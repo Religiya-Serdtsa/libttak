@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <pthread.h>
+#include <limits.h>
 #include <errno.h>
 #include <sys/mman.h>
 #include <unistd.h>
