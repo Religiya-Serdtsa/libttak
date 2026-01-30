@@ -1,0 +1,6 @@
+## Please Modift This two
+```
+yjlee@elegant:~/libttak/apps/mersenne-prime$ grep -r "/home/yjlee"
+mersenne_explorer.c:#define STATE_DIR "/home/yjlee/Documents"
+src/main.c:#define LOCAL_STATE_DIR "/home/yjlee/Documents"
+```
