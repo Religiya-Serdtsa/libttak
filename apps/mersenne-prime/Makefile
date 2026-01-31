@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -O3 -Iinternal -Iinclude -I/usr/local/include
+CFLAGS = -Wall -Wextra -Werror -O3 -Iinternal -Iinclude -I/usr/local/include -march=native
 LDFLAGS = -lttak -lcurl -lpthread -lm
 
 BIN_DIR = bin
