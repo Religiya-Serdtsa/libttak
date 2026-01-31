@@ -1,4 +1,4 @@
-GCC = gcc
+CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g -pthread -MMD -MP -Iinclude
 LDFLAGS = -pthread
 
@@ -6,7 +6,7 @@ PREFIX ?= /usr/local
 LIBDIR = $(PREFIX)/lib
 INCDIR = $(PREFIX)/include
 
-SRC_DIRS = src/ht src/thread src/timing src/mem src/async src/priority src/atomic src/sync src/math
+SRC_DIRS = src/ht src/thread src/timing src/mem src/async src/priority src/atomic src/sync src/math src/tree src/container
 SRCS = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
 OBJS = $(patsubst src/%.c,obj/%.o,$(SRCS))
 DEPS = $(OBJS:.o=.d)
