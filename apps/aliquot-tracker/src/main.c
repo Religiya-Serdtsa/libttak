@@ -81,6 +81,9 @@ typedef struct {
     bool catalog_hit;
     uint64_t wall_time_ms;
     uint32_t max_bits;
+    char max_hash[65];
+    char max_prefix[TRACK_PREFIX_DIGITS + 1];
+    uint32_t max_dec_digits;
 } aliquot_outcome_t;
 
 typedef struct {
@@ -191,6 +194,8 @@ static uint64_t g_catalog_exact[CATALOG_MAX_EXACT];
 static size_t g_catalog_exact_count;
 static catalog_mod_rule_t g_catalog_mod_rules[CATALOG_MAX_MOD_RULE];
 static size_t g_catalog_mod_rule_count;
+
+static uint32_t bigint_decimal_digits_estimate(uint32_t bits);
 
 /* Seeds that are already well documented elsewhere; we short-circuit them early. */
 static const uint64_t g_catalog_seeds[] = {
@@ -366,12 +371,9 @@ static void ensure_state_dir(void) {
     }
 }
 
-static uint64_t sum_proper_divisors(uint64_t n) {
-    uint64_t result;
-    if (ttak_sum_proper_divisors_u64(n, &result)) {
-        return result;
-    }
-    return UINT64_MAX; // Return UINT64_MAX on overflow
+static bool sum_proper_divisors_u64_checked(uint64_t n, uint64_t *out) {
+    if (!out) return false;
+    return ttak_sum_proper_divisors_u64(n, out);
 }
 
 static void history_init(history_table_t *t) {
@@ -599,11 +601,12 @@ static bool frontier_accept_seed(uint64_t seed, scan_result_t *result) {
             uint64_t now = monotonic_millis();
             if (now - start_ms >= (uint64_t)SCAN_TIMECAP_MS) break;
         }
-        uint64_t next = sum_proper_divisors(current);
+        uint64_t next = 0;
+        bool ok = sum_proper_divisors_u64_checked(current, &next);
         ttak_atomic_inc64(&g_total_probes);
         steps++;
-        if (next > max_value) max_value = next;
-        if (next == UINT64_MAX) {
+
+        if (!ok) { // Overflow
             if (result) {
                 result->ended_by = SCAN_END_OVERFLOW;
                 result->steps = steps;
@@ -611,6 +614,9 @@ static bool frontier_accept_seed(uint64_t seed, scan_result_t *result) {
             }
             return true;
         }
+
+        if (next > max_value) max_value = next;
+
         if (is_catalog_value(next)) {
             if (result) {
                 result->ended_by = SCAN_END_CATALOG;
@@ -642,8 +648,18 @@ static void run_aliquot_sequence_big(ttak_bigint_t *start_val, uint32_t start_st
     ttak_bigint_init_copy(&current, start_val, now);
     history_big_insert(&hist, &current, start_step);
 
+    ttak_bigint_t max_seen;
+    ttak_bigint_init_copy(&max_seen, start_val, now);
+    // The u64 max value is stale. The starting big value is our new max.
+    out->max_bits = ttak_bigint_get_bit_length(&max_seen);
+
     uint32_t steps = start_step;
     while (true) {
+        if (ttak_bigint_cmp(&current, &max_seen) > 0) {
+            ttak_bigint_copy(&max_seen, &current, now);
+            out->max_bits = ttak_bigint_get_bit_length(&max_seen);
+        }
+
         if (max_steps > 0 && steps >= max_steps) {
             out->hit_limit = true;
             break;
@@ -669,12 +685,6 @@ static void run_aliquot_sequence_big(ttak_bigint_t *start_val, uint32_t start_st
         }
 
         ttak_atomic_inc64(&g_total_probes);
-
-        uint32_t current_bits = ttak_bigint_get_bit_length(&current);
-        if (current_bits > out->max_bits) {
-            out->max_bits = current_bits;
-        }
-
         steps++;
 
         if (ttak_bigint_is_zero(&next) || ttak_bigint_cmp_u64(&next, 1) == 0) {
@@ -703,6 +713,18 @@ static void run_aliquot_sequence_big(ttak_bigint_t *start_val, uint32_t start_st
     }
 
     out->steps = steps;
+
+    // Record final metrics from the largest value seen.
+    out->max_bits = ttak_bigint_get_bit_length(&max_seen);
+    out->max_dec_digits = bigint_decimal_digits_estimate(out->max_bits);
+    ttak_bigint_to_hex_hash(&max_seen, out->max_hash);
+    ttak_bigint_format_prefix(&max_seen, out->max_prefix, sizeof(out->max_prefix));
+    // Also ensure max_value (u64) is saturated, as it's used in some logging.
+    if (out->overflow) {
+        out->max_value = UINT64_MAX;
+    }
+
+    ttak_bigint_free(&max_seen, now);
     ttak_bigint_free(&current, now);
     history_big_destroy(&hist);
 }
@@ -744,35 +766,49 @@ static void run_aliquot_sequence(uint64_t seed, uint32_t max_steps, uint64_t tim
         if (atomic_load_explicit(&shutdown_requested, memory_order_relaxed)) break;
 
         uint64_t dbg_start_ms = monotonic_millis();
-        uint64_t next = sum_proper_divisors(current);
+        uint64_t next = 0;
+        bool ok = sum_proper_divisors_u64_checked(current, &next);
         uint64_t dbg_elapsed_ms = monotonic_millis() - dbg_start_ms;
         if (dbg_elapsed_ms > 1000) {
             printf("[ALIQUOT] slow sum_divisors on %" PRIu64 " took %" PRIu64 "ms\n", current, dbg_elapsed_ms);
         }
 
         ttak_atomic_inc64(&g_total_probes);
+
+        if (!ok) { // Overflow
+            out->overflow = true;
+            steps++;
+            if (!allow_bigints) {
+                break;
+            }
+
+            uint64_t now = monotonic_millis();
+            ttak_bigint_t big_current;
+            ttak_bigint_init(&big_current, now);
+            ttak_bigint_set_u64(&big_current, current, now);
+
+            ttak_bigint_t big_next;
+            ttak_bigint_init(&big_next, now);
+            if (!sum_proper_divisors_big(&big_current, &big_next, now)) {
+                ttak_bigint_free(&big_next, now);
+                ttak_bigint_free(&big_current, now);
+                break;
+            }
+
+            run_aliquot_sequence_big(&big_next, steps, max_steps, time_budget_ms, out, start_ms);
+
+            ttak_bigint_free(&big_next, now);
+            ttak_bigint_free(&big_current, now);
+            break;
+        }
+
         if (next > out->max_value) {
             out->max_value = next;
             uint32_t bits = bit_length_u64(next);
             if (bits > out->max_bits) out->max_bits = bits;
         }
         steps++;
-        if (next == UINT64_MAX) {
-            // Overflow, only fall back to big integers when explicitly allowed.
-            out->overflow = true;
-            if (!allow_bigints) {
-                break;
-            }
-            uint64_t now = monotonic_millis();
-            ttak_bigint_t big_current;
-            ttak_bigint_init(&big_current, now);
-            ttak_bigint_set_u64(&big_current, current, now);
 
-            run_aliquot_sequence_big(&big_current, steps, max_steps, time_budget_ms, out, start_ms);
-
-            ttak_bigint_free(&big_current, now);
-            break;
-        }
         if (next <= 1) {
             out->terminated = true;
             out->final_value = next;
@@ -982,26 +1018,37 @@ static void capture_track_metrics(const aliquot_outcome_t *out, const aliquot_jo
     rec->steps = out->steps;
     rec->wall_time_ms = out->wall_time_ms;
     rec->budget_ms = budget_ms;
-    rec->max_u64 = out->max_value;
     rec->scout_score = job ? job->scout_score : 0.0;
     rec->priority = job ? job->priority : 0;
     snprintf(rec->ended, sizeof(rec->ended), "%s", track_end_reason(out));
     format_track_end_detail(out, rec->ended_by, sizeof(rec->ended_by));
-    uint64_t now = monotonic_millis();
-    ttak_bigint_t max_bi;
-    ttak_bigint_init(&max_bi, now);
-    if (ttak_bigint_set_u64(&max_bi, out->max_value, now)) {
-        rec->max_bits = ttak_bigint_get_bit_length(&max_bi);
-        rec->max_dec_digits = bigint_decimal_digits_estimate(rec->max_bits);
-        ttak_bigint_to_hex_hash(&max_bi, rec->max_hash);
-        ttak_bigint_format_prefix(&max_bi, rec->max_prefix, sizeof(rec->max_prefix));
+
+    if (out->overflow) {
+        // For big sequences, the metrics were pre-calculated.
+        rec->max_bits = out->max_bits;
+        rec->max_dec_digits = out->max_dec_digits;
+        snprintf(rec->max_hash, sizeof(rec->max_hash), "%s", out->max_hash);
+        snprintf(rec->max_prefix, sizeof(rec->max_prefix), "%s", out->max_prefix);
+        rec->max_u64 = UINT64_MAX; // Signal that max_u64 is not the true max
     } else {
-        rec->max_bits = 0;
-        rec->max_dec_digits = 0;
-        rec->max_hash[0] = '\0';
-        rec->max_prefix[0] = '\0';
+        // For u64 sequences, calculate metrics now.
+        rec->max_u64 = out->max_value;
+        uint64_t now = monotonic_millis();
+        ttak_bigint_t max_bi;
+        ttak_bigint_init(&max_bi, now);
+        if (ttak_bigint_set_u64(&max_bi, out->max_value, now)) {
+            rec->max_bits = ttak_bigint_get_bit_length(&max_bi);
+            rec->max_dec_digits = bigint_decimal_digits_estimate(rec->max_bits);
+            ttak_bigint_to_hex_hash(&max_bi, rec->max_hash);
+            ttak_bigint_format_prefix(&max_bi, rec->max_prefix, sizeof(rec->max_prefix));
+        } else {
+            rec->max_bits = 0;
+            rec->max_dec_digits = 0;
+            rec->max_hash[0] = '\0';
+            rec->max_prefix[0] = '\0';
+        }
+        ttak_bigint_free(&max_bi, now);
     }
-    ttak_bigint_free(&max_bi, now);
 }
 
 static void append_track_record(const aliquot_outcome_t *out, const aliquot_job_t *job, uint64_t budget_ms) {
