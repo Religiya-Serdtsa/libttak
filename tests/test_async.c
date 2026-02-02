@@ -41,20 +41,46 @@ void test_promise_future_basic() {
     ttak_mem_free(promise);
 }
 
-void test_async_schedule() {
+void test_async_schedule_fallback() {
     uint64_t now = 3000;
     int data = 0;
     ttak_task_t *task = ttak_task_create(my_task_func, &data, NULL, now);
     
-    ttak_async_schedule(task, now + 10);
+    ttak_async_schedule(task, now + 10, 0);
     ASSERT(data == 1);
     
     ttak_task_destroy(task, now + 20);
 }
 
+void test_async_schedule_with_pool() {
+    uint64_t now = 4000;
+    int data = 0;
+    ttak_promise_t *promise = ttak_promise_create(now);
+    ASSERT(promise != NULL);
+    ttak_future_t *future = ttak_promise_get_future(promise);
+    ASSERT(future != NULL);
+
+    ttak_task_t *task = ttak_task_create(my_task_func, &data, promise, now);
+    ASSERT(task != NULL);
+
+    ttak_async_init(0);
+    ttak_async_schedule(task, now + 10, 1);
+
+    void *res = ttak_future_get(future);
+    ASSERT(res == NULL);
+    ASSERT(data == 1);
+
+    ttak_task_destroy(task, now + 20);
+    ttak_async_shutdown();
+
+    ttak_mem_free(promise->future);
+    ttak_mem_free(promise);
+}
+
 int main() {
     RUN_TEST(test_task_create_execute);
     RUN_TEST(test_promise_future_basic);
-    RUN_TEST(test_async_schedule);
+    RUN_TEST(test_async_schedule_fallback);
+    RUN_TEST(test_async_schedule_with_pool);
     return 0;
 }

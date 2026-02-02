@@ -10,6 +10,14 @@ const ttak_ntt_prime_t ttak_ntt_primes[TTAK_NTT_PRIME_COUNT] = {
     { 469762049ULL, 3ULL, 26U, 18226067692438159359ULL, 118963808ULL }
 };
 
+/**
+ * @brief Compute (a + b) mod mod without overflow.
+ *
+ * @param a   Left operand.
+ * @param b   Right operand.
+ * @param mod Prime modulus.
+ * @return Modular sum.
+ */
 uint64_t ttak_mod_add(uint64_t a, uint64_t b, uint64_t mod) {
     uint64_t sum = a + b;
     if (sum >= mod || sum < a) {
@@ -18,15 +26,39 @@ uint64_t ttak_mod_add(uint64_t a, uint64_t b, uint64_t mod) {
     return sum;
 }
 
+/**
+ * @brief Compute (a - b) mod mod, wrapping into the range [0, mod).
+ *
+ * @param a   Left operand.
+ * @param b   Right operand.
+ * @param mod Prime modulus.
+ * @return Modular difference.
+ */
 uint64_t ttak_mod_sub(uint64_t a, uint64_t b, uint64_t mod) {
     return (a >= b) ? (a - b) : (a + mod - b);
 }
 
+/**
+ * @brief Multiply two residues modulo mod using 128-bit intermediates.
+ *
+ * @param a   Left operand.
+ * @param b   Right operand.
+ * @param mod Prime modulus.
+ * @return Modular product.
+ */
 uint64_t ttak_mod_mul(uint64_t a, uint64_t b, uint64_t mod) {
     ttak_uint128_native_t prod = (ttak_uint128_native_t)a * (ttak_uint128_native_t)b;
     return (uint64_t)(prod % mod);
 }
 
+/**
+ * @brief Exponentiate a base modulo mod using square-and-multiply.
+ *
+ * @param base Base residue.
+ * @param exp  Exponent.
+ * @param mod  Prime modulus.
+ * @return base^exp mod mod.
+ */
 uint64_t ttak_mod_pow(uint64_t base, uint64_t exp, uint64_t mod) {
     uint64_t result = 1 % mod;
     uint64_t factor = base % mod;
@@ -40,6 +72,13 @@ uint64_t ttak_mod_pow(uint64_t base, uint64_t exp, uint64_t mod) {
     return result;
 }
 
+/**
+ * @brief Compute the modular inverse using the extended Euclidean algorithm.
+ *
+ * @param value Input residue.
+ * @param mod   Modulus.
+ * @return Multiplicative inverse or 0 if none exists.
+ */
 uint64_t ttak_mod_inverse(uint64_t value, uint64_t mod) {
     int64_t t = 0;
     int64_t new_t = 1;
@@ -62,6 +101,13 @@ uint64_t ttak_mod_inverse(uint64_t value, uint64_t mod) {
     return (uint64_t)t;
 }
 
+/**
+ * @brief Reduce a 128-bit product using Montgomery arithmetic.
+ *
+ * @param value Intermediate product.
+ * @param prime Prime parameters (including Montgomery constants).
+ * @return Reduced residue.
+ */
 uint64_t ttak_montgomery_reduce(ttak_uint128_native_t value, const ttak_ntt_prime_t *prime) {
     uint64_t m = (uint64_t)value * prime->montgomery_inv;
     ttak_uint128_native_t t = (value + (ttak_uint128_native_t)m * prime->modulus) >> 64;
@@ -72,17 +118,38 @@ uint64_t ttak_montgomery_reduce(ttak_uint128_native_t value, const ttak_ntt_prim
     return result;
 }
 
+/**
+ * @brief Multiply two residues in Montgomery space.
+ *
+ * @param lhs   Left operand (Montgomery form).
+ * @param rhs   Right operand (Montgomery form).
+ * @param prime Prime definition.
+ * @return Product in Montgomery form.
+ */
 uint64_t ttak_montgomery_mul(uint64_t lhs, uint64_t rhs, const ttak_ntt_prime_t *prime) {
     ttak_uint128_native_t value = (ttak_uint128_native_t)lhs * (ttak_uint128_native_t)rhs;
     return ttak_montgomery_reduce(value, prime);
 }
 
+/**
+ * @brief Convert a standard residue into Montgomery representation.
+ *
+ * @param value Value in standard form.
+ * @param prime Prime definition with R^2 precomputed.
+ * @return Value represented in Montgomery space.
+ */
 uint64_t ttak_montgomery_convert(uint64_t value, const ttak_ntt_prime_t *prime) {
     uint64_t v = value % prime->modulus;
     ttak_uint128_native_t converted = (ttak_uint128_native_t)v * prime->montgomery_r2;
     return ttak_montgomery_reduce(converted, prime);
 }
 
+/**
+ * @brief Reorder the array into bit-reversed order.
+ *
+ * @param data Data array to permute.
+ * @param n    Length of the array (power of two).
+ */
 static void bit_reverse(uint64_t *data, size_t n) {
     size_t j = 0;
     for (size_t i = 1; i < n; ++i) {
@@ -100,18 +167,41 @@ static void bit_reverse(uint64_t *data, size_t n) {
     }
 }
 
+/**
+ * @brief Convert every element into Montgomery space.
+ *
+ * @param data  Array of residues.
+ * @param n     Number of elements.
+ * @param prime Prime modulus descriptor.
+ */
 static void montgomery_array_convert(uint64_t *data, size_t n, const ttak_ntt_prime_t *prime) {
     for (size_t i = 0; i < n; ++i) {
         data[i] = ttak_montgomery_convert(data[i], prime);
     }
 }
 
+/**
+ * @brief Convert every element from Montgomery space back to standard form.
+ *
+ * @param data  Array of residues.
+ * @param n     Number of elements.
+ * @param prime Prime modulus descriptor.
+ */
 static void montgomery_array_restore(uint64_t *data, size_t n, const ttak_ntt_prime_t *prime) {
     for (size_t i = 0; i < n; ++i) {
         data[i] = ttak_montgomery_reduce((ttak_uint128_native_t)data[i], prime);
     }
 }
 
+/**
+ * @brief Perform an in-place NTT or inverse NTT over the provided data.
+ *
+ * @param data   Array of residues to transform (length must be power of two).
+ * @param n      Number of elements.
+ * @param prime  Prime modulus descriptor.
+ * @param inverse Set to true for inverse transform.
+ * @return true on success, false if parameters are invalid.
+ */
 _Bool ttak_ntt_transform(uint64_t *data, size_t n, const ttak_ntt_prime_t *prime, _Bool inverse) {
     if (!data || !prime || n == 0) return false;
     if ((n & (n - 1)) != 0) return false;
@@ -159,6 +249,15 @@ _Bool ttak_ntt_transform(uint64_t *data, size_t n, const ttak_ntt_prime_t *prime
     return true;
 }
 
+/**
+ * @brief Multiply two transformed sequences element-wise.
+ *
+ * @param dst   Destination array.
+ * @param lhs   Left operand.
+ * @param rhs   Right operand.
+ * @param n     Number of elements.
+ * @param prime Prime modulus descriptor.
+ */
 void ttak_ntt_pointwise_mul(uint64_t *dst, const uint64_t *lhs, const uint64_t *rhs, size_t n, const ttak_ntt_prime_t *prime) {
     uint64_t mod = prime->modulus;
     for (size_t i = 0; i < n; ++i) {
@@ -166,6 +265,14 @@ void ttak_ntt_pointwise_mul(uint64_t *dst, const uint64_t *lhs, const uint64_t *
     }
 }
 
+/**
+ * @brief Square each element of a transformed sequence.
+ *
+ * @param dst   Destination array.
+ * @param src   Source array.
+ * @param n     Number of elements.
+ * @param prime Prime modulus descriptor.
+ */
 void ttak_ntt_pointwise_square(uint64_t *dst, const uint64_t *src, size_t n, const ttak_ntt_prime_t *prime) {
     uint64_t mod = prime->modulus;
     for (size_t i = 0; i < n; ++i) {
@@ -173,6 +280,12 @@ void ttak_ntt_pointwise_square(uint64_t *dst, const uint64_t *src, size_t n, con
     }
 }
 
+/**
+ * @brief Round up to the next power of two.
+ *
+ * @param value Input value.
+ * @return Next power of two >= value.
+ */
 size_t ttak_next_power_of_two(size_t value) {
     if (value == 0) return 1;
     value--;
@@ -187,6 +300,12 @@ size_t ttak_next_power_of_two(size_t value) {
     return value + 1;
 }
 
+/**
+ * @brief Convert a native 128-bit integer into the portable struct.
+ *
+ * @param value Native 128-bit value.
+ * @return Decomposed hi/lo representation.
+ */
 static ttak_u128_t make_u128(ttak_uint128_native_t value) {
     ttak_u128_t out;
     out.lo = (uint64_t)value;
@@ -194,10 +313,26 @@ static ttak_u128_t make_u128(ttak_uint128_native_t value) {
     return out;
 }
 
+/**
+ * @brief Compute value mod mod using native 128-bit arithmetic.
+ *
+ * @param value 128-bit value.
+ * @param mod   64-bit modulus.
+ * @return Reduced 64-bit residue.
+ */
 static uint64_t mod128_u64(ttak_uint128_native_t value, uint64_t mod) {
     return (uint64_t)(value % mod);
 }
 
+/**
+ * @brief Combine residues via the Chinese Remainder Theorem.
+ *
+ * @param terms       Array of residue/modulus pairs.
+ * @param count       Number of terms.
+ * @param residue_out Resulting residue in mixed-radix form.
+ * @param modulus_out Combined modulus.
+ * @return true on success, false if inversion fails.
+ */
 _Bool ttak_crt_combine(const ttak_crt_term_t *terms, size_t count, ttak_u128_t *residue_out, ttak_u128_t *modulus_out) {
     if (!terms || count == 0 || !residue_out || !modulus_out) return false;
 

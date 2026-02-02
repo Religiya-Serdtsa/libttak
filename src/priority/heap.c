@@ -3,6 +3,13 @@
 #include <stdlib.h>
 #include <string.h>
 
+/**
+ * @brief Initialize a binary heap container.
+ *
+ * @param heap        Heap to initialize.
+ * @param initial_cap Desired starting capacity.
+ * @param cmp         Comparator returning positive when first arg has higher priority.
+ */
 void ttak_heap_tree_init(ttak_heap_tree_t *heap, size_t initial_cap, int (*cmp)(const void*, const void*)) {
     if (!heap) return;
     heap->cmp = cmp;
@@ -58,6 +65,13 @@ static void heapify_down(ttak_heap_tree_t *heap, size_t index) {
     }
 }
 
+/**
+ * @brief Insert an element into the heap.
+ *
+ * @param heap    Heap to update.
+ * @param element Payload pointer to push.
+ * @param now     Timestamp for allocator bookkeeping.
+ */
 void ttak_heap_tree_push(ttak_heap_tree_t *heap, void *element, uint64_t now) {
     if (!heap || !heap->data) return;
 
@@ -74,6 +88,13 @@ void ttak_heap_tree_push(ttak_heap_tree_t *heap, void *element, uint64_t now) {
     heap->size++;
 }
 
+/**
+ * @brief Remove and return the highest-priority element.
+ *
+ * @param heap Heap to pop from.
+ * @param now  Timestamp (unused but kept for interface parity).
+ * @return Pointer to the popped element, or NULL if empty.
+ */
 void *ttak_heap_tree_pop(ttak_heap_tree_t *heap, uint64_t now) {
     (void)now; // Access verification not strictly needed for array slots unless checking the array pointer itself
     if (!heap || !heap->data || heap->size == 0) return NULL;
@@ -89,11 +110,23 @@ void *ttak_heap_tree_pop(ttak_heap_tree_t *heap, uint64_t now) {
     return root;
 }
 
+/**
+ * @brief Access the top element without removing it.
+ *
+ * @param heap Heap to inspect.
+ * @return Pointer to the element, or NULL if empty.
+ */
 void *ttak_heap_tree_peek(const ttak_heap_tree_t *heap) {
     if (!heap || !heap->data || heap->size == 0) return NULL;
     return heap->data[0];
 }
 
+/**
+ * @brief Destroy the heap and release its storage.
+ *
+ * @param heap Heap to destroy.
+ * @param now  Timestamp (unused).
+ */
 void ttak_heap_tree_destroy(ttak_heap_tree_t *heap, uint64_t now) {
     (void)now;
     if (!heap) return;

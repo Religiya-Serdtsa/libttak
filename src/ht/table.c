@@ -34,6 +34,15 @@
         v2 = ROTL(v2, 32);  \
     } while (0)
 
+/**
+ * @brief Default SipHash-2-4 implementation for arbitrary byte keys.
+ *
+ * @param key Key bytes.
+ * @param len Number of bytes.
+ * @param k0  First SipHash key.
+ * @param k1  Second SipHash key.
+ * @return 64-bit hash value.
+ */
 static uint64_t default_siphash(const void *key, size_t len, uint64_t k0, uint64_t k1) {
     uint64_t v0 = 0x736f6d6570736575ULL ^ k0;
     uint64_t v1 = 0x646f72616e646f6dULL ^ k1;
@@ -85,7 +94,17 @@ static uint64_t default_siphash(const void *key, size_t len, uint64_t k0, uint64
     return v0 ^ v1 ^ v2 ^ v3;
 }
 
-void ttak_table_init(ttak_table_t *table, size_t capacity, 
+/**
+ * @brief Initialize a hash table with optional callbacks.
+ *
+ * @param table     Table to configure.
+ * @param capacity  Initial bucket count.
+ * @param hash_func Hashing routine (defaults to SipHash-2-4).
+ * @param key_cmp   Comparator for keys.
+ * @param key_free  Destructor for keys (optional).
+ * @param val_free  Destructor for values (optional).
+ */
+void ttak_table_init(ttak_table_t *table, size_t capacity,
                      uint64_t (*hash_func)(const void*, size_t, uint64_t, uint64_t),
                      int (*key_cmp)(const void*, const void*),
                      void (*key_free)(void*),
@@ -110,6 +129,15 @@ void ttak_table_init(ttak_table_t *table, size_t capacity,
     }
 }
 
+/**
+ * @brief Insert or update a table entry.
+ *
+ * @param table   Table to mutate.
+ * @param key     Key owned by the table.
+ * @param key_len Length of the key.
+ * @param value   Value pointer to store.
+ * @param now     Timestamp for memory safety checks.
+ */
 void ttak_table_put(ttak_table_t *table, void *key, size_t key_len, void *value, uint64_t now) {
     if (!table || !table->buckets) return;
 
@@ -142,6 +170,15 @@ void ttak_table_put(ttak_table_t *table, void *key, size_t key_len, void *value,
     table->size++;
 }
 
+/**
+ * @brief Retrieve a value from the table.
+ *
+ * @param table   Table to inspect.
+ * @param key     Key to locate.
+ * @param key_len Key length in bytes.
+ * @param now     Timestamp for memory validation.
+ * @return Stored value pointer or NULL if absent.
+ */
 void *ttak_table_get(ttak_table_t *table, const void *key, size_t key_len, uint64_t now) {
     if (!table || !table->buckets) return NULL;
 
@@ -159,6 +196,15 @@ void *ttak_table_get(ttak_table_t *table, const void *key, size_t key_len, uint6
     return NULL;
 }
 
+/**
+ * @brief Remove an entry from the table.
+ *
+ * @param table   Table to mutate.
+ * @param key     Key to delete.
+ * @param key_len Key length in bytes.
+ * @param now     Timestamp for memory validation.
+ * @return true if removed, false if the key was missing.
+ */
 bool ttak_table_remove(ttak_table_t *table, const void *key, size_t key_len, uint64_t now) {
     if (!table || !table->buckets) return false;
 
@@ -191,6 +237,12 @@ bool ttak_table_remove(ttak_table_t *table, const void *key, size_t key_len, uin
     return false;
 }
 
+/**
+ * @brief Destroy the hash table and free all entries.
+ *
+ * @param table Table to tear down.
+ * @param now   Timestamp for allocator bookkeeping.
+ */
 void ttak_table_destroy(ttak_table_t *table, uint64_t now) {
     if (!table || !table->buckets) return;
 

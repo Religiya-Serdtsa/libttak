@@ -2,8 +2,15 @@
 #include <ttak/math/factor.h>
 #include <ttak/mem/mem.h>
 
-// Formula for sum of divisors: σ(n) = Π (p_i^(a_i+1) - 1) / (p_i - 1)
-
+/**
+ * @brief Compute the sum of proper divisors for a 64-bit integer.
+ *
+ * Implements σ(n) - n where σ uses the prime factorization formula.
+ *
+ * @param n          Input value.
+ * @param result_out Output pointer for the sum.
+ * @return true on success, false if factorization fails or overflow occurs.
+ */
 bool ttak_sum_proper_divisors_u64(uint64_t n, uint64_t *result_out) {
     if (n <= 1) {
         *result_out = 0;
@@ -57,6 +64,14 @@ bool ttak_sum_proper_divisors_u64(uint64_t n, uint64_t *result_out) {
     return true;
 }
 
+/**
+ * @brief Compute the sum of proper divisors for a big integer.
+ *
+ * @param n          Input value.
+ * @param result_out Destination for σ(n) - n.
+ * @param now        Timestamp for allocations.
+ * @return true on success, false on factorization or arithmetic failure.
+ */
 bool ttak_sum_proper_divisors_big(const ttak_bigint_t *n, ttak_bigint_t *result_out, uint64_t now) {
     if (ttak_bigint_is_zero(n) || ttak_bigint_cmp_u64(n, 1) <= 0) {
         ttak_bigint_set_u64(result_out, 0, now);

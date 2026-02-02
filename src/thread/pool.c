@@ -7,6 +7,11 @@
 #include <signal.h>
 #include <errno.h>
 
+/**
+ * @brief Stop all workers and signal shutdown.
+ *
+ * @param pool Pool to shut down.
+ */
 static void pool_force_shutdown(ttak_thread_pool_t *pool) {
     if (!pool) return;
     pthread_mutex_lock(&pool->pool_lock);
@@ -20,6 +25,14 @@ static void pool_force_shutdown(ttak_thread_pool_t *pool) {
     pthread_mutex_unlock(&pool->pool_lock);
 }
 
+/**
+ * @brief Create a thread pool with the given worker count.
+ *
+ * @param num_threads Number of worker threads.
+ * @param default_nice Initial nice value for workers.
+ * @param now         Timestamp for memory tracking.
+ * @return Pointer to the created pool or NULL on failure.
+ */
 ttak_thread_pool_t *ttak_thread_pool_create(size_t num_threads, int default_nice, uint64_t now) {
     ttak_thread_pool_t *pool = (ttak_thread_pool_t *)ttak_mem_alloc(sizeof(ttak_thread_pool_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!pool) return NULL;
@@ -51,6 +64,16 @@ ttak_thread_pool_t *ttak_thread_pool_create(size_t num_threads, int default_nice
     return pool;
 }
 
+/**
+ * @brief Submit a function to be executed asynchronously.
+ *
+ * @param pool     Pool receiving the work.
+ * @param func     Function pointer to execute.
+ * @param arg      Argument passed to the function.
+ * @param priority Scheduling priority hint.
+ * @param now      Timestamp for memory bookkeeping.
+ * @return Future representing the eventual result, or NULL on failure.
+ */
 ttak_future_t *ttak_thread_pool_submit_task(ttak_thread_pool_t *pool, void *(*func)(void *), void *arg, int priority, uint64_t now) {
     if (!pool) return NULL;
 
@@ -59,18 +82,51 @@ ttak_future_t *ttak_thread_pool_submit_task(ttak_thread_pool_t *pool, void *(*fu
 
     ttak_task_t *task = ttak_task_create((ttak_task_func_t)func, arg, promise, now);
     if (!task) {
-        // promise will be leaked here, but ttak_mem doesn't have a good way to free recursively yet
+        ttak_mem_free(promise->future);
+        ttak_mem_free(promise); // destroys promise here.
         return NULL; 
     }
 
-    pthread_mutex_lock(&pool->pool_lock);
-    pool->task_queue.push(&pool->task_queue, task, priority, now);
-    pthread_cond_signal(&pool->task_cond);
-    pthread_mutex_unlock(&pool->pool_lock);
+    if (!ttak_thread_pool_schedule_task(pool, task, priority, now)) {
+        ttak_task_destroy(task, now);
+        ttak_mem_free(promise->future);
+        ttak_mem_free(promise);
+        return NULL;
+    }
 
     return ttak_promise_get_future(promise);
 }
 
+/**
+ * @brief Queue a prepared task for execution.
+ *
+ * @param pool     Pool to enqueue into.
+ * @param task     Task instance created earlier.
+ * @param priority Priority hint.
+ * @param now      Timestamp for queue bookkeeping.
+ * @return true if scheduled, false if the pool is shutting down.
+ */
+_Bool ttak_thread_pool_schedule_task(ttak_thread_pool_t *pool, ttak_task_t *task, int priority, uint64_t now) {
+    if (!pool || !task) return 0;
+
+    pthread_mutex_lock(&pool->pool_lock);
+    if (pool->is_shutdown) {
+        pthread_mutex_unlock(&pool->pool_lock);
+        return 0;
+    }
+
+    pool->task_queue.push(&pool->task_queue, task, priority, now);
+    pthread_cond_signal(&pool->task_cond);
+    pthread_mutex_unlock(&pool->pool_lock);
+
+    return 1;
+}
+
+/**
+ * @brief Destroy the pool, wait for workers, and free pending tasks.
+ *
+ * @param pool Pool to destroy.
+ */
 void ttak_thread_pool_destroy(ttak_thread_pool_t *pool) {
     if (!pool) return;
 

@@ -55,6 +55,11 @@ static _Thread_local _Bool in_mem_op = false;
 static _Thread_local _Bool in_mem_init = false;
 static _Bool global_init_done = false;
 
+/**
+ * @brief Lazily initialize the global pointer map and mem tree.
+ *
+ * @param now Timestamp propagated to the map allocator.
+ */
 static void ensure_global_map(uint64_t now) {
     if (global_init_done || in_mem_init) return;
 
@@ -69,6 +74,19 @@ static void ensure_global_map(uint64_t now) {
     pthread_mutex_unlock(&global_init_lock);
 }
 
+/**
+ * @brief Allocate tracked memory with metadata headers and optional strict checks.
+ *
+ * @param size           Number of bytes requested.
+ * @param lifetime_ticks Lifetime hint for automatic reclamation.
+ * @param now            Current timestamp.
+ * @param is_const       Marks the buffer as immutable.
+ * @param is_volatile    Indicates volatile access patterns.
+ * @param allow_direct   If false, ttak_mem_access will refuse direct pointers.
+ * @param is_root        Marks the allocation as externally referenced for the mem tree.
+ * @param flags          Allocation behavior flags.
+ * @return Pointer to zeroed user memory or NULL on failure.
+ */
 void TTAK_HOT_PATH *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, uint64_t now, _Bool is_const, _Bool is_volatile, _Bool allow_direct, _Bool is_root, ttak_mem_flags_t flags) {
     size_t header_size = sizeof(ttak_mem_header_t);
     _Bool strict_check_enabled = (flags & TTAK_MEM_STRICT_CHECK);
@@ -151,6 +169,17 @@ void TTAK_HOT_PATH *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, ui
     return user_ptr;
 }
 
+/**
+ * @brief Reallocate memory while preserving metadata and strict-check flags.
+ *
+ * @param ptr            Existing allocation (may be NULL).
+ * @param new_size       Requested size.
+ * @param lifetime_ticks Updated lifetime hint.
+ * @param now            Current timestamp.
+ * @param is_root        Whether the resulting allocation should be tracked as root.
+ * @param flags          Allocation behavior flags.
+ * @return Reallocated pointer or NULL on failure.
+ */
 void TTAK_HOT_PATH *ttak_mem_realloc_safe(void *ptr, size_t new_size, uint64_t lifetime_ticks, uint64_t now, _Bool is_root, ttak_mem_flags_t flags) {
     V_HEADER(ptr);
     if (!ptr) {
@@ -184,6 +213,11 @@ void TTAK_HOT_PATH *ttak_mem_realloc_safe(void *ptr, size_t new_size, uint64_t l
     return new_ptr;
 }
 
+/**
+ * @brief Free tracked memory, remove it from maps, and verify canaries.
+ *
+ * @param ptr Pointer returned by ttak_mem_alloc_safe.
+ */
 void TTAK_HOT_PATH ttak_mem_free(void *ptr) {
     if (!ptr) return;
     V_HEADER(ptr); // This will check canaries if strict_check is enabled
@@ -231,6 +265,13 @@ void TTAK_HOT_PATH ttak_mem_free(void *ptr) {
     }
 }
 
+/**
+ * @brief Validate an allocation and obtain a pinned pointer for direct access.
+ *
+ * @param ptr Pointer to validate.
+ * @param now Current timestamp for expiry checks.
+ * @return Original pointer if access is permitted, SAFE_NULL otherwise.
+ */
 void TTAK_HOT_PATH *ttak_mem_access(void *ptr, uint64_t now) {
     if (!ptr) return SAFE_NULL;
     V_HEADER(ptr);
@@ -255,6 +296,11 @@ void TTAK_HOT_PATH *ttak_mem_access(void *ptr, uint64_t now) {
     return ptr;
 }
 
+/**
+ * @brief Sweep and free expired or highly accessed allocations.
+ *
+ * @param now Current timestamp for expiration checks.
+ */
 void TTAK_COLD_PATH tt_autoclean_dirty_pointers(uint64_t now) {
     size_t count = 0;
     void **dirty = tt_inspect_dirty_pointers(now, &count);
@@ -265,6 +311,15 @@ void TTAK_COLD_PATH tt_autoclean_dirty_pointers(uint64_t now) {
     free(dirty);
 }
 
+/**
+ * @brief Return a snapshot of allocations considered "dirty".
+ *
+ * Caller owns the returned array.
+ *
+ * @param now       Current timestamp.
+ * @param count_out Number of pointers returned.
+ * @return Array of pointers or NULL if inspection fails.
+ */
 void TTAK_COLD_PATH **tt_inspect_dirty_pointers(uint64_t now, size_t *count_out) {
     if (!count_out || !global_ptr_map) return NULL;
     *count_out = 0;
@@ -292,6 +347,13 @@ void TTAK_COLD_PATH **tt_inspect_dirty_pointers(uint64_t now, size_t *count_out)
     return dirty;
 }
 
+/**
+ * @brief Run the auto-clean pass and then report dirty pointers.
+ *
+ * @param now       Current timestamp.
+ * @param count_out Populated with the number of dirty pointers.
+ * @return Array of dirty pointers (caller frees) or NULL.
+ */
 void **tt_autoclean_and_inspect(uint64_t now, size_t *count_out) {
     tt_autoclean_dirty_pointers(now);
     return tt_inspect_dirty_pointers(now, count_out);

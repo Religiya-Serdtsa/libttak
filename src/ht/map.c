@@ -9,6 +9,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+/**
+ * @brief Round up to the next power-of-two capacity.
+ *
+ * @param n Requested size.
+ * @return The smallest power of two >= n.
+ */
 static size_t next_pow2(size_t n) {
     if (n == 0) return 1;
     n--;
@@ -24,6 +30,13 @@ static size_t next_pow2(size_t n) {
     return n;
 }
 
+/**
+ * @brief Allocate and initialize a hash map.
+ *
+ * @param init_cap Desired initial capacity.
+ * @param now      Timestamp for memory tracker integration.
+ * @return Newly created map or NULL on allocation failure.
+ */
 tt_map_t *ttak_create_map(size_t init_cap, uint64_t now) {
     tt_map_t *map = ttak_mem_alloc(sizeof(tt_map_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!map) return NULL;
@@ -40,6 +53,12 @@ tt_map_t *ttak_create_map(size_t init_cap, uint64_t now) {
     return map;
 }
 
+/**
+ * @brief Grow the map when the load factor becomes high.
+ *
+ * @param map Map to resize.
+ * @param now Timestamp required by the allocator.
+ */
 static void ttak_resize_map(tt_map_t *map, uint64_t now) {
     size_t old_cap = map->cap;
     size_t new_cap = old_cap * 2; // Always maintain power of 2
@@ -62,6 +81,14 @@ static void ttak_resize_map(tt_map_t *map, uint64_t now) {
     ttak_mem_free(old_tbl);
 }
 
+/**
+ * @brief Insert or update an entry in the map.
+ *
+ * @param map Map to mutate.
+ * @param key Key to associate with the value.
+ * @param val Stored payload.
+ * @param now Timestamp for access validation.
+ */
 void ttak_insert_to_map(tt_map_t *map, uintptr_t key, size_t val, uint64_t now) {
     if (!ttak_mem_access(map, now)) return;
     if (map->size * 10 >= map->cap * 7) {
@@ -86,6 +113,15 @@ void ttak_insert_to_map(tt_map_t *map, uintptr_t key, size_t val, uint64_t now) 
     map->size++;
 }
 
+/**
+ * @brief Look up a key in the map.
+ *
+ * @param map Map instance to query.
+ * @param key Key to search for.
+ * @param out Optional pointer to receive the stored value.
+ * @param now Timestamp for memory access validation.
+ * @return true if the key exists, false otherwise.
+ */
 _Bool ttak_map_get_key(tt_map_t *map, uintptr_t key, size_t *out, uint64_t now) {
     if (!ttak_mem_access(map, now) || !map->tbl) return 0;
     uint64_t h   = gen_hash_sip24(key, 0x0706050403020100ULL, 0x0f0e0d0c0b0a0908ULL);
@@ -106,6 +142,13 @@ _Bool ttak_map_get_key(tt_map_t *map, uintptr_t key, size_t *out, uint64_t now) 
     return (_Bool)0;
 }
 
+/**
+ * @brief Remove an entry from the map and shrink when sparsity is high.
+ *
+ * @param map Map to update.
+ * @param key Key to remove.
+ * @param now Timestamp for memory tracking.
+ */
 void ttak_delete_from_map(tt_map_t *map, uintptr_t key, uint64_t now) {
     if (!ttak_mem_access(map, now) || !map->tbl) return;
     uint64_t h   = gen_hash_sip24(key, 0x0706050403020100ULL, 0x0f0e0d0c0b0a0908ULL);

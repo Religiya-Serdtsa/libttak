@@ -5,14 +5,36 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+/**
+ * @brief Retrieve a mutable pointer to the limb storage.
+ *
+ * Automatically selects between the SSO buffer and the heap buffer.
+ *
+ * @param bi Big integer container.
+ * @return Pointer to the writable limb array.
+ */
 static limb_t *get_limbs(ttak_bigint_t *bi) {
     return bi->is_dynamic ? bi->data.dyn_ptr : bi->data.sso_buf;
 }
 
+/**
+ * @brief Retrieve a read-only pointer to the limb storage.
+ *
+ * @param bi Big integer container.
+ * @return Pointer to the immutable limb array.
+ */
 static const limb_t *get_const_limbs(const ttak_bigint_t *bi) {
     return bi->is_dynamic ? bi->data.dyn_ptr : bi->data.sso_buf;
 }
 
+/**
+ * @brief Grow the limb buffer so it can hold the requested number of limbs.
+ *
+ * @param bi        Big integer to reallocate.
+ * @param required  Minimum limb capacity.
+ * @param now       Timestamp for allocator bookkeeping.
+ * @return true if capacity is guaranteed, false on allocation failure.
+ */
 static _Bool ensure_capacity(ttak_bigint_t *bi, size_t required, uint64_t now) {
     if (required <= bi->capacity) return true;
     if (required > TTAK_MAX_LIMB_LIMIT) return false;
@@ -50,6 +72,11 @@ static _Bool ensure_capacity(ttak_bigint_t *bi, size_t required, uint64_t now) {
     return true;
 }
 
+/**
+ * @brief Remove leading zero limbs and normalize the sign flag.
+ *
+ * @param bi Big integer to normalize.
+ */
 static void trim_unused(ttak_bigint_t *bi) {
     limb_t *limbs = get_limbs(bi);
     while (bi->used > 0 && limbs[bi->used - 1] == 0) {
@@ -60,6 +87,12 @@ static void trim_unused(ttak_bigint_t *bi) {
     }
 }
 
+/**
+ * @brief Initialize a big integer with zero value using SSO storage.
+ *
+ * @param bi  Big integer to initialize.
+ * @param now Unused timestamp parameter (kept for API parity).
+ */
 void ttak_bigint_init(ttak_bigint_t *bi, uint64_t now) {
     (void)now;
     bi->capacity = TTAK_BIGINT_SSO_LIMIT;
@@ -69,16 +102,36 @@ void ttak_bigint_init(ttak_bigint_t *bi, uint64_t now) {
     memset(bi->data.sso_buf, 0, sizeof(bi->data.sso_buf));
 }
 
+/**
+ * @brief Initialize a big integer from an unsigned 64-bit value.
+ *
+ * @param bi    Destination big integer.
+ * @param value Immediate value to store.
+ * @param now   Current timestamp for downstream allocations.
+ */
 void ttak_bigint_init_u64(ttak_bigint_t *bi, uint64_t value, uint64_t now) {
     ttak_bigint_init(bi, now);
     ttak_bigint_set_u64(bi, value, now);
 }
 
+/**
+ * @brief Initialize a big integer by copying another instance.
+ *
+ * @param dst Destination instance to initialize.
+ * @param src Source big integer to duplicate.
+ * @param now Current timestamp for allocations.
+ */
 void ttak_bigint_init_copy(ttak_bigint_t *dst, const ttak_bigint_t *src, uint64_t now) {
     ttak_bigint_init(dst, now);
     ttak_bigint_copy(dst, src, now);
 }
 
+/**
+ * @brief Release any dynamic storage associated with the big integer.
+ *
+ * @param bi  Instance to destroy.
+ * @param now Timestamp (unused, for API symmetry).
+ */
 void ttak_bigint_free(ttak_bigint_t *bi, uint64_t now) {
     (void)now;
     if (bi && bi->is_dynamic && bi->data.dyn_ptr) {
@@ -89,6 +142,14 @@ void ttak_bigint_free(ttak_bigint_t *bi, uint64_t now) {
     }
 }
 
+/**
+ * @brief Assign an unsigned 64-bit value to the big integer.
+ *
+ * @param bi    Destination integer.
+ * @param value Value to copy.
+ * @param now   Timestamp for potential reallocations.
+ * @return true on success, false on allocation failure.
+ */
 _Bool ttak_bigint_set_u64(ttak_bigint_t *bi, uint64_t value, uint64_t now) {
     bi->is_negative = false;
     if (value == 0) {
@@ -113,6 +174,14 @@ _Bool ttak_bigint_set_u64(ttak_bigint_t *bi, uint64_t value, uint64_t now) {
     return true;
 }
 
+/**
+ * @brief Copy an existing big integer into another.
+ *
+ * @param dst Destination big integer.
+ * @param src Source to duplicate.
+ * @param now Timestamp used for reallocations.
+ * @return true on success, false otherwise.
+ */
 _Bool ttak_bigint_copy(ttak_bigint_t *dst, const ttak_bigint_t *src, uint64_t now) {
     if (dst == src) return true;
     if (!ensure_capacity(dst, src->used, now)) return false;
@@ -123,6 +192,13 @@ _Bool ttak_bigint_copy(ttak_bigint_t *dst, const ttak_bigint_t *src, uint64_t no
     return true;
 }
 
+/**
+ * @brief Compare two big integers.
+ *
+ * @param lhs Left-hand operand.
+ * @param rhs Right-hand operand.
+ * @return -1, 0, or 1 following the standard ordering semantics.
+ */
 int ttak_bigint_cmp(const ttak_bigint_t *lhs, const ttak_bigint_t *rhs) {
     if (lhs->is_negative != rhs->is_negative) {
         return lhs->is_negative ? -1 : 1;
@@ -145,6 +221,13 @@ int ttak_bigint_cmp(const ttak_bigint_t *lhs, const ttak_bigint_t *rhs) {
     return 0;
 }
 
+/**
+ * @brief Compare a big integer with a 64-bit value.
+ *
+ * @param lhs Big integer operand.
+ * @param rhs Unsigned 64-bit value.
+ * @return Comparison result using the same convention as ttak_bigint_cmp.
+ */
 int ttak_bigint_cmp_u64(const ttak_bigint_t *lhs, uint64_t rhs) {
     ttak_bigint_t rhs_bi;
     ttak_bigint_init_u64(&rhs_bi, rhs, 0);
@@ -153,10 +236,25 @@ int ttak_bigint_cmp_u64(const ttak_bigint_t *lhs, uint64_t rhs) {
     return result;
 }
 
+/**
+ * @brief Test whether the big integer equals zero.
+ *
+ * @param bi Big integer to inspect.
+ * @return true if the integer is zero, false otherwise.
+ */
 bool ttak_bigint_is_zero(const ttak_bigint_t *bi) {
     return bi->used == 0 || (bi->used == 1 && get_const_limbs(bi)[0] == 0);
 }
 
+/**
+ * @brief Add two big integers.
+ *
+ * @param dst Destination for the result.
+ * @param lhs Left operand.
+ * @param rhs Right operand.
+ * @param now Timestamp for potential allocations.
+ * @return true on success, false on allocation failure.
+ */
 _Bool ttak_bigint_add(ttak_bigint_t *dst, const ttak_bigint_t *lhs, const ttak_bigint_t *rhs, uint64_t now) {
     if (lhs->is_negative != rhs->is_negative) {
         // Subtraction case
@@ -192,6 +290,15 @@ _Bool ttak_bigint_add(ttak_bigint_t *dst, const ttak_bigint_t *lhs, const ttak_b
     return true;
 }
 
+/**
+ * @brief Subtract rhs from lhs and store in dst.
+ *
+ * @param dst Destination big integer.
+ * @param lhs Minuend.
+ * @param rhs Subtrahend.
+ * @param now Timestamp for allocations.
+ * @return true on success, false otherwise.
+ */
 _Bool ttak_bigint_sub(ttak_bigint_t *dst, const ttak_bigint_t *lhs, const ttak_bigint_t *rhs, uint64_t now) {
     if (lhs->is_negative != rhs->is_negative) {
         // Addition case
@@ -240,6 +347,15 @@ _Bool ttak_bigint_sub(ttak_bigint_t *dst, const ttak_bigint_t *lhs, const ttak_b
     return true;
 }
 
+/**
+ * @brief Multiply two big integers.
+ *
+ * @param dst Destination for the product.
+ * @param lhs Left operand.
+ * @param rhs Right operand.
+ * @param now Timestamp for scratch allocations.
+ * @return true when multiplication succeeds, false when memory is insufficient.
+ */
 _Bool ttak_bigint_mul(ttak_bigint_t *dst, const ttak_bigint_t *lhs, const ttak_bigint_t *rhs, uint64_t now) {
     if (ttak_bigint_is_zero(lhs) || ttak_bigint_is_zero(rhs)) {
         return ttak_bigint_set_u64(dst, 0, now);
@@ -275,6 +391,16 @@ _Bool ttak_bigint_mul(ttak_bigint_t *dst, const ttak_bigint_t *lhs, const ttak_b
     return ok;
 }
 
+/**
+ * @brief Divide a big integer by a 64-bit value.
+ *
+ * @param q   Optional quotient output.
+ * @param r   Optional remainder output.
+ * @param n   Dividend.
+ * @param d   Unsigned 64-bit divisor.
+ * @param now Timestamp for temporary allocations.
+ * @return true on success, false when dividing by zero or allocation fails.
+ */
 _Bool ttak_bigint_div_u64(ttak_bigint_t *q, ttak_bigint_t *r, const ttak_bigint_t *n, uint64_t d, uint64_t now) {
     if (d == 0) return false; // Division by zero
 
@@ -344,10 +470,28 @@ ttak_bigint_free(&n_abs, now);
     return true;
 }
 
+/**
+ * @brief Compute n mod d where d is a 64-bit value.
+ *
+ * @param r   Destination for the remainder.
+ * @param n   Dividend.
+ * @param d   Unsigned divisor.
+ * @param now Timestamp for helper allocations.
+ * @return true on success, false otherwise.
+ */
 _Bool ttak_bigint_mod_u64(ttak_bigint_t *r, const ttak_bigint_t *n, uint64_t d, uint64_t now) {
     return ttak_bigint_div_u64(NULL, r, n, d, now);
 }
 
+/**
+ * @brief Add a 64-bit value to a big integer.
+ *
+ * @param dst Destination for the sum.
+ * @param lhs Left operand.
+ * @param rhs Unsigned value to add.
+ * @param now Timestamp for allocations.
+ * @return true on success, false otherwise.
+ */
 _Bool ttak_bigint_add_u64(ttak_bigint_t *dst, const ttak_bigint_t *lhs, uint64_t rhs, uint64_t now) {
     ttak_bigint_t rhs_bi;
     ttak_bigint_init_u64(&rhs_bi, rhs, now);
@@ -356,6 +500,15 @@ _Bool ttak_bigint_add_u64(ttak_bigint_t *dst, const ttak_bigint_t *lhs, uint64_t
     return ok;
 }
 
+/**
+ * @brief Multiply a big integer by a 64-bit value.
+ *
+ * @param dst Destination for the product.
+ * @param lhs Multiplicand.
+ * @param rhs 64-bit multiplier.
+ * @param now Timestamp for allocations.
+ * @return true on success, false if allocation fails.
+ */
 _Bool ttak_bigint_mul_u64(ttak_bigint_t *dst, const ttak_bigint_t *lhs, uint64_t rhs, uint64_t now) {
     if (rhs == 0 || ttak_bigint_is_zero(lhs)) {
         return ttak_bigint_set_u64(dst, 0, now);
@@ -393,6 +546,12 @@ _Bool ttak_bigint_mul_u64(ttak_bigint_t *dst, const ttak_bigint_t *lhs, uint64_t
     return true;
 }
 
+/**
+ * @brief Compute the number of significant bits in the big integer.
+ *
+ * @param bi Big integer to inspect.
+ * @return Bit length, or 0 when the value is zero.
+ */
 size_t ttak_bigint_get_bit_length(const ttak_bigint_t *bi) {
     if (ttak_bigint_is_zero(bi)) return 0;
     const limb_t *limbs = get_const_limbs(bi);
@@ -418,6 +577,14 @@ size_t ttak_bigint_get_bit_length(const ttak_bigint_t *bi) {
 #define TTAK_BIGINT_BASE (1ULL << TTAK_BIGINT_BASE_BITS)
 
 // Helper for Knuth division: u -= v
+/**
+ * @brief Subtract two limb arrays in-place (u -= v).
+ *
+ * @param u Destination/minuend array.
+ * @param v Subtrahend array.
+ * @param n Number of limbs to process.
+ * @return Final borrow flag (0 or 1).
+ */
 limb_t sub_limbs(limb_t *u, const limb_t *v, size_t n) {
     uint64_t borrow = 0;
     for (size_t i = 0; i < n; ++i) {
@@ -429,6 +596,14 @@ limb_t sub_limbs(limb_t *u, const limb_t *v, size_t n) {
 }
 
 // Helper for Knuth division: u += v
+/**
+ * @brief Add two limb arrays in-place (u += v).
+ *
+ * @param u Destination/addend array.
+ * @param v Second addend array.
+ * @param n Number of limbs to sum.
+ * @return Final carry flag.
+ */
 limb_t add_limbs(limb_t *u, const limb_t *v, size_t n) {
     uint64_t carry = 0;
     for (size_t i = 0; i < n; ++i) {
@@ -440,6 +615,14 @@ limb_t add_limbs(limb_t *u, const limb_t *v, size_t n) {
 }
 
 // Helper for Knuth division: left shift
+/**
+ * @brief Left shift a limb array by a small number of bits.
+ *
+ * @param num        Buffer to shift.
+ * @param len        Number of limbs.
+ * @param shift_bits Bits to shift (0 < shift_bits < base bits).
+ * @return Carry produced by the shift.
+ */
 static limb_t lshift_limbs(limb_t *num, size_t len, int shift_bits) {
     if (shift_bits == 0) return 0;
     limb_t carry = 0;
@@ -452,6 +635,13 @@ static limb_t lshift_limbs(limb_t *num, size_t len, int shift_bits) {
 }
 
 // Helper for Knuth division: right shift
+/**
+ * @brief Right shift a limb array by a small number of bits.
+ *
+ * @param num        Buffer to shift.
+ * @param len        Number of limbs.
+ * @param shift_bits Bits to shift (0 < shift_bits < base bits).
+ */
 static void rshift_limbs(limb_t *num, size_t len, int shift_bits) {
     if (shift_bits == 0) return;
     limb_t carry = 0;
@@ -465,6 +655,18 @@ static void rshift_limbs(limb_t *num, size_t len, int shift_bits) {
 // Knuth's Algorithm D for division.
 // q_out will have m + 1 limbs, r_out will have n limbs.
 // u is the dividend (m+n limbs), v is the divisor (n limbs).
+/**
+ * @brief Execute Knuth's Algorithm D for limb arrays.
+ *
+ * @param q_out Quotient result (m + 1 limbs).
+ * @param r_out Remainder result (n limbs).
+ * @param u     Dividend limbs (m + n limbs).
+ * @param m     Difference in limb counts between dividend and divisor.
+ * @param v     Divisor limbs (n limbs).
+ * @param n     Limb count of the divisor.
+ * @param now   Timestamp for transient allocations.
+ * @return true on success, false if allocation fails or divisor is invalid.
+ */
 static _Bool knuth_div_limbs(limb_t *q_out, limb_t *r_out,
                              const limb_t *u, size_t m,
                              const limb_t *v, size_t n,
@@ -550,6 +752,16 @@ static _Bool knuth_div_limbs(limb_t *q_out, limb_t *r_out,
     return true;
 }
 
+/**
+ * @brief Divide two arbitrary-precision integers.
+ *
+ * @param q   Optional quotient output.
+ * @param r   Optional remainder output.
+ * @param n   Dividend.
+ * @param d   Divisor (must be non-zero).
+ * @param now Timestamp for scratch allocations.
+ * @return true on success, false on division by zero or allocation failure.
+ */
 _Bool ttak_bigint_div(ttak_bigint_t *q, ttak_bigint_t *r, const ttak_bigint_t *n, const ttak_bigint_t *d, uint64_t now) {
     if (ttak_bigint_is_zero(d)) return false;
 
@@ -638,10 +850,28 @@ _Bool ttak_bigint_div(ttak_bigint_t *q, ttak_bigint_t *r, const ttak_bigint_t *n
     return ok;
 }
 
+/**
+ * @brief Compute the modulus n mod d for arbitrary-precision operands.
+ *
+ * @param r   Destination for the remainder.
+ * @param n   Dividend.
+ * @param d   Divisor.
+ * @param now Timestamp for scratch allocations.
+ * @return true on success, false on division errors.
+ */
 _Bool ttak_bigint_mod(ttak_bigint_t *r, const ttak_bigint_t *n, const ttak_bigint_t *d, uint64_t now) {
     return ttak_bigint_div(NULL, r, n, d, now);
 }
 
+/**
+ * @brief Convert a big integer to a decimal string.
+ *
+ * Caller assumes ownership of the returned buffer.
+ *
+ * @param bi  Big integer to format.
+ * @param now Timestamp for allocations.
+ * @return Null-terminated decimal string, or NULL on failure.
+ */
 char* ttak_bigint_to_string(const ttak_bigint_t *bi, uint64_t now) {
     if (ttak_bigint_is_zero(bi)) {
         char *s = ttak_mem_alloc(2, __TTAK_UNSAFE_MEM_FOREVER__, now);
@@ -690,6 +920,13 @@ char* ttak_bigint_to_string(const ttak_bigint_t *bi, uint64_t now) {
     return s;
 }
 
+/**
+ * @brief Reduce a big integer modulo the Mersenne number 2^p - 1.
+ *
+ * @param bi  Value to reduce in-place.
+ * @param p   Exponent that defines the modulus.
+ * @param now Timestamp for helper allocations.
+ */
 void ttak_bigint_mersenne_mod(ttak_bigint_t *bi, int p, uint64_t now) {
     (void)now;
     size_t required_limbs = ((size_t)p + 31) / 32;
@@ -763,6 +1000,13 @@ void ttak_bigint_mersenne_mod(ttak_bigint_t *bi, int p, uint64_t now) {
     ttak_bigint_free(&one, now);
 }
 
+/**
+ * @brief Export the big integer into an unsigned 64-bit value if possible.
+ *
+ * @param bi        Big integer to convert.
+ * @param value_out Output pointer that receives the value.
+ * @return true if the value fits in 64 bits, false otherwise.
+ */
 bool ttak_bigint_export_u64(const ttak_bigint_t *bi, uint64_t *value_out) {
     if (!bi || bi->is_negative || bi->used > 2) {
         if (value_out) *value_out = 0;
@@ -778,6 +1022,12 @@ bool ttak_bigint_export_u64(const ttak_bigint_t *bi, uint64_t *value_out) {
 
 #include <ttak/security/sha256.h>
 
+/**
+ * @brief Hash the big integer with SHA-256 and emit a hexadecimal digest.
+ *
+ * @param bi  Input big integer.
+ * @param out Buffer of at least 65 chars to store the ASCII hash and null terminator.
+ */
 void ttak_bigint_to_hex_hash(const ttak_bigint_t *bi, char out[65]) {
     SHA256_CTX ctx;
     sha256_init(&ctx);
@@ -795,6 +1045,13 @@ void ttak_bigint_to_hex_hash(const ttak_bigint_t *bi, char out[65]) {
     out[64] = '\0';
 }
 
+/**
+ * @brief Produce a short prefix string describing the value.
+ *
+ * @param bi       Big integer to summarize.
+ * @param dest     Destination buffer.
+ * @param dest_cap Size of the destination buffer.
+ */
 void ttak_bigint_format_prefix(const ttak_bigint_t *bi, char *dest, size_t dest_cap) {
     if (!dest || dest_cap == 0) {
         if (dest) dest[0] = '\0';
@@ -812,6 +1069,12 @@ void ttak_bigint_format_prefix(const ttak_bigint_t *bi, char *dest, size_t dest_
     ttak_mem_free(s);
 }
 
+/**
+ * @brief Compute the SHA-256 digest of the big integer limbs.
+ *
+ * @param bi  Big integer to hash.
+ * @param out Output buffer for the 32-byte digest.
+ */
 void ttak_bigint_hash(const ttak_bigint_t *bi, uint8_t out[32]) {
     SHA256_CTX ctx;
     sha256_init(&ctx);
