@@ -4,6 +4,11 @@
 
 /* Queue Implementation */
 
+/**
+ * @brief Initialize a simple pointer queue.
+ *
+ * @param q Queue to initialize.
+ */
 void ttak_simple_queue_init(ttak_simple_queue_t *q) {
     if (!q) return;
     q->head = NULL;
@@ -11,6 +16,13 @@ void ttak_simple_queue_init(ttak_simple_queue_t *q) {
     q->size = 0;
 }
 
+/**
+ * @brief Push an element to the tail of the queue.
+ *
+ * @param q    Queue to update.
+ * @param data Data pointer to store.
+ * @param now  Timestamp for allocator bookkeeping.
+ */
 void ttak_simple_queue_push(ttak_simple_queue_t *q, void *data, uint64_t now) {
     if (!q) return;
     ttak_simple_node_t *node = (ttak_simple_node_t *)ttak_mem_alloc(sizeof(ttak_simple_node_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
@@ -38,6 +50,13 @@ void ttak_simple_queue_push(ttak_simple_queue_t *q, void *data, uint64_t now) {
     q->size++;
 }
 
+/**
+ * @brief Pop the head element from the queue.
+ *
+ * @param q   Queue to update.
+ * @param now Timestamp for pointer validation.
+ * @return Stored data pointer or NULL when empty.
+ */
 void *ttak_simple_queue_pop(ttak_simple_queue_t *q, uint64_t now) {
     if (!q || !q->head) return NULL;
 
@@ -59,14 +78,32 @@ void *ttak_simple_queue_pop(ttak_simple_queue_t *q, uint64_t now) {
     return data;
 }
 
+/**
+ * @brief Check whether the queue has no elements.
+ *
+ * @param q Queue to inspect.
+ * @return true if empty, false otherwise.
+ */
 bool ttak_simple_queue_is_empty(const ttak_simple_queue_t *q) {
     return !q || q->head == NULL;
 }
 
+/**
+ * @brief Return the number of enqueued nodes.
+ *
+ * @param q Queue to inspect.
+ * @return Element count.
+ */
 size_t ttak_simple_queue_size(const ttak_simple_queue_t *q) {
     return q ? q->size : 0;
 }
 
+/**
+ * @brief Destroy the queue and free all nodes.
+ *
+ * @param q   Queue to destroy.
+ * @param now Timestamp for deallocation.
+ */
 void ttak_simple_queue_destroy(ttak_simple_queue_t *q, uint64_t now) {
     if (!q) return;
     while (q->head) {
@@ -76,12 +113,24 @@ void ttak_simple_queue_destroy(ttak_simple_queue_t *q, uint64_t now) {
 
 /* Stack Implementation */
 
+/**
+ * @brief Initialize a simple LIFO stack.
+ *
+ * @param s Stack to initialize.
+ */
 void ttak_simple_stack_init(ttak_simple_stack_t *s) {
     if (!s) return;
     s->top = NULL;
     s->size = 0;
 }
 
+/**
+ * @brief Push an element onto the stack.
+ *
+ * @param s    Stack to update.
+ * @param data Pointer to store.
+ * @param now  Timestamp for allocator bookkeeping.
+ */
 void ttak_simple_stack_push(ttak_simple_stack_t *s, void *data, uint64_t now) {
     if (!s) return;
     ttak_simple_node_t *node = (ttak_simple_node_t *)ttak_mem_alloc(sizeof(ttak_simple_node_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
@@ -93,6 +142,13 @@ void ttak_simple_stack_push(ttak_simple_stack_t *s, void *data, uint64_t now) {
     s->size++;
 }
 
+/**
+ * @brief Pop the top element from the stack.
+ *
+ * @param s   Stack to update.
+ * @param now Timestamp for pointer validation.
+ * @return Stored data pointer or NULL when empty.
+ */
 void *ttak_simple_stack_pop(ttak_simple_stack_t *s, uint64_t now) {
     if (!s || !s->top) return NULL;
 
@@ -109,14 +165,32 @@ void *ttak_simple_stack_pop(ttak_simple_stack_t *s, uint64_t now) {
     return data;
 }
 
+/**
+ * @brief Check whether the stack contains no elements.
+ *
+ * @param s Stack to inspect.
+ * @return true if empty, false otherwise.
+ */
 bool ttak_simple_stack_is_empty(const ttak_simple_stack_t *s) {
     return !s || s->top == NULL;
 }
 
+/**
+ * @brief Return the number of nodes stored in the stack.
+ *
+ * @param s Stack to inspect.
+ * @return Element count.
+ */
 size_t ttak_simple_stack_size(const ttak_simple_stack_t *s) {
     return s ? s->size : 0;
 }
 
+/**
+ * @brief Destroy the stack by freeing all nodes.
+ *
+ * @param s   Stack to destroy.
+ * @param now Timestamp for deallocation.
+ */
 void ttak_simple_stack_destroy(ttak_simple_stack_t *s, uint64_t now) {
     if (!s) return;
     while (s->top) {

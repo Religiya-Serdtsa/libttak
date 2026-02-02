@@ -32,6 +32,12 @@ static const uint32_t k[64] = {
     0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208, 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2
 };
 
+/**
+ * @brief Compress a single 512-bit block.
+ *
+ * @param ctx  Hash state.
+ * @param data 64-byte chunk.
+ */
 static void sha256_transform(SHA256_CTX *ctx, const uint8_t data[]) {
     uint32_t a, b, c, d, e, f, g, h;
     uint32_t w[64];
@@ -83,6 +89,11 @@ static void sha256_transform(SHA256_CTX *ctx, const uint8_t data[]) {
     ctx->state[7] += h;
 }
 
+/**
+ * @brief Initialize the SHA-256 state.
+ *
+ * @param ctx Hash context to reset.
+ */
 void sha256_init(SHA256_CTX *ctx) {
     ctx->datalen = 0;
     ctx->bitlen = 0;
@@ -96,6 +107,13 @@ void sha256_init(SHA256_CTX *ctx) {
     ctx->state[7] = 0x5be0cd19;
 }
 
+/**
+ * @brief Absorb arbitrary data into the hash state.
+ *
+ * @param ctx  Hash context.
+ * @param data Input buffer.
+ * @param len  Number of bytes to process.
+ */
 void sha256_update(SHA256_CTX *ctx, const uint8_t data[], size_t len) {
     size_t i;
 
@@ -111,6 +129,12 @@ void sha256_update(SHA256_CTX *ctx, const uint8_t data[], size_t len) {
     }
 }
 
+/**
+ * @brief Finalize the hash and produce the 32-byte digest.
+ *
+ * @param ctx  Hash context (reset on completion).
+ * @param hash Output buffer for the digest.
+ */
 void sha256_final(SHA256_CTX *ctx, uint8_t hash[]) {
     uint32_t i;
 

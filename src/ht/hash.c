@@ -20,6 +20,14 @@
         v2 = ROTL(v2, 32);  \
     } while (0)
 
+/**
+ * @brief Compute the SipHash-2-4 digest for a machine-word key.
+ *
+ * @param key Input key to hash.
+ * @param k0  First 64-bit SipHash key.
+ * @param k1  Second 64-bit SipHash key.
+ * @return 64-bit hash suitable for table indexing.
+ */
 uint64_t gen_hash_sip24(uintptr_t key, uint64_t k0, uint64_t k1) {
     uint64_t v0 = 0x736f6d6570736575ULL ^ k0;
     uint64_t v1 = 0x646f72616e646f6dULL ^ k1;

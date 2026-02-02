@@ -3,7 +3,16 @@
 #include <string.h>
 #include <math.h>
 
-// Internal helper to add a factor to a dynamic array.
+/**
+ * @brief Append or increment a prime factor in the u64 factor list.
+ *
+ * @param p         Prime factor to add.
+ * @param factors   Dynamic array pointer.
+ * @param count     Current element count.
+ * @param capacity  Current capacity (will grow as needed).
+ * @param now       Timestamp for allocator bookkeeping.
+ * @return 0 on success, -1 on allocation failure.
+ */
 static int add_factor(uint64_t p, ttak_prime_factor_t **factors, size_t *count, size_t *capacity, uint64_t now) {
     for (size_t i = 0; i < *count; ++i) {
         if ((*factors)[i].p == p) {
@@ -26,6 +35,15 @@ static int add_factor(uint64_t p, ttak_prime_factor_t **factors, size_t *count, 
     return 0;
 }
 
+/**
+ * @brief Factor a 64-bit integer via trial division.
+ *
+ * @param n           Value to factor.
+ * @param factors_out Output array of factors (caller frees with ttak_mem_free()).
+ * @param count_out   Number of factors produced.
+ * @param now         Timestamp for allocations.
+ * @return 0 on success, -1 on allocation failure.
+ */
 int ttak_factor_u64(uint64_t n, ttak_prime_factor_t **factors_out, size_t *count_out, uint64_t now) {
     if (n <= 1) {
         *factors_out = NULL;
@@ -65,7 +83,16 @@ fail:
     return -1;
 }
 
-// Internal helper for big integer factorization
+/**
+ * @brief Append or increment a big prime factor within the dynamic list.
+ *
+ * @param p         Factor to add.
+ * @param factors   Dynamic array pointer.
+ * @param count     Number of populated entries.
+ * @param capacity  Allocated capacity.
+ * @param now       Timestamp for allocations.
+ * @return 0 on success, -1 on allocation failure.
+ */
 static int add_factor_big(const ttak_bigint_t *p, ttak_prime_factor_big_t **factors, size_t *count, size_t *capacity, uint64_t now) {
     for (size_t i = 0; i < *count; ++i) {
         if (ttak_bigint_cmp(&(*factors)[i].p, p) == 0) {
@@ -93,6 +120,15 @@ static int add_factor_big(const ttak_bigint_t *p, ttak_prime_factor_big_t **fact
 // very slow for numbers with large prime factors. For a "fast" implementation as requested,
 // this should be replaced or augmented with algorithms like Pollard's Rho or the
 // Elliptic Curve Method (ECM), especially for factors beyond a certain bit size.
+/**
+ * @brief Factor a big integer via naive trial division.
+ *
+ * @param n           Value to factor (must be > 1).
+ * @param factors_out Output array of big factors.
+ * @param count_out   Number of factors produced.
+ * @param now         Timestamp for allocations.
+ * @return 0 on success, -1 when allocation fails.
+ */
 int ttak_factor_big(const ttak_bigint_t *n, ttak_prime_factor_big_t **factors_out, size_t *count_out, uint64_t now) {
     if (ttak_bigint_is_zero(n) || ttak_bigint_cmp_u64(n, 1) <= 0) {
         *factors_out = NULL;

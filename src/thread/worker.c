@@ -28,6 +28,12 @@ static void threaded_function_wrapper(ttak_worker_t *worker, ttak_task_t *task) 
     }
 }
 
+/**
+ * @brief Worker thread entry point that drains the pool queue.
+ *
+ * @param arg Pointer to the worker structure.
+ * @return Exit code cast to void*.
+ */
 void *ttak_worker_routine(void *arg) {
     ttak_worker_t *self = (ttak_worker_t *)arg;
     ttak_thread_pool_t *pool = self->pool;

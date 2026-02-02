@@ -2,6 +2,14 @@
 #include <ttak/mem/mem.h>
 #include <stdlib.h>
 
+/**
+ * @brief Allocate a B-tree node with capacity derived from t.
+ *
+ * @param t    Minimum degree.
+ * @param leaf Indicates whether the node starts as a leaf.
+ * @param now  Timestamp for allocator bookkeeping.
+ * @return Pointer to the node or NULL on failure.
+ */
 static ttak_btree_node_t *create_node(int t, bool leaf, uint64_t now) {
     ttak_btree_node_t *node = (ttak_btree_node_t *)ttak_mem_alloc(sizeof(ttak_btree_node_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!node) return NULL;
@@ -25,6 +33,15 @@ static ttak_btree_node_t *create_node(int t, bool leaf, uint64_t now) {
     return node;
 }
 
+/**
+ * @brief Initialize a B-tree descriptor.
+ *
+ * @param tree     Tree to initialize.
+ * @param t        Minimum degree (clamped to >= 2).
+ * @param cmp      Key comparator.
+ * @param key_free Optional key destructor.
+ * @param val_free Optional value destructor.
+ */
 void ttak_btree_init(ttak_btree_t *tree, int t, int (*cmp)(const void*, const void*), void (*key_free)(void*), void (*val_free)(void*)) {
     if (!tree) return;
     tree->root = NULL;
@@ -34,6 +51,14 @@ void ttak_btree_init(ttak_btree_t *tree, int t, int (*cmp)(const void*, const vo
     tree->val_free = val_free;
 }
 
+/**
+ * @brief Split the i-th child of node x when it becomes full.
+ *
+ * @param tree B-tree instance.
+ * @param x    Parent node.
+ * @param i    Child index to split.
+ * @param now  Timestamp for allocations.
+ */
 static void split_child(ttak_btree_t *tree, ttak_btree_node_t *x, int i, uint64_t now) {
     int t = tree->t;
     ttak_btree_node_t *y = x->children[i];
@@ -73,6 +98,15 @@ static void split_child(ttak_btree_t *tree, ttak_btree_node_t *x, int i, uint64_
     x->n = x->n + 1;
 }
 
+/**
+ * @brief Insert a key/value pair into a node that is known not to be full.
+ *
+ * @param tree B-tree instance.
+ * @param x    Node that can accept another key.
+ * @param k    Key pointer.
+ * @param v    Value pointer.
+ * @param now  Timestamp for recursion/allocations.
+ */
 static void insert_non_full(ttak_btree_t *tree, ttak_btree_node_t *x, void *k, void *v, uint64_t now) {
     int i = x->n - 1;
 
@@ -100,6 +134,14 @@ static void insert_non_full(ttak_btree_t *tree, ttak_btree_node_t *x, void *k, v
     }
 }
 
+/**
+ * @brief Insert or update a key/value pair in the B-tree.
+ *
+ * @param tree  Tree to mutate.
+ * @param key   Key pointer owned by the tree.
+ * @param value Value pointer owned by the tree.
+ * @param now   Timestamp for allocations.
+ */
 void ttak_btree_insert(ttak_btree_t *tree, void *key, void *value, uint64_t now) {
     if (!tree) return;
     
@@ -122,6 +164,15 @@ void ttak_btree_insert(ttak_btree_t *tree, void *key, void *value, uint64_t now)
     }
 }
 
+/**
+ * @brief Recursively search for a key starting at node x.
+ *
+ * @param tree B-tree instance.
+ * @param x    Current node.
+ * @param k    Key to find.
+ * @param now  Timestamp for pointer validation.
+ * @return Stored value or NULL if absent.
+ */
 static void *search_recursive(ttak_btree_t *tree, ttak_btree_node_t *x, const void *k, uint64_t now) {
     if (!x || !ttak_mem_access(x, now)) return NULL;
     
@@ -139,11 +190,27 @@ static void *search_recursive(ttak_btree_t *tree, ttak_btree_node_t *x, const vo
     return search_recursive(tree, x->children[i], k, now);
 }
 
+/**
+ * @brief Lookup a key in the B-tree.
+ *
+ * @param tree Tree to query.
+ * @param key  Key to search for.
+ * @param now  Timestamp for pointer validation.
+ * @return Stored value pointer or NULL.
+ */
 void *ttak_btree_search(ttak_btree_t *tree, const void *key, uint64_t now) {
     if (!tree) return NULL;
     return search_recursive(tree, tree->root, key, now);
 }
 
+/**
+ * @brief Recursively free a subtree.
+ *
+ * @param x   Node to destroy.
+ * @param kf  Key destructor.
+ * @param vf  Value destructor.
+ * @param now Timestamp for bookkeeping.
+ */
 static void destroy_recursive(ttak_btree_node_t *x, void (*kf)(void*), void (*vf)(void*), uint64_t now) {
     if (!x) return;
     
@@ -166,6 +233,12 @@ static void destroy_recursive(ttak_btree_node_t *x, void (*kf)(void*), void (*vf
     ttak_mem_free(x);
 }
 
+/**
+ * @brief Destroy the entire B-tree.
+ *
+ * @param tree Tree to tear down.
+ * @param now  Timestamp for destructor bookkeeping.
+ */
 void ttak_btree_destroy(ttak_btree_t *tree, uint64_t now) {
     if (!tree || !tree->root) return;
     destroy_recursive(tree->root, tree->key_free, tree->val_free, now);

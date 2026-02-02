@@ -14,10 +14,22 @@ uint64_t ttak_atomic_read64(uint64_t *ptr) {
     return __atomic_load_n(ptr, __ATOMIC_SEQ_CST);
 }
 
+/**
+ * @brief Atomically store a 64-bit value.
+ *
+ * @param ptr Pointer to the atomic variable.
+ * @param val Value to store.
+ */
 void ttak_atomic_write64(uint64_t *ptr, uint64_t val) {
     __atomic_store_n(ptr, val, __ATOMIC_SEQ_CST);
 }
 
+/**
+ * @brief Atomically increment a 64-bit integer.
+ *
+ * @param ptr Pointer to the atomic counter.
+ * @return Updated value after increment.
+ */
 uint64_t ttak_atomic_inc64(uint64_t *ptr) {
     return __atomic_add_fetch(ptr, 1, __ATOMIC_SEQ_CST);
 }
@@ -37,7 +49,10 @@ _Bool tt_func_has_expired(ttak_func_wrapper_t *wr, uint64_t now) {
 }
 
 /**
- * @brief initialize tt_func_wrapper.
+ * @brief Initialize a function wrapper with default bookkeeping.
+ *
+ * @param wr  Wrapper to initialize.
+ * @param now Current timestamp used for metadata.
  */
 void func_wrapper_init(ttak_func_wrapper_t *wr, uint64_t now) {
     if (!wr) return;
@@ -58,6 +73,13 @@ void func_wrapper_init(ttak_func_wrapper_t *wr, uint64_t now) {
     }
 }
 
+/**
+ * @brief Execute the wrapped function under the wrapper mutex.
+ *
+ * @param f   Function wrapper to execute.
+ * @param now Current timestamp for expiration checks.
+ * @return Stored return value pointer, or NULL if execution is skipped.
+ */
 void *atomic_function_execute(tt_func_wr_t *f, uint64_t now) {
     if (!f) return NULL;
 

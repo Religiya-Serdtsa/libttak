@@ -2,6 +2,13 @@
 #include <ttak/mem/mem.h>
 #include <stdlib.h>
 
+/**
+ * @brief Initialize a fixed-length pair container.
+ *
+ * @param pair   Pair structure to configure.
+ * @param length Number of entries the pair should manage.
+ * @param now    Current timestamp for memory accounting.
+ */
 void ttak_pair_init(ttak_pair_t *pair, size_t length, uint64_t now) {
     if (!pair) return;
     pair->length = length;
@@ -12,6 +19,13 @@ void ttak_pair_init(ttak_pair_t *pair, size_t length, uint64_t now) {
     }
 }
 
+/**
+ * @brief Assign an element to the given index.
+ *
+ * @param pair    Pair container holding the slots.
+ * @param index   Index to update.
+ * @param element Value to store.
+ */
 void ttak_pair_set(ttak_pair_t *pair, size_t index, void *element) {
     if (!pair || !pair->elements || index >= pair->length) return;
     // Access check not strictly required for the array pointer itself if we own it,
@@ -19,11 +33,25 @@ void ttak_pair_set(ttak_pair_t *pair, size_t index, void *element) {
     pair->elements[index] = element;
 }
 
+/**
+ * @brief Retrieve an element from the pair.
+ *
+ * @param pair  Pair container to inspect.
+ * @param index Slot to read.
+ * @return Stored pointer or NULL if out of range.
+ */
 void *ttak_pair_get(const ttak_pair_t *pair, size_t index) {
     if (!pair || !pair->elements || index >= pair->length) return NULL;
     return pair->elements[index];
 }
 
+/**
+ * @brief Release the pair container and optionally free stored items.
+ *
+ * @param pair      Container to tear down.
+ * @param free_elem Callback invoked for each non-NULL element (optional).
+ * @param now       Timestamp for memory validation.
+ */
 void ttak_pair_destroy(ttak_pair_t *pair, void (*free_elem)(void*), uint64_t now) {
     if (!pair) return;
     

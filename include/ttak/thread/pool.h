@@ -9,6 +9,8 @@
 
 typedef struct ttak_thread_pool ttak_thread_pool_t;
 
+typedef struct ttak_worker ttak_worker_t;
+
 struct ttak_thread_pool {
     size_t              num_threads;
     ttak_worker_t       **workers;
@@ -27,5 +29,8 @@ struct ttak_thread_pool {
 ttak_thread_pool_t *ttak_thread_pool_create(size_t num_threads, int default_nice, uint64_t now);
 void ttak_thread_pool_destroy(ttak_thread_pool_t *pool);
 ttak_future_t *ttak_thread_pool_submit_task(ttak_thread_pool_t *pool, void *(*func)(void *), void *arg, int priority, uint64_t now);
+_Bool ttak_thread_pool_schedule_task(ttak_thread_pool_t *pool, ttak_task_t *task, int priority, uint64_t now);
+
+extern ttak_thread_pool_t *async_pool;
 
 #endif // TTAK_THREAD_POOL_H

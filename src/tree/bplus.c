@@ -5,6 +5,14 @@
 
 #define MAX_PATH 64
 
+/**
+ * @brief Allocate a B+ tree node configured as leaf or internal.
+ *
+ * @param order Maximum number of children.
+ * @param leaf  Whether the node starts as a leaf.
+ * @param now   Timestamp for allocator bookkeeping.
+ * @return Pointer to the node or NULL on failure.
+ */
 static ttak_bplus_node_t *create_node(int order, bool leaf, uint64_t now) {
     ttak_bplus_node_t *node = (ttak_bplus_node_t *)ttak_mem_alloc(sizeof(ttak_bplus_node_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!node) return NULL;
@@ -29,6 +37,15 @@ static ttak_bplus_node_t *create_node(int order, bool leaf, uint64_t now) {
     return node;
 }
 
+/**
+ * @brief Initialize a B+ tree with comparison and destructor callbacks.
+ *
+ * @param tree  Tree to initialize.
+ * @param order Minimum node order (enforced >= 3).
+ * @param cmp   Key comparator.
+ * @param kf    Optional key destructor.
+ * @param vf    Optional value destructor.
+ */
 void ttak_bplus_init(ttak_bplus_tree_t *tree, int order, int (*cmp)(const void*, const void*), void (*kf)(void*), void (*vf)(void*)) {
     if (!tree) return;
     tree->root = NULL;
@@ -38,6 +55,14 @@ void ttak_bplus_init(ttak_bplus_tree_t *tree, int order, int (*cmp)(const void*,
     tree->val_free = vf;
 }
 
+/**
+ * @brief Look up a key in the B+ tree.
+ *
+ * @param tree Tree to query.
+ * @param key  Key to search for.
+ * @param now  Timestamp for pointer validation.
+ * @return Stored value or NULL if not found.
+ */
 void *ttak_bplus_get(ttak_bplus_tree_t *tree, const void *key, uint64_t now) {
     if (!tree || !tree->root) return NULL;
     ttak_bplus_node_t *c = tree->root;
@@ -60,7 +85,18 @@ void *ttak_bplus_get(ttak_bplus_tree_t *tree, const void *key, uint64_t now) {
     return NULL;
 }
 
-static void insert_parent(ttak_bplus_tree_t *tree, ttak_bplus_node_t *left, void *key, ttak_bplus_node_t *right, 
+/**
+ * @brief Insert a promoted key into the parent chain, splitting as needed.
+ *
+ * @param tree       B+ tree instance.
+ * @param left       Left child where the split originated.
+ * @param key        Key to push upward.
+ * @param right      Newly created right child.
+ * @param parents    Stack of parent nodes along the path.
+ * @param parent_idx Current parent stack index.
+ * @param now        Timestamp for allocations.
+ */
+static void insert_parent(ttak_bplus_tree_t *tree, ttak_bplus_node_t *left, void *key, ttak_bplus_node_t *right,
                           ttak_bplus_node_t **parents, int parent_idx, uint64_t now) {
     if (parent_idx < 0) {
         // New Root
@@ -113,6 +149,14 @@ static void insert_parent(ttak_bplus_tree_t *tree, ttak_bplus_node_t *left, void
     }
 }
 
+/**
+ * @brief Insert or update a key/value pair in the tree.
+ *
+ * @param tree  Tree to mutate.
+ * @param key   Key pointer owned by the tree.
+ * @param value Value pointer owned by the tree.
+ * @param now   Timestamp for allocations.
+ */
 void ttak_bplus_insert(ttak_bplus_tree_t *tree, void *key, void *value, uint64_t now) {
     if (!tree) return;
     
@@ -183,6 +227,14 @@ void ttak_bplus_insert(ttak_bplus_tree_t *tree, void *key, void *value, uint64_t
     }
 }
 
+/**
+ * @brief Recursively destroy an entire subtree.
+ *
+ * @param node Node to destroy.
+ * @param kf   Key destructor.
+ * @param vf   Value destructor.
+ * @param now  Timestamp for memory bookkeeping.
+ */
 static void recursive_destroy(ttak_bplus_node_t *node, void (*kf)(void*), void (*vf)(void*), uint64_t now) {
     if (!node) return;
     if (!node->is_leaf) {
@@ -208,6 +260,12 @@ static void recursive_destroy(ttak_bplus_node_t *node, void (*kf)(void*), void (
     ttak_mem_free(node);
 }
 
+/**
+ * @brief Destroy the B+ tree and release all nodes.
+ *
+ * @param tree Tree to destroy.
+ * @param now  Timestamp for destructor bookkeeping.
+ */
 void ttak_bplus_destroy(ttak_bplus_tree_t *tree, uint64_t now) {
     if (!tree || !tree->root) return;
     recursive_destroy(tree->root, tree->key_free, tree->val_free, now);
