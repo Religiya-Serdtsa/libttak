@@ -73,6 +73,9 @@ directories:
 clean:
 	rm -rf obj lib $(TEST_BINS) tests/*.d
 
+blueprints:
+	@python3 blueprints/scripts/render_blueprints.py
+
 -include $(DEPS)
 
-.PHONY: all clean directories install uninstall
+.PHONY: all clean directories install uninstall blueprints

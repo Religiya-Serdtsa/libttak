@@ -1,0 +1,38 @@
+@startuml
+!theme plain
+hide empty members
+
+package "Tree Structures (tree/)" {
+    class ttak_ast_tree_t {
+        + root : ttak_ast_node_t*
+    }
+
+    class ttak_ast_node_t {
+        + type : int
+        + value : void*
+        + children : ttak_ast_node_t**
+        + children_count : size_t
+    }
+
+    class ttak_bplus_tree_t {
+        + root : ttak_bplus_node_t*
+        + order : int
+    }
+
+    class ttak_btree_t {
+        + root : ttak_btree_node_t*
+        + t : int
+    }
+}
+
+package "Memory Tree (mem_tree/)" {
+    class ttak_mem_tree_t {
+        + head : ttak_mem_node_t*
+        + tail : ttak_mem_node_t*
+        + lock : pthread_mutex_t
+        + total_allocated : size_t
+    }
+}
+
+ttak_ast_tree_t *-- ttak_ast_node_t
+@enduml

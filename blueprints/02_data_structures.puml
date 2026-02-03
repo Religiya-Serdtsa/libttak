@@ -2,31 +2,42 @@
 !theme plain
 hide empty members
 
-package "Data Structures" {
+package "Hash Table (ht/)" {
     class ttak_map_t {
-        + buckets : ttak_bucket_t**
-        + capacity : size_t
-        + count : size_t
+        + table : ttak_table_t*
+        + hash_func : hash_fn
+        __
+        + create()
+        + put(key, value)
+        + get(key)
     }
 
-    class ttak_shard_t {
-        + data : void*
-        + lock : ttak_rwlock_t
+    class ttak_table_t {
+        + entries : ttak_table_entry_t**
+        + capacity : size_t
+        + size : size_t
+    }
+}
+
+package "Containers (container/)" {
+    class ttak_set_t {
+        + map : ttak_map_t*
         __
-        + init(data)
-        + destroy()
+        + add(member)
+        + contains(member)
+    }
+
+    class ttak_pair_t {
+        + first : void*
+        + second : void*
     }
 
     class ttak_ringbuf_t {
-        + buffer : void*
+        + buffer : void**
         + head : size_t
         + tail : size_t
         + capacity : size_t
-        + full : bool
         + lock : ttak_rwlock_t
-        __
-        + push(item)
-        + pop(out_item)
     }
 
     class ttak_object_pool_t {
@@ -34,20 +45,6 @@ package "Data Structures" {
         + bitmap : uint8_t*
         + item_size : size_t
         + capacity : size_t
-        + lock : ttak_spin_t
-        __
-        + alloc()
-        + free(ptr)
-    }
-
-    class ttak_heap_t {
-        + data : void**
-        + size : size_t
-    }
-
-    class ttak_queue_t {
-         + head : node_t*
-         + tail : node_t*
     }
 }
 @enduml

@@ -7,16 +7,18 @@ package "Memory Management" {
         + alloc()
         + free()
     }
-    class ttak_mem_tree_t {
-        + head : node_t*
-        + lock : mutex
-    }
 }
 
 package "Threading & Sync" {
     class ttak_thread_pool_t {
-        + workers : worker_t*
-        + tasks : queue_t
+        + workers : ttak_worker_t*
+        + task_queue : ttak_queue_t*
+        + lock : pthread_mutex_t
+    }
+
+    class ttak_worker_t {
+        + thread : pthread_t
+        + pool : ttak_thread_pool_t*
     }
 
     class ttak_spin_t {
