@@ -5,12 +5,19 @@
 {\ttfamily \#include $<$stdbool.\+h$>$}\newline
 {\ttfamily \#include $<$stdatomic.\+h$>$}\newline
 {\ttfamily \#include $<$pthread.\+h$>$}\newline
-Include dependency graph for mem\+\_\+tree.\+h\+:
-\nopagebreak
+Include dependency graph for mem\+\_\+tree.\+h\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=350pt]{mem__tree_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=241pt]{mem__tree_8h__dep__incl}
 \end{center}
 \end{figure}
 \doxysubsubsection*{Classes}
@@ -23,10 +30,10 @@ struct \mbox{\hyperlink{structttak__mem__tree}{ttak\+\_\+mem\+\_\+tree}}
 \doxysubsubsection*{Typedefs}
 \begin{DoxyCompactItemize}
 \item 
-typedef struct \mbox{\hyperlink{structttak__mem__node}{ttak\+\_\+mem\+\_\+node}} \mbox{\hyperlink{mem__tree_8h_aa9f7129a1849cc78030b371254a60a77}{ttak\+\_\+mem\+\_\+node\+\_\+t}}
-\begin{DoxyCompactList}\small\item\em Represents a node in the generic heap tree, tracking a dynamically allocated memory block. \end{DoxyCompactList}\item 
 typedef struct \mbox{\hyperlink{structttak__mem__tree}{ttak\+\_\+mem\+\_\+tree}} \mbox{\hyperlink{mem__tree_8h_a247fb2ceb1803d4d3ad077d0785cc858}{ttak\+\_\+mem\+\_\+tree\+\_\+t}}
-\begin{DoxyCompactList}\small\item\em Manages the collection of dynamically allocated memory blocks as a mem tree. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\item 
+typedef struct \mbox{\hyperlink{structttak__mem__node}{ttak\+\_\+mem\+\_\+node}} \mbox{\hyperlink{mem__tree_8h_aa9f7129a1849cc78030b371254a60a77}{ttak\+\_\+mem\+\_\+node\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Represents a node in the generic heap tree, tracking a dynamically allocated memory block. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -42,8 +49,12 @@ void \mbox{\hyperlink{mem__tree_8h_af7a4426bfe47e5a396b851845d14af2d}{ttak\+\_\+
 \begin{DoxyCompactList}\small\item\em Increments the reference count for a given mem node. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{mem__tree_8h_aac7ffebbd2335f8acaab651abdd02633}{ttak\+\_\+mem\+\_\+node\+\_\+release}} (\mbox{\hyperlink{mem__tree_8h_aa9f7129a1849cc78030b371254a60a77}{ttak\+\_\+mem\+\_\+node\+\_\+t}} \texorpdfstring{$\ast$}{*}node)
 \begin{DoxyCompactList}\small\item\em Decrements the reference count for a given mem node. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{mem__tree_8h_a4dbe96bbd56762d5d53af8f2179d6759}{ttak\+\_\+mem\+\_\+tree\+\_\+set\+\_\+cleanup\+\_\+interval}} (\mbox{\hyperlink{mem__tree_8h_a247fb2ceb1803d4d3ad077d0785cc858}{ttak\+\_\+mem\+\_\+tree\+\_\+t}} \texorpdfstring{$\ast$}{*}tree, uint64\+\_\+t interval\+\_\+ns)
-\begin{DoxyCompactList}\small\item\em Sets the interval for automatic memory cleanup. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{mem__tree_8h_a88bf0a46b8d452336a612b2b3c9bfa45}{ttak\+\_\+mem\+\_\+tree\+\_\+set\+\_\+cleaning\+\_\+intervals}} (\mbox{\hyperlink{mem__tree_8h_a247fb2ceb1803d4d3ad077d0785cc858}{ttak\+\_\+mem\+\_\+tree\+\_\+t}} \texorpdfstring{$\ast$}{*}tree, uint64\+\_\+t min\+\_\+ns, uint64\+\_\+t max\+\_\+ns)
+\begin{DoxyCompactList}\small\item\em Sets the min and max intervals for automatic memory cleanup. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{mem__tree_8h_a436290192d1395d496994a8c0f8db280}{ttak\+\_\+mem\+\_\+tree\+\_\+set\+\_\+pressure\+\_\+threshold}} (\mbox{\hyperlink{mem__tree_8h_a247fb2ceb1803d4d3ad077d0785cc858}{ttak\+\_\+mem\+\_\+tree\+\_\+t}} \texorpdfstring{$\ast$}{*}tree, size\+\_\+t threshold\+\_\+bytes)
+\begin{DoxyCompactList}\small\item\em Sets the pressure threshold that triggers immediate cleanup. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{mem__tree_8h_aed4760fee74d3dfdf9c233cf4cc00fb4}{ttak\+\_\+mem\+\_\+tree\+\_\+report\+\_\+pressure}} (\mbox{\hyperlink{mem__tree_8h_a247fb2ceb1803d4d3ad077d0785cc858}{ttak\+\_\+mem\+\_\+tree\+\_\+t}} \texorpdfstring{$\ast$}{*}tree, size\+\_\+t pressure\+\_\+amount)
+\begin{DoxyCompactList}\small\item\em Reports potential garbage pressure to the mem tree. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{mem__tree_8h_aa0c98b14defb177dc3873e04a23a872c}{ttak\+\_\+mem\+\_\+tree\+\_\+set\+\_\+manual\+\_\+cleanup}} (\mbox{\hyperlink{mem__tree_8h_a247fb2ceb1803d4d3ad077d0785cc858}{ttak\+\_\+mem\+\_\+tree\+\_\+t}} \texorpdfstring{$\ast$}{*}tree, \+\_\+\+Bool manual\+\_\+cleanup\+\_\+enabled)
 \begin{DoxyCompactList}\small\item\em Sets the manual cleanup flag. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{mem__tree_8h_a4ec6c7de2748fc8090db6fc273b9f7f9}{ttak\+\_\+mem\+\_\+tree\+\_\+perform\+\_\+cleanup}} (\mbox{\hyperlink{mem__tree_8h_a247fb2ceb1803d4d3ad077d0785cc858}{ttak\+\_\+mem\+\_\+tree\+\_\+t}} \texorpdfstring{$\ast$}{*}tree, uint64\+\_\+t now)
@@ -52,39 +63,35 @@ void \mbox{\hyperlink{mem__tree_8h_a4ec6c7de2748fc8090db6fc273b9f7f9}{ttak\+\_\+
 \begin{DoxyCompactList}\small\item\em Finds a mem node associated with a given memory pointer. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
-\label{doc-typedef-members}
-\Hypertarget{mem__tree_8h_doc-typedef-members}
 \doxysubsection{Typedef Documentation}
-\Hypertarget{mem__tree_8h_aa9f7129a1849cc78030b371254a60a77}\index{mem\_tree.h@{mem\_tree.h}!ttak\_mem\_node\_t@{ttak\_mem\_node\_t}}
+\Hypertarget{mem__tree_8h_aa9f7129a1849cc78030b371254a60a77}\label{mem__tree_8h_aa9f7129a1849cc78030b371254a60a77} 
+\index{mem\_tree.h@{mem\_tree.h}!ttak\_mem\_node\_t@{ttak\_mem\_node\_t}}
 \index{ttak\_mem\_node\_t@{ttak\_mem\_node\_t}!mem\_tree.h@{mem\_tree.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_mem\_node\_t}{ttak\_mem\_node\_t}}
-{\footnotesize\ttfamily \label{mem__tree_8h_aa9f7129a1849cc78030b371254a60a77} 
-typedef struct \mbox{\hyperlink{structttak__mem__node}{ttak\+\_\+mem\+\_\+node}} \mbox{\hyperlink{mem__tree_8h_aa9f7129a1849cc78030b371254a60a77}{ttak\+\_\+mem\+\_\+node\+\_\+t}}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__mem__node}{ttak\+\_\+mem\+\_\+node}} \mbox{\hyperlink{mem__tree_8h_aa9f7129a1849cc78030b371254a60a77}{ttak\+\_\+mem\+\_\+node\+\_\+t}}}
 
 
 
 Represents a node in the generic heap tree, tracking a dynamically allocated memory block. 
 
-Each node stores metadata about a memory allocation, including its pointer, size, expiration time, and reference count. It also includes flags for managing its lifecycle within the heap tree and a mutex for thread-\/safe access. \Hypertarget{mem__tree_8h_a247fb2ceb1803d4d3ad077d0785cc858}\index{mem\_tree.h@{mem\_tree.h}!ttak\_mem\_tree\_t@{ttak\_mem\_tree\_t}}
+Each node stores metadata about a memory allocation, including its pointer, size, expiration time, and reference count. It also includes flags for managing its lifecycle within the heap tree and a mutex for thread-\/safe access. \Hypertarget{mem__tree_8h_a247fb2ceb1803d4d3ad077d0785cc858}\label{mem__tree_8h_a247fb2ceb1803d4d3ad077d0785cc858} 
+\index{mem\_tree.h@{mem\_tree.h}!ttak\_mem\_tree\_t@{ttak\_mem\_tree\_t}}
 \index{ttak\_mem\_tree\_t@{ttak\_mem\_tree\_t}!mem\_tree.h@{mem\_tree.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_mem\_tree\_t}{ttak\_mem\_tree\_t}}
-{\footnotesize\ttfamily \label{mem__tree_8h_a247fb2ceb1803d4d3ad077d0785cc858} 
-typedef struct \mbox{\hyperlink{structttak__mem__tree}{ttak\+\_\+mem\+\_\+tree}} \mbox{\hyperlink{mem__tree_8h_a247fb2ceb1803d4d3ad077d0785cc858}{ttak\+\_\+mem\+\_\+tree\+\_\+t}}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__mem__tree}{ttak\+\_\+mem\+\_\+tree}} \mbox{\hyperlink{mem__tree_8h_a247fb2ceb1803d4d3ad077d0785cc858}{ttak\+\_\+mem\+\_\+tree\+\_\+t}}}
 
 
 
-Manages the collection of dynamically allocated memory blocks as a mem tree. 
+Definition at line \mbox{\hyperlink{mem__tree_8h_source_l00010}{10}} of file \mbox{\hyperlink{mem__tree_8h_source}{mem\+\_\+tree.\+h}}.
 
-This structure provides a centralized mechanism for tracking memory allocations, their interdependencies (via reference counts), and their lifetimes. It supports automatic cleanup of expired or unreferenced blocks and allows for manual control over the cleanup process. 
 
-\label{doc-func-members}
-\Hypertarget{mem__tree_8h_doc-func-members}
+
 \doxysubsection{Function Documentation}
-\Hypertarget{mem__tree_8h_af7a4426bfe47e5a396b851845d14af2d}\index{mem\_tree.h@{mem\_tree.h}!ttak\_mem\_node\_acquire@{ttak\_mem\_node\_acquire}}
+\Hypertarget{mem__tree_8h_af7a4426bfe47e5a396b851845d14af2d}\label{mem__tree_8h_af7a4426bfe47e5a396b851845d14af2d} 
+\index{mem\_tree.h@{mem\_tree.h}!ttak\_mem\_node\_acquire@{ttak\_mem\_node\_acquire}}
 \index{ttak\_mem\_node\_acquire@{ttak\_mem\_node\_acquire}!mem\_tree.h@{mem\_tree.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_mem\_node\_acquire()}{ttak\_mem\_node\_acquire()}}
-{\footnotesize\ttfamily \label{mem__tree_8h_af7a4426bfe47e5a396b851845d14af2d} 
-void ttak\+\_\+mem\+\_\+node\+\_\+acquire (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{mem__tree_8h_aa9f7129a1849cc78030b371254a60a77}{ttak\+\_\+mem\+\_\+node\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{node}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void ttak\+\_\+mem\+\_\+node\+\_\+acquire (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{mem__tree_8h_aa9f7129a1849cc78030b371254a60a77}{ttak\+\_\+mem\+\_\+node\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{node }\end{DoxyParamCaption})}
 
 
 
@@ -95,11 +102,11 @@ Increments the reference count for a given mem node.
 {\em node} & Pointer to the mem node. \\
 \hline
 \end{DoxyParams}
-\Hypertarget{mem__tree_8h_aac7ffebbd2335f8acaab651abdd02633}\index{mem\_tree.h@{mem\_tree.h}!ttak\_mem\_node\_release@{ttak\_mem\_node\_release}}
+\Hypertarget{mem__tree_8h_aac7ffebbd2335f8acaab651abdd02633}\label{mem__tree_8h_aac7ffebbd2335f8acaab651abdd02633} 
+\index{mem\_tree.h@{mem\_tree.h}!ttak\_mem\_node\_release@{ttak\_mem\_node\_release}}
 \index{ttak\_mem\_node\_release@{ttak\_mem\_node\_release}!mem\_tree.h@{mem\_tree.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_mem\_node\_release()}{ttak\_mem\_node\_release()}}
-{\footnotesize\ttfamily \label{mem__tree_8h_aac7ffebbd2335f8acaab651abdd02633} 
-void ttak\+\_\+mem\+\_\+node\+\_\+release (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{mem__tree_8h_aa9f7129a1849cc78030b371254a60a77}{ttak\+\_\+mem\+\_\+node\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{node}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void ttak\+\_\+mem\+\_\+node\+\_\+release (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{mem__tree_8h_aa9f7129a1849cc78030b371254a60a77}{ttak\+\_\+mem\+\_\+node\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{node }\end{DoxyParamCaption})}
 
 
 
@@ -112,11 +119,11 @@ If the reference count drops to zero and the node has expired, it may be marked 
 {\em node} & Pointer to the mem node. \\
 \hline
 \end{DoxyParams}
-\Hypertarget{mem__tree_8h_a829c009bd70438fe7468683c3cbc3222}\index{mem\_tree.h@{mem\_tree.h}!ttak\_mem\_tree\_add@{ttak\_mem\_tree\_add}}
+\Hypertarget{mem__tree_8h_a829c009bd70438fe7468683c3cbc3222}\label{mem__tree_8h_a829c009bd70438fe7468683c3cbc3222} 
+\index{mem\_tree.h@{mem\_tree.h}!ttak\_mem\_tree\_add@{ttak\_mem\_tree\_add}}
 \index{ttak\_mem\_tree\_add@{ttak\_mem\_tree\_add}!mem\_tree.h@{mem\_tree.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_mem\_tree\_add()}{ttak\_mem\_tree\_add()}}
-{\footnotesize\ttfamily \label{mem__tree_8h_a829c009bd70438fe7468683c3cbc3222} 
-\mbox{\hyperlink{mem__tree_8h_aa9f7129a1849cc78030b371254a60a77}{ttak\+\_\+mem\+\_\+node\+\_\+t}} \texorpdfstring{$\ast$}{*} ttak\+\_\+mem\+\_\+tree\+\_\+add (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{mem__tree_8h_a247fb2ceb1803d4d3ad077d0785cc858}{ttak\+\_\+mem\+\_\+tree\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{tree}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{ptr}{, }\item[{size\+\_\+t}]{size}{, }\item[{uint64\+\_\+t}]{expires\+\_\+tick}{, }\item[{\+\_\+\+Bool}]{is\+\_\+root}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \mbox{\hyperlink{mem__tree_8h_aa9f7129a1849cc78030b371254a60a77}{ttak\+\_\+mem\+\_\+node\+\_\+t}} \texorpdfstring{$\ast$}{*} ttak\+\_\+mem\+\_\+tree\+\_\+add (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{mem__tree_8h_a247fb2ceb1803d4d3ad077d0785cc858}{ttak\+\_\+mem\+\_\+tree\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{tree,  }\item[{void \texorpdfstring{$\ast$}{*}}]{ptr,  }\item[{size\+\_\+t}]{size,  }\item[{uint64\+\_\+t}]{expires\+\_\+tick,  }\item[{\+\_\+\+Bool}]{is\+\_\+root }\end{DoxyParamCaption})}
 
 
 
@@ -138,11 +145,11 @@ Adds a new memory block to be tracked by the mem tree.
 \begin{DoxyReturn}{Returns}
 A pointer to the newly created mem node, or NULL on failure. 
 \end{DoxyReturn}
-\Hypertarget{mem__tree_8h_a4b6933d1bc2b4582826465605c4376c2}\index{mem\_tree.h@{mem\_tree.h}!ttak\_mem\_tree\_destroy@{ttak\_mem\_tree\_destroy}}
+\Hypertarget{mem__tree_8h_a4b6933d1bc2b4582826465605c4376c2}\label{mem__tree_8h_a4b6933d1bc2b4582826465605c4376c2} 
+\index{mem\_tree.h@{mem\_tree.h}!ttak\_mem\_tree\_destroy@{ttak\_mem\_tree\_destroy}}
 \index{ttak\_mem\_tree\_destroy@{ttak\_mem\_tree\_destroy}!mem\_tree.h@{mem\_tree.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_mem\_tree\_destroy()}{ttak\_mem\_tree\_destroy()}}
-{\footnotesize\ttfamily \label{mem__tree_8h_a4b6933d1bc2b4582826465605c4376c2} 
-void ttak\+\_\+mem\+\_\+tree\+\_\+destroy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{mem__tree_8h_a247fb2ceb1803d4d3ad077d0785cc858}{ttak\+\_\+mem\+\_\+tree\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{tree}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void ttak\+\_\+mem\+\_\+tree\+\_\+destroy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{mem__tree_8h_a247fb2ceb1803d4d3ad077d0785cc858}{ttak\+\_\+mem\+\_\+tree\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{tree }\end{DoxyParamCaption})}
 
 
 
@@ -150,14 +157,14 @@ Destroys the mem tree, freeing all remaining allocated memory blocks and stoppin
 
 
 \begin{DoxyParams}{Parameters}
-{\em tree} & Pointer to the \doxylink{mem__tree_8h_a247fb2ceb1803d4d3ad077d0785cc858}{ttak\+\_\+mem\+\_\+tree\+\_\+t} structure to destroy. \\
+{\em tree} & Pointer to the ttak\+\_\+mem\+\_\+tree\+\_\+t structure to destroy. \\
 \hline
 \end{DoxyParams}
-\Hypertarget{mem__tree_8h_a46caf44d87353e948b1b34132ecb2531}\index{mem\_tree.h@{mem\_tree.h}!ttak\_mem\_tree\_find\_node@{ttak\_mem\_tree\_find\_node}}
+\Hypertarget{mem__tree_8h_a46caf44d87353e948b1b34132ecb2531}\label{mem__tree_8h_a46caf44d87353e948b1b34132ecb2531} 
+\index{mem\_tree.h@{mem\_tree.h}!ttak\_mem\_tree\_find\_node@{ttak\_mem\_tree\_find\_node}}
 \index{ttak\_mem\_tree\_find\_node@{ttak\_mem\_tree\_find\_node}!mem\_tree.h@{mem\_tree.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_mem\_tree\_find\_node()}{ttak\_mem\_tree\_find\_node()}}
-{\footnotesize\ttfamily \label{mem__tree_8h_a46caf44d87353e948b1b34132ecb2531} 
-\mbox{\hyperlink{mem__tree_8h_aa9f7129a1849cc78030b371254a60a77}{ttak\+\_\+mem\+\_\+node\+\_\+t}} \texorpdfstring{$\ast$}{*} ttak\+\_\+mem\+\_\+tree\+\_\+find\+\_\+node (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{mem__tree_8h_a247fb2ceb1803d4d3ad077d0785cc858}{ttak\+\_\+mem\+\_\+tree\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{tree}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{ptr}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \mbox{\hyperlink{mem__tree_8h_aa9f7129a1849cc78030b371254a60a77}{ttak\+\_\+mem\+\_\+node\+\_\+t}} \texorpdfstring{$\ast$}{*} ttak\+\_\+mem\+\_\+tree\+\_\+find\+\_\+node (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{mem__tree_8h_a247fb2ceb1803d4d3ad077d0785cc858}{ttak\+\_\+mem\+\_\+tree\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{tree,  }\item[{void \texorpdfstring{$\ast$}{*}}]{ptr }\end{DoxyParamCaption})}
 
 
 
@@ -173,11 +180,11 @@ Finds a mem node associated with a given memory pointer.
 \begin{DoxyReturn}{Returns}
 A pointer to the found mem node, or NULL if not found. 
 \end{DoxyReturn}
-\Hypertarget{mem__tree_8h_a886b8c79113ee78c206e16bfbf73c677}\index{mem\_tree.h@{mem\_tree.h}!ttak\_mem\_tree\_init@{ttak\_mem\_tree\_init}}
+\Hypertarget{mem__tree_8h_a886b8c79113ee78c206e16bfbf73c677}\label{mem__tree_8h_a886b8c79113ee78c206e16bfbf73c677} 
+\index{mem\_tree.h@{mem\_tree.h}!ttak\_mem\_tree\_init@{ttak\_mem\_tree\_init}}
 \index{ttak\_mem\_tree\_init@{ttak\_mem\_tree\_init}!mem\_tree.h@{mem\_tree.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_mem\_tree\_init()}{ttak\_mem\_tree\_init()}}
-{\footnotesize\ttfamily \label{mem__tree_8h_a886b8c79113ee78c206e16bfbf73c677} 
-void ttak\+\_\+mem\+\_\+tree\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{mem__tree_8h_a247fb2ceb1803d4d3ad077d0785cc858}{ttak\+\_\+mem\+\_\+tree\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{tree}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void ttak\+\_\+mem\+\_\+tree\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{mem__tree_8h_a247fb2ceb1803d4d3ad077d0785cc858}{ttak\+\_\+mem\+\_\+tree\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{tree }\end{DoxyParamCaption})}
 
 
 
@@ -185,14 +192,14 @@ Initializes a new mem tree instance.
 
 
 \begin{DoxyParams}{Parameters}
-{\em tree} & Pointer to the \doxylink{mem__tree_8h_a247fb2ceb1803d4d3ad077d0785cc858}{ttak\+\_\+mem\+\_\+tree\+\_\+t} structure to initialize. \\
+{\em tree} & Pointer to the ttak\+\_\+mem\+\_\+tree\+\_\+t structure to initialize. \\
 \hline
 \end{DoxyParams}
-\Hypertarget{mem__tree_8h_a4ec6c7de2748fc8090db6fc273b9f7f9}\index{mem\_tree.h@{mem\_tree.h}!ttak\_mem\_tree\_perform\_cleanup@{ttak\_mem\_tree\_perform\_cleanup}}
+\Hypertarget{mem__tree_8h_a4ec6c7de2748fc8090db6fc273b9f7f9}\label{mem__tree_8h_a4ec6c7de2748fc8090db6fc273b9f7f9} 
+\index{mem\_tree.h@{mem\_tree.h}!ttak\_mem\_tree\_perform\_cleanup@{ttak\_mem\_tree\_perform\_cleanup}}
 \index{ttak\_mem\_tree\_perform\_cleanup@{ttak\_mem\_tree\_perform\_cleanup}!mem\_tree.h@{mem\_tree.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_mem\_tree\_perform\_cleanup()}{ttak\_mem\_tree\_perform\_cleanup()}}
-{\footnotesize\ttfamily \label{mem__tree_8h_a4ec6c7de2748fc8090db6fc273b9f7f9} 
-void ttak\+\_\+mem\+\_\+tree\+\_\+perform\+\_\+cleanup (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{mem__tree_8h_a247fb2ceb1803d4d3ad077d0785cc858}{ttak\+\_\+mem\+\_\+tree\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{tree}{, }\item[{uint64\+\_\+t}]{now}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void ttak\+\_\+mem\+\_\+tree\+\_\+perform\+\_\+cleanup (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{mem__tree_8h_a247fb2ceb1803d4d3ad077d0785cc858}{ttak\+\_\+mem\+\_\+tree\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{tree,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
 
 
 
@@ -207,11 +214,11 @@ This function is typically called when automatic cleanup is disabled or when an 
 {\em now} & Current monotonic tick. \\
 \hline
 \end{DoxyParams}
-\Hypertarget{mem__tree_8h_a42638152eb455b0d7f23e964f946c8df}\index{mem\_tree.h@{mem\_tree.h}!ttak\_mem\_tree\_remove@{ttak\_mem\_tree\_remove}}
+\Hypertarget{mem__tree_8h_a42638152eb455b0d7f23e964f946c8df}\label{mem__tree_8h_a42638152eb455b0d7f23e964f946c8df} 
+\index{mem\_tree.h@{mem\_tree.h}!ttak\_mem\_tree\_remove@{ttak\_mem\_tree\_remove}}
 \index{ttak\_mem\_tree\_remove@{ttak\_mem\_tree\_remove}!mem\_tree.h@{mem\_tree.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_mem\_tree\_remove()}{ttak\_mem\_tree\_remove()}}
-{\footnotesize\ttfamily \label{mem__tree_8h_a42638152eb455b0d7f23e964f946c8df} 
-void ttak\+\_\+mem\+\_\+tree\+\_\+remove (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{mem__tree_8h_a247fb2ceb1803d4d3ad077d0785cc858}{ttak\+\_\+mem\+\_\+tree\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{tree}{, }\item[{\mbox{\hyperlink{mem__tree_8h_aa9f7129a1849cc78030b371254a60a77}{ttak\+\_\+mem\+\_\+node\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{node}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void ttak\+\_\+mem\+\_\+tree\+\_\+remove (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{mem__tree_8h_a247fb2ceb1803d4d3ad077d0785cc858}{ttak\+\_\+mem\+\_\+tree\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{tree,  }\item[{\mbox{\hyperlink{mem__tree_8h_aa9f7129a1849cc78030b371254a60a77}{ttak\+\_\+mem\+\_\+node\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{node }\end{DoxyParamCaption})}
 
 
 
@@ -226,28 +233,51 @@ This function should only be called when the memory block is no longer reference
 {\em node} & Pointer to the mem node to remove and free. \\
 \hline
 \end{DoxyParams}
-\Hypertarget{mem__tree_8h_a4dbe96bbd56762d5d53af8f2179d6759}\index{mem\_tree.h@{mem\_tree.h}!ttak\_mem\_tree\_set\_cleanup\_interval@{ttak\_mem\_tree\_set\_cleanup\_interval}}
-\index{ttak\_mem\_tree\_set\_cleanup\_interval@{ttak\_mem\_tree\_set\_cleanup\_interval}!mem\_tree.h@{mem\_tree.h}}
-\doxysubsubsection{\texorpdfstring{ttak\_mem\_tree\_set\_cleanup\_interval()}{ttak\_mem\_tree\_set\_cleanup\_interval()}}
-{\footnotesize\ttfamily \label{mem__tree_8h_a4dbe96bbd56762d5d53af8f2179d6759} 
-void ttak\+\_\+mem\+\_\+tree\+\_\+set\+\_\+cleanup\+\_\+interval (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{mem__tree_8h_a247fb2ceb1803d4d3ad077d0785cc858}{ttak\+\_\+mem\+\_\+tree\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{tree}{, }\item[{uint64\+\_\+t}]{interval\+\_\+ns}{}\end{DoxyParamCaption})}
+\Hypertarget{mem__tree_8h_aed4760fee74d3dfdf9c233cf4cc00fb4}\label{mem__tree_8h_aed4760fee74d3dfdf9c233cf4cc00fb4} 
+\index{mem\_tree.h@{mem\_tree.h}!ttak\_mem\_tree\_report\_pressure@{ttak\_mem\_tree\_report\_pressure}}
+\index{ttak\_mem\_tree\_report\_pressure@{ttak\_mem\_tree\_report\_pressure}!mem\_tree.h@{mem\_tree.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_mem\_tree\_report\_pressure()}{ttak\_mem\_tree\_report\_pressure()}}
+{\footnotesize\ttfamily void ttak\+\_\+mem\+\_\+tree\+\_\+report\+\_\+pressure (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{mem__tree_8h_a247fb2ceb1803d4d3ad077d0785cc858}{ttak\+\_\+mem\+\_\+tree\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{tree,  }\item[{size\+\_\+t}]{pressure\+\_\+amount }\end{DoxyParamCaption})}
 
 
 
-Sets the interval for automatic memory cleanup. 
+Reports potential garbage pressure to the mem tree. 
+
+Increasing the pressure score signals the cleanup thread that there is work to do. If pressure is zero, the cleanup thread may perform an early return or sleep longer.
 
 
 \begin{DoxyParams}{Parameters}
 {\em tree} & Pointer to the mem tree. \\
 \hline
-{\em interval\+\_\+ns} & The new cleanup interval in nanoseconds. \\
+{\em pressure\+\_\+amount} & Amount to increase the pressure score by. \\
 \hline
 \end{DoxyParams}
-\Hypertarget{mem__tree_8h_aa0c98b14defb177dc3873e04a23a872c}\index{mem\_tree.h@{mem\_tree.h}!ttak\_mem\_tree\_set\_manual\_cleanup@{ttak\_mem\_tree\_set\_manual\_cleanup}}
+\Hypertarget{mem__tree_8h_a88bf0a46b8d452336a612b2b3c9bfa45}\label{mem__tree_8h_a88bf0a46b8d452336a612b2b3c9bfa45} 
+\index{mem\_tree.h@{mem\_tree.h}!ttak\_mem\_tree\_set\_cleaning\_intervals@{ttak\_mem\_tree\_set\_cleaning\_intervals}}
+\index{ttak\_mem\_tree\_set\_cleaning\_intervals@{ttak\_mem\_tree\_set\_cleaning\_intervals}!mem\_tree.h@{mem\_tree.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_mem\_tree\_set\_cleaning\_intervals()}{ttak\_mem\_tree\_set\_cleaning\_intervals()}}
+{\footnotesize\ttfamily void ttak\+\_\+mem\+\_\+tree\+\_\+set\+\_\+cleaning\+\_\+intervals (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{mem__tree_8h_a247fb2ceb1803d4d3ad077d0785cc858}{ttak\+\_\+mem\+\_\+tree\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{tree,  }\item[{uint64\+\_\+t}]{min\+\_\+ns,  }\item[{uint64\+\_\+t}]{max\+\_\+ns }\end{DoxyParamCaption})}
+
+
+
+Sets the min and max intervals for automatic memory cleanup. 
+
+The cleanup thread uses an adaptive interval based on memory pressure. It will back off towards the max interval if no garbage is detected.
+
+
+\begin{DoxyParams}{Parameters}
+{\em tree} & Pointer to the mem tree. \\
+\hline
+{\em min\+\_\+ns} & The minimum cleanup interval in nanoseconds (e.\+g., 10s). \\
+\hline
+{\em max\+\_\+ns} & The maximum cleanup interval in nanoseconds (e.\+g., 120s). \\
+\hline
+\end{DoxyParams}
+\Hypertarget{mem__tree_8h_aa0c98b14defb177dc3873e04a23a872c}\label{mem__tree_8h_aa0c98b14defb177dc3873e04a23a872c} 
+\index{mem\_tree.h@{mem\_tree.h}!ttak\_mem\_tree\_set\_manual\_cleanup@{ttak\_mem\_tree\_set\_manual\_cleanup}}
 \index{ttak\_mem\_tree\_set\_manual\_cleanup@{ttak\_mem\_tree\_set\_manual\_cleanup}!mem\_tree.h@{mem\_tree.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_mem\_tree\_set\_manual\_cleanup()}{ttak\_mem\_tree\_set\_manual\_cleanup()}}
-{\footnotesize\ttfamily \label{mem__tree_8h_aa0c98b14defb177dc3873e04a23a872c} 
-void ttak\+\_\+mem\+\_\+tree\+\_\+set\+\_\+manual\+\_\+cleanup (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{mem__tree_8h_a247fb2ceb1803d4d3ad077d0785cc858}{ttak\+\_\+mem\+\_\+tree\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{tree}{, }\item[{\+\_\+\+Bool}]{manual\+\_\+cleanup\+\_\+enabled}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void ttak\+\_\+mem\+\_\+tree\+\_\+set\+\_\+manual\+\_\+cleanup (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{mem__tree_8h_a247fb2ceb1803d4d3ad077d0785cc858}{ttak\+\_\+mem\+\_\+tree\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{tree,  }\item[{\+\_\+\+Bool}]{manual\+\_\+cleanup\+\_\+enabled }\end{DoxyParamCaption})}
 
 
 
@@ -260,5 +290,22 @@ When set to true, automatic cleanup is disabled, and memory must be freed manual
 {\em tree} & Pointer to the mem tree. \\
 \hline
 {\em manual\+\_\+cleanup\+\_\+enabled} & True to enable manual cleanup, false to enable automatic. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{mem__tree_8h_a436290192d1395d496994a8c0f8db280}\label{mem__tree_8h_a436290192d1395d496994a8c0f8db280} 
+\index{mem\_tree.h@{mem\_tree.h}!ttak\_mem\_tree\_set\_pressure\_threshold@{ttak\_mem\_tree\_set\_pressure\_threshold}}
+\index{ttak\_mem\_tree\_set\_pressure\_threshold@{ttak\_mem\_tree\_set\_pressure\_threshold}!mem\_tree.h@{mem\_tree.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_mem\_tree\_set\_pressure\_threshold()}{ttak\_mem\_tree\_set\_pressure\_threshold()}}
+{\footnotesize\ttfamily void ttak\+\_\+mem\+\_\+tree\+\_\+set\+\_\+pressure\+\_\+threshold (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{mem__tree_8h_a247fb2ceb1803d4d3ad077d0785cc858}{ttak\+\_\+mem\+\_\+tree\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{tree,  }\item[{size\+\_\+t}]{threshold\+\_\+bytes }\end{DoxyParamCaption})}
+
+
+
+Sets the pressure threshold that triggers immediate cleanup. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em tree} & Pointer to the mem tree. \\
+\hline
+{\em threshold\+\_\+bytes} & Pressure threshold in bytes. \\
 \hline
 \end{DoxyParams}

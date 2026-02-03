@@ -1,0 +1,58 @@
+#ifndef TTAK_CONTAINER_POOL_H
+#define TTAK_CONTAINER_POOL_H
+
+#include <stddef.h>
+#include <stdint.h>
+#include <ttak/sync/sync.h>
+#include <ttak/sync/spinlock.h>
+
+/**
+ * @brief Fixed-size Object Pool structure.
+ * 
+ * Efficiently manages a set of pre-allocated objects of the same size.
+ * Uses a bitmap for allocation tracking and a spinlock for thread safety.
+ */
+typedef struct ttak_object_pool {
+    void *buffer;           /**< Contiguous memory block holding all items. */
+    uint8_t *bitmap;        /**< Bitmask indicating allocation status. */
+    size_t item_size;       /**< Size of a single item. */
+    size_t capacity;        /**< Total capacity of the pool. */
+    size_t used_count;      /**< Number of currently allocated items. */
+    ttak_spin_t lock;       /**< Spinlock for protecting the bitmap. */
+} ttak_object_pool_t;
+
+typedef ttak_object_pool_t tt_object_pool_t;
+
+/**
+ * @brief Creates a new object pool.
+ * 
+ * @param capacity Maximum number of items.
+ * @param item_size Size of each item in bytes.
+ * @return Pointer to the new pool, or NULL on failure.
+ */
+ttak_object_pool_t *ttak_object_pool_create(size_t capacity, size_t item_size);
+
+/**
+ * @brief Destroys the object pool and frees memory.
+ * 
+ * @param pool Pointer to the pool.
+ */
+void ttak_object_pool_destroy(ttak_object_pool_t *pool);
+
+/**
+ * @brief Allocates an object from the pool.
+ * 
+ * @param pool Pointer to the pool.
+ * @return Pointer to the allocated object, or NULL if pool is full.
+ */
+void *ttak_object_pool_alloc(ttak_object_pool_t *pool);
+
+/**
+ * @brief Returns an object to the pool (frees it).
+ * 
+ * @param pool Pointer to the pool.
+ * @param ptr Pointer to the object to free.
+ */
+void ttak_object_pool_free(ttak_object_pool_t *pool, void *ptr);
+
+#endif // TTAK_CONTAINER_POOL_H

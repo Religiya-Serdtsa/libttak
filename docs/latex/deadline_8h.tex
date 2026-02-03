@@ -1,0 +1,138 @@
+\doxysection{include/ttak/timing/deadline.h File Reference}
+\hypertarget{deadline_8h}{}\label{deadline_8h}\index{include/ttak/timing/deadline.h@{include/ttak/timing/deadline.h}}
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+Include dependency graph for deadline.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=214pt]{deadline_8h__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structttak__deadline}{ttak\+\_\+deadline}}
+\begin{DoxyCompactList}\small\item\em Represents a specific point in time used for deadline checks. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structttak__timeout}{ttak\+\_\+timeout}}
+\begin{DoxyCompactList}\small\item\em Represents a duration used for timeouts. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \mbox{\hyperlink{structttak__deadline}{ttak\+\_\+deadline}} \mbox{\hyperlink{deadline_8h_a022a0b359411f6980f5b0dfdac99da4f}{ttak\+\_\+deadline\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Represents a specific point in time used for deadline checks. \end{DoxyCompactList}\item 
+typedef \mbox{\hyperlink{deadline_8h_a022a0b359411f6980f5b0dfdac99da4f}{ttak\+\_\+deadline\+\_\+t}} \mbox{\hyperlink{deadline_8h_a245d654efae2242071f2aa80f6d14559}{tt\+\_\+deadline\+\_\+t}}
+\item 
+typedef struct \mbox{\hyperlink{structttak__timeout}{ttak\+\_\+timeout}} \mbox{\hyperlink{deadline_8h_a16f5db969af8b7050739af92f2754b6d}{ttak\+\_\+timeout\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Represents a duration used for timeouts. \end{DoxyCompactList}\item 
+typedef \mbox{\hyperlink{deadline_8h_a16f5db969af8b7050739af92f2754b6d}{ttak\+\_\+timeout\+\_\+t}} \mbox{\hyperlink{deadline_8h_a356541121163f9ff375b831de619a1d8}{tt\+\_\+timeout\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{deadline_8h_ab1eabe910d59e18530d7f7887b9f1b8f}{ttak\+\_\+deadline\+\_\+set}} (\mbox{\hyperlink{deadline_8h_a022a0b359411f6980f5b0dfdac99da4f}{ttak\+\_\+deadline\+\_\+t}} \texorpdfstring{$\ast$}{*}dl, uint64\+\_\+t ms\+\_\+from\+\_\+now)
+\begin{DoxyCompactList}\small\item\em Sets a deadline relative to the current time. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{deadline_8h_ab57cb1af44003c39bcf6dc963470e0a2}{ttak\+\_\+deadline\+\_\+is\+\_\+expired}} (const \mbox{\hyperlink{deadline_8h_a022a0b359411f6980f5b0dfdac99da4f}{ttak\+\_\+deadline\+\_\+t}} \texorpdfstring{$\ast$}{*}dl)
+\begin{DoxyCompactList}\small\item\em Checks if the deadline has passed. \end{DoxyCompactList}\item 
+uint64\+\_\+t \mbox{\hyperlink{deadline_8h_a6d55b6288d926f99e96118f3bbccd8b9}{ttak\+\_\+deadline\+\_\+remaining}} (const \mbox{\hyperlink{deadline_8h_a022a0b359411f6980f5b0dfdac99da4f}{ttak\+\_\+deadline\+\_\+t}} \texorpdfstring{$\ast$}{*}dl)
+\begin{DoxyCompactList}\small\item\em Returns the remaining time in milliseconds. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{deadline_8h_a245d654efae2242071f2aa80f6d14559}\label{deadline_8h_a245d654efae2242071f2aa80f6d14559} 
+\index{deadline.h@{deadline.h}!tt\_deadline\_t@{tt\_deadline\_t}}
+\index{tt\_deadline\_t@{tt\_deadline\_t}!deadline.h@{deadline.h}}
+\doxysubsubsection{\texorpdfstring{tt\_deadline\_t}{tt\_deadline\_t}}
+{\footnotesize\ttfamily typedef \mbox{\hyperlink{deadline_8h_a022a0b359411f6980f5b0dfdac99da4f}{ttak\+\_\+deadline\+\_\+t}} \mbox{\hyperlink{deadline_8h_a245d654efae2242071f2aa80f6d14559}{tt\+\_\+deadline\+\_\+t}}}
+
+
+
+Definition at line \mbox{\hyperlink{deadline_8h_source_l00015}{15}} of file \mbox{\hyperlink{deadline_8h_source}{deadline.\+h}}.
+
+\Hypertarget{deadline_8h_a356541121163f9ff375b831de619a1d8}\label{deadline_8h_a356541121163f9ff375b831de619a1d8} 
+\index{deadline.h@{deadline.h}!tt\_timeout\_t@{tt\_timeout\_t}}
+\index{tt\_timeout\_t@{tt\_timeout\_t}!deadline.h@{deadline.h}}
+\doxysubsubsection{\texorpdfstring{tt\_timeout\_t}{tt\_timeout\_t}}
+{\footnotesize\ttfamily typedef \mbox{\hyperlink{deadline_8h_a16f5db969af8b7050739af92f2754b6d}{ttak\+\_\+timeout\+\_\+t}} \mbox{\hyperlink{deadline_8h_a356541121163f9ff375b831de619a1d8}{tt\+\_\+timeout\+\_\+t}}}
+
+
+
+Definition at line \mbox{\hyperlink{deadline_8h_source_l00024}{24}} of file \mbox{\hyperlink{deadline_8h_source}{deadline.\+h}}.
+
+\Hypertarget{deadline_8h_a022a0b359411f6980f5b0dfdac99da4f}\label{deadline_8h_a022a0b359411f6980f5b0dfdac99da4f} 
+\index{deadline.h@{deadline.h}!ttak\_deadline\_t@{ttak\_deadline\_t}}
+\index{ttak\_deadline\_t@{ttak\_deadline\_t}!deadline.h@{deadline.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_deadline\_t}{ttak\_deadline\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__deadline}{ttak\+\_\+deadline}} \mbox{\hyperlink{deadline_8h_a022a0b359411f6980f5b0dfdac99da4f}{ttak\+\_\+deadline\+\_\+t}}}
+
+
+
+Represents a specific point in time used for deadline checks. 
+
+\Hypertarget{deadline_8h_a16f5db969af8b7050739af92f2754b6d}\label{deadline_8h_a16f5db969af8b7050739af92f2754b6d} 
+\index{deadline.h@{deadline.h}!ttak\_timeout\_t@{ttak\_timeout\_t}}
+\index{ttak\_timeout\_t@{ttak\_timeout\_t}!deadline.h@{deadline.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_timeout\_t}{ttak\_timeout\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__timeout}{ttak\+\_\+timeout}} \mbox{\hyperlink{deadline_8h_a16f5db969af8b7050739af92f2754b6d}{ttak\+\_\+timeout\+\_\+t}}}
+
+
+
+Represents a duration used for timeouts. 
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{deadline_8h_ab57cb1af44003c39bcf6dc963470e0a2}\label{deadline_8h_ab57cb1af44003c39bcf6dc963470e0a2} 
+\index{deadline.h@{deadline.h}!ttak\_deadline\_is\_expired@{ttak\_deadline\_is\_expired}}
+\index{ttak\_deadline\_is\_expired@{ttak\_deadline\_is\_expired}!deadline.h@{deadline.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_deadline\_is\_expired()}{ttak\_deadline\_is\_expired()}}
+{\footnotesize\ttfamily bool ttak\+\_\+deadline\+\_\+is\+\_\+expired (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{deadline_8h_a022a0b359411f6980f5b0dfdac99da4f}{ttak\+\_\+deadline\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{dl }\end{DoxyParamCaption})}
+
+
+
+Checks if the deadline has passed. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dl} & Pointer to the deadline structure. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if expired, false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{deadline_8h_a6d55b6288d926f99e96118f3bbccd8b9}\label{deadline_8h_a6d55b6288d926f99e96118f3bbccd8b9} 
+\index{deadline.h@{deadline.h}!ttak\_deadline\_remaining@{ttak\_deadline\_remaining}}
+\index{ttak\_deadline\_remaining@{ttak\_deadline\_remaining}!deadline.h@{deadline.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_deadline\_remaining()}{ttak\_deadline\_remaining()}}
+{\footnotesize\ttfamily uint64\+\_\+t ttak\+\_\+deadline\+\_\+remaining (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{deadline_8h_a022a0b359411f6980f5b0dfdac99da4f}{ttak\+\_\+deadline\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{dl }\end{DoxyParamCaption})}
+
+
+
+Returns the remaining time in milliseconds. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dl} & Pointer to the deadline structure. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Remaining milliseconds, or 0 if expired. 
+\end{DoxyReturn}
+\Hypertarget{deadline_8h_ab1eabe910d59e18530d7f7887b9f1b8f}\label{deadline_8h_ab1eabe910d59e18530d7f7887b9f1b8f} 
+\index{deadline.h@{deadline.h}!ttak\_deadline\_set@{ttak\_deadline\_set}}
+\index{ttak\_deadline\_set@{ttak\_deadline\_set}!deadline.h@{deadline.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_deadline\_set()}{ttak\_deadline\_set()}}
+{\footnotesize\ttfamily void ttak\+\_\+deadline\+\_\+set (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{deadline_8h_a022a0b359411f6980f5b0dfdac99da4f}{ttak\+\_\+deadline\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{dl,  }\item[{uint64\+\_\+t}]{ms\+\_\+from\+\_\+now }\end{DoxyParamCaption})}
+
+
+
+Sets a deadline relative to the current time. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dl} & Pointer to the deadline structure. \\
+\hline
+{\em ms\+\_\+from\+\_\+now} & Milliseconds from now when the deadline expires. \\
+\hline
+\end{DoxyParams}

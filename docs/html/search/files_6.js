@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['map_2eh_0',['map.h',['../map_8h.html',1,'']]],
-  ['mem_2eh_1',['mem.h',['../mem_8h.html',1,'']]],
-  ['mem_5ftree_2eh_2',['mem_tree.h',['../mem__tree_8h.html',1,'']]]
+  ['hash_2eh_0',['hash.h',['../hash_8h.html',1,'']]],
+  ['heap_2eh_1',['heap.h',['../heap_8h.html',1,'']]],
+  ['history_2emd_2',['HISTORY.md',['../HISTORY_8md.html',1,'']]],
+  ['hwinfo_2eh_3',['hwinfo.h',['../hwinfo_8h.html',1,'']]]
 ];

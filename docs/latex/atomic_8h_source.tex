@@ -36,7 +36,7 @@
 \DoxyCodeLine{\Hypertarget{atomic_8h_source_l00032}\mbox{\hyperlink{structttak__func__wrapper_aa10d8287d469a27cb185d8e0a5f37ba3}{00032}}\ \ \ \ \ \_Bool\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (*\mbox{\hyperlink{structttak__func__wrapper_aa10d8287d469a27cb185d8e0a5f37ba3}{func\_has\_expired}})(\textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__func__wrapper}{ttak\_func\_wrapper}}\ *,\ uint64\_t);\ \textcolor{comment}{/**\ <\ Function\ to\ check\ if\ it\ is\ expired.\ */}}
 \DoxyCodeLine{\Hypertarget{atomic_8h_source_l00033}\mbox{\hyperlink{structttak__func__wrapper_a1824b96148678c8c7b980edc41429cf5}{00033}}\ \ \ \ \ \_Bool\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structttak__func__wrapper_a1824b96148678c8c7b980edc41429cf5}{expired}};}
 \DoxyCodeLine{\Hypertarget{atomic_8h_source_l00034}\mbox{\hyperlink{structttak__func__wrapper_af0597208068d1204048cfca6f64ece75}{00034}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\mbox{\hyperlink{structttak__func__wrapper_af0597208068d1204048cfca6f64ece75}{args}};\ \textcolor{comment}{/**<\ Pointer\ to\ arguments.\ */}}
-\DoxyCodeLine{\Hypertarget{atomic_8h_source_l00035}\mbox{\hyperlink{structttak__func__wrapper_ab6af31f577a8ffff8f2c0e75f4693129}{00035}}\ \ \ \ \ \mbox{\hyperlink{hash_8h_a1f1a8bb38c53fea315e97508c3d66efd}{tt\_map\_t}}\ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structttak__func__wrapper_ab6af31f577a8ffff8f2c0e75f4693129}{tbl}}\ \ ;\ \textcolor{comment}{/**<\ Table\ containing\ <order,\ size>.\ */}}
+\DoxyCodeLine{\Hypertarget{atomic_8h_source_l00035}\mbox{\hyperlink{structttak__func__wrapper_ab6af31f577a8ffff8f2c0e75f4693129}{00035}}\ \ \ \ \ \mbox{\hyperlink{structttak__map__t}{tt\_map\_t}}\ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structttak__func__wrapper_ab6af31f577a8ffff8f2c0e75f4693129}{tbl}}\ \ ;\ \textcolor{comment}{/**<\ Table\ containing\ <order,\ size>.\ */}}
 \DoxyCodeLine{\Hypertarget{atomic_8h_source_l00036}\mbox{\hyperlink{structttak__func__wrapper_a995ca0be7a03cbeee33e41a691ccda88}{00036}}\ \ \ \ \ \mbox{\hyperlink{atomic_8h_a37a39e5ffd47a8c7afba57d3cdf6f788}{ttak\_generic\_func\_t}}\ \mbox{\hyperlink{structttak__func__wrapper_a995ca0be7a03cbeee33e41a691ccda88}{fun}}\ \ ;\ \textcolor{comment}{/**<\ Function\ to\ execute\ atomically.\ */}}
 \DoxyCodeLine{\Hypertarget{atomic_8h_source_l00037}\mbox{\hyperlink{structttak__func__wrapper_a5782d28386dc058826791e6487bc1ad5}{00037}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\mbox{\hyperlink{structttak__func__wrapper_a5782d28386dc058826791e6487bc1ad5}{ret}};\ \ \textcolor{comment}{/**<\ Storage\ for\ return\ value.\ */}}
 \DoxyCodeLine{\Hypertarget{atomic_8h_source_l00038}\mbox{\hyperlink{atomic_8h_a9afd1a0a270b79c8b529c847deee8b90}{00038}}\ \}\ \mbox{\hyperlink{atomic_8h_a9afd1a0a270b79c8b529c847deee8b90}{ttak\_func\_wrapper\_t}};}
@@ -44,16 +44,16 @@
 \DoxyCodeLine{\Hypertarget{atomic_8h_source_l00040}00040\ \textcolor{comment}{/**}}
 \DoxyCodeLine{\Hypertarget{atomic_8h_source_l00041}00041\ \textcolor{comment}{\ *\ @brief\ Check\ tt\_func\_wrapper\ has\ expired.}}
 \DoxyCodeLine{\Hypertarget{atomic_8h_source_l00042}00042\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{atomic_8h_source_l00043}\mbox{\hyperlink{atomic_8h_a52a4af1733d936d7991c868f37e85fc8}{00043}}\ \_Bool\ \mbox{\hyperlink{atomic_8h_a52a4af1733d936d7991c868f37e85fc8}{tt\_func\_has\_expired}}(\mbox{\hyperlink{atomic_8h_a9afd1a0a270b79c8b529c847deee8b90}{ttak\_func\_wrapper\_t}}\ *wr,\ uint64\_t\ now);\textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{atomic_8h_source_l00043}\mbox{\hyperlink{atomic_8h_a52a4af1733d936d7991c868f37e85fc8}{00043}}\ \_Bool\ \mbox{\hyperlink{atomic_8h_a52a4af1733d936d7991c868f37e85fc8}{tt\_func\_has\_expired}}(\mbox{\hyperlink{structttak__func__wrapper}{ttak\_func\_wrapper\_t}}\ *wr,\ uint64\_t\ now);\textcolor{comment}{}}
 \DoxyCodeLine{\Hypertarget{atomic_8h_source_l00044}00044\ \textcolor{comment}{/**}}
 \DoxyCodeLine{\Hypertarget{atomic_8h_source_l00045}00045\ \textcolor{comment}{\ *\ @brief\ initialize\ tt\_func\_wrapper.}}
 \DoxyCodeLine{\Hypertarget{atomic_8h_source_l00046}00046\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{atomic_8h_source_l00047}\mbox{\hyperlink{atomic_8h_aa8c8e784da856951cb1f07f0e009e34f}{00047}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{atomic_8h_aa8c8e784da856951cb1f07f0e009e34f}{func\_wrapper\_init}}(\mbox{\hyperlink{atomic_8h_a9afd1a0a270b79c8b529c847deee8b90}{ttak\_func\_wrapper\_t}}\ *wr,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{atomic_8h_source_l00047}\mbox{\hyperlink{atomic_8h_aa8c8e784da856951cb1f07f0e009e34f}{00047}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{atomic_8h_aa8c8e784da856951cb1f07f0e009e34f}{func\_wrapper\_init}}(\mbox{\hyperlink{structttak__func__wrapper}{ttak\_func\_wrapper\_t}}\ *wr,\ uint64\_t\ now);}
 \DoxyCodeLine{\Hypertarget{atomic_8h_source_l00048}00048\ \textcolor{comment}{}}
 \DoxyCodeLine{\Hypertarget{atomic_8h_source_l00049}00049\ \textcolor{comment}{/**}}
 \DoxyCodeLine{\Hypertarget{atomic_8h_source_l00050}00050\ \textcolor{comment}{\ *\ @brief\ Shortened\ alias\ for\ ttak\_func\_wrapper\_t.}}
 \DoxyCodeLine{\Hypertarget{atomic_8h_source_l00051}00051\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{atomic_8h_source_l00052}\mbox{\hyperlink{atomic_8h_a4d9636cc0652ce6208ce2d9b44b24c48}{00052}}\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{atomic_8h_a9afd1a0a270b79c8b529c847deee8b90}{ttak\_func\_wrapper\_t}}\ \mbox{\hyperlink{atomic_8h_a4d9636cc0652ce6208ce2d9b44b24c48}{tt\_func\_wr\_t}};}
+\DoxyCodeLine{\Hypertarget{atomic_8h_source_l00052}\mbox{\hyperlink{atomic_8h_a4d9636cc0652ce6208ce2d9b44b24c48}{00052}}\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{structttak__func__wrapper}{ttak\_func\_wrapper\_t}}\ \mbox{\hyperlink{atomic_8h_a4d9636cc0652ce6208ce2d9b44b24c48}{tt\_func\_wr\_t}};}
 \DoxyCodeLine{\Hypertarget{atomic_8h_source_l00053}00053\ \textcolor{comment}{}}
 \DoxyCodeLine{\Hypertarget{atomic_8h_source_l00054}00054\ \textcolor{comment}{/**}}
 \DoxyCodeLine{\Hypertarget{atomic_8h_source_l00055}00055\ \textcolor{comment}{\ *\ @brief\ Executes\ a\ function\ atomically\ using\ the\ provided\ wrapper.}}
@@ -62,7 +62,7 @@
 \DoxyCodeLine{\Hypertarget{atomic_8h_source_l00058}00058\ \textcolor{comment}{\ *\ @param\ now\ Current\ tick\ count.}}
 \DoxyCodeLine{\Hypertarget{atomic_8h_source_l00059}00059\ \textcolor{comment}{\ *\ @return\ Pointer\ to\ the\ return\ value.}}
 \DoxyCodeLine{\Hypertarget{atomic_8h_source_l00060}00060\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{atomic_8h_source_l00061}\mbox{\hyperlink{atomic_8h_a89133290d76526074f7fc534d092154d}{00061}}\ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{atomic_8h_a89133290d76526074f7fc534d092154d}{atomic\_function\_execute}}(\mbox{\hyperlink{atomic_8h_a4d9636cc0652ce6208ce2d9b44b24c48}{tt\_func\_wr\_t}}\ *f,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{atomic_8h_source_l00061}\mbox{\hyperlink{atomic_8h_a89133290d76526074f7fc534d092154d}{00061}}\ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{atomic_8h_a89133290d76526074f7fc534d092154d}{atomic\_function\_execute}}(\mbox{\hyperlink{structttak__func__wrapper}{tt\_func\_wr\_t}}\ *f,\ uint64\_t\ now);}
 \DoxyCodeLine{\Hypertarget{atomic_8h_source_l00062}00062\ }
 \DoxyCodeLine{\Hypertarget{atomic_8h_source_l00063}00063\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ \_\_TTAK\_ATOMIC\_H\_\_}}
 

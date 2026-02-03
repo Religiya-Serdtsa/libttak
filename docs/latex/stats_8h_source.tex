@@ -1,0 +1,69 @@
+\doxysection{stats.\+h}
+\hypertarget{stats_8h_source}{}\label{stats_8h_source}\index{include/ttak/stats/stats.h@{include/ttak/stats/stats.h}}
+\mbox{\hyperlink{stats_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ TTAK\_STATS\_STATS\_H}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ TTAK\_STATS\_STATS\_H}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{sync_8h}{ttak/sync/sync.h}}>}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{spinlock_8h}{ttak/sync/spinlock.h}}>}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00008}\mbox{\hyperlink{stats_8h_a7d7878976b4f1d8dbb22a4c3af8ceb8f}{00008}}\ \textcolor{preprocessor}{\#define\ TTAK\_STATS\_HIST\_BUCKETS\ 10}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00009}00009\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00010}00010\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00011}00011\ \textcolor{comment}{\ *\ @brief\ Thread-\/safe\ Statistics\ structure.}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00012}00012\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00013}00013\ \textcolor{comment}{\ *\ Tracks\ count,\ sum,\ min,\ max,\ and\ a\ simple\ histogram.}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00014}00014\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00015}\mbox{\hyperlink{structttak__stats}{00015}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__stats}{ttak\_stats}}\ \{}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00016}\mbox{\hyperlink{structttak__stats_a049a63b14d250966d575675ae4c0dcd9}{00016}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__stats_a049a63b14d250966d575675ae4c0dcd9}{count}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Total\ number\ of\ samples.\ */}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00017}\mbox{\hyperlink{structttak__stats_afa34d3d46d6cac02fd808df9e9ef5130}{00017}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__stats_afa34d3d46d6cac02fd808df9e9ef5130}{sum}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Sum\ of\ all\ sample\ values.\ */}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00018}\mbox{\hyperlink{structttak__stats_a6f870ddf2467bd4498be35c17dff9b3c}{00018}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__stats_a6f870ddf2467bd4498be35c17dff9b3c}{min}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Minimum\ value\ observed.\ */}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00019}\mbox{\hyperlink{structttak__stats_a808309ba092c4c6ce3948ad679a63f33}{00019}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__stats_a808309ba092c4c6ce3948ad679a63f33}{max}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Maximum\ value\ observed.\ */}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00020}\mbox{\hyperlink{structttak__stats_aed5a4e8e63554f066ed1858e18a33409}{00020}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__stats_aed5a4e8e63554f066ed1858e18a33409}{histogram}}[\mbox{\hyperlink{stats_8h_a7d7878976b4f1d8dbb22a4c3af8ceb8f}{TTAK\_STATS\_HIST\_BUCKETS}}];\textcolor{comment}{/**<\ Histogram\ buckets.\ */}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00021}\mbox{\hyperlink{structttak__stats_ab51ebdd3e5c43fbaa2dbeb59804057c2}{00021}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__stats_ab51ebdd3e5c43fbaa2dbeb59804057c2}{hist\_min}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Lower\ bound\ for\ the\ histogram.\ */}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00022}\mbox{\hyperlink{structttak__stats_a0051740f14757b374d2dae3f8a9342c4}{00022}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__stats_a0051740f14757b374d2dae3f8a9342c4}{hist\_max}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Upper\ bound\ for\ the\ histogram.\ */}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00023}\mbox{\hyperlink{structttak__stats_a61409b0d6c251a2573a5173c9e44915a}{00023}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__stats_a61409b0d6c251a2573a5173c9e44915a}{hist\_step}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Range\ of\ each\ histogram\ bucket.\ */}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00024}\mbox{\hyperlink{structttak__stats_a4500840e3211865c4db0493f947c3667}{00024}}\ \ \ \ \ \mbox{\hyperlink{structttak__spin}{ttak\_spin\_t}}\ \mbox{\hyperlink{structttak__stats_a4500840e3211865c4db0493f947c3667}{lock}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Spinlock\ for\ thread\ safety.\ */}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00025}\mbox{\hyperlink{stats_8h_a897b5aaf1addd7acb495025c2129969a}{00025}}\ \}\ \mbox{\hyperlink{stats_8h_a897b5aaf1addd7acb495025c2129969a}{ttak\_stats\_t}};}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00027}\mbox{\hyperlink{stats_8h_a992d82b06af030499b3dca50aaa42075}{00027}}\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{structttak__stats}{ttak\_stats\_t}}\ \mbox{\hyperlink{stats_8h_a992d82b06af030499b3dca50aaa42075}{tt\_stats\_t}};}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00028}00028\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00029}00029\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00030}00030\ \textcolor{comment}{\ *\ @brief\ Initializes\ the\ statistics\ structure.}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00031}00031\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00032}00032\ \textcolor{comment}{\ *\ @param\ s\ Pointer\ to\ the\ stats\ structure.}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00033}00033\ \textcolor{comment}{\ *\ @param\ hist\_min\ Lower\ bound\ for\ the\ histogram.}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00034}00034\ \textcolor{comment}{\ *\ @param\ hist\_max\ Upper\ bound\ for\ the\ histogram.}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00035}00035\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00036}\mbox{\hyperlink{stats_8h_abb915be3d13f3f1a2d348e008d230265}{00036}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{stats_8h_abb915be3d13f3f1a2d348e008d230265}{ttak\_stats\_init}}(\mbox{\hyperlink{structttak__stats}{ttak\_stats\_t}}\ *s,\ uint64\_t\ hist\_min,\ uint64\_t\ hist\_max);}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00037}00037\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00038}00038\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00039}00039\ \textcolor{comment}{\ *\ @brief\ Records\ a\ new\ value\ into\ the\ statistics.}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00040}00040\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00041}00041\ \textcolor{comment}{\ *\ @param\ s\ Pointer\ to\ the\ stats\ structure.}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00042}00042\ \textcolor{comment}{\ *\ @param\ value\ The\ value\ to\ record.}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00043}00043\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00044}\mbox{\hyperlink{stats_8h_ad02dbf59493719ca258726aff1de4641}{00044}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{stats_8h_ad02dbf59493719ca258726aff1de4641}{ttak\_stats\_record}}(\mbox{\hyperlink{structttak__stats}{ttak\_stats\_t}}\ *s,\ uint64\_t\ value);}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00045}00045\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00046}00046\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00047}00047\ \textcolor{comment}{\ *\ @brief\ Prints\ the\ statistics\ to\ stdout\ in\ ASCII\ format.}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00048}00048\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00049}00049\ \textcolor{comment}{\ *\ Includes\ basic\ metrics\ and\ a\ bar\ chart\ for\ the\ histogram.}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00050}00050\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00051}00051\ \textcolor{comment}{\ *\ @param\ s\ Pointer\ to\ the\ stats\ structure.}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00052}00052\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00053}\mbox{\hyperlink{stats_8h_a002bb2dfd3e80a61693eb3223901753e}{00053}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{stats_8h_a002bb2dfd3e80a61693eb3223901753e}{ttak\_stats\_print\_ascii}}(\mbox{\hyperlink{structttak__stats}{ttak\_stats\_t}}\ *s);}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00054}00054\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00055}00055\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00056}00056\ \textcolor{comment}{\ *\ @brief\ Calculates\ the\ arithmetic\ mean.}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00057}00057\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00058}00058\ \textcolor{comment}{\ *\ @param\ s\ Pointer\ to\ the\ stats\ structure.}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00059}00059\ \textcolor{comment}{\ *\ @return\ The\ mean\ value.}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00060}00060\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00061}\mbox{\hyperlink{stats_8h_a54b911aa8d10ae214de24d79a3c00357}{00061}}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{stats_8h_a54b911aa8d10ae214de24d79a3c00357}{ttak\_stats\_mean}}(\mbox{\hyperlink{structttak__stats}{ttak\_stats\_t}}\ *s);}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00063}00063\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_STATS\_STATS\_H}}
+
+\end{DoxyCode}

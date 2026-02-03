@@ -7,6 +7,8 @@
 #include <stdatomic.h>
 #include <pthread.h>
 
+typedef struct ttak_mem_tree ttak_mem_tree_t;
+
 /**
  * @brief Represents a node in the generic heap tree, tracking a dynamically allocated memory block.
  *
@@ -22,6 +24,8 @@ typedef struct ttak_mem_node {
     _Bool is_root;                  /**< True if this node is referenced externally (not by another heap node). */
     pthread_mutex_t lock;           /**< Mutex for thread-safe access to this node's metadata. */
     struct ttak_mem_node *next;    /**< Pointer to the next node in the mem tree's internal list. */
+    struct ttak_mem_node *prev;    /**< Pointer to the previous node in the mem tree's internal list. */
+    ttak_mem_tree_t *tree;         /**< Pointer back to the parent mem tree. */
 } ttak_mem_node_t;
 
 /**
@@ -32,14 +36,18 @@ typedef struct ttak_mem_node {
  * automatic cleanup of expired or unreferenced blocks and allows for manual control
  * over the cleanup process.
  */
-typedef struct ttak_mem_tree {
+struct ttak_mem_tree {
     ttak_mem_node_t *head;             /**< Head of the linked list of all tracked mem nodes. */
     pthread_mutex_t lock;               /**< Mutex for thread-safe access to the mem tree structure. */
-    _Atomic uint64_t cleanup_interval_ns; /**< Interval in nanoseconds for automatic cleanup. */
+    pthread_cond_t cond;                /**< Condition variable for immediate cleanup wakeup. */
+    _Atomic uint64_t max_cleanup_interval_ns; /**< Maximum interval in nanoseconds for automatic cleanup (default 120s). */
+    _Atomic uint64_t min_cleanup_interval_ns; /**< Minimum interval in nanoseconds for automatic cleanup (default 10s). */
+    _Atomic size_t garbage_pressure;    /**< Score representing the amount of potential garbage/missing memory. */
+    _Atomic size_t pressure_threshold;  /**< Threshold to trigger immediate cleanup (default 1MB). */
     _Atomic _Bool use_manual_cleanup;   /**< Flag to disable automatic cleanup (1 for manual, 0 for auto). */
     pthread_t cleanup_thread;           /**< Thread ID for the background automatic cleanup process. */
     _Atomic _Bool shutdown_requested;   /**< Flag to signal the cleanup thread to terminate. */
-} ttak_mem_tree_t;
+};
 
 /**
  * @brief Initializes a new mem tree instance.
@@ -96,12 +104,35 @@ void ttak_mem_node_acquire(ttak_mem_node_t *node);
 void ttak_mem_node_release(ttak_mem_node_t *node);
 
 /**
- * @brief Sets the interval for automatic memory cleanup.
+ * @brief Sets the min and max intervals for automatic memory cleanup.
+ *
+ * The cleanup thread uses an adaptive interval based on memory pressure.
+ * It will back off towards the max interval if no garbage is detected.
  *
  * @param tree Pointer to the mem tree.
- * @param interval_ns The new cleanup interval in nanoseconds.
+ * @param min_ns The minimum cleanup interval in nanoseconds (e.g., 10s).
+ * @param max_ns The maximum cleanup interval in nanoseconds (e.g., 120s).
  */
-void ttak_mem_tree_set_cleanup_interval(ttak_mem_tree_t *tree, uint64_t interval_ns);
+void ttak_mem_tree_set_cleaning_intervals(ttak_mem_tree_t *tree, uint64_t min_ns, uint64_t max_ns);
+
+/**
+ * @brief Sets the pressure threshold that triggers immediate cleanup.
+ * 
+ * @param tree Pointer to the mem tree.
+ * @param threshold_bytes Pressure threshold in bytes.
+ */
+void ttak_mem_tree_set_pressure_threshold(ttak_mem_tree_t *tree, size_t threshold_bytes);
+
+/**
+ * @brief Reports potential garbage pressure to the mem tree.
+ *
+ * Increasing the pressure score signals the cleanup thread that there is work to do.
+ * If pressure is zero, the cleanup thread may perform an early return or sleep longer.
+ *
+ * @param tree Pointer to the mem tree.
+ * @param pressure_amount Amount to increase the pressure score by.
+ */
+void ttak_mem_tree_report_pressure(ttak_mem_tree_t *tree, size_t pressure_amount);
 
 /**
  * @brief Sets the manual cleanup flag.

@@ -1,0 +1,235 @@
+\doxysection{include/ttak/mem/owner.h File Reference}
+\hypertarget{owner_8h}{}\label{owner_8h}\index{include/ttak/mem/owner.h@{include/ttak/mem/owner.h}}
+{\ttfamily \#include $<$ttak/ht/map.\+h$>$}\newline
+{\ttfamily \#include $<$ttak/sync/sync.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+Include dependency graph for owner.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{owner_8h__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structttak__owner}{ttak\+\_\+owner}}
+\begin{DoxyCompactList}\small\item\em The Owner structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef void(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{owner_8h_a0b143e19f7925443babcbe9e98b7bd7c}{ttak\+\_\+owner\+\_\+func\+\_\+t}}) (void \texorpdfstring{$\ast$}{*}ctx, void \texorpdfstring{$\ast$}{*}args)
+\begin{DoxyCompactList}\small\item\em Function pointer type for tasks executed within the owner\textquotesingle{}s context. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structttak__owner}{ttak\+\_\+owner}} \mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em The Owner structure. \end{DoxyCompactList}\item 
+typedef \mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \mbox{\hyperlink{owner_8h_a9b17ab97f490a6a7a1a4f90c2216186c}{tt\+\_\+owner\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{owner_8h_a6c47e6a1c635efb2ad989e927612e94a}{ttak\+\_\+owner\+\_\+policy\+\_\+t}} \{ \mbox{\hyperlink{owner_8h_a6c47e6a1c635efb2ad989e927612e94aaf926995f7102aa5b23a6e4af4f5d6303}{TTAK\+\_\+\+OWNER\+\_\+\+SAFE\+\_\+\+DEFAULT}} = 0
+, \mbox{\hyperlink{owner_8h_a6c47e6a1c635efb2ad989e927612e94aa55791aa9e8301d023a68a58576bc2291}{TTAK\+\_\+\+OWNER\+\_\+\+DENY\+\_\+\+DANGEROUS\+\_\+\+MEM}} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 0)
+, \mbox{\hyperlink{owner_8h_a6c47e6a1c635efb2ad989e927612e94aa5fc9f432296d5885fa5bb9d64a949197}{TTAK\+\_\+\+OWNER\+\_\+\+DENY\+\_\+\+THREADING}} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1)
+, \mbox{\hyperlink{owner_8h_a6c47e6a1c635efb2ad989e927612e94aa161c7bdbf7ab13fa527d7dd726d0357b}{TTAK\+\_\+\+OWNER\+\_\+\+STRICT\+\_\+\+ISOLATION}} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 2)
+ \}
+\begin{DoxyCompactList}\small\item\em Configuration flags for the owner\textquotesingle{}s safety policy. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{owner_8h_a7f2426faee1c99c71652d908024dadd8}{ttak\+\_\+owner\+\_\+create}} (uint32\+\_\+t policy)
+\begin{DoxyCompactList}\small\item\em Creates a new Owner context. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{owner_8h_a73e3bd2628d53ed3e2b168de4f999c16}{ttak\+\_\+owner\+\_\+destroy}} (\mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}owner)
+\begin{DoxyCompactList}\small\item\em Destroys the Owner and releases all registered resources. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{owner_8h_ac4a9d4c89369dd2c3c208633fb41d9a8}{ttak\+\_\+owner\+\_\+register\+\_\+func}} (\mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}owner, const char \texorpdfstring{$\ast$}{*}name, \mbox{\hyperlink{owner_8h_a0b143e19f7925443babcbe9e98b7bd7c}{ttak\+\_\+owner\+\_\+func\+\_\+t}} func)
+\begin{DoxyCompactList}\small\item\em Registers a function into the owner\textquotesingle{}s isolated context. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{owner_8h_ae74497f47054f5c3204578fa163dc942}{ttak\+\_\+owner\+\_\+register\+\_\+resource}} (\mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}owner, const char \texorpdfstring{$\ast$}{*}name, void \texorpdfstring{$\ast$}{*}data)
+\begin{DoxyCompactList}\small\item\em Registers a resource (variable) into the owner\textquotesingle{}s isolated context. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{owner_8h_ac178a65367f5aec292088dcdc1e1ee36}{ttak\+\_\+owner\+\_\+execute}} (\mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}owner, const char \texorpdfstring{$\ast$}{*}func\+\_\+name, const char \texorpdfstring{$\ast$}{*}resource\+\_\+name, void \texorpdfstring{$\ast$}{*}args)
+\begin{DoxyCompactList}\small\item\em Executes a registered function within the owner\textquotesingle{}s safety context. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{owner_8h_a9b17ab97f490a6a7a1a4f90c2216186c}\label{owner_8h_a9b17ab97f490a6a7a1a4f90c2216186c} 
+\index{owner.h@{owner.h}!tt\_owner\_t@{tt\_owner\_t}}
+\index{tt\_owner\_t@{tt\_owner\_t}!owner.h@{owner.h}}
+\doxysubsubsection{\texorpdfstring{tt\_owner\_t}{tt\_owner\_t}}
+{\footnotesize\ttfamily typedef \mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \mbox{\hyperlink{owner_8h_a9b17ab97f490a6a7a1a4f90c2216186c}{tt\+\_\+owner\+\_\+t}}}
+
+
+
+Definition at line \mbox{\hyperlink{owner_8h_source_l00041}{41}} of file \mbox{\hyperlink{owner_8h_source}{owner.\+h}}.
+
+\Hypertarget{owner_8h_a0b143e19f7925443babcbe9e98b7bd7c}\label{owner_8h_a0b143e19f7925443babcbe9e98b7bd7c} 
+\index{owner.h@{owner.h}!ttak\_owner\_func\_t@{ttak\_owner\_func\_t}}
+\index{ttak\_owner\_func\_t@{ttak\_owner\_func\_t}!owner.h@{owner.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_owner\_func\_t}{ttak\_owner\_func\_t}}
+{\footnotesize\ttfamily typedef void(\texorpdfstring{$\ast$}{*} ttak\+\_\+owner\+\_\+func\+\_\+t) (void \texorpdfstring{$\ast$}{*}ctx, void \texorpdfstring{$\ast$}{*}args)}
+
+
+
+Function pointer type for tasks executed within the owner\textquotesingle{}s context. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ctx} & Pointer to the user-\/provided context data. \\
+\hline
+{\em args} & Arguments passed during the execution call. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{owner_8h_source_l00015}{15}} of file \mbox{\hyperlink{owner_8h_source}{owner.\+h}}.
+
+\Hypertarget{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}\label{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c} 
+\index{owner.h@{owner.h}!ttak\_owner\_t@{ttak\_owner\_t}}
+\index{ttak\_owner\_t@{ttak\_owner\_t}!owner.h@{owner.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_owner\_t}{ttak\_owner\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__owner}{ttak\+\_\+owner}} \mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}}}
+
+
+
+The Owner structure. 
+
+Acts as a sandbox/container for resources and functions. Ensures isolation and enforces safety policies. 
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{owner_8h_a6c47e6a1c635efb2ad989e927612e94a}\label{owner_8h_a6c47e6a1c635efb2ad989e927612e94a} 
+\index{owner.h@{owner.h}!ttak\_owner\_policy\_t@{ttak\_owner\_policy\_t}}
+\index{ttak\_owner\_policy\_t@{ttak\_owner\_policy\_t}!owner.h@{owner.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_owner\_policy\_t}{ttak\_owner\_policy\_t}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{owner_8h_a6c47e6a1c635efb2ad989e927612e94a}{ttak\+\_\+owner\+\_\+policy\+\_\+t}}}
+
+
+
+Configuration flags for the owner\textquotesingle{}s safety policy. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_OWNER\_SAFE\_DEFAULT@{TTAK\_OWNER\_SAFE\_DEFAULT}!owner.h@{owner.h}}\index{owner.h@{owner.h}!TTAK\_OWNER\_SAFE\_DEFAULT@{TTAK\_OWNER\_SAFE\_DEFAULT}}}\Hypertarget{owner_8h_a6c47e6a1c635efb2ad989e927612e94aaf926995f7102aa5b23a6e4af4f5d6303}\label{owner_8h_a6c47e6a1c635efb2ad989e927612e94aaf926995f7102aa5b23a6e4af4f5d6303} 
+TTAK\+\_\+\+OWNER\+\_\+\+SAFE\+\_\+\+DEFAULT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_OWNER\_DENY\_DANGEROUS\_MEM@{TTAK\_OWNER\_DENY\_DANGEROUS\_MEM}!owner.h@{owner.h}}\index{owner.h@{owner.h}!TTAK\_OWNER\_DENY\_DANGEROUS\_MEM@{TTAK\_OWNER\_DENY\_DANGEROUS\_MEM}}}\Hypertarget{owner_8h_a6c47e6a1c635efb2ad989e927612e94aa55791aa9e8301d023a68a58576bc2291}\label{owner_8h_a6c47e6a1c635efb2ad989e927612e94aa55791aa9e8301d023a68a58576bc2291} 
+TTAK\+\_\+\+OWNER\+\_\+\+DENY\+\_\+\+DANGEROUS\+\_\+\+MEM&Prevent access to memory marked as unsafe/volatile. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_OWNER\_DENY\_THREADING@{TTAK\_OWNER\_DENY\_THREADING}!owner.h@{owner.h}}\index{owner.h@{owner.h}!TTAK\_OWNER\_DENY\_THREADING@{TTAK\_OWNER\_DENY\_THREADING}}}\Hypertarget{owner_8h_a6c47e6a1c635efb2ad989e927612e94aa5fc9f432296d5885fa5bb9d64a949197}\label{owner_8h_a6c47e6a1c635efb2ad989e927612e94aa5fc9f432296d5885fa5bb9d64a949197} 
+TTAK\+\_\+\+OWNER\+\_\+\+DENY\+\_\+\+THREADING&Prevent spawning threads or async tasks within this context. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_OWNER\_STRICT\_ISOLATION@{TTAK\_OWNER\_STRICT\_ISOLATION}!owner.h@{owner.h}}\index{owner.h@{owner.h}!TTAK\_OWNER\_STRICT\_ISOLATION@{TTAK\_OWNER\_STRICT\_ISOLATION}}}\Hypertarget{owner_8h_a6c47e6a1c635efb2ad989e927612e94aa161c7bdbf7ab13fa527d7dd726d0357b}\label{owner_8h_a6c47e6a1c635efb2ad989e927612e94aa161c7bdbf7ab13fa527d7dd726d0357b} 
+TTAK\+\_\+\+OWNER\+\_\+\+STRICT\+\_\+\+ISOLATION&Enforce strict data isolation (no external pointer access). \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{owner_8h_source_l00020}{20}} of file \mbox{\hyperlink{owner_8h_source}{owner.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{owner_8h_a7f2426faee1c99c71652d908024dadd8}\label{owner_8h_a7f2426faee1c99c71652d908024dadd8} 
+\index{owner.h@{owner.h}!ttak\_owner\_create@{ttak\_owner\_create}}
+\index{ttak\_owner\_create@{ttak\_owner\_create}!owner.h@{owner.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_owner\_create()}{ttak\_owner\_create()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*} ttak\+\_\+owner\+\_\+create (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{policy }\end{DoxyParamCaption})}
+
+
+
+Creates a new Owner context. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em policy} & Safety policy flags. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the initialized owner, or NULL on failure. 
+\end{DoxyReturn}
+\Hypertarget{owner_8h_a73e3bd2628d53ed3e2b168de4f999c16}\label{owner_8h_a73e3bd2628d53ed3e2b168de4f999c16} 
+\index{owner.h@{owner.h}!ttak\_owner\_destroy@{ttak\_owner\_destroy}}
+\index{ttak\_owner\_destroy@{ttak\_owner\_destroy}!owner.h@{owner.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_owner\_destroy()}{ttak\_owner\_destroy()}}
+{\footnotesize\ttfamily void ttak\+\_\+owner\+\_\+destroy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{owner }\end{DoxyParamCaption})}
+
+
+
+Destroys the Owner and releases all registered resources. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em owner} & The owner to destroy. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{owner_8h_ac178a65367f5aec292088dcdc1e1ee36}\label{owner_8h_ac178a65367f5aec292088dcdc1e1ee36} 
+\index{owner.h@{owner.h}!ttak\_owner\_execute@{ttak\_owner\_execute}}
+\index{ttak\_owner\_execute@{ttak\_owner\_execute}!owner.h@{owner.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_owner\_execute()}{ttak\_owner\_execute()}}
+{\footnotesize\ttfamily bool ttak\+\_\+owner\+\_\+execute (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{owner,  }\item[{const char \texorpdfstring{$\ast$}{*}}]{func\+\_\+name,  }\item[{const char \texorpdfstring{$\ast$}{*}}]{resource\+\_\+name,  }\item[{void \texorpdfstring{$\ast$}{*}}]{args }\end{DoxyParamCaption})}
+
+
+
+Executes a registered function within the owner\textquotesingle{}s safety context. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em owner} & The owner context. \\
+\hline
+{\em func\+\_\+name} & Name of the function to execute. \\
+\hline
+{\em resource\+\_\+name} & Name of the registered resource to pass as \textquotesingle{}ctx\textquotesingle{} (optional, can be NULL). \\
+\hline
+{\em args} & runtime arguments to pass to the function. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if execution was permitted and successful. 
+\end{DoxyReturn}
+\Hypertarget{owner_8h_ac4a9d4c89369dd2c3c208633fb41d9a8}\label{owner_8h_ac4a9d4c89369dd2c3c208633fb41d9a8} 
+\index{owner.h@{owner.h}!ttak\_owner\_register\_func@{ttak\_owner\_register\_func}}
+\index{ttak\_owner\_register\_func@{ttak\_owner\_register\_func}!owner.h@{owner.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_owner\_register\_func()}{ttak\_owner\_register\_func()}}
+{\footnotesize\ttfamily bool ttak\+\_\+owner\+\_\+register\+\_\+func (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{owner,  }\item[{const char \texorpdfstring{$\ast$}{*}}]{name,  }\item[{\mbox{\hyperlink{owner_8h_a0b143e19f7925443babcbe9e98b7bd7c}{ttak\+\_\+owner\+\_\+func\+\_\+t}}}]{func }\end{DoxyParamCaption})}
+
+
+
+Registers a function into the owner\textquotesingle{}s isolated context. 
+
+The function is "{}copied"{} (logically) and can only be invoked via ttak\+\_\+owner\+\_\+execute.
+
+
+\begin{DoxyParams}{Parameters}
+{\em owner} & The owner context. \\
+\hline
+{\em name} & Unique name for the function. \\
+\hline
+{\em func} & Function pointer. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if registered successfully, false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{owner_8h_ae74497f47054f5c3204578fa163dc942}\label{owner_8h_ae74497f47054f5c3204578fa163dc942} 
+\index{owner.h@{owner.h}!ttak\_owner\_register\_resource@{ttak\_owner\_register\_resource}}
+\index{ttak\_owner\_register\_resource@{ttak\_owner\_register\_resource}!owner.h@{owner.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_owner\_register\_resource()}{ttak\_owner\_register\_resource()}}
+{\footnotesize\ttfamily bool ttak\+\_\+owner\+\_\+register\+\_\+resource (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{owner,  }\item[{const char \texorpdfstring{$\ast$}{*}}]{name,  }\item[{void \texorpdfstring{$\ast$}{*}}]{data }\end{DoxyParamCaption})}
+
+
+
+Registers a resource (variable) into the owner\textquotesingle{}s isolated context. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em owner} & The owner context. \\
+\hline
+{\em name} & Unique name for the resource. \\
+\hline
+{\em data} & Pointer to the data. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if registered successfully. 
+\end{DoxyReturn}

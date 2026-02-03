@@ -1,0 +1,77 @@
+\doxysection{ttak\+\_\+epoch\+\_\+gc Struct Reference}
+\hypertarget{structttak__epoch__gc}{}\label{structttak__epoch__gc}\index{ttak\_epoch\_gc@{ttak\_epoch\_gc}}
+
+
+Epoch-\/based garbage collection context.  
+
+
+
+
+{\ttfamily \#include $<$epoch\+\_\+gc.\+h$>$}
+
+
+
+Collaboration diagram for ttak\+\_\+epoch\+\_\+gc\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=325pt]{structttak__epoch__gc__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{mem__tree_8h_a247fb2ceb1803d4d3ad077d0785cc858}{ttak\+\_\+mem\+\_\+tree\+\_\+t}} \mbox{\hyperlink{structttak__epoch__gc_a9377dd939116b8afa03f01ba1691ee17}{tree}}
+\item 
+uint64\+\_\+t \mbox{\hyperlink{structttak__epoch__gc_ab3a7c8a89fbdc06128a6b176ed2132eb}{current\+\_\+epoch}}
+\item 
+uint64\+\_\+t \mbox{\hyperlink{structttak__epoch__gc_a20d6d9cd563837e4cbe0c5c785202279}{last\+\_\+cleanup\+\_\+ts}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Epoch-\/based garbage collection context. 
+
+Manages memory lifecycle using generational epochs. Designed for periodic, non-\/blocking cleanup where the user triggers the cycle. Traverses the heap tree to identify and free expired blocks without a global stop-\/the-\/world pause. 
+
+Definition at line \mbox{\hyperlink{epoch__gc_8h_source_l00013}{13}} of file \mbox{\hyperlink{epoch__gc_8h_source}{epoch\+\_\+gc.\+h}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structttak__epoch__gc_ab3a7c8a89fbdc06128a6b176ed2132eb}\label{structttak__epoch__gc_ab3a7c8a89fbdc06128a6b176ed2132eb} 
+\index{ttak\_epoch\_gc@{ttak\_epoch\_gc}!current\_epoch@{current\_epoch}}
+\index{current\_epoch@{current\_epoch}!ttak\_epoch\_gc@{ttak\_epoch\_gc}}
+\doxysubsubsection{\texorpdfstring{current\_epoch}{current\_epoch}}
+{\footnotesize\ttfamily uint64\+\_\+t ttak\+\_\+epoch\+\_\+gc\+::current\+\_\+epoch}
+
+Current active epoch ID. 
+
+Definition at line \mbox{\hyperlink{epoch__gc_8h_source_l00015}{15}} of file \mbox{\hyperlink{epoch__gc_8h_source}{epoch\+\_\+gc.\+h}}.
+
+\Hypertarget{structttak__epoch__gc_a20d6d9cd563837e4cbe0c5c785202279}\label{structttak__epoch__gc_a20d6d9cd563837e4cbe0c5c785202279} 
+\index{ttak\_epoch\_gc@{ttak\_epoch\_gc}!last\_cleanup\_ts@{last\_cleanup\_ts}}
+\index{last\_cleanup\_ts@{last\_cleanup\_ts}!ttak\_epoch\_gc@{ttak\_epoch\_gc}}
+\doxysubsubsection{\texorpdfstring{last\_cleanup\_ts}{last\_cleanup\_ts}}
+{\footnotesize\ttfamily uint64\+\_\+t ttak\+\_\+epoch\+\_\+gc\+::last\+\_\+cleanup\+\_\+ts}
+
+Timestamp of the last cleanup execution. 
+
+Definition at line \mbox{\hyperlink{epoch__gc_8h_source_l00016}{16}} of file \mbox{\hyperlink{epoch__gc_8h_source}{epoch\+\_\+gc.\+h}}.
+
+\Hypertarget{structttak__epoch__gc_a9377dd939116b8afa03f01ba1691ee17}\label{structttak__epoch__gc_a9377dd939116b8afa03f01ba1691ee17} 
+\index{ttak\_epoch\_gc@{ttak\_epoch\_gc}!tree@{tree}}
+\index{tree@{tree}!ttak\_epoch\_gc@{ttak\_epoch\_gc}}
+\doxysubsubsection{\texorpdfstring{tree}{tree}}
+{\footnotesize\ttfamily \mbox{\hyperlink{mem__tree_8h_a247fb2ceb1803d4d3ad077d0785cc858}{ttak\+\_\+mem\+\_\+tree\+\_\+t}} ttak\+\_\+epoch\+\_\+gc\+::tree}
+
+Underlying memory tree tracking allocations. 
+
+Definition at line \mbox{\hyperlink{epoch__gc_8h_source_l00014}{14}} of file \mbox{\hyperlink{epoch__gc_8h_source}{epoch\+\_\+gc.\+h}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/ttak/mem/\mbox{\hyperlink{epoch__gc_8h}{epoch\+\_\+gc.\+h}}\end{DoxyCompactItemize}

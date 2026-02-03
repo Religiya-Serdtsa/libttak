@@ -1,0 +1,56 @@
+\doxysection{deadline.\+h}
+\hypertarget{deadline_8h_source}{}\label{deadline_8h_source}\index{include/ttak/timing/deadline.h@{include/ttak/timing/deadline.h}}
+\mbox{\hyperlink{deadline_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ TTAK\_TIMING\_DEADLINE\_H}}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ TTAK\_TIMING\_DEADLINE\_H}}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00006}00006\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00007}00007\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00008}00008\ \textcolor{comment}{\ *\ @brief\ Represents\ a\ specific\ point\ in\ time\ used\ for\ deadline\ checks.}}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00009}00009\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00010}\mbox{\hyperlink{structttak__deadline}{00010}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__deadline}{ttak\_deadline}}\ \{}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00011}\mbox{\hyperlink{structttak__deadline_ac8ee85b5fbf0014328ad1e3498bd447a}{00011}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__deadline_ac8ee85b5fbf0014328ad1e3498bd447a}{start\_ts}};\ \ \ \ \ \ \textcolor{comment}{/**<\ Timestamp\ when\ the\ deadline\ was\ set.\ */}}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00012}\mbox{\hyperlink{structttak__deadline_ac59be80c1d5e5f95b34b334e4017dbcf}{00012}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__deadline_ac59be80c1d5e5f95b34b334e4017dbcf}{deadline\_ts}};\ \ \ \textcolor{comment}{/**<\ Target\ timestamp\ for\ expiration.\ */}}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00013}\mbox{\hyperlink{deadline_8h_a022a0b359411f6980f5b0dfdac99da4f}{00013}}\ \}\ \mbox{\hyperlink{deadline_8h_a022a0b359411f6980f5b0dfdac99da4f}{ttak\_deadline\_t}};}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00015}\mbox{\hyperlink{deadline_8h_a245d654efae2242071f2aa80f6d14559}{00015}}\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{structttak__deadline}{ttak\_deadline\_t}}\ \mbox{\hyperlink{deadline_8h_a245d654efae2242071f2aa80f6d14559}{tt\_deadline\_t}};}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00016}00016\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00017}00017\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00018}00018\ \textcolor{comment}{\ *\ @brief\ Represents\ a\ duration\ used\ for\ timeouts.}}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00019}00019\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00020}\mbox{\hyperlink{structttak__timeout}{00020}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__timeout}{ttak\_timeout}}\ \{}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00021}\mbox{\hyperlink{structttak__timeout_a8649d9ff42f678794a783052349915b4}{00021}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__timeout_a8649d9ff42f678794a783052349915b4}{duration\_ms}};\ \ \ \textcolor{comment}{/**<\ Duration\ in\ milliseconds.\ */}}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00022}\mbox{\hyperlink{deadline_8h_a16f5db969af8b7050739af92f2754b6d}{00022}}\ \}\ \mbox{\hyperlink{deadline_8h_a16f5db969af8b7050739af92f2754b6d}{ttak\_timeout\_t}};}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00024}\mbox{\hyperlink{deadline_8h_a356541121163f9ff375b831de619a1d8}{00024}}\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{structttak__timeout}{ttak\_timeout\_t}}\ \mbox{\hyperlink{deadline_8h_a356541121163f9ff375b831de619a1d8}{tt\_timeout\_t}};}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00025}00025\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00026}00026\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00027}00027\ \textcolor{comment}{\ *\ @brief\ Sets\ a\ deadline\ relative\ to\ the\ current\ time.}}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00028}00028\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00029}00029\ \textcolor{comment}{\ *\ @param\ dl\ Pointer\ to\ the\ deadline\ structure.}}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00030}00030\ \textcolor{comment}{\ *\ @param\ ms\_from\_now\ Milliseconds\ from\ now\ when\ the\ deadline\ expires.}}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00031}00031\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00032}\mbox{\hyperlink{deadline_8h_ab1eabe910d59e18530d7f7887b9f1b8f}{00032}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{deadline_8h_ab1eabe910d59e18530d7f7887b9f1b8f}{ttak\_deadline\_set}}(\mbox{\hyperlink{structttak__deadline}{ttak\_deadline\_t}}\ *dl,\ uint64\_t\ ms\_from\_now);}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00033}00033\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00034}00034\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00035}00035\ \textcolor{comment}{\ *\ @brief\ Checks\ if\ the\ deadline\ has\ passed.}}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00036}00036\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00037}00037\ \textcolor{comment}{\ *\ @param\ dl\ Pointer\ to\ the\ deadline\ structure.}}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00038}00038\ \textcolor{comment}{\ *\ @return\ true\ if\ expired,\ false\ otherwise.}}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00039}00039\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00040}\mbox{\hyperlink{deadline_8h_ab57cb1af44003c39bcf6dc963470e0a2}{00040}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{deadline_8h_ab57cb1af44003c39bcf6dc963470e0a2}{ttak\_deadline\_is\_expired}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__deadline}{ttak\_deadline\_t}}\ *dl);}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00041}00041\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00042}00042\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00043}00043\ \textcolor{comment}{\ *\ @brief\ Returns\ the\ remaining\ time\ in\ milliseconds.}}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00044}00044\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00045}00045\ \textcolor{comment}{\ *\ @param\ dl\ Pointer\ to\ the\ deadline\ structure.}}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00046}00046\ \textcolor{comment}{\ *\ @return\ Remaining\ milliseconds,\ or\ 0\ if\ expired.}}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00047}00047\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00048}\mbox{\hyperlink{deadline_8h_a6d55b6288d926f99e96118f3bbccd8b9}{00048}}\ uint64\_t\ \mbox{\hyperlink{deadline_8h_a6d55b6288d926f99e96118f3bbccd8b9}{ttak\_deadline\_remaining}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__deadline}{ttak\_deadline\_t}}\ *dl);}
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{deadline_8h_source_l00050}00050\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_TIMING\_DEADLINE\_H}}
+
+\end{DoxyCode}

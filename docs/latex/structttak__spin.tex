@@ -1,0 +1,43 @@
+\doxysection{ttak\+\_\+spin Struct Reference}
+\hypertarget{structttak__spin}{}\label{structttak__spin}\index{ttak\_spin@{ttak\_spin}}
+
+
+Spinlock structure.  
+
+
+
+
+{\ttfamily \#include $<$spinlock.\+h$>$}
+
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+atomic\+\_\+flag \mbox{\hyperlink{structttak__spin_a683704b7bbd13b3e6d62fe8432ae3e2c}{flag}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Spinlock structure. 
+
+Uses an atomic flag for mutual exclusion. Prefer this over mutexes for very short critical sections. 
+
+Definition at line \mbox{\hyperlink{spinlock_8h_source_l00043}{43}} of file \mbox{\hyperlink{spinlock_8h_source}{spinlock.\+h}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structttak__spin_a683704b7bbd13b3e6d62fe8432ae3e2c}\label{structttak__spin_a683704b7bbd13b3e6d62fe8432ae3e2c} 
+\index{ttak\_spin@{ttak\_spin}!flag@{flag}}
+\index{flag@{flag}!ttak\_spin@{ttak\_spin}}
+\doxysubsubsection{\texorpdfstring{flag}{flag}}
+{\footnotesize\ttfamily atomic\+\_\+flag ttak\+\_\+spin\+::flag}
+
+Atomic flag (TAS). 
+
+Definition at line \mbox{\hyperlink{spinlock_8h_source_l00044}{44}} of file \mbox{\hyperlink{spinlock_8h_source}{spinlock.\+h}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/ttak/sync/\mbox{\hyperlink{spinlock_8h}{spinlock.\+h}}\end{DoxyCompactItemize}

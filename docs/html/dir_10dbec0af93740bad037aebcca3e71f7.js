@@ -6,5 +6,6 @@ var dir_10dbec0af93740bad037aebcca3e71f7 =
     [ "03_memory_and_threads.puml", "03__memory__and__threads_8puml.html", null ],
     [ "04_math_library.puml", "04__math__library_8puml.html", null ],
     [ "05_priority_scheduling.puml", "05__priority__scheduling_8puml.html", null ],
-    [ "06_utilities.puml", "06__utilities_8puml.html", null ]
+    [ "06_utilities.puml", "06__utilities_8puml.html", null ],
+    [ "07_safety_and_ownership.puml", "07__safety__and__ownership_8puml.html", null ]
 ];

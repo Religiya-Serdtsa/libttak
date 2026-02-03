@@ -1,11 +1,11 @@
 var searchData=
 [
-  ['tt_5fhour_0',['TT_HOUR',['../internal_2app__types_8h.html#a19035333be330bdd7cb30b014a4075fe',1,'app_types.h']]],
-  ['tt_5fmicro_5fsecond_1',['TT_MICRO_SECOND',['../internal_2app__types_8h.html#ac02e371a9ce7c79927fcd1250ad5f082',1,'app_types.h']]],
-  ['tt_5fmilli_5fsecond_2',['TT_MILLI_SECOND',['../internal_2app__types_8h.html#a706d706dd7fd86c64eca603344ecd44d',1,'app_types.h']]],
-  ['tt_5fminute_3',['TT_MINUTE',['../internal_2app__types_8h.html#a3209654bf799b3cadd064970c008a32a',1,'app_types.h']]],
-  ['tt_5fnano_5fsecond_4',['TT_NANO_SECOND',['../internal_2app__types_8h.html#a8f73ed891f186c57f1a72da390592879',1,'app_types.h']]],
-  ['tt_5fsecond_5',['TT_SECOND',['../internal_2app__types_8h.html#a751dbf1f1d796405a9b2fe2f7ffa945e',1,'app_types.h']]],
+  ['tt_5fhour_0',['tt_hour',['../internal_2app__types_8h.html#a19035333be330bdd7cb30b014a4075fe',1,'TT_HOUR:&#160;app_types.h'],['../timing_8h.html#a19035333be330bdd7cb30b014a4075fe',1,'TT_HOUR:&#160;timing.h']]],
+  ['tt_5fmicro_5fsecond_1',['tt_micro_second',['../internal_2app__types_8h.html#ac02e371a9ce7c79927fcd1250ad5f082',1,'TT_MICRO_SECOND:&#160;app_types.h'],['../timing_8h.html#ac02e371a9ce7c79927fcd1250ad5f082',1,'TT_MICRO_SECOND:&#160;timing.h']]],
+  ['tt_5fmilli_5fsecond_2',['tt_milli_second',['../timing_8h.html#a706d706dd7fd86c64eca603344ecd44d',1,'TT_MILLI_SECOND:&#160;timing.h'],['../internal_2app__types_8h.html#a706d706dd7fd86c64eca603344ecd44d',1,'TT_MILLI_SECOND:&#160;app_types.h']]],
+  ['tt_5fminute_3',['tt_minute',['../timing_8h.html#a3209654bf799b3cadd064970c008a32a',1,'TT_MINUTE:&#160;timing.h'],['../internal_2app__types_8h.html#a3209654bf799b3cadd064970c008a32a',1,'TT_MINUTE:&#160;app_types.h']]],
+  ['tt_5fnano_5fsecond_4',['tt_nano_second',['../timing_8h.html#a8f73ed891f186c57f1a72da390592879',1,'TT_NANO_SECOND:&#160;timing.h'],['../internal_2app__types_8h.html#a8f73ed891f186c57f1a72da390592879',1,'TT_NANO_SECOND:&#160;app_types.h']]],
+  ['tt_5fsecond_5',['tt_second',['../timing_8h.html#a751dbf1f1d796405a9b2fe2f7ffa945e',1,'TT_SECOND:&#160;timing.h'],['../internal_2app__types_8h.html#a751dbf1f1d796405a9b2fe2f7ffa945e',1,'TT_SECOND:&#160;app_types.h']]],
   ['ttak_5fbigint_5fsso_5flimit_6',['TTAK_BIGINT_SSO_LIMIT',['../bigint_8h.html#a0e2f0eb2f43ff9d8dd473fac7b29e498',1,'bigint.h']]],
   ['ttak_5fcache_5fline_5fsize_7',['TTAK_CACHE_LINE_SIZE',['../mem_8h.html#a56bacec5f02dbd8cad7b15e6682fbf20',1,'mem.h']]],
   ['ttak_5fcold_5fpath_8',['TTAK_COLD_PATH',['../internal_2app__types_8h.html#a5ba4b50baa645717996dbe107641cf43',1,'app_types.h']]],
@@ -27,6 +27,7 @@ var searchData=
   ['ttak_5fmem_5frealloc_24',['ttak_mem_realloc',['../mem_8h.html#aecbcfc6a4045b6bd854f785a49706a77',1,'mem.h']]],
   ['ttak_5fmem_5frealloc_5fwith_5fflags_25',['ttak_mem_realloc_with_flags',['../mem_8h.html#ac436c1f90ce06b2759063c0d124cbd90',1,'mem.h']]],
   ['ttak_5fntt_5fprime_5fcount_26',['TTAK_NTT_PRIME_COUNT',['../include_2ttak_2math_2ntt_8h.html#a3d17fcf4b6668cff2d6f9a3e2efd8cfe',1,'ntt.h']]],
-  ['ttak_5fthread_5fcall_27',['TTAK_THREAD_CALL',['../thread__compat_8h.html#a99da1eadff2d3dbed9d01c2e7f00220c',1,'thread_compat.h']]],
-  ['ttak_5fthread_5fyield_28',['ttak_thread_yield',['../thread__compat_8h.html#acbece6975db97e6f2a4dde166f5d45db',1,'thread_compat.h']]]
+  ['ttak_5fstats_5fhist_5fbuckets_27',['TTAK_STATS_HIST_BUCKETS',['../stats_8h.html#a7d7878976b4f1d8dbb22a4c3af8ceb8f',1,'stats.h']]],
+  ['ttak_5fthread_5fcall_28',['TTAK_THREAD_CALL',['../thread__compat_8h.html#a99da1eadff2d3dbed9d01c2e7f00220c',1,'thread_compat.h']]],
+  ['ttak_5fthread_5fyield_29',['ttak_thread_yield',['../thread__compat_8h.html#acbece6975db97e6f2a4dde166f5d45db',1,'thread_compat.h']]]
 ];

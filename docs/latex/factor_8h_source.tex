@@ -17,7 +17,7 @@
 \DoxyCodeLine{\Hypertarget{factor_8h_source_l00013}00013\ }
 \DoxyCodeLine{\Hypertarget{factor_8h_source_l00014}00014\ \textcolor{comment}{//\ Structure\ to\ hold\ prime\ factors\ for\ big\ integers.}}
 \DoxyCodeLine{\Hypertarget{factor_8h_source_l00015}\mbox{\hyperlink{structttak__prime__factor__big__t}{00015}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
-\DoxyCodeLine{\Hypertarget{factor_8h_source_l00016}\mbox{\hyperlink{structttak__prime__factor__big__t_a9e417b434396f8acdbf2ae9d494ffd65}{00016}}\ \ \ \ \ \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\_bigint\_t}}\ \mbox{\hyperlink{structttak__prime__factor__big__t_a9e417b434396f8acdbf2ae9d494ffd65}{p}};\ \textcolor{comment}{//\ The\ prime\ factor}}
+\DoxyCodeLine{\Hypertarget{factor_8h_source_l00016}\mbox{\hyperlink{structttak__prime__factor__big__t_a9e417b434396f8acdbf2ae9d494ffd65}{00016}}\ \ \ \ \ \mbox{\hyperlink{structttak__bigint}{ttak\_bigint\_t}}\ \mbox{\hyperlink{structttak__prime__factor__big__t_a9e417b434396f8acdbf2ae9d494ffd65}{p}};\ \textcolor{comment}{//\ The\ prime\ factor}}
 \DoxyCodeLine{\Hypertarget{factor_8h_source_l00017}\mbox{\hyperlink{structttak__prime__factor__big__t_a6f4d585de07028f67feabd49022e2879}{00017}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__prime__factor__big__t_a6f4d585de07028f67feabd49022e2879}{a}};\ \ \ \ \ \ \textcolor{comment}{//\ The\ exponent}}
 \DoxyCodeLine{\Hypertarget{factor_8h_source_l00018}00018\ \}\ \mbox{\hyperlink{structttak__prime__factor__big__t}{ttak\_prime\_factor\_big\_t}};}
 \DoxyCodeLine{\Hypertarget{factor_8h_source_l00019}00019\ }
@@ -41,7 +41,7 @@
 \DoxyCodeLine{\Hypertarget{factor_8h_source_l00037}00037\ \textcolor{comment}{\ *\ @return\ 0\ on\ success,\ non-\/zero\ on\ failure.\ The\ caller\ must\ free\ the\ allocated\ factors\ array}}
 \DoxyCodeLine{\Hypertarget{factor_8h_source_l00038}00038\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ and\ the\ bigints\ within\ it.}}
 \DoxyCodeLine{\Hypertarget{factor_8h_source_l00039}00039\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{factor_8h_source_l00040}\mbox{\hyperlink{factor_8h_a9d0d60799dc948f455f1d0bb9bf2ecd9}{00040}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{factor_8h_a9d0d60799dc948f455f1d0bb9bf2ecd9}{ttak\_factor\_big}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\_bigint\_t}}\ *n,\ \mbox{\hyperlink{structttak__prime__factor__big__t}{ttak\_prime\_factor\_big\_t}}\ **factors\_out,\ \textcolor{keywordtype}{size\_t}\ *count\_out,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{factor_8h_source_l00040}\mbox{\hyperlink{factor_8h_a9d0d60799dc948f455f1d0bb9bf2ecd9}{00040}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{factor_8h_a9d0d60799dc948f455f1d0bb9bf2ecd9}{ttak\_factor\_big}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__bigint}{ttak\_bigint\_t}}\ *n,\ \mbox{\hyperlink{structttak__prime__factor__big__t}{ttak\_prime\_factor\_big\_t}}\ **factors\_out,\ \textcolor{keywordtype}{size\_t}\ *count\_out,\ uint64\_t\ now);}
 \DoxyCodeLine{\Hypertarget{factor_8h_source_l00041}00041\ }
 \DoxyCodeLine{\Hypertarget{factor_8h_source_l00042}00042\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_MATH\_FACTOR\_H}}
 

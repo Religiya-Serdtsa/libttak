@@ -25,11 +25,11 @@
 var NAVTREE =
 [
   [ "libttak", "index.html", [
-    [ "LibTTAK: Timestamp-tracking memory lifetime, Thread and Async Toolkit", "index.html", "index" ],
+    [ "TTL Cache Benchmark (libttak)", "index.html", "index" ],
     [ "Development History", "md_HISTORY.html", [
-      [ "2026-01-30", "md_HISTORY.html#autotoc_md1", [
-        [ "Initial Skeleton Creation &amp; Build Stabilization", "md_HISTORY.html#autotoc_md2", null ],
-        [ "Key Diffs Overview", "md_HISTORY.html#autotoc_md3", null ]
+      [ "2026-01-30", "md_HISTORY.html#autotoc_md8", [
+        [ "Initial Skeleton Creation & Build Stabilization", "md_HISTORY.html#autotoc_md9", null ],
+        [ "Key Diffs Overview", "md_HISTORY.html#autotoc_md10", null ]
       ] ]
     ] ],
     [ "Classes", "annotated.html", [
@@ -44,7 +44,7 @@ var NAVTREE =
       [ "File List", "files.html", "files_dup" ],
       [ "File Members", "globals.html", [
         [ "All", "globals.html", "globals_dup" ],
-        [ "Functions", "globals_func.html", null ],
+        [ "Functions", "globals_func.html", "globals_func" ],
         [ "Variables", "globals_vars.html", null ],
         [ "Typedefs", "globals_type.html", null ],
         [ "Enumerations", "globals_enum.html", null ],
@@ -58,10 +58,10 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "00__overview_8puml.html",
-"index.html#autotoc_md5",
-"structttak__btree.html#ac4ca3eb61f7f677a2abb28736d97db87"
+"hash_8h_source.html",
+"spinlock_8h.html#a7f17b0b237b8397e7849b9d249d1a196",
+"structttak__pair.html#a78b3c071801b6ef8767665464f80cc9c"
 ];
 
-var SYNCONMSG = 'click to disable panel synchronization';
-var SYNCOFFMSG = 'click to enable panel synchronization';
-var LISTOFALLMEMBERS = 'List of all members';
+var SYNCONMSG = 'click to disable panel synchronisation';
+var SYNCOFFMSG = 'click to enable panel synchronisation';

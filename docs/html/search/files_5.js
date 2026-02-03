@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['lockfree_5fqueue_2eh_0',['lockfree_queue.h',['../lockfree__queue_8h.html',1,'']]]
+  ['factor_2eh_0',['factor.h',['../factor_8h.html',1,'']]],
+  ['future_2eh_1',['future.h',['../future_8h.html',1,'']]]
 ];

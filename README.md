@@ -10,11 +10,9 @@ by calling a cleaner function.
 This is not garbage collection.
 Nothing is freed unless the user explicitly requests it.
 
-- Memory is collected when you decide to clean it
+- Memory can be collected forcefully when you decide to clean it
 - No stop-the-world GC
 - Every allocated block belongs to a lifetime
-
-------------------------------------------------------------
 
 ## How cool is it?
 
@@ -82,23 +80,6 @@ can be released safely in one step.
 
 There is no automatic memory reclamation.
 Cleanup only happens when explicitly requested.
-
-------------------------------------------------------------
-
-## Example (conceptual)
-
-The intended usage is as follows:
-
-    lifetime_t scope = lifetime_begin();
-
-    int *buf = ttak_alloc(scope, sizeof(int) * 1024);
-
-    /* use buf */
-
-    lifetime_end(scope);
-
-All memory allocated under this lifetime
-is released at this point.
 
 ------------------------------------------------------------
 

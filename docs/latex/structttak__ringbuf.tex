@@ -1,0 +1,115 @@
+\doxysection{ttak\+\_\+ringbuf Struct Reference}
+\hypertarget{structttak__ringbuf}{}\label{structttak__ringbuf}\index{ttak\_ringbuf@{ttak\_ringbuf}}
+
+
+Thread-\/safe Ring Buffer structure.  
+
+
+
+
+{\ttfamily \#include $<$ringbuf.\+h$>$}
+
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__ringbuf_a756ba68ca45210f8377ee7a868289e61}{buffer}}
+\item 
+size\+\_\+t \mbox{\hyperlink{structttak__ringbuf_a105892a939f39b22421219473b40888b}{item\+\_\+size}}
+\item 
+size\+\_\+t \mbox{\hyperlink{structttak__ringbuf_aac5c851ef70fd84a8886a6adaed8517e}{capacity}}
+\item 
+size\+\_\+t \mbox{\hyperlink{structttak__ringbuf_a683b231f95c0cfcf54b840750e29d678}{head}}
+\item 
+size\+\_\+t \mbox{\hyperlink{structttak__ringbuf_a391549f9b534e3761e2567ec8e7ba431}{tail}}
+\item 
+bool \mbox{\hyperlink{structttak__ringbuf_a8f02e88791c2aa5cd364535a32a4f395}{full}}
+\item 
+\mbox{\hyperlink{sync_8h_ad3f9b08e4c066e7bb7b1ed98d2a90386}{ttak\+\_\+rwlock\+\_\+t}} \mbox{\hyperlink{structttak__ringbuf_a61fd0ec96c9611f153a4a80c5a9072cd}{lock}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Thread-\/safe Ring Buffer structure. 
+
+Uses a read-\/write lock to allow multiple readers or exclusive writers. (Note\+: Standard ring buffers are often single-\/producer/single-\/consumer lock-\/free, this one is generic and locked). 
+
+Definition at line \mbox{\hyperlink{ringbuf_8h_source_l00016}{16}} of file \mbox{\hyperlink{ringbuf_8h_source}{ringbuf.\+h}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structttak__ringbuf_a756ba68ca45210f8377ee7a868289e61}\label{structttak__ringbuf_a756ba68ca45210f8377ee7a868289e61} 
+\index{ttak\_ringbuf@{ttak\_ringbuf}!buffer@{buffer}}
+\index{buffer@{buffer}!ttak\_ringbuf@{ttak\_ringbuf}}
+\doxysubsubsection{\texorpdfstring{buffer}{buffer}}
+{\footnotesize\ttfamily void\texorpdfstring{$\ast$}{*} ttak\+\_\+ringbuf\+::buffer}
+
+Internal data buffer. 
+
+Definition at line \mbox{\hyperlink{ringbuf_8h_source_l00017}{17}} of file \mbox{\hyperlink{ringbuf_8h_source}{ringbuf.\+h}}.
+
+\Hypertarget{structttak__ringbuf_aac5c851ef70fd84a8886a6adaed8517e}\label{structttak__ringbuf_aac5c851ef70fd84a8886a6adaed8517e} 
+\index{ttak\_ringbuf@{ttak\_ringbuf}!capacity@{capacity}}
+\index{capacity@{capacity}!ttak\_ringbuf@{ttak\_ringbuf}}
+\doxysubsubsection{\texorpdfstring{capacity}{capacity}}
+{\footnotesize\ttfamily size\+\_\+t ttak\+\_\+ringbuf\+::capacity}
+
+Maximum number of items. 
+
+Definition at line \mbox{\hyperlink{ringbuf_8h_source_l00019}{19}} of file \mbox{\hyperlink{ringbuf_8h_source}{ringbuf.\+h}}.
+
+\Hypertarget{structttak__ringbuf_a8f02e88791c2aa5cd364535a32a4f395}\label{structttak__ringbuf_a8f02e88791c2aa5cd364535a32a4f395} 
+\index{ttak\_ringbuf@{ttak\_ringbuf}!full@{full}}
+\index{full@{full}!ttak\_ringbuf@{ttak\_ringbuf}}
+\doxysubsubsection{\texorpdfstring{full}{full}}
+{\footnotesize\ttfamily bool ttak\+\_\+ringbuf\+::full}
+
+Flag indicating buffer is full (distinguishes empty vs full). 
+
+Definition at line \mbox{\hyperlink{ringbuf_8h_source_l00022}{22}} of file \mbox{\hyperlink{ringbuf_8h_source}{ringbuf.\+h}}.
+
+\Hypertarget{structttak__ringbuf_a683b231f95c0cfcf54b840750e29d678}\label{structttak__ringbuf_a683b231f95c0cfcf54b840750e29d678} 
+\index{ttak\_ringbuf@{ttak\_ringbuf}!head@{head}}
+\index{head@{head}!ttak\_ringbuf@{ttak\_ringbuf}}
+\doxysubsubsection{\texorpdfstring{head}{head}}
+{\footnotesize\ttfamily size\+\_\+t ttak\+\_\+ringbuf\+::head}
+
+Write index (where next item goes). 
+
+Definition at line \mbox{\hyperlink{ringbuf_8h_source_l00020}{20}} of file \mbox{\hyperlink{ringbuf_8h_source}{ringbuf.\+h}}.
+
+\Hypertarget{structttak__ringbuf_a105892a939f39b22421219473b40888b}\label{structttak__ringbuf_a105892a939f39b22421219473b40888b} 
+\index{ttak\_ringbuf@{ttak\_ringbuf}!item\_size@{item\_size}}
+\index{item\_size@{item\_size}!ttak\_ringbuf@{ttak\_ringbuf}}
+\doxysubsubsection{\texorpdfstring{item\_size}{item\_size}}
+{\footnotesize\ttfamily size\+\_\+t ttak\+\_\+ringbuf\+::item\+\_\+size}
+
+Size of each item. 
+
+Definition at line \mbox{\hyperlink{ringbuf_8h_source_l00018}{18}} of file \mbox{\hyperlink{ringbuf_8h_source}{ringbuf.\+h}}.
+
+\Hypertarget{structttak__ringbuf_a61fd0ec96c9611f153a4a80c5a9072cd}\label{structttak__ringbuf_a61fd0ec96c9611f153a4a80c5a9072cd} 
+\index{ttak\_ringbuf@{ttak\_ringbuf}!lock@{lock}}
+\index{lock@{lock}!ttak\_ringbuf@{ttak\_ringbuf}}
+\doxysubsubsection{\texorpdfstring{lock}{lock}}
+{\footnotesize\ttfamily \mbox{\hyperlink{sync_8h_ad3f9b08e4c066e7bb7b1ed98d2a90386}{ttak\+\_\+rwlock\+\_\+t}} ttak\+\_\+ringbuf\+::lock}
+
+Lock for thread safety. 
+
+Definition at line \mbox{\hyperlink{ringbuf_8h_source_l00023}{23}} of file \mbox{\hyperlink{ringbuf_8h_source}{ringbuf.\+h}}.
+
+\Hypertarget{structttak__ringbuf_a391549f9b534e3761e2567ec8e7ba431}\label{structttak__ringbuf_a391549f9b534e3761e2567ec8e7ba431} 
+\index{ttak\_ringbuf@{ttak\_ringbuf}!tail@{tail}}
+\index{tail@{tail}!ttak\_ringbuf@{ttak\_ringbuf}}
+\doxysubsubsection{\texorpdfstring{tail}{tail}}
+{\footnotesize\ttfamily size\+\_\+t ttak\+\_\+ringbuf\+::tail}
+
+Read index (where next item is taken). 
+
+Definition at line \mbox{\hyperlink{ringbuf_8h_source_l00021}{21}} of file \mbox{\hyperlink{ringbuf_8h_source}{ringbuf.\+h}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/ttak/container/\mbox{\hyperlink{ringbuf_8h}{ringbuf.\+h}}\end{DoxyCompactItemize}

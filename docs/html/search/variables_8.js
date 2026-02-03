@@ -8,8 +8,9 @@ var searchData=
   ['is_5fleaf_5',['is_leaf',['../structttak__bplus__node.html#a07589750aab8bea88adbeb529d9f0b35',1,'ttak_bplus_node']]],
   ['is_5fnegative_6',['is_negative',['../structttak__bigint.html#af30df33b0ddadae81a76c81867a93252',1,'ttak_bigint']]],
   ['is_5fprime_7',['is_prime',['../structgimps__result__t.html#a92fb4ed790aa327968aaa0cacbd356d9',1,'gimps_result_t']]],
-  ['is_5froot_8',['is_root',['../structttak__mem__node.html#a7fa380a4b8f31d509cd7410d546264f5',1,'ttak_mem_node']]],
+  ['is_5froot_8',['is_root',['../structttak__mem__node.html#a7fa380a4b8f31d509cd7410d546264f5',1,'ttak_mem_node::is_root'],['../structttak__mem__header__t.html#ad1189a2d1c2973b2537c1e4d34a0d439',1,'ttak_mem_header_t::is_root']]],
   ['is_5fshutdown_9',['is_shutdown',['../structttak__thread__pool.html#ae11c409b6317364d0d6c9d68a823bdb6',1,'ttak_thread_pool']]],
   ['is_5fvolatile_10',['is_volatile',['../structttak__mem__header__t.html#a69a6983e3aa59121684422c82714b3c9',1,'ttak_mem_header_t']]],
-  ['iteration_5ftime_5fms_11',['iteration_time_ms',['../structttak__node__telemetry__t.html#ab718fcfb9ae30ab77adf32be820dd6c6',1,'ttak_node_telemetry_t']]]
+  ['item_5fsize_11',['item_size',['../structttak__object__pool.html#a2097794e192b7fa4813e4a98b5724637',1,'ttak_object_pool::item_size'],['../structttak__ringbuf.html#a105892a939f39b22421219473b40888b',1,'ttak_ringbuf::item_size']]],
+  ['iteration_5ftime_5fms_12',['iteration_time_ms',['../structttak__node__telemetry__t.html#ab718fcfb9ae30ab77adf32be820dd6c6',1,'ttak_node_telemetry_t']]]
 ];

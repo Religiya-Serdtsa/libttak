@@ -12,6 +12,8 @@ var mem__tree_8h =
     [ "ttak_mem_tree_init", "mem__tree_8h.html#a886b8c79113ee78c206e16bfbf73c677", null ],
     [ "ttak_mem_tree_perform_cleanup", "mem__tree_8h.html#a4ec6c7de2748fc8090db6fc273b9f7f9", null ],
     [ "ttak_mem_tree_remove", "mem__tree_8h.html#a42638152eb455b0d7f23e964f946c8df", null ],
-    [ "ttak_mem_tree_set_cleanup_interval", "mem__tree_8h.html#a4dbe96bbd56762d5d53af8f2179d6759", null ],
-    [ "ttak_mem_tree_set_manual_cleanup", "mem__tree_8h.html#aa0c98b14defb177dc3873e04a23a872c", null ]
+    [ "ttak_mem_tree_report_pressure", "mem__tree_8h.html#aed4760fee74d3dfdf9c233cf4cc00fb4", null ],
+    [ "ttak_mem_tree_set_cleaning_intervals", "mem__tree_8h.html#a88bf0a46b8d452336a612b2b3c9bfa45", null ],
+    [ "ttak_mem_tree_set_manual_cleanup", "mem__tree_8h.html#aa0c98b14defb177dc3873e04a23a872c", null ],
+    [ "ttak_mem_tree_set_pressure_threshold", "mem__tree_8h.html#a436290192d1395d496994a8c0f8db280", null ]
 ];

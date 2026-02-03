@@ -1,0 +1,80 @@
+\doxysection{limit.\+h}
+\hypertarget{limit_8h_source}{}\label{limit_8h_source}\index{include/ttak/limit/limit.h@{include/ttak/limit/limit.h}}
+\mbox{\hyperlink{limit_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ TTAK\_LIMIT\_LIMIT\_H}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ TTAK\_LIMIT\_LIMIT\_H}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{sync_8h}{ttak/sync/sync.h}}>}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{spinlock_8h}{ttak/sync/spinlock.h}}>}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00008}00008\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00009}00009\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00010}00010\ \textcolor{comment}{\ *\ @brief\ Token\ Bucket\ structure\ for\ rate\ limiting.}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00011}00011\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00012}00012\ \textcolor{comment}{\ *\ Implements\ the\ standard\ token\ bucket\ algorithm.}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00013}00013\ \textcolor{comment}{\ *\ Thread-\/safe\ using\ a\ spinlock.}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00014}00014\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00015}\mbox{\hyperlink{structttak__token__bucket}{00015}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__token__bucket}{ttak\_token\_bucket}}\ \{}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00016}\mbox{\hyperlink{structttak__token__bucket_a0b2ab0fbdbea57c05eb48f2b57f16887}{00016}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{structttak__token__bucket_a0b2ab0fbdbea57c05eb48f2b57f16887}{tokens}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Current\ number\ of\ tokens\ available.\ */}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00017}\mbox{\hyperlink{structttak__token__bucket_ab9671ce6110edd22dfdc3e3c9f6848fe}{00017}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{structttak__token__bucket_ab9671ce6110edd22dfdc3e3c9f6848fe}{max\_tokens}};\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Maximum\ bucket\ capacity\ (burst\ size).\ */}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00018}\mbox{\hyperlink{structttak__token__bucket_a775a12f2e1843a18a47516e07acc3332}{00018}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{structttak__token__bucket_a775a12f2e1843a18a47516e07acc3332}{refill\_rate}};\ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Rate\ at\ which\ tokens\ are\ refilled\ (tokens\ per\ second).\ */}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00019}\mbox{\hyperlink{structttak__token__bucket_a50b753451c21520ebb0c27861abae93c}{00019}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__token__bucket_a50b753451c21520ebb0c27861abae93c}{last\_refill\_ts}};\ \ \ \ \textcolor{comment}{/**<\ Timestamp\ of\ the\ last\ refill\ operation.\ */}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00020}\mbox{\hyperlink{structttak__token__bucket_a12b2de2e89230830dbe9934e8f68724c}{00020}}\ \ \ \ \ \mbox{\hyperlink{structttak__spin}{ttak\_spin\_t}}\ \mbox{\hyperlink{structttak__token__bucket_a12b2de2e89230830dbe9934e8f68724c}{lock}};\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Spinlock\ for\ thread\ safety.\ */}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00021}\mbox{\hyperlink{limit_8h_aa93e8c31cd330170d3b7640faba120cc}{00021}}\ \}\ \mbox{\hyperlink{limit_8h_aa93e8c31cd330170d3b7640faba120cc}{ttak\_token\_bucket\_t}};}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00023}\mbox{\hyperlink{limit_8h_a5d83178dfa8a793b5253e83a233d873c}{00023}}\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{structttak__token__bucket}{ttak\_token\_bucket\_t}}\ \mbox{\hyperlink{limit_8h_a5d83178dfa8a793b5253e83a233d873c}{tt\_token\_bucket\_t}};}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00024}00024\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00025}00025\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00026}00026\ \textcolor{comment}{\ *\ @brief\ Initializes\ a\ token\ bucket.}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00027}00027\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00028}00028\ \textcolor{comment}{\ *\ @param\ tb\ Pointer\ to\ the\ bucket.}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00029}00029\ \textcolor{comment}{\ *\ @param\ rate\ Refill\ rate\ in\ tokens\ per\ second.}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00030}00030\ \textcolor{comment}{\ *\ @param\ burst\ Maximum\ burst\ size\ (capacity).}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00031}00031\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00032}\mbox{\hyperlink{limit_8h_ab7b4f398fc841de28b2863657169952e}{00032}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{limit_8h_ab7b4f398fc841de28b2863657169952e}{ttak\_token\_bucket\_init}}(\mbox{\hyperlink{structttak__token__bucket}{ttak\_token\_bucket\_t}}\ *tb,\ \textcolor{keywordtype}{double}\ rate,\ \textcolor{keywordtype}{double}\ burst);}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00033}00033\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00034}00034\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00035}00035\ \textcolor{comment}{\ *\ @brief\ Attempts\ to\ consume\ tokens\ from\ the\ bucket.}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00036}00036\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00037}00037\ \textcolor{comment}{\ *\ @param\ tb\ Pointer\ to\ the\ bucket.}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00038}00038\ \textcolor{comment}{\ *\ @param\ tokens\ Number\ of\ tokens\ to\ consume.}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00039}00039\ \textcolor{comment}{\ *\ @return\ true\ if\ tokens\ were\ available\ and\ consumed.}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00040}00040\ \textcolor{comment}{\ *\ @return\ false\ if\ there\ were\ insufficient\ tokens.}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00041}00041\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00042}\mbox{\hyperlink{limit_8h_a3deddce4c8bded9bce6e0fe704d9c332}{00042}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{limit_8h_a3deddce4c8bded9bce6e0fe704d9c332}{ttak\_token\_bucket\_consume}}(\mbox{\hyperlink{structttak__token__bucket}{ttak\_token\_bucket\_t}}\ *tb,\ \textcolor{keywordtype}{double}\ tokens);}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00043}00043\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00044}00044\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00045}00045\ \textcolor{comment}{\ *\ @brief\ Rate\ Limiter\ structure\ (wrapper\ around\ Token\ Bucket).}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00046}00046\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00047}00047\ \textcolor{comment}{\ *\ Simplifies\ rate\ limiting\ for\ binary\ allow/deny\ decisions.}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00048}00048\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00049}\mbox{\hyperlink{structttak__ratelimit}{00049}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__ratelimit}{ttak\_ratelimit}}\ \{}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00050}\mbox{\hyperlink{structttak__ratelimit_a19b939a6b2e0c9941b3ed567d90c20b5}{00050}}\ \ \ \ \ \mbox{\hyperlink{structttak__token__bucket}{ttak\_token\_bucket\_t}}\ \mbox{\hyperlink{structttak__ratelimit_a19b939a6b2e0c9941b3ed567d90c20b5}{bucket}};\ \textcolor{comment}{/**<\ Underlying\ token\ bucket.\ */}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00051}\mbox{\hyperlink{limit_8h_a8af4cfe974109d7dd4137f6cdeea1818}{00051}}\ \}\ \mbox{\hyperlink{limit_8h_a8af4cfe974109d7dd4137f6cdeea1818}{ttak\_ratelimit\_t}};}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00053}\mbox{\hyperlink{limit_8h_a125660251414d05c0017797217ecd141}{00053}}\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{structttak__ratelimit}{ttak\_ratelimit\_t}}\ \mbox{\hyperlink{limit_8h_a125660251414d05c0017797217ecd141}{tt\_ratelimit\_t}};}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00054}00054\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00055}00055\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00056}00056\ \textcolor{comment}{\ *\ @brief\ Initializes\ a\ rate\ limiter.}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00057}00057\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00058}00058\ \textcolor{comment}{\ *\ @param\ rl\ Pointer\ to\ the\ rate\ limiter.}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00059}00059\ \textcolor{comment}{\ *\ @param\ rate\ Allowed\ rate\ (requests\ per\ second).}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00060}00060\ \textcolor{comment}{\ *\ @param\ burst\ Maximum\ burst\ size.}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00061}00061\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00062}\mbox{\hyperlink{limit_8h_afa1836ac0cc88aff9138135b731e61fa}{00062}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{limit_8h_afa1836ac0cc88aff9138135b731e61fa}{ttak\_ratelimit\_init}}(\mbox{\hyperlink{structttak__ratelimit}{ttak\_ratelimit\_t}}\ *rl,\ \textcolor{keywordtype}{double}\ rate,\ \textcolor{keywordtype}{double}\ burst);}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00063}00063\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00064}00064\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00065}00065\ \textcolor{comment}{\ *\ @brief\ Checks\ if\ an\ action\ is\ allowed\ by\ the\ rate\ limiter.}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00066}00066\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00067}00067\ \textcolor{comment}{\ *\ Consumes\ 1.0\ token.}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00068}00068\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00069}00069\ \textcolor{comment}{\ *\ @param\ rl\ Pointer\ to\ the\ rate\ limiter.}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00070}00070\ \textcolor{comment}{\ *\ @return\ true\ if\ allowed,\ false\ otherwise.}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00071}00071\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00072}\mbox{\hyperlink{limit_8h_a684abae6debf25661db4c6a36d10cd9e}{00072}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{limit_8h_a684abae6debf25661db4c6a36d10cd9e}{ttak\_ratelimit\_allow}}(\mbox{\hyperlink{structttak__ratelimit}{ttak\_ratelimit\_t}}\ *rl);}
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00073}00073\ }
+\DoxyCodeLine{\Hypertarget{limit_8h_source_l00074}00074\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_LIMIT\_LIMIT\_H}}
+
+\end{DoxyCode}

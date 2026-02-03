@@ -1,0 +1,19 @@
+<map id="include/ttak/stats/stats.h" name="include/ttak/stats/stats.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="103,5,238,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="135,167,206,192"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="173,46,173,153,168,153,168,46"/>
+<area shape="rect" id="Node000003" href="$sync_8h.html" title=" " alt="" coords="5,93,133,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="148,48,97,87,94,82,145,43"/>
+<area shape="rect" id="Node000005" href="$spinlock_8h.html" title=" " alt="" coords="208,93,360,119"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="200,43,257,83,254,87,197,48"/>
+<area shape="poly" id="edge4_Node000003_Node000002" title=" " alt="" coords="87,116,144,156,141,161,84,121"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="27,167,111,192"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="72,119,72,153,67,153,67,119"/>
+<area shape="poly" id="edge8_Node000005_Node000002" title=" " alt="" coords="267,121,202,162,199,157,264,116"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="319,167,417,192"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="299,117,345,155,342,160,296,121"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="441,167,524,192"/>
+<area shape="poly" id="edge7_Node000005_Node000007" title=" " alt="" coords="317,116,438,159,436,164,315,121"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="231,167,295,192"/>
+<area shape="poly" id="edge9_Node000005_Node000008" title=" " alt="" coords="283,120,273,154,267,153,278,118"/>
+</map>

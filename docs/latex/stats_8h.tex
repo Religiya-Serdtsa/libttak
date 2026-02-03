@@ -1,0 +1,151 @@
+\doxysection{include/ttak/stats/stats.h File Reference}
+\hypertarget{stats_8h}{}\label{stats_8h}\index{include/ttak/stats/stats.h@{include/ttak/stats/stats.h}}
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$ttak/sync/sync.\+h$>$}\newline
+{\ttfamily \#include $<$ttak/sync/spinlock.\+h$>$}\newline
+Include dependency graph for stats.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{stats_8h__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structttak__stats}{ttak\+\_\+stats}}
+\begin{DoxyCompactList}\small\item\em Thread-\/safe Statistics structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{stats_8h_a7d7878976b4f1d8dbb22a4c3af8ceb8f}{TTAK\+\_\+\+STATS\+\_\+\+HIST\+\_\+\+BUCKETS}}~10
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \mbox{\hyperlink{structttak__stats}{ttak\+\_\+stats}} \mbox{\hyperlink{stats_8h_a897b5aaf1addd7acb495025c2129969a}{ttak\+\_\+stats\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Thread-\/safe Statistics structure. \end{DoxyCompactList}\item 
+typedef \mbox{\hyperlink{stats_8h_a897b5aaf1addd7acb495025c2129969a}{ttak\+\_\+stats\+\_\+t}} \mbox{\hyperlink{stats_8h_a992d82b06af030499b3dca50aaa42075}{tt\+\_\+stats\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{stats_8h_abb915be3d13f3f1a2d348e008d230265}{ttak\+\_\+stats\+\_\+init}} (\mbox{\hyperlink{stats_8h_a897b5aaf1addd7acb495025c2129969a}{ttak\+\_\+stats\+\_\+t}} \texorpdfstring{$\ast$}{*}s, uint64\+\_\+t hist\+\_\+min, uint64\+\_\+t hist\+\_\+max)
+\begin{DoxyCompactList}\small\item\em Initializes the statistics structure. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{stats_8h_ad02dbf59493719ca258726aff1de4641}{ttak\+\_\+stats\+\_\+record}} (\mbox{\hyperlink{stats_8h_a897b5aaf1addd7acb495025c2129969a}{ttak\+\_\+stats\+\_\+t}} \texorpdfstring{$\ast$}{*}s, uint64\+\_\+t value)
+\begin{DoxyCompactList}\small\item\em Records a new value into the statistics. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{stats_8h_a002bb2dfd3e80a61693eb3223901753e}{ttak\+\_\+stats\+\_\+print\+\_\+ascii}} (\mbox{\hyperlink{stats_8h_a897b5aaf1addd7acb495025c2129969a}{ttak\+\_\+stats\+\_\+t}} \texorpdfstring{$\ast$}{*}s)
+\begin{DoxyCompactList}\small\item\em Prints the statistics to stdout in ASCII format. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{stats_8h_a54b911aa8d10ae214de24d79a3c00357}{ttak\+\_\+stats\+\_\+mean}} (\mbox{\hyperlink{stats_8h_a897b5aaf1addd7acb495025c2129969a}{ttak\+\_\+stats\+\_\+t}} \texorpdfstring{$\ast$}{*}s)
+\begin{DoxyCompactList}\small\item\em Calculates the arithmetic mean. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{stats_8h_a7d7878976b4f1d8dbb22a4c3af8ceb8f}\label{stats_8h_a7d7878976b4f1d8dbb22a4c3af8ceb8f} 
+\index{stats.h@{stats.h}!TTAK\_STATS\_HIST\_BUCKETS@{TTAK\_STATS\_HIST\_BUCKETS}}
+\index{TTAK\_STATS\_HIST\_BUCKETS@{TTAK\_STATS\_HIST\_BUCKETS}!stats.h@{stats.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_STATS\_HIST\_BUCKETS}{TTAK\_STATS\_HIST\_BUCKETS}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+STATS\+\_\+\+HIST\+\_\+\+BUCKETS~10}
+
+
+
+Definition at line \mbox{\hyperlink{stats_8h_source_l00008}{8}} of file \mbox{\hyperlink{stats_8h_source}{stats.\+h}}.
+
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{stats_8h_a992d82b06af030499b3dca50aaa42075}\label{stats_8h_a992d82b06af030499b3dca50aaa42075} 
+\index{stats.h@{stats.h}!tt\_stats\_t@{tt\_stats\_t}}
+\index{tt\_stats\_t@{tt\_stats\_t}!stats.h@{stats.h}}
+\doxysubsubsection{\texorpdfstring{tt\_stats\_t}{tt\_stats\_t}}
+{\footnotesize\ttfamily typedef \mbox{\hyperlink{stats_8h_a897b5aaf1addd7acb495025c2129969a}{ttak\+\_\+stats\+\_\+t}} \mbox{\hyperlink{stats_8h_a992d82b06af030499b3dca50aaa42075}{tt\+\_\+stats\+\_\+t}}}
+
+
+
+Definition at line \mbox{\hyperlink{stats_8h_source_l00027}{27}} of file \mbox{\hyperlink{stats_8h_source}{stats.\+h}}.
+
+\Hypertarget{stats_8h_a897b5aaf1addd7acb495025c2129969a}\label{stats_8h_a897b5aaf1addd7acb495025c2129969a} 
+\index{stats.h@{stats.h}!ttak\_stats\_t@{ttak\_stats\_t}}
+\index{ttak\_stats\_t@{ttak\_stats\_t}!stats.h@{stats.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_stats\_t}{ttak\_stats\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__stats}{ttak\+\_\+stats}} \mbox{\hyperlink{stats_8h_a897b5aaf1addd7acb495025c2129969a}{ttak\+\_\+stats\+\_\+t}}}
+
+
+
+Thread-\/safe Statistics structure. 
+
+Tracks count, sum, min, max, and a simple histogram. 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{stats_8h_abb915be3d13f3f1a2d348e008d230265}\label{stats_8h_abb915be3d13f3f1a2d348e008d230265} 
+\index{stats.h@{stats.h}!ttak\_stats\_init@{ttak\_stats\_init}}
+\index{ttak\_stats\_init@{ttak\_stats\_init}!stats.h@{stats.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_stats\_init()}{ttak\_stats\_init()}}
+{\footnotesize\ttfamily void ttak\+\_\+stats\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{stats_8h_a897b5aaf1addd7acb495025c2129969a}{ttak\+\_\+stats\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{s,  }\item[{uint64\+\_\+t}]{hist\+\_\+min,  }\item[{uint64\+\_\+t}]{hist\+\_\+max }\end{DoxyParamCaption})}
+
+
+
+Initializes the statistics structure. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em s} & Pointer to the stats structure. \\
+\hline
+{\em hist\+\_\+min} & Lower bound for the histogram. \\
+\hline
+{\em hist\+\_\+max} & Upper bound for the histogram. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{stats_8h_a54b911aa8d10ae214de24d79a3c00357}\label{stats_8h_a54b911aa8d10ae214de24d79a3c00357} 
+\index{stats.h@{stats.h}!ttak\_stats\_mean@{ttak\_stats\_mean}}
+\index{ttak\_stats\_mean@{ttak\_stats\_mean}!stats.h@{stats.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_stats\_mean()}{ttak\_stats\_mean()}}
+{\footnotesize\ttfamily double ttak\+\_\+stats\+\_\+mean (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{stats_8h_a897b5aaf1addd7acb495025c2129969a}{ttak\+\_\+stats\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{s }\end{DoxyParamCaption})}
+
+
+
+Calculates the arithmetic mean. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em s} & Pointer to the stats structure. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The mean value. 
+\end{DoxyReturn}
+\Hypertarget{stats_8h_a002bb2dfd3e80a61693eb3223901753e}\label{stats_8h_a002bb2dfd3e80a61693eb3223901753e} 
+\index{stats.h@{stats.h}!ttak\_stats\_print\_ascii@{ttak\_stats\_print\_ascii}}
+\index{ttak\_stats\_print\_ascii@{ttak\_stats\_print\_ascii}!stats.h@{stats.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_stats\_print\_ascii()}{ttak\_stats\_print\_ascii()}}
+{\footnotesize\ttfamily void ttak\+\_\+stats\+\_\+print\+\_\+ascii (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{stats_8h_a897b5aaf1addd7acb495025c2129969a}{ttak\+\_\+stats\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{s }\end{DoxyParamCaption})}
+
+
+
+Prints the statistics to stdout in ASCII format. 
+
+Includes basic metrics and a bar chart for the histogram.
+
+
+\begin{DoxyParams}{Parameters}
+{\em s} & Pointer to the stats structure. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{stats_8h_ad02dbf59493719ca258726aff1de4641}\label{stats_8h_ad02dbf59493719ca258726aff1de4641} 
+\index{stats.h@{stats.h}!ttak\_stats\_record@{ttak\_stats\_record}}
+\index{ttak\_stats\_record@{ttak\_stats\_record}!stats.h@{stats.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_stats\_record()}{ttak\_stats\_record()}}
+{\footnotesize\ttfamily void ttak\+\_\+stats\+\_\+record (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{stats_8h_a897b5aaf1addd7acb495025c2129969a}{ttak\+\_\+stats\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{s,  }\item[{uint64\+\_\+t}]{value }\end{DoxyParamCaption})}
+
+
+
+Records a new value into the statistics. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em s} & Pointer to the stats structure. \\
+\hline
+{\em value} & The value to record. \\
+\hline
+\end{DoxyParams}

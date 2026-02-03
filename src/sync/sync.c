@@ -41,6 +41,78 @@ int ttak_mutex_destroy(ttak_mutex_t *mutex) {
 }
 
 /**
+ * @brief Initialize a read-write lock.
+ *
+ * @param rwlock RWLock to initialize.
+ * @return pthread error code.
+ */
+int ttak_rwlock_init(ttak_rwlock_t *rwlock) {
+    return pthread_rwlock_init(rwlock, NULL);
+}
+
+/**
+ * @brief Acquire a read lock.
+ *
+ * @param rwlock RWLock to lock for reading.
+ * @return pthread error code.
+ */
+int ttak_rwlock_rdlock(ttak_rwlock_t *rwlock) {
+    return pthread_rwlock_rdlock(rwlock);
+}
+
+/**
+ * @brief Acquire a write lock.
+ *
+ * @param rwlock RWLock to lock for writing.
+ * @return pthread error code.
+ */
+int ttak_rwlock_wrlock(ttak_rwlock_t *rwlock) {
+    return pthread_rwlock_wrlock(rwlock);
+}
+
+/**
+ * @brief Release a read or write lock.
+ *
+ * @param rwlock RWLock to unlock.
+ * @return pthread error code.
+ */
+int ttak_rwlock_unlock(ttak_rwlock_t *rwlock) {
+    return pthread_rwlock_unlock(rwlock);
+}
+
+/**
+ * @brief Destroy a read-write lock.
+ *
+ * @param rwlock RWLock to destroy.
+ * @return pthread error code.
+ */
+int ttak_rwlock_destroy(ttak_rwlock_t *rwlock) {
+    return pthread_rwlock_destroy(rwlock);
+}
+
+/**
+ * @brief Initialize a shard.
+ *
+ * @param shard Shard to initialize.
+ * @param data Data to associate with the shard.
+ * @return pthread error code for lock initialization.
+ */
+int ttak_shard_init(ttak_shard_t *shard, void *data) {
+    shard->data = data;
+    return ttak_rwlock_init(&shard->lock);
+}
+
+/**
+ * @brief Destroy a shard.
+ *
+ * @param shard Shard to destroy.
+ * @return pthread error code for lock destruction.
+ */
+int ttak_shard_destroy(ttak_shard_t *shard) {
+    return ttak_rwlock_destroy(&shard->lock);
+}
+
+/**
  * @brief Initialize a condition variable.
  *
  * @param cond Condition variable to initialize.
