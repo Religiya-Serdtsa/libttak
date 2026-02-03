@@ -1,5 +1,7 @@
 var NAVTREEINDEX2 =
 {
+"spinlock_8h.html#a705f9b9b5f7cf440ded7db544f974487":[3,0,4,0,12,0,5],
+"spinlock_8h.html#a797cbaf0c99650d6b8fab1447cf232da":[3,0,4,0,12,0,2],
 "spinlock_8h.html#a7f17b0b237b8397e7849b9d249d1a196":[3,0,4,0,12,0,6],
 "spinlock_8h.html#a842ccd455a040d093eee00fefd115c27":[3,0,4,0,12,0,7],
 "spinlock_8h.html#a8481cf7fcbf7ea098cdf2aabbfbfba95":[3,0,4,0,12,0,10],
@@ -247,7 +249,5 @@ var NAVTREEINDEX2 =
 "structttak__owner.html#a06604c5fe6dd960f99fd33e66f0156e1":[2,0,34,0],
 "structttak__owner.html#a1e5a9809a7e68de76c8473de3fddf53d":[2,0,34,2],
 "structttak__owner.html#a870e95008012760ad3712fe902a39c20":[2,0,34,3],
-"structttak__owner.html#ad3f0f21fea12c13d2fcbddcbe3472269":[2,0,34,1],
-"structttak__owner.html#af8f1a51f68b2d8255dff9d232d2c7435":[2,0,34,4],
-"structttak__pair.html":[2,0,35]
+"structttak__owner.html#ad3f0f21fea12c13d2fcbddcbe3472269":[2,0,34,1]
 };

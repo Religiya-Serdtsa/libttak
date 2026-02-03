@@ -27,9 +27,9 @@ var NAVTREE =
   [ "libttak", "index.html", [
     [ "TTL Cache Benchmark (libttak)", "index.html", "index" ],
     [ "Development History", "md_HISTORY.html", [
-      [ "2026-01-30", "md_HISTORY.html#autotoc_md8", [
-        [ "Initial Skeleton Creation & Build Stabilization", "md_HISTORY.html#autotoc_md9", null ],
-        [ "Key Diffs Overview", "md_HISTORY.html#autotoc_md10", null ]
+      [ "2026-01-30", "md_HISTORY.html#autotoc_md12", [
+        [ "Initial Skeleton Creation & Build Stabilization", "md_HISTORY.html#autotoc_md13", null ],
+        [ "Key Diffs Overview", "md_HISTORY.html#autotoc_md14", null ]
       ] ]
     ] ],
     [ "Classes", "annotated.html", [
@@ -58,9 +58,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "00__overview_8puml.html",
-"hash_8h_source.html",
-"spinlock_8h.html#a7f17b0b237b8397e7849b9d249d1a196",
-"structttak__pair.html#a78b3c071801b6ef8767665464f80cc9c"
+"hash_8h.html#ab5081f0575ed9a431e1e35e25975dfda",
+"spinlock_8h.html#a705f9b9b5f7cf440ded7db544f974487",
+"structttak__owner.html#af8f1a51f68b2d8255dff9d232d2c7435"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
