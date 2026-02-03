@@ -1,5 +1,12 @@
 CC = gcc
-CFLAGS = -O2 -g -Wall -pthread -I../../include
+CFLAGS = -O0 -g -Wall -pthread -I../../include \
+				 -fno-inline -fno-omit-frame-pointer \
+				 -fno-optimize-sibling-calls \
+				 -fno-jump-tables -fno-builtin \
+				 -fno-strict-aliasing -fno-common \
+				 -fno-stack-protector -fno-asynchronous-unwind-tables \
+				 -fno-exceptions -fno-tree-vectorize -fno-strict-overflow \
+				 -s -ffunction-sections -fdata-sections
 LDFLAGS = -L../../lib -lttak -lpthread
 
 TARGET = ttl_cache_bench
