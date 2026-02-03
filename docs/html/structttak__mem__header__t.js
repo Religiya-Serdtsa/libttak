@@ -10,6 +10,7 @@ var structttak__mem__header__t =
     [ "freed", "structttak__mem__header__t.html#a86b5bea8ae5d34192969173c8ea7ef88", null ],
     [ "is_const", "structttak__mem__header__t.html#a5bf1a1bf467c6b8f9df7c13ff72ee660", null ],
     [ "is_huge", "structttak__mem__header__t.html#aec81dfe0c2ad6a934ac1daae25d1c823", null ],
+    [ "is_root", "structttak__mem__header__t.html#ad1189a2d1c2973b2537c1e4d34a0d439", null ],
     [ "is_volatile", "structttak__mem__header__t.html#a69a6983e3aa59121684422c82714b3c9", null ],
     [ "lock", "structttak__mem__header__t.html#a5c63e95556a7b6528834155059dae312", null ],
     [ "magic", "structttak__mem__header__t.html#a63c543d0e2277438790686ca125adadf", null ],

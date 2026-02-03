@@ -2,61 +2,50 @@
 \hypertarget{03__memory__and__threads_8puml_source}{}\label{03__memory__and__threads_8puml_source}\index{blueprints/03\_memory\_and\_threads.puml@{blueprints/03\_memory\_and\_threads.puml}}
 \mbox{\hyperlink{03__memory__and__threads_8puml}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00001}00001\ @startuml\ libttak\_memory\_and\_threads}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00002}00002\ !theme\ vibrant}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00003}00003\ }
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00004}00004\ title\ Memory\ and\ Threading\ Layer}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00005}00005\ }
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00006}00006\ package\ "{}Threading"{}\ \{}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00007}00007\ \ \ \ \ [Thread\ Pool]}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00008}00008\ \ \ \ \ [Worker]}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00009}00009\ \}}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00010}00010\ }
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00011}00011\ package\ "{}Synchronization"{}\ \{}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00012}00012\ \ \ \ \ [Sync\ Primitives]\ as\ Sync}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00013}00013\ \}}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00014}00014\ }
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00015}00015\ package\ "{}Atomics"{}\ \{}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00016}00016\ \ \ \ \ [Atomic\ Operations]\ as\ Atomic}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00017}00017\ \}}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00018}00018\ }
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00019}00019\ package\ "{}Memory"{}\ \{}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00020}00020\ \ \ \ \ [Memory\ Manager]\ as\ Mem}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00021}00021\ \ \ \ \ [Memory\ Tree]\ as\ MemTree}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00022}00022\ \}}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00023}00023\ }
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00024}00024\ '\ Relationships}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00025}00025\ [Thread\ Pool]\ -\/-\/>\ [Worker]\ :\ Manages\ a\ pool\ of}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00026}00026\ [Worker]\ -\/-\/>\ [Sync]\ :\ Uses\ for\ task\ synchronization}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00027}00027\ [Worker]\ -\/-\/>\ [Atomic]\ :\ Uses\ for\ thread-\/safe\ operations}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00028}00028\ }
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00029}00029\ [Sync]\ -\/-\/>\ [Atomic]\ :\ Built\ upon}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00030}00030\ }
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00031}00031\ [Thread\ Pool]\ ..>\ Mem\ :\ For\ allocating\ worker\ contexts}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00032}00032\ [Worker]\ ..>\ Mem\ :\ For\ allocating\ task\ data}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00033}00033\ }
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00034}00034\ Mem\ <-\/-\/>\ MemTree\ :\ Manages\ memory\ blocks\ using\ the\ tree}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00035}00035\ }
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00036}00036\ note\ right\ of\ [Worker]}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00037}00037\ \ \ A\ single\ worker\ thread\ that}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00038}00038\ \ \ can\ execute\ tasks.}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00039}00039\ end\ note}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00040}00040\ }
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00041}00041\ note\ left\ of\ [Thread\ Pool]}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00042}00042\ \ \ A\ collection\ of\ worker\ threads}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00043}00043\ \ \ to\ execute\ tasks\ in\ parallel.}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00044}00044\ end\ note}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00045}00045\ }
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00046}00046\ note\ bottom\ of\ [Sync]}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00047}00047\ \ \ Provides\ synchronization\ mechanisms}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00048}00048\ \ \ like\ mutexes\ and\ condition\ variables.}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00049}00049\ end\ note}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00050}00050\ }
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00051}00051\ note\ bottom\ of\ Mem}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00052}00052\ \ \ Provides\ custom\ memory}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00053}00053\ \ \ allocation\ strategies.}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00054}00054\ end\ note}
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00055}00055\ }
-\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00056}00056\ @enduml}
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00001}00001\ @startuml}
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00002}00002\ !theme\ plain}
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00003}00003\ hide\ empty\ members}
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00005}00005\ package\ "{}Memory\ Management"{}\ \{}
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00006}00006\ \ \ \ \ class\ ttak\_mem\_t\ \{}
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00007}00007\ \ \ \ \ \ \ \ \ +\ alloc()}
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00008}00008\ \ \ \ \ \ \ \ \ +\ free()}
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00009}00009\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00010}00010\ \ \ \ \ class\ ttak\_mem\_tree\_t\ \{}
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00011}00011\ \ \ \ \ \ \ \ \ +\ head\ :\ node\_t*}
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00012}00012\ \ \ \ \ \ \ \ \ +\ lock\ :\ mutex}
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00013}00013\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00014}00014\ \}}
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00016}00016\ package\ "{}Threading\ \&\ Sync"{}\ \{}
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00017}00017\ \ \ \ \ class\ ttak\_thread\_pool\_t\ \{}
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00018}00018\ \ \ \ \ \ \ \ \ +\ workers\ :\ worker\_t*}
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00019}00019\ \ \ \ \ \ \ \ \ +\ tasks\ :\ queue\_t}
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00020}00020\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00022}00022\ \ \ \ \ class\ ttak\_spin\_t\ \{}
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00023}00023\ \ \ \ \ \ \ \ \ +\ flag\ :\ atomic\_flag}
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00024}00024\ \ \ \ \ \ \ \ \ \_\_}
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00025}00025\ \ \ \ \ \ \ \ \ +\ lock()}
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00026}00026\ \ \ \ \ \ \ \ \ +\ trylock()}
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00027}00027\ \ \ \ \ \ \ \ \ +\ unlock()}
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00028}00028\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00030}00030\ \ \ \ \ class\ ttak\_backoff\_t\ \{}
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00031}00031\ \ \ \ \ \ \ \ \ +\ count\ :\ int}
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00032}00032\ \ \ \ \ \ \ \ \ +\ limit\ :\ int}
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00033}00033\ \ \ \ \ \ \ \ \ \_\_}
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00034}00034\ \ \ \ \ \ \ \ \ +\ pause()}
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00035}00035\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00037}00037\ \ \ \ \ class\ ttak\_rwlock\_t\ \{}
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00038}00038\ \ \ \ \ \ \ \ \ +\ rdlock()}
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00039}00039\ \ \ \ \ \ \ \ \ +\ wrlock()}
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00040}00040\ \ \ \ \ \ \ \ \ +\ unlock()}
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00041}00041\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00042}00042\ \}}
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00044}00044\ ttak\_thread\_pool\_t\ -\/-\/>\ ttak\_mem\_t\ :\ uses}
+\DoxyCodeLine{\Hypertarget{03__memory__and__threads_8puml_source_l00045}00045\ @enduml}
 
 \end{DoxyCode}

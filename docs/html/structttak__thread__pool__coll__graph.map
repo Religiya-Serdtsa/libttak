@@ -1,17 +1,17 @@
 <map id="ttak_thread_pool" name="ttak_thread_pool">
-<area shape="rect" id="Node000001" title=" " alt="" coords="188,224,320,251"/>
-<area shape="rect" id="Node000002" href="$structttak__worker.html" title=" " alt="" coords="138,324,236,352"/>
-<area shape="poly" id="edge2_Node000002_Node000001" title=" " alt="" coords="200,262,185,277,181,288,180,300,185,324,180,325,175,300,176,287,181,274,196,258"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="212,311,222,299,237,274,247,251,252,253,241,276,227,302,216,315"/>
-<area shape="rect" id="Node000003" href="$structttak__worker__wrapper.html" title=" " alt="" coords="5,224,164,251"/>
-<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="94,265,102,283,113,298,130,311,148,321,146,326,127,316,110,302,98,285,89,267"/>
-<area shape="rect" id="Node000004" href="$structttak__promise.html" title=" " alt="" coords="31,114,138,142"/>
-<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="87,158,87,223,82,223,82,158"/>
-<area shape="rect" id="Node000005" href="$structttak__future.html" title=" " alt="" coords="38,5,131,33"/>
-<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="87,49,87,114,82,114,82,49"/>
-<area shape="rect" id="Node000006" href="$struct____internal__ttak__proc__priority__queue__t.html" title=" " alt="" coords="177,106,330,151"/>
-<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="256,166,256,223,251,223,251,166"/>
-<area shape="rect" id="Node000007" href="$struct____internal__ttak__qnode__t.html" title=" " alt="" coords="165,5,342,33"/>
-<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="256,49,256,105,251,105,251,49"/>
-<area shape="poly" id="edge8_Node000007_Node000007" title=" " alt="" coords="360,11,369,19,361,27,344,30,343,25,359,22,364,19,356,15"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="188,196,320,221"/>
+<area shape="rect" id="Node000002" href="$structttak__worker.html" title=" " alt="" coords="141,284,239,309"/>
+<area shape="poly" id="edge2_Node000002_Node000001" title=" " alt="" coords="205,230,188,247,184,265,188,283,183,284,179,265,184,244,201,226"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="210,272,223,258,246,220,250,223,227,262,214,276"/>
+<area shape="rect" id="Node000003" href="$structttak__worker__wrapper.html" title=" " alt="" coords="5,196,164,221"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="99,231,121,258,160,282,158,286,118,262,95,235"/>
+<area shape="rect" id="Node000004" href="$structttak__promise.html" title=" " alt="" coords="31,101,139,126"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="87,140,87,196,82,196,82,140"/>
+<area shape="rect" id="Node000005" href="$structttak__future.html" title=" " alt="" coords="37,5,132,31"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="87,44,87,101,82,101,82,44"/>
+<area shape="rect" id="Node000006" href="$struct____internal__ttak__proc__priority__queue__t.html" title=" " alt="" coords="177,93,331,133"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="257,147,257,196,251,196,251,147"/>
+<area shape="rect" id="Node000007" href="$struct____internal__ttak__qnode__t.html" title=" " alt="" coords="165,5,343,31"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="257,44,257,93,251,93,251,44"/>
+<area shape="poly" id="edge8_Node000007_Node000007" title=" " alt="" coords="359,10,370,18,362,25,344,28,343,23,360,20,365,18,356,15"/>
 </map>

@@ -1,0 +1,126 @@
+\doxysection{include/ttak/mem/epoch\+\_\+gc.h File Reference}
+\hypertarget{epoch__gc_8h}{}\label{epoch__gc_8h}\index{include/ttak/mem/epoch\_gc.h@{include/ttak/mem/epoch\_gc.h}}
+{\ttfamily \#include $<$ttak/mem\+\_\+tree/mem\+\_\+tree.\+h$>$}\newline
+Include dependency graph for epoch\+\_\+gc.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{epoch__gc_8h__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structttak__epoch__gc}{ttak\+\_\+epoch\+\_\+gc}}
+\begin{DoxyCompactList}\small\item\em Epoch-\/based garbage collection context. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \mbox{\hyperlink{structttak__epoch__gc}{ttak\+\_\+epoch\+\_\+gc}} \mbox{\hyperlink{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4}{ttak\+\_\+epoch\+\_\+gc\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Epoch-\/based garbage collection context. \end{DoxyCompactList}\item 
+typedef \mbox{\hyperlink{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4}{ttak\+\_\+epoch\+\_\+gc\+\_\+t}} \mbox{\hyperlink{epoch__gc_8h_a19a48ee392866ef40aed9cc4fa6bbf41}{tt\+\_\+epoch\+\_\+gc\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{epoch__gc_8h_ad33bfc5d616f25de473c9dea52d0ae24}{ttak\+\_\+epoch\+\_\+gc\+\_\+init}} (\mbox{\hyperlink{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4}{ttak\+\_\+epoch\+\_\+gc\+\_\+t}} \texorpdfstring{$\ast$}{*}gc)
+\begin{DoxyCompactList}\small\item\em Initializes the Epoch GC. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{epoch__gc_8h_af549ef9e0036830f203fa10a01c2d484}{ttak\+\_\+epoch\+\_\+gc\+\_\+destroy}} (\mbox{\hyperlink{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4}{ttak\+\_\+epoch\+\_\+gc\+\_\+t}} \texorpdfstring{$\ast$}{*}gc)
+\begin{DoxyCompactList}\small\item\em Destroys the GC context and frees tracked resources. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{epoch__gc_8h_a6bedbb1da48f451a81bac7e5cc47a50d}{ttak\+\_\+epoch\+\_\+gc\+\_\+register}} (\mbox{\hyperlink{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4}{ttak\+\_\+epoch\+\_\+gc\+\_\+t}} \texorpdfstring{$\ast$}{*}gc, void \texorpdfstring{$\ast$}{*}ptr, size\+\_\+t size)
+\begin{DoxyCompactList}\small\item\em Registers a pointer to be managed by the current epoch. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{epoch__gc_8h_a2c9fb90ed22fe61eea9bbcafddf53625}{ttak\+\_\+epoch\+\_\+gc\+\_\+rotate}} (\mbox{\hyperlink{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4}{ttak\+\_\+epoch\+\_\+gc\+\_\+t}} \texorpdfstring{$\ast$}{*}gc)
+\begin{DoxyCompactList}\small\item\em Advances the epoch and triggers a non-\/blocking cleanup pass. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{epoch__gc_8h_a19a48ee392866ef40aed9cc4fa6bbf41}\label{epoch__gc_8h_a19a48ee392866ef40aed9cc4fa6bbf41} 
+\index{epoch\_gc.h@{epoch\_gc.h}!tt\_epoch\_gc\_t@{tt\_epoch\_gc\_t}}
+\index{tt\_epoch\_gc\_t@{tt\_epoch\_gc\_t}!epoch\_gc.h@{epoch\_gc.h}}
+\doxysubsubsection{\texorpdfstring{tt\_epoch\_gc\_t}{tt\_epoch\_gc\_t}}
+{\footnotesize\ttfamily typedef \mbox{\hyperlink{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4}{ttak\+\_\+epoch\+\_\+gc\+\_\+t}} \mbox{\hyperlink{epoch__gc_8h_a19a48ee392866ef40aed9cc4fa6bbf41}{tt\+\_\+epoch\+\_\+gc\+\_\+t}}}
+
+
+
+Definition at line \mbox{\hyperlink{epoch__gc_8h_source_l00019}{19}} of file \mbox{\hyperlink{epoch__gc_8h_source}{epoch\+\_\+gc.\+h}}.
+
+\Hypertarget{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4}\label{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4} 
+\index{epoch\_gc.h@{epoch\_gc.h}!ttak\_epoch\_gc\_t@{ttak\_epoch\_gc\_t}}
+\index{ttak\_epoch\_gc\_t@{ttak\_epoch\_gc\_t}!epoch\_gc.h@{epoch\_gc.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_epoch\_gc\_t}{ttak\_epoch\_gc\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__epoch__gc}{ttak\+\_\+epoch\+\_\+gc}} \mbox{\hyperlink{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4}{ttak\+\_\+epoch\+\_\+gc\+\_\+t}}}
+
+
+
+Epoch-\/based garbage collection context. 
+
+Manages memory lifecycle using generational epochs. Designed for periodic, non-\/blocking cleanup where the user triggers the cycle. Traverses the heap tree to identify and free expired blocks without a global stop-\/the-\/world pause. 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{epoch__gc_8h_af549ef9e0036830f203fa10a01c2d484}\label{epoch__gc_8h_af549ef9e0036830f203fa10a01c2d484} 
+\index{epoch\_gc.h@{epoch\_gc.h}!ttak\_epoch\_gc\_destroy@{ttak\_epoch\_gc\_destroy}}
+\index{ttak\_epoch\_gc\_destroy@{ttak\_epoch\_gc\_destroy}!epoch\_gc.h@{epoch\_gc.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_epoch\_gc\_destroy()}{ttak\_epoch\_gc\_destroy()}}
+{\footnotesize\ttfamily void ttak\+\_\+epoch\+\_\+gc\+\_\+destroy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4}{ttak\+\_\+epoch\+\_\+gc\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{gc }\end{DoxyParamCaption})}
+
+
+
+Destroys the GC context and frees tracked resources. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em gc} & Pointer to the GC structure. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{epoch__gc_8h_ad33bfc5d616f25de473c9dea52d0ae24}\label{epoch__gc_8h_ad33bfc5d616f25de473c9dea52d0ae24} 
+\index{epoch\_gc.h@{epoch\_gc.h}!ttak\_epoch\_gc\_init@{ttak\_epoch\_gc\_init}}
+\index{ttak\_epoch\_gc\_init@{ttak\_epoch\_gc\_init}!epoch\_gc.h@{epoch\_gc.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_epoch\_gc\_init()}{ttak\_epoch\_gc\_init()}}
+{\footnotesize\ttfamily void ttak\+\_\+epoch\+\_\+gc\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4}{ttak\+\_\+epoch\+\_\+gc\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{gc }\end{DoxyParamCaption})}
+
+
+
+Initializes the Epoch GC. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em gc} & Pointer to the GC structure. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{epoch__gc_8h_a6bedbb1da48f451a81bac7e5cc47a50d}\label{epoch__gc_8h_a6bedbb1da48f451a81bac7e5cc47a50d} 
+\index{epoch\_gc.h@{epoch\_gc.h}!ttak\_epoch\_gc\_register@{ttak\_epoch\_gc\_register}}
+\index{ttak\_epoch\_gc\_register@{ttak\_epoch\_gc\_register}!epoch\_gc.h@{epoch\_gc.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_epoch\_gc\_register()}{ttak\_epoch\_gc\_register()}}
+{\footnotesize\ttfamily void ttak\+\_\+epoch\+\_\+gc\+\_\+register (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4}{ttak\+\_\+epoch\+\_\+gc\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{gc,  }\item[{void \texorpdfstring{$\ast$}{*}}]{ptr,  }\item[{size\+\_\+t}]{size }\end{DoxyParamCaption})}
+
+
+
+Registers a pointer to be managed by the current epoch. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em gc} & Pointer to the GC structure. \\
+\hline
+{\em ptr} & Pointer to the allocated memory. \\
+\hline
+{\em size} & Size of the memory block. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{epoch__gc_8h_a2c9fb90ed22fe61eea9bbcafddf53625}\label{epoch__gc_8h_a2c9fb90ed22fe61eea9bbcafddf53625} 
+\index{epoch\_gc.h@{epoch\_gc.h}!ttak\_epoch\_gc\_rotate@{ttak\_epoch\_gc\_rotate}}
+\index{ttak\_epoch\_gc\_rotate@{ttak\_epoch\_gc\_rotate}!epoch\_gc.h@{epoch\_gc.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_epoch\_gc\_rotate()}{ttak\_epoch\_gc\_rotate()}}
+{\footnotesize\ttfamily void ttak\+\_\+epoch\+\_\+gc\+\_\+rotate (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4}{ttak\+\_\+epoch\+\_\+gc\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{gc }\end{DoxyParamCaption})}
+
+
+
+Advances the epoch and triggers a non-\/blocking cleanup pass. 
+
+This should be called periodically by the user. It increments the epoch and traverses the heap tree to free blocks associated with expired epochs (based on configured retention or explicit lifetime).
+
+
+\begin{DoxyParams}{Parameters}
+{\em gc} & Pointer to the GC structure. \\
+\hline
+\end{DoxyParams}

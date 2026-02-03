@@ -5,8 +5,7 @@
 {\ttfamily \#include $<$stddef.\+h$>$}\newline
 {\ttfamily \#include $<$stdalign.\+h$>$}\newline
 {\ttfamily \#include $<$pthread.\+h$>$}\newline
-Include dependency graph for app\+\_\+types.\+h\+:
-\nopagebreak
+Include dependency graph for app\+\_\+types.\+h\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -35,17 +34,17 @@ struct \mbox{\hyperlink{structttak__mem__header__t}{ttak\+\_\+mem\+\_\+header\+\
 \item 
 \#define \mbox{\hyperlink{internal_2app__types_8h_a5ba4b50baa645717996dbe107641cf43}{TTAK\+\_\+\+COLD\+\_\+\+PATH}}
 \item 
-\#define \mbox{\hyperlink{internal_2app__types_8h_a8f73ed891f186c57f1a72da390592879}{TT\+\_\+\+NANO\+\_\+\+SECOND}}(n)
+\#define \mbox{\hyperlink{internal_2app__types_8h_a8f73ed891f186c57f1a72da390592879}{TT\+\_\+\+NANO\+\_\+\+SECOND}}(n)~((uint64\+\_\+t)(n))
 \begin{DoxyCompactList}\small\item\em Time unit macros for converting to nanoseconds. \end{DoxyCompactList}\item 
-\#define \mbox{\hyperlink{internal_2app__types_8h_ac02e371a9ce7c79927fcd1250ad5f082}{TT\+\_\+\+MICRO\+\_\+\+SECOND}}(n)
+\#define \mbox{\hyperlink{internal_2app__types_8h_ac02e371a9ce7c79927fcd1250ad5f082}{TT\+\_\+\+MICRO\+\_\+\+SECOND}}(n)~((uint64\+\_\+t)(n) \texorpdfstring{$\ast$}{*} 1000\+ULL)
 \item 
-\#define \mbox{\hyperlink{internal_2app__types_8h_a706d706dd7fd86c64eca603344ecd44d}{TT\+\_\+\+MILLI\+\_\+\+SECOND}}(n)
+\#define \mbox{\hyperlink{internal_2app__types_8h_a706d706dd7fd86c64eca603344ecd44d}{TT\+\_\+\+MILLI\+\_\+\+SECOND}}(n)~((uint64\+\_\+t)(n) \texorpdfstring{$\ast$}{*} 1000\+ULL \texorpdfstring{$\ast$}{*} 1000\+ULL)
 \item 
-\#define \mbox{\hyperlink{internal_2app__types_8h_a751dbf1f1d796405a9b2fe2f7ffa945e}{TT\+\_\+\+SECOND}}(n)
+\#define \mbox{\hyperlink{internal_2app__types_8h_a751dbf1f1d796405a9b2fe2f7ffa945e}{TT\+\_\+\+SECOND}}(n)~((uint64\+\_\+t)(n) \texorpdfstring{$\ast$}{*} 1000\+ULL \texorpdfstring{$\ast$}{*} 1000\+ULL \texorpdfstring{$\ast$}{*} 1000\+ULL)
 \item 
-\#define \mbox{\hyperlink{internal_2app__types_8h_a3209654bf799b3cadd064970c008a32a}{TT\+\_\+\+MINUTE}}(n)
+\#define \mbox{\hyperlink{internal_2app__types_8h_a3209654bf799b3cadd064970c008a32a}{TT\+\_\+\+MINUTE}}(n)~((uint64\+\_\+t)(n) \texorpdfstring{$\ast$}{*} 60\+ULL \texorpdfstring{$\ast$}{*} 1000\+ULL \texorpdfstring{$\ast$}{*} 1000\+ULL \texorpdfstring{$\ast$}{*} 1000\+ULL)
 \item 
-\#define \mbox{\hyperlink{internal_2app__types_8h_a19035333be330bdd7cb30b014a4075fe}{TT\+\_\+\+HOUR}}(n)
+\#define \mbox{\hyperlink{internal_2app__types_8h_a19035333be330bdd7cb30b014a4075fe}{TT\+\_\+\+HOUR}}(n)~((uint64\+\_\+t)(n) \texorpdfstring{$\ast$}{*} 60\+ULL \texorpdfstring{$\ast$}{*} 60\+ULL \texorpdfstring{$\ast$}{*} 1000\+ULL \texorpdfstring{$\ast$}{*} 1000\+ULL \texorpdfstring{$\ast$}{*} 1000\+ULL)
 \item 
 \#define \mbox{\hyperlink{internal_2app__types_8h_ac5b096c74969e7dbd5e24d44a446c015}{SAFE\+\_\+\+NULL}}~NULL
 \begin{DoxyCompactList}\small\item\em Sentinel for invalidated references. \end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -56,24 +55,22 @@ static uint32\+\_\+t \mbox{\hyperlink{internal_2app__types_8h_ad663cf355d411491e
 \begin{DoxyCompactList}\small\item\em Calculates a 32-\/bit checksum of the header metadata. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
-\label{doc-define-members}
-\Hypertarget{internal_2app__types_8h_doc-define-members}
 \doxysubsection{Macro Definition Documentation}
-\Hypertarget{internal_2app__types_8h_a1a83af89a777d8df64b1697e388679d9}\index{app\_types.h@{app\_types.h}!ERR\_TTAK\_INV\_ACC@{ERR\_TTAK\_INV\_ACC}}
+\Hypertarget{internal_2app__types_8h_a1a83af89a777d8df64b1697e388679d9}\label{internal_2app__types_8h_a1a83af89a777d8df64b1697e388679d9} 
+\index{app\_types.h@{app\_types.h}!ERR\_TTAK\_INV\_ACC@{ERR\_TTAK\_INV\_ACC}}
 \index{ERR\_TTAK\_INV\_ACC@{ERR\_TTAK\_INV\_ACC}!app\_types.h@{app\_types.h}}
 \doxysubsubsection{\texorpdfstring{ERR\_TTAK\_INV\_ACC}{ERR\_TTAK\_INV\_ACC}}
-{\footnotesize\ttfamily \label{internal_2app__types_8h_a1a83af89a777d8df64b1697e388679d9} 
-\#define ERR\+\_\+\+TTAK\+\_\+\+INV\+\_\+\+ACC~-\/205}
+{\footnotesize\ttfamily \#define ERR\+\_\+\+TTAK\+\_\+\+INV\+\_\+\+ACC~-\/205}
 
 
 
 Definition at line \mbox{\hyperlink{internal_2app__types_8h_source_l00030}{30}} of file \mbox{\hyperlink{internal_2app__types_8h_source}{app\+\_\+types.\+h}}.
 
-\Hypertarget{internal_2app__types_8h_a147a8eb4940f2cc5a8e3b1b8dae3ddae}\index{app\_types.h@{app\_types.h}!ERR\_TTAK\_MATH\_ERR@{ERR\_TTAK\_MATH\_ERR}}
+\Hypertarget{internal_2app__types_8h_a147a8eb4940f2cc5a8e3b1b8dae3ddae}\label{internal_2app__types_8h_a147a8eb4940f2cc5a8e3b1b8dae3ddae} 
+\index{app\_types.h@{app\_types.h}!ERR\_TTAK\_MATH\_ERR@{ERR\_TTAK\_MATH\_ERR}}
 \index{ERR\_TTAK\_MATH\_ERR@{ERR\_TTAK\_MATH\_ERR}!app\_types.h@{app\_types.h}}
 \doxysubsubsection{\texorpdfstring{ERR\_TTAK\_MATH\_ERR}{ERR\_TTAK\_MATH\_ERR}}
-{\footnotesize\ttfamily \label{internal_2app__types_8h_a147a8eb4940f2cc5a8e3b1b8dae3ddae} 
-\#define ERR\+\_\+\+TTAK\+\_\+\+MATH\+\_\+\+ERR~-\/206}
+{\footnotesize\ttfamily \#define ERR\+\_\+\+TTAK\+\_\+\+MATH\+\_\+\+ERR~-\/206}
 
 
 
@@ -83,11 +80,11 @@ Internal error codes mapping.
 
 Definition at line \mbox{\hyperlink{internal_2app__types_8h_source_l00029}{29}} of file \mbox{\hyperlink{internal_2app__types_8h_source}{app\+\_\+types.\+h}}.
 
-\Hypertarget{internal_2app__types_8h_ac5b096c74969e7dbd5e24d44a446c015}\index{app\_types.h@{app\_types.h}!SAFE\_NULL@{SAFE\_NULL}}
+\Hypertarget{internal_2app__types_8h_ac5b096c74969e7dbd5e24d44a446c015}\label{internal_2app__types_8h_ac5b096c74969e7dbd5e24d44a446c015} 
+\index{app\_types.h@{app\_types.h}!SAFE\_NULL@{SAFE\_NULL}}
 \index{SAFE\_NULL@{SAFE\_NULL}!app\_types.h@{app\_types.h}}
 \doxysubsubsection{\texorpdfstring{SAFE\_NULL}{SAFE\_NULL}}
-{\footnotesize\ttfamily \label{internal_2app__types_8h_ac5b096c74969e7dbd5e24d44a446c015} 
-\#define SAFE\+\_\+\+NULL~NULL}
+{\footnotesize\ttfamily \#define SAFE\+\_\+\+NULL~NULL}
 
 
 
@@ -97,77 +94,52 @@ Sentinel for invalidated references.
 
 Definition at line \mbox{\hyperlink{internal_2app__types_8h_source_l00053}{53}} of file \mbox{\hyperlink{internal_2app__types_8h_source}{app\+\_\+types.\+h}}.
 
-\Hypertarget{internal_2app__types_8h_a19035333be330bdd7cb30b014a4075fe}\index{app\_types.h@{app\_types.h}!TT\_HOUR@{TT\_HOUR}}
+\Hypertarget{internal_2app__types_8h_a19035333be330bdd7cb30b014a4075fe}\label{internal_2app__types_8h_a19035333be330bdd7cb30b014a4075fe} 
+\index{app\_types.h@{app\_types.h}!TT\_HOUR@{TT\_HOUR}}
 \index{TT\_HOUR@{TT\_HOUR}!app\_types.h@{app\_types.h}}
 \doxysubsubsection{\texorpdfstring{TT\_HOUR}{TT\_HOUR}}
-{\footnotesize\ttfamily \label{internal_2app__types_8h_a19035333be330bdd7cb30b014a4075fe} 
-\#define TT\+\_\+\+HOUR(\begin{DoxyParamCaption}\item[{}]{n}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \#define TT\+\_\+\+HOUR(\begin{DoxyParamCaption}\item[{}]{n }\end{DoxyParamCaption})~((uint64\+\_\+t)(n) \texorpdfstring{$\ast$}{*} 60\+ULL \texorpdfstring{$\ast$}{*} 60\+ULL \texorpdfstring{$\ast$}{*} 1000\+ULL \texorpdfstring{$\ast$}{*} 1000\+ULL \texorpdfstring{$\ast$}{*} 1000\+ULL)}
 
-{\bfseries Value\+:}
-\begin{DoxyCode}{0}
-\DoxyCodeLine{((uint64\_t)(n)\ *\ 60ULL\ *\ 60ULL\ *\ 1000ULL\ *\ 1000ULL\ *\ 1000ULL)}
-
-\end{DoxyCode}
 
 
 Definition at line \mbox{\hyperlink{internal_2app__types_8h_source_l00048}{48}} of file \mbox{\hyperlink{internal_2app__types_8h_source}{app\+\_\+types.\+h}}.
 
-\Hypertarget{internal_2app__types_8h_ac02e371a9ce7c79927fcd1250ad5f082}\index{app\_types.h@{app\_types.h}!TT\_MICRO\_SECOND@{TT\_MICRO\_SECOND}}
+\Hypertarget{internal_2app__types_8h_ac02e371a9ce7c79927fcd1250ad5f082}\label{internal_2app__types_8h_ac02e371a9ce7c79927fcd1250ad5f082} 
+\index{app\_types.h@{app\_types.h}!TT\_MICRO\_SECOND@{TT\_MICRO\_SECOND}}
 \index{TT\_MICRO\_SECOND@{TT\_MICRO\_SECOND}!app\_types.h@{app\_types.h}}
 \doxysubsubsection{\texorpdfstring{TT\_MICRO\_SECOND}{TT\_MICRO\_SECOND}}
-{\footnotesize\ttfamily \label{internal_2app__types_8h_ac02e371a9ce7c79927fcd1250ad5f082} 
-\#define TT\+\_\+\+MICRO\+\_\+\+SECOND(\begin{DoxyParamCaption}\item[{}]{n}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \#define TT\+\_\+\+MICRO\+\_\+\+SECOND(\begin{DoxyParamCaption}\item[{}]{n }\end{DoxyParamCaption})~((uint64\+\_\+t)(n) \texorpdfstring{$\ast$}{*} 1000\+ULL)}
 
-{\bfseries Value\+:}
-\begin{DoxyCode}{0}
-\DoxyCodeLine{((uint64\_t)(n)\ *\ 1000ULL)}
-
-\end{DoxyCode}
 
 
 Definition at line \mbox{\hyperlink{internal_2app__types_8h_source_l00044}{44}} of file \mbox{\hyperlink{internal_2app__types_8h_source}{app\+\_\+types.\+h}}.
 
-\Hypertarget{internal_2app__types_8h_a706d706dd7fd86c64eca603344ecd44d}\index{app\_types.h@{app\_types.h}!TT\_MILLI\_SECOND@{TT\_MILLI\_SECOND}}
+\Hypertarget{internal_2app__types_8h_a706d706dd7fd86c64eca603344ecd44d}\label{internal_2app__types_8h_a706d706dd7fd86c64eca603344ecd44d} 
+\index{app\_types.h@{app\_types.h}!TT\_MILLI\_SECOND@{TT\_MILLI\_SECOND}}
 \index{TT\_MILLI\_SECOND@{TT\_MILLI\_SECOND}!app\_types.h@{app\_types.h}}
 \doxysubsubsection{\texorpdfstring{TT\_MILLI\_SECOND}{TT\_MILLI\_SECOND}}
-{\footnotesize\ttfamily \label{internal_2app__types_8h_a706d706dd7fd86c64eca603344ecd44d} 
-\#define TT\+\_\+\+MILLI\+\_\+\+SECOND(\begin{DoxyParamCaption}\item[{}]{n}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \#define TT\+\_\+\+MILLI\+\_\+\+SECOND(\begin{DoxyParamCaption}\item[{}]{n }\end{DoxyParamCaption})~((uint64\+\_\+t)(n) \texorpdfstring{$\ast$}{*} 1000\+ULL \texorpdfstring{$\ast$}{*} 1000\+ULL)}
 
-{\bfseries Value\+:}
-\begin{DoxyCode}{0}
-\DoxyCodeLine{((uint64\_t)(n)\ *\ 1000ULL\ *\ 1000ULL)}
-
-\end{DoxyCode}
 
 
 Definition at line \mbox{\hyperlink{internal_2app__types_8h_source_l00045}{45}} of file \mbox{\hyperlink{internal_2app__types_8h_source}{app\+\_\+types.\+h}}.
 
-\Hypertarget{internal_2app__types_8h_a3209654bf799b3cadd064970c008a32a}\index{app\_types.h@{app\_types.h}!TT\_MINUTE@{TT\_MINUTE}}
+\Hypertarget{internal_2app__types_8h_a3209654bf799b3cadd064970c008a32a}\label{internal_2app__types_8h_a3209654bf799b3cadd064970c008a32a} 
+\index{app\_types.h@{app\_types.h}!TT\_MINUTE@{TT\_MINUTE}}
 \index{TT\_MINUTE@{TT\_MINUTE}!app\_types.h@{app\_types.h}}
 \doxysubsubsection{\texorpdfstring{TT\_MINUTE}{TT\_MINUTE}}
-{\footnotesize\ttfamily \label{internal_2app__types_8h_a3209654bf799b3cadd064970c008a32a} 
-\#define TT\+\_\+\+MINUTE(\begin{DoxyParamCaption}\item[{}]{n}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \#define TT\+\_\+\+MINUTE(\begin{DoxyParamCaption}\item[{}]{n }\end{DoxyParamCaption})~((uint64\+\_\+t)(n) \texorpdfstring{$\ast$}{*} 60\+ULL \texorpdfstring{$\ast$}{*} 1000\+ULL \texorpdfstring{$\ast$}{*} 1000\+ULL \texorpdfstring{$\ast$}{*} 1000\+ULL)}
 
-{\bfseries Value\+:}
-\begin{DoxyCode}{0}
-\DoxyCodeLine{((uint64\_t)(n)\ *\ 60ULL\ *\ 1000ULL\ *\ 1000ULL\ *\ 1000ULL)}
-
-\end{DoxyCode}
 
 
 Definition at line \mbox{\hyperlink{internal_2app__types_8h_source_l00047}{47}} of file \mbox{\hyperlink{internal_2app__types_8h_source}{app\+\_\+types.\+h}}.
 
-\Hypertarget{internal_2app__types_8h_a8f73ed891f186c57f1a72da390592879}\index{app\_types.h@{app\_types.h}!TT\_NANO\_SECOND@{TT\_NANO\_SECOND}}
+\Hypertarget{internal_2app__types_8h_a8f73ed891f186c57f1a72da390592879}\label{internal_2app__types_8h_a8f73ed891f186c57f1a72da390592879} 
+\index{app\_types.h@{app\_types.h}!TT\_NANO\_SECOND@{TT\_NANO\_SECOND}}
 \index{TT\_NANO\_SECOND@{TT\_NANO\_SECOND}!app\_types.h@{app\_types.h}}
 \doxysubsubsection{\texorpdfstring{TT\_NANO\_SECOND}{TT\_NANO\_SECOND}}
-{\footnotesize\ttfamily \label{internal_2app__types_8h_a8f73ed891f186c57f1a72da390592879} 
-\#define TT\+\_\+\+NANO\+\_\+\+SECOND(\begin{DoxyParamCaption}\item[{}]{n}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \#define TT\+\_\+\+NANO\+\_\+\+SECOND(\begin{DoxyParamCaption}\item[{}]{n }\end{DoxyParamCaption})~((uint64\+\_\+t)(n))}
 
-{\bfseries Value\+:}
-\begin{DoxyCode}{0}
-\DoxyCodeLine{((uint64\_t)(n))}
-
-\end{DoxyCode}
 
 
 Time unit macros for converting to nanoseconds. 
@@ -176,46 +148,41 @@ Time unit macros for converting to nanoseconds.
 
 Definition at line \mbox{\hyperlink{internal_2app__types_8h_source_l00043}{43}} of file \mbox{\hyperlink{internal_2app__types_8h_source}{app\+\_\+types.\+h}}.
 
-\Hypertarget{internal_2app__types_8h_a751dbf1f1d796405a9b2fe2f7ffa945e}\index{app\_types.h@{app\_types.h}!TT\_SECOND@{TT\_SECOND}}
+\Hypertarget{internal_2app__types_8h_a751dbf1f1d796405a9b2fe2f7ffa945e}\label{internal_2app__types_8h_a751dbf1f1d796405a9b2fe2f7ffa945e} 
+\index{app\_types.h@{app\_types.h}!TT\_SECOND@{TT\_SECOND}}
 \index{TT\_SECOND@{TT\_SECOND}!app\_types.h@{app\_types.h}}
 \doxysubsubsection{\texorpdfstring{TT\_SECOND}{TT\_SECOND}}
-{\footnotesize\ttfamily \label{internal_2app__types_8h_a751dbf1f1d796405a9b2fe2f7ffa945e} 
-\#define TT\+\_\+\+SECOND(\begin{DoxyParamCaption}\item[{}]{n}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \#define TT\+\_\+\+SECOND(\begin{DoxyParamCaption}\item[{}]{n }\end{DoxyParamCaption})~((uint64\+\_\+t)(n) \texorpdfstring{$\ast$}{*} 1000\+ULL \texorpdfstring{$\ast$}{*} 1000\+ULL \texorpdfstring{$\ast$}{*} 1000\+ULL)}
 
-{\bfseries Value\+:}
-\begin{DoxyCode}{0}
-\DoxyCodeLine{((uint64\_t)(n)\ *\ 1000ULL\ *\ 1000ULL\ *\ 1000ULL)}
-
-\end{DoxyCode}
 
 
 Definition at line \mbox{\hyperlink{internal_2app__types_8h_source_l00046}{46}} of file \mbox{\hyperlink{internal_2app__types_8h_source}{app\+\_\+types.\+h}}.
 
-\Hypertarget{internal_2app__types_8h_a5ba4b50baa645717996dbe107641cf43}\index{app\_types.h@{app\_types.h}!TTAK\_COLD\_PATH@{TTAK\_COLD\_PATH}}
+\Hypertarget{internal_2app__types_8h_a5ba4b50baa645717996dbe107641cf43}\label{internal_2app__types_8h_a5ba4b50baa645717996dbe107641cf43} 
+\index{app\_types.h@{app\_types.h}!TTAK\_COLD\_PATH@{TTAK\_COLD\_PATH}}
 \index{TTAK\_COLD\_PATH@{TTAK\_COLD\_PATH}!app\_types.h@{app\_types.h}}
 \doxysubsubsection{\texorpdfstring{TTAK\_COLD\_PATH}{TTAK\_COLD\_PATH}}
-{\footnotesize\ttfamily \label{internal_2app__types_8h_a5ba4b50baa645717996dbe107641cf43} 
-\#define TTAK\+\_\+\+COLD\+\_\+\+PATH}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+COLD\+\_\+\+PATH}
 
 
 
 Definition at line \mbox{\hyperlink{internal_2app__types_8h_source_l00037}{37}} of file \mbox{\hyperlink{internal_2app__types_8h_source}{app\+\_\+types.\+h}}.
 
-\Hypertarget{internal_2app__types_8h_a9f804bdef8f3eaa64b7090504f3790d1}\index{app\_types.h@{app\_types.h}!TTAK\_HOT\_PATH@{TTAK\_HOT\_PATH}}
+\Hypertarget{internal_2app__types_8h_a9f804bdef8f3eaa64b7090504f3790d1}\label{internal_2app__types_8h_a9f804bdef8f3eaa64b7090504f3790d1} 
+\index{app\_types.h@{app\_types.h}!TTAK\_HOT\_PATH@{TTAK\_HOT\_PATH}}
 \index{TTAK\_HOT\_PATH@{TTAK\_HOT\_PATH}!app\_types.h@{app\_types.h}}
 \doxysubsubsection{\texorpdfstring{TTAK\_HOT\_PATH}{TTAK\_HOT\_PATH}}
-{\footnotesize\ttfamily \label{internal_2app__types_8h_a9f804bdef8f3eaa64b7090504f3790d1} 
-\#define TTAK\+\_\+\+HOT\+\_\+\+PATH}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+HOT\+\_\+\+PATH}
 
 
 
 Definition at line \mbox{\hyperlink{internal_2app__types_8h_source_l00036}{36}} of file \mbox{\hyperlink{internal_2app__types_8h_source}{app\+\_\+types.\+h}}.
 
-\Hypertarget{internal_2app__types_8h_a02d61fafa21eadc8010ca9803d77bafb}\index{app\_types.h@{app\_types.h}!TTAK\_MAGIC\_NUMBER@{TTAK\_MAGIC\_NUMBER}}
+\Hypertarget{internal_2app__types_8h_a02d61fafa21eadc8010ca9803d77bafb}\label{internal_2app__types_8h_a02d61fafa21eadc8010ca9803d77bafb} 
+\index{app\_types.h@{app\_types.h}!TTAK\_MAGIC\_NUMBER@{TTAK\_MAGIC\_NUMBER}}
 \index{TTAK\_MAGIC\_NUMBER@{TTAK\_MAGIC\_NUMBER}!app\_types.h@{app\_types.h}}
 \doxysubsubsection{\texorpdfstring{TTAK\_MAGIC\_NUMBER}{TTAK\_MAGIC\_NUMBER}}
-{\footnotesize\ttfamily \label{internal_2app__types_8h_a02d61fafa21eadc8010ca9803d77bafb} 
-\#define TTAK\+\_\+\+MAGIC\+\_\+\+NUMBER~0x5454414B}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+MAGIC\+\_\+\+NUMBER~0x5454414B}
 
 
 
@@ -225,11 +192,11 @@ Definition at line \mbox{\hyperlink{internal_2app__types_8h_source_l00036}{36}} 
 
 Definition at line \mbox{\hyperlink{internal_2app__types_8h_source_l00013}{13}} of file \mbox{\hyperlink{internal_2app__types_8h_source}{app\+\_\+types.\+h}}.
 
-\Hypertarget{internal_2app__types_8h_afb038556e0b1b0989b6a6ddf3fa399f2}\index{app\_types.h@{app\_types.h}!TTAK\_MAX\_LIMB\_LIMIT@{TTAK\_MAX\_LIMB\_LIMIT}}
+\Hypertarget{internal_2app__types_8h_afb038556e0b1b0989b6a6ddf3fa399f2}\label{internal_2app__types_8h_afb038556e0b1b0989b6a6ddf3fa399f2} 
+\index{app\_types.h@{app\_types.h}!TTAK\_MAX\_LIMB\_LIMIT@{TTAK\_MAX\_LIMB\_LIMIT}}
 \index{TTAK\_MAX\_LIMB\_LIMIT@{TTAK\_MAX\_LIMB\_LIMIT}!app\_types.h@{app\_types.h}}
 \doxysubsubsection{\texorpdfstring{TTAK\_MAX\_LIMB\_LIMIT}{TTAK\_MAX\_LIMB\_LIMIT}}
-{\footnotesize\ttfamily \label{internal_2app__types_8h_afb038556e0b1b0989b6a6ddf3fa399f2} 
-\#define TTAK\+\_\+\+MAX\+\_\+\+LIMB\+\_\+\+LIMIT~0x1000000}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+MAX\+\_\+\+LIMB\+\_\+\+LIMIT~0x1000000}
 
 
 
@@ -239,11 +206,11 @@ Safety limit for mathematical operations to prevent OOM/\+Overflow. 16 million l
 
 Definition at line \mbox{\hyperlink{internal_2app__types_8h_source_l00019}{19}} of file \mbox{\hyperlink{internal_2app__types_8h_source}{app\+\_\+types.\+h}}.
 
-\Hypertarget{internal_2app__types_8h_a57726742a27442de442d3f964b17136e}\index{app\_types.h@{app\_types.h}!TTAK\_MEM\_HIGH\_WATERMARK@{TTAK\_MEM\_HIGH\_WATERMARK}}
+\Hypertarget{internal_2app__types_8h_a57726742a27442de442d3f964b17136e}\label{internal_2app__types_8h_a57726742a27442de442d3f964b17136e} 
+\index{app\_types.h@{app\_types.h}!TTAK\_MEM\_HIGH\_WATERMARK@{TTAK\_MEM\_HIGH\_WATERMARK}}
 \index{TTAK\_MEM\_HIGH\_WATERMARK@{TTAK\_MEM\_HIGH\_WATERMARK}!app\_types.h@{app\_types.h}}
 \doxysubsubsection{\texorpdfstring{TTAK\_MEM\_HIGH\_WATERMARK}{TTAK\_MEM\_HIGH\_WATERMARK}}
-{\footnotesize\ttfamily \label{internal_2app__types_8h_a57726742a27442de442d3f964b17136e} 
-\#define TTAK\+\_\+\+MEM\+\_\+\+HIGH\+\_\+\+WATERMARK~(512ULL \texorpdfstring{$\ast$}{*} 1024ULL \texorpdfstring{$\ast$}{*} 1024ULL)}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+MEM\+\_\+\+HIGH\+\_\+\+WATERMARK~(512ULL \texorpdfstring{$\ast$}{*} 1024ULL \texorpdfstring{$\ast$}{*} 1024ULL)}
 
 
 
@@ -255,14 +222,12 @@ Definition at line \mbox{\hyperlink{internal_2app__types_8h_source_l00024}{24}} 
 
 
 
-\label{doc-func-members}
-\Hypertarget{internal_2app__types_8h_doc-func-members}
 \doxysubsection{Function Documentation}
-\Hypertarget{internal_2app__types_8h_ad663cf355d411491ef16fbaba940be07}\index{app\_types.h@{app\_types.h}!ttak\_calc\_header\_checksum@{ttak\_calc\_header\_checksum}}
+\Hypertarget{internal_2app__types_8h_ad663cf355d411491ef16fbaba940be07}\label{internal_2app__types_8h_ad663cf355d411491ef16fbaba940be07} 
+\index{app\_types.h@{app\_types.h}!ttak\_calc\_header\_checksum@{ttak\_calc\_header\_checksum}}
 \index{ttak\_calc\_header\_checksum@{ttak\_calc\_header\_checksum}!app\_types.h@{app\_types.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_calc\_header\_checksum()}{ttak\_calc\_header\_checksum()}}
-{\footnotesize\ttfamily \label{internal_2app__types_8h_ad663cf355d411491ef16fbaba940be07} 
-uint32\+\_\+t ttak\+\_\+calc\+\_\+header\+\_\+checksum (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structttak__mem__header__t}{ttak\+\_\+mem\+\_\+header\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{h}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+{\footnotesize\ttfamily static uint32\+\_\+t ttak\+\_\+calc\+\_\+header\+\_\+checksum (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structttak__mem__header__t}{ttak\+\_\+mem\+\_\+header\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{h }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
 
 
 

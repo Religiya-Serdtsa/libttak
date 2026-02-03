@@ -83,7 +83,7 @@ typedef struct {
     _Bool    allow_direct_access; /**< Safety bypass flag */
     _Bool    is_huge;       /**< Mapped via hugepages */
     _Bool    should_join;   /**< Indicates if associated resource needs joining */
-    _Bool    strict_check;  /**< Enable strict memory boundary checks */
+    _Bool    strict_check; _Bool    is_root;  /**< Enable strict memory boundary checks */
     uint64_t canary_start;  /**< Magic number for start of user data */
     uint64_t canary_end;    /**< Magic number for end of user data */
     char     reserved[11];  /**< Explicit padding for 128-byte header on x64 */
@@ -103,7 +103,7 @@ static inline uint32_t ttak_calc_header_checksum(const ttak_mem_header_t *h) {
     sum ^= (uint32_t)(h->size >> 32);
 #endif
     sum ^= (uint32_t)h->should_join;
-    sum ^= (uint32_t)h->strict_check;
+    sum ^= (uint32_t)h->strict_check; sum ^= (uint32_t)h->is_root;
     sum ^= (uint32_t)h->canary_start;
     sum ^= (uint32_t)(h->canary_start >> 32);
     sum ^= (uint32_t)h->canary_end;

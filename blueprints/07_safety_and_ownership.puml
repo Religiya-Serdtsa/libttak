@@ -1,0 +1,63 @@
+@startuml
+!theme plain
+hide empty members
+
+package "Safety & Ownership" {
+    class ttak_owner_t {
+        + resources : ttak_map_t*
+        + functions : ttak_map_t*
+        + lock : ttak_rwlock_t
+        + policy_flags : uint32_t
+        + creation_ts : uint64_t
+        __
+        + create(policy)
+        + destroy()
+        + register_func(name, func)
+        + register_resource(name, data)
+        + execute(func_name, resource_name, args)
+    }
+
+    enum ttak_owner_policy_t {
+        TTAK_OWNER_SAFE_DEFAULT
+        TTAK_OWNER_DENY_DANGEROUS_MEM
+        TTAK_OWNER_DENY_THREADING
+        TTAK_OWNER_STRICT_ISOLATION
+    }
+
+    class ttak_epoch_gc_t {
+        + tree : ttak_mem_tree_t
+        + current_epoch : uint64_t
+        + last_cleanup_ts : uint64_t
+        __
+        + init()
+        + destroy()
+        + register(ptr, size)
+        + rotate()
+    }
+    note right of ttak_epoch_gc_t::rotate
+        Triggers non-blocking
+        periodic cleanup
+    end note
+
+    class ttak_ratelimit_t {
+        + bucket : ttak_token_bucket_t
+        __
+        + init(rate, burst)
+        + allow() : bool
+    }
+
+    class ttak_token_bucket_t {
+        + tokens : double
+        + max_tokens : double
+        + refill_rate : double
+        + last_refill_ts : uint64_t
+        + lock : ttak_spin_t
+        __
+        + init(rate, burst)
+        + consume(amount) : bool
+    }
+
+    ttak_owner_t ..> ttak_owner_policy_t
+    ttak_ratelimit_t *-- ttak_token_bucket_t
+}
+@enduml

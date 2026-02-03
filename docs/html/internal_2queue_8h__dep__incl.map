@@ -1,12 +1,12 @@
 <map id="include/ttak/priority/internal/queue.h" name="include/ttak/priority/internal/queue.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="54,5,204,50"/>
-<area shape="rect" id="Node000002" href="$queue_8h.html" title=" " alt="" coords="54,98,204,143"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="132,66,132,98,126,98,126,66"/>
-<area shape="rect" id="Node000003" href="$pool_8h.html" title=" " alt="" coords="57,191,201,235"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="132,158,132,190,126,190,126,158"/>
-<area shape="rect" id="Node000004" href="$promise_8h.html" title=" " alt="" coords="5,283,146,328"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="111,250,90,285,86,282,106,247"/>
-<area shape="rect" id="Node000005" href="$worker_8h.html" title=" " alt="" coords="57,376,201,421"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="98,340,119,374,114,377,94,343"/>
-<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="145,361,156,327,158,306,156,284,138,237,143,235,161,283,164,306,161,329,150,362"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="54,5,205,45"/>
+<area shape="rect" id="Node000002" href="$queue_8h.html" title=" " alt="" coords="54,93,205,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="132,59,132,93,127,93,127,59"/>
+<area shape="rect" id="Node000003" href="$thread_2pool_8h.html" title=" " alt="" coords="57,181,202,221"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="132,147,132,181,127,181,127,147"/>
+<area shape="rect" id="Node000004" href="$promise_8h.html" title=" " alt="" coords="5,269,147,309"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="113,234,90,271,86,268,108,232"/>
+<area shape="rect" id="Node000005" href="$worker_8h.html" title=" " alt="" coords="57,357,202,397"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="97,320,120,356,115,359,93,322"/>
+<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="144,344,156,309,159,289,156,270,148,245,138,223,143,221,153,243,161,269,164,289,161,310,149,345"/>
 </map>

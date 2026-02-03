@@ -137,6 +137,7 @@ void TTAK_HOT_PATH *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, ui
     header->is_huge = is_huge;
     header->should_join = false; // Default to false, can be set later if needed
     header->strict_check = strict_check_enabled;
+    header->is_root = is_root;
     header->canary_start = strict_check_enabled ? TTAK_CANARY_START_MAGIC : 0;
     header->canary_end = strict_check_enabled ? TTAK_CANARY_END_MAGIC : 0;
     pthread_mutex_init(&header->lock, NULL);
@@ -160,7 +161,7 @@ void TTAK_HOT_PATH *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, ui
     if (global_init_done && !in_mem_init && !in_mem_op) {
         pthread_mutex_lock(&global_map_lock);
         in_mem_op = true;
-        ttak_insert_to_map(global_ptr_map, (uintptr_t)user_ptr, (size_t)header, now);
+        if (is_root) { ttak_insert_to_map(global_ptr_map, (uintptr_t)user_ptr, (size_t)header, now); }
         ttak_mem_tree_add(&global_mem_tree, user_ptr, size, header->expires_tick, is_root); // Add to mem tree
         in_mem_op = false;
         pthread_mutex_unlock(&global_map_lock);
@@ -223,7 +224,7 @@ void TTAK_HOT_PATH ttak_mem_free(void *ptr) {
     V_HEADER(ptr); // This will check canaries if strict_check is enabled
     ttak_mem_header_t *header = GET_HEADER(ptr);
 
-    if (!in_mem_op) {
+    if (!in_mem_op && header->is_root) {
         pthread_mutex_lock(&global_map_lock);
         in_mem_op = true;
         if (global_ptr_map) {

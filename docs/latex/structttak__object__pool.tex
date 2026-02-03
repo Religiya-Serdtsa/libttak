@@ -1,0 +1,113 @@
+\doxysection{ttak\+\_\+object\+\_\+pool Struct Reference}
+\hypertarget{structttak__object__pool}{}\label{structttak__object__pool}\index{ttak\_object\_pool@{ttak\_object\_pool}}
+
+
+Fixed-\/size Object Pool structure.  
+
+
+
+
+{\ttfamily \#include $<$pool.\+h$>$}
+
+
+
+Collaboration diagram for ttak\+\_\+object\+\_\+pool\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=178pt]{structttak__object__pool__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__object__pool_a73ea2079b6694a8aad3b037175b4567c}{buffer}}
+\item 
+uint8\+\_\+t \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__object__pool_a5d2309b73288099265b56b0555c8d17e}{bitmap}}
+\item 
+size\+\_\+t \mbox{\hyperlink{structttak__object__pool_a2097794e192b7fa4813e4a98b5724637}{item\+\_\+size}}
+\item 
+size\+\_\+t \mbox{\hyperlink{structttak__object__pool_ad6c6f8215988b972296cc49fee97d89d}{capacity}}
+\item 
+size\+\_\+t \mbox{\hyperlink{structttak__object__pool_a53077709490b4f7933fd2a6609d14e84}{used\+\_\+count}}
+\item 
+\mbox{\hyperlink{spinlock_8h_a705f9b9b5f7cf440ded7db544f974487}{ttak\+\_\+spin\+\_\+t}} \mbox{\hyperlink{structttak__object__pool_a5c261e179030cdd19276708d98142e46}{lock}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Fixed-\/size Object Pool structure. 
+
+Efficiently manages a set of pre-\/allocated objects of the same size. Uses a bitmap for allocation tracking and a spinlock for thread safety. 
+
+Definition at line \mbox{\hyperlink{container_2pool_8h_source_l00015}{15}} of file \mbox{\hyperlink{container_2pool_8h_source}{pool.\+h}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structttak__object__pool_a5d2309b73288099265b56b0555c8d17e}\label{structttak__object__pool_a5d2309b73288099265b56b0555c8d17e} 
+\index{ttak\_object\_pool@{ttak\_object\_pool}!bitmap@{bitmap}}
+\index{bitmap@{bitmap}!ttak\_object\_pool@{ttak\_object\_pool}}
+\doxysubsubsection{\texorpdfstring{bitmap}{bitmap}}
+{\footnotesize\ttfamily uint8\+\_\+t\texorpdfstring{$\ast$}{*} ttak\+\_\+object\+\_\+pool\+::bitmap}
+
+Bitmask indicating allocation status. 
+
+Definition at line \mbox{\hyperlink{container_2pool_8h_source_l00017}{17}} of file \mbox{\hyperlink{container_2pool_8h_source}{pool.\+h}}.
+
+\Hypertarget{structttak__object__pool_a73ea2079b6694a8aad3b037175b4567c}\label{structttak__object__pool_a73ea2079b6694a8aad3b037175b4567c} 
+\index{ttak\_object\_pool@{ttak\_object\_pool}!buffer@{buffer}}
+\index{buffer@{buffer}!ttak\_object\_pool@{ttak\_object\_pool}}
+\doxysubsubsection{\texorpdfstring{buffer}{buffer}}
+{\footnotesize\ttfamily void\texorpdfstring{$\ast$}{*} ttak\+\_\+object\+\_\+pool\+::buffer}
+
+Contiguous memory block holding all items. 
+
+Definition at line \mbox{\hyperlink{container_2pool_8h_source_l00016}{16}} of file \mbox{\hyperlink{container_2pool_8h_source}{pool.\+h}}.
+
+\Hypertarget{structttak__object__pool_ad6c6f8215988b972296cc49fee97d89d}\label{structttak__object__pool_ad6c6f8215988b972296cc49fee97d89d} 
+\index{ttak\_object\_pool@{ttak\_object\_pool}!capacity@{capacity}}
+\index{capacity@{capacity}!ttak\_object\_pool@{ttak\_object\_pool}}
+\doxysubsubsection{\texorpdfstring{capacity}{capacity}}
+{\footnotesize\ttfamily size\+\_\+t ttak\+\_\+object\+\_\+pool\+::capacity}
+
+Total capacity of the pool. 
+
+Definition at line \mbox{\hyperlink{container_2pool_8h_source_l00019}{19}} of file \mbox{\hyperlink{container_2pool_8h_source}{pool.\+h}}.
+
+\Hypertarget{structttak__object__pool_a2097794e192b7fa4813e4a98b5724637}\label{structttak__object__pool_a2097794e192b7fa4813e4a98b5724637} 
+\index{ttak\_object\_pool@{ttak\_object\_pool}!item\_size@{item\_size}}
+\index{item\_size@{item\_size}!ttak\_object\_pool@{ttak\_object\_pool}}
+\doxysubsubsection{\texorpdfstring{item\_size}{item\_size}}
+{\footnotesize\ttfamily size\+\_\+t ttak\+\_\+object\+\_\+pool\+::item\+\_\+size}
+
+Size of a single item. 
+
+Definition at line \mbox{\hyperlink{container_2pool_8h_source_l00018}{18}} of file \mbox{\hyperlink{container_2pool_8h_source}{pool.\+h}}.
+
+\Hypertarget{structttak__object__pool_a5c261e179030cdd19276708d98142e46}\label{structttak__object__pool_a5c261e179030cdd19276708d98142e46} 
+\index{ttak\_object\_pool@{ttak\_object\_pool}!lock@{lock}}
+\index{lock@{lock}!ttak\_object\_pool@{ttak\_object\_pool}}
+\doxysubsubsection{\texorpdfstring{lock}{lock}}
+{\footnotesize\ttfamily \mbox{\hyperlink{spinlock_8h_a705f9b9b5f7cf440ded7db544f974487}{ttak\+\_\+spin\+\_\+t}} ttak\+\_\+object\+\_\+pool\+::lock}
+
+Spinlock for protecting the bitmap. 
+
+Definition at line \mbox{\hyperlink{container_2pool_8h_source_l00021}{21}} of file \mbox{\hyperlink{container_2pool_8h_source}{pool.\+h}}.
+
+\Hypertarget{structttak__object__pool_a53077709490b4f7933fd2a6609d14e84}\label{structttak__object__pool_a53077709490b4f7933fd2a6609d14e84} 
+\index{ttak\_object\_pool@{ttak\_object\_pool}!used\_count@{used\_count}}
+\index{used\_count@{used\_count}!ttak\_object\_pool@{ttak\_object\_pool}}
+\doxysubsubsection{\texorpdfstring{used\_count}{used\_count}}
+{\footnotesize\ttfamily size\+\_\+t ttak\+\_\+object\+\_\+pool\+::used\+\_\+count}
+
+Number of currently allocated items. 
+
+Definition at line \mbox{\hyperlink{container_2pool_8h_source_l00020}{20}} of file \mbox{\hyperlink{container_2pool_8h_source}{pool.\+h}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/ttak/container/\mbox{\hyperlink{container_2pool_8h}{pool.\+h}}\end{DoxyCompactItemize}

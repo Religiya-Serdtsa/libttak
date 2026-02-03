@@ -1,0 +1,11 @@
+<map id="include/ttak/sync/spinlock.h" name="include/ttak/sync/spinlock.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="119,5,321,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,104,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="194,33,95,76,93,71,192,28"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="128,79,211,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="214,33,188,69,183,66,209,29"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="235,79,306,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="231,29,257,66,252,69,226,33"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="331,79,395,104"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="244,28,328,70,326,75,242,33"/>
+</map>

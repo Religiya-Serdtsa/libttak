@@ -1,0 +1,169 @@
+\doxysection{include/ttak/limit/limit.h File Reference}
+\hypertarget{limit_8h}{}\label{limit_8h}\index{include/ttak/limit/limit.h@{include/ttak/limit/limit.h}}
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$ttak/sync/sync.\+h$>$}\newline
+{\ttfamily \#include $<$ttak/sync/spinlock.\+h$>$}\newline
+Include dependency graph for limit.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{limit_8h__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structttak__token__bucket}{ttak\+\_\+token\+\_\+bucket}}
+\begin{DoxyCompactList}\small\item\em Token Bucket structure for rate limiting. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structttak__ratelimit}{ttak\+\_\+ratelimit}}
+\begin{DoxyCompactList}\small\item\em Rate Limiter structure (wrapper around Token Bucket). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \mbox{\hyperlink{structttak__token__bucket}{ttak\+\_\+token\+\_\+bucket}} \mbox{\hyperlink{limit_8h_aa93e8c31cd330170d3b7640faba120cc}{ttak\+\_\+token\+\_\+bucket\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Token Bucket structure for rate limiting. \end{DoxyCompactList}\item 
+typedef \mbox{\hyperlink{limit_8h_aa93e8c31cd330170d3b7640faba120cc}{ttak\+\_\+token\+\_\+bucket\+\_\+t}} \mbox{\hyperlink{limit_8h_a5d83178dfa8a793b5253e83a233d873c}{tt\+\_\+token\+\_\+bucket\+\_\+t}}
+\item 
+typedef struct \mbox{\hyperlink{structttak__ratelimit}{ttak\+\_\+ratelimit}} \mbox{\hyperlink{limit_8h_a8af4cfe974109d7dd4137f6cdeea1818}{ttak\+\_\+ratelimit\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Rate Limiter structure (wrapper around Token Bucket). \end{DoxyCompactList}\item 
+typedef \mbox{\hyperlink{limit_8h_a8af4cfe974109d7dd4137f6cdeea1818}{ttak\+\_\+ratelimit\+\_\+t}} \mbox{\hyperlink{limit_8h_a125660251414d05c0017797217ecd141}{tt\+\_\+ratelimit\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{limit_8h_ab7b4f398fc841de28b2863657169952e}{ttak\+\_\+token\+\_\+bucket\+\_\+init}} (\mbox{\hyperlink{limit_8h_aa93e8c31cd330170d3b7640faba120cc}{ttak\+\_\+token\+\_\+bucket\+\_\+t}} \texorpdfstring{$\ast$}{*}tb, double rate, double burst)
+\begin{DoxyCompactList}\small\item\em Initializes a token bucket. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{limit_8h_a3deddce4c8bded9bce6e0fe704d9c332}{ttak\+\_\+token\+\_\+bucket\+\_\+consume}} (\mbox{\hyperlink{limit_8h_aa93e8c31cd330170d3b7640faba120cc}{ttak\+\_\+token\+\_\+bucket\+\_\+t}} \texorpdfstring{$\ast$}{*}tb, double tokens)
+\begin{DoxyCompactList}\small\item\em Attempts to consume tokens from the bucket. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{limit_8h_afa1836ac0cc88aff9138135b731e61fa}{ttak\+\_\+ratelimit\+\_\+init}} (\mbox{\hyperlink{limit_8h_a8af4cfe974109d7dd4137f6cdeea1818}{ttak\+\_\+ratelimit\+\_\+t}} \texorpdfstring{$\ast$}{*}rl, double rate, double burst)
+\begin{DoxyCompactList}\small\item\em Initializes a rate limiter. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{limit_8h_a684abae6debf25661db4c6a36d10cd9e}{ttak\+\_\+ratelimit\+\_\+allow}} (\mbox{\hyperlink{limit_8h_a8af4cfe974109d7dd4137f6cdeea1818}{ttak\+\_\+ratelimit\+\_\+t}} \texorpdfstring{$\ast$}{*}rl)
+\begin{DoxyCompactList}\small\item\em Checks if an action is allowed by the rate limiter. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{limit_8h_a125660251414d05c0017797217ecd141}\label{limit_8h_a125660251414d05c0017797217ecd141} 
+\index{limit.h@{limit.h}!tt\_ratelimit\_t@{tt\_ratelimit\_t}}
+\index{tt\_ratelimit\_t@{tt\_ratelimit\_t}!limit.h@{limit.h}}
+\doxysubsubsection{\texorpdfstring{tt\_ratelimit\_t}{tt\_ratelimit\_t}}
+{\footnotesize\ttfamily typedef \mbox{\hyperlink{limit_8h_a8af4cfe974109d7dd4137f6cdeea1818}{ttak\+\_\+ratelimit\+\_\+t}} \mbox{\hyperlink{limit_8h_a125660251414d05c0017797217ecd141}{tt\+\_\+ratelimit\+\_\+t}}}
+
+
+
+Definition at line \mbox{\hyperlink{limit_8h_source_l00053}{53}} of file \mbox{\hyperlink{limit_8h_source}{limit.\+h}}.
+
+\Hypertarget{limit_8h_a5d83178dfa8a793b5253e83a233d873c}\label{limit_8h_a5d83178dfa8a793b5253e83a233d873c} 
+\index{limit.h@{limit.h}!tt\_token\_bucket\_t@{tt\_token\_bucket\_t}}
+\index{tt\_token\_bucket\_t@{tt\_token\_bucket\_t}!limit.h@{limit.h}}
+\doxysubsubsection{\texorpdfstring{tt\_token\_bucket\_t}{tt\_token\_bucket\_t}}
+{\footnotesize\ttfamily typedef \mbox{\hyperlink{limit_8h_aa93e8c31cd330170d3b7640faba120cc}{ttak\+\_\+token\+\_\+bucket\+\_\+t}} \mbox{\hyperlink{limit_8h_a5d83178dfa8a793b5253e83a233d873c}{tt\+\_\+token\+\_\+bucket\+\_\+t}}}
+
+
+
+Definition at line \mbox{\hyperlink{limit_8h_source_l00023}{23}} of file \mbox{\hyperlink{limit_8h_source}{limit.\+h}}.
+
+\Hypertarget{limit_8h_a8af4cfe974109d7dd4137f6cdeea1818}\label{limit_8h_a8af4cfe974109d7dd4137f6cdeea1818} 
+\index{limit.h@{limit.h}!ttak\_ratelimit\_t@{ttak\_ratelimit\_t}}
+\index{ttak\_ratelimit\_t@{ttak\_ratelimit\_t}!limit.h@{limit.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_ratelimit\_t}{ttak\_ratelimit\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__ratelimit}{ttak\+\_\+ratelimit}} \mbox{\hyperlink{limit_8h_a8af4cfe974109d7dd4137f6cdeea1818}{ttak\+\_\+ratelimit\+\_\+t}}}
+
+
+
+Rate Limiter structure (wrapper around Token Bucket). 
+
+Simplifies rate limiting for binary allow/deny decisions. \Hypertarget{limit_8h_aa93e8c31cd330170d3b7640faba120cc}\label{limit_8h_aa93e8c31cd330170d3b7640faba120cc} 
+\index{limit.h@{limit.h}!ttak\_token\_bucket\_t@{ttak\_token\_bucket\_t}}
+\index{ttak\_token\_bucket\_t@{ttak\_token\_bucket\_t}!limit.h@{limit.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_token\_bucket\_t}{ttak\_token\_bucket\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__token__bucket}{ttak\+\_\+token\+\_\+bucket}} \mbox{\hyperlink{limit_8h_aa93e8c31cd330170d3b7640faba120cc}{ttak\+\_\+token\+\_\+bucket\+\_\+t}}}
+
+
+
+Token Bucket structure for rate limiting. 
+
+Implements the standard token bucket algorithm. Thread-\/safe using a spinlock. 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{limit_8h_a684abae6debf25661db4c6a36d10cd9e}\label{limit_8h_a684abae6debf25661db4c6a36d10cd9e} 
+\index{limit.h@{limit.h}!ttak\_ratelimit\_allow@{ttak\_ratelimit\_allow}}
+\index{ttak\_ratelimit\_allow@{ttak\_ratelimit\_allow}!limit.h@{limit.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_ratelimit\_allow()}{ttak\_ratelimit\_allow()}}
+{\footnotesize\ttfamily bool ttak\+\_\+ratelimit\+\_\+allow (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{limit_8h_a8af4cfe974109d7dd4137f6cdeea1818}{ttak\+\_\+ratelimit\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{rl }\end{DoxyParamCaption})}
+
+
+
+Checks if an action is allowed by the rate limiter. 
+
+Consumes 1.\+0 token.
+
+
+\begin{DoxyParams}{Parameters}
+{\em rl} & Pointer to the rate limiter. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if allowed, false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{limit_8h_afa1836ac0cc88aff9138135b731e61fa}\label{limit_8h_afa1836ac0cc88aff9138135b731e61fa} 
+\index{limit.h@{limit.h}!ttak\_ratelimit\_init@{ttak\_ratelimit\_init}}
+\index{ttak\_ratelimit\_init@{ttak\_ratelimit\_init}!limit.h@{limit.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_ratelimit\_init()}{ttak\_ratelimit\_init()}}
+{\footnotesize\ttfamily void ttak\+\_\+ratelimit\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{limit_8h_a8af4cfe974109d7dd4137f6cdeea1818}{ttak\+\_\+ratelimit\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{rl,  }\item[{double}]{rate,  }\item[{double}]{burst }\end{DoxyParamCaption})}
+
+
+
+Initializes a rate limiter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rl} & Pointer to the rate limiter. \\
+\hline
+{\em rate} & Allowed rate (requests per second). \\
+\hline
+{\em burst} & Maximum burst size. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{limit_8h_a3deddce4c8bded9bce6e0fe704d9c332}\label{limit_8h_a3deddce4c8bded9bce6e0fe704d9c332} 
+\index{limit.h@{limit.h}!ttak\_token\_bucket\_consume@{ttak\_token\_bucket\_consume}}
+\index{ttak\_token\_bucket\_consume@{ttak\_token\_bucket\_consume}!limit.h@{limit.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_token\_bucket\_consume()}{ttak\_token\_bucket\_consume()}}
+{\footnotesize\ttfamily bool ttak\+\_\+token\+\_\+bucket\+\_\+consume (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{limit_8h_aa93e8c31cd330170d3b7640faba120cc}{ttak\+\_\+token\+\_\+bucket\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{tb,  }\item[{double}]{tokens }\end{DoxyParamCaption})}
+
+
+
+Attempts to consume tokens from the bucket. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em tb} & Pointer to the bucket. \\
+\hline
+{\em tokens} & Number of tokens to consume. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if tokens were available and consumed. 
+
+false if there were insufficient tokens. 
+\end{DoxyReturn}
+\Hypertarget{limit_8h_ab7b4f398fc841de28b2863657169952e}\label{limit_8h_ab7b4f398fc841de28b2863657169952e} 
+\index{limit.h@{limit.h}!ttak\_token\_bucket\_init@{ttak\_token\_bucket\_init}}
+\index{ttak\_token\_bucket\_init@{ttak\_token\_bucket\_init}!limit.h@{limit.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_token\_bucket\_init()}{ttak\_token\_bucket\_init()}}
+{\footnotesize\ttfamily void ttak\+\_\+token\+\_\+bucket\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{limit_8h_aa93e8c31cd330170d3b7640faba120cc}{ttak\+\_\+token\+\_\+bucket\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{tb,  }\item[{double}]{rate,  }\item[{double}]{burst }\end{DoxyParamCaption})}
+
+
+
+Initializes a token bucket. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em tb} & Pointer to the bucket. \\
+\hline
+{\em rate} & Refill rate in tokens per second. \\
+\hline
+{\em burst} & Maximum burst size (capacity). \\
+\hline
+\end{DoxyParams}

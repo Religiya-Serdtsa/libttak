@@ -1,9 +1,17 @@
 var sync_8h =
 [
+    [ "ttak_shard", "structttak__shard.html", "structttak__shard" ],
     [ "tt_type_shared", "structtt__type__shared.html", "structtt__type__shared" ],
+    [ "tt_cond_t", "sync_8h.html#a3284a9090fdc13bcdfe050f57a1520fa", null ],
+    [ "tt_mutex_t", "sync_8h.html#adc0236631270c39ddc9071cd4b2d40fc", null ],
+    [ "tt_rwlock_t", "sync_8h.html#a34fb9173fe482a84a25f888310e1cc35", null ],
+    [ "tt_shard_t", "sync_8h.html#a8d737f4190550c09c17a020ab282259f", null ],
     [ "tt_type_shared_t", "sync_8h.html#af7e69d4612c0d58e7c611b79f1f5d43e", null ],
     [ "ttak_cond_t", "sync_8h.html#aecf69ab36c01d7bce72c0f206d73031d", null ],
     [ "ttak_mutex_t", "sync_8h.html#a099d39f1f8999756bc828ad4b337d5b6", null ],
+    [ "ttak_rwlock_t", "sync_8h.html#ad3f9b08e4c066e7bb7b1ed98d2a90386", null ],
+    [ "ttak_shard_t", "sync_8h.html#a2af401fa7e43489271afefbdfa2b5399", null ],
+    [ "ttak_type_shared_t", "sync_8h.html#a39cac376f364ac1c89b986bdae4fae57", null ],
     [ "ttak_cond_broadcast", "sync_8h.html#afae6538fc09fc9a3250a30adb1ba9637", null ],
     [ "ttak_cond_destroy", "sync_8h.html#a0ff8df06a516ac77b19fd1f81a2e04a6", null ],
     [ "ttak_cond_init", "sync_8h.html#ad001a691fece502b0a7d9d056e4c6952", null ],
@@ -12,5 +20,12 @@ var sync_8h =
     [ "ttak_mutex_destroy", "sync_8h.html#a578b3284d758bc51aa4ecf76f2e0dbc2", null ],
     [ "ttak_mutex_init", "sync_8h.html#a7d304f966c52c975456a7f618a17dc7f", null ],
     [ "ttak_mutex_lock", "sync_8h.html#a65d82f049c34962c2dde6cdd45a09563", null ],
-    [ "ttak_mutex_unlock", "sync_8h.html#a1dfa60f4c2eb49ec4f5d9b5eaf6448f0", null ]
+    [ "ttak_mutex_unlock", "sync_8h.html#a1dfa60f4c2eb49ec4f5d9b5eaf6448f0", null ],
+    [ "ttak_rwlock_destroy", "sync_8h.html#a1d8c7ddb2549a0dd08c117c5f2e93f21", null ],
+    [ "ttak_rwlock_init", "sync_8h.html#a0d5576b5df1b2e31b33bea4dd0066105", null ],
+    [ "ttak_rwlock_rdlock", "sync_8h.html#a0e51c1ef0a128df271c0d86a1085dce3", null ],
+    [ "ttak_rwlock_unlock", "sync_8h.html#a7d5dfa0872ff98f5a43013a2d5666500", null ],
+    [ "ttak_rwlock_wrlock", "sync_8h.html#a91f4ec058c517f0741cd0d156c2c9dd4", null ],
+    [ "ttak_shard_destroy", "sync_8h.html#a812fa46f2809040c0cb9cc3adeaa9ae4", null ],
+    [ "ttak_shard_init", "sync_8h.html#a418b5e2a4fd818ceb7e5d0be5ae92352", null ]
 ];

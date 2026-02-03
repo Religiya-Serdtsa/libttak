@@ -1,0 +1,169 @@
+\doxysection{include/ttak/container/ringbuf.h File Reference}
+\hypertarget{ringbuf_8h}{}\label{ringbuf_8h}\index{include/ttak/container/ringbuf.h@{include/ttak/container/ringbuf.h}}
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$ttak/sync/sync.\+h$>$}\newline
+Include dependency graph for ringbuf.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{ringbuf_8h__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structttak__ringbuf}{ttak\+\_\+ringbuf}}
+\begin{DoxyCompactList}\small\item\em Thread-\/safe Ring Buffer structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \mbox{\hyperlink{structttak__ringbuf}{ttak\+\_\+ringbuf}} \mbox{\hyperlink{ringbuf_8h_ade1a3bb2033eab17549a208ab320b00c}{ttak\+\_\+ringbuf\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Thread-\/safe Ring Buffer structure. \end{DoxyCompactList}\item 
+typedef \mbox{\hyperlink{ringbuf_8h_ade1a3bb2033eab17549a208ab320b00c}{ttak\+\_\+ringbuf\+\_\+t}} \mbox{\hyperlink{ringbuf_8h_a6e109c5eead13625e33c2621c5b1795c}{tt\+\_\+ringbuf\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{ringbuf_8h_ade1a3bb2033eab17549a208ab320b00c}{ttak\+\_\+ringbuf\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{ringbuf_8h_ae98b49e1a3f737b70d4267aa851eda50}{ttak\+\_\+ringbuf\+\_\+create}} (size\+\_\+t capacity, size\+\_\+t item\+\_\+size)
+\begin{DoxyCompactList}\small\item\em Creates a ring buffer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{ringbuf_8h_ad7f370c8bc296f6ea5d063059cbf1a81}{ttak\+\_\+ringbuf\+\_\+destroy}} (\mbox{\hyperlink{ringbuf_8h_ade1a3bb2033eab17549a208ab320b00c}{ttak\+\_\+ringbuf\+\_\+t}} \texorpdfstring{$\ast$}{*}rb)
+\begin{DoxyCompactList}\small\item\em Destroys ring buffer. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{ringbuf_8h_a9d38ee04270d6d8614607e23f7640b8e}{ttak\+\_\+ringbuf\+\_\+push}} (\mbox{\hyperlink{ringbuf_8h_ade1a3bb2033eab17549a208ab320b00c}{ttak\+\_\+ringbuf\+\_\+t}} \texorpdfstring{$\ast$}{*}rb, const void \texorpdfstring{$\ast$}{*}item)
+\begin{DoxyCompactList}\small\item\em Pushes an item to the buffer. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{ringbuf_8h_a19d67c36ee4ad784bc255d68019edb89}{ttak\+\_\+ringbuf\+\_\+pop}} (\mbox{\hyperlink{ringbuf_8h_ade1a3bb2033eab17549a208ab320b00c}{ttak\+\_\+ringbuf\+\_\+t}} \texorpdfstring{$\ast$}{*}rb, void \texorpdfstring{$\ast$}{*}out\+\_\+item)
+\begin{DoxyCompactList}\small\item\em Pops an item from the buffer. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{ringbuf_8h_af17a639124a0e0f26d1bff01399bf81e}{ttak\+\_\+ringbuf\+\_\+is\+\_\+empty}} (\mbox{\hyperlink{ringbuf_8h_ade1a3bb2033eab17549a208ab320b00c}{ttak\+\_\+ringbuf\+\_\+t}} \texorpdfstring{$\ast$}{*}rb)
+\begin{DoxyCompactList}\small\item\em Checks if empty. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{ringbuf_8h_a2ae4b42c8c81fbb85fa0d2e871cd279e}{ttak\+\_\+ringbuf\+\_\+is\+\_\+full}} (\mbox{\hyperlink{ringbuf_8h_ade1a3bb2033eab17549a208ab320b00c}{ttak\+\_\+ringbuf\+\_\+t}} \texorpdfstring{$\ast$}{*}rb)
+\begin{DoxyCompactList}\small\item\em Checks if full. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{ringbuf_8h_abe2e766a3c7a5e4497d44c76e56b8918}{ttak\+\_\+ringbuf\+\_\+count}} (\mbox{\hyperlink{ringbuf_8h_ade1a3bb2033eab17549a208ab320b00c}{ttak\+\_\+ringbuf\+\_\+t}} \texorpdfstring{$\ast$}{*}rb)
+\begin{DoxyCompactList}\small\item\em Returns current item count. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{ringbuf_8h_a6e109c5eead13625e33c2621c5b1795c}\label{ringbuf_8h_a6e109c5eead13625e33c2621c5b1795c} 
+\index{ringbuf.h@{ringbuf.h}!tt\_ringbuf\_t@{tt\_ringbuf\_t}}
+\index{tt\_ringbuf\_t@{tt\_ringbuf\_t}!ringbuf.h@{ringbuf.h}}
+\doxysubsubsection{\texorpdfstring{tt\_ringbuf\_t}{tt\_ringbuf\_t}}
+{\footnotesize\ttfamily typedef \mbox{\hyperlink{ringbuf_8h_ade1a3bb2033eab17549a208ab320b00c}{ttak\+\_\+ringbuf\+\_\+t}} \mbox{\hyperlink{ringbuf_8h_a6e109c5eead13625e33c2621c5b1795c}{tt\+\_\+ringbuf\+\_\+t}}}
+
+
+
+Definition at line \mbox{\hyperlink{ringbuf_8h_source_l00026}{26}} of file \mbox{\hyperlink{ringbuf_8h_source}{ringbuf.\+h}}.
+
+\Hypertarget{ringbuf_8h_ade1a3bb2033eab17549a208ab320b00c}\label{ringbuf_8h_ade1a3bb2033eab17549a208ab320b00c} 
+\index{ringbuf.h@{ringbuf.h}!ttak\_ringbuf\_t@{ttak\_ringbuf\_t}}
+\index{ttak\_ringbuf\_t@{ttak\_ringbuf\_t}!ringbuf.h@{ringbuf.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_ringbuf\_t}{ttak\_ringbuf\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__ringbuf}{ttak\+\_\+ringbuf}} \mbox{\hyperlink{ringbuf_8h_ade1a3bb2033eab17549a208ab320b00c}{ttak\+\_\+ringbuf\+\_\+t}}}
+
+
+
+Thread-\/safe Ring Buffer structure. 
+
+Uses a read-\/write lock to allow multiple readers or exclusive writers. (Note\+: Standard ring buffers are often single-\/producer/single-\/consumer lock-\/free, this one is generic and locked). 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{ringbuf_8h_abe2e766a3c7a5e4497d44c76e56b8918}\label{ringbuf_8h_abe2e766a3c7a5e4497d44c76e56b8918} 
+\index{ringbuf.h@{ringbuf.h}!ttak\_ringbuf\_count@{ttak\_ringbuf\_count}}
+\index{ttak\_ringbuf\_count@{ttak\_ringbuf\_count}!ringbuf.h@{ringbuf.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_ringbuf\_count()}{ttak\_ringbuf\_count()}}
+{\footnotesize\ttfamily size\+\_\+t ttak\+\_\+ringbuf\+\_\+count (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{ringbuf_8h_ade1a3bb2033eab17549a208ab320b00c}{ttak\+\_\+ringbuf\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{rb }\end{DoxyParamCaption})}
+
+
+
+Returns current item count. 
+
+\Hypertarget{ringbuf_8h_ae98b49e1a3f737b70d4267aa851eda50}\label{ringbuf_8h_ae98b49e1a3f737b70d4267aa851eda50} 
+\index{ringbuf.h@{ringbuf.h}!ttak\_ringbuf\_create@{ttak\_ringbuf\_create}}
+\index{ttak\_ringbuf\_create@{ttak\_ringbuf\_create}!ringbuf.h@{ringbuf.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_ringbuf\_create()}{ttak\_ringbuf\_create()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{ringbuf_8h_ade1a3bb2033eab17549a208ab320b00c}{ttak\+\_\+ringbuf\+\_\+t}} \texorpdfstring{$\ast$}{*} ttak\+\_\+ringbuf\+\_\+create (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{capacity,  }\item[{size\+\_\+t}]{item\+\_\+size }\end{DoxyParamCaption})}
+
+
+
+Creates a ring buffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em capacity} & Number of items. \\
+\hline
+{\em item\+\_\+size} & Size of each item. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to ring buffer. 
+\end{DoxyReturn}
+\Hypertarget{ringbuf_8h_ad7f370c8bc296f6ea5d063059cbf1a81}\label{ringbuf_8h_ad7f370c8bc296f6ea5d063059cbf1a81} 
+\index{ringbuf.h@{ringbuf.h}!ttak\_ringbuf\_destroy@{ttak\_ringbuf\_destroy}}
+\index{ttak\_ringbuf\_destroy@{ttak\_ringbuf\_destroy}!ringbuf.h@{ringbuf.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_ringbuf\_destroy()}{ttak\_ringbuf\_destroy()}}
+{\footnotesize\ttfamily void ttak\+\_\+ringbuf\+\_\+destroy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{ringbuf_8h_ade1a3bb2033eab17549a208ab320b00c}{ttak\+\_\+ringbuf\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{rb }\end{DoxyParamCaption})}
+
+
+
+Destroys ring buffer. 
+
+\Hypertarget{ringbuf_8h_af17a639124a0e0f26d1bff01399bf81e}\label{ringbuf_8h_af17a639124a0e0f26d1bff01399bf81e} 
+\index{ringbuf.h@{ringbuf.h}!ttak\_ringbuf\_is\_empty@{ttak\_ringbuf\_is\_empty}}
+\index{ttak\_ringbuf\_is\_empty@{ttak\_ringbuf\_is\_empty}!ringbuf.h@{ringbuf.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_ringbuf\_is\_empty()}{ttak\_ringbuf\_is\_empty()}}
+{\footnotesize\ttfamily bool ttak\+\_\+ringbuf\+\_\+is\+\_\+empty (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{ringbuf_8h_ade1a3bb2033eab17549a208ab320b00c}{ttak\+\_\+ringbuf\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{rb }\end{DoxyParamCaption})}
+
+
+
+Checks if empty. 
+
+\Hypertarget{ringbuf_8h_a2ae4b42c8c81fbb85fa0d2e871cd279e}\label{ringbuf_8h_a2ae4b42c8c81fbb85fa0d2e871cd279e} 
+\index{ringbuf.h@{ringbuf.h}!ttak\_ringbuf\_is\_full@{ttak\_ringbuf\_is\_full}}
+\index{ttak\_ringbuf\_is\_full@{ttak\_ringbuf\_is\_full}!ringbuf.h@{ringbuf.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_ringbuf\_is\_full()}{ttak\_ringbuf\_is\_full()}}
+{\footnotesize\ttfamily bool ttak\+\_\+ringbuf\+\_\+is\+\_\+full (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{ringbuf_8h_ade1a3bb2033eab17549a208ab320b00c}{ttak\+\_\+ringbuf\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{rb }\end{DoxyParamCaption})}
+
+
+
+Checks if full. 
+
+\Hypertarget{ringbuf_8h_a19d67c36ee4ad784bc255d68019edb89}\label{ringbuf_8h_a19d67c36ee4ad784bc255d68019edb89} 
+\index{ringbuf.h@{ringbuf.h}!ttak\_ringbuf\_pop@{ttak\_ringbuf\_pop}}
+\index{ttak\_ringbuf\_pop@{ttak\_ringbuf\_pop}!ringbuf.h@{ringbuf.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_ringbuf\_pop()}{ttak\_ringbuf\_pop()}}
+{\footnotesize\ttfamily bool ttak\+\_\+ringbuf\+\_\+pop (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{ringbuf_8h_ade1a3bb2033eab17549a208ab320b00c}{ttak\+\_\+ringbuf\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{rb,  }\item[{void \texorpdfstring{$\ast$}{*}}]{out\+\_\+item }\end{DoxyParamCaption})}
+
+
+
+Pops an item from the buffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rb} & Buffer. \\
+\hline
+{\em out\+\_\+item} & Pointer to copy data out to. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if popped, false if empty. 
+\end{DoxyReturn}
+\Hypertarget{ringbuf_8h_a9d38ee04270d6d8614607e23f7640b8e}\label{ringbuf_8h_a9d38ee04270d6d8614607e23f7640b8e} 
+\index{ringbuf.h@{ringbuf.h}!ttak\_ringbuf\_push@{ttak\_ringbuf\_push}}
+\index{ttak\_ringbuf\_push@{ttak\_ringbuf\_push}!ringbuf.h@{ringbuf.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_ringbuf\_push()}{ttak\_ringbuf\_push()}}
+{\footnotesize\ttfamily bool ttak\+\_\+ringbuf\+\_\+push (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{ringbuf_8h_ade1a3bb2033eab17549a208ab320b00c}{ttak\+\_\+ringbuf\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{rb,  }\item[{const void \texorpdfstring{$\ast$}{*}}]{item }\end{DoxyParamCaption})}
+
+
+
+Pushes an item to the buffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rb} & Buffer. \\
+\hline
+{\em item} & Pointer to data to copy in. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if pushed, false if full. 
+\end{DoxyReturn}

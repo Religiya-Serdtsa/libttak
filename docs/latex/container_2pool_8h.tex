@@ -1,0 +1,133 @@
+\doxysection{include/ttak/container/pool.h File Reference}
+\hypertarget{container_2pool_8h}{}\label{container_2pool_8h}\index{include/ttak/container/pool.h@{include/ttak/container/pool.h}}
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$ttak/sync/sync.\+h$>$}\newline
+{\ttfamily \#include $<$ttak/sync/spinlock.\+h$>$}\newline
+Include dependency graph for pool.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{container_2pool_8h__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structttak__object__pool}{ttak\+\_\+object\+\_\+pool}}
+\begin{DoxyCompactList}\small\item\em Fixed-\/size Object Pool structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \mbox{\hyperlink{structttak__object__pool}{ttak\+\_\+object\+\_\+pool}} \mbox{\hyperlink{container_2pool_8h_aeadd65a89efc983ccbb49d5c943060b4}{ttak\+\_\+object\+\_\+pool\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Fixed-\/size Object Pool structure. \end{DoxyCompactList}\item 
+typedef \mbox{\hyperlink{container_2pool_8h_aeadd65a89efc983ccbb49d5c943060b4}{ttak\+\_\+object\+\_\+pool\+\_\+t}} \mbox{\hyperlink{container_2pool_8h_a23a4fa9c71c011f57ec588df18ca906b}{tt\+\_\+object\+\_\+pool\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{container_2pool_8h_aeadd65a89efc983ccbb49d5c943060b4}{ttak\+\_\+object\+\_\+pool\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{container_2pool_8h_a1e735c3b58df81d4fe9eccd4bdb345cd}{ttak\+\_\+object\+\_\+pool\+\_\+create}} (size\+\_\+t capacity, size\+\_\+t item\+\_\+size)
+\begin{DoxyCompactList}\small\item\em Creates a new object pool. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{container_2pool_8h_a8ca91c2bfd5b3529f07cfcba28d44bc8}{ttak\+\_\+object\+\_\+pool\+\_\+destroy}} (\mbox{\hyperlink{container_2pool_8h_aeadd65a89efc983ccbb49d5c943060b4}{ttak\+\_\+object\+\_\+pool\+\_\+t}} \texorpdfstring{$\ast$}{*}pool)
+\begin{DoxyCompactList}\small\item\em Destroys the object pool and frees memory. \end{DoxyCompactList}\item 
+void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{container_2pool_8h_a220b1179fec38a46834a02ff45251daa}{ttak\+\_\+object\+\_\+pool\+\_\+alloc}} (\mbox{\hyperlink{container_2pool_8h_aeadd65a89efc983ccbb49d5c943060b4}{ttak\+\_\+object\+\_\+pool\+\_\+t}} \texorpdfstring{$\ast$}{*}pool)
+\begin{DoxyCompactList}\small\item\em Allocates an object from the pool. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{container_2pool_8h_aa76851f60ea6890bb00c8127cbe448dd}{ttak\+\_\+object\+\_\+pool\+\_\+free}} (\mbox{\hyperlink{container_2pool_8h_aeadd65a89efc983ccbb49d5c943060b4}{ttak\+\_\+object\+\_\+pool\+\_\+t}} \texorpdfstring{$\ast$}{*}pool, void \texorpdfstring{$\ast$}{*}ptr)
+\begin{DoxyCompactList}\small\item\em Returns an object to the pool (frees it). \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{container_2pool_8h_a23a4fa9c71c011f57ec588df18ca906b}\label{container_2pool_8h_a23a4fa9c71c011f57ec588df18ca906b} 
+\index{pool.h@{pool.h}!tt\_object\_pool\_t@{tt\_object\_pool\_t}}
+\index{tt\_object\_pool\_t@{tt\_object\_pool\_t}!pool.h@{pool.h}}
+\doxysubsubsection{\texorpdfstring{tt\_object\_pool\_t}{tt\_object\_pool\_t}}
+{\footnotesize\ttfamily typedef \mbox{\hyperlink{container_2pool_8h_aeadd65a89efc983ccbb49d5c943060b4}{ttak\+\_\+object\+\_\+pool\+\_\+t}} \mbox{\hyperlink{container_2pool_8h_a23a4fa9c71c011f57ec588df18ca906b}{tt\+\_\+object\+\_\+pool\+\_\+t}}}
+
+
+
+Definition at line \mbox{\hyperlink{container_2pool_8h_source_l00024}{24}} of file \mbox{\hyperlink{container_2pool_8h_source}{pool.\+h}}.
+
+\Hypertarget{container_2pool_8h_aeadd65a89efc983ccbb49d5c943060b4}\label{container_2pool_8h_aeadd65a89efc983ccbb49d5c943060b4} 
+\index{pool.h@{pool.h}!ttak\_object\_pool\_t@{ttak\_object\_pool\_t}}
+\index{ttak\_object\_pool\_t@{ttak\_object\_pool\_t}!pool.h@{pool.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_object\_pool\_t}{ttak\_object\_pool\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__object__pool}{ttak\+\_\+object\+\_\+pool}} \mbox{\hyperlink{container_2pool_8h_aeadd65a89efc983ccbb49d5c943060b4}{ttak\+\_\+object\+\_\+pool\+\_\+t}}}
+
+
+
+Fixed-\/size Object Pool structure. 
+
+Efficiently manages a set of pre-\/allocated objects of the same size. Uses a bitmap for allocation tracking and a spinlock for thread safety. 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{container_2pool_8h_a220b1179fec38a46834a02ff45251daa}\label{container_2pool_8h_a220b1179fec38a46834a02ff45251daa} 
+\index{pool.h@{pool.h}!ttak\_object\_pool\_alloc@{ttak\_object\_pool\_alloc}}
+\index{ttak\_object\_pool\_alloc@{ttak\_object\_pool\_alloc}!pool.h@{pool.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_object\_pool\_alloc()}{ttak\_object\_pool\_alloc()}}
+{\footnotesize\ttfamily void \texorpdfstring{$\ast$}{*} ttak\+\_\+object\+\_\+pool\+\_\+alloc (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{container_2pool_8h_aeadd65a89efc983ccbb49d5c943060b4}{ttak\+\_\+object\+\_\+pool\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{pool }\end{DoxyParamCaption})}
+
+
+
+Allocates an object from the pool. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pool} & Pointer to the pool. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the allocated object, or NULL if pool is full. 
+\end{DoxyReturn}
+\Hypertarget{container_2pool_8h_a1e735c3b58df81d4fe9eccd4bdb345cd}\label{container_2pool_8h_a1e735c3b58df81d4fe9eccd4bdb345cd} 
+\index{pool.h@{pool.h}!ttak\_object\_pool\_create@{ttak\_object\_pool\_create}}
+\index{ttak\_object\_pool\_create@{ttak\_object\_pool\_create}!pool.h@{pool.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_object\_pool\_create()}{ttak\_object\_pool\_create()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{container_2pool_8h_aeadd65a89efc983ccbb49d5c943060b4}{ttak\+\_\+object\+\_\+pool\+\_\+t}} \texorpdfstring{$\ast$}{*} ttak\+\_\+object\+\_\+pool\+\_\+create (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{capacity,  }\item[{size\+\_\+t}]{item\+\_\+size }\end{DoxyParamCaption})}
+
+
+
+Creates a new object pool. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em capacity} & Maximum number of items. \\
+\hline
+{\em item\+\_\+size} & Size of each item in bytes. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the new pool, or NULL on failure. 
+\end{DoxyReturn}
+\Hypertarget{container_2pool_8h_a8ca91c2bfd5b3529f07cfcba28d44bc8}\label{container_2pool_8h_a8ca91c2bfd5b3529f07cfcba28d44bc8} 
+\index{pool.h@{pool.h}!ttak\_object\_pool\_destroy@{ttak\_object\_pool\_destroy}}
+\index{ttak\_object\_pool\_destroy@{ttak\_object\_pool\_destroy}!pool.h@{pool.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_object\_pool\_destroy()}{ttak\_object\_pool\_destroy()}}
+{\footnotesize\ttfamily void ttak\+\_\+object\+\_\+pool\+\_\+destroy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{container_2pool_8h_aeadd65a89efc983ccbb49d5c943060b4}{ttak\+\_\+object\+\_\+pool\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{pool }\end{DoxyParamCaption})}
+
+
+
+Destroys the object pool and frees memory. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pool} & Pointer to the pool. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{container_2pool_8h_aa76851f60ea6890bb00c8127cbe448dd}\label{container_2pool_8h_aa76851f60ea6890bb00c8127cbe448dd} 
+\index{pool.h@{pool.h}!ttak\_object\_pool\_free@{ttak\_object\_pool\_free}}
+\index{ttak\_object\_pool\_free@{ttak\_object\_pool\_free}!pool.h@{pool.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_object\_pool\_free()}{ttak\_object\_pool\_free()}}
+{\footnotesize\ttfamily void ttak\+\_\+object\+\_\+pool\+\_\+free (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{container_2pool_8h_aeadd65a89efc983ccbb49d5c943060b4}{ttak\+\_\+object\+\_\+pool\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{pool,  }\item[{void \texorpdfstring{$\ast$}{*}}]{ptr }\end{DoxyParamCaption})}
+
+
+
+Returns an object to the pool (frees it). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pool} & Pointer to the pool. \\
+\hline
+{\em ptr} & Pointer to the object to free. \\
+\hline
+\end{DoxyParams}

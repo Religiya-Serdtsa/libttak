@@ -1,0 +1,20 @@
+<map id="include/ttak/limit/limit.h" name="include/ttak/limit/limit.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="129,5,263,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="118,167,189,192"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="193,47,163,154,158,153,188,45"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="213,167,296,192"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="206,45,248,153,243,155,201,47"/>
+<area shape="rect" id="Node000004" href="$sync_8h.html" title=" " alt="" coords="5,93,133,119"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="167,48,101,88,98,84,164,43"/>
+<area shape="rect" id="Node000006" href="$spinlock_8h.html" title=" " alt="" coords="259,93,411,119"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="231,43,303,84,301,89,228,48"/>
+<area shape="poly" id="edge5_Node000004_Node000002" title=" " alt="" coords="85,117,131,155,127,160,81,121"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="10,167,94,192"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="69,120,61,154,55,153,64,118"/>
+<area shape="poly" id="edge9_Node000006_Node000002" title=" " alt="" coords="307,121,197,164,195,159,305,116"/>
+<area shape="poly" id="edge8_Node000006_Node000003" title=" " alt="" coords="324,121,280,160,276,156,320,117"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="408,167,507,192"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="356,116,427,157,424,162,353,121"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="320,167,384,192"/>
+<area shape="poly" id="edge10_Node000006_Node000008" title=" " alt="" coords="340,118,349,153,343,154,335,120"/>
+</map>

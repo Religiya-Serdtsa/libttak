@@ -1,0 +1,149 @@
+\doxysection{ttak\+\_\+stats Struct Reference}
+\hypertarget{structttak__stats}{}\label{structttak__stats}\index{ttak\_stats@{ttak\_stats}}
+
+
+Thread-\/safe Statistics structure.  
+
+
+
+
+{\ttfamily \#include $<$stats.\+h$>$}
+
+
+
+Collaboration diagram for ttak\+\_\+stats\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=145pt]{structttak__stats__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+uint64\+\_\+t \mbox{\hyperlink{structttak__stats_a049a63b14d250966d575675ae4c0dcd9}{count}}
+\item 
+uint64\+\_\+t \mbox{\hyperlink{structttak__stats_afa34d3d46d6cac02fd808df9e9ef5130}{sum}}
+\item 
+uint64\+\_\+t \mbox{\hyperlink{structttak__stats_a6f870ddf2467bd4498be35c17dff9b3c}{min}}
+\item 
+uint64\+\_\+t \mbox{\hyperlink{structttak__stats_a808309ba092c4c6ce3948ad679a63f33}{max}}
+\item 
+uint64\+\_\+t \mbox{\hyperlink{structttak__stats_aed5a4e8e63554f066ed1858e18a33409}{histogram}} \mbox{[}\mbox{\hyperlink{stats_8h_a7d7878976b4f1d8dbb22a4c3af8ceb8f}{TTAK\+\_\+\+STATS\+\_\+\+HIST\+\_\+\+BUCKETS}}\mbox{]}
+\item 
+uint64\+\_\+t \mbox{\hyperlink{structttak__stats_ab51ebdd3e5c43fbaa2dbeb59804057c2}{hist\+\_\+min}}
+\item 
+uint64\+\_\+t \mbox{\hyperlink{structttak__stats_a0051740f14757b374d2dae3f8a9342c4}{hist\+\_\+max}}
+\item 
+uint64\+\_\+t \mbox{\hyperlink{structttak__stats_a61409b0d6c251a2573a5173c9e44915a}{hist\+\_\+step}}
+\item 
+\mbox{\hyperlink{spinlock_8h_a705f9b9b5f7cf440ded7db544f974487}{ttak\+\_\+spin\+\_\+t}} \mbox{\hyperlink{structttak__stats_a4500840e3211865c4db0493f947c3667}{lock}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Thread-\/safe Statistics structure. 
+
+Tracks count, sum, min, max, and a simple histogram. 
+
+Definition at line \mbox{\hyperlink{stats_8h_source_l00015}{15}} of file \mbox{\hyperlink{stats_8h_source}{stats.\+h}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structttak__stats_a049a63b14d250966d575675ae4c0dcd9}\label{structttak__stats_a049a63b14d250966d575675ae4c0dcd9} 
+\index{ttak\_stats@{ttak\_stats}!count@{count}}
+\index{count@{count}!ttak\_stats@{ttak\_stats}}
+\doxysubsubsection{\texorpdfstring{count}{count}}
+{\footnotesize\ttfamily uint64\+\_\+t ttak\+\_\+stats\+::count}
+
+Total number of samples. 
+
+Definition at line \mbox{\hyperlink{stats_8h_source_l00016}{16}} of file \mbox{\hyperlink{stats_8h_source}{stats.\+h}}.
+
+\Hypertarget{structttak__stats_a0051740f14757b374d2dae3f8a9342c4}\label{structttak__stats_a0051740f14757b374d2dae3f8a9342c4} 
+\index{ttak\_stats@{ttak\_stats}!hist\_max@{hist\_max}}
+\index{hist\_max@{hist\_max}!ttak\_stats@{ttak\_stats}}
+\doxysubsubsection{\texorpdfstring{hist\_max}{hist\_max}}
+{\footnotesize\ttfamily uint64\+\_\+t ttak\+\_\+stats\+::hist\+\_\+max}
+
+Upper bound for the histogram. 
+
+Definition at line \mbox{\hyperlink{stats_8h_source_l00022}{22}} of file \mbox{\hyperlink{stats_8h_source}{stats.\+h}}.
+
+\Hypertarget{structttak__stats_ab51ebdd3e5c43fbaa2dbeb59804057c2}\label{structttak__stats_ab51ebdd3e5c43fbaa2dbeb59804057c2} 
+\index{ttak\_stats@{ttak\_stats}!hist\_min@{hist\_min}}
+\index{hist\_min@{hist\_min}!ttak\_stats@{ttak\_stats}}
+\doxysubsubsection{\texorpdfstring{hist\_min}{hist\_min}}
+{\footnotesize\ttfamily uint64\+\_\+t ttak\+\_\+stats\+::hist\+\_\+min}
+
+Lower bound for the histogram. 
+
+Definition at line \mbox{\hyperlink{stats_8h_source_l00021}{21}} of file \mbox{\hyperlink{stats_8h_source}{stats.\+h}}.
+
+\Hypertarget{structttak__stats_a61409b0d6c251a2573a5173c9e44915a}\label{structttak__stats_a61409b0d6c251a2573a5173c9e44915a} 
+\index{ttak\_stats@{ttak\_stats}!hist\_step@{hist\_step}}
+\index{hist\_step@{hist\_step}!ttak\_stats@{ttak\_stats}}
+\doxysubsubsection{\texorpdfstring{hist\_step}{hist\_step}}
+{\footnotesize\ttfamily uint64\+\_\+t ttak\+\_\+stats\+::hist\+\_\+step}
+
+Range of each histogram bucket. 
+
+Definition at line \mbox{\hyperlink{stats_8h_source_l00023}{23}} of file \mbox{\hyperlink{stats_8h_source}{stats.\+h}}.
+
+\Hypertarget{structttak__stats_aed5a4e8e63554f066ed1858e18a33409}\label{structttak__stats_aed5a4e8e63554f066ed1858e18a33409} 
+\index{ttak\_stats@{ttak\_stats}!histogram@{histogram}}
+\index{histogram@{histogram}!ttak\_stats@{ttak\_stats}}
+\doxysubsubsection{\texorpdfstring{histogram}{histogram}}
+{\footnotesize\ttfamily uint64\+\_\+t ttak\+\_\+stats\+::histogram\mbox{[}\mbox{\hyperlink{stats_8h_a7d7878976b4f1d8dbb22a4c3af8ceb8f}{TTAK\+\_\+\+STATS\+\_\+\+HIST\+\_\+\+BUCKETS}}\mbox{]}}
+
+Histogram buckets. 
+
+Definition at line \mbox{\hyperlink{stats_8h_source_l00020}{20}} of file \mbox{\hyperlink{stats_8h_source}{stats.\+h}}.
+
+\Hypertarget{structttak__stats_a4500840e3211865c4db0493f947c3667}\label{structttak__stats_a4500840e3211865c4db0493f947c3667} 
+\index{ttak\_stats@{ttak\_stats}!lock@{lock}}
+\index{lock@{lock}!ttak\_stats@{ttak\_stats}}
+\doxysubsubsection{\texorpdfstring{lock}{lock}}
+{\footnotesize\ttfamily \mbox{\hyperlink{spinlock_8h_a705f9b9b5f7cf440ded7db544f974487}{ttak\+\_\+spin\+\_\+t}} ttak\+\_\+stats\+::lock}
+
+Spinlock for thread safety. 
+
+Definition at line \mbox{\hyperlink{stats_8h_source_l00024}{24}} of file \mbox{\hyperlink{stats_8h_source}{stats.\+h}}.
+
+\Hypertarget{structttak__stats_a808309ba092c4c6ce3948ad679a63f33}\label{structttak__stats_a808309ba092c4c6ce3948ad679a63f33} 
+\index{ttak\_stats@{ttak\_stats}!max@{max}}
+\index{max@{max}!ttak\_stats@{ttak\_stats}}
+\doxysubsubsection{\texorpdfstring{max}{max}}
+{\footnotesize\ttfamily uint64\+\_\+t ttak\+\_\+stats\+::max}
+
+Maximum value observed. 
+
+Definition at line \mbox{\hyperlink{stats_8h_source_l00019}{19}} of file \mbox{\hyperlink{stats_8h_source}{stats.\+h}}.
+
+\Hypertarget{structttak__stats_a6f870ddf2467bd4498be35c17dff9b3c}\label{structttak__stats_a6f870ddf2467bd4498be35c17dff9b3c} 
+\index{ttak\_stats@{ttak\_stats}!min@{min}}
+\index{min@{min}!ttak\_stats@{ttak\_stats}}
+\doxysubsubsection{\texorpdfstring{min}{min}}
+{\footnotesize\ttfamily uint64\+\_\+t ttak\+\_\+stats\+::min}
+
+Minimum value observed. 
+
+Definition at line \mbox{\hyperlink{stats_8h_source_l00018}{18}} of file \mbox{\hyperlink{stats_8h_source}{stats.\+h}}.
+
+\Hypertarget{structttak__stats_afa34d3d46d6cac02fd808df9e9ef5130}\label{structttak__stats_afa34d3d46d6cac02fd808df9e9ef5130} 
+\index{ttak\_stats@{ttak\_stats}!sum@{sum}}
+\index{sum@{sum}!ttak\_stats@{ttak\_stats}}
+\doxysubsubsection{\texorpdfstring{sum}{sum}}
+{\footnotesize\ttfamily uint64\+\_\+t ttak\+\_\+stats\+::sum}
+
+Sum of all sample values. 
+
+Definition at line \mbox{\hyperlink{stats_8h_source_l00017}{17}} of file \mbox{\hyperlink{stats_8h_source}{stats.\+h}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/ttak/stats/\mbox{\hyperlink{stats_8h}{stats.\+h}}\end{DoxyCompactItemize}

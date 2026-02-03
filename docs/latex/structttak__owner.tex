@@ -1,0 +1,101 @@
+\doxysection{ttak\+\_\+owner Struct Reference}
+\hypertarget{structttak__owner}{}\label{structttak__owner}\index{ttak\_owner@{ttak\_owner}}
+
+
+The Owner structure.  
+
+
+
+
+{\ttfamily \#include $<$owner.\+h$>$}
+
+
+
+Collaboration diagram for ttak\+\_\+owner\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=165pt]{structttak__owner__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structttak__map__t}{ttak\+\_\+map\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__owner_af8f1a51f68b2d8255dff9d232d2c7435}{resources}}
+\item 
+\mbox{\hyperlink{structttak__map__t}{ttak\+\_\+map\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__owner_ad3f0f21fea12c13d2fcbddcbe3472269}{functions}}
+\item 
+\mbox{\hyperlink{sync_8h_ad3f9b08e4c066e7bb7b1ed98d2a90386}{ttak\+\_\+rwlock\+\_\+t}} \mbox{\hyperlink{structttak__owner_a1e5a9809a7e68de76c8473de3fddf53d}{lock}}
+\item 
+uint64\+\_\+t \mbox{\hyperlink{structttak__owner_a06604c5fe6dd960f99fd33e66f0156e1}{creation\+\_\+ts}}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{structttak__owner_a870e95008012760ad3712fe902a39c20}{policy\+\_\+flags}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The Owner structure. 
+
+Acts as a sandbox/container for resources and functions. Ensures isolation and enforces safety policies. 
+
+Definition at line \mbox{\hyperlink{owner_8h_source_l00033}{33}} of file \mbox{\hyperlink{owner_8h_source}{owner.\+h}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structttak__owner_a06604c5fe6dd960f99fd33e66f0156e1}\label{structttak__owner_a06604c5fe6dd960f99fd33e66f0156e1} 
+\index{ttak\_owner@{ttak\_owner}!creation\_ts@{creation\_ts}}
+\index{creation\_ts@{creation\_ts}!ttak\_owner@{ttak\_owner}}
+\doxysubsubsection{\texorpdfstring{creation\_ts}{creation\_ts}}
+{\footnotesize\ttfamily uint64\+\_\+t ttak\+\_\+owner\+::creation\+\_\+ts}
+
+Timestamp when this owner was created. 
+
+Definition at line \mbox{\hyperlink{owner_8h_source_l00037}{37}} of file \mbox{\hyperlink{owner_8h_source}{owner.\+h}}.
+
+\Hypertarget{structttak__owner_ad3f0f21fea12c13d2fcbddcbe3472269}\label{structttak__owner_ad3f0f21fea12c13d2fcbddcbe3472269} 
+\index{ttak\_owner@{ttak\_owner}!functions@{functions}}
+\index{functions@{functions}!ttak\_owner@{ttak\_owner}}
+\doxysubsubsection{\texorpdfstring{functions}{functions}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structttak__map__t}{ttak\+\_\+map\+\_\+t}}\texorpdfstring{$\ast$}{*} ttak\+\_\+owner\+::functions}
+
+Map storing registered functions. 
+
+Definition at line \mbox{\hyperlink{owner_8h_source_l00035}{35}} of file \mbox{\hyperlink{owner_8h_source}{owner.\+h}}.
+
+\Hypertarget{structttak__owner_a1e5a9809a7e68de76c8473de3fddf53d}\label{structttak__owner_a1e5a9809a7e68de76c8473de3fddf53d} 
+\index{ttak\_owner@{ttak\_owner}!lock@{lock}}
+\index{lock@{lock}!ttak\_owner@{ttak\_owner}}
+\doxysubsubsection{\texorpdfstring{lock}{lock}}
+{\footnotesize\ttfamily \mbox{\hyperlink{sync_8h_ad3f9b08e4c066e7bb7b1ed98d2a90386}{ttak\+\_\+rwlock\+\_\+t}} ttak\+\_\+owner\+::lock}
+
+RWLock for thread-\/safe access to the owner\textquotesingle{}s state. 
+
+Definition at line \mbox{\hyperlink{owner_8h_source_l00036}{36}} of file \mbox{\hyperlink{owner_8h_source}{owner.\+h}}.
+
+\Hypertarget{structttak__owner_a870e95008012760ad3712fe902a39c20}\label{structttak__owner_a870e95008012760ad3712fe902a39c20} 
+\index{ttak\_owner@{ttak\_owner}!policy\_flags@{policy\_flags}}
+\index{policy\_flags@{policy\_flags}!ttak\_owner@{ttak\_owner}}
+\doxysubsubsection{\texorpdfstring{policy\_flags}{policy\_flags}}
+{\footnotesize\ttfamily uint32\+\_\+t ttak\+\_\+owner\+::policy\+\_\+flags}
+
+Safety policy bitmask. 
+
+Definition at line \mbox{\hyperlink{owner_8h_source_l00038}{38}} of file \mbox{\hyperlink{owner_8h_source}{owner.\+h}}.
+
+\Hypertarget{structttak__owner_af8f1a51f68b2d8255dff9d232d2c7435}\label{structttak__owner_af8f1a51f68b2d8255dff9d232d2c7435} 
+\index{ttak\_owner@{ttak\_owner}!resources@{resources}}
+\index{resources@{resources}!ttak\_owner@{ttak\_owner}}
+\doxysubsubsection{\texorpdfstring{resources}{resources}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structttak__map__t}{ttak\+\_\+map\+\_\+t}}\texorpdfstring{$\ast$}{*} ttak\+\_\+owner\+::resources}
+
+Map storing owned resources (isolated variables). 
+
+Definition at line \mbox{\hyperlink{owner_8h_source_l00034}{34}} of file \mbox{\hyperlink{owner_8h_source}{owner.\+h}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/ttak/mem/\mbox{\hyperlink{owner_8h}{owner.\+h}}\end{DoxyCompactItemize}

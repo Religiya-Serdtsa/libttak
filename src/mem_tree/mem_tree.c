@@ -23,14 +23,17 @@ void ttak_mem_tree_init(ttak_mem_tree_t *tree) {
 
     memset(tree, 0, sizeof(ttak_mem_tree_t));
     pthread_mutex_init(&tree->lock, NULL);
-    atomic_store(&tree->cleanup_interval_ns, TT_MINUTE(30)); // Default to 30 minutes
+    pthread_cond_init(&tree->cond, NULL);
+    atomic_store(&tree->min_cleanup_interval_ns, TT_MILLI_SECOND(500)); // Default min 500ms
+    atomic_store(&tree->max_cleanup_interval_ns, TT_SECOND(10)); // Default max 10s
+    atomic_store(&tree->garbage_pressure, 0);
+    atomic_store(&tree->pressure_threshold, 1024 * 1024); // Default 1MB
     atomic_store(&tree->use_manual_cleanup, false);
     atomic_store(&tree->shutdown_requested, false);
 
     // Launch the background cleanup thread
     if (pthread_create(&tree->cleanup_thread, NULL, cleanup_thread_func, tree) != 0) {
         fprintf(stderr, "[TTAK_MEM_TREE] Failed to create cleanup thread.\n");
-        // Handle error: perhaps set a flag to indicate auto-cleanup is disabled
     }
 }
 
@@ -48,12 +51,20 @@ void ttak_mem_tree_destroy(ttak_mem_tree_t *tree) {
 
     // Signal cleanup thread to stop and join it
     atomic_store(&tree->shutdown_requested, true);
+    pthread_mutex_lock(&tree->lock);
+    pthread_cond_signal(&tree->cond);
+    pthread_mutex_unlock(&tree->lock);
+
     if (tree->cleanup_thread) {
         pthread_join(tree->cleanup_thread, NULL);
     }
 
     pthread_mutex_lock(&tree->lock);
-    ttak_mem_node_t *current = tree->head;
+    ttak_mem_node_t *to_free_list = tree->head;
+    tree->head = NULL;
+    pthread_mutex_unlock(&tree->lock);
+
+    ttak_mem_node_t *current = to_free_list;
     while (current) {
         ttak_mem_node_t *next = current->next;
         // Free the actual memory block if it hasn't been freed already
@@ -64,8 +75,7 @@ void ttak_mem_tree_destroy(ttak_mem_tree_t *tree) {
         free(current); // Free the mem node itself
         current = next;
     }
-    tree->head = NULL;
-    pthread_mutex_unlock(&tree->lock);
+    pthread_cond_destroy(&tree->cond);
     pthread_mutex_destroy(&tree->lock);
 }
 
@@ -97,10 +107,15 @@ ttak_mem_node_t *ttak_mem_tree_add(ttak_mem_tree_t *tree, void *ptr, size_t size
     new_node->expires_tick = expires_tick;
     atomic_init(&new_node->ref_count, 1); // Initial ref count is 1
     new_node->is_root = is_root;
+    new_node->tree = tree;
     pthread_mutex_init(&new_node->lock, NULL);
 
     pthread_mutex_lock(&tree->lock);
     new_node->next = tree->head;
+    new_node->prev = NULL;
+    if (tree->head) {
+        tree->head->prev = new_node;
+    }
     tree->head = new_node;
     pthread_mutex_unlock(&tree->lock);
 
@@ -121,15 +136,16 @@ void ttak_mem_tree_remove(ttak_mem_tree_t *tree, ttak_mem_node_t *node) {
     if (!tree || !node) return;
 
     pthread_mutex_lock(&tree->lock);
-    ttak_mem_node_t **indirect = &tree->head;
-    while (*indirect != node) {
-        indirect = &(*indirect)->next;
-        if (!*indirect) { // Node not found
-            pthread_mutex_unlock(&tree->lock);
-            return;
-        }
+    
+    if (node->prev) {
+        node->prev->next = node->next;
+    } else if (tree->head == node) {
+        tree->head = node->next;
     }
-    *indirect = node->next; // Remove from list
+
+    if (node->next) {
+        node->next->prev = node->prev;
+    }
 
     pthread_mutex_unlock(&tree->lock);
 
@@ -166,21 +182,59 @@ void ttak_mem_node_acquire(ttak_mem_node_t *node) {
  */
 void ttak_mem_node_release(ttak_mem_node_t *node) {
     if (!node) return;
-    atomic_fetch_sub(&node->ref_count, 1);
+    if (atomic_fetch_sub(&node->ref_count, 1) == 1) {
+        // Last reference released, report pressure to the tree if possible
+        if (node->tree) {
+            ttak_mem_tree_report_pressure(node->tree, node->size);
+        }
+    }
 }
 
 /**
- * @brief Sets the interval for automatic memory cleanup.
+ * @brief Sets the min and max intervals for automatic memory cleanup.
  *
- * This function updates the atomic cleanup interval for the mem tree.
- * The background cleanup thread will use this new interval for its sleep cycles.
+ * The cleanup thread uses an adaptive interval based on memory pressure.
+ * It will back off towards the max interval if no garbage is detected.
  *
  * @param tree Pointer to the mem tree.
- * @param interval_ns The new cleanup interval in nanoseconds.
+ * @param min_ns The minimum cleanup interval in nanoseconds (e.g., 10s).
+ * @param max_ns The maximum cleanup interval in nanoseconds (e.g., 120s).
  */
-void ttak_mem_tree_set_cleanup_interval(ttak_mem_tree_t *tree, uint64_t interval_ns) {
+void ttak_mem_tree_set_cleaning_intervals(ttak_mem_tree_t *tree, uint64_t min_ns, uint64_t max_ns) {
     if (!tree) return;
-    atomic_store(&tree->cleanup_interval_ns, interval_ns);
+    atomic_store(&tree->min_cleanup_interval_ns, min_ns);
+    atomic_store(&tree->max_cleanup_interval_ns, max_ns);
+}
+
+/**
+ * @brief Sets the pressure threshold that triggers immediate cleanup.
+ * 
+ * @param tree Pointer to the mem tree.
+ * @param threshold_bytes Pressure threshold in bytes.
+ */
+void ttak_mem_tree_set_pressure_threshold(ttak_mem_tree_t *tree, size_t threshold_bytes) {
+    if (!tree) return;
+    atomic_store(&tree->pressure_threshold, threshold_bytes);
+}
+
+/**
+ * @brief Reports potential garbage pressure to the mem tree.
+ *
+ * Increasing the pressure score signals the cleanup thread that there is work to do.
+ * If pressure exceeds the threshold, the cleanup thread is signaled to wake up immediately.
+ *
+ * @param tree Pointer to the mem tree.
+ * @param pressure_amount Amount to increase the pressure score by.
+ */
+void ttak_mem_tree_report_pressure(ttak_mem_tree_t *tree, size_t pressure_amount) {
+    if (!tree) return;
+    size_t new_pressure = atomic_fetch_add(&tree->garbage_pressure, pressure_amount) + pressure_amount;
+    
+    if (new_pressure >= atomic_load(&tree->pressure_threshold)) {
+        pthread_mutex_lock(&tree->lock);
+        pthread_cond_signal(&tree->cond);
+        pthread_mutex_unlock(&tree->lock);
+    }
 }
 
 /**
@@ -210,8 +264,16 @@ void ttak_mem_tree_set_manual_cleanup(ttak_mem_tree_t *tree, _Bool manual_cleanu
 void ttak_mem_tree_perform_cleanup(ttak_mem_tree_t *tree, uint64_t now) {
     if (!tree) return;
 
+    // Check pressure first (Early Return)
+    if (atomic_load(&tree->garbage_pressure) == 0 && !atomic_load(&tree->use_manual_cleanup)) {
+        return;
+    }
+
     pthread_mutex_lock(&tree->lock);
     ttak_mem_node_t **indirect = &tree->head;
+    ttak_mem_node_t *to_free_head = NULL;
+    ttak_mem_node_t *to_free_tail = NULL;
+
     while (*indirect) {
         ttak_mem_node_t *node = *indirect;
         pthread_mutex_lock(&node->lock); // Lock node before checking its state
@@ -220,24 +282,54 @@ void ttak_mem_tree_perform_cleanup(ttak_mem_tree_t *tree, uint64_t now) {
         if (atomic_load(&node->ref_count) == 0 && node->expires_tick != __TTAK_UNSAFE_MEM_FOREVER__ && now >= node->expires_tick) {
             should_free = true;
         }
-        // Add condition for is_root and no external references if implemented later
 
         pthread_mutex_unlock(&node->lock); // Unlock node
 
         if (should_free) {
-            *indirect = node->next; // Remove from list
-            // Free the actual memory block
-            if (node->ptr) {
-                ttak_mem_free(node->ptr);
-                node->ptr = NULL;
+            *indirect = node->next; // Remove from main list
+            if (node->next) {
+                node->next->prev = node->prev;
             }
-            pthread_mutex_destroy(&node->lock);
-            free(node); // Free the mem node itself
+            
+            // Add to temporary free list
+            node->next = NULL;
+            node->prev = NULL;
+            if (!to_free_head) {
+                to_free_head = node;
+                to_free_tail = node;
+            } else {
+                to_free_tail->next = node;
+                to_free_tail = node;
+            }
         } else {
             indirect = &(*indirect)->next;
         }
     }
     pthread_mutex_unlock(&tree->lock);
+
+    // Free collected nodes outside the tree lock
+    size_t total_freed = 0;
+    ttak_mem_node_t *current = to_free_head;
+    while (current) {
+        ttak_mem_node_t *next = current->next;
+        total_freed += current->size;
+        if (current->ptr) {
+            ttak_mem_free(current->ptr);
+            current->ptr = NULL;
+        }
+        pthread_mutex_destroy(&current->lock);
+        free(current);
+        current = next;
+    }
+
+    // Subtract freed amount from pressure
+    if (total_freed > 0) {
+        size_t old_pressure = atomic_load(&tree->garbage_pressure);
+        while (old_pressure >= total_freed && !atomic_compare_exchange_weak(&tree->garbage_pressure, &old_pressure, old_pressure - total_freed));
+        if (old_pressure < total_freed) {
+            atomic_store(&tree->garbage_pressure, 0);
+        }
+    }
 }
 
 /**
@@ -254,21 +346,44 @@ static void *cleanup_thread_func(void *arg) {
     ttak_mem_tree_t *tree = (ttak_mem_tree_t *)arg;
     if (!tree) return NULL;
 
+    uint64_t current_sleep_ns = atomic_load(&tree->min_cleanup_interval_ns);
+
     while (!atomic_load(&tree->shutdown_requested)) {
-        uint64_t interval_ns = atomic_load(&tree->cleanup_interval_ns);
         _Bool manual_cleanup_enabled = atomic_load(&tree->use_manual_cleanup);
 
         if (!manual_cleanup_enabled) {
-            ttak_mem_tree_perform_cleanup(tree, ttak_get_tick_count());
+            size_t pressure = atomic_load(&tree->garbage_pressure);
+            
+            if (pressure > 0) {
+                ttak_mem_tree_perform_cleanup(tree, ttak_get_tick_count());
+                // Reset sleep interval to min after work is done
+                current_sleep_ns = atomic_load(&tree->min_cleanup_interval_ns);
+            } else {
+                // No pressure: Adaptive backoff
+                current_sleep_ns *= 2;
+                uint64_t max_ns = atomic_load(&tree->max_cleanup_interval_ns);
+                if (current_sleep_ns > max_ns) {
+                    current_sleep_ns = max_ns;
+                }
+            }
+        } else {
+            // Manual cleanup: sleep for max interval or until signaled
+            current_sleep_ns = atomic_load(&tree->max_cleanup_interval_ns);
         }
 
-        // Sleep for the specified interval, but wake up if shutdown is requested
-        uint64_t sleep_start = ttak_get_tick_count();
-        while (ttak_get_tick_count() - sleep_start < interval_ns && !atomic_load(&tree->shutdown_requested)) {
-            // Sleep in smaller chunks to be responsive to shutdown requests
-            struct timespec ts = {.tv_sec = 0, .tv_nsec = TT_MILLI_SECOND(100)}; // Sleep for 100ms
-            nanosleep(&ts, NULL);
+        pthread_mutex_lock(&tree->lock);
+        if (!atomic_load(&tree->shutdown_requested)) {
+            struct timespec ts;
+            clock_gettime(CLOCK_REALTIME, &ts);
+            ts.tv_sec += current_sleep_ns / 1000000000ULL;
+            ts.tv_nsec += current_sleep_ns % 1000000000ULL;
+            if (ts.tv_nsec >= 1000000000ULL) {
+                ts.tv_sec++;
+                ts.tv_nsec -= 1000000000ULL;
+            }
+            pthread_cond_timedwait(&tree->cond, &tree->lock, &ts);
         }
+        pthread_mutex_unlock(&tree->lock);
     }
     return NULL;
 }

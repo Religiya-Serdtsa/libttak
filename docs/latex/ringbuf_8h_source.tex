@@ -1,0 +1,81 @@
+\doxysection{ringbuf.\+h}
+\hypertarget{ringbuf_8h_source}{}\label{ringbuf_8h_source}\index{include/ttak/container/ringbuf.h@{include/ttak/container/ringbuf.h}}
+\mbox{\hyperlink{ringbuf_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ TTAK\_CONTAINER\_RINGBUF\_H}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ TTAK\_CONTAINER\_RINGBUF\_H}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{sync_8h}{ttak/sync/sync.h}}>}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00008}00008\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00009}00009\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00010}00010\ \textcolor{comment}{\ *\ @brief\ Thread-\/safe\ Ring\ Buffer\ structure.}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00011}00011\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00012}00012\ \textcolor{comment}{\ *\ Uses\ a\ read-\/write\ lock\ to\ allow\ multiple\ readers\ or\ exclusive\ writers.}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00013}00013\ \textcolor{comment}{\ *\ (Note:\ Standard\ ring\ buffers\ are\ often\ single-\/producer/single-\/consumer\ lock-\/free,}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00014}00014\ \textcolor{comment}{\ *\ this\ one\ is\ generic\ and\ locked).}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00015}00015\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00016}\mbox{\hyperlink{structttak__ringbuf}{00016}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__ringbuf}{ttak\_ringbuf}}\ \{}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00017}\mbox{\hyperlink{structttak__ringbuf_a756ba68ca45210f8377ee7a868289e61}{00017}}\ \ \ \ \ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{structttak__ringbuf_a756ba68ca45210f8377ee7a868289e61}{buffer}};\ \ \ \ \ \ \ \textcolor{comment}{/**<\ Internal\ data\ buffer.\ */}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00018}\mbox{\hyperlink{structttak__ringbuf_a105892a939f39b22421219473b40888b}{00018}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structttak__ringbuf_a105892a939f39b22421219473b40888b}{item\_size}};\ \ \ \textcolor{comment}{/**<\ Size\ of\ each\ item.\ */}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00019}\mbox{\hyperlink{structttak__ringbuf_aac5c851ef70fd84a8886a6adaed8517e}{00019}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structttak__ringbuf_aac5c851ef70fd84a8886a6adaed8517e}{capacity}};\ \ \ \ \textcolor{comment}{/**<\ Maximum\ number\ of\ items.\ */}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00020}\mbox{\hyperlink{structttak__ringbuf_a683b231f95c0cfcf54b840750e29d678}{00020}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structttak__ringbuf_a683b231f95c0cfcf54b840750e29d678}{head}};\ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Write\ index\ (where\ next\ item\ goes).\ */}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00021}\mbox{\hyperlink{structttak__ringbuf_a391549f9b534e3761e2567ec8e7ba431}{00021}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structttak__ringbuf_a391549f9b534e3761e2567ec8e7ba431}{tail}};\ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Read\ index\ (where\ next\ item\ is\ taken).\ */}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00022}\mbox{\hyperlink{structttak__ringbuf_a8f02e88791c2aa5cd364535a32a4f395}{00022}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structttak__ringbuf_a8f02e88791c2aa5cd364535a32a4f395}{full}};\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Flag\ indicating\ buffer\ is\ full\ (distinguishes\ empty\ vs\ full).\ */}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00023}\mbox{\hyperlink{structttak__ringbuf_a61fd0ec96c9611f153a4a80c5a9072cd}{00023}}\ \ \ \ \ \mbox{\hyperlink{sync_8h_ad3f9b08e4c066e7bb7b1ed98d2a90386}{ttak\_rwlock\_t}}\ \mbox{\hyperlink{structttak__ringbuf_a61fd0ec96c9611f153a4a80c5a9072cd}{lock}};\ \textcolor{comment}{/**<\ Lock\ for\ thread\ safety.\ */}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00024}\mbox{\hyperlink{ringbuf_8h_ade1a3bb2033eab17549a208ab320b00c}{00024}}\ \}\ \mbox{\hyperlink{ringbuf_8h_ade1a3bb2033eab17549a208ab320b00c}{ttak\_ringbuf\_t}};}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00026}\mbox{\hyperlink{ringbuf_8h_a6e109c5eead13625e33c2621c5b1795c}{00026}}\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{structttak__ringbuf}{ttak\_ringbuf\_t}}\ \mbox{\hyperlink{ringbuf_8h_a6e109c5eead13625e33c2621c5b1795c}{tt\_ringbuf\_t}};}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00027}00027\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00028}00028\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00029}00029\ \textcolor{comment}{\ *\ @brief\ Creates\ a\ ring\ buffer.}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00030}00030\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00031}00031\ \textcolor{comment}{\ *\ @param\ capacity\ Number\ of\ items.}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00032}00032\ \textcolor{comment}{\ *\ @param\ item\_size\ Size\ of\ each\ item.}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00033}00033\ \textcolor{comment}{\ *\ @return\ Pointer\ to\ ring\ buffer.}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00034}00034\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00035}\mbox{\hyperlink{ringbuf_8h_ae98b49e1a3f737b70d4267aa851eda50}{00035}}\ \mbox{\hyperlink{structttak__ringbuf}{ttak\_ringbuf\_t}}\ *\mbox{\hyperlink{ringbuf_8h_ae98b49e1a3f737b70d4267aa851eda50}{ttak\_ringbuf\_create}}(\textcolor{keywordtype}{size\_t}\ capacity,\ \textcolor{keywordtype}{size\_t}\ item\_size);}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00036}00036\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00037}00037\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00038}00038\ \textcolor{comment}{\ *\ @brief\ Destroys\ ring\ buffer.}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00039}00039\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00040}\mbox{\hyperlink{ringbuf_8h_ad7f370c8bc296f6ea5d063059cbf1a81}{00040}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{ringbuf_8h_ad7f370c8bc296f6ea5d063059cbf1a81}{ttak\_ringbuf\_destroy}}(\mbox{\hyperlink{structttak__ringbuf}{ttak\_ringbuf\_t}}\ *rb);}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00041}00041\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00042}00042\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00043}00043\ \textcolor{comment}{\ *\ @brief\ Pushes\ an\ item\ to\ the\ buffer.}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00044}00044\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00045}00045\ \textcolor{comment}{\ *\ @param\ rb\ Buffer.}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00046}00046\ \textcolor{comment}{\ *\ @param\ item\ Pointer\ to\ data\ to\ copy\ in.}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00047}00047\ \textcolor{comment}{\ *\ @return\ true\ if\ pushed,\ false\ if\ full.}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00048}00048\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00049}\mbox{\hyperlink{ringbuf_8h_a9d38ee04270d6d8614607e23f7640b8e}{00049}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{ringbuf_8h_a9d38ee04270d6d8614607e23f7640b8e}{ttak\_ringbuf\_push}}(\mbox{\hyperlink{structttak__ringbuf}{ttak\_ringbuf\_t}}\ *rb,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *item);}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00050}00050\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00051}00051\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00052}00052\ \textcolor{comment}{\ *\ @brief\ Pops\ an\ item\ from\ the\ buffer.}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00053}00053\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00054}00054\ \textcolor{comment}{\ *\ @param\ rb\ Buffer.}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00055}00055\ \textcolor{comment}{\ *\ @param\ out\_item\ Pointer\ to\ copy\ data\ out\ to.}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00056}00056\ \textcolor{comment}{\ *\ @return\ true\ if\ popped,\ false\ if\ empty.}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00057}00057\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00058}\mbox{\hyperlink{ringbuf_8h_a19d67c36ee4ad784bc255d68019edb89}{00058}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{ringbuf_8h_a19d67c36ee4ad784bc255d68019edb89}{ttak\_ringbuf\_pop}}(\mbox{\hyperlink{structttak__ringbuf}{ttak\_ringbuf\_t}}\ *rb,\ \textcolor{keywordtype}{void}\ *out\_item);}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00059}00059\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00060}00060\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00061}00061\ \textcolor{comment}{\ *\ @brief\ Checks\ if\ empty.}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00062}00062\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00063}\mbox{\hyperlink{ringbuf_8h_af17a639124a0e0f26d1bff01399bf81e}{00063}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{ringbuf_8h_af17a639124a0e0f26d1bff01399bf81e}{ttak\_ringbuf\_is\_empty}}(\mbox{\hyperlink{structttak__ringbuf}{ttak\_ringbuf\_t}}\ *rb);}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00064}00064\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00065}00065\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00066}00066\ \textcolor{comment}{\ *\ @brief\ Checks\ if\ full.}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00067}00067\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00068}\mbox{\hyperlink{ringbuf_8h_a2ae4b42c8c81fbb85fa0d2e871cd279e}{00068}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{ringbuf_8h_a2ae4b42c8c81fbb85fa0d2e871cd279e}{ttak\_ringbuf\_is\_full}}(\mbox{\hyperlink{structttak__ringbuf}{ttak\_ringbuf\_t}}\ *rb);}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00069}00069\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00070}00070\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00071}00071\ \textcolor{comment}{\ *\ @brief\ Returns\ current\ item\ count.}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00072}00072\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00073}\mbox{\hyperlink{ringbuf_8h_abe2e766a3c7a5e4497d44c76e56b8918}{00073}}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{ringbuf_8h_abe2e766a3c7a5e4497d44c76e56b8918}{ttak\_ringbuf\_count}}(\mbox{\hyperlink{structttak__ringbuf}{ttak\_ringbuf\_t}}\ *rb);}
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00074}00074\ }
+\DoxyCodeLine{\Hypertarget{ringbuf_8h_source_l00075}00075\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_CONTAINER\_RINGBUF\_H}}
+
+\end{DoxyCode}

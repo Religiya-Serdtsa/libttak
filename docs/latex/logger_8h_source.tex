@@ -1,0 +1,61 @@
+\doxysection{logger.\+h}
+\hypertarget{logger_8h_source}{}\label{logger_8h_source}\index{include/ttak/log/logger.h@{include/ttak/log/logger.h}}
+\mbox{\hyperlink{logger_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ TTAK\_LOG\_LOGGER\_H}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ TTAK\_LOG\_LOGGER\_H}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <stdarg.h>}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00005}00005\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00006}00006\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00007}00007\ \textcolor{comment}{\ *\ @brief\ Log\ levels.}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00008}00008\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00009}\mbox{\hyperlink{logger_8h_a13b7cbf4245d32959202870c26bbd3e4}{00009}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \{}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00010}\mbox{\hyperlink{logger_8h_a13b7cbf4245d32959202870c26bbd3e4aaa15a233cf59ffb44ff5bb284e26232e}{00010}}\ \ \ \ \ \mbox{\hyperlink{logger_8h_a13b7cbf4245d32959202870c26bbd3e4aaa15a233cf59ffb44ff5bb284e26232e}{TTAK\_LOG\_DEBUG}},}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00011}\mbox{\hyperlink{logger_8h_a13b7cbf4245d32959202870c26bbd3e4acb352e0c20de60006f58c68a466840b4}{00011}}\ \ \ \ \ \mbox{\hyperlink{logger_8h_a13b7cbf4245d32959202870c26bbd3e4acb352e0c20de60006f58c68a466840b4}{TTAK\_LOG\_INFO}},}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00012}\mbox{\hyperlink{logger_8h_a13b7cbf4245d32959202870c26bbd3e4a516688026ec77907cc3b03993542c097}{00012}}\ \ \ \ \ \mbox{\hyperlink{logger_8h_a13b7cbf4245d32959202870c26bbd3e4a516688026ec77907cc3b03993542c097}{TTAK\_LOG\_WARN}},}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00013}00013\ \ \ \ \ \mbox{\hyperlink{logger_8h_a13b7cbf4245d32959202870c26bbd3e4a3c15d82ae51223aa509051b77801dbc5}{TTAK\_LOG\_ERROR}}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00014}\mbox{\hyperlink{logger_8h_a13b7cbf4245d32959202870c26bbd3e4a3c15d82ae51223aa509051b77801dbc5}{00014}}\ \}\ \mbox{\hyperlink{logger_8h_a13b7cbf4245d32959202870c26bbd3e4}{ttak\_log\_level\_t}};}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00015}00015\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00016}00016\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00017}00017\ \textcolor{comment}{\ *\ @brief\ Function\ pointer\ definition\ for\ custom\ log\ handlers.}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00018}00018\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00019}00019\ \textcolor{comment}{\ *\ @param\ level\ Severity\ level\ of\ the\ message.}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00020}00020\ \textcolor{comment}{\ *\ @param\ msg\ Formatted\ message\ string.}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00021}00021\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00022}\mbox{\hyperlink{logger_8h_a9c88f26d8f8810ba8ff97f986e82319a}{00022}}\ \textcolor{keyword}{typedef}\ void\ (*\mbox{\hyperlink{logger_8h_a9c88f26d8f8810ba8ff97f986e82319a}{ttak\_log\_func\_t}})(\mbox{\hyperlink{logger_8h_a13b7cbf4245d32959202870c26bbd3e4}{ttak\_log\_level\_t}}\ level,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *msg);}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00023}00023\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00024}00024\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00025}00025\ \textcolor{comment}{\ *\ @brief\ Logger\ structure.}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00026}00026\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00027}00027\ \textcolor{comment}{\ *\ Encapsulates\ logging\ configuration\ including\ minimum\ level\ and\ handler.}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00028}00028\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00029}\mbox{\hyperlink{structttak__logger}{00029}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__logger}{ttak\_logger}}\ \{}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00030}\mbox{\hyperlink{structttak__logger_a75133a7cb19ffae0042df8c5cd970760}{00030}}\ \ \ \ \ \mbox{\hyperlink{logger_8h_a13b7cbf4245d32959202870c26bbd3e4}{ttak\_log\_level\_t}}\ \mbox{\hyperlink{structttak__logger_a75133a7cb19ffae0042df8c5cd970760}{min\_level}};\ \textcolor{comment}{/**<\ Minimum\ severity\ to\ log.\ */}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00031}\mbox{\hyperlink{structttak__logger_ad14eb5229a9a1b9546005984b0f33433}{00031}}\ \ \ \ \ \mbox{\hyperlink{logger_8h_a9c88f26d8f8810ba8ff97f986e82319a}{ttak\_log\_func\_t}}\ \mbox{\hyperlink{structttak__logger_ad14eb5229a9a1b9546005984b0f33433}{log\_func}};\ \ \ \textcolor{comment}{/**<\ Callback\ function\ for\ processing\ logs.\ */}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00032}\mbox{\hyperlink{logger_8h_a3a653b85eb05b9b2000b5e7e20fedcda}{00032}}\ \}\ \mbox{\hyperlink{logger_8h_a3a653b85eb05b9b2000b5e7e20fedcda}{ttak\_logger\_t}};}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00034}\mbox{\hyperlink{logger_8h_a09af614ae19dca4978a6b3df0f80bf9b}{00034}}\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{structttak__logger}{ttak\_logger\_t}}\ \mbox{\hyperlink{logger_8h_a09af614ae19dca4978a6b3df0f80bf9b}{tt\_logger\_t}};}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00035}00035\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00036}00036\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00037}00037\ \textcolor{comment}{\ *\ @brief\ Initializes\ the\ logger.}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00038}00038\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00039}00039\ \textcolor{comment}{\ *\ @param\ l\ Pointer\ to\ the\ logger.}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00040}00040\ \textcolor{comment}{\ *\ @param\ func\ Custom\ log\ function\ (pass\ NULL\ for\ default\ stderr).}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00041}00041\ \textcolor{comment}{\ *\ @param\ level\ Minimum\ log\ level.}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00042}00042\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00043}\mbox{\hyperlink{logger_8h_a521315f19c7d983c5f323d47a86e9832}{00043}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{logger_8h_a521315f19c7d983c5f323d47a86e9832}{ttak\_logger\_init}}(\mbox{\hyperlink{structttak__logger}{ttak\_logger\_t}}\ *l,\ \mbox{\hyperlink{logger_8h_a9c88f26d8f8810ba8ff97f986e82319a}{ttak\_log\_func\_t}}\ func,\ \mbox{\hyperlink{logger_8h_a13b7cbf4245d32959202870c26bbd3e4}{ttak\_log\_level\_t}}\ level);}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00044}00044\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00045}00045\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00046}00046\ \textcolor{comment}{\ *\ @brief\ Logs\ a\ message.}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00047}00047\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00048}00048\ \textcolor{comment}{\ *\ @param\ l\ Pointer\ to\ the\ logger.}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00049}00049\ \textcolor{comment}{\ *\ @param\ level\ Severity\ level.}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00050}00050\ \textcolor{comment}{\ *\ @param\ fmt\ Printf-\/style\ format\ string.}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00051}00051\ \textcolor{comment}{\ *\ @param\ ...\ Arguments\ for\ format\ string.}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00052}00052\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00053}\mbox{\hyperlink{logger_8h_ac3cf29e97c6046fd7efcc81a18599844}{00053}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{logger_8h_ac3cf29e97c6046fd7efcc81a18599844}{ttak\_logger\_log}}(\mbox{\hyperlink{structttak__logger}{ttak\_logger\_t}}\ *l,\ \mbox{\hyperlink{logger_8h_a13b7cbf4245d32959202870c26bbd3e4}{ttak\_log\_level\_t}}\ level,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *fmt,\ ...);}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00055}00055\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_LOG\_LOGGER\_H}}
+
+\end{DoxyCode}

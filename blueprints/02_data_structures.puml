@@ -1,49 +1,53 @@
-@startuml libttak_data_structures
-!theme vibrant
+@startuml
+!theme plain
+hide empty members
 
-title Data Structures
+package "Data Structures" {
+    class ttak_map_t {
+        + buckets : ttak_bucket_t**
+        + capacity : size_t
+        + count : size_t
+    }
 
-package "Generic Containers" {
-    [Pair]
-    [Set]
+    class ttak_shard_t {
+        + data : void*
+        + lock : ttak_rwlock_t
+        __
+        + init(data)
+        + destroy()
+    }
+
+    class ttak_ringbuf_t {
+        + buffer : void*
+        + head : size_t
+        + tail : size_t
+        + capacity : size_t
+        + full : bool
+        + lock : ttak_rwlock_t
+        __
+        + push(item)
+        + pop(out_item)
+    }
+
+    class ttak_object_pool_t {
+        + buffer : void*
+        + bitmap : uint8_t*
+        + item_size : size_t
+        + capacity : size_t
+        + lock : ttak_spin_t
+        __
+        + alloc()
+        + free(ptr)
+    }
+
+    class ttak_heap_t {
+        + data : void**
+        + size : size_t
+    }
+
+    class ttak_queue_t {
+         + head : node_t*
+         + tail : node_t*
+    }
 }
-
-package "Hash Tables" {
-    [Hash]
-    [Map]
-    [Table]
-}
-
-package "Trees" {
-    [B+ Tree] as BPlusTree
-    [B-Tree] as BTree
-    [AST]
-}
-
-package "Memory Management" {
-    [Memory Manager] as Mem
-}
-
-' Relationships
-[Set] ..> [Table] : Uses
-[Map] ..> [Table] : Uses
-[Table] ..> [Hash] : Uses for hashing keys
-[Table] ..> Mem : For allocations
-
-[BPlusTree] ..> Mem : For node allocations
-[BTree] ..> Mem : For node allocations
-[AST] ..> Mem : For node allocations
-
-note right of [Table]
-  A generic hash table implementation.
-end note
-
-note left of [Map]
-  Key-value map built on top of the Table.
-end note
-
-note top of [Set]
-  A collection of unique items.
-end note
-
 @enduml
