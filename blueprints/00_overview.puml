@@ -6,6 +6,7 @@ title libttak High-Level Architecture
 package "libttak Core" {
     component "Async" as Async
     component "Data Structures" as DS
+    component "Trees" as Tree
     component "Memory" as Mem
     component "Threading" as Thread
     component "Math" as Math
@@ -17,6 +18,9 @@ package "Low-Level Primitives" {
     component "Atomics" as Atomic
     component "Sync" as Sync
     component "Timing" as Timing
+    component "Logging" as Log
+    component "Stats" as Stats
+    component "Limits" as Limit
 }
 
 ' Relationships
@@ -27,8 +31,13 @@ Async ..> Timing
 
 Priority ..> DS
 DS ..> Mem
+Tree ..> Mem
 
 Math ..> Mem
 Security ..> Mem
+
+Log ..> Timing
+Stats ..> Atomic
+Limit ..> Timing
 
 @enduml

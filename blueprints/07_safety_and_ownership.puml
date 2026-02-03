@@ -2,7 +2,7 @@
 !theme plain
 hide empty members
 
-package "Safety & Ownership" {
+package "Safety & Ownership (mem/)" {
     class ttak_owner_t {
         + resources : ttak_map_t*
         + functions : ttak_map_t*
@@ -25,7 +25,7 @@ package "Safety & Ownership" {
     }
 
     class ttak_epoch_gc_t {
-        + tree : ttak_mem_tree_t
+        + mem_tree : ttak_mem_tree_t*
         + current_epoch : uint64_t
         + last_cleanup_ts : uint64_t
         __
@@ -34,30 +34,8 @@ package "Safety & Ownership" {
         + register(ptr, size)
         + rotate()
     }
-    note right of ttak_epoch_gc_t::rotate
-        Triggers non-blocking
-        periodic cleanup
-    end note
-
-    class ttak_ratelimit_t {
-        + bucket : ttak_token_bucket_t
-        __
-        + init(rate, burst)
-        + allow() : bool
-    }
-
-    class ttak_token_bucket_t {
-        + tokens : double
-        + max_tokens : double
-        + refill_rate : double
-        + last_refill_ts : uint64_t
-        + lock : ttak_spin_t
-        __
-        + init(rate, burst)
-        + consume(amount) : bool
-    }
 
     ttak_owner_t ..> ttak_owner_policy_t
-    ttak_ratelimit_t *-- ttak_token_bucket_t
+    ttak_epoch_gc_t ..> ttak_mem_tree_t : uses
 }
 @enduml

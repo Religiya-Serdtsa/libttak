@@ -3,38 +3,57 @@
 hide empty members
 
 package "Utilities" {
-    class ttak_logger_t {
-        + min_level : ttak_log_level_t
-        + log_func : fn_ptr
-        __
-        + init(func, level)
-        + log(level, fmt, ...)
+    package "Logging (log/)" {
+        class ttak_logger_t {
+            + min_level : ttak_log_level_t
+            + log_func : fn_ptr
+            __
+            + init(func, level)
+            + log(level, fmt, ...)
+        }
     }
 
-    class ttak_stats_t {
-        + count : uint64_t
-        + sum : uint64_t
-        + min : uint64_t
-        + max : uint64_t
-        + histogram : uint64_t[]
-        + lock : ttak_spin_t
-        __
-        + record(val)
-        + mean() : double
-        + print_ascii()
+    package "Stats (stats/)" {
+        class ttak_stats_t {
+            + count : uint64_t
+            + sum : uint64_t
+            + min : uint64_t
+            + max : uint64_t
+            + histogram : uint64_t[]
+            + lock : ttak_spin_t
+            __
+            + record(val)
+            + mean() : double
+            + print_ascii()
+        }
     }
 
-    class ttak_deadline_t {
-        + start_ts : uint64_t
-        + deadline_ts : uint64_t
-        __
-        + set(ms)
-        + is_expired() : bool
-        + remaining() : uint64_t
+    package "Timing (timing/)" {
+        class ttak_deadline_t {
+            + start_ts : uint64_t
+            + deadline_ts : uint64_t
+            __
+            + set(ms)
+            + is_expired() : bool
+            + remaining() : uint64_t
+        }
     }
 
-    class ttak_timeout_t {
-        + duration_ms : uint64_t
+    package "Limits (limit/)" {
+        class ttak_ratelimit_t {
+            + bucket : ttak_token_bucket_t
+            __
+            + init(rate, burst)
+            + allow() : bool
+        }
+
+        class ttak_token_bucket_t {
+            + tokens : double
+            + max_tokens : double
+            + refill_rate : double
+            + last_refill_ts : uint64_t
+            + lock : ttak_spin_t
+        }
     }
 }
 @enduml
