@@ -7,40 +7,59 @@
 \DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00003}00003\ hide\ empty\ members}
 \DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00004}00004\ }
 \DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00005}00005\ package\ "{}Utilities"{}\ \{}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00006}00006\ \ \ \ \ class\ ttak\_logger\_t\ \{}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00007}00007\ \ \ \ \ \ \ \ \ +\ min\_level\ :\ ttak\_log\_level\_t}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00008}00008\ \ \ \ \ \ \ \ \ +\ log\_func\ :\ fn\_ptr}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00009}00009\ \ \ \ \ \ \ \ \ \_\_}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00010}00010\ \ \ \ \ \ \ \ \ +\ init(func,\ level)}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00011}00011\ \ \ \ \ \ \ \ \ +\ log(level,\ fmt,\ ...)}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00012}00012\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00013}00013\ }
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00014}00014\ \ \ \ \ class\ ttak\_stats\_t\ \{}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00015}00015\ \ \ \ \ \ \ \ \ +\ count\ :\ uint64\_t}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00016}00016\ \ \ \ \ \ \ \ \ +\ sum\ :\ uint64\_t}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00017}00017\ \ \ \ \ \ \ \ \ +\ min\ :\ uint64\_t}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00018}00018\ \ \ \ \ \ \ \ \ +\ max\ :\ uint64\_t}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00019}00019\ \ \ \ \ \ \ \ \ +\ histogram\ :\ uint64\_t[]}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00020}00020\ \ \ \ \ \ \ \ \ +\ lock\ :\ ttak\_spin\_t}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00021}00021\ \ \ \ \ \ \ \ \ \_\_}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00022}00022\ \ \ \ \ \ \ \ \ +\ record(val)}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00023}00023\ \ \ \ \ \ \ \ \ +\ mean()\ :\ double}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00024}00024\ \ \ \ \ \ \ \ \ +\ print\_ascii()}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00025}00025\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00026}00026\ }
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00027}00027\ \ \ \ \ class\ ttak\_deadline\_t\ \{}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00028}00028\ \ \ \ \ \ \ \ \ +\ start\_ts\ :\ uint64\_t}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00029}00029\ \ \ \ \ \ \ \ \ +\ deadline\_ts\ :\ uint64\_t}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00030}00030\ \ \ \ \ \ \ \ \ \_\_}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00031}00031\ \ \ \ \ \ \ \ \ +\ set(ms)}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00032}00032\ \ \ \ \ \ \ \ \ +\ is\_expired()\ :\ bool}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00033}00033\ \ \ \ \ \ \ \ \ +\ remaining()\ :\ uint64\_t}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00034}00034\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00035}00035\ }
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00036}00036\ \ \ \ \ class\ ttak\_timeout\_t\ \{}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00037}00037\ \ \ \ \ \ \ \ \ +\ duration\_ms\ :\ uint64\_t}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00038}00038\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00039}00039\ \}}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00040}00040\ @enduml}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00006}00006\ \ \ \ \ package\ "{}Logging\ (log/)"{}\ \{}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00007}00007\ \ \ \ \ \ \ \ \ class\ ttak\_logger\_t\ \{}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00008}00008\ \ \ \ \ \ \ \ \ \ \ \ \ +\ min\_level\ :\ ttak\_log\_level\_t}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00009}00009\ \ \ \ \ \ \ \ \ \ \ \ \ +\ log\_func\ :\ fn\_ptr}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00010}00010\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00011}00011\ \ \ \ \ \ \ \ \ \ \ \ \ +\ init(func,\ level)}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00012}00012\ \ \ \ \ \ \ \ \ \ \ \ \ +\ log(level,\ fmt,\ ...)}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00013}00013\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00014}00014\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00016}00016\ \ \ \ \ package\ "{}Stats\ (stats/)"{}\ \{}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00017}00017\ \ \ \ \ \ \ \ \ class\ ttak\_stats\_t\ \{}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00018}00018\ \ \ \ \ \ \ \ \ \ \ \ \ +\ count\ :\ uint64\_t}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00019}00019\ \ \ \ \ \ \ \ \ \ \ \ \ +\ sum\ :\ uint64\_t}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00020}00020\ \ \ \ \ \ \ \ \ \ \ \ \ +\ min\ :\ uint64\_t}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00021}00021\ \ \ \ \ \ \ \ \ \ \ \ \ +\ max\ :\ uint64\_t}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ +\ histogram\ :\ uint64\_t[]}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ +\ lock\ :\ ttak\_spin\_t}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ +\ record(val)}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ +\ mean()\ :\ double}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ +\ print\_ascii()}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00028}00028\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00029}00029\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00031}00031\ \ \ \ \ package\ "{}Timing\ (timing/)"{}\ \{}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00032}00032\ \ \ \ \ \ \ \ \ class\ ttak\_deadline\_t\ \{}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ +\ start\_ts\ :\ uint64\_t}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ +\ deadline\_ts\ :\ uint64\_t}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ +\ set(ms)}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ +\ is\_expired()\ :\ bool}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ +\ remaining()\ :\ uint64\_t}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00039}00039\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00040}00040\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00042}00042\ \ \ \ \ package\ "{}Limits\ (limit/)"{}\ \{}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00043}00043\ \ \ \ \ \ \ \ \ class\ ttak\_ratelimit\_t\ \{}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ +\ bucket\ :\ ttak\_token\_bucket\_t}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ +\ init(rate,\ burst)}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ +\ allow()\ :\ bool}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00048}00048\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00050}00050\ \ \ \ \ \ \ \ \ class\ ttak\_token\_bucket\_t\ \{}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ +\ tokens\ :\ double}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ +\ max\_tokens\ :\ double}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ +\ refill\_rate\ :\ double}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ +\ last\_refill\_ts\ :\ uint64\_t}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ +\ lock\ :\ ttak\_spin\_t}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00056}00056\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00057}00057\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00058}00058\ \}}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00059}00059\ @enduml}
 
 \end{DoxyCode}

@@ -9,5 +9,5 @@ var searchData=
   ['get_5frunning_5fcount_6',['get_running_count',['../structttak__scheduler.html#af3448cd2c75d1a97380db9f6e77b3e1e',1,'ttak_scheduler']]],
   ['get_5fsize_7',['get_size',['../struct____internal__ttak__proc__priority__queue__t.html#abfe3e7817ed79ec79fb5d7cc1d5255db',1,'__internal_ttak_proc_priority_queue_t']]],
   ['gimps_5fresult_5ft_8',['gimps_result_t',['../structgimps__result__t.html',1,'']]],
-  ['good_20if_20you_20stay_20safe_9',['C is good, if you stay safe',['..//home/yjlee/libttak/README.md#autotoc_md14',1,'']]]
+  ['good_20if_20you_20stay_20safe_9',['C is good, if you stay safe',['..//home/yjlee/libttak/README.md#autotoc_md18',1,'']]]
 ];

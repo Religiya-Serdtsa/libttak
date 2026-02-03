@@ -6,7 +6,7 @@
 \DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00002}00002\ !theme\ plain}
 \DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00003}00003\ hide\ empty\ members}
 \DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00004}00004\ }
-\DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00005}00005\ package\ "{}Safety\ \&\ Ownership"{}\ \{}
+\DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00005}00005\ package\ "{}Safety\ \&\ Ownership\ (mem/)"{}\ \{}
 \DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00006}00006\ \ \ \ \ class\ ttak\_owner\_t\ \{}
 \DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00007}00007\ \ \ \ \ \ \ \ \ +\ resources\ :\ ttak\_map\_t*}
 \DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00008}00008\ \ \ \ \ \ \ \ \ +\ functions\ :\ ttak\_map\_t*}
@@ -29,7 +29,7 @@
 \DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00025}00025\ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00026}00026\ }
 \DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00027}00027\ \ \ \ \ class\ ttak\_epoch\_gc\_t\ \{}
-\DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00028}00028\ \ \ \ \ \ \ \ \ +\ tree\ :\ ttak\_mem\_tree\_t}
+\DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00028}00028\ \ \ \ \ \ \ \ \ +\ mem\_tree\ :\ ttak\_mem\_tree\_t*}
 \DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00029}00029\ \ \ \ \ \ \ \ \ +\ current\_epoch\ :\ uint64\_t}
 \DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00030}00030\ \ \ \ \ \ \ \ \ +\ last\_cleanup\_ts\ :\ uint64\_t}
 \DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00031}00031\ \ \ \ \ \ \ \ \ \_\_}
@@ -38,32 +38,10 @@
 \DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00034}00034\ \ \ \ \ \ \ \ \ +\ register(ptr,\ size)}
 \DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00035}00035\ \ \ \ \ \ \ \ \ +\ rotate()}
 \DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00036}00036\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00037}00037\ \ \ \ \ note\ right\ of\ ttak\_epoch\_gc\_t::rotate}
-\DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00038}00038\ \ \ \ \ \ \ \ \ Triggers\ non-\/blocking}
-\DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00039}00039\ \ \ \ \ \ \ \ \ periodic\ cleanup}
-\DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00040}00040\ \ \ \ \ end\ note}
-\DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00041}00041\ }
-\DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00042}00042\ \ \ \ \ class\ ttak\_ratelimit\_t\ \{}
-\DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00043}00043\ \ \ \ \ \ \ \ \ +\ bucket\ :\ ttak\_token\_bucket\_t}
-\DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00044}00044\ \ \ \ \ \ \ \ \ \_\_}
-\DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00045}00045\ \ \ \ \ \ \ \ \ +\ init(rate,\ burst)}
-\DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00046}00046\ \ \ \ \ \ \ \ \ +\ allow()\ :\ bool}
-\DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00047}00047\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00048}00048\ }
-\DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00049}00049\ \ \ \ \ class\ ttak\_token\_bucket\_t\ \{}
-\DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00050}00050\ \ \ \ \ \ \ \ \ +\ tokens\ :\ double}
-\DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00051}00051\ \ \ \ \ \ \ \ \ +\ max\_tokens\ :\ double}
-\DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00052}00052\ \ \ \ \ \ \ \ \ +\ refill\_rate\ :\ double}
-\DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00053}00053\ \ \ \ \ \ \ \ \ +\ last\_refill\_ts\ :\ uint64\_t}
-\DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00054}00054\ \ \ \ \ \ \ \ \ +\ lock\ :\ ttak\_spin\_t}
-\DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00055}00055\ \ \ \ \ \ \ \ \ \_\_}
-\DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00056}00056\ \ \ \ \ \ \ \ \ +\ init(rate,\ burst)}
-\DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00057}00057\ \ \ \ \ \ \ \ \ +\ consume(amount)\ :\ bool}
-\DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00058}00058\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00059}00059\ }
-\DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00060}00060\ \ \ \ \ ttak\_owner\_t\ ..>\ ttak\_owner\_policy\_t}
-\DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00061}00061\ \ \ \ \ ttak\_ratelimit\_t\ *-\/-\/\ ttak\_token\_bucket\_t}
-\DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00062}00062\ \}}
-\DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00063}00063\ @enduml}
+\DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00038}00038\ \ \ \ \ ttak\_owner\_t\ ..>\ ttak\_owner\_policy\_t}
+\DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00039}00039\ \ \ \ \ ttak\_epoch\_gc\_t\ ..>\ ttak\_mem\_tree\_t\ :\ uses}
+\DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00040}00040\ \}}
+\DoxyCodeLine{\Hypertarget{07__safety__and__ownership_8puml_source_l00041}00041\ @enduml}
 
 \end{DoxyCode}

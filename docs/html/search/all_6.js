@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['c_20is_20good_20if_20you_20stay_20safe_0',['C is good, if you stay safe',['..//home/yjlee/libttak/README.md#autotoc_md14',1,'']]],
+  ['c_20is_20good_20if_20you_20stay_20safe_0',['C is good, if you stay safe',['..//home/yjlee/libttak/README.md#autotoc_md18',1,'']]],
   ['cache_20benchmark_20libttak_1',['TTL Cache Benchmark (libttak)',['../index.html',1,'']]],
   ['cache_5fl1_5fkb_2',['cache_l1_kb',['../structttak__hw__spec__t.html#aa17b87ee1d8d2a0d75fdf85e99c9c8f6',1,'ttak_hw_spec_t']]],
   ['cache_5fl2_5fkb_3',['cache_l2_kb',['../structttak__hw__spec__t.html#a9ad43ae38428c73e9767b47d6ec547ef',1,'ttak_hw_spec_t']]],
@@ -16,13 +16,13 @@ var searchData=
   ['cmp_13',['cmp',['../structttak__btree.html#ac4ca3eb61f7f677a2abb28736d97db87',1,'ttak_btree::cmp'],['../structttak__heap__tree.html#af2ca80a7e0420f1a674963f9f12c41eb',1,'ttak_heap_tree::cmp'],['../structttak__bplus__tree.html#a224e4a27e60f30836cecb7c4e9d51e2d',1,'ttak_bplus_tree::cmp']]],
   ['computerid_14',['computerid',['../structapp__state__t.html#acaf0198605f77b7ef9ffd33b44f080c6',1,'app_state_t']]],
   ['cond_15',['cond',['../structttak__mem__tree.html#a66aff4cfeb51826d80c498f97ac7754f',1,'ttak_mem_tree::cond'],['../structttak__future.html#a51864bb1d03b06e09cb18262b2bd3675',1,'ttak_future::cond']]],
-  ['cool_20is_20it_16',['How cool is it?',['..//home/yjlee/libttak/README.md#autotoc_md12',1,'']]],
+  ['cool_20is_20it_16',['How cool is it?',['..//home/yjlee/libttak/README.md#autotoc_md16',1,'']]],
   ['count_17',['count',['../structttak__stats.html#a049a63b14d250966d575675ae4c0dcd9',1,'ttak_stats::count'],['../structttak__backoff.html#a656759f034652ed5bdf8be5d4aae9353',1,'ttak_backoff::count']]],
   ['cpu_5fflags_18',['cpu_flags',['../structttak__hw__spec__t.html#ac5a787647378f204cb7d2311c57ca8fb',1,'ttak_hw_spec_t']]],
   ['cpu_5ffreq_5fkhz_19',['cpu_freq_khz',['../structttak__hw__spec__t.html#ac34a9652f00dcea40a2782b8d49ac672',1,'ttak_hw_spec_t']]],
   ['cpu_5fmodel_20',['cpu_model',['../structttak__hw__spec__t.html#aa24ec18dc361441049b719cc84f594ae',1,'ttak_hw_spec_t']]],
   ['created_5ftick_21',['created_tick',['../structttak__mem__header__t.html#aefba5a41d63f62a6de53c3a9a6f0f51b',1,'ttak_mem_header_t']]],
-  ['creation_20build_20stabilization_22',['Initial Skeleton Creation &amp; Build Stabilization',['../md_HISTORY.html#autotoc_md9',1,'']]],
+  ['creation_20build_20stabilization_22',['Initial Skeleton Creation &amp; Build Stabilization',['../md_HISTORY.html#autotoc_md13',1,'']]],
   ['creation_5fts_23',['creation_ts',['../structttak__owner.html#a06604c5fe6dd960f99fd33e66f0156e1',1,'ttak_owner::creation_ts'],['../structttak__thread__pool.html#a3e5f0e7aff5c7d8d3c98f6614cafa405',1,'ttak_thread_pool::creation_ts']]],
   ['ctrl_24',['ctrl',['../struct__node.html#ae3f8bb98545485738428f81dfcf6a14b',1,'_node']]],
   ['current_5fepoch_25',['current_epoch',['../structttak__epoch__gc.html#ab3a7c8a89fbdc06128a6b176ed2132eb',1,'ttak_epoch_gc']]]

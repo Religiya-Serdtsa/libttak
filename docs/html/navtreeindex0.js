@@ -16,6 +16,8 @@ var NAVTREEINDEX0 =
 "06__utilities_8puml_source.html":[3,0,2,6],
 "07__safety__and__ownership_8puml.html":[3,0,2,7],
 "07__safety__and__ownership_8puml_source.html":[3,0,2,7],
+"08__tree__structures_8puml.html":[3,0,2,8],
+"08__tree__structures_8puml_source.html":[3,0,2,8],
 "annotated.html":[2,0],
 "apps_2mersenne-prime_2internal_2app__types_8h.html":[3,0,0,0,1,0],
 "apps_2mersenne-prime_2internal_2app__types_8h_source.html":[3,0,0,0,1,0],
@@ -247,7 +249,5 @@ var NAVTREEINDEX0 =
 "hash_8h.html#a217ad8485de2dcca79110f37d4da9688":[3,0,4,0,3,0,4],
 "hash_8h.html#a2b7cf2a3641be7b89138615764d60ba3":[3,0,4,0,3,0,3],
 "hash_8h.html#a39cea30a6762653587526256ec50c847":[3,0,4,0,3,0,7],
-"hash_8h.html#a86c0b717fb0af43c6f5c2232a2efa00f":[3,0,4,0,3,0,8],
-"hash_8h.html#ab5081f0575ed9a431e1e35e25975dfda":[3,0,4,0,3,0,6],
-"hash_8h.html#ab792dfd97ab00abb6a5fc20191a9e952":[3,0,4,0,3,0,2]
+"hash_8h.html#a86c0b717fb0af43c6f5c2232a2efa00f":[3,0,4,0,3,0,8]
 };

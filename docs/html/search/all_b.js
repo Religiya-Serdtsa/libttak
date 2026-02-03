@@ -12,6 +12,6 @@ var searchData=
   ['history_9',['Development History',['../md_HISTORY.html',1,'']]],
   ['history_2emd_10',['HISTORY.md',['../HISTORY_8md.html',1,'']]],
   ['hostname_11',['hostname',['../structttak__hw__spec__t.html#aa88cd7dcd77c7e35a7dd8344b579b931',1,'ttak_hw_spec_t']]],
-  ['how_20cool_20is_20it_12',['How cool is it?',['..//home/yjlee/libttak/README.md#autotoc_md12',1,'']]],
+  ['how_20cool_20is_20it_12',['How cool is it?',['..//home/yjlee/libttak/README.md#autotoc_md16',1,'']]],
   ['hwinfo_2eh_13',['hwinfo.h',['../hwinfo_8h.html',1,'']]]
 ];

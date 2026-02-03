@@ -6,7 +6,8 @@ var searchData=
   ['deadline_5fts_3',['deadline_ts',['../structttak__deadline.html#ac59be80c1d5e5f95b34b334e4017dbcf',1,'ttak_deadline']]],
   ['deleted_4',['DELETED',['../hash_8h.html#ab792dfd97ab00abb6a5fc20191a9e952',1,'hash.h']]],
   ['development_20history_5',['Development History',['../md_HISTORY.html',1,'']]],
-  ['diffs_20overview_6',['Key Diffs Overview',['../md_HISTORY.html#autotoc_md10',1,'']]],
-  ['duration_5fms_7',['duration_ms',['../structttak__timeout.html#a8649d9ff42f678794a783052349915b4',1,'ttak_timeout']]],
-  ['dyn_5fptr_8',['dyn_ptr',['../structttak__bigint.html#a3bf5b190c917a856b8a01fd628d16bfe',1,'ttak_bigint']]]
+  ['diffs_20overview_6',['Key Diffs Overview',['../md_HISTORY.html#autotoc_md14',1,'']]],
+  ['directory_20structure_7',['Directory Structure',['..//home/yjlee/libttak/blueprints/README.md#autotoc_md8',1,'']]],
+  ['duration_5fms_8',['duration_ms',['../structttak__timeout.html#a8649d9ff42f678794a783052349915b4',1,'ttak_timeout']]],
+  ['dyn_5fptr_9',['dyn_ptr',['../structttak__bigint.html#a3bf5b190c917a856b8a01fd628d16bfe',1,'ttak_bigint']]]
 ];

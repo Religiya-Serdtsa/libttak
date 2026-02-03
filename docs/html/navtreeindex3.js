@@ -1,5 +1,7 @@
 var NAVTREEINDEX3 =
 {
+"structttak__owner.html#af8f1a51f68b2d8255dff9d232d2c7435":[2,0,34,4],
+"structttak__pair.html":[2,0,35],
 "structttak__pair.html#a78b3c071801b6ef8767665464f80cc9c":[2,0,35,0],
 "structttak__pair.html#a84382a44c21cd42e0d7c99750a0015b3":[2,0,35,1],
 "structttak__prime__factor__big__t.html":[2,0,36],

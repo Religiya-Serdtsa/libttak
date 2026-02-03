@@ -1,0 +1,44 @@
+\doxysection{08\+\_\+tree\+\_\+structures.\+puml}
+\hypertarget{08__tree__structures_8puml_source}{}\label{08__tree__structures_8puml_source}\index{blueprints/08\_tree\_structures.puml@{blueprints/08\_tree\_structures.puml}}
+\mbox{\hyperlink{08__tree__structures_8puml}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{08__tree__structures_8puml_source_l00001}00001\ @startuml}
+\DoxyCodeLine{\Hypertarget{08__tree__structures_8puml_source_l00002}00002\ !theme\ plain}
+\DoxyCodeLine{\Hypertarget{08__tree__structures_8puml_source_l00003}00003\ hide\ empty\ members}
+\DoxyCodeLine{\Hypertarget{08__tree__structures_8puml_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{08__tree__structures_8puml_source_l00005}00005\ package\ "{}Tree\ Structures\ (tree/)"{}\ \{}
+\DoxyCodeLine{\Hypertarget{08__tree__structures_8puml_source_l00006}00006\ \ \ \ \ class\ ttak\_ast\_tree\_t\ \{}
+\DoxyCodeLine{\Hypertarget{08__tree__structures_8puml_source_l00007}00007\ \ \ \ \ \ \ \ \ +\ root\ :\ ttak\_ast\_node\_t*}
+\DoxyCodeLine{\Hypertarget{08__tree__structures_8puml_source_l00008}00008\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{08__tree__structures_8puml_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{08__tree__structures_8puml_source_l00010}00010\ \ \ \ \ class\ ttak\_ast\_node\_t\ \{}
+\DoxyCodeLine{\Hypertarget{08__tree__structures_8puml_source_l00011}00011\ \ \ \ \ \ \ \ \ +\ type\ :\ int}
+\DoxyCodeLine{\Hypertarget{08__tree__structures_8puml_source_l00012}00012\ \ \ \ \ \ \ \ \ +\ value\ :\ void*}
+\DoxyCodeLine{\Hypertarget{08__tree__structures_8puml_source_l00013}00013\ \ \ \ \ \ \ \ \ +\ children\ :\ ttak\_ast\_node\_t**}
+\DoxyCodeLine{\Hypertarget{08__tree__structures_8puml_source_l00014}00014\ \ \ \ \ \ \ \ \ +\ children\_count\ :\ size\_t}
+\DoxyCodeLine{\Hypertarget{08__tree__structures_8puml_source_l00015}00015\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{08__tree__structures_8puml_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{08__tree__structures_8puml_source_l00017}00017\ \ \ \ \ class\ ttak\_bplus\_tree\_t\ \{}
+\DoxyCodeLine{\Hypertarget{08__tree__structures_8puml_source_l00018}00018\ \ \ \ \ \ \ \ \ +\ root\ :\ ttak\_bplus\_node\_t*}
+\DoxyCodeLine{\Hypertarget{08__tree__structures_8puml_source_l00019}00019\ \ \ \ \ \ \ \ \ +\ order\ :\ int}
+\DoxyCodeLine{\Hypertarget{08__tree__structures_8puml_source_l00020}00020\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{08__tree__structures_8puml_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{08__tree__structures_8puml_source_l00022}00022\ \ \ \ \ class\ ttak\_btree\_t\ \{}
+\DoxyCodeLine{\Hypertarget{08__tree__structures_8puml_source_l00023}00023\ \ \ \ \ \ \ \ \ +\ root\ :\ ttak\_btree\_node\_t*}
+\DoxyCodeLine{\Hypertarget{08__tree__structures_8puml_source_l00024}00024\ \ \ \ \ \ \ \ \ +\ t\ :\ int}
+\DoxyCodeLine{\Hypertarget{08__tree__structures_8puml_source_l00025}00025\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{08__tree__structures_8puml_source_l00026}00026\ \}}
+\DoxyCodeLine{\Hypertarget{08__tree__structures_8puml_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{08__tree__structures_8puml_source_l00028}00028\ package\ "{}Memory\ Tree\ (mem\_tree/)"{}\ \{}
+\DoxyCodeLine{\Hypertarget{08__tree__structures_8puml_source_l00029}00029\ \ \ \ \ class\ ttak\_mem\_tree\_t\ \{}
+\DoxyCodeLine{\Hypertarget{08__tree__structures_8puml_source_l00030}00030\ \ \ \ \ \ \ \ \ +\ head\ :\ ttak\_mem\_node\_t*}
+\DoxyCodeLine{\Hypertarget{08__tree__structures_8puml_source_l00031}00031\ \ \ \ \ \ \ \ \ +\ tail\ :\ ttak\_mem\_node\_t*}
+\DoxyCodeLine{\Hypertarget{08__tree__structures_8puml_source_l00032}00032\ \ \ \ \ \ \ \ \ +\ lock\ :\ pthread\_mutex\_t}
+\DoxyCodeLine{\Hypertarget{08__tree__structures_8puml_source_l00033}00033\ \ \ \ \ \ \ \ \ +\ total\_allocated\ :\ size\_t}
+\DoxyCodeLine{\Hypertarget{08__tree__structures_8puml_source_l00034}00034\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{08__tree__structures_8puml_source_l00035}00035\ \}}
+\DoxyCodeLine{\Hypertarget{08__tree__structures_8puml_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{08__tree__structures_8puml_source_l00037}00037\ ttak\_ast\_tree\_t\ *-\/-\/\ ttak\_ast\_node\_t}
+\DoxyCodeLine{\Hypertarget{08__tree__structures_8puml_source_l00038}00038\ @enduml}
+
+\end{DoxyCode}
