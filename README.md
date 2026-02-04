@@ -5,9 +5,10 @@
 *LibTTAK's Mascot, Memuh the sea rabbit*
 *Memuh consumes the memory leftovers when the lifetime expires.*
 
-Gentle.
+**Gentle.
 Predictable.
 Explicit.
+**
 
 A small and friendly C systems collection for safer memory
 and enjoyable programming.
