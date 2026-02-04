@@ -1,6 +1,6 @@
 # LibTTAK Tutorials
 
-These tutorials are designed for clone-coding: every step rebuilds an existing subsystem from scratch so that, after completing the list, you will have covered **every module and public facility in `libttak`, unsafe contexts included**. The guide now ships as **dozens of bite-sized lessons** (`modules/01-*.md`, `modules/02-*.md`, …) so that you can focus on one commitment-sized topic at a time instead of scrolling a giant README. Start with Lesson 01 and walk forward; the ordering is intentional so that you literally re-lay the foundation of the library, stack the intermediate subsystems, and finish with the unsafe bridges—by the end you should be able to think and ship like the library’s original designer.
+These tutorials are designed for clone-coding: every step rebuilds an existing subsystem from scratch so that, after completing the list, you will have covered **every module and public facility in `libttak`, unsafe contexts included**. The guide now ships as **dozens of bite-sized lessons** (`modules/01-*/README.md`, `modules/02-*/README.md`, …) so that you can focus on one commitment-sized topic at a time instead of scrolling a giant README. Start with Lesson 01 and walk forward; the ordering is intentional so that you literally re-lay the foundation of the library, stack the intermediate subsystems, and finish with the unsafe bridges—by the end you should be able to think and ship like the library’s original designer.
 
 Key ideas:
 
@@ -34,10 +34,20 @@ Every stage in `CLONE_PATH.md` points at one or more lessons, and each lesson re
 ## Files & Tools
 
 - `CLONE_PATH.md` – ordered checklist that maps every tutorial stage to the lesson files.
-- `modules/*.md` – numbered lessons (01–35) with scope, steps, and verification tasks.
+- `modules/*/README.md` – numbered lessons (01–35) with scope, steps, and verification tasks.
 - `DANGEROUS/` – isolated guidance for unsafe facilities (`ttak_context_t`, raw shared memory, etc.).
 - `libttak.hlp` – concise manual fed into the helper program.
 - `helper/` – source for the helper tool that lets you page through `.hlp` files and mark confusing sections for later review.
+
+## Per-lesson folders
+
+Each lesson now has a sibling workspace under `tutorials/NN-lesson-name/` where you can keep the code and notes that the module references. Start with:
+
+- `tutorials/01-getting-started/` – ships a buildable sample program (`getting_started.c`) plus a `Makefile` that assumes you already ran `make && sudo make install` for `libttak`. Use it to confirm your compiler can include `<ttak/...>` headers and link against `-lttak`.
+- `tutorials/02-helper-workflow/` – quick checklist for practicing the helper tool interface (build, run against `libttak.hlp`, jot down shortcuts).
+- `tutorials/03-hash-table-buckets/` – scratchpad for the first data-structure clone; keep your sketches and hash-table test results here before moving on.
+
+Continue creating folders that match the remaining lesson numbers whenever you want to capture scratch code or logs separate from the main source tree.
 
 To build the helper:
 
@@ -49,10 +59,11 @@ make
 Usage:
 
 ```bash
-./helper ../libttak.hlp
-./helper ../DANGEROUS/libttak_unsafe.hlp   # unsafe supplement
+./helper                             # browse tutorial table of contents + READMEs
+./helper --manual ../libttak.hlp     # legacy helper manual
+./helper --manual ../DANGEROUS/libttak_unsafe.hlp
 ```
 
-Controls: `i` (up), `k` (down), `Enter` (mark section to `marked_explanations.txt`), `Backspace` or `Esc` (exit).
+Tutorial mode controls: `i`/`k` move, `Enter` opens the selected README in a `less` pager, `Tab` opens that lesson's sample code (press `Tab` again to jump back to the table), `Backspace` returns to the table, `Esc` exits. Manual mode keeps the legacy controls and marking workflow, including `Enter` saving the current section to `marked_explanations.txt`.
 
 Once you finish all clone steps (and optional DANGEROUS exercises), you will have reproduced the full library—with every module touched at least once—and gained familiarity with the helper/manual workflows needed for ongoing maintenance.

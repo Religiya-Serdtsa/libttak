@@ -1,4 +1,4 @@
-CC = tcc
+override CC = tcc
 
 # Standard flags for core modules: -O0 for maximum debuggability and predictable flow
 CFLAGS = -Wall -std=c11 -pthread -Iinclude -O0 -g \
@@ -73,6 +73,7 @@ directories:
 clean:
 	rm -rf obj lib tests/*.d
 	find tests/ -type f ! -name "*.c" ! -name "*.h" -delete
+	rm -rf a.out
 
 asm_clean:
 	rm -f $(ASMS)
