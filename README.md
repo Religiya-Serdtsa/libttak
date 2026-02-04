@@ -26,6 +26,120 @@ No memory is freed unless explicitly requested by the user.
 - No stop-the-world behavior
 - Every allocation belongs to a well-defined lifetime
 
+## Why LibTTAK?
+
+LibTTAK exists because defensive patterns appear even in languages that promise safety when engineers need deterministic cleanup, staged shutdowns, or externally imposed invariants. The library makes those guard rails explicit and mechanical in C so that the same discipline does not need to be reinvented per project.
+
+<table>
+  <tr>
+    <th>Rust stays on alert</th>
+    <th>C++ never unclenches</th>
+    <th>LibTTAK just clocks lifetimes</th>
+  </tr>
+  <tr>
+    <td>
+
+```rust
+fn guarded_session(repo: &Repo, cfg: Config) -> Result<Session, Error> {
+    let mut guard = repo.open().map_err(Error::open)?;
+    if guard.is_dead() {
+        return Err(Error::DeadRepo);
+    }
+
+    let mut session = Session::new(cfg.clone()).map_err(Error::session)?;
+    if session.remaining_budget() == 0 {
+        guard.close();
+        return Err(Error::Depleted);
+    }
+
+    let key = cfg.key.as_ref().ok_or(Error::MissingKey)?;
+    if key.len() < 32 {
+        guard.close();
+        return Err(Error::WeakKey);
+    }
+
+    Ok(Session::armed(session, guard))
+}
+```
+    </td>
+    <td>
+
+```cpp
+auto guarded_session(Repo& repo, const Config& cfg) -> Result<Session> {
+    auto guard = repo.open();
+    if (!guard.ok()) {
+        return Error::Open(guard.error());
+    }
+    if (guard->isDead()) {
+        return Error::DeadRepo();
+    }
+
+    auto session = Session::New(cfg);
+    if (!session.ok()) {
+        guard->close();
+        return Error::Session(session.error());
+    }
+    if (session->remainingBudget() == 0) {
+        guard->close();
+        return Error::Depleted();
+    }
+
+    const auto* key = cfg.key();
+    if (!key) {
+        guard->close();
+        return Error::MissingKey();
+    }
+    if (key->size() < 32) {
+        guard->close();
+        return Error::WeakKey();
+    }
+
+    guard->seal();
+    return Session::Armed(std::move(session.value()), std::move(*guard));
+}
+```
+    </td>
+    <td>
+
+```c
+#include <inttypes.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <stdio.h>
+
+#include <ttak/mem/mem.h>
+
+const uint64_t now = 500;
+const uint64_t lifetime = 1200;
+const uint64_t checkpoints[] = {now, now + lifetime / 2, now + lifetime + 1};
+
+char *message = ttak_mem_alloc(128, lifetime, now);
+if (!message) {
+    return 1;
+}
+
+snprintf(message, 128, "session=%" PRIu64 " expires@%" PRIu64,
+         lifetime, now + lifetime);
+
+for (size_t i = 0; i < sizeof(checkpoints) / sizeof(checkpoints[0]); ++i) {
+    const uint64_t tick = checkpoints[i];
+    char *view = ttak_mem_access(message, tick);
+    if (view) {
+        printf("[tick %" PRIu64 "] %s\n", tick, view);
+    } else {
+        printf("[tick %" PRIu64 "] lifetime closed\n", tick);
+    }
+}
+
+ttak_mem_free(message);
+```
+
+    </td>
+  </tr>
+</table>
+
+Two languages, same instinct: repeat every guard, manually couple every cleanup, never assume success. LibTTAK pushes that mindset into the runtime itself so C authors can keep the discipline while trading copy-pasted sentry code for an explicit lifetime model—the lifetime bookkeeping and cleanup coupling is part of the runtime, not handwritten ceremony.
+
 ## How is it used?
 
 See the tutorials directory for step-by-step examples.
