@@ -99,7 +99,7 @@ auto guarded_session(Repo& repo, const Config& cfg) -> tl::expected<ArmedSession
 
 ### LibTTAK (lifetime-as-data) just clocks scopes
 
-LibTTAK encodes the lifetime directly into the allocation. Cleanup hooks and access validation stem from the data’s declared expiry rather than ad-hoc guard paths, so the same snippet is both the runtime policy and the business logic.
+LibTTAK encodes the lifetime directly into the allocation. Cleanup hooks and access validation stem from the data’s declared expiry rather than ad-hoc guard paths, so the same snippet is both the runtime policy and the business logic. The model is not tied to `int main`—production code usually builds helpers that manage lifetimes at subsystem boundaries and let higher layers decide when to advance or release them.
 
 ```c
 #include <inttypes.h>
@@ -115,33 +115,44 @@ typedef struct {
     char token[64];
 } session_blob_t;
 
-int main(void) {
-    const uint64_t now = 500;
-    const uint64_t lifetime = 1200;
-    const uint64_t probes[] = {now, now + lifetime / 2, now + lifetime + 1};
-
+static session_blob_t *session_claim(uint64_t now, uint64_t lifetime) {
     session_blob_t *blob = ttak_mem_alloc(sizeof(*blob), lifetime, now);
     if (!blob) {
-        fputs("allocation failed\n", stderr);
-        return 1;
+        return NULL;
     }
-
     blob->expires_at = now + lifetime;
     snprintf(blob->token, sizeof(blob->token),
              "session expires@%" PRIu64, blob->expires_at);
+    return blob;
+}
 
-    for (size_t i = 0; i < sizeof(probes) / sizeof(probes[0]); ++i) {
-        const uint64_t tick = probes[i];
-        session_blob_t *view = ttak_mem_access(blob, tick);
-        if (!view) {
-            printf("[tick %" PRIu64 "] lifetime closed\n", tick);
-            continue;
-        }
-        printf("[tick %" PRIu64 "] %s\n", tick, view->token);
+static void session_tick(session_blob_t *blob, uint64_t tick) {
+    session_blob_t *view = ttak_mem_access(blob, tick);
+    if (!view) {
+        printf("[tick %" PRIu64 "] lifetime closed\n", tick);
+        return;
     }
+    printf("[tick %" PRIu64 "] %s\n", tick, view->token);
+}
 
-    ttak_mem_free(blob);
-    return 0;
+static void session_release(session_blob_t **blob) {
+    if (!blob || !*blob) {
+        return;
+    }
+    ttak_mem_free(*blob);
+    *blob = NULL;
+}
+
+void session_daemon(uint64_t now, const uint64_t *ticks, size_t n) {
+    session_blob_t *blob = session_claim(now, 1200);
+    if (!blob) {
+        fputs("allocation failed\n", stderr);
+        return;
+    }
+    for (size_t i = 0; i < n; ++i) {
+        session_tick(blob, ticks[i]);
+    }
+    session_release(&blob);
 }
 ```
 
