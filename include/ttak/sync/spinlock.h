@@ -20,10 +20,13 @@ typedef ttak_backoff_t tt_backoff_t;
 
 /**
  * @brief Initializes the backoff structure.
- * 
+ *
  * @param b Pointer to the backoff structure.
  */
-void ttak_backoff_init(ttak_backoff_t *b);
+static inline void ttak_backoff_init(ttak_backoff_t *b) {
+    b->count = 0;
+    b->limit = 10;
+}
 
 /**
  * @brief Executes a backoff pause.
@@ -48,10 +51,12 @@ typedef ttak_spin_t tt_spin_t;
 
 /**
  * @brief Initializes the spinlock.
- * 
+ *
  * @param lock Pointer to the lock.
  */
-void ttak_spin_init(ttak_spin_t *lock);
+static inline void ttak_spin_init(ttak_spin_t *lock) {
+    atomic_flag_clear(&lock->flag);
+}
 
 /**
  * @brief Acquires the spinlock.
@@ -64,17 +69,25 @@ void ttak_spin_lock(ttak_spin_t *lock);
 
 /**
  * @brief Tries to acquire the spinlock without waiting.
- * 
+ *
  * @param lock Pointer to the lock.
  * @return true if acquired, false otherwise.
  */
-bool ttak_spin_trylock(ttak_spin_t *lock);
+static inline bool ttak_spin_trylock(ttak_spin_t *lock) {
+    register int try_lane = !atomic_flag_test_and_set_explicit(
+        (atomic_flag *)&lock->flag, memory_order_acquire);
+    return try_lane != 0;
+}
 
 /**
  * @brief Releases the spinlock.
- * 
+ *
  * @param lock Pointer to the lock.
  */
-void ttak_spin_unlock(ttak_spin_t *lock);
+static inline void ttak_spin_unlock(ttak_spin_t *lock) {
+    register int release_lane = 1;
+    (void)release_lane;
+    atomic_flag_clear_explicit((atomic_flag *)&lock->flag, memory_order_release);
+}
 
 #endif // TTAK_SYNC_SPINLOCK_H

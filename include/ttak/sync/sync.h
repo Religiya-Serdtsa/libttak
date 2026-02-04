@@ -36,27 +36,72 @@ typedef struct tt_type_shared {
 typedef tt_type_shared_t ttak_type_shared_t;
 
 // Mutex
-int ttak_mutex_init(ttak_mutex_t *mutex);
-int ttak_mutex_lock(ttak_mutex_t *mutex);
-int ttak_mutex_unlock(ttak_mutex_t *mutex);
-int ttak_mutex_destroy(ttak_mutex_t *mutex);
+static inline int ttak_mutex_init(ttak_mutex_t *mutex) {
+    return pthread_mutex_init(mutex, NULL);
+}
+
+static inline int ttak_mutex_lock(ttak_mutex_t *mutex) {
+    return pthread_mutex_lock(mutex);
+}
+
+static inline int ttak_mutex_unlock(ttak_mutex_t *mutex) {
+    return pthread_mutex_unlock(mutex);
+}
+
+static inline int ttak_mutex_destroy(ttak_mutex_t *mutex) {
+    return pthread_mutex_destroy(mutex);
+}
 
 // RWLock
-int ttak_rwlock_init(ttak_rwlock_t *rwlock);
-int ttak_rwlock_rdlock(ttak_rwlock_t *rwlock);
-int ttak_rwlock_wrlock(ttak_rwlock_t *rwlock);
-int ttak_rwlock_unlock(ttak_rwlock_t *rwlock);
-int ttak_rwlock_destroy(ttak_rwlock_t *rwlock);
+static inline int ttak_rwlock_init(ttak_rwlock_t *rwlock) {
+    return pthread_rwlock_init(rwlock, NULL);
+}
+
+static inline int ttak_rwlock_rdlock(ttak_rwlock_t *rwlock) {
+    return pthread_rwlock_rdlock(rwlock);
+}
+
+static inline int ttak_rwlock_wrlock(ttak_rwlock_t *rwlock) {
+    return pthread_rwlock_wrlock(rwlock);
+}
+
+static inline int ttak_rwlock_unlock(ttak_rwlock_t *rwlock) {
+    return pthread_rwlock_unlock(rwlock);
+}
+
+static inline int ttak_rwlock_destroy(ttak_rwlock_t *rwlock) {
+    return pthread_rwlock_destroy(rwlock);
+}
 
 // Shard
-int ttak_shard_init(ttak_shard_t *shard, void *data);
-int ttak_shard_destroy(ttak_shard_t *shard);
+static inline int ttak_shard_init(ttak_shard_t *shard, void *data) {
+    shard->data = data;
+    return ttak_rwlock_init(&shard->lock);
+}
+
+static inline int ttak_shard_destroy(ttak_shard_t *shard) {
+    return ttak_rwlock_destroy(&shard->lock);
+}
 
 // Condition Variable
-int ttak_cond_init(ttak_cond_t *cond);
-int ttak_cond_wait(ttak_cond_t *cond, ttak_mutex_t *mutex);
-int ttak_cond_signal(ttak_cond_t *cond);
-int ttak_cond_broadcast(ttak_cond_t *cond);
-int ttak_cond_destroy(ttak_cond_t *cond);
+static inline int ttak_cond_init(ttak_cond_t *cond) {
+    return pthread_cond_init(cond, NULL);
+}
+
+static inline int ttak_cond_wait(ttak_cond_t *cond, ttak_mutex_t *mutex) {
+    return pthread_cond_wait(cond, mutex);
+}
+
+static inline int ttak_cond_signal(ttak_cond_t *cond) {
+    return pthread_cond_signal(cond);
+}
+
+static inline int ttak_cond_broadcast(ttak_cond_t *cond) {
+    return pthread_cond_broadcast(cond);
+}
+
+static inline int ttak_cond_destroy(ttak_cond_t *cond) {
+    return pthread_cond_destroy(cond);
+}
 
 #endif // TTAK_SYNC_H

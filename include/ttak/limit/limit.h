@@ -59,7 +59,9 @@ typedef ttak_ratelimit_t tt_ratelimit_t;
  * @param rate Allowed rate (requests per second).
  * @param burst Maximum burst size.
  */
-void ttak_ratelimit_init(ttak_ratelimit_t *rl, double rate, double burst);
+static inline void ttak_ratelimit_init(ttak_ratelimit_t *rl, double rate, double burst) {
+    ttak_token_bucket_init(&rl->bucket, rate, burst);
+}
 
 /**
  * @brief Checks if an action is allowed by the rate limiter.
@@ -69,6 +71,8 @@ void ttak_ratelimit_init(ttak_ratelimit_t *rl, double rate, double burst);
  * @param rl Pointer to the rate limiter.
  * @return true if allowed, false otherwise.
  */
-bool ttak_ratelimit_allow(ttak_ratelimit_t *rl);
+static inline bool ttak_ratelimit_allow(ttak_ratelimit_t *rl) {
+    return ttak_token_bucket_consume(&rl->bucket, 1.0);
+}
 
 #endif // TTAK_LIMIT_LIMIT_H

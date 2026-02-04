@@ -59,10 +59,3 @@ void ttak_async_schedule(ttak_task_t *task, uint64_t now, int priority) {
 
     ttak_task_execute(task, now);
 }
-
-/**
- * @brief Yield the processor to improve fairness.
- */
-void ttak_async_yield(void) {
-    sched_yield();
-}
