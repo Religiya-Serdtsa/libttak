@@ -1,70 +1,88 @@
 ## LibTTAK
-Timestamp-tracking memory lifetime, thread and async toolkit
 
-LibTTAK provides safer C development by tracking memory lifetime.
+![Mascot](./mascot.png)
+*LibTTAK's Mascot, Memuh the sea rabbit*
+
+Gentle.
+Predictable.
+Explicit.
+
+A small and friendly C systems collection for safer memory
+and enjoyable programming.
+
+LibTTAK provides safer C development by tracking memory lifetimes.
 All dynamically allocated objects created through libttak
-have an explicit lifetime.
+are associated with an explicit lifetime.
 
 When a lifetime expires, the associated memory can be cleaned
-by calling a cleaner function.
+by calling a user-controlled cleanup function.
 This is not garbage collection.
-Nothing is freed unless the user explicitly requests it.
+No memory is freed unless explicitly requested by the user.
 
-- Memory can be collected forcefully when you decide to clean it
-- No stop-the-world GC
-- Every allocated block belongs to a lifetime
+- Memory is reclaimed only when you decide to clean it
+- No stop-the-world behavior
+- Every allocation belongs to a well-defined lifetime
 
-## How cool is it?
+## How is it used?
 
-See examples under the apps directory.
+See the tutorials directory for step-by-step examples.
+The apps directory contains complete, working applications
+built on top of libttak.
 
 LibTTAK allows grouping temporary allocations under a single lifetime.
-This makes it easier to write complex or long-running programs
-without manually tracking every free path.
+This makes it possible to write complex or long-running programs
+without manually tracking every individual free path.
 
-Intermediate objects can be allocated freely and released together
-at a well-defined point.
+Intermediate objects can be allocated freely
+and released together at a well-defined point.
 
 ------------------------------------------------------------
 
 ## C is good, if you stay safe
 
-LibTTAK prioritizes safety over performance.
+LibTTAK prioritizes safety over raw performance.
 
 It does not claim to be faster than plain C.
 Its performance characteristics are closer to modern systems languages,
-but without C++ language features.
+while preserving a traditional C programming model.
 
-The library follows C-style programming.
+The library follows conventional C style.
 There are no templates, iterators, or hidden abstractions.
-Most behavior is explicit and visible in code.
+Most behavior is explicit and visible in the source code.
 
 ------------------------------------------------------------
 
 ## What libttak provides
 
 LibTTAK consists of several modules designed
-to work around the lifetime-based memory model.
+around a lifetime-based memory model.
 
-- Memory
-  Lifetime-tracked allocation and deterministic cleanup
+- Memory  
+  Lifetime-tracked allocation with deterministic cleanup
 
-- Thread
-  Thread abstraction using atomics and synchronization primitives
+- Everything as a type  
+  Functions, variables, and memory contexts are represented
+  explicitly as typed objects rather than implicit global state
 
-- Async
-  Lightweight async layer built on threads and timing
+- Ownership  
+  Explicit ownership rules to enforce clear code structure
 
-- Data structures
-  Containers designed to work with lifetime-managed memory
+- Thread  
+  Thread abstractions built on atomics and synchronization primitives
 
-- Math
+- Async  
+  A lightweight asynchronous layer based on threads and timing
+
+- Data structures  
+  Containers designed to operate on lifetime-managed memory
+
+- Math  
   Math utilities that rely on controlled allocation lifetimes
 
-- Scheduling
+- Scheduling  
   Priority-based scheduling helpers
 
-Low-level utilities such as atomics, synchronization,
+Low-level wrappers for atomics, synchronization,
 and timing are provided to support these modules.
 
 ------------------------------------------------------------
@@ -75,19 +93,36 @@ Every allocation performed through libttak
 is associated with a lifetime.
 
 A lifetime represents a scope or time span defined by the user.
-When the lifetime ends, all allocations associated with it
-can be released safely in one step.
+When a lifetime ends, all allocations associated with it
+can be released safely in a single operation.
 
 There is no automatic memory reclamation.
-Cleanup only happens when explicitly requested.
+Cleanup occurs only when explicitly requested.
+
+------------------------------------------------------------
+
+## Forced dependency
+
+An owner constrains its member components.
+Each component follows a defined sequence of steps
+to participate in program execution.
+
+This design deliberately limits certain degrees of freedom
+to reduce ambiguity and enforce consistent structure.
+
+- Reproducible program behavior
+- No uncontrolled memory growth
+- Clear owner-member relationships
 
 ------------------------------------------------------------
 
 ## Notes
 
-LibTTAK does not attempt to change the nature of C.
+LibTTAK provides a constrained programming model
+designed to reduce common sources of error in C.
 
-If dangerous patterns are avoided and ownership is explicit,
-C remains a viable and effective language.
+When dangerous patterns are avoided
+and ownership is made explicit,
+C remains a viable and effective systems language.
 
 LibTTAK exists to support that style of development.
