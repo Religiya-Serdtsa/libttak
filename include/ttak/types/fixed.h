@@ -127,6 +127,38 @@ static inline uint64_t ttak_u128_bit(ttak_u128_t v, unsigned bit) {
 }
 
 static inline void ttak_mul_64(uint64_t a, uint64_t b, uint64_t *hi, uint64_t *lo) {
+    /* Inline ISA primitives keep TinyCC builds fast without optimizer help. */
+#if defined(__x86_64__)
+    uint64_t lo_tmp, hi_tmp;
+    __asm__ __volatile__("mulq %[rhs]"
+                         : "=a"(lo_tmp), "=d"(hi_tmp)
+                         : "0"(a), [rhs] "r"(b)
+                         : "cc");
+    *lo = lo_tmp;
+    *hi = hi_tmp;
+    return;
+#elif defined(__aarch64__)
+    uint64_t lo_tmp, hi_tmp;
+    __asm__ __volatile__(
+        "mul %0, %2, %3\n"
+        "umulh %1, %2, %3"
+        : "=&r"(lo_tmp), "=&r"(hi_tmp)
+        : "r"(a), "r"(b));
+    *lo = lo_tmp;
+    *hi = hi_tmp;
+    return;
+#elif defined(__riscv_xlen) && (__riscv_xlen == 64)
+    uint64_t lo_tmp, hi_tmp;
+    __asm__ __volatile__(
+        "mul %0, %2, %3\n"
+        "mulhu %1, %2, %3"
+        : "=&r"(lo_tmp), "=&r"(hi_tmp)
+        : "r"(a), "r"(b));
+    *lo = lo_tmp;
+    *hi = hi_tmp;
+    return;
+#endif
+
     uint64_t a_lo = (uint32_t)a;
     uint64_t a_hi = a >> 32;
     uint64_t b_lo = (uint32_t)b;
