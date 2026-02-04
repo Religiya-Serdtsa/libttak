@@ -1,6 +1,7 @@
 ## LibTTAK
 
 ![Mascot](./mascot.png)
+
 *LibTTAK's Mascot, Memuh the sea rabbit*
 
 Gentle.
@@ -57,29 +58,29 @@ Most behavior is explicit and visible in the source code.
 LibTTAK consists of several modules designed
 around a lifetime-based memory model.
 
-- Memory  
+- Memory
   Lifetime-tracked allocation with deterministic cleanup
 
-- Everything as a type  
+- Everything as a type
   Functions, variables, and memory contexts are represented
   explicitly as typed objects rather than implicit global state
 
-- Ownership  
+- Ownership
   Explicit ownership rules to enforce clear code structure
 
-- Thread  
+- Thread
   Thread abstractions built on atomics and synchronization primitives
 
-- Async  
+- Async
   A lightweight asynchronous layer based on threads and timing
 
-- Data structures  
+- Data structures
   Containers designed to operate on lifetime-managed memory
 
-- Math  
+- Math
   Math utilities that rely on controlled allocation lifetimes
 
-- Scheduling  
+- Scheduling
   Priority-based scheduling helpers
 
 Low-level wrappers for atomics, synchronization,
