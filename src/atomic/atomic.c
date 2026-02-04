@@ -2,16 +2,21 @@
 #include <ttak/ht/map.h>
 #include <ttak/mem/mem.h>
 #include <pthread.h>
+#include <stdatomic.h>
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
 
+#if defined(__TINYC__)
+pthread_mutex_t __ttak_atomic_global_lock = PTHREAD_MUTEX_INITIALIZER;
+#endif
+
 /**
  * @brief Atomic operations for uint64_t using GCC builtins.
  */
-uint64_t ttak_atomic_read64(uint64_t *ptr) {
-    return __atomic_load_n(ptr, __ATOMIC_SEQ_CST);
+uint64_t ttak_atomic_read64(volatile uint64_t *ptr) {
+    return atomic_load_explicit((_Atomic uint64_t *)ptr, memory_order_seq_cst);
 }
 
 /**
@@ -20,8 +25,8 @@ uint64_t ttak_atomic_read64(uint64_t *ptr) {
  * @param ptr Pointer to the atomic variable.
  * @param val Value to store.
  */
-void ttak_atomic_write64(uint64_t *ptr, uint64_t val) {
-    __atomic_store_n(ptr, val, __ATOMIC_SEQ_CST);
+void ttak_atomic_write64(volatile uint64_t *ptr, uint64_t val) {
+    atomic_store_explicit((_Atomic uint64_t *)ptr, val, memory_order_seq_cst);
 }
 
 /**
@@ -30,8 +35,16 @@ void ttak_atomic_write64(uint64_t *ptr, uint64_t val) {
  * @param ptr Pointer to the atomic counter.
  * @return Updated value after increment.
  */
-uint64_t ttak_atomic_inc64(uint64_t *ptr) {
-    return __atomic_add_fetch(ptr, 1, __ATOMIC_SEQ_CST);
+uint64_t ttak_atomic_inc64(volatile uint64_t *ptr) {
+    return atomic_fetch_add_explicit((_Atomic uint64_t *)ptr, 1, memory_order_seq_cst) + 1;
+}
+
+uint64_t ttak_atomic_add64(volatile uint64_t *ptr, uint64_t delta) {
+    return atomic_fetch_add_explicit((_Atomic uint64_t *)ptr, delta, memory_order_seq_cst) + delta;
+}
+
+uint64_t ttak_atomic_sub64(volatile uint64_t *ptr, uint64_t delta) {
+    return atomic_fetch_sub_explicit((_Atomic uint64_t *)ptr, delta, memory_order_seq_cst) - delta;
 }
 
 /**

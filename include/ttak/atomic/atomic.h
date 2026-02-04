@@ -14,9 +14,11 @@ typedef void (*ttak_generic_func_t)(void);
 /**
  * @brief Atomic operations for uint64_t.
  */
-uint64_t ttak_atomic_read64(uint64_t *ptr);
-void ttak_atomic_write64(uint64_t *ptr, uint64_t val);
-uint64_t ttak_atomic_inc64(uint64_t *ptr);
+uint64_t ttak_atomic_read64(volatile uint64_t *ptr);
+void ttak_atomic_write64(volatile uint64_t *ptr, uint64_t val);
+uint64_t ttak_atomic_inc64(volatile uint64_t *ptr);
+uint64_t ttak_atomic_add64(volatile uint64_t *ptr, uint64_t delta);
+uint64_t ttak_atomic_sub64(volatile uint64_t *ptr, uint64_t delta);
 
 /**
  * @brief Wrapper structure for atomic function execution.

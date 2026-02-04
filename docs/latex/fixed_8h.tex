@@ -1,0 +1,689 @@
+\doxysection{include/ttak/types/fixed.h File Reference}
+\hypertarget{fixed_8h}{}\label{fixed_8h}\index{include/ttak/types/fixed.h@{include/ttak/types/fixed.h}}
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+Include dependency graph for fixed.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=214pt]{fixed_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{fixed_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}}
+\item 
+struct \mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} \mbox{\hyperlink{fixed_8h_a3c207c23ea3e928b9339e192280da009}{ttak\+\_\+u128\+\_\+make}} (uint64\+\_\+t hi, uint64\+\_\+t lo)
+\item 
+static \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} \mbox{\hyperlink{fixed_8h_ac8e313ac73404364a1195f501ccc3185}{ttak\+\_\+u128\+\_\+from\+\_\+u64}} (uint64\+\_\+t value)
+\item 
+static \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} \mbox{\hyperlink{fixed_8h_a564e53852020bc10d086130ae58c3f3d}{ttak\+\_\+u128\+\_\+zero}} (void)
+\item 
+static uint64\+\_\+t \mbox{\hyperlink{fixed_8h_a07e64bcc2b86d434e02b76852059f931}{ttak\+\_\+u128\+\_\+get\+\_\+lo}} (\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} v)
+\item 
+static uint64\+\_\+t \mbox{\hyperlink{fixed_8h_a30f2d206464903bbce4026d47feab406}{ttak\+\_\+u128\+\_\+get\+\_\+hi}} (\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} v)
+\item 
+static int \mbox{\hyperlink{fixed_8h_a068e0c1af176740d1ca4c1347f6dd624}{ttak\+\_\+u128\+\_\+cmp}} (\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} a, \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} b)
+\item 
+static \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} \mbox{\hyperlink{fixed_8h_a14b65fddfc8fd2bc6ea50a3025e5b846}{ttak\+\_\+u128\+\_\+add}} (\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} a, \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} b)
+\item 
+static bool \mbox{\hyperlink{fixed_8h_a787ae96b9534f66a53f31f9f263b4b4d}{ttak\+\_\+u128\+\_\+add\+\_\+overflow}} (\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} a, \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} b, \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} \texorpdfstring{$\ast$}{*}out)
+\item 
+static \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} \mbox{\hyperlink{fixed_8h_a5eb83b55ae3fd2581c90852e1722c3e5}{ttak\+\_\+u128\+\_\+add64}} (\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} a, uint64\+\_\+t b)
+\item 
+static \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} \mbox{\hyperlink{fixed_8h_ae37314ceda6f651347211e518fd52db5}{ttak\+\_\+u128\+\_\+sub}} (\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} a, \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} b)
+\item 
+static bool \mbox{\hyperlink{fixed_8h_a6b5fdee94c50864f516e4b3af79755a8}{ttak\+\_\+u128\+\_\+sub\+\_\+underflow}} (\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} a, \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} b, \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} \texorpdfstring{$\ast$}{*}out)
+\item 
+static \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} \mbox{\hyperlink{fixed_8h_a6f574fdb87776da75e9f166d3702ff3e}{ttak\+\_\+u128\+\_\+sub64}} (\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} a, uint64\+\_\+t b)
+\item 
+static \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} \mbox{\hyperlink{fixed_8h_a4f73e4ed30878983e5d26592727dd6d4}{ttak\+\_\+u128\+\_\+and}} (\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} a, \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} b)
+\item 
+static \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} \mbox{\hyperlink{fixed_8h_aef708ed2f0eac735910ce6103eceef17}{ttak\+\_\+u128\+\_\+shl}} (\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} v, unsigned shift)
+\item 
+static \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} \mbox{\hyperlink{fixed_8h_a82e9782e486bf10449fe10cd60e79dea}{ttak\+\_\+u128\+\_\+shr}} (\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} v, unsigned shift)
+\item 
+static bool \mbox{\hyperlink{fixed_8h_a0586f7a724639cf8ea03933df9b10064}{ttak\+\_\+u128\+\_\+is\+\_\+zero}} (\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} v)
+\item 
+static uint64\+\_\+t \mbox{\hyperlink{fixed_8h_adb1d545b5cba1ae4a024c1908eb29d9d}{ttak\+\_\+u128\+\_\+bit}} (\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} v, unsigned bit)
+\item 
+static void \mbox{\hyperlink{fixed_8h_a799eeed1842f8fa060ae9babb1a1c8b5}{ttak\+\_\+mul\+\_\+64}} (uint64\+\_\+t a, uint64\+\_\+t b, uint64\+\_\+t \texorpdfstring{$\ast$}{*}hi, uint64\+\_\+t \texorpdfstring{$\ast$}{*}lo)
+\item 
+static \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} \mbox{\hyperlink{fixed_8h_ac0d78544bdf52b1e7be2adad8d318749}{ttak\+\_\+u128\+\_\+mul\+\_\+u64\+\_\+scalar}} (uint64\+\_\+t a, uint64\+\_\+t b)
+\item 
+static uint64\+\_\+t \mbox{\hyperlink{fixed_8h_a8efab2f600f17fcb131ed9c647277c81}{ttak\+\_\+u64\+\_\+mul\+\_\+lo}} (uint64\+\_\+t a, uint64\+\_\+t b)
+\item 
+static \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} \mbox{\hyperlink{fixed_8h_aeaacfff748e4338ade685b01de358b41}{ttak\+\_\+u128\+\_\+mul\+\_\+u64\+\_\+wide}} (\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} value, uint64\+\_\+t factor, bool \texorpdfstring{$\ast$}{*}overflow)
+\item 
+static \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} \mbox{\hyperlink{fixed_8h_a9e0c22388e772c30ae3b1d9da87b94ed}{ttak\+\_\+u128\+\_\+mul64}} (uint64\+\_\+t a, uint64\+\_\+t b)
+\item 
+static uint64\+\_\+t \mbox{\hyperlink{fixed_8h_a087115982f5b266423f6f19dcfe7ff2b}{ttak\+\_\+u128\+\_\+mod\+\_\+u64}} (\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} value, uint64\+\_\+t mod)
+\item 
+static \mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}} \mbox{\hyperlink{fixed_8h_a1b966208235fd38f729c9aca5dff57db}{ttak\+\_\+u256\+\_\+zero}} (void)
+\item 
+static \mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}} \mbox{\hyperlink{fixed_8h_abba53a0920f9ad08f21dc8a9310bebf3}{ttak\+\_\+u256\+\_\+from\+\_\+limbs}} (uint64\+\_\+t l3, uint64\+\_\+t l2, uint64\+\_\+t l1, uint64\+\_\+t l0)
+\item 
+static \mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}} \mbox{\hyperlink{fixed_8h_ad6aa9932db56063fc3ef9885b3c19b3f}{ttak\+\_\+u256\+\_\+from\+\_\+u128}} (\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} value)
+\item 
+static \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} \mbox{\hyperlink{fixed_8h_a012c546ae881dd002f23c278dc982359}{ttak\+\_\+u256\+\_\+low128}} (\mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}} value)
+\item 
+static \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} \mbox{\hyperlink{fixed_8h_a1321fb7294fdf487da9f2454061c8108}{ttak\+\_\+u256\+\_\+high128}} (\mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}} value)
+\item 
+static \mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}} \mbox{\hyperlink{fixed_8h_a2ec62a2dabcd6f92c012917ba6bb40f5}{ttak\+\_\+u256\+\_\+add}} (\mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}} a, \mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}} b)
+\item 
+static \mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}} \mbox{\hyperlink{fixed_8h_aabf015779a4c4fe39c71d3b0199c1d4f}{ttak\+\_\+u256\+\_\+shr}} (\mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}} v, unsigned shift)
+\item 
+static \mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}} \mbox{\hyperlink{fixed_8h_a2fed85bfb8af0c518f0bb1673705fb67}{ttak\+\_\+u256\+\_\+shl}} (\mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}} v, unsigned shift)
+\item 
+static \mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}} \mbox{\hyperlink{fixed_8h_aa2efd7138d14a4d05b823a479d42e1aa}{ttak\+\_\+u128\+\_\+mul\+\_\+u128}} (\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} a, \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} b)
+\item 
+static \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} \mbox{\hyperlink{fixed_8h_a8fc96f8e7f1d99183873dcfa432f42af}{ttak\+\_\+u256\+\_\+extract\+\_\+low}} (\mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}} value)
+\item 
+static \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} \mbox{\hyperlink{fixed_8h_ad63615da32c5bbfd6bd52310a625cc3e}{ttak\+\_\+u256\+\_\+extract\+\_\+high}} (\mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}} value)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{fixed_8h_a799eeed1842f8fa060ae9babb1a1c8b5}\label{fixed_8h_a799eeed1842f8fa060ae9babb1a1c8b5} 
+\index{fixed.h@{fixed.h}!ttak\_mul\_64@{ttak\_mul\_64}}
+\index{ttak\_mul\_64@{ttak\_mul\_64}!fixed.h@{fixed.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_mul\_64()}{ttak\_mul\_64()}}
+{\footnotesize\ttfamily static void ttak\+\_\+mul\+\_\+64 (\begin{DoxyParamCaption}\item[{uint64\+\_\+t}]{a,  }\item[{uint64\+\_\+t}]{b,  }\item[{uint64\+\_\+t \texorpdfstring{$\ast$}{*}}]{hi,  }\item[{uint64\+\_\+t \texorpdfstring{$\ast$}{*}}]{lo }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{fixed_8h_source_l00129}{129}} of file \mbox{\hyperlink{fixed_8h_source}{fixed.\+h}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{fixed_8h_a799eeed1842f8fa060ae9babb1a1c8b5_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{fixed_8h_a14b65fddfc8fd2bc6ea50a3025e5b846}\label{fixed_8h_a14b65fddfc8fd2bc6ea50a3025e5b846} 
+\index{fixed.h@{fixed.h}!ttak\_u128\_add@{ttak\_u128\_add}}
+\index{ttak\_u128\_add@{ttak\_u128\_add}!fixed.h@{fixed.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_u128\_add()}{ttak\_u128\_add()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} ttak\+\_\+u128\+\_\+add (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}}}]{a,  }\item[{\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}}}]{b }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{fixed_8h_source_l00042}{42}} of file \mbox{\hyperlink{fixed_8h_source}{fixed.\+h}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=341pt]{fixed_8h_a14b65fddfc8fd2bc6ea50a3025e5b846_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{fixed_8h_a5eb83b55ae3fd2581c90852e1722c3e5}\label{fixed_8h_a5eb83b55ae3fd2581c90852e1722c3e5} 
+\index{fixed.h@{fixed.h}!ttak\_u128\_add64@{ttak\_u128\_add64}}
+\index{ttak\_u128\_add64@{ttak\_u128\_add64}!fixed.h@{fixed.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_u128\_add64()}{ttak\_u128\_add64()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} ttak\+\_\+u128\+\_\+add64 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}}}]{a,  }\item[{uint64\+\_\+t}]{b }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{fixed_8h_source_l00057}{57}} of file \mbox{\hyperlink{fixed_8h_source}{fixed.\+h}}.
+
+\Hypertarget{fixed_8h_a787ae96b9534f66a53f31f9f263b4b4d}\label{fixed_8h_a787ae96b9534f66a53f31f9f263b4b4d} 
+\index{fixed.h@{fixed.h}!ttak\_u128\_add\_overflow@{ttak\_u128\_add\_overflow}}
+\index{ttak\_u128\_add\_overflow@{ttak\_u128\_add\_overflow}!fixed.h@{fixed.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_u128\_add\_overflow()}{ttak\_u128\_add\_overflow()}}
+{\footnotesize\ttfamily static bool ttak\+\_\+u128\+\_\+add\+\_\+overflow (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}}}]{a,  }\item[{\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}}}]{b,  }\item[{\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{out }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{fixed_8h_source_l00050}{50}} of file \mbox{\hyperlink{fixed_8h_source}{fixed.\+h}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=341pt]{fixed_8h_a787ae96b9534f66a53f31f9f263b4b4d_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{fixed_8h_a4f73e4ed30878983e5d26592727dd6d4}\label{fixed_8h_a4f73e4ed30878983e5d26592727dd6d4} 
+\index{fixed.h@{fixed.h}!ttak\_u128\_and@{ttak\_u128\_and}}
+\index{ttak\_u128\_and@{ttak\_u128\_and}!fixed.h@{fixed.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_u128\_and()}{ttak\_u128\_and()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} ttak\+\_\+u128\+\_\+and (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}}}]{a,  }\item[{\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}}}]{b }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{fixed_8h_source_l00086}{86}} of file \mbox{\hyperlink{fixed_8h_source}{fixed.\+h}}.
+
+\Hypertarget{fixed_8h_adb1d545b5cba1ae4a024c1908eb29d9d}\label{fixed_8h_adb1d545b5cba1ae4a024c1908eb29d9d} 
+\index{fixed.h@{fixed.h}!ttak\_u128\_bit@{ttak\_u128\_bit}}
+\index{ttak\_u128\_bit@{ttak\_u128\_bit}!fixed.h@{fixed.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_u128\_bit()}{ttak\_u128\_bit()}}
+{\footnotesize\ttfamily static uint64\+\_\+t ttak\+\_\+u128\+\_\+bit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}}}]{v,  }\item[{unsigned}]{bit }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{fixed_8h_source_l00121}{121}} of file \mbox{\hyperlink{fixed_8h_source}{fixed.\+h}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=315pt]{fixed_8h_adb1d545b5cba1ae4a024c1908eb29d9d_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{fixed_8h_a068e0c1af176740d1ca4c1347f6dd624}\label{fixed_8h_a068e0c1af176740d1ca4c1347f6dd624} 
+\index{fixed.h@{fixed.h}!ttak\_u128\_cmp@{ttak\_u128\_cmp}}
+\index{ttak\_u128\_cmp@{ttak\_u128\_cmp}!fixed.h@{fixed.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_u128\_cmp()}{ttak\_u128\_cmp()}}
+{\footnotesize\ttfamily static int ttak\+\_\+u128\+\_\+cmp (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}}}]{a,  }\item[{\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}}}]{b }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{fixed_8h_source_l00034}{34}} of file \mbox{\hyperlink{fixed_8h_source}{fixed.\+h}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=349pt]{fixed_8h_a068e0c1af176740d1ca4c1347f6dd624_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{fixed_8h_ac8e313ac73404364a1195f501ccc3185}\label{fixed_8h_ac8e313ac73404364a1195f501ccc3185} 
+\index{fixed.h@{fixed.h}!ttak\_u128\_from\_u64@{ttak\_u128\_from\_u64}}
+\index{ttak\_u128\_from\_u64@{ttak\_u128\_from\_u64}!fixed.h@{fixed.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_u128\_from\_u64()}{ttak\_u128\_from\_u64()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} ttak\+\_\+u128\+\_\+from\+\_\+u64 (\begin{DoxyParamCaption}\item[{uint64\+\_\+t}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{fixed_8h_source_l00023}{23}} of file \mbox{\hyperlink{fixed_8h_source}{fixed.\+h}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=331pt]{fixed_8h_ac8e313ac73404364a1195f501ccc3185_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{fixed_8h_a30f2d206464903bbce4026d47feab406}\label{fixed_8h_a30f2d206464903bbce4026d47feab406} 
+\index{fixed.h@{fixed.h}!ttak\_u128\_get\_hi@{ttak\_u128\_get\_hi}}
+\index{ttak\_u128\_get\_hi@{ttak\_u128\_get\_hi}!fixed.h@{fixed.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_u128\_get\_hi()}{ttak\_u128\_get\_hi()}}
+{\footnotesize\ttfamily static uint64\+\_\+t ttak\+\_\+u128\+\_\+get\+\_\+hi (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}}}]{v }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{fixed_8h_source_l00032}{32}} of file \mbox{\hyperlink{fixed_8h_source}{fixed.\+h}}.
+
+\Hypertarget{fixed_8h_a07e64bcc2b86d434e02b76852059f931}\label{fixed_8h_a07e64bcc2b86d434e02b76852059f931} 
+\index{fixed.h@{fixed.h}!ttak\_u128\_get\_lo@{ttak\_u128\_get\_lo}}
+\index{ttak\_u128\_get\_lo@{ttak\_u128\_get\_lo}!fixed.h@{fixed.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_u128\_get\_lo()}{ttak\_u128\_get\_lo()}}
+{\footnotesize\ttfamily static uint64\+\_\+t ttak\+\_\+u128\+\_\+get\+\_\+lo (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}}}]{v }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{fixed_8h_source_l00031}{31}} of file \mbox{\hyperlink{fixed_8h_source}{fixed.\+h}}.
+
+\Hypertarget{fixed_8h_a0586f7a724639cf8ea03933df9b10064}\label{fixed_8h_a0586f7a724639cf8ea03933df9b10064} 
+\index{fixed.h@{fixed.h}!ttak\_u128\_is\_zero@{ttak\_u128\_is\_zero}}
+\index{ttak\_u128\_is\_zero@{ttak\_u128\_is\_zero}!fixed.h@{fixed.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_u128\_is\_zero()}{ttak\_u128\_is\_zero()}}
+{\footnotesize\ttfamily static bool ttak\+\_\+u128\+\_\+is\+\_\+zero (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}}}]{v }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{fixed_8h_source_l00117}{117}} of file \mbox{\hyperlink{fixed_8h_source}{fixed.\+h}}.
+
+\Hypertarget{fixed_8h_a3c207c23ea3e928b9339e192280da009}\label{fixed_8h_a3c207c23ea3e928b9339e192280da009} 
+\index{fixed.h@{fixed.h}!ttak\_u128\_make@{ttak\_u128\_make}}
+\index{ttak\_u128\_make@{ttak\_u128\_make}!fixed.h@{fixed.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_u128\_make()}{ttak\_u128\_make()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} ttak\+\_\+u128\+\_\+make (\begin{DoxyParamCaption}\item[{uint64\+\_\+t}]{hi,  }\item[{uint64\+\_\+t}]{lo }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{fixed_8h_source_l00016}{16}} of file \mbox{\hyperlink{fixed_8h_source}{fixed.\+h}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{fixed_8h_a3c207c23ea3e928b9339e192280da009_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{fixed_8h_a087115982f5b266423f6f19dcfe7ff2b}\label{fixed_8h_a087115982f5b266423f6f19dcfe7ff2b} 
+\index{fixed.h@{fixed.h}!ttak\_u128\_mod\_u64@{ttak\_u128\_mod\_u64}}
+\index{ttak\_u128\_mod\_u64@{ttak\_u128\_mod\_u64}!fixed.h@{fixed.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_u128\_mod\_u64()}{ttak\_u128\_mod\_u64()}}
+{\footnotesize\ttfamily static uint64\+\_\+t ttak\+\_\+u128\+\_\+mod\+\_\+u64 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}}}]{value,  }\item[{uint64\+\_\+t}]{mod }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{fixed_8h_source_l00178}{178}} of file \mbox{\hyperlink{fixed_8h_source}{fixed.\+h}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=315pt]{fixed_8h_a087115982f5b266423f6f19dcfe7ff2b_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{fixed_8h_a9e0c22388e772c30ae3b1d9da87b94ed}\label{fixed_8h_a9e0c22388e772c30ae3b1d9da87b94ed} 
+\index{fixed.h@{fixed.h}!ttak\_u128\_mul64@{ttak\_u128\_mul64}}
+\index{ttak\_u128\_mul64@{ttak\_u128\_mul64}!fixed.h@{fixed.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_u128\_mul64()}{ttak\_u128\_mul64()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} ttak\+\_\+u128\+\_\+mul64 (\begin{DoxyParamCaption}\item[{uint64\+\_\+t}]{a,  }\item[{uint64\+\_\+t}]{b }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{fixed_8h_source_l00174}{174}} of file \mbox{\hyperlink{fixed_8h_source}{fixed.\+h}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{fixed_8h_a9e0c22388e772c30ae3b1d9da87b94ed_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{fixed_8h_aa2efd7138d14a4d05b823a479d42e1aa}\label{fixed_8h_aa2efd7138d14a4d05b823a479d42e1aa} 
+\index{fixed.h@{fixed.h}!ttak\_u128\_mul\_u128@{ttak\_u128\_mul\_u128}}
+\index{ttak\_u128\_mul\_u128@{ttak\_u128\_mul\_u128}!fixed.h@{fixed.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_u128\_mul\_u128()}{ttak\_u128\_mul\_u128()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}} ttak\+\_\+u128\+\_\+mul\+\_\+u128 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}}}]{a,  }\item[{\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}}}]{b }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{fixed_8h_source_l00259}{259}} of file \mbox{\hyperlink{fixed_8h_source}{fixed.\+h}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{fixed_8h_aa2efd7138d14a4d05b823a479d42e1aa_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{fixed_8h_ac0d78544bdf52b1e7be2adad8d318749}\label{fixed_8h_ac0d78544bdf52b1e7be2adad8d318749} 
+\index{fixed.h@{fixed.h}!ttak\_u128\_mul\_u64\_scalar@{ttak\_u128\_mul\_u64\_scalar}}
+\index{ttak\_u128\_mul\_u64\_scalar@{ttak\_u128\_mul\_u64\_scalar}!fixed.h@{fixed.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_u128\_mul\_u64\_scalar()}{ttak\_u128\_mul\_u64\_scalar()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} ttak\+\_\+u128\+\_\+mul\+\_\+u64\+\_\+scalar (\begin{DoxyParamCaption}\item[{uint64\+\_\+t}]{a,  }\item[{uint64\+\_\+t}]{b }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{fixed_8h_source_l00147}{147}} of file \mbox{\hyperlink{fixed_8h_source}{fixed.\+h}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=340pt]{fixed_8h_ac0d78544bdf52b1e7be2adad8d318749_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{fixed_8h_ac0d78544bdf52b1e7be2adad8d318749_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{fixed_8h_aeaacfff748e4338ade685b01de358b41}\label{fixed_8h_aeaacfff748e4338ade685b01de358b41} 
+\index{fixed.h@{fixed.h}!ttak\_u128\_mul\_u64\_wide@{ttak\_u128\_mul\_u64\_wide}}
+\index{ttak\_u128\_mul\_u64\_wide@{ttak\_u128\_mul\_u64\_wide}!fixed.h@{fixed.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_u128\_mul\_u64\_wide()}{ttak\_u128\_mul\_u64\_wide()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} ttak\+\_\+u128\+\_\+mul\+\_\+u64\+\_\+wide (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}}}]{value,  }\item[{uint64\+\_\+t}]{factor,  }\item[{bool \texorpdfstring{$\ast$}{*}}]{overflow }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{fixed_8h_source_l00160}{160}} of file \mbox{\hyperlink{fixed_8h_source}{fixed.\+h}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{fixed_8h_aeaacfff748e4338ade685b01de358b41_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{fixed_8h_aef708ed2f0eac735910ce6103eceef17}\label{fixed_8h_aef708ed2f0eac735910ce6103eceef17} 
+\index{fixed.h@{fixed.h}!ttak\_u128\_shl@{ttak\_u128\_shl}}
+\index{ttak\_u128\_shl@{ttak\_u128\_shl}!fixed.h@{fixed.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_u128\_shl()}{ttak\_u128\_shl()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} ttak\+\_\+u128\+\_\+shl (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}}}]{v,  }\item[{unsigned}]{shift }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{fixed_8h_source_l00093}{93}} of file \mbox{\hyperlink{fixed_8h_source}{fixed.\+h}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{fixed_8h_aef708ed2f0eac735910ce6103eceef17_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{fixed_8h_a82e9782e486bf10449fe10cd60e79dea}\label{fixed_8h_a82e9782e486bf10449fe10cd60e79dea} 
+\index{fixed.h@{fixed.h}!ttak\_u128\_shr@{ttak\_u128\_shr}}
+\index{ttak\_u128\_shr@{ttak\_u128\_shr}!fixed.h@{fixed.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_u128\_shr()}{ttak\_u128\_shr()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} ttak\+\_\+u128\+\_\+shr (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}}}]{v,  }\item[{unsigned}]{shift }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{fixed_8h_source_l00105}{105}} of file \mbox{\hyperlink{fixed_8h_source}{fixed.\+h}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{fixed_8h_a82e9782e486bf10449fe10cd60e79dea_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{fixed_8h_ae37314ceda6f651347211e518fd52db5}\label{fixed_8h_ae37314ceda6f651347211e518fd52db5} 
+\index{fixed.h@{fixed.h}!ttak\_u128\_sub@{ttak\_u128\_sub}}
+\index{ttak\_u128\_sub@{ttak\_u128\_sub}!fixed.h@{fixed.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_u128\_sub()}{ttak\_u128\_sub()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} ttak\+\_\+u128\+\_\+sub (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}}}]{a,  }\item[{\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}}}]{b }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{fixed_8h_source_l00064}{64}} of file \mbox{\hyperlink{fixed_8h_source}{fixed.\+h}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=345pt]{fixed_8h_ae37314ceda6f651347211e518fd52db5_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{fixed_8h_a6f574fdb87776da75e9f166d3702ff3e}\label{fixed_8h_a6f574fdb87776da75e9f166d3702ff3e} 
+\index{fixed.h@{fixed.h}!ttak\_u128\_sub64@{ttak\_u128\_sub64}}
+\index{ttak\_u128\_sub64@{ttak\_u128\_sub64}!fixed.h@{fixed.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_u128\_sub64()}{ttak\_u128\_sub64()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} ttak\+\_\+u128\+\_\+sub64 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}}}]{a,  }\item[{uint64\+\_\+t}]{b }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{fixed_8h_source_l00078}{78}} of file \mbox{\hyperlink{fixed_8h_source}{fixed.\+h}}.
+
+\Hypertarget{fixed_8h_a6b5fdee94c50864f516e4b3af79755a8}\label{fixed_8h_a6b5fdee94c50864f516e4b3af79755a8} 
+\index{fixed.h@{fixed.h}!ttak\_u128\_sub\_underflow@{ttak\_u128\_sub\_underflow}}
+\index{ttak\_u128\_sub\_underflow@{ttak\_u128\_sub\_underflow}!fixed.h@{fixed.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_u128\_sub\_underflow()}{ttak\_u128\_sub\_underflow()}}
+{\footnotesize\ttfamily static bool ttak\+\_\+u128\+\_\+sub\+\_\+underflow (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}}}]{a,  }\item[{\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}}}]{b,  }\item[{\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{out }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{fixed_8h_source_l00072}{72}} of file \mbox{\hyperlink{fixed_8h_source}{fixed.\+h}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=349pt]{fixed_8h_a6b5fdee94c50864f516e4b3af79755a8_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{fixed_8h_a564e53852020bc10d086130ae58c3f3d}\label{fixed_8h_a564e53852020bc10d086130ae58c3f3d} 
+\index{fixed.h@{fixed.h}!ttak\_u128\_zero@{ttak\_u128\_zero}}
+\index{ttak\_u128\_zero@{ttak\_u128\_zero}!fixed.h@{fixed.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_u128\_zero()}{ttak\_u128\_zero()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} ttak\+\_\+u128\+\_\+zero (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{fixed_8h_source_l00027}{27}} of file \mbox{\hyperlink{fixed_8h_source}{fixed.\+h}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=306pt]{fixed_8h_a564e53852020bc10d086130ae58c3f3d_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=294pt]{fixed_8h_a564e53852020bc10d086130ae58c3f3d_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{fixed_8h_a2ec62a2dabcd6f92c012917ba6bb40f5}\label{fixed_8h_a2ec62a2dabcd6f92c012917ba6bb40f5} 
+\index{fixed.h@{fixed.h}!ttak\_u256\_add@{ttak\_u256\_add}}
+\index{ttak\_u256\_add@{ttak\_u256\_add}!fixed.h@{fixed.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_u256\_add()}{ttak\_u256\_add()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}} ttak\+\_\+u256\+\_\+add (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}}}]{a,  }\item[{\mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}}}]{b }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{fixed_8h_source_l00210}{210}} of file \mbox{\hyperlink{fixed_8h_source}{fixed.\+h}}.
+
+\Hypertarget{fixed_8h_ad63615da32c5bbfd6bd52310a625cc3e}\label{fixed_8h_ad63615da32c5bbfd6bd52310a625cc3e} 
+\index{fixed.h@{fixed.h}!ttak\_u256\_extract\_high@{ttak\_u256\_extract\_high}}
+\index{ttak\_u256\_extract\_high@{ttak\_u256\_extract\_high}!fixed.h@{fixed.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_u256\_extract\_high()}{ttak\_u256\_extract\_high()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} ttak\+\_\+u256\+\_\+extract\+\_\+high (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}}}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{fixed_8h_source_l00303}{303}} of file \mbox{\hyperlink{fixed_8h_source}{fixed.\+h}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{fixed_8h_ad63615da32c5bbfd6bd52310a625cc3e_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{fixed_8h_a8fc96f8e7f1d99183873dcfa432f42af}\label{fixed_8h_a8fc96f8e7f1d99183873dcfa432f42af} 
+\index{fixed.h@{fixed.h}!ttak\_u256\_extract\_low@{ttak\_u256\_extract\_low}}
+\index{ttak\_u256\_extract\_low@{ttak\_u256\_extract\_low}!fixed.h@{fixed.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_u256\_extract\_low()}{ttak\_u256\_extract\_low()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} ttak\+\_\+u256\+\_\+extract\+\_\+low (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}}}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{fixed_8h_source_l00299}{299}} of file \mbox{\hyperlink{fixed_8h_source}{fixed.\+h}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{fixed_8h_a8fc96f8e7f1d99183873dcfa432f42af_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{fixed_8h_abba53a0920f9ad08f21dc8a9310bebf3}\label{fixed_8h_abba53a0920f9ad08f21dc8a9310bebf3} 
+\index{fixed.h@{fixed.h}!ttak\_u256\_from\_limbs@{ttak\_u256\_from\_limbs}}
+\index{ttak\_u256\_from\_limbs@{ttak\_u256\_from\_limbs}!fixed.h@{fixed.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_u256\_from\_limbs()}{ttak\_u256\_from\_limbs()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}} ttak\+\_\+u256\+\_\+from\+\_\+limbs (\begin{DoxyParamCaption}\item[{uint64\+\_\+t}]{l3,  }\item[{uint64\+\_\+t}]{l2,  }\item[{uint64\+\_\+t}]{l1,  }\item[{uint64\+\_\+t}]{l0 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{fixed_8h_source_l00193}{193}} of file \mbox{\hyperlink{fixed_8h_source}{fixed.\+h}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{fixed_8h_abba53a0920f9ad08f21dc8a9310bebf3_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{fixed_8h_ad6aa9932db56063fc3ef9885b3c19b3f}\label{fixed_8h_ad6aa9932db56063fc3ef9885b3c19b3f} 
+\index{fixed.h@{fixed.h}!ttak\_u256\_from\_u128@{ttak\_u256\_from\_u128}}
+\index{ttak\_u256\_from\_u128@{ttak\_u256\_from\_u128}!fixed.h@{fixed.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_u256\_from\_u128()}{ttak\_u256\_from\_u128()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}} ttak\+\_\+u256\+\_\+from\+\_\+u128 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}}}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{fixed_8h_source_l00198}{198}} of file \mbox{\hyperlink{fixed_8h_source}{fixed.\+h}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{fixed_8h_ad6aa9932db56063fc3ef9885b3c19b3f_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{fixed_8h_a1321fb7294fdf487da9f2454061c8108}\label{fixed_8h_a1321fb7294fdf487da9f2454061c8108} 
+\index{fixed.h@{fixed.h}!ttak\_u256\_high128@{ttak\_u256\_high128}}
+\index{ttak\_u256\_high128@{ttak\_u256\_high128}!fixed.h@{fixed.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_u256\_high128()}{ttak\_u256\_high128()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} ttak\+\_\+u256\+\_\+high128 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}}}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{fixed_8h_source_l00206}{206}} of file \mbox{\hyperlink{fixed_8h_source}{fixed.\+h}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=324pt]{fixed_8h_a1321fb7294fdf487da9f2454061c8108_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{fixed_8h_a1321fb7294fdf487da9f2454061c8108_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{fixed_8h_a012c546ae881dd002f23c278dc982359}\label{fixed_8h_a012c546ae881dd002f23c278dc982359} 
+\index{fixed.h@{fixed.h}!ttak\_u256\_low128@{ttak\_u256\_low128}}
+\index{ttak\_u256\_low128@{ttak\_u256\_low128}!fixed.h@{fixed.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_u256\_low128()}{ttak\_u256\_low128()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} ttak\+\_\+u256\+\_\+low128 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}}}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{fixed_8h_source_l00202}{202}} of file \mbox{\hyperlink{fixed_8h_source}{fixed.\+h}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=320pt]{fixed_8h_a012c546ae881dd002f23c278dc982359_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{fixed_8h_a012c546ae881dd002f23c278dc982359_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{fixed_8h_a2fed85bfb8af0c518f0bb1673705fb67}\label{fixed_8h_a2fed85bfb8af0c518f0bb1673705fb67} 
+\index{fixed.h@{fixed.h}!ttak\_u256\_shl@{ttak\_u256\_shl}}
+\index{ttak\_u256\_shl@{ttak\_u256\_shl}!fixed.h@{fixed.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_u256\_shl()}{ttak\_u256\_shl()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}} ttak\+\_\+u256\+\_\+shl (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}}}]{v,  }\item[{unsigned}]{shift }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{fixed_8h_source_l00241}{241}} of file \mbox{\hyperlink{fixed_8h_source}{fixed.\+h}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=293pt]{fixed_8h_a2fed85bfb8af0c518f0bb1673705fb67_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{fixed_8h_aabf015779a4c4fe39c71d3b0199c1d4f}\label{fixed_8h_aabf015779a4c4fe39c71d3b0199c1d4f} 
+\index{fixed.h@{fixed.h}!ttak\_u256\_shr@{ttak\_u256\_shr}}
+\index{ttak\_u256\_shr@{ttak\_u256\_shr}!fixed.h@{fixed.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_u256\_shr()}{ttak\_u256\_shr()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}} ttak\+\_\+u256\+\_\+shr (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}}}]{v,  }\item[{unsigned}]{shift }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{fixed_8h_source_l00223}{223}} of file \mbox{\hyperlink{fixed_8h_source}{fixed.\+h}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=294pt]{fixed_8h_aabf015779a4c4fe39c71d3b0199c1d4f_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{fixed_8h_a1b966208235fd38f729c9aca5dff57db}\label{fixed_8h_a1b966208235fd38f729c9aca5dff57db} 
+\index{fixed.h@{fixed.h}!ttak\_u256\_zero@{ttak\_u256\_zero}}
+\index{ttak\_u256\_zero@{ttak\_u256\_zero}!fixed.h@{fixed.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_u256\_zero()}{ttak\_u256\_zero()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}} ttak\+\_\+u256\+\_\+zero (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{fixed_8h_source_l00188}{188}} of file \mbox{\hyperlink{fixed_8h_source}{fixed.\+h}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=294pt]{fixed_8h_a1b966208235fd38f729c9aca5dff57db_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{fixed_8h_a8efab2f600f17fcb131ed9c647277c81}\label{fixed_8h_a8efab2f600f17fcb131ed9c647277c81} 
+\index{fixed.h@{fixed.h}!ttak\_u64\_mul\_lo@{ttak\_u64\_mul\_lo}}
+\index{ttak\_u64\_mul\_lo@{ttak\_u64\_mul\_lo}!fixed.h@{fixed.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_u64\_mul\_lo()}{ttak\_u64\_mul\_lo()}}
+{\footnotesize\ttfamily static uint64\+\_\+t ttak\+\_\+u64\+\_\+mul\+\_\+lo (\begin{DoxyParamCaption}\item[{uint64\+\_\+t}]{a,  }\item[{uint64\+\_\+t}]{b }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{fixed_8h_source_l00153}{153}} of file \mbox{\hyperlink{fixed_8h_source}{fixed.\+h}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=291pt]{fixed_8h_a8efab2f600f17fcb131ed9c647277c81_cgraph}
+\end{center}
+\end{figure}

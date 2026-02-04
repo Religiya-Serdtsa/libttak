@@ -12,9 +12,9 @@ Backoff strategy structure for spinlocks.
 \doxysubsubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-int \mbox{\hyperlink{structttak__backoff_a656759f034652ed5bdf8be5d4aae9353}{count}}
+volatile int \mbox{\hyperlink{structttak__backoff_aeb72f752747271ecc00decd5d871516b}{count}}
 \item 
-int \mbox{\hyperlink{structttak__backoff_a89920ee20a15f807e465618477405b41}{limit}}
+volatile int \mbox{\hyperlink{structttak__backoff_a1954b53b8683bc65272c57ba465d76c1}{limit}}
 \end{DoxyCompactItemize}
 
 
@@ -28,21 +28,21 @@ Definition at line \mbox{\hyperlink{spinlock_8h_source_l00014}{14}} of file \mbo
 
 
 \doxysubsection{Member Data Documentation}
-\Hypertarget{structttak__backoff_a656759f034652ed5bdf8be5d4aae9353}\label{structttak__backoff_a656759f034652ed5bdf8be5d4aae9353} 
+\Hypertarget{structttak__backoff_aeb72f752747271ecc00decd5d871516b}\label{structttak__backoff_aeb72f752747271ecc00decd5d871516b} 
 \index{ttak\_backoff@{ttak\_backoff}!count@{count}}
 \index{count@{count}!ttak\_backoff@{ttak\_backoff}}
 \doxysubsubsection{\texorpdfstring{count}{count}}
-{\footnotesize\ttfamily int ttak\+\_\+backoff\+::count}
+{\footnotesize\ttfamily volatile int ttak\+\_\+backoff\+::count}
 
 Current backoff iteration count. 
 
 Definition at line \mbox{\hyperlink{spinlock_8h_source_l00015}{15}} of file \mbox{\hyperlink{spinlock_8h_source}{spinlock.\+h}}.
 
-\Hypertarget{structttak__backoff_a89920ee20a15f807e465618477405b41}\label{structttak__backoff_a89920ee20a15f807e465618477405b41} 
+\Hypertarget{structttak__backoff_a1954b53b8683bc65272c57ba465d76c1}\label{structttak__backoff_a1954b53b8683bc65272c57ba465d76c1} 
 \index{ttak\_backoff@{ttak\_backoff}!limit@{limit}}
 \index{limit@{limit}!ttak\_backoff@{ttak\_backoff}}
 \doxysubsubsection{\texorpdfstring{limit}{limit}}
-{\footnotesize\ttfamily int ttak\+\_\+backoff\+::limit}
+{\footnotesize\ttfamily volatile int ttak\+\_\+backoff\+::limit}
 
 Maximum iterations before yielding the thread. 
 

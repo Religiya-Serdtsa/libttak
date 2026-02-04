@@ -1,0 +1,180 @@
+\doxysection{include/ttak/unsafe/region.h File Reference}
+\hypertarget{region_8h}{}\label{region_8h}\index{include/ttak/unsafe/region.h@{include/ttak/unsafe/region.h}}
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+Include dependency graph for region.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=288pt]{region_8h__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structttak__unsafe__region}{ttak\+\_\+unsafe\+\_\+region}}
+\begin{DoxyCompactList}\small\item\em Describes a raw memory span with minimal safety guarantees. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{region_8h_a99596a8898e83a96943e80034e591fd8}{\+\_\+\+\_\+\+TTAK\+\_\+\+REGION\+\_\+\+CANONICAL\+\_\+\+CTX\+\_\+\+\_\+}}~0U
+\item 
+\#define \mbox{\hyperlink{region_8h_a80122b85afdab06b953482374740b7ca}{\+\_\+\+\_\+\+TTAK\+\_\+\+REGION\+\_\+\+CANONICAL\+\_\+\+ALLOC\+\_\+\+\_\+}}~"{}ttak-\/canon"{}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \mbox{\hyperlink{structttak__unsafe__region}{ttak\+\_\+unsafe\+\_\+region}} \mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Describes a raw memory span with minimal safety guarantees. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{region_8h_a5358d0aa0acda59ff14e8fb3bc3791f8}{ttak\+\_\+unsafe\+\_\+region\+\_\+init}} (\mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}region, uint32\+\_\+t ctx\+\_\+id, const char \texorpdfstring{$\ast$}{*}allocator\+\_\+tag)
+\begin{DoxyCompactList}\small\item\em Initializes an unsafe region to track a context and allocator tag. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{region_8h_ad85f2fd69cda148c4b26d754bcc49d9c}{ttak\+\_\+unsafe\+\_\+region\+\_\+reset}} (\mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}region)
+\begin{DoxyCompactList}\small\item\em Resets the region to the canonical empty state. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{region_8h_a1fcfeb47ea623311709790902d07eba5}{ttak\+\_\+unsafe\+\_\+region\+\_\+is\+\_\+empty}} (const \mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}region)
+\begin{DoxyCompactList}\small\item\em Returns true if the region currently owns no memory. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{region_8h_a29e3622b42d82ad3421db4f5f3932d11}{ttak\+\_\+unsafe\+\_\+region\+\_\+pin}} (\mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}region)
+\begin{DoxyCompactList}\small\item\em Increments the pin counter to signal an active borrow. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{region_8h_a7dc7d1fafdd11d1d88d6c4a2cf65ec14}{ttak\+\_\+unsafe\+\_\+region\+\_\+unpin}} (\mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}region)
+\begin{DoxyCompactList}\small\item\em Decrements the pin counter. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{region_8h_a61f666927f8e71f34e08a93551146e57}{ttak\+\_\+unsafe\+\_\+region\+\_\+move}} (\mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}dst, \mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}src)
+\begin{DoxyCompactList}\small\item\em Moves memory from src to dst within the same context/allocator. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{region_8h_accc23f89515395bd88dde530d37a208c}{ttak\+\_\+unsafe\+\_\+region\+\_\+move\+\_\+cross\+\_\+ctx}} (\mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}dst, \mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}src, uint32\+\_\+t new\+\_\+ctx\+\_\+id, const char \texorpdfstring{$\ast$}{*}new\+\_\+allocator\+\_\+tag)
+\begin{DoxyCompactList}\small\item\em Moves memory across contexts, overriding ownership metadata. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{region_8h_a9ae4ea2db72b9156fb12e38a0a99255a}{ttak\+\_\+unsafe\+\_\+region\+\_\+adopt}} (\mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}dst, void \texorpdfstring{$\ast$}{*}ptr, size\+\_\+t size, size\+\_\+t capacity, const char \texorpdfstring{$\ast$}{*}allocator\+\_\+tag, uint32\+\_\+t ctx\+\_\+id)
+\begin{DoxyCompactList}\small\item\em Adopts an externally allocated span. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{region_8h_abbaa0de0a3dcf0eb15a4126ba301a8f5}{ttak\+\_\+unsafe\+\_\+region\+\_\+steal}} (\mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}dst, \mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}src)
+\begin{DoxyCompactList}\small\item\em Steals ownership from src regardless of prior dst state. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{region_8h_a80122b85afdab06b953482374740b7ca}\label{region_8h_a80122b85afdab06b953482374740b7ca} 
+\index{region.h@{region.h}!\_\_TTAK\_REGION\_CANONICAL\_ALLOC\_\_@{\_\_TTAK\_REGION\_CANONICAL\_ALLOC\_\_}}
+\index{\_\_TTAK\_REGION\_CANONICAL\_ALLOC\_\_@{\_\_TTAK\_REGION\_CANONICAL\_ALLOC\_\_}!region.h@{region.h}}
+\doxysubsubsection{\texorpdfstring{\_\_TTAK\_REGION\_CANONICAL\_ALLOC\_\_}{\_\_TTAK\_REGION\_CANONICAL\_ALLOC\_\_}}
+{\footnotesize\ttfamily \#define \+\_\+\+\_\+\+TTAK\+\_\+\+REGION\+\_\+\+CANONICAL\+\_\+\+ALLOC\+\_\+\+\_\+~"{}ttak-\/canon"{}}
+
+
+
+Definition at line \mbox{\hyperlink{region_8h_source_l00009}{9}} of file \mbox{\hyperlink{region_8h_source}{region.\+h}}.
+
+\Hypertarget{region_8h_a99596a8898e83a96943e80034e591fd8}\label{region_8h_a99596a8898e83a96943e80034e591fd8} 
+\index{region.h@{region.h}!\_\_TTAK\_REGION\_CANONICAL\_CTX\_\_@{\_\_TTAK\_REGION\_CANONICAL\_CTX\_\_}}
+\index{\_\_TTAK\_REGION\_CANONICAL\_CTX\_\_@{\_\_TTAK\_REGION\_CANONICAL\_CTX\_\_}!region.h@{region.h}}
+\doxysubsubsection{\texorpdfstring{\_\_TTAK\_REGION\_CANONICAL\_CTX\_\_}{\_\_TTAK\_REGION\_CANONICAL\_CTX\_\_}}
+{\footnotesize\ttfamily \#define \+\_\+\+\_\+\+TTAK\+\_\+\+REGION\+\_\+\+CANONICAL\+\_\+\+CTX\+\_\+\+\_\+~0U}
+
+
+
+Definition at line \mbox{\hyperlink{region_8h_source_l00008}{8}} of file \mbox{\hyperlink{region_8h_source}{region.\+h}}.
+
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{region_8h_ae5defc2542cbc73f73d7e08a623b354d}\label{region_8h_ae5defc2542cbc73f73d7e08a623b354d} 
+\index{region.h@{region.h}!ttak\_unsafe\_region\_t@{ttak\_unsafe\_region\_t}}
+\index{ttak\_unsafe\_region\_t@{ttak\_unsafe\_region\_t}!region.h@{region.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_unsafe\_region\_t}{ttak\_unsafe\_region\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__unsafe__region}{ttak\+\_\+unsafe\+\_\+region}} \mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}}}
+
+
+
+Describes a raw memory span with minimal safety guarantees. 
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{region_8h_a9ae4ea2db72b9156fb12e38a0a99255a}\label{region_8h_a9ae4ea2db72b9156fb12e38a0a99255a} 
+\index{region.h@{region.h}!ttak\_unsafe\_region\_adopt@{ttak\_unsafe\_region\_adopt}}
+\index{ttak\_unsafe\_region\_adopt@{ttak\_unsafe\_region\_adopt}!region.h@{region.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_unsafe\_region\_adopt()}{ttak\_unsafe\_region\_adopt()}}
+{\footnotesize\ttfamily bool ttak\+\_\+unsafe\+\_\+region\+\_\+adopt (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{dst,  }\item[{void \texorpdfstring{$\ast$}{*}}]{ptr,  }\item[{size\+\_\+t}]{size,  }\item[{size\+\_\+t}]{capacity,  }\item[{const char \texorpdfstring{$\ast$}{*}}]{allocator\+\_\+tag,  }\item[{uint32\+\_\+t}]{ctx\+\_\+id }\end{DoxyParamCaption})}
+
+
+
+Adopts an externally allocated span. 
+
+\Hypertarget{region_8h_a5358d0aa0acda59ff14e8fb3bc3791f8}\label{region_8h_a5358d0aa0acda59ff14e8fb3bc3791f8} 
+\index{region.h@{region.h}!ttak\_unsafe\_region\_init@{ttak\_unsafe\_region\_init}}
+\index{ttak\_unsafe\_region\_init@{ttak\_unsafe\_region\_init}!region.h@{region.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_unsafe\_region\_init()}{ttak\_unsafe\_region\_init()}}
+{\footnotesize\ttfamily void ttak\+\_\+unsafe\+\_\+region\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{region,  }\item[{uint32\+\_\+t}]{ctx\+\_\+id,  }\item[{const char \texorpdfstring{$\ast$}{*}}]{allocator\+\_\+tag }\end{DoxyParamCaption})}
+
+
+
+Initializes an unsafe region to track a context and allocator tag. 
+
+\Hypertarget{region_8h_a1fcfeb47ea623311709790902d07eba5}\label{region_8h_a1fcfeb47ea623311709790902d07eba5} 
+\index{region.h@{region.h}!ttak\_unsafe\_region\_is\_empty@{ttak\_unsafe\_region\_is\_empty}}
+\index{ttak\_unsafe\_region\_is\_empty@{ttak\_unsafe\_region\_is\_empty}!region.h@{region.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_unsafe\_region\_is\_empty()}{ttak\_unsafe\_region\_is\_empty()}}
+{\footnotesize\ttfamily bool ttak\+\_\+unsafe\+\_\+region\+\_\+is\+\_\+empty (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{region }\end{DoxyParamCaption})}
+
+
+
+Returns true if the region currently owns no memory. 
+
+\Hypertarget{region_8h_a61f666927f8e71f34e08a93551146e57}\label{region_8h_a61f666927f8e71f34e08a93551146e57} 
+\index{region.h@{region.h}!ttak\_unsafe\_region\_move@{ttak\_unsafe\_region\_move}}
+\index{ttak\_unsafe\_region\_move@{ttak\_unsafe\_region\_move}!region.h@{region.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_unsafe\_region\_move()}{ttak\_unsafe\_region\_move()}}
+{\footnotesize\ttfamily bool ttak\+\_\+unsafe\+\_\+region\+\_\+move (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{dst,  }\item[{\mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{src }\end{DoxyParamCaption})}
+
+
+
+Moves memory from src to dst within the same context/allocator. 
+
+\Hypertarget{region_8h_accc23f89515395bd88dde530d37a208c}\label{region_8h_accc23f89515395bd88dde530d37a208c} 
+\index{region.h@{region.h}!ttak\_unsafe\_region\_move\_cross\_ctx@{ttak\_unsafe\_region\_move\_cross\_ctx}}
+\index{ttak\_unsafe\_region\_move\_cross\_ctx@{ttak\_unsafe\_region\_move\_cross\_ctx}!region.h@{region.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_unsafe\_region\_move\_cross\_ctx()}{ttak\_unsafe\_region\_move\_cross\_ctx()}}
+{\footnotesize\ttfamily bool ttak\+\_\+unsafe\+\_\+region\+\_\+move\+\_\+cross\+\_\+ctx (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{dst,  }\item[{\mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{src,  }\item[{uint32\+\_\+t}]{new\+\_\+ctx\+\_\+id,  }\item[{const char \texorpdfstring{$\ast$}{*}}]{new\+\_\+allocator\+\_\+tag }\end{DoxyParamCaption})}
+
+
+
+Moves memory across contexts, overriding ownership metadata. 
+
+\Hypertarget{region_8h_a29e3622b42d82ad3421db4f5f3932d11}\label{region_8h_a29e3622b42d82ad3421db4f5f3932d11} 
+\index{region.h@{region.h}!ttak\_unsafe\_region\_pin@{ttak\_unsafe\_region\_pin}}
+\index{ttak\_unsafe\_region\_pin@{ttak\_unsafe\_region\_pin}!region.h@{region.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_unsafe\_region\_pin()}{ttak\_unsafe\_region\_pin()}}
+{\footnotesize\ttfamily bool ttak\+\_\+unsafe\+\_\+region\+\_\+pin (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{region }\end{DoxyParamCaption})}
+
+
+
+Increments the pin counter to signal an active borrow. 
+
+\Hypertarget{region_8h_ad85f2fd69cda148c4b26d754bcc49d9c}\label{region_8h_ad85f2fd69cda148c4b26d754bcc49d9c} 
+\index{region.h@{region.h}!ttak\_unsafe\_region\_reset@{ttak\_unsafe\_region\_reset}}
+\index{ttak\_unsafe\_region\_reset@{ttak\_unsafe\_region\_reset}!region.h@{region.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_unsafe\_region\_reset()}{ttak\_unsafe\_region\_reset()}}
+{\footnotesize\ttfamily void ttak\+\_\+unsafe\+\_\+region\+\_\+reset (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{region }\end{DoxyParamCaption})}
+
+
+
+Resets the region to the canonical empty state. 
+
+\Hypertarget{region_8h_abbaa0de0a3dcf0eb15a4126ba301a8f5}\label{region_8h_abbaa0de0a3dcf0eb15a4126ba301a8f5} 
+\index{region.h@{region.h}!ttak\_unsafe\_region\_steal@{ttak\_unsafe\_region\_steal}}
+\index{ttak\_unsafe\_region\_steal@{ttak\_unsafe\_region\_steal}!region.h@{region.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_unsafe\_region\_steal()}{ttak\_unsafe\_region\_steal()}}
+{\footnotesize\ttfamily bool ttak\+\_\+unsafe\+\_\+region\+\_\+steal (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{dst,  }\item[{\mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{src }\end{DoxyParamCaption})}
+
+
+
+Steals ownership from src regardless of prior dst state. 
+
+\Hypertarget{region_8h_a7dc7d1fafdd11d1d88d6c4a2cf65ec14}\label{region_8h_a7dc7d1fafdd11d1d88d6c4a2cf65ec14} 
+\index{region.h@{region.h}!ttak\_unsafe\_region\_unpin@{ttak\_unsafe\_region\_unpin}}
+\index{ttak\_unsafe\_region\_unpin@{ttak\_unsafe\_region\_unpin}!region.h@{region.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_unsafe\_region\_unpin()}{ttak\_unsafe\_region\_unpin()}}
+{\footnotesize\ttfamily bool ttak\+\_\+unsafe\+\_\+region\+\_\+unpin (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{region }\end{DoxyParamCaption})}
+
+
+
+Decrements the pin counter. 
+

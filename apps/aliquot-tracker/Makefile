@@ -1,7 +1,11 @@
-CC = gcc
-# Build the aliqout tracker against the in-tree libttak to avoid system-wide installs.
-CFLAGS = -Wall -Wextra -Werror -O3 -pthread -march=native -mtune=native -g -funroll-loops -ftree-vectorize -fstrict-aliasing -finline-functions
-LDFLAGS = -lttak -pthread -lm
+CC ?= tcc
+# Build the aliquot tracker against the in-tree libttak to avoid system-wide installs.
+ROOT ?= ../..
+LIBTTK ?= $(ROOT)/lib/libttak.a
+
+CPPFLAGS += -I$(ROOT)/include
+CFLAGS += -std=c11 -Wall
+LDFLAGS += -L$(ROOT)/lib -lttak -pthread -lm
 
 BIN_DIR = bin
 SRC_DIR = src
@@ -14,10 +18,10 @@ all: $(TARGET)
 
 $(TARGET): $(OBJS) $(LIBTTK)
 	@mkdir -p $(BIN_DIR)
-	$(CC) $(OBJS) -o $@ $(LDFLAGS)
+	$(CC) $(CFLAGS) $(OBJS) -o $@ $(LDFLAGS)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
 $(LIBTTK):
 	$(MAKE) -C $(ROOT) lib/libttak.a

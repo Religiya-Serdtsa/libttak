@@ -137,8 +137,22 @@ $(document).ready(function(){initNavTree('07__safety__and__ownership_8puml_sourc
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    ttak_owner_t ..&gt; ttak_owner_policy_t</div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    ttak_epoch_gc_t ..&gt; ttak_mem_tree_t : uses</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>}</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>@enduml</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    class ttak_context_t &lt;&lt;unsafe&gt;&gt; {</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        + first : ttak_owner_t*</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        + second : ttak_owner_t*</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        + shared_mem : void*</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        + shared_size : size_t</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        + ownership_side : int</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        __</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        + init(first, second, shared_mem, size, inherit)</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        + run(request_side, cb, arg)</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        + reassign(side)</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    }</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    ttak_owner_t -- ttak_context_t : &quot;__TTAK_CTX_USE_FIRST__ / __TTAK_CTX_USE_SECOND__&quot;</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>}</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>@enduml</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

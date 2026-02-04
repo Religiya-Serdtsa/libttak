@@ -9,6 +9,7 @@
 #include <pthread.h>
 #include <ttak/mem/mem.h>
 #include <ttak/timing/timing.h>
+#include <ttak/types/fixed.h>
 #include "thread_compat.h"
 #include "lockfree_queue.h"
 
@@ -54,44 +55,27 @@ void handle_sigint(int sig) {
     atomic_store(&g_shutdown_requested, true);
 }
 
-// Minimal BigInt logic for LL test (p <= 127)
-typedef unsigned __int128 uint128;
+// Minimal 128-bit arithmetic for LL test (p <= 127)
+static ttak_u128_t ll_mask(int p) {
+    ttak_u128_t mask = ttak_u128_from_u64(1);
+    mask = ttak_u128_shl(mask, (unsigned)p);
+    mask = ttak_u128_sub64(mask, 1);
+    return mask;
+}
 
-static inline uint128 llt_sqr_mod(uint128 s, int p) {
-    uint64_t s0 = (uint64_t)s;
-    uint64_t s1 = (uint64_t)(s >> 64);
-    
-    unsigned __int128 p0 = (unsigned __int128)s0 * s0;
-    unsigned __int128 p1 = (unsigned __int128)s0 * s1;
-    unsigned __int128 p2 = (unsigned __int128)s1 * s1;
-    
-    uint64_t d[4];
-    d[0] = (uint64_t)p0;
-    unsigned __int128 m1 = (p0 >> 64) + (uint64_t)p1 + (uint64_t)p1;
-    d[1] = (uint64_t)m1;
-    unsigned __int128 m2 = (m1 >> 64) + (p1 >> 64) + (p1 >> 64) + (uint64_t)p2;
-    d[2] = (uint64_t)m2;
-    d[3] = (uint64_t)(p2 >> 64) + (uint64_t)(m2 >> 64);
-    
-    uint128 L = (((uint128)d[1] << 64) | d[0]);
-    uint128 M = ((uint128)1 << p) - 1;
-    if (p < 128) L &= M;
-
-    uint64_t h[4] = {0};
-    int limb_shift = p / 64;
-    int bit_shift = p % 64;
-    if (bit_shift == 0) {
-        for (int i = 0; i < 4 - limb_shift; i++) h[i] = d[i + limb_shift];
-    } else {
-        for (int i = 0; i < 3 - limb_shift; i++) {
-            h[i] = (d[i + limb_shift] >> bit_shift) | (d[i + limb_shift + 1] << (64 - bit_shift));
-        }
-        h[3 - limb_shift] = d[3] >> bit_shift;
+static ttak_u128_t llt_sqr_mod(ttak_u128_t s, int p) {
+    ttak_u256_t square = ttak_u128_mul_u128(s, s);
+    ttak_u128_t modulo = ll_mask(p);
+    ttak_u128_t low = ttak_u256_low128(square);
+    if (p < 128) {
+        low = ttak_u128_and(low, modulo);
     }
-    uint128 H = ((uint128)h[1] << 64) | h[0];
-    
-    uint128 res = L + H;
-    while (res >= M) res -= M;
+    ttak_u256_t shifted = ttak_u256_shr(square, (unsigned)p);
+    ttak_u128_t high = ttak_u256_low128(shifted);
+    ttak_u128_t res = ttak_u128_add(low, high);
+    while (ttak_u128_cmp(res, modulo) >= 0) {
+        res = ttak_u128_sub(res, modulo);
+    }
     return res;
 }
 
@@ -102,8 +86,9 @@ void lucas_lehmer_test(mersenne_task_t *task) {
         task->state = TASK_STATE_DONE;
         return;
     }
-    uint128 s = 4;
-    uint128 M = ((uint128)1 << task->p) - 1;
+    ttak_u128_t s = ttak_u128_from_u64(4);
+    ttak_u128_t M = ll_mask(task->p);
+    ttak_u128_t two = ttak_u128_from_u64(2);
     uint64_t start = ttak_get_tick_count();
     uint64_t iters = 0;
     for (int i = 0; i < task->p - 2; i++) {
@@ -113,11 +98,16 @@ void lucas_lehmer_test(mersenne_task_t *task) {
             return;
         }
         s = llt_sqr_mod(s, task->p);
-        if (s < 2) s = M - (2 - s); else s -= 2;
+        if (ttak_u128_cmp(s, two) < 0) {
+            ttak_u128_t diff = ttak_u128_sub(two, s);
+            s = ttak_u128_sub(M, diff);
+        } else {
+            s = ttak_u128_sub64(s, 2);
+        }
         iters++;
     }
     task->iterations_done = iters;
-    task->residue_is_zero = (s == 0);
+    task->residue_is_zero = ttak_u128_is_zero(s);
     task->status = task->residue_is_zero ? STATUS_PRIME : STATUS_COMPOSITE;
     task->elapsed_ms = ttak_get_tick_count() - start;
     task->state = TASK_STATE_DONE;

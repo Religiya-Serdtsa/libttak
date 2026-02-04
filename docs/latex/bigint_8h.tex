@@ -4,7 +4,9 @@
 {\ttfamily \#include $<$stddef.\+h$>$}\newline
 {\ttfamily \#include $<$stdbool.\+h$>$}\newline
 {\ttfamily \#include $<$stdalign.\+h$>$}\newline
-Include dependency graph for bigint.\+h\+:\nopagebreak
+{\ttfamily \#include $<$ttak/types/fixed.\+h$>$}\newline
+Include dependency graph for bigint.\+h\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -52,6 +54,10 @@ void \mbox{\hyperlink{bigint_8h_a9ced4cc74432ad65092a8e4855639a9c}{ttak\+\_\+big
 \begin{DoxyCompactList}\small\item\em Frees the bigint resources. \end{DoxyCompactList}\item 
 \+\_\+\+Bool \mbox{\hyperlink{bigint_8h_a88b0d07f7949605cf1c6fdc3cb1a3415}{ttak\+\_\+bigint\+\_\+set\+\_\+u64}} (\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}bi, uint64\+\_\+t value, uint64\+\_\+t now)
 \begin{DoxyCompactList}\small\item\em Assigns an unsigned 64-\/bit value to the bigint. \end{DoxyCompactList}\item 
+\+\_\+\+Bool \mbox{\hyperlink{bigint_8h_ad2ecfc5d86f91946b73fecff67942753}{ttak\+\_\+bigint\+\_\+set\+\_\+u128}} (\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}bi, \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} value, uint64\+\_\+t now)
+\item 
+\+\_\+\+Bool \mbox{\hyperlink{bigint_8h_a66b18083442e2cbfa62271dfd3f8c775}{ttak\+\_\+bigint\+\_\+set\+\_\+u256}} (\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}bi, \mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}} value, uint64\+\_\+t now)
+\item 
 \+\_\+\+Bool \mbox{\hyperlink{bigint_8h_aacc6ff52c48fb44ceccff44df241c028}{ttak\+\_\+bigint\+\_\+copy}} (\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}dst, const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}src, uint64\+\_\+t now)
 \item 
 int \mbox{\hyperlink{bigint_8h_a49487c985999445bea59fc58526bb6fa}{ttak\+\_\+bigint\+\_\+cmp}} (const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}lhs, const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}rhs)
@@ -86,6 +92,10 @@ char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{bigint_8h_a27bb46730e0d7dfe78c9
 \item 
 bool \mbox{\hyperlink{bigint_8h_a50c53fbcb72a68c5dd13d5b431da687d}{ttak\+\_\+bigint\+\_\+export\+\_\+u64}} (const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}bi, uint64\+\_\+t \texorpdfstring{$\ast$}{*}value\+\_\+out)
 \item 
+bool \mbox{\hyperlink{bigint_8h_a4f0f64bcda595609b8636f26f6ba0270}{ttak\+\_\+bigint\+\_\+export\+\_\+u128}} (const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}bi, \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} \texorpdfstring{$\ast$}{*}value\+\_\+out)
+\item 
+bool \mbox{\hyperlink{bigint_8h_a00a446d5050ce99eed0d74e3b06c1423}{ttak\+\_\+bigint\+\_\+export\+\_\+u256}} (const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}bi, \mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}} \texorpdfstring{$\ast$}{*}value\+\_\+out)
+\item 
 void \mbox{\hyperlink{bigint_8h_ac4659c21c5e59a5e28e324a515adc9a0}{ttak\+\_\+bigint\+\_\+to\+\_\+hex\+\_\+hash}} (const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}bi, char out\mbox{[}65\mbox{]})
 \item 
 void \mbox{\hyperlink{bigint_8h_ae2268b4f3ec8fc8539668d446a2d058e}{ttak\+\_\+bigint\+\_\+format\+\_\+prefix}} (const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}bi, char \texorpdfstring{$\ast$}{*}dest, size\+\_\+t dest\+\_\+cap)
@@ -103,7 +113,7 @@ void \mbox{\hyperlink{bigint_8h_aab31490feba3f34a36ad76e549c5c5b1}{ttak\+\_\+big
 
 
 
-Definition at line \mbox{\hyperlink{bigint_8h_source_l00014}{14}} of file \mbox{\hyperlink{bigint_8h_source}{bigint.\+h}}.
+Definition at line \mbox{\hyperlink{bigint_8h_source_l00015}{15}} of file \mbox{\hyperlink{bigint_8h_source}{bigint.\+h}}.
 
 
 
@@ -116,7 +126,7 @@ Definition at line \mbox{\hyperlink{bigint_8h_source_l00014}{14}} of file \mbox{
 
 
 
-Definition at line \mbox{\hyperlink{bigint_8h_source_l00031}{31}} of file \mbox{\hyperlink{bigint_8h_source}{bigint.\+h}}.
+Definition at line \mbox{\hyperlink{bigint_8h_source_l00032}{32}} of file \mbox{\hyperlink{bigint_8h_source}{bigint.\+h}}.
 
 \Hypertarget{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}\label{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870} 
 \index{bigint.h@{bigint.h}!limb\_t@{limb\_t}}
@@ -130,7 +140,7 @@ Platform-\/optimized word type for Raspberry Pi (ARMv7/v8).
 
 
 
-Definition at line \mbox{\hyperlink{bigint_8h_source_l00012}{12}} of file \mbox{\hyperlink{bigint_8h_source}{bigint.\+h}}.
+Definition at line \mbox{\hyperlink{bigint_8h_source_l00013}{13}} of file \mbox{\hyperlink{bigint_8h_source}{bigint.\+h}}.
 
 \Hypertarget{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}\label{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa} 
 \index{bigint.h@{bigint.h}!ttak\_bigint\_t@{ttak\_bigint\_t}}
@@ -201,6 +211,18 @@ true on success, false on allocation failure.
 \index{ttak\_bigint\_div\_u64@{ttak\_bigint\_div\_u64}!bigint.h@{bigint.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigint\_div\_u64()}{ttak\_bigint\_div\_u64()}}
 {\footnotesize\ttfamily \+\_\+\+Bool ttak\+\_\+bigint\+\_\+div\+\_\+u64 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{q,  }\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{r,  }\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{n,  }\item[{uint64\+\_\+t}]{d,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+\Hypertarget{bigint_8h_a4f0f64bcda595609b8636f26f6ba0270}\label{bigint_8h_a4f0f64bcda595609b8636f26f6ba0270} 
+\index{bigint.h@{bigint.h}!ttak\_bigint\_export\_u128@{ttak\_bigint\_export\_u128}}
+\index{ttak\_bigint\_export\_u128@{ttak\_bigint\_export\_u128}!bigint.h@{bigint.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_bigint\_export\_u128()}{ttak\_bigint\_export\_u128()}}
+{\footnotesize\ttfamily bool ttak\+\_\+bigint\+\_\+export\+\_\+u128 (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{bi,  }\item[{\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{value\+\_\+out }\end{DoxyParamCaption})}
+
+\Hypertarget{bigint_8h_a00a446d5050ce99eed0d74e3b06c1423}\label{bigint_8h_a00a446d5050ce99eed0d74e3b06c1423} 
+\index{bigint.h@{bigint.h}!ttak\_bigint\_export\_u256@{ttak\_bigint\_export\_u256}}
+\index{ttak\_bigint\_export\_u256@{ttak\_bigint\_export\_u256}!bigint.h@{bigint.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_bigint\_export\_u256()}{ttak\_bigint\_export\_u256()}}
+{\footnotesize\ttfamily bool ttak\+\_\+bigint\+\_\+export\+\_\+u256 (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{bi,  }\item[{\mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{value\+\_\+out }\end{DoxyParamCaption})}
 
 \Hypertarget{bigint_8h_a50c53fbcb72a68c5dd13d5b431da687d}\label{bigint_8h_a50c53fbcb72a68c5dd13d5b431da687d} 
 \index{bigint.h@{bigint.h}!ttak\_bigint\_export\_u64@{ttak\_bigint\_export\_u64}}
@@ -297,6 +319,18 @@ Performs modulo operation optimized for Mersenne primes (2\texorpdfstring{$^\wed
 \index{ttak\_bigint\_mul\_u64@{ttak\_bigint\_mul\_u64}!bigint.h@{bigint.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigint\_mul\_u64()}{ttak\_bigint\_mul\_u64()}}
 {\footnotesize\ttfamily \+\_\+\+Bool ttak\+\_\+bigint\+\_\+mul\+\_\+u64 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{dst,  }\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{lhs,  }\item[{uint64\+\_\+t}]{rhs,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+\Hypertarget{bigint_8h_ad2ecfc5d86f91946b73fecff67942753}\label{bigint_8h_ad2ecfc5d86f91946b73fecff67942753} 
+\index{bigint.h@{bigint.h}!ttak\_bigint\_set\_u128@{ttak\_bigint\_set\_u128}}
+\index{ttak\_bigint\_set\_u128@{ttak\_bigint\_set\_u128}!bigint.h@{bigint.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_bigint\_set\_u128()}{ttak\_bigint\_set\_u128()}}
+{\footnotesize\ttfamily \+\_\+\+Bool ttak\+\_\+bigint\+\_\+set\+\_\+u128 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{bi,  }\item[{\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}}}]{value,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+\Hypertarget{bigint_8h_a66b18083442e2cbfa62271dfd3f8c775}\label{bigint_8h_a66b18083442e2cbfa62271dfd3f8c775} 
+\index{bigint.h@{bigint.h}!ttak\_bigint\_set\_u256@{ttak\_bigint\_set\_u256}}
+\index{ttak\_bigint\_set\_u256@{ttak\_bigint\_set\_u256}!bigint.h@{bigint.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_bigint\_set\_u256()}{ttak\_bigint\_set\_u256()}}
+{\footnotesize\ttfamily \+\_\+\+Bool ttak\+\_\+bigint\+\_\+set\+\_\+u256 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{bi,  }\item[{\mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}}}]{value,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
 
 \Hypertarget{bigint_8h_a88b0d07f7949605cf1c6fdc3cb1a3415}\label{bigint_8h_a88b0d07f7949605cf1c6fdc3cb1a3415} 
 \index{bigint.h@{bigint.h}!ttak\_bigint\_set\_u64@{ttak\_bigint\_set\_u64}}

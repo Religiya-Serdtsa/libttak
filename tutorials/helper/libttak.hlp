@@ -1,0 +1,17 @@
+## Scheduler Overview
+Every worker job flows through the priority queue. Lower `priority` value runs first. The scheduler wakes sleeping threads whenever new work arrives.
+
+## Ownership Basics
+Use `ttak_owner_t` to register resources and execute callbacks. Locks sit inside the owner; acquire them through `ttak_owner_execute` rather than manually.
+
+## Memory Tree Cleanup
+Epoch GC rotates allocations: register blocks, bump epochs, let `ttak_mem_tree_perform_cleanup` reclaim old nodes. Never free memory outside the owner that created it.
+
+## Big Integer Policy
+`ttak_sum_proper_divisors_big()` starts in fast mode. On any `assign/export/arith` failure it logs the stage, resets targets, and retries via the safe generic path.
+
+## Thread Pool Contracts
+`ttak_thread_pool_submit_task` accepts a function and context. It must be paired with `ttak_future_wait` if you need the result; otherwise tasks run fire-and-forget.
+
+## Logging Etiquette
+Attach a logger when you need run-time breadcrumbs. Keep each message short so collectors (like the helper) can parse them easily.

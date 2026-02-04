@@ -10,7 +10,9 @@ var atomic_8h =
     [ "atomic_function_execute", "atomic_8h.html#a89133290d76526074f7fc534d092154d", null ],
     [ "func_wrapper_init", "atomic_8h.html#aa8c8e784da856951cb1f07f0e009e34f", null ],
     [ "tt_func_has_expired", "atomic_8h.html#a52a4af1733d936d7991c868f37e85fc8", null ],
-    [ "ttak_atomic_inc64", "atomic_8h.html#a2cbc7b3501bd3aac0bae8995f3f2efd0", null ],
-    [ "ttak_atomic_read64", "atomic_8h.html#acdd90f8d5acb37a06a350a71aa5876d0", null ],
-    [ "ttak_atomic_write64", "atomic_8h.html#a7dbb2165cfeeb97aa18698125af4c95b", null ]
+    [ "ttak_atomic_add64", "atomic_8h.html#a343b4c3796fd9010b5715b2cc71acdca", null ],
+    [ "ttak_atomic_inc64", "atomic_8h.html#a1c3cfff1b58f14df90cc576695d291cb", null ],
+    [ "ttak_atomic_read64", "atomic_8h.html#ad6fa58ebc4a659aa99f982c6c9d59956", null ],
+    [ "ttak_atomic_sub64", "atomic_8h.html#a4a09efa188b5a0ad9d5403099fb438fe", null ],
+    [ "ttak_atomic_write64", "atomic_8h.html#a9cdea4bd1ee68fedda089869d53e077d", null ]
 ];

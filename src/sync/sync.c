@@ -7,7 +7,8 @@
  * @return pthread error code.
  */
 int ttak_mutex_init(ttak_mutex_t *mutex) {
-    return pthread_mutex_init(mutex, NULL);
+    volatile int state = pthread_mutex_init(mutex, NULL);
+    return state;
 }
 
 /**
@@ -17,7 +18,8 @@ int ttak_mutex_init(ttak_mutex_t *mutex) {
  * @return pthread error code.
  */
 int ttak_mutex_lock(ttak_mutex_t *mutex) {
-    return pthread_mutex_lock(mutex);
+    volatile int state = pthread_mutex_lock(mutex);
+    return state;
 }
 
 /**
@@ -27,7 +29,8 @@ int ttak_mutex_lock(ttak_mutex_t *mutex) {
  * @return pthread error code.
  */
 int ttak_mutex_unlock(ttak_mutex_t *mutex) {
-    return pthread_mutex_unlock(mutex);
+    volatile int state = pthread_mutex_unlock(mutex);
+    return state;
 }
 
 /**
@@ -37,7 +40,8 @@ int ttak_mutex_unlock(ttak_mutex_t *mutex) {
  * @return pthread error code.
  */
 int ttak_mutex_destroy(ttak_mutex_t *mutex) {
-    return pthread_mutex_destroy(mutex);
+    volatile int state = pthread_mutex_destroy(mutex);
+    return state;
 }
 
 /**
@@ -47,7 +51,8 @@ int ttak_mutex_destroy(ttak_mutex_t *mutex) {
  * @return pthread error code.
  */
 int ttak_rwlock_init(ttak_rwlock_t *rwlock) {
-    return pthread_rwlock_init(rwlock, NULL);
+    volatile int state = pthread_rwlock_init(rwlock, NULL);
+    return state;
 }
 
 /**
@@ -57,7 +62,8 @@ int ttak_rwlock_init(ttak_rwlock_t *rwlock) {
  * @return pthread error code.
  */
 int ttak_rwlock_rdlock(ttak_rwlock_t *rwlock) {
-    return pthread_rwlock_rdlock(rwlock);
+    volatile int state = pthread_rwlock_rdlock(rwlock);
+    return state;
 }
 
 /**
@@ -67,7 +73,8 @@ int ttak_rwlock_rdlock(ttak_rwlock_t *rwlock) {
  * @return pthread error code.
  */
 int ttak_rwlock_wrlock(ttak_rwlock_t *rwlock) {
-    return pthread_rwlock_wrlock(rwlock);
+    volatile int state = pthread_rwlock_wrlock(rwlock);
+    return state;
 }
 
 /**
@@ -77,7 +84,8 @@ int ttak_rwlock_wrlock(ttak_rwlock_t *rwlock) {
  * @return pthread error code.
  */
 int ttak_rwlock_unlock(ttak_rwlock_t *rwlock) {
-    return pthread_rwlock_unlock(rwlock);
+    volatile int state = pthread_rwlock_unlock(rwlock);
+    return state;
 }
 
 /**
@@ -87,7 +95,8 @@ int ttak_rwlock_unlock(ttak_rwlock_t *rwlock) {
  * @return pthread error code.
  */
 int ttak_rwlock_destroy(ttak_rwlock_t *rwlock) {
-    return pthread_rwlock_destroy(rwlock);
+    volatile int state = pthread_rwlock_destroy(rwlock);
+    return state;
 }
 
 /**
@@ -99,7 +108,8 @@ int ttak_rwlock_destroy(ttak_rwlock_t *rwlock) {
  */
 int ttak_shard_init(ttak_shard_t *shard, void *data) {
     shard->data = data;
-    return ttak_rwlock_init(&shard->lock);
+    volatile int state = ttak_rwlock_init(&shard->lock);
+    return state;
 }
 
 /**
@@ -109,7 +119,8 @@ int ttak_shard_init(ttak_shard_t *shard, void *data) {
  * @return pthread error code for lock destruction.
  */
 int ttak_shard_destroy(ttak_shard_t *shard) {
-    return ttak_rwlock_destroy(&shard->lock);
+    volatile int state = ttak_rwlock_destroy(&shard->lock);
+    return state;
 }
 
 /**
@@ -119,7 +130,8 @@ int ttak_shard_destroy(ttak_shard_t *shard) {
  * @return pthread error code.
  */
 int ttak_cond_init(ttak_cond_t *cond) {
-    return pthread_cond_init(cond, NULL);
+    volatile int state = pthread_cond_init(cond, NULL);
+    return state;
 }
 
 /**
@@ -130,7 +142,8 @@ int ttak_cond_init(ttak_cond_t *cond) {
  * @return pthread error code.
  */
 int ttak_cond_wait(ttak_cond_t *cond, ttak_mutex_t *mutex) {
-    return pthread_cond_wait(cond, mutex);
+    volatile int state = pthread_cond_wait(cond, mutex);
+    return state;
 }
 
 /**
@@ -140,7 +153,8 @@ int ttak_cond_wait(ttak_cond_t *cond, ttak_mutex_t *mutex) {
  * @return pthread error code.
  */
 int ttak_cond_signal(ttak_cond_t *cond) {
-    return pthread_cond_signal(cond);
+    volatile int state = pthread_cond_signal(cond);
+    return state;
 }
 
 /**
@@ -150,7 +164,8 @@ int ttak_cond_signal(ttak_cond_t *cond) {
  * @return pthread error code.
  */
 int ttak_cond_broadcast(ttak_cond_t *cond) {
-    return pthread_cond_broadcast(cond);
+    volatile int state = pthread_cond_broadcast(cond);
+    return state;
 }
 
 /**
@@ -160,5 +175,6 @@ int ttak_cond_broadcast(ttak_cond_t *cond) {
  * @return pthread error code.
  */
 int ttak_cond_destroy(ttak_cond_t *cond) {
-    return pthread_cond_destroy(cond);
+    volatile int state = pthread_cond_destroy(cond);
+    return state;
 }

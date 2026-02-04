@@ -37,11 +37,15 @@ typedef \mbox{\hyperlink{atomic_8h_a9afd1a0a270b79c8b529c847deee8b90}{ttak\+\_\+
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-uint64\+\_\+t \mbox{\hyperlink{atomic_8h_acdd90f8d5acb37a06a350a71aa5876d0}{ttak\+\_\+atomic\+\_\+read64}} (uint64\+\_\+t \texorpdfstring{$\ast$}{*}ptr)
+uint64\+\_\+t \mbox{\hyperlink{atomic_8h_ad6fa58ebc4a659aa99f982c6c9d59956}{ttak\+\_\+atomic\+\_\+read64}} (volatile uint64\+\_\+t \texorpdfstring{$\ast$}{*}ptr)
 \begin{DoxyCompactList}\small\item\em Atomic operations for uint64\+\_\+t. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{atomic_8h_a7dbb2165cfeeb97aa18698125af4c95b}{ttak\+\_\+atomic\+\_\+write64}} (uint64\+\_\+t \texorpdfstring{$\ast$}{*}ptr, uint64\+\_\+t val)
+void \mbox{\hyperlink{atomic_8h_a9cdea4bd1ee68fedda089869d53e077d}{ttak\+\_\+atomic\+\_\+write64}} (volatile uint64\+\_\+t \texorpdfstring{$\ast$}{*}ptr, uint64\+\_\+t val)
 \item 
-uint64\+\_\+t \mbox{\hyperlink{atomic_8h_a2cbc7b3501bd3aac0bae8995f3f2efd0}{ttak\+\_\+atomic\+\_\+inc64}} (uint64\+\_\+t \texorpdfstring{$\ast$}{*}ptr)
+uint64\+\_\+t \mbox{\hyperlink{atomic_8h_a1c3cfff1b58f14df90cc576695d291cb}{ttak\+\_\+atomic\+\_\+inc64}} (volatile uint64\+\_\+t \texorpdfstring{$\ast$}{*}ptr)
+\item 
+uint64\+\_\+t \mbox{\hyperlink{atomic_8h_a343b4c3796fd9010b5715b2cc71acdca}{ttak\+\_\+atomic\+\_\+add64}} (volatile uint64\+\_\+t \texorpdfstring{$\ast$}{*}ptr, uint64\+\_\+t delta)
+\item 
+uint64\+\_\+t \mbox{\hyperlink{atomic_8h_a4a09efa188b5a0ad9d5403099fb438fe}{ttak\+\_\+atomic\+\_\+sub64}} (volatile uint64\+\_\+t \texorpdfstring{$\ast$}{*}ptr, uint64\+\_\+t delta)
 \item 
 \+\_\+\+Bool \mbox{\hyperlink{atomic_8h_a52a4af1733d936d7991c868f37e85fc8}{tt\+\_\+func\+\_\+has\+\_\+expired}} (\mbox{\hyperlink{atomic_8h_a9afd1a0a270b79c8b529c847deee8b90}{ttak\+\_\+func\+\_\+wrapper\+\_\+t}} \texorpdfstring{$\ast$}{*}wr, uint64\+\_\+t now)
 \begin{DoxyCompactList}\small\item\em Check tt\+\_\+func\+\_\+wrapper has expired. \end{DoxyCompactList}\item 
@@ -60,7 +64,7 @@ void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{atomic_8h_a89133290d76526074f7f
 
 
 
-Definition at line \mbox{\hyperlink{atomic_8h_source_l00025}{25}} of file \mbox{\hyperlink{atomic_8h_source}{atomic.\+h}}.
+Definition at line \mbox{\hyperlink{atomic_8h_source_l00027}{27}} of file \mbox{\hyperlink{atomic_8h_source}{atomic.\+h}}.
 
 \Hypertarget{atomic_8h_a936cad8f41d4d318d5e60a991dfff062}\label{atomic_8h_a936cad8f41d4d318d5e60a991dfff062} 
 \index{atomic.h@{atomic.h}!\_\_TT\_FUNC\_ATOMIC\_\_@{\_\_TT\_FUNC\_ATOMIC\_\_}}
@@ -74,7 +78,7 @@ Wrapper structure for atomic function execution.
 
 
 
-Definition at line \mbox{\hyperlink{atomic_8h_source_l00024}{24}} of file \mbox{\hyperlink{atomic_8h_source}{atomic.\+h}}.
+Definition at line \mbox{\hyperlink{atomic_8h_source_l00026}{26}} of file \mbox{\hyperlink{atomic_8h_source}{atomic.\+h}}.
 
 \Hypertarget{atomic_8h_aed92dea3feb49ca6753cc5ba00c538db}\label{atomic_8h_aed92dea3feb49ca6753cc5ba00c538db} 
 \index{atomic.h@{atomic.h}!\_\_TT\_FUNC\_THREADED\_\_@{\_\_TT\_FUNC\_THREADED\_\_}}
@@ -84,7 +88,7 @@ Definition at line \mbox{\hyperlink{atomic_8h_source_l00024}{24}} of file \mbox{
 
 
 
-Definition at line \mbox{\hyperlink{atomic_8h_source_l00026}{26}} of file \mbox{\hyperlink{atomic_8h_source}{atomic.\+h}}.
+Definition at line \mbox{\hyperlink{atomic_8h_source_l00028}{28}} of file \mbox{\hyperlink{atomic_8h_source}{atomic.\+h}}.
 
 
 
@@ -101,7 +105,7 @@ Shortened alias for ttak\+\_\+func\+\_\+wrapper\+\_\+t.
 
 
 
-Definition at line \mbox{\hyperlink{atomic_8h_source_l00052}{52}} of file \mbox{\hyperlink{atomic_8h_source}{atomic.\+h}}.
+Definition at line \mbox{\hyperlink{atomic_8h_source_l00054}{54}} of file \mbox{\hyperlink{atomic_8h_source}{atomic.\+h}}.
 
 \Hypertarget{atomic_8h_a9afd1a0a270b79c8b529c847deee8b90}\label{atomic_8h_a9afd1a0a270b79c8b529c847deee8b90} 
 \index{atomic.h@{atomic.h}!ttak\_func\_wrapper\_t@{ttak\_func\_wrapper\_t}}
@@ -166,25 +170,37 @@ initialize tt\+\_\+func\+\_\+wrapper.
 
 Check tt\+\_\+func\+\_\+wrapper has expired. 
 
-\Hypertarget{atomic_8h_a2cbc7b3501bd3aac0bae8995f3f2efd0}\label{atomic_8h_a2cbc7b3501bd3aac0bae8995f3f2efd0} 
+\Hypertarget{atomic_8h_a343b4c3796fd9010b5715b2cc71acdca}\label{atomic_8h_a343b4c3796fd9010b5715b2cc71acdca} 
+\index{atomic.h@{atomic.h}!ttak\_atomic\_add64@{ttak\_atomic\_add64}}
+\index{ttak\_atomic\_add64@{ttak\_atomic\_add64}!atomic.h@{atomic.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_atomic\_add64()}{ttak\_atomic\_add64()}}
+{\footnotesize\ttfamily uint64\+\_\+t ttak\+\_\+atomic\+\_\+add64 (\begin{DoxyParamCaption}\item[{volatile uint64\+\_\+t \texorpdfstring{$\ast$}{*}}]{ptr,  }\item[{uint64\+\_\+t}]{delta }\end{DoxyParamCaption})}
+
+\Hypertarget{atomic_8h_a1c3cfff1b58f14df90cc576695d291cb}\label{atomic_8h_a1c3cfff1b58f14df90cc576695d291cb} 
 \index{atomic.h@{atomic.h}!ttak\_atomic\_inc64@{ttak\_atomic\_inc64}}
 \index{ttak\_atomic\_inc64@{ttak\_atomic\_inc64}!atomic.h@{atomic.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_atomic\_inc64()}{ttak\_atomic\_inc64()}}
-{\footnotesize\ttfamily uint64\+\_\+t ttak\+\_\+atomic\+\_\+inc64 (\begin{DoxyParamCaption}\item[{uint64\+\_\+t \texorpdfstring{$\ast$}{*}}]{ptr }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily uint64\+\_\+t ttak\+\_\+atomic\+\_\+inc64 (\begin{DoxyParamCaption}\item[{volatile uint64\+\_\+t \texorpdfstring{$\ast$}{*}}]{ptr }\end{DoxyParamCaption})}
 
-\Hypertarget{atomic_8h_acdd90f8d5acb37a06a350a71aa5876d0}\label{atomic_8h_acdd90f8d5acb37a06a350a71aa5876d0} 
+\Hypertarget{atomic_8h_ad6fa58ebc4a659aa99f982c6c9d59956}\label{atomic_8h_ad6fa58ebc4a659aa99f982c6c9d59956} 
 \index{atomic.h@{atomic.h}!ttak\_atomic\_read64@{ttak\_atomic\_read64}}
 \index{ttak\_atomic\_read64@{ttak\_atomic\_read64}!atomic.h@{atomic.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_atomic\_read64()}{ttak\_atomic\_read64()}}
-{\footnotesize\ttfamily uint64\+\_\+t ttak\+\_\+atomic\+\_\+read64 (\begin{DoxyParamCaption}\item[{uint64\+\_\+t \texorpdfstring{$\ast$}{*}}]{ptr }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily uint64\+\_\+t ttak\+\_\+atomic\+\_\+read64 (\begin{DoxyParamCaption}\item[{volatile uint64\+\_\+t \texorpdfstring{$\ast$}{*}}]{ptr }\end{DoxyParamCaption})}
 
 
 
 Atomic operations for uint64\+\_\+t. 
 
-\Hypertarget{atomic_8h_a7dbb2165cfeeb97aa18698125af4c95b}\label{atomic_8h_a7dbb2165cfeeb97aa18698125af4c95b} 
+\Hypertarget{atomic_8h_a4a09efa188b5a0ad9d5403099fb438fe}\label{atomic_8h_a4a09efa188b5a0ad9d5403099fb438fe} 
+\index{atomic.h@{atomic.h}!ttak\_atomic\_sub64@{ttak\_atomic\_sub64}}
+\index{ttak\_atomic\_sub64@{ttak\_atomic\_sub64}!atomic.h@{atomic.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_atomic\_sub64()}{ttak\_atomic\_sub64()}}
+{\footnotesize\ttfamily uint64\+\_\+t ttak\+\_\+atomic\+\_\+sub64 (\begin{DoxyParamCaption}\item[{volatile uint64\+\_\+t \texorpdfstring{$\ast$}{*}}]{ptr,  }\item[{uint64\+\_\+t}]{delta }\end{DoxyParamCaption})}
+
+\Hypertarget{atomic_8h_a9cdea4bd1ee68fedda089869d53e077d}\label{atomic_8h_a9cdea4bd1ee68fedda089869d53e077d} 
 \index{atomic.h@{atomic.h}!ttak\_atomic\_write64@{ttak\_atomic\_write64}}
 \index{ttak\_atomic\_write64@{ttak\_atomic\_write64}!atomic.h@{atomic.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_atomic\_write64()}{ttak\_atomic\_write64()}}
-{\footnotesize\ttfamily void ttak\+\_\+atomic\+\_\+write64 (\begin{DoxyParamCaption}\item[{uint64\+\_\+t \texorpdfstring{$\ast$}{*}}]{ptr,  }\item[{uint64\+\_\+t}]{val }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void ttak\+\_\+atomic\+\_\+write64 (\begin{DoxyParamCaption}\item[{volatile uint64\+\_\+t \texorpdfstring{$\ast$}{*}}]{ptr,  }\item[{uint64\+\_\+t}]{val }\end{DoxyParamCaption})}
 

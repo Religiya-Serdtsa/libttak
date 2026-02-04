@@ -90,25 +90,47 @@ typedef struct {
 } ttak_mem_header_t;
 
 /**
- * @brief Calculates a 32-bit checksum of the header metadata.
+ * @brief Calculates a 32-bit checksum for the memory header.
+ * * This implementation breaks the serial XOR chain into two independent
+ * accumulators (sum1, sum2) to encourage Instruction Level Parallelism (ILP).
+ * By breaking the data dependency, even a simple compiler like TCC can
+ * produce assembly that utilizes multiple execution units simultaneously,
+ * making the optimization compiler-agnostic.
+ * * @param h Pointer to the memory header to be checksummed.
+ * @return uint32_t The resulting 32-bit checksum.
  */
 static inline uint32_t ttak_calc_header_checksum(const ttak_mem_header_t *h) {
-    uint32_t sum = h->magic;
-    sum ^= (uint32_t)h->created_tick;
-    sum ^= (uint32_t)(h->created_tick >> 32);
-    sum ^= (uint32_t)h->expires_tick;
-    sum ^= (uint32_t)(h->expires_tick >> 32);
-    sum ^= (uint32_t)h->size;
+    /* Split the workload into two independent streams to exploit ILP */
+    uint32_t sum1 = h->magic;
+    uint32_t sum2 = (uint32_t)h->created_tick;
+
+    /* Process created_tick (upper) and expires_tick (lower) */
+    sum1 ^= (uint32_t)(h->created_tick >> 32);
+    sum2 ^= (uint32_t)h->expires_tick;
+
+    /* Process expires_tick (upper) and size (lower) */
+    sum1 ^= (uint32_t)(h->expires_tick >> 32);
+    sum2 ^= (uint32_t)h->size;
+
 #if defined(__LP64__) || defined(_WIN64)
-    sum ^= (uint32_t)(h->size >> 32);
+    /* Process size (upper) on 64-bit systems */
+    sum1 ^= (uint32_t)(h->size >> 32);
 #endif
-    sum ^= (uint32_t)h->should_join;
-    sum ^= (uint32_t)h->strict_check; sum ^= (uint32_t)h->is_root;
-    sum ^= (uint32_t)h->canary_start;
-    sum ^= (uint32_t)(h->canary_start >> 32);
-    sum ^= (uint32_t)h->canary_end;
-    sum ^= (uint32_t)(h->canary_end >> 32);
-    return sum;
+
+    /* Mix in boolean flags and status fields */
+    sum2 ^= (uint32_t)h->should_join;
+    sum1 ^= (uint32_t)h->strict_check;
+    sum2 ^= (uint32_t)h->is_root;
+
+    /* Process canary boundaries */
+    sum1 ^= (uint32_t)h->canary_start;
+    sum2 ^= (uint32_t)(h->canary_start >> 32);
+
+    sum1 ^= (uint32_t)h->canary_end;
+    sum2 ^= (uint32_t)(h->canary_end >> 32);
+
+    /* Final merge of the two streams */
+    return sum1 ^ sum2;
 }
 
 #endif // TTAK_INTERNAL_APP_TYPES_H

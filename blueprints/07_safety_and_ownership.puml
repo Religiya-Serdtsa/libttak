@@ -2,6 +2,12 @@
 !theme plain
 hide empty members
 
+skinparam class<<dangerous>> {
+    BackgroundColor #ffe6e6
+    BorderColor red
+    FontColor #a00
+}
+
 package "Safety & Ownership (mem/)" {
     class ttak_owner_t {
         + resources : ttak_map_t*
@@ -37,5 +43,27 @@ package "Safety & Ownership (mem/)" {
 
     ttak_owner_t ..> ttak_owner_policy_t
     ttak_epoch_gc_t ..> ttak_mem_tree_t : uses
+
+    class ttak_context_t <<dangerous>> {
+        + first : ttak_owner_t*
+        + second : ttak_owner_t*
+        + shared_mem : void*
+        + shared_size : size_t
+        + ownership_side : int
+        __
+        + init(first, second, shared_mem, size, inherit)
+        + run(request_side, cb, arg)
+        + reassign(side)
+    }
+
+    ttak_owner_t -- ttak_context_t : "__TTAK_CTX_USE_FIRST__ / __TTAK_CTX_USE_SECOND__"
+
+    note right of ttak_context_t
+        NOT RECOMMENDED outside
+        controlled lab setups.
+        Only one side may mutate
+        at a time; misuse can corrupt
+        shared memory.
+    end note
 }
 @enduml

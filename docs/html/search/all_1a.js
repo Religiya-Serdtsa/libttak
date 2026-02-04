@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['you_20stay_20safe_0',['C is good, if you stay safe',['..//home/yjlee/libttak/README.md#autotoc_md18',1,'']]]
+  ['queue_2eh_0',['queue.h',['../internal_2queue_8h.html',1,'(Global Namespace)'],['../queue_8h.html',1,'(Global Namespace)']]]
 ];

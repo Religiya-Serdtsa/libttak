@@ -3,8 +3,6 @@ Here are the classes, structs, unions and interfaces with brief descriptions\+:\
 \item\contentsline{section}{\mbox{\hyperlink{struct____internal__ttak__proc__priority__queue__t}{\+\_\+\+\_\+internal\+\_\+ttak\+\_\+proc\+\_\+priority\+\_\+queue\+\_\+t}} }{\pageref{struct____internal__ttak__proc__priority__queue__t}}{}
 \item\contentsline{section}{\mbox{\hyperlink{struct____internal__ttak__qnode__t}{\+\_\+\+\_\+internal\+\_\+ttak\+\_\+qnode\+\_\+t}} }{\pageref{struct____internal__ttak__qnode__t}}{}
 \item\contentsline{section}{\mbox{\hyperlink{struct__node}{\+\_\+node}} \\*Node structure with max\+\_\+align\+\_\+t padding for Raspberry Pi compatibility }{\pageref{struct__node}}{}
-\item\contentsline{section}{\mbox{\hyperlink{structapp__state__t}{app\+\_\+state\+\_\+t}} \\*Application State for persistence and GIMPS metadata }{\pageref{structapp__state__t}}{}
-\item\contentsline{section}{\mbox{\hyperlink{structgimps__result__t}{gimps\+\_\+result\+\_\+t}} \\*GIMPS Result structure for reporting and retry queue }{\pageref{structgimps__result__t}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structSHA256__CTX}{SHA256\+\_\+\+CTX}} }{\pageref{structSHA256__CTX}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structtt__type__shared}{tt\+\_\+type\+\_\+shared}} \\*Shared resource structure }{\pageref{structtt__type__shared}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__ast__node}{ttak\+\_\+ast\+\_\+node}} }{\pageref{structttak__ast__node}}{}
@@ -18,20 +16,19 @@ Here are the classes, structs, unions and interfaces with brief descriptions\+:\
 \item\contentsline{section}{\mbox{\hyperlink{structttak__bplus__tree}{ttak\+\_\+bplus\+\_\+tree}} }{\pageref{structttak__bplus__tree}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__btree}{ttak\+\_\+btree}} }{\pageref{structttak__btree}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__btree__node}{ttak\+\_\+btree\+\_\+node}} }{\pageref{structttak__btree__node}}{}
+\item\contentsline{section}{\mbox{\hyperlink{structttak__context}{ttak\+\_\+context}} }{\pageref{structttak__context}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__crt__term}{ttak\+\_\+crt\+\_\+term}} }{\pageref{structttak__crt__term}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__deadline}{ttak\+\_\+deadline}} \\*Represents a specific point in time used for deadline checks }{\pageref{structttak__deadline}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__epoch__gc}{ttak\+\_\+epoch\+\_\+gc}} \\*Epoch-\/based garbage collection context }{\pageref{structttak__epoch__gc}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__func__wrapper}{ttak\+\_\+func\+\_\+wrapper}} }{\pageref{structttak__func__wrapper}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__future}{ttak\+\_\+future}} }{\pageref{structttak__future}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__heap__tree}{ttak\+\_\+heap\+\_\+tree}} \\*Generic Binary Heap (Tree). Implemented as a dynamic array }{\pageref{structttak__heap__tree}}{}
-\item\contentsline{section}{\mbox{\hyperlink{structttak__hw__spec__t}{ttak\+\_\+hw\+\_\+spec\+\_\+t}} }{\pageref{structttak__hw__spec__t}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__lf__queue__t}{ttak\+\_\+lf\+\_\+queue\+\_\+t}} }{\pageref{structttak__lf__queue__t}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__logger}{ttak\+\_\+logger}} \\*Logger structure }{\pageref{structttak__logger}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__map__t}{ttak\+\_\+map\+\_\+t}} }{\pageref{structttak__map__t}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__mem__header__t}{ttak\+\_\+mem\+\_\+header\+\_\+t}} \\*Recommended pattern for resource-\/managing structures\+: All structures that manage dynamic resources (e.\+g., memory, threads, file handles) should follow an \+\_\+init and \+\_\+destroy pattern }{\pageref{structttak__mem__header__t}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__mem__node}{ttak\+\_\+mem\+\_\+node}} \\*Represents a node in the generic heap tree, tracking a dynamically allocated memory block }{\pageref{structttak__mem__node}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__mem__tree}{ttak\+\_\+mem\+\_\+tree}} \\*Manages the collection of dynamically allocated memory blocks as a mem tree }{\pageref{structttak__mem__tree}}{}
-\item\contentsline{section}{\mbox{\hyperlink{structttak__node__telemetry__t}{ttak\+\_\+node\+\_\+telemetry\+\_\+t}} }{\pageref{structttak__node__telemetry__t}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__ntt__prime}{ttak\+\_\+ntt\+\_\+prime}} \\*Predefined prime information for NTT operations }{\pageref{structttak__ntt__prime}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__object__pool}{ttak\+\_\+object\+\_\+pool}} \\*Fixed-\/size Object Pool structure }{\pageref{structttak__object__pool}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__owner}{ttak\+\_\+owner}} \\*The Owner structure }{\pageref{structttak__owner}}{}
@@ -54,7 +51,9 @@ Here are the classes, structs, unions and interfaces with brief descriptions\+:\
 \item\contentsline{section}{\mbox{\hyperlink{structttak__thread__pool}{ttak\+\_\+thread\+\_\+pool}} }{\pageref{structttak__thread__pool}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__timeout}{ttak\+\_\+timeout}} \\*Represents a duration used for timeouts }{\pageref{structttak__timeout}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__token__bucket}{ttak\+\_\+token\+\_\+bucket}} \\*Token Bucket structure for rate limiting }{\pageref{structttak__token__bucket}}{}
-\item\contentsline{section}{\mbox{\hyperlink{structttak__u128}{ttak\+\_\+u128}} \\*Portable 128-\/bit container for CRT outputs }{\pageref{structttak__u128}}{}
+\item\contentsline{section}{\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} }{\pageref{structttak__u128__t}}{}
+\item\contentsline{section}{\mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}} }{\pageref{structttak__u256__t}}{}
+\item\contentsline{section}{\mbox{\hyperlink{structttak__unsafe__region}{ttak\+\_\+unsafe\+\_\+region}} \\*Describes a raw memory span with minimal safety guarantees }{\pageref{structttak__unsafe__region}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__worker}{ttak\+\_\+worker}} }{\pageref{structttak__worker}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__worker__wrapper}{ttak\+\_\+worker\+\_\+wrapper}} }{\pageref{structttak__worker__wrapper}}{}
 \end{DoxyCompactList}

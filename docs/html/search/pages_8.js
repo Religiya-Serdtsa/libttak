@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['history_0',['Development History',['../md_HISTORY.html',1,'']]],
-  ['how_20cool_20is_20it_1',['How cool is it?',['../index.html#autotoc_md5',1,'']]]
+  ['oriented_20build_20and_20math_20tuning_0',['TCC-Oriented Build and Math Tuning',['../md_docs_2TCC__OPTIMIZATION.html',1,'']]]
 ];

@@ -1,0 +1,10 @@
+<map id="ttak_u128_mul_u64_wide" name="ttak_u128_mul_u64_wide">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,25,193,51"/>
+<area shape="rect" id="Node000002" href="$fixed_8h.html#a799eeed1842f8fa060ae9babb1a1c8b5" title=" " alt="" coords="485,25,588,51"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="157,23,241,10,339,3,438,10,483,19,482,25,437,15,339,8,242,15,158,28"/>
+<area shape="rect" id="Node000003" href="$fixed_8h.html#a3c207c23ea3e928b9339e192280da009" title=" " alt="" coords="274,25,405,51"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="193,35,260,35,260,41,193,41"/>
+<area shape="rect" id="Node000004" href="$fixed_8h.html#ac0d78544bdf52b1e7be2adad8d318749" title=" " alt="" coords="241,75,437,100"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="162,48,264,69,263,75,161,53"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="390,72,471,52,473,57,391,77"/>
+</map>

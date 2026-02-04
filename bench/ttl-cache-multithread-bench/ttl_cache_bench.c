@@ -11,8 +11,6 @@
 #include <stdatomic.h>
 
 // libttak includes
-#include <ttak/mem/mem.h>
-#include <ttak/mem_tree/mem_tree.h>
 #include <ttak/ht/map.h>
 #include <ttak/sync/sync.h>
 #include <ttak/thread/pool.h>
@@ -70,13 +68,15 @@ static stats_t stats;
 typedef struct {
     uint64_t epoch_id;
     size_t size;
-    void *tree_node; // Pointer to the node in the epoch-specific tree
     char data[]; // Flexible array member
 } cache_item_t;
 
 typedef struct {
     uint64_t id;
-    ttak_mem_tree_t tree;
+    cache_item_t **items;
+    size_t item_count;
+    size_t item_capacity;
+    ttak_mutex_t items_lock;
     // For each shard, we track keys inserted during this epoch
     struct {
         uintptr_t *keys;
@@ -145,8 +145,10 @@ static epoch_t *create_epoch(uint64_t id) {
     epoch_t *e = calloc(1, sizeof(epoch_t) + entry_size * (size_t)cfg.shards);
 
     e->id = id;
-    ttak_mem_tree_init(&e->tree);
-    ttak_mem_tree_set_manual_cleanup(&e->tree, true); // We trigger cleanup manually
+    e->item_capacity = 4096;
+    e->items = malloc(sizeof(cache_item_t*) * e->item_capacity);
+    e->item_count = 0;
+    ttak_mutex_init(&e->items_lock);
 
     for (int i = 0; i < cfg.shards; i++) {
         ttak_mutex_init(&e->shard_keys[i].lock);
@@ -170,6 +172,26 @@ static void record_key_in_epoch(epoch_t *e, int shard_idx, uintptr_t key) {
     }
     e->shard_keys[shard_idx].keys[e->shard_keys[shard_idx].count++] = key;
     ttak_mutex_unlock(&e->shard_keys[shard_idx].lock);
+}
+
+static bool record_item_in_epoch(epoch_t *e, cache_item_t *item) {
+    bool recorded = false;
+    ttak_mutex_lock(&e->items_lock);
+    if (e->item_count == e->item_capacity) {
+        size_t new_cap = e->item_capacity ? e->item_capacity * 2 : 4096;
+        cache_item_t **new_items = realloc(e->items, sizeof(cache_item_t*) * new_cap);
+        if (new_items) {
+            e->items = new_items;
+            e->item_capacity = new_cap;
+        } else {
+            goto done;
+        }
+    }
+    e->items[e->item_count++] = item;
+    recorded = true;
+done:
+    ttak_mutex_unlock(&e->items_lock);
+    return recorded;
 }
 
 static void *worker_task(void *arg) {
@@ -215,9 +237,7 @@ static void *worker_task(void *arg) {
 
             size_t item_size = sizeof(cache_item_t) + (size_t)cfg.value_size;
 
-            // Use a bounded lifetime instead of FOREVER so overwritten items can be reclaimed.
-            uint64_t ttl_ms = (uint64_t)cfg.ttl_ms;
-            cache_item_t *item = ttak_mem_alloc_safe(item_size, ttl_ms, now_ms, false, false, true, false, TTAK_MEM_DEFAULT);
+            cache_item_t *item = malloc(item_size);
             if (!item) {
                 continue;
             }
@@ -226,7 +246,10 @@ static void *worker_task(void *arg) {
             item->size = (size_t)cfg.value_size;
             memcpy(item->data, val_buf, (size_t)cfg.value_size);
 
-            ttak_mem_tree_add(&cur_epoch->tree, item, item_size, 0, true);
+            if (!record_item_in_epoch(cur_epoch, item)) {
+                free(item);
+                continue;
+            }
 
             ttak_rwlock_wrlock(&s->lock);
             ttak_insert_to_map(map, key, (size_t)item, now_ms);
@@ -295,9 +318,12 @@ static void *maintenance_task(void *arg) {
                 // Small grace period to reduce immediate reuse pressure.
                 usleep(20000);
 
-                ttak_mem_tree_destroy(&target_epoch->tree);
-                ttak_mem_tree_init(&target_epoch->tree);
-                ttak_mem_tree_set_manual_cleanup(&target_epoch->tree, true);
+                ttak_mutex_lock(&target_epoch->items_lock);
+                for (size_t i = 0; i < target_epoch->item_count; i++) {
+                    free(target_epoch->items[i]);
+                }
+                target_epoch->item_count = 0;
+                ttak_mutex_unlock(&target_epoch->items_lock);
             }
 
             target_epoch->id = next_idx;

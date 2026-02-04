@@ -26,11 +26,29 @@ var NAVTREE =
 [
   [ "libttak", "index.html", [
     [ "TTL Cache Benchmark (libttak)", "index.html", "index" ],
+    [ "TCC-Oriented Build and Math Tuning", "md_docs_2TCC__OPTIMIZATION.html", [
+      [ "Build Expectations", "md_docs_2TCC__OPTIMIZATION.html#autotoc_md12", null ],
+      [ "Hardcore C Tricks", "md_docs_2TCC__OPTIMIZATION.html#autotoc_md13", null ],
+      [ "Portable Assembly Strategy", "md_docs_2TCC__OPTIMIZATION.html#autotoc_md14", null ],
+      [ "Applying the Tricks Elsewhere", "md_docs_2TCC__OPTIMIZATION.html#autotoc_md15", null ]
+    ] ],
     [ "Development History", "md_HISTORY.html", [
-      [ "2026-01-30", "md_HISTORY.html#autotoc_md12", [
-        [ "Initial Skeleton Creation & Build Stabilization", "md_HISTORY.html#autotoc_md13", null ],
-        [ "Key Diffs Overview", "md_HISTORY.html#autotoc_md14", null ]
+      [ "2026-01-30", "md_HISTORY.html#autotoc_md17", [
+        [ "Initial Skeleton Creation & Build Stabilization", "md_HISTORY.html#autotoc_md18", null ],
+        [ "Key Diffs Overview", "md_HISTORY.html#autotoc_md19", null ]
       ] ]
+    ] ],
+    [ "Clone Coding Path", "md_tutorials_2CLONE__PATH.html", null ],
+    [ "Stage Notes", "md_tutorials_2modules_2notes.html", [
+      [ "Stage 1", "md_tutorials_2modules_2notes.html#autotoc_md45", null ],
+      [ "Stage 2", "md_tutorials_2modules_2notes.html#autotoc_md46", null ],
+      [ "Stage 3", "md_tutorials_2modules_2notes.html#autotoc_md47", null ],
+      [ "Stage 4", "md_tutorials_2modules_2notes.html#autotoc_md48", null ],
+      [ "Stage 5", "md_tutorials_2modules_2notes.html#autotoc_md49", null ],
+      [ "Stage 6", "md_tutorials_2modules_2notes.html#autotoc_md50", null ],
+      [ "Stage 7", "md_tutorials_2modules_2notes.html#autotoc_md51", null ],
+      [ "Stage 8", "md_tutorials_2modules_2notes.html#autotoc_md52", null ],
+      [ "Stage 9 (Dangerous)", "md_tutorials_2modules_2notes.html#autotoc_md53", null ]
     ] ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
@@ -58,9 +76,10 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "00__overview_8puml.html",
-"hash_8h.html#ab5081f0575ed9a431e1e35e25975dfda",
-"spinlock_8h.html#a705f9b9b5f7cf440ded7db544f974487",
-"structttak__owner.html#af8f1a51f68b2d8255dff9d232d2c7435"
+"fixed_8h.html#adb1d545b5cba1ae4a024c1908eb29d9d",
+"pair_8h.html#a0b4627cc662cfecb967b0931fa0c562a",
+"structttak__mem__header__t.html#a0362d896df5d92be01157426136ad6b0",
+"thread__compat_8h.html#aed0cde1556bd55109429d49799f3a9c8"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

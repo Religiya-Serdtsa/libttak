@@ -174,6 +174,60 @@ _Bool ttak_bigint_set_u64(ttak_bigint_t *bi, uint64_t value, uint64_t now) {
     return true;
 }
 
+_Bool ttak_bigint_set_u128(ttak_bigint_t *bi, ttak_u128_t value, uint64_t now) {
+    bi->is_negative = false;
+    if (ttak_u128_is_zero(value)) {
+        bi->used = 0;
+        return true;
+    }
+
+    size_t needed_limbs = 0;
+    if (value.hi != 0) {
+        needed_limbs = 4;
+    } else if (value.lo > 0xFFFFFFFFu) {
+        needed_limbs = 2;
+    } else {
+        needed_limbs = 1;
+    }
+
+    if (!ensure_capacity(bi, needed_limbs, now)) {
+        return false;
+    }
+
+    limb_t *limbs = get_limbs(bi);
+    limbs[0] = (limb_t)(value.lo & 0xFFFFFFFFu);
+    if (needed_limbs > 1) limbs[1] = (limb_t)(value.lo >> 32);
+    if (needed_limbs > 2) limbs[2] = (limb_t)(value.hi & 0xFFFFFFFFu);
+    if (needed_limbs > 3) limbs[3] = (limb_t)(value.hi >> 32);
+    bi->used = needed_limbs;
+    return true;
+}
+
+_Bool ttak_bigint_set_u256(ttak_bigint_t *bi, ttak_u256_t value, uint64_t now) {
+    bi->is_negative = false;
+    limb_t words[8];
+    for (int i = 0; i < 4; ++i) {
+        uint64_t chunk = value.limb[i];
+        words[i * 2] = (limb_t)(chunk & 0xFFFFFFFFu);
+        words[i * 2 + 1] = (limb_t)(chunk >> 32);
+    }
+    size_t needed_limbs = 8;
+    while (needed_limbs > 0 && words[needed_limbs - 1] == 0) {
+        needed_limbs--;
+    }
+    if (needed_limbs == 0) {
+        bi->used = 0;
+        return true;
+    }
+    if (!ensure_capacity(bi, needed_limbs, now)) {
+        return false;
+    }
+    limb_t *limbs = get_limbs(bi);
+    memcpy(limbs, words, needed_limbs * sizeof(limb_t));
+    bi->used = needed_limbs;
+    return true;
+}
+
 /**
  * @brief Copy an existing big integer into another.
  *
@@ -1017,6 +1071,37 @@ bool ttak_bigint_export_u64(const ttak_bigint_t *bi, uint64_t *value_out) {
     if (bi->used > 0) value |= limbs[0];
     if (bi->used > 1) value |= (uint64_t)limbs[1] << 32;
     if (value_out) *value_out = value;
+    return true;
+}
+
+bool ttak_bigint_export_u128(const ttak_bigint_t *bi, ttak_u128_t *value_out) {
+    if (!bi || !value_out || bi->is_negative || bi->used > 4) {
+        if (value_out) *value_out = ttak_u128_zero();
+        return false;
+    }
+    const limb_t *limbs = get_const_limbs(bi);
+    uint64_t lo = 0, hi = 0;
+    if (bi->used > 0) lo |= (uint64_t)limbs[0];
+    if (bi->used > 1) lo |= (uint64_t)limbs[1] << 32;
+    if (bi->used > 2) hi |= (uint64_t)limbs[2];
+    if (bi->used > 3) hi |= (uint64_t)limbs[3] << 32;
+    *value_out = ttak_u128_make(hi, lo);
+    return true;
+}
+
+bool ttak_bigint_export_u256(const ttak_bigint_t *bi, ttak_u256_t *value_out) {
+    if (!bi || !value_out || bi->is_negative || bi->used > 8) {
+        if (value_out) *value_out = ttak_u256_zero();
+        return false;
+    }
+    uint64_t chunks[4] = {0, 0, 0, 0};
+    const limb_t *limbs = get_const_limbs(bi);
+    for (int pair = 0; pair < 4; ++pair) {
+        size_t idx = pair * 2;
+        if (bi->used > idx) chunks[pair] |= (uint64_t)limbs[idx];
+        if (bi->used > idx + 1) chunks[pair] |= (uint64_t)limbs[idx + 1] << 32;
+    }
+    *value_out = ttak_u256_from_limbs(chunks[3], chunks[2], chunks[1], chunks[0]);
     return true;
 }
 

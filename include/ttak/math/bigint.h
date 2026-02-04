@@ -5,6 +5,7 @@
 #include <stddef.h>
 #include <stdbool.h>
 #include <stdalign.h>
+#include <ttak/types/fixed.h>
 
 /**
  * @brief Platform-optimized word type for Raspberry Pi (ARMv7/v8).
@@ -54,6 +55,8 @@ void ttak_bigint_free(ttak_bigint_t *bi, uint64_t now);
  * @return true on success, false on allocation failure.
  */
 _Bool ttak_bigint_set_u64(ttak_bigint_t *bi, uint64_t value, uint64_t now);
+_Bool ttak_bigint_set_u128(ttak_bigint_t *bi, ttak_u128_t value, uint64_t now);
+_Bool ttak_bigint_set_u256(ttak_bigint_t *bi, ttak_u256_t value, uint64_t now);
 _Bool ttak_bigint_copy(ttak_bigint_t *dst, const ttak_bigint_t *src, uint64_t now);
 
 int ttak_bigint_cmp(const ttak_bigint_t *lhs, const ttak_bigint_t *rhs);
@@ -82,6 +85,8 @@ _Bool ttak_bigint_mod_u64(ttak_bigint_t *r, const ttak_bigint_t *n, uint64_t d, 
 size_t ttak_bigint_get_bit_length(const ttak_bigint_t *bi);
 char* ttak_bigint_to_string(const ttak_bigint_t *bi, uint64_t now);
 bool ttak_bigint_export_u64(const ttak_bigint_t *bi, uint64_t *value_out);
+bool ttak_bigint_export_u128(const ttak_bigint_t *bi, ttak_u128_t *value_out);
+bool ttak_bigint_export_u256(const ttak_bigint_t *bi, ttak_u256_t *value_out);
 void ttak_bigint_to_hex_hash(const ttak_bigint_t *bi, char out[65]);
 void ttak_bigint_format_prefix(const ttak_bigint_t *bi, char *dest, size_t dest_cap);
 void ttak_bigint_hash(const ttak_bigint_t *bi, uint8_t out[32]);
