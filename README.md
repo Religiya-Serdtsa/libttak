@@ -29,106 +29,129 @@ No memory is freed unless explicitly requested by the user.
 
 ## Why LibTTAK?
 
-LibTTAK exists because defensive patterns appear even in languages that promise safety when engineers need deterministic cleanup, staged shutdowns, or externally imposed invariants. The library makes those guard rails explicit and mechanical in C so that the same discipline does not need to be reinvented per project.
+LibTTAK exists because defensive patterns appear even in languages that promise safety when engineers need deterministic cleanup, staged shutdowns, or externally imposed invariants. The library makes those guard rails explicit and mechanical in C so that the same discipline does not need to be reinvented per project. When we line up the best practices from each ecosystem, the question is no longer “who writes cleaner code” but “where does the lifetime knowledge reside?”
 
-**Rust stays on alert**
+### Rust (Drop + ScopeGuard) stays on alert
+
+Rust can rely on `Drop` and scope guards so that no explicit `close()` call sneaks through a fast path, yet the programmer still has to restate every invariant directly in the control flow.
 
 ```rust
-fn guarded_session(repo: &Repo, cfg: Config) -> Result<Session, Error> {
-    let mut guard = repo.open().map_err(Error::open)?;
+use scopeguard::ScopeGuard;
+
+fn guarded_session(repo: &Repo, cfg: &Config) -> Result<ArmedSession, Error> {
+    let guard = repo.open().map_err(Error::open)?;
+    let guard = scopeguard::guard(guard, |mut g| g.close());
+
     if guard.is_dead() {
         return Err(Error::DeadRepo);
     }
 
     let mut session = Session::new(cfg.clone()).map_err(Error::session)?;
     if session.remaining_budget() == 0 {
-        guard.close();
         return Err(Error::Depleted);
     }
 
-    let key = cfg.key.as_ref().ok_or(Error::MissingKey)?;
+    let key = cfg.key.as_deref().ok_or(Error::MissingKey)?;
     if key.len() < 32 {
-        guard.close();
         return Err(Error::WeakKey);
     }
 
+    let guard = ScopeGuard::into_inner(guard);
     Ok(Session::armed(session, guard))
 }
 ```
 
-**C++ never unclenches**
+### C++ (smart pointers + custom deleters) never unclenches
+
+Modern C++ leans on `std::unique_ptr`, custom deleters, and `tl::expected`/`std::expected` to guarantee exception safety, but the ergonomics still depend on wiring the same checks and releases at every return site.
 
 ```cpp
-auto guarded_session(Repo& repo, const Config& cfg) -> Result<Session> {
-    auto guard = repo.open();
-    if (!guard.ok()) {
-        return Error::Open(guard.error());
-    }
-    if (guard->isDead()) {
-        return Error::DeadRepo();
+#include <memory>
+#include <utility>
+
+auto guarded_session(Repo& repo, const Config& cfg) -> tl::expected<ArmedSession, Error> {
+    using guard_ptr = std::unique_ptr<RepoGuard, decltype(&RepoGuard::close)>;
+    using session_ptr = std::unique_ptr<Session, decltype(&Session::abort)>;
+
+    guard_ptr guard(repo.open().value(), &RepoGuard::close);
+    if (guard->is_dead()) {
+        return tl::unexpected(Error::DeadRepo{});
     }
 
-    auto session = Session::New(cfg);
-    if (!session.ok()) {
-        guard->close();
-        return Error::Session(session.error());
-    }
-    if (session->remainingBudget() == 0) {
-        guard->close();
-        return Error::Depleted();
+    session_ptr session(Session::create(cfg).value(), &Session::abort);
+    if (session->remaining_budget() == 0) {
+        return tl::unexpected(Error::Depleted{});
     }
 
     const auto* key = cfg.key();
-    if (!key) {
-        guard->close();
-        return Error::MissingKey();
-    }
-    if (key->size() < 32) {
-        guard->close();
-        return Error::WeakKey();
+    if (!key || key->size() < 32) {
+        return tl::unexpected(Error::WeakKey{});
     }
 
     guard->seal();
-    return Session::Armed(std::move(session.value()), std::move(*guard));
+    session->prime(*key);
+
+    auto raw_session = session.release();
+    auto raw_guard = guard.release();
+    return Session::arm(raw_session, raw_guard);
 }
 ```
 
-**LibTTAK just clocks lifetimes**
+### LibTTAK (lifetime-as-data) just clocks scopes
+
+LibTTAK encodes the lifetime directly into the allocation. Cleanup hooks and access validation stem from the data’s declared expiry rather than ad-hoc guard paths, so the same snippet is both the runtime policy and the business logic.
 
 ```c
 #include <inttypes.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <string.h>
 
 #include <ttak/mem/mem.h>
 
-const uint64_t now = 500;
-const uint64_t lifetime = 1200;
-const uint64_t checkpoints[] = {now, now + lifetime / 2, now + lifetime + 1};
+typedef struct {
+    uint64_t expires_at;
+    char token[64];
+} session_blob_t;
 
-char *message = ttak_mem_alloc(128, lifetime, now);
-if (!message) {
-    return 1;
-}
+int main(void) {
+    const uint64_t now = 500;
+    const uint64_t lifetime = 1200;
+    const uint64_t probes[] = {now, now + lifetime / 2, now + lifetime + 1};
 
-snprintf(message, 128, "session=%" PRIu64 " expires@%" PRIu64,
-         lifetime, now + lifetime);
-
-for (size_t i = 0; i < sizeof(checkpoints) / sizeof(checkpoints[0]); ++i) {
-    const uint64_t tick = checkpoints[i];
-    char *view = ttak_mem_access(message, tick);
-    if (view) {
-        printf("[tick %" PRIu64 "] %s\n", tick, view);
-    } else {
-        printf("[tick %" PRIu64 "] lifetime closed\n", tick);
+    session_blob_t *blob = ttak_mem_alloc(sizeof(*blob), lifetime, now);
+    if (!blob) {
+        fputs("allocation failed\n", stderr);
+        return 1;
     }
-}
 
-ttak_mem_free(message);
+    blob->expires_at = now + lifetime;
+    snprintf(blob->token, sizeof(blob->token),
+             "session expires@%" PRIu64, blob->expires_at);
+
+    for (size_t i = 0; i < sizeof(probes) / sizeof(probes[0]); ++i) {
+        const uint64_t tick = probes[i];
+        session_blob_t *view = ttak_mem_access(blob, tick);
+        if (!view) {
+            printf("[tick %" PRIu64 "] lifetime closed\n", tick);
+            continue;
+        }
+        printf("[tick %" PRIu64 "] %s\n", tick, view->token);
+    }
+
+    ttak_mem_free(blob);
+    return 0;
+}
 ```
 
-Two languages, same instinct: repeat every guard, manually couple every cleanup, never assume success. LibTTAK pushes that mindset into the runtime itself so C authors can keep the discipline while trading copy-pasted sentry code for an explicit lifetime model—the lifetime bookkeeping and cleanup coupling is part of the runtime, not handwritten ceremony.
+Three best-practice snippets, same defensive posture: all checks are explicit, every slow path is guarded, and success must be restated. LibTTAK’s edge is that the lifetime is *data*, not control flow.
+
+- **Lifetime knowledge** lives inside the allocation record, so `ttak_mem_access` enforces expiry with no duplicate branching while the runtime can still enumerate `tt_inspect_dirty_pointers`.
+- **Operational coupling** becomes declarative: a single `ttak_mem_alloc` call covers creation, observation, and cleanup pressure (manual or `tt_autoclean_dirty_pointers`), whereas RAII code must restate that contract per call site.
+- **Shared tooling** is uniform; whether the consumer is C, C++, or Rust-through-FFI, LibTTAK exposes the same hooks for tracing, leak hunting, and staged shutdowns.
+
+That is why “Gentle. Predictable. Explicit.” is not a slogan but the literal data model.
 
 ## How is it used?
 
