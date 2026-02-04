@@ -43,7 +43,7 @@ static ttak_mem_tree_t global_mem_tree; // Global instance of the mem tree
     } \
     if (_h->strict_check) { \
         uint64_t *canary_start_ptr = (uint64_t *)((char *)_h + sizeof(ttak_mem_header_t)); \
-        uint64_t *canary_end_ptr = (uint64_t *)((char *)_h + sizeof(ttak_mem_header_t) + _h->size); \
+        uint64_t *canary_end_ptr = (uint64_t *)((char *)_h + sizeof(ttak_mem_header_t) + sizeof(uint64_t) + _h->size); \
         if (*canary_start_ptr != TTAK_CANARY_START_MAGIC) { \
             fprintf(stderr, "[FATAL] TTAK Memory Corruption detected at %p (Start canary corrupted)\n", (void*)ptr); \
             abort(); \
