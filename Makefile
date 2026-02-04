@@ -1,7 +1,7 @@
-CC = gcc
+CC = tcc
 
 # Standard flags for core modules: -O0 for maximum debuggability and predictable flow
-CFLAGS = -Wall -pthread -MMD -MP -Iinclude -O0 -g \
+CFLAGS = -Wall -std=c11 -pthread -Iinclude -O0 -g \
          -fno-inline -fno-omit-frame-pointer \
          -fno-optimize-sibling-calls \
          -fno-jump-tables -fno-builtin \
@@ -10,10 +10,7 @@ CFLAGS = -Wall -pthread -MMD -MP -Iinclude -O0 -g \
          -fno-exceptions -fno-tree-vectorize -fno-strict-overflow \
          -ffunction-sections -fdata-sections
 
-# Optimization flags for math-heavy modules to handle intensive computations (e.g., Aliquot sequences)
-MATH_CFLAGS = -O3 -march=native -mtune=native \
-              -funroll-loops -ftree-vectorize -fstrict-aliasing \
-              -finline-functions
+DEPFLAGS = -MD -MF $(@:.o=.d)
 
 LDFLAGS = -pthread -lm
 
@@ -23,10 +20,12 @@ INCDIR = $(PREFIX)/include
 
 SRC_DIRS = src/ht src/thread src/timing src/mem src/async src/priority \
            src/atomic src/sync src/math src/tree src/container \
-           src/security src/mem_tree src/limit src/stats src/log
+           src/security src/mem_tree src/limit src/stats src/log \
+           src/unsafe
 
 SRCS = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
 OBJS = $(patsubst src/%.c,obj/%.o,$(SRCS))
+ASMS = $(patsubst src/%.c,obj/%.s,$(SRCS))
 DEPS = $(OBJS:.o=.d)
 
 LIB = lib/libttak.a
@@ -40,15 +39,16 @@ $(LIB): $(OBJS)
 	@mkdir -p lib
 	ar rcs $@ $(OBJS)
 
-# Specific rule for math directory: enables high optimization for performance-critical logic
-obj/math/%.o: src/math/%.c
-	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(MATH_CFLAGS) -c $< -o $@
+asm: directories $(ASMS)
 
 # Default rule for all other directories
 obj/%.o: src/%.c
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(DEPFLAGS) -c $< -o $@
+
+obj/%.s: obj/%.o
+	@mkdir -p $(dir $@)
+	objdump -d $< > $@
 
 test: all $(TEST_BINS)
 	@echo "Starting internal test suite..."
@@ -74,6 +74,9 @@ clean:
 	rm -rf obj lib tests/*.d
 	find tests/ -type f ! -name "*.c" ! -name "*.h" -delete
 
+asm_clean:
+	rm -f $(ASMS)
+
 install: $(LIB)
 	install -d $(INCDIR)
 	install -d $(LIBDIR)
@@ -89,4 +92,4 @@ blueprints:
 
 -include $(DEPS)
 
-.PHONY: all clean directories install uninstall blueprints test
+.PHONY: all clean directories install uninstall blueprints test asm asm_clean

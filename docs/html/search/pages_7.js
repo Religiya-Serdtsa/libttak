@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['good_20if_20you_20stay_20safe_0',['C is good, if you stay safe.',['../index.html#autotoc_md6',1,'']]]
+  ['notes_0',['Stage Notes',['../md_tutorials_2modules_2notes.html',1,'']]]
 ];

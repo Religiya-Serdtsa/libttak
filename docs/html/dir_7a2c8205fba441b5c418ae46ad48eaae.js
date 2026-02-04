@@ -15,5 +15,7 @@ var dir_7a2c8205fba441b5c418ae46ad48eaae =
     [ "sync", "dir_926046accce45670bef15addf519c640.html", "dir_926046accce45670bef15addf519c640" ],
     [ "thread", "dir_de79d35134aad86fb3d662a3adebca9f.html", "dir_de79d35134aad86fb3d662a3adebca9f" ],
     [ "timing", "dir_a93403a77c982573f260f613cf194398.html", "dir_a93403a77c982573f260f613cf194398" ],
-    [ "tree", "dir_2882d03c691174216d8600853f119947.html", "dir_2882d03c691174216d8600853f119947" ]
+    [ "tree", "dir_2882d03c691174216d8600853f119947.html", "dir_2882d03c691174216d8600853f119947" ],
+    [ "types", "dir_c619a2efc7e1f9a0cba0d403b376f987.html", "dir_c619a2efc7e1f9a0cba0d403b376f987" ],
+    [ "unsafe", "dir_1ee65210972bccae71ca507b55fd7fc2.html", "dir_1ee65210972bccae71ca507b55fd7fc2" ]
 ];

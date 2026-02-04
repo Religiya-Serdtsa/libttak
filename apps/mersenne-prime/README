@@ -1,5 +1,0 @@
-## Please Modift This two
-```
-yjlee@elegant:~/libttak/apps/mersenne-prime$ grep -r "/home/yjlee"
-src/main.c:#define LOCAL_STATE_DIR "/home/yjlee/Documents"
-```

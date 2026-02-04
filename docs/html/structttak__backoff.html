@@ -104,10 +104,10 @@ $(document).ready(function(){initNavTree('structttak__backoff.html',''); initRes
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a656759f034652ed5bdf8be5d4aae9353" id="r_a656759f034652ed5bdf8be5d4aae9353"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__backoff.html#a656759f034652ed5bdf8be5d4aae9353">count</a></td></tr>
-<tr class="separator:a656759f034652ed5bdf8be5d4aae9353"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89920ee20a15f807e465618477405b41" id="r_a89920ee20a15f807e465618477405b41"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__backoff.html#a89920ee20a15f807e465618477405b41">limit</a></td></tr>
-<tr class="separator:a89920ee20a15f807e465618477405b41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb72f752747271ecc00decd5d871516b" id="r_aeb72f752747271ecc00decd5d871516b"><td class="memItemLeft" align="right" valign="top">volatile int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__backoff.html#aeb72f752747271ecc00decd5d871516b">count</a></td></tr>
+<tr class="separator:aeb72f752747271ecc00decd5d871516b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1954b53b8683bc65272c57ba465d76c1" id="r_a1954b53b8683bc65272c57ba465d76c1"><td class="memItemLeft" align="right" valign="top">volatile int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__backoff.html#a1954b53b8683bc65272c57ba465d76c1">limit</a></td></tr>
+<tr class="separator:a1954b53b8683bc65272c57ba465d76c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Backoff strategy structure for spinlocks. </p>
@@ -115,14 +115,14 @@ Public Attributes</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="spinlock_8h_source.html#l00014">14</a> of file <a class="el" href="spinlock_8h_source.html">spinlock.h</a>.</p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
-<a id="a656759f034652ed5bdf8be5d4aae9353" name="a656759f034652ed5bdf8be5d4aae9353"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a656759f034652ed5bdf8be5d4aae9353">&#9670;&#160;</a></span>count</h2>
+<a id="aeb72f752747271ecc00decd5d871516b" name="aeb72f752747271ecc00decd5d871516b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb72f752747271ecc00decd5d871516b">&#9670;&#160;</a></span>count</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int ttak_backoff::count</td>
+          <td class="memname">volatile int ttak_backoff::count</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -132,14 +132,14 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a89920ee20a15f807e465618477405b41" name="a89920ee20a15f807e465618477405b41"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a89920ee20a15f807e465618477405b41">&#9670;&#160;</a></span>limit</h2>
+<a id="a1954b53b8683bc65272c57ba465d76c1" name="a1954b53b8683bc65272c57ba465d76c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1954b53b8683bc65272c57ba465d76c1">&#9670;&#160;</a></span>limit</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int ttak_backoff::limit</td>
+          <td class="memname">volatile int ttak_backoff::limit</td>
         </tr>
       </table>
 </div><div class="memdoc">

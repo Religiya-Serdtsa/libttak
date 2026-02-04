@@ -1,17 +1,13 @@
 /**
  * @file main.c
  * @brief Standalone aliquot tracker that seeds exploratory jobs, schedules work,
- *        and records interesting findings to disk.
- *
- * The file is lengthy because it keeps the scheduling, persistence, and arithmetic
- * glue in one place; concise comments mark the pieces that tend to trip maintainers.
+ * and records interesting findings to disk.
  */
 #define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include <stdbool.h>
-#include <stdatomic.h>
 #include <inttypes.h>
 #include <pthread.h>
 #include <signal.h>
@@ -26,6 +22,7 @@
 #include <limits.h>
 
 #include <ttak/mem/mem.h>
+#include <ttak/mem/owner.h>
 #include <ttak/sync/sync.h>
 #include <ttak/timing/timing.h>
 #include <ttak/atomic/atomic.h>
@@ -35,7 +32,7 @@
 #include <ttak/thread/pool.h>
 
 #ifndef PATH_MAX
-#define PATH_MAX 4096
+#define PATH_MAX 8192
 #endif
 
 #define STATE_ENV_VAR       "ALIQUOT_STATE_DIR"
@@ -45,10 +42,11 @@
 #define TRACK_LOG_NAME      "aliquot_track.jsonl"
 #define CATALOG_FILTER_FILE "catalog_filters.txt"
 #define QUEUE_STATE_NAME    "aliquot_queue.json"
+#define LEDGER_RESOURCE_NAME "ledger-state"
 
 #define MAX_WORKERS         8
 #define JOB_QUEUE_CAP       512
-#define HISTORY_BUCKETS     4096
+#define HISTORY_BUCKETS     8192
 #define LONG_RUN_MAX_STEPS  100000
 #define SCOUT_PREVIEW_STEPS 256
 #define FLUSH_INTERVAL_MS   4000
@@ -80,7 +78,10 @@ typedef struct {
     bool time_budget_hit;
     bool catalog_hit;
     uint64_t wall_time_ms;
+    uint64_t wall_time_us;
     uint32_t max_bits;
+    uint32_t max_step_index;
+    char *max_value_dec;
     char max_hash[65];
     char max_prefix[TRACK_PREFIX_DIGITS + 1];
     uint32_t max_dec_digits;
@@ -113,7 +114,7 @@ typedef enum {
 typedef struct {
     uint64_t seed;
     uint64_t steps;
-    uint64_t max_u64;
+    uint64_t max_value;
     scan_end_reason_t ended_by;
 } scan_result_t;
 
@@ -126,8 +127,9 @@ typedef struct {
     uint64_t seed;
     uint64_t steps;
     uint64_t wall_time_ms;
+    uint64_t wall_time_us;
     uint64_t budget_ms;
-    uint64_t max_u64;
+    uint32_t max_step;
     uint32_t max_bits;
     uint32_t max_dec_digits;
     double scout_score;
@@ -136,6 +138,7 @@ typedef struct {
     char ended_by[32];
     char max_hash[65];
     char max_prefix[TRACK_PREFIX_DIGITS + 1];
+    char *max_value_dec;
 } track_record_t;
 
 typedef struct history_entry {
@@ -178,8 +181,27 @@ typedef struct {
     size_t count;
 } pending_queue_t;
 
-static atomic_bool shutdown_requested;
-static atomic_uint_fast64_t g_rng_state;
+typedef struct {
+    found_record_t *found_records;
+    size_t found_count;
+    size_t found_cap;
+    size_t persisted_found_count;
+
+    jump_record_t *jump_records;
+    size_t jump_count;
+    size_t jump_cap;
+    size_t persisted_jump_count;
+
+    track_record_t *track_records;
+    size_t track_count;
+    size_t track_cap;
+    size_t persisted_track_count;
+
+    ttak_mutex_t lock;
+} ledger_state_t;
+
+static volatile uint64_t shutdown_requested;
+static volatile uint64_t g_rng_state;
 
 static char g_state_dir[PATH_MAX];
 static char g_found_log_path[PATH_MAX];
@@ -195,9 +217,10 @@ static size_t g_catalog_exact_count;
 static catalog_mod_rule_t g_catalog_mod_rules[CATALOG_MAX_MOD_RULE];
 static size_t g_catalog_mod_rule_count;
 
-static uint32_t bigint_decimal_digits_estimate(uint32_t bits);
+static void aliquot_outcome_cleanup(aliquot_outcome_t *out);
+static bool aliquot_outcome_set_decimal_from_u64(aliquot_outcome_t *out, uint64_t value);
+static bool aliquot_outcome_set_decimal_from_bigint(aliquot_outcome_t *out, const ttak_bigint_t *value, uint64_t now);
 
-/* Seeds that are already well documented elsewhere; we short-circuit them early. */
 static const uint64_t g_catalog_seeds[] = {
     1, 2, 3, 4, 5, 6, 28, 496, 8128, 33550336,
     8589869056ULL, 137438691328ULL,
@@ -213,20 +236,8 @@ static const uint64_t g_catalog_seeds[] = {
     6086552, 6175984
 };
 
-static found_record_t *g_found_records;
-static size_t g_found_count;
-static size_t g_found_cap;
-static size_t g_persisted_found_count;
-
-static jump_record_t *g_jump_records;
-static size_t g_jump_count;
-static size_t g_jump_cap;
-static size_t g_persisted_jump_count;
-
-static track_record_t *g_track_records;
-static size_t g_track_count;
-static size_t g_track_cap;
-static size_t g_persisted_track_count;
+static ledger_state_t g_ledger_state;
+static ttak_owner_t *g_ledger_owner;
 
 static pending_queue_t g_pending_queue;
 static ttak_mutex_t g_pending_lock = PTHREAD_MUTEX_INITIALIZER;
@@ -243,6 +254,14 @@ static void *worker_process_job_wrapper(void *arg);
 static void process_job(const aliquot_job_t *job);
 static bool enqueue_job(aliquot_job_t *job, const char *source_tag);
 static uint32_t bit_length_u64(uint64_t value);
+static bool ledger_init_owner(void);
+static void ledger_destroy_owner(void);
+static bool ledger_store_found_record(const found_record_t *rec);
+static bool ledger_store_jump_record(const jump_record_t *rec);
+static bool ledger_store_track_record(const track_record_t *rec);
+static void ledger_mark_found_persisted(void);
+static void ledger_mark_jump_persisted(void);
+static void ledger_mark_track_persisted(void);
 
 static bool pending_queue_add(uint64_t seed) {
     ttak_mutex_lock(&g_pending_lock);
@@ -259,7 +278,6 @@ static void pending_queue_remove(uint64_t seed) {
     ttak_mutex_lock(&g_pending_lock);
     for (size_t i = 0; i < g_pending_queue.count; ++i) {
         if (g_pending_queue.seeds[i] == seed) {
-            /* O(1) removal keeps snapshots cheap; ordering is irrelevant. */
             g_pending_queue.seeds[i] = g_pending_queue.seeds[g_pending_queue.count - 1];
             g_pending_queue.count--;
             break;
@@ -287,24 +305,67 @@ static size_t pending_queue_depth(void) {
 
 static void handle_signal(int sig) {
     (void)sig;
-    atomic_store_explicit(&shutdown_requested, true, memory_order_relaxed);
+    ttak_atomic_write64(&shutdown_requested, 1);
 }
 
 static uint64_t monotonic_millis(void) {
     return ttak_get_tick_count();
 }
 
+static uint64_t monotonic_micros(void) {
+    return ttak_get_tick_count_ns() / 1000ULL;
+}
+
+static void log_big_sum_failure(uint64_t seed, uint32_t steps, uint64_t current_value_u64,
+                                const ttak_bigint_t *current_value, const char *stage) {
+    if (!current_value) return;
+    char hash[65];
+    char prefix[TRACK_PREFIX_DIGITS + 1];
+    ttak_bigint_to_hex_hash(current_value, hash);
+    ttak_bigint_format_prefix(current_value, prefix, sizeof(prefix));
+    uint32_t bits = ttak_bigint_get_bit_length(current_value);
+    const char *reason = ttak_sum_proper_divisors_big_error_name(
+        ttak_sum_proper_divisors_big_last_error());
+    fprintf(stderr,
+            "[ALIQUOT][BIGSUM] stage=%s seed=%" PRIu64 " step=%u bits=%u current=%" PRIu64
+            " reason=%s prefix=%s hash=%s\n",
+            stage ? stage : "unknown", seed, steps, bits, current_value_u64,
+            reason ? reason : "unknown", prefix, hash);
+}
+
 static void responsive_sleep(uint32_t ms) {
     const uint32_t chunk = 200;
     uint32_t waited = 0;
     while (waited < ms) {
-        if (atomic_load_explicit(&shutdown_requested, memory_order_relaxed)) break;
+        if (ttak_atomic_read64(&shutdown_requested)) break;
         uint32_t slice = ms - waited;
         if (slice > chunk) slice = chunk;
         struct timespec ts = {.tv_sec = slice / 1000, .tv_nsec = (slice % 1000) * 1000000L};
         nanosleep(&ts, NULL);
         waited += slice;
     }
+}
+
+static bool join_state_path(char *dest, size_t dest_size, const char *dir, const char *leaf) {
+    if (!dest || !dir || !leaf || dest_size == 0) return false;
+    size_t dir_len = strnlen(dir, dest_size);
+    if (dir_len >= dest_size) return false;
+    size_t leaf_len = strlen(leaf);
+    bool needs_sep = dir_len > 0 && dir[dir_len - 1] != '/';
+    size_t total = dir_len + (needs_sep ? 1 : 0) + leaf_len + 1;
+    if (total > dest_size) return false;
+
+    size_t pos = 0;
+    if (dir_len) {
+        memcpy(dest, dir, dir_len);
+        pos = dir_len;
+    } else dest[0] = '\0';
+
+    if (needs_sep) dest[pos++] = '/';
+    memcpy(dest + pos, leaf, leaf_len);
+    pos += leaf_len;
+    dest[pos] = '\0';
+    return true;
 }
 
 static void configure_state_paths(void) {
@@ -319,10 +380,13 @@ static void configure_state_paths(void) {
     if (len == 0) {
         snprintf(g_state_dir, sizeof(g_state_dir), "%s", DEFAULT_STATE_DIR);
     }
-    snprintf(g_found_log_path, sizeof(g_found_log_path), "%s/%s", g_state_dir, FOUND_LOG_NAME);
-    snprintf(g_jump_log_path, sizeof(g_jump_log_path), "%s/%s", g_state_dir, JUMP_LOG_NAME);
-    snprintf(g_track_log_path, sizeof(g_track_log_path), "%s/%s", g_state_dir, TRACK_LOG_NAME);
-    snprintf(g_queue_state_path, sizeof(g_queue_state_path), "%s/%s", g_state_dir, QUEUE_STATE_NAME);
+    if (!join_state_path(g_found_log_path, sizeof(g_found_log_path), g_state_dir, FOUND_LOG_NAME) ||
+        !join_state_path(g_jump_log_path, sizeof(g_jump_log_path), g_state_dir, JUMP_LOG_NAME) ||
+        !join_state_path(g_track_log_path, sizeof(g_track_log_path), g_state_dir, TRACK_LOG_NAME) ||
+        !join_state_path(g_queue_state_path, sizeof(g_queue_state_path), g_state_dir, QUEUE_STATE_NAME)) {
+        fprintf(stderr, "[ALIQUOT] State path too long, please choose a shorter %s\n", STATE_ENV_VAR);
+        exit(1);
+    }
 }
 
 static void seed_rng(void) {
@@ -330,16 +394,16 @@ static void seed_rng(void) {
     clock_gettime(CLOCK_REALTIME, &ts);
     uint64_t seed = ((uint64_t)ts.tv_nsec << 16) ^ (uint64_t)getpid();
     if (seed == 0) seed = 88172645463393265ULL;
-    atomic_store(&g_rng_state, seed);
+    ttak_atomic_write64(&g_rng_state, seed);
 }
 
 static uint64_t next_random64(void) {
-    uint64_t x = atomic_load(&g_rng_state);
+    uint64_t x = ttak_atomic_read64(&g_rng_state);
     x ^= x >> 12;
     x ^= x << 25;
     x ^= x >> 27;
     x *= 2685821657736338717ULL;
-    atomic_store(&g_rng_state, x);
+    ttak_atomic_write64(&g_rng_state, x);
     return x;
 }
 
@@ -408,7 +472,6 @@ static bool history_contains(history_table_t *t, uint64_t value, uint32_t *step_
 static void history_insert(history_table_t *t, uint64_t value, uint32_t step) {
     size_t idx = value % HISTORY_BUCKETS;
     uint64_t now = monotonic_millis();
-    /* These nodes live for the duration of the run, so the FOREVER tag is fine. */
     history_entry_t *node = ttak_mem_alloc(sizeof(*node), __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!node) return;
     node->value = value;
@@ -417,7 +480,6 @@ static void history_insert(history_table_t *t, uint64_t value, uint32_t step) {
     t->buckets[idx] = node;
 }
 
-/* Avoid rescheduling the same seed by tracking it in a coarse hash table. */
 static bool seed_registry_try_add(uint64_t seed) {
     size_t idx = seed % SEED_REGISTRY_BUCKETS;
     ttak_mutex_lock(&g_seed_lock);
@@ -493,7 +555,6 @@ static void history_big_insert(history_big_table_t *t, const ttak_bigint_t *valu
     node->next = t->buckets[idx];
     t->buckets[idx] = node;
 }
-
 
 static bool record_catalog_exact(uint64_t seed) {
     for (size_t i = 0; i < g_catalog_exact_count; ++i) {
@@ -596,7 +657,7 @@ static bool frontier_accept_seed(uint64_t seed, scan_result_t *result) {
     uint64_t max_value = seed;
     uint32_t steps = 0;
     while (steps < SCAN_STEP_CAP) {
-        if (atomic_load_explicit(&shutdown_requested, memory_order_relaxed)) break;
+        if (ttak_atomic_read64(&shutdown_requested)) break;
         if (SCAN_TIMECAP_MS > 0) {
             uint64_t now = monotonic_millis();
             if (now - start_ms >= (uint64_t)SCAN_TIMECAP_MS) break;
@@ -606,11 +667,11 @@ static bool frontier_accept_seed(uint64_t seed, scan_result_t *result) {
         ttak_atomic_inc64(&g_total_probes);
         steps++;
 
-        if (!ok) { // Overflow
+        if (!ok) {
             if (result) {
                 result->ended_by = SCAN_END_OVERFLOW;
                 result->steps = steps;
-                result->max_u64 = max_value;
+                result->max_value = max_value;
             }
             return true;
         }
@@ -621,7 +682,7 @@ static bool frontier_accept_seed(uint64_t seed, scan_result_t *result) {
             if (result) {
                 result->ended_by = SCAN_END_CATALOG;
                 result->steps = steps;
-                result->max_u64 = max_value;
+                result->max_value = max_value;
             }
             return false;
         }
@@ -630,7 +691,7 @@ static bool frontier_accept_seed(uint64_t seed, scan_result_t *result) {
     if (result) {
         result->ended_by = SCAN_END_TIMECAP;
         result->steps = steps;
-        result->max_u64 = max_value;
+        result->max_value = max_value;
     }
     return true;
 }
@@ -650,14 +711,15 @@ static void run_aliquot_sequence_big(ttak_bigint_t *start_val, uint32_t start_st
 
     ttak_bigint_t max_seen;
     ttak_bigint_init_copy(&max_seen, start_val, now);
-    // The u64 max value is stale. The starting big value is our new max.
     out->max_bits = ttak_bigint_get_bit_length(&max_seen);
+    uint32_t max_step_index = start_step;
 
     uint32_t steps = start_step;
     while (true) {
         if (ttak_bigint_cmp(&current, &max_seen) > 0) {
             ttak_bigint_copy(&max_seen, &current, now);
             out->max_bits = ttak_bigint_get_bit_length(&max_seen);
+            max_step_index = steps;
         }
 
         if (max_steps > 0 && steps >= max_steps) {
@@ -671,19 +733,19 @@ static void run_aliquot_sequence_big(ttak_bigint_t *start_val, uint32_t start_st
                 break;
             }
         }
-        if (atomic_load_explicit(&shutdown_requested, memory_order_relaxed)) break;
+        if (ttak_atomic_read64(&shutdown_requested)) break;
 
         now = monotonic_millis();
         ttak_bigint_t next;
         ttak_bigint_init(&next, now);
 
-        uint64_t dbg_start_ms = monotonic_millis();
-        sum_proper_divisors_big(&current, &next, now);
-        uint64_t dbg_elapsed_ms = monotonic_millis() - dbg_start_ms;
-        if (dbg_elapsed_ms > 1000) {
-            printf("[ALIQUOT] slow big sum_divisors on a %zu-bit number took %" PRIu64 "ms\n", ttak_bigint_get_bit_length(&current), dbg_elapsed_ms);
+        if (!sum_proper_divisors_big(&current, &next, now)) {
+            uint64_t approx = 0;
+            ttak_bigint_export_u64(&current, &approx);
+            log_big_sum_failure(out->seed, steps, approx, &current, "big-sequence");
+            ttak_bigint_free(&next, now);
+            break;
         }
-
         ttak_atomic_inc64(&g_total_probes);
         steps++;
 
@@ -713,13 +775,13 @@ static void run_aliquot_sequence_big(ttak_bigint_t *start_val, uint32_t start_st
     }
 
     out->steps = steps;
-
-    // Record final metrics from the largest value seen.
+    out->max_step_index = max_step_index;
     out->max_bits = ttak_bigint_get_bit_length(&max_seen);
-    out->max_dec_digits = bigint_decimal_digits_estimate(out->max_bits);
     ttak_bigint_to_hex_hash(&max_seen, out->max_hash);
     ttak_bigint_format_prefix(&max_seen, out->max_prefix, sizeof(out->max_prefix));
-    // Also ensure max_value (u64) is saturated, as it's used in some logging.
+    if (!aliquot_outcome_set_decimal_from_bigint(out, &max_seen, monotonic_millis())) {
+        out->max_dec_digits = 0;
+    }
     if (out->overflow) {
         out->max_value = UINT64_MAX;
     }
@@ -729,7 +791,6 @@ static void run_aliquot_sequence_big(ttak_bigint_t *start_val, uint32_t start_st
     history_big_destroy(&hist);
 }
 
-/* Lightweight walker that stays in u64 lane until overflow forces a bigint detour. */
 static void run_aliquot_sequence(uint64_t seed, uint32_t max_steps, uint64_t time_budget_ms, bool allow_bigints, aliquot_outcome_t *out) {
     if (!out) return;
     memset(out, 0, sizeof(*out));
@@ -737,7 +798,9 @@ static void run_aliquot_sequence(uint64_t seed, uint32_t max_steps, uint64_t tim
     out->max_value = seed;
     out->final_value = seed;
     out->max_bits = bit_length_u64(seed);
+    out->max_step_index = 0;
     uint64_t start_ms = monotonic_millis();
+    uint64_t start_us = monotonic_micros();
 
     history_table_t hist;
     history_init(&hist);
@@ -763,40 +826,30 @@ static void run_aliquot_sequence(uint64_t seed, uint32_t max_steps, uint64_t tim
                 break;
             }
         }
-        if (atomic_load_explicit(&shutdown_requested, memory_order_relaxed)) break;
+        if (ttak_atomic_read64(&shutdown_requested)) break;
 
-        uint64_t dbg_start_ms = monotonic_millis();
         uint64_t next = 0;
         bool ok = sum_proper_divisors_u64_checked(current, &next);
-        uint64_t dbg_elapsed_ms = monotonic_millis() - dbg_start_ms;
-        if (dbg_elapsed_ms > 1000) {
-            printf("[ALIQUOT] slow sum_divisors on %" PRIu64 " took %" PRIu64 "ms\n", current, dbg_elapsed_ms);
-        }
-
         ttak_atomic_inc64(&g_total_probes);
+        steps++;
 
-        if (!ok) { // Overflow
+        if (!ok) {
             out->overflow = true;
-            steps++;
-            if (!allow_bigints) {
-                break;
-            }
+            if (!allow_bigints) break;
 
             uint64_t now = monotonic_millis();
             ttak_bigint_t big_current;
             ttak_bigint_init(&big_current, now);
             ttak_bigint_set_u64(&big_current, current, now);
-
             ttak_bigint_t big_next;
             ttak_bigint_init(&big_next, now);
             if (!sum_proper_divisors_big(&big_current, &big_next, now)) {
+                log_big_sum_failure(seed, steps, current, &big_current, "bridge");
                 ttak_bigint_free(&big_next, now);
                 ttak_bigint_free(&big_current, now);
                 break;
             }
-
             run_aliquot_sequence_big(&big_next, steps, max_steps, time_budget_ms, out, start_ms);
-
             ttak_bigint_free(&big_next, now);
             ttak_bigint_free(&big_current, now);
             break;
@@ -806,8 +859,8 @@ static void run_aliquot_sequence(uint64_t seed, uint32_t max_steps, uint64_t tim
             out->max_value = next;
             uint32_t bits = bit_length_u64(next);
             if (bits > out->max_bits) out->max_bits = bits;
+            out->max_step_index = steps;
         }
-        steps++;
 
         if (next <= 1) {
             out->terminated = true;
@@ -820,11 +873,8 @@ static void run_aliquot_sequence(uint64_t seed, uint32_t max_steps, uint64_t tim
             out->cycle_length = steps - prev_step;
             out->final_value = next;
             if (out->cycle_length <= 2) {
-                if (out->cycle_length == 1 && next == seed) {
-                    out->perfect = true;
-                } else {
-                    out->amicable = true;
-                }
+                if (out->cycle_length == 1 && next == seed) out->perfect = true;
+                else out->amicable = true;
             }
             break;
         }
@@ -840,7 +890,13 @@ static void run_aliquot_sequence(uint64_t seed, uint32_t max_steps, uint64_t tim
         out->final_value = current;
     }
     out->steps = steps;
-    out->wall_time_ms = monotonic_millis() - start_ms;
+    uint64_t elapsed_us = monotonic_micros() - start_us;
+    out->wall_time_us = elapsed_us;
+    out->wall_time_ms = elapsed_us / 1000ULL;
+    if (out->wall_time_ms == 0 && elapsed_us > 0) {
+        out->wall_time_ms = 1;
+    }
+    if (!out->max_value_dec) aliquot_outcome_set_decimal_from_u64(out, out->max_value);
     history_destroy(&hist);
 }
 
@@ -864,93 +920,326 @@ static bool looks_long(const aliquot_outcome_t *out, double *score_out) {
 
 static double compute_overflow_pressure(const aliquot_outcome_t *out) {
     if (!out) return 0.0;
-    if (out->overflow) {
-        return 60.0;
-    }
+    if (out->overflow) return 60.0;
     long double ratio = (long double)out->max_value / (long double)UINT64_MAX;
     if (ratio < 0.0L) ratio = 0.0L;
     if (ratio > 1.0L) ratio = 1.0L;
     return (double)(ratio * 60.0L);
 }
 
-
-
-static bool ensure_found_capacity(size_t extra) {
-    if (g_found_count + extra <= g_found_cap) return true;
-    size_t new_cap = g_found_cap ? g_found_cap * 2 : 32;
-    while (new_cap < g_found_count + extra) new_cap *= 2;
-    size_t bytes = new_cap * sizeof(*g_found_records);
+static bool ledger_ensure_found_capacity_locked(ledger_state_t *state, size_t extra) {
+    if (!state) return false;
+    if (state->found_count + extra <= state->found_cap) return true;
+    size_t new_cap = state->found_cap ? state->found_cap * 2 : 32;
+    while (new_cap < state->found_count + extra) new_cap *= 2;
+    size_t bytes = new_cap * sizeof(*state->found_records);
     uint64_t now = monotonic_millis();
-    found_record_t *tmp = g_found_records
-        ? ttak_mem_realloc(g_found_records, bytes, __TTAK_UNSAFE_MEM_FOREVER__, now)
+    found_record_t *tmp = state->found_records
+        ? ttak_mem_realloc(state->found_records, bytes, __TTAK_UNSAFE_MEM_FOREVER__, now)
         : ttak_mem_alloc(bytes, __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!tmp) return false;
-    g_found_records = tmp;
-    g_found_cap = new_cap;
+    state->found_records = tmp;
+    state->found_cap = new_cap;
     return true;
 }
 
-static bool ensure_jump_capacity(size_t extra) {
-    if (g_jump_count + extra <= g_jump_cap) return true;
-    size_t new_cap = g_jump_cap ? g_jump_cap * 2 : 32;
-    while (new_cap < g_jump_count + extra) new_cap *= 2;
-    size_t bytes = new_cap * sizeof(*g_jump_records);
+static bool ledger_ensure_jump_capacity_locked(ledger_state_t *state, size_t extra) {
+    if (!state) return false;
+    if (state->jump_count + extra <= state->jump_cap) return true;
+    size_t new_cap = state->jump_cap ? state->jump_cap * 2 : 32;
+    while (new_cap < state->jump_count + extra) new_cap *= 2;
+    size_t bytes = new_cap * sizeof(*state->jump_records);
     uint64_t now = monotonic_millis();
-    jump_record_t *tmp = g_jump_records
-        ? ttak_mem_realloc(g_jump_records, bytes, __TTAK_UNSAFE_MEM_FOREVER__, now)
+    jump_record_t *tmp = state->jump_records
+        ? ttak_mem_realloc(state->jump_records, bytes, __TTAK_UNSAFE_MEM_FOREVER__, now)
         : ttak_mem_alloc(bytes, __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!tmp) return false;
-    g_jump_records = tmp;
-    g_jump_cap = new_cap;
+    state->jump_records = tmp;
+    state->jump_cap = new_cap;
     return true;
 }
 
-static bool ensure_track_capacity(size_t extra) {
-    if (g_track_count + extra <= g_track_cap) return true;
-    size_t new_cap = g_track_cap ? g_track_cap * 2 : 32;
-    while (new_cap < g_track_count + extra) new_cap *= 2;
-    size_t bytes = new_cap * sizeof(*g_track_records);
+static bool ledger_ensure_track_capacity_locked(ledger_state_t *state, size_t extra) {
+    if (!state) return false;
+    if (state->track_count + extra <= state->track_cap) return true;
+    size_t new_cap = state->track_cap ? state->track_cap * 2 : 32;
+    while (new_cap < state->track_count + extra) new_cap *= 2;
+    size_t bytes = new_cap * sizeof(*state->track_records);
     uint64_t now = monotonic_millis();
-    track_record_t *tmp = g_track_records
-        ? ttak_mem_realloc(g_track_records, bytes, __TTAK_UNSAFE_MEM_FOREVER__, now)
+    track_record_t *tmp = state->track_records
+        ? ttak_mem_realloc(state->track_records, bytes, __TTAK_UNSAFE_MEM_FOREVER__, now)
         : ttak_mem_alloc(bytes, __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!tmp) return false;
-    g_track_records = tmp;
-    g_track_cap = new_cap;
+    state->track_records = tmp;
+    state->track_cap = new_cap;
     return true;
+}
+
+typedef struct {
+    const found_record_t *record;
+    bool ok;
+} ledger_store_found_args_t;
+
+typedef struct {
+    const jump_record_t *record;
+    bool ok;
+} ledger_store_jump_args_t;
+
+typedef struct {
+    const track_record_t *record;
+    bool ok;
+} ledger_store_track_args_t;
+
+static void ledger_owner_store_found(void *ctx, void *args) {
+    ledger_state_t *state = (ledger_state_t *)ctx;
+    ledger_store_found_args_t *params = (ledger_store_found_args_t *)args;
+    if (!state || !params || !params->record) return;
+    ttak_mutex_lock(&state->lock);
+    if (ledger_ensure_found_capacity_locked(state, 1)) {
+        state->found_records[state->found_count++] = *params->record;
+        params->ok = true;
+    }
+    ttak_mutex_unlock(&state->lock);
+}
+
+static void ledger_owner_store_jump(void *ctx, void *args) {
+    ledger_state_t *state = (ledger_state_t *)ctx;
+    ledger_store_jump_args_t *params = (ledger_store_jump_args_t *)args;
+    if (!state || !params || !params->record) return;
+    ttak_mutex_lock(&state->lock);
+    if (ledger_ensure_jump_capacity_locked(state, 1)) {
+        state->jump_records[state->jump_count++] = *params->record;
+        params->ok = true;
+    }
+    ttak_mutex_unlock(&state->lock);
+}
+
+static void ledger_owner_store_track(void *ctx, void *args) {
+    ledger_state_t *state = (ledger_state_t *)ctx;
+    ledger_store_track_args_t *params = (ledger_store_track_args_t *)args;
+    if (!state || !params || !params->record) return;
+    ttak_mutex_lock(&state->lock);
+    if (ledger_ensure_track_capacity_locked(state, 1)) {
+        state->track_records[state->track_count++] = *params->record;
+        params->ok = true;
+    }
+    ttak_mutex_unlock(&state->lock);
+}
+
+static void ledger_owner_persist_found(void *ctx, void *args) {
+    (void)args;
+    ledger_state_t *state = (ledger_state_t *)ctx;
+    if (!state) return;
+    ttak_mutex_lock(&state->lock);
+    if (state->persisted_found_count >= state->found_count) {
+        ttak_mutex_unlock(&state->lock);
+        return;
+    }
+    FILE *fp = fopen(g_found_log_path, "a");
+    if (!fp) {
+        ttak_mutex_unlock(&state->lock);
+        return;
+    }
+    for (size_t i = state->persisted_found_count; i < state->found_count; ++i) {
+        const found_record_t *rec = &state->found_records[i];
+        fprintf(fp, "{\"seed\":%" PRIu64 ",\"steps\":%" PRIu64 ",\"max\":%" PRIu64 ",\"final\":%" PRIu64 ",\"cycle\":%u,\"status\":\"%s\",\"source\":\"%s\"}\n",
+                rec->seed, rec->steps, rec->max_value, rec->final_value,
+                rec->cycle_length, rec->status, rec->provenance);
+    }
+    fclose(fp);
+    state->persisted_found_count = state->found_count;
+    ttak_mutex_unlock(&state->lock);
+}
+
+static void ledger_owner_persist_jump(void *ctx, void *args) {
+    (void)args;
+    ledger_state_t *state = (ledger_state_t *)ctx;
+    if (!state) return;
+    ttak_mutex_lock(&state->lock);
+    if (state->persisted_jump_count >= state->jump_count) {
+        ttak_mutex_unlock(&state->lock);
+        return;
+    }
+    FILE *fp = fopen(g_jump_log_path, "a");
+    if (!fp) {
+        ttak_mutex_unlock(&state->lock);
+        return;
+    }
+    for (size_t i = state->persisted_jump_count; i < state->jump_count; ++i) {
+        const jump_record_t *rec = &state->jump_records[i];
+        fprintf(fp, "{\"seed\":%" PRIu64 ",\"steps\":%" PRIu64 ",\"max\":%" PRIu64 ",\"score\":%.2f,\"overflow\":%.3f}\n",
+                rec->seed, rec->preview_steps, rec->preview_max, rec->score, rec->overflow_pressure);
+    }
+    fclose(fp);
+    state->persisted_jump_count = state->jump_count;
+    ttak_mutex_unlock(&state->lock);
+}
+
+static void ledger_owner_persist_track(void *ctx, void *args) {
+    (void)args;
+    ledger_state_t *state = (ledger_state_t *)ctx;
+    if (!state) return;
+    ttak_mutex_lock(&state->lock);
+    if (state->persisted_track_count >= state->track_count) {
+        ttak_mutex_unlock(&state->lock);
+        return;
+    }
+    FILE *fp = fopen(g_track_log_path, "a");
+    if (!fp) {
+        ttak_mutex_unlock(&state->lock);
+        return;
+    }
+    for (size_t i = state->persisted_track_count; i < state->track_count; ++i) {
+        track_record_t *rec = &state->track_records[i];
+        fprintf(fp, "{\"seed\":%" PRIu64 ",\"steps\":%" PRIu64 ",\"bits\":%u,\"digits\":%u,"
+                "\"hash\":\"%s\",\"prefix\":\"%s\",\"ended\":\"%s\",\"ended_by\":\"%s\",\"wall_ms\":%" PRIu64 ",\"wall_us\":%" PRIu64 ","
+                "\"budget_ms\":%" PRIu64 ",\"score\":%.2f,\"priority\":%u,\"max_step\":%u,\"max_value\":\"%s\"}\n",
+                rec->seed, rec->steps, rec->max_bits, rec->max_dec_digits,
+                rec->max_hash, rec->max_prefix, rec->ended, rec->ended_by, rec->wall_time_ms, rec->wall_time_us,
+                rec->budget_ms, rec->scout_score, rec->priority, rec->max_step,
+                rec->max_value_dec ? rec->max_value_dec : "unknown");
+        if (rec->max_value_dec) {
+            ttak_mem_free(rec->max_value_dec);
+            rec->max_value_dec = NULL;
+        }
+    }
+    fclose(fp);
+    state->persisted_track_count = state->track_count;
+    ttak_mutex_unlock(&state->lock);
+}
+
+static void ledger_owner_mark_found_persisted(void *ctx, void *args) {
+    (void)args;
+    ledger_state_t *state = (ledger_state_t *)ctx;
+    if (!state) return;
+    ttak_mutex_lock(&state->lock);
+    state->persisted_found_count = state->found_count;
+    ttak_mutex_unlock(&state->lock);
+}
+
+static void ledger_owner_mark_jump_persisted(void *ctx, void *args) {
+    (void)args;
+    ledger_state_t *state = (ledger_state_t *)ctx;
+    if (!state) return;
+    ttak_mutex_lock(&state->lock);
+    state->persisted_jump_count = state->jump_count;
+    ttak_mutex_unlock(&state->lock);
+}
+
+static void ledger_owner_mark_track_persisted(void *ctx, void *args) {
+    (void)args;
+    ledger_state_t *state = (ledger_state_t *)ctx;
+    if (!state) return;
+    ttak_mutex_lock(&state->lock);
+    state->persisted_track_count = state->track_count;
+    ttak_mutex_unlock(&state->lock);
+}
+
+static bool ledger_store_found_record(const found_record_t *rec) {
+    if (!g_ledger_owner || !rec) return false;
+    ledger_store_found_args_t args = {.record = rec, .ok = false};
+    ttak_owner_execute(g_ledger_owner, "store_found", LEDGER_RESOURCE_NAME, &args);
+    return args.ok;
+}
+
+static bool ledger_store_jump_record(const jump_record_t *rec) {
+    if (!g_ledger_owner || !rec) return false;
+    ledger_store_jump_args_t args = {.record = rec, .ok = false};
+    ttak_owner_execute(g_ledger_owner, "store_jump", LEDGER_RESOURCE_NAME, &args);
+    return args.ok;
+}
+
+static bool ledger_store_track_record(const track_record_t *rec) {
+    if (!g_ledger_owner || !rec) return false;
+    ledger_store_track_args_t args = {.record = rec, .ok = false};
+    ttak_owner_execute(g_ledger_owner, "store_track", LEDGER_RESOURCE_NAME, &args);
+    return args.ok;
+}
+
+static void ledger_mark_found_persisted(void) {
+    if (g_ledger_owner) ttak_owner_execute(g_ledger_owner, "mark_found_persisted", LEDGER_RESOURCE_NAME, NULL);
+}
+
+static void ledger_mark_jump_persisted(void) {
+    if (g_ledger_owner) ttak_owner_execute(g_ledger_owner, "mark_jump_persisted", LEDGER_RESOURCE_NAME, NULL);
+}
+
+static void ledger_mark_track_persisted(void) {
+    if (g_ledger_owner) ttak_owner_execute(g_ledger_owner, "mark_track_persisted", LEDGER_RESOURCE_NAME, NULL);
+}
+
+static bool ledger_init_owner(void) {
+    if (ttak_mutex_init(&g_ledger_state.lock) != 0) {
+        fprintf(stderr, "[ALIQUOT] Failed to init ledger mutex\n");
+        return false;
+    }
+    g_ledger_owner = ttak_owner_create(TTAK_OWNER_SAFE_DEFAULT);
+    if (!g_ledger_owner) {
+        fprintf(stderr, "[ALIQUOT] Failed to create ledger owner\n");
+        return false;
+    }
+    if (!ttak_owner_register_resource(g_ledger_owner, LEDGER_RESOURCE_NAME, &g_ledger_state)) {
+        fprintf(stderr, "[ALIQUOT] Failed to register ledger resource\n");
+        ttak_owner_destroy(g_ledger_owner);
+        g_ledger_owner = NULL;
+        return false;
+    }
+    bool ok = true;
+    ok &= ttak_owner_register_func(g_ledger_owner, "store_found", ledger_owner_store_found);
+    ok &= ttak_owner_register_func(g_ledger_owner, "store_jump", ledger_owner_store_jump);
+    ok &= ttak_owner_register_func(g_ledger_owner, "store_track", ledger_owner_store_track);
+    ok &= ttak_owner_register_func(g_ledger_owner, "persist_found", ledger_owner_persist_found);
+    ok &= ttak_owner_register_func(g_ledger_owner, "persist_jump", ledger_owner_persist_jump);
+    ok &= ttak_owner_register_func(g_ledger_owner, "persist_track", ledger_owner_persist_track);
+    ok &= ttak_owner_register_func(g_ledger_owner, "mark_found_persisted", ledger_owner_mark_found_persisted);
+    ok &= ttak_owner_register_func(g_ledger_owner, "mark_jump_persisted", ledger_owner_mark_jump_persisted);
+    ok &= ttak_owner_register_func(g_ledger_owner, "mark_track_persisted", ledger_owner_mark_track_persisted);
+    if (!ok) {
+        fprintf(stderr, "[ALIQUOT] Failed to register ledger owner funcs\n");
+        ttak_owner_destroy(g_ledger_owner);
+        g_ledger_owner = NULL;
+        return false;
+    }
+    return true;
+}
+
+static void ledger_destroy_owner(void) {
+    if (g_ledger_owner) {
+        ttak_owner_destroy(g_ledger_owner);
+        g_ledger_owner = NULL;
+    }
+    ttak_mutex_destroy(&g_ledger_state.lock);
 }
 
 static void append_found_record(const aliquot_outcome_t *out, const char *source) {
     if (!out) return;
-    if (!ensure_found_capacity(1)) return;
-    found_record_t *rec = &g_found_records[g_found_count++];
-    rec->seed = out->seed;
-    rec->steps = out->steps;
-    rec->max_value = out->max_value;
-    rec->final_value = out->final_value;
-    rec->cycle_length = out->cycle_length;
-    snprintf(rec->status, sizeof(rec->status), "%s", classify_outcome(out));
-    if (source) {
-        snprintf(rec->provenance, sizeof(rec->provenance), "%s", source);
-    } else {
-        rec->provenance[0] = '\0';
-    }
+    found_record_t rec = {0};
+    rec.seed = out->seed;
+    rec.steps = out->steps;
+    rec.max_value = out->max_value;
+    rec.final_value = out->final_value;
+    rec.cycle_length = out->cycle_length;
+    snprintf(rec.status, sizeof(rec.status), "%s", classify_outcome(out));
+    if (source) snprintf(rec.provenance, sizeof(rec.provenance), "%s", source);
+    else rec.provenance[0] = '\0';
+    if (!ledger_store_found_record(&rec)) return;
     printf("[ALIQUOT] seed=%" PRIu64 " steps=%" PRIu64 " status=%s via %s\n",
-           rec->seed, rec->steps, rec->status,
-           rec->provenance[0] ? rec->provenance : "unknown");
+            rec.seed, rec.steps, rec.status,
+            rec.provenance[0] ? rec.provenance : "unknown");
     ttak_atomic_inc64(&g_total_sequences);
 }
 
 static void append_jump_record(uint64_t seed, uint64_t steps, uint64_t max_value, double score, double overflow_pressure) {
-    if (!ensure_jump_capacity(1)) return;
-    jump_record_t *rec = &g_jump_records[g_jump_count++];
-    rec->seed = seed;
-    rec->preview_steps = steps;
-    rec->preview_max = max_value;
-    rec->score = score;
-    rec->overflow_pressure = overflow_pressure;
+    jump_record_t rec = {
+        .seed = seed,
+        .preview_steps = steps,
+        .preview_max = max_value,
+        .score = score,
+        .overflow_pressure = overflow_pressure
+    };
+    if (!ledger_store_jump_record(&rec)) return;
     printf("[SCOUT] seed=%" PRIu64 " steps=%" PRIu64 " max=%" PRIu64 " score=%.2f overflow=%.2f\n",
-           seed, steps, max_value, score, overflow_pressure);
+            seed, steps, max_value, score, overflow_pressure);
 }
 
 static const char *track_end_reason(const aliquot_outcome_t *out) {
@@ -968,209 +1257,154 @@ static const char *track_end_reason(const aliquot_outcome_t *out) {
 
 static void format_track_end_detail(const aliquot_outcome_t *out, char *dest, size_t dest_cap) {
     if (!dest || dest_cap == 0) return;
-    if (!out) {
-        snprintf(dest, dest_cap, "%s", "unknown");
-        return;
-    }
-    if (out->overflow) {
-        snprintf(dest, dest_cap, "%s", "overflow");
-        return;
-    }
-    if (out->catalog_hit) {
-        snprintf(dest, dest_cap, "%s", "catalog_hit");
-        return;
-    }
-    if (out->time_budget_hit) {
-        snprintf(dest, dest_cap, "%s", "time_budget");
-        return;
-    }
+    if (!out) { snprintf(dest, dest_cap, "unknown"); return; }
+    if (out->overflow) { snprintf(dest, dest_cap, "overflow"); return; }
+    if (out->catalog_hit) { snprintf(dest, dest_cap, "catalog_hit"); return; }
+    if (out->time_budget_hit) { snprintf(dest, dest_cap, "time_budget"); return; }
     if (out->entered_cycle) {
-        if (out->cycle_length > 0) {
-            snprintf(dest, dest_cap, "cycle_%u", out->cycle_length);
-        } else {
-            snprintf(dest, dest_cap, "%s", "cycle");
-        }
+        if (out->cycle_length > 0) snprintf(dest, dest_cap, "cycle_%u", out->cycle_length);
+        else snprintf(dest, dest_cap, "cycle");
         return;
     }
-    if (out->terminated) {
-        uint64_t final_value = out->final_value;
-        snprintf(dest, dest_cap, "reached_%" PRIu64, final_value);
-        return;
-    }
-    if (out->hit_limit) {
-        snprintf(dest, dest_cap, "%s", "step_limit");
-        return;
-    }
-    snprintf(dest, dest_cap, "%s", "open");
+    if (out->terminated) { snprintf(dest, dest_cap, "reached_%" PRIu64, out->final_value); return; }
+    if (out->hit_limit) { snprintf(dest, dest_cap, "step_limit"); return; }
+    snprintf(dest, dest_cap, "open");
 }
 
-static uint32_t bigint_decimal_digits_estimate(uint32_t bits) {
-    if (bits == 0) return 1;
-    double approx = (double)bits * 0.3010299956639812; // log10(2)
-    uint32_t digits = (uint32_t)approx + 1;
-    return digits;
+static bool aliquot_outcome_set_decimal_from_u64(aliquot_outcome_t *out, uint64_t value) {
+    if (!out) return false;
+    char tmp[32];
+    int written = snprintf(tmp, sizeof(tmp), "%" PRIu64, value);
+    if (written < 0) return false;
+    uint64_t now = monotonic_millis();
+    char *dst = ttak_mem_alloc((size_t)written + 1, __TTAK_UNSAFE_MEM_FOREVER__, now);
+    if (!dst) return false;
+    memcpy(dst, tmp, (size_t)written + 1);
+    if (out->max_value_dec) ttak_mem_free(out->max_value_dec);
+    out->max_value_dec = dst;
+    out->max_dec_digits = (uint32_t)written;
+    return true;
 }
 
-static void capture_track_metrics(const aliquot_outcome_t *out, const aliquot_job_t *job, uint64_t budget_ms, track_record_t *rec) {
+static bool aliquot_outcome_set_decimal_from_bigint(aliquot_outcome_t *out, const ttak_bigint_t *value, uint64_t now) {
+    if (!out || !value) return false;
+    char *digits = ttak_bigint_to_string(value, now);
+    if (!digits) return false;
+    if (out->max_value_dec) ttak_mem_free(out->max_value_dec);
+    out->max_value_dec = digits;
+    out->max_dec_digits = (uint32_t)strlen(digits);
+    return true;
+}
+
+static void aliquot_outcome_cleanup(aliquot_outcome_t *out) {
+    if (!out) return;
+    if (out->max_value_dec) { ttak_mem_free(out->max_value_dec); out->max_value_dec = NULL; }
+}
+
+static void capture_track_metrics(aliquot_outcome_t *out, const aliquot_job_t *job, uint64_t budget_ms, track_record_t *rec) {
     if (!out || !rec) return;
     memset(rec, 0, sizeof(*rec));
     rec->seed = out->seed;
     rec->steps = out->steps;
     rec->wall_time_ms = out->wall_time_ms;
+    rec->wall_time_us = out->wall_time_us;
     rec->budget_ms = budget_ms;
     rec->scout_score = job ? job->scout_score : 0.0;
     rec->priority = job ? job->priority : 0;
+    rec->max_step = out->max_step_index;
     snprintf(rec->ended, sizeof(rec->ended), "%s", track_end_reason(out));
     format_track_end_detail(out, rec->ended_by, sizeof(rec->ended_by));
 
+    if (out->max_value_dec) {
+        rec->max_value_dec = out->max_value_dec;
+        out->max_value_dec = NULL;
+        rec->max_dec_digits = (uint32_t)strlen(rec->max_value_dec);
+    }
+
+    uint64_t now = monotonic_millis();
+    ttak_bigint_t max_bi;
+    ttak_bigint_init(&max_bi, now);
     if (out->overflow) {
-        // For big sequences, the metrics were pre-calculated.
         rec->max_bits = out->max_bits;
-        rec->max_dec_digits = out->max_dec_digits;
         snprintf(rec->max_hash, sizeof(rec->max_hash), "%s", out->max_hash);
         snprintf(rec->max_prefix, sizeof(rec->max_prefix), "%s", out->max_prefix);
-        rec->max_u64 = UINT64_MAX; // Signal that max_u64 is not the true max
     } else {
-        // For u64 sequences, calculate metrics now.
-        rec->max_u64 = out->max_value;
-        uint64_t now = monotonic_millis();
-        ttak_bigint_t max_bi;
-        ttak_bigint_init(&max_bi, now);
         if (ttak_bigint_set_u64(&max_bi, out->max_value, now)) {
             rec->max_bits = ttak_bigint_get_bit_length(&max_bi);
-            rec->max_dec_digits = bigint_decimal_digits_estimate(rec->max_bits);
             ttak_bigint_to_hex_hash(&max_bi, rec->max_hash);
             ttak_bigint_format_prefix(&max_bi, rec->max_prefix, sizeof(rec->max_prefix));
-        } else {
-            rec->max_bits = 0;
-            rec->max_dec_digits = 0;
-            rec->max_hash[0] = '\0';
-            rec->max_prefix[0] = '\0';
         }
-        ttak_bigint_free(&max_bi, now);
     }
+    ttak_bigint_free(&max_bi, now);
 }
 
-static void append_track_record(const aliquot_outcome_t *out, const aliquot_job_t *job, uint64_t budget_ms) {
+static void append_track_record(aliquot_outcome_t *out, const aliquot_job_t *job, uint64_t budget_ms) {
     if (!out) return;
-    if (!ensure_track_capacity(1)) return;
-    track_record_t *rec = &g_track_records[g_track_count++];
-    capture_track_metrics(out, job, budget_ms, rec);
+    track_record_t rec = {0};
+    capture_track_metrics(out, job, budget_ms, &rec);
+    if (!ledger_store_track_record(&rec)) {
+        if (rec.max_value_dec) ttak_mem_free(rec.max_value_dec);
+        return;
+    }
     printf("[TRACK] seed=%" PRIu64 " bits=%u ended_by=%s\n",
-           rec->seed, rec->max_bits, rec->ended_by);
+           rec.seed, rec.max_bits, rec.ended_by);
 }
 
 static uint64_t determine_time_budget(const aliquot_job_t *job) {
     if (!job) return TRACK_FAST_BUDGET_MS;
-    if (job->priority >= 3) return TRACK_DEEP_BUDGET_MS;
-    if (job->preview_overflow) return TRACK_DEEP_BUDGET_MS;
-    if (job->scout_score >= SCOUT_SCORE_GATE * 1.5) return TRACK_DEEP_BUDGET_MS;
+    if (job->priority >= 3 || job->preview_overflow || job->scout_score >= SCOUT_SCORE_GATE * 1.5)
+        return TRACK_DEEP_BUDGET_MS;
     return TRACK_FAST_BUDGET_MS;
 }
 
 static void rehydrate_found_record(const found_record_t *rec) {
     if (!rec) return;
-    if (!ensure_found_capacity(1)) return;
-    g_found_records[g_found_count++] = *rec;
+    ledger_store_found_record(rec);
 }
 
 static void rehydrate_jump_record(const jump_record_t *rec) {
     if (!rec) return;
-    if (!ensure_jump_capacity(1)) return;
-    g_jump_records[g_jump_count++] = *rec;
+    ledger_store_jump_record(rec);
 }
 
 static void rehydrate_track_record(const track_record_t *rec) {
     if (!rec) return;
-    if (!ensure_track_capacity(1)) return;
-    g_track_records[g_track_count++] = *rec;
+    ledger_store_track_record(rec);
 }
 
 static void persist_found_records(void) {
-    FILE *fp = fopen(g_found_log_path, "a");
-    if (!fp) {
-        fprintf(stderr, "[ALIQUOT] Failed to write %s: %s\n", g_found_log_path, strerror(errno));
-        return;
-    }
-    for (size_t i = g_persisted_found_count; i < g_found_count; ++i) {
-        const found_record_t *rec = &g_found_records[i];
-        fprintf(fp, "{\"seed\":%" PRIu64 ",\"steps\":%" PRIu64 ",\"max\":%" PRIu64 ",\"final\":%" PRIu64 ",\"cycle\":%u,\"status\":\"%s\",\"source\":\"%s\"}\n",
-                rec->seed, rec->steps, rec->max_value, rec->final_value,
-                rec->cycle_length, rec->status, rec->provenance);
-    }
-    fclose(fp);
-    g_persisted_found_count = g_found_count;
+    if (g_ledger_owner) ttak_owner_execute(g_ledger_owner, "persist_found", LEDGER_RESOURCE_NAME, NULL);
 }
 
 static void persist_jump_records(void) {
-    FILE *fp = fopen(g_jump_log_path, "a");
-    if (!fp) {
-        fprintf(stderr, "[ALIQUOT] Failed to write %s: %s\n", g_jump_log_path, strerror(errno));
-        return;
-    }
-    for (size_t i = g_persisted_jump_count; i < g_jump_count; ++i) {
-        const jump_record_t *rec = &g_jump_records[i];
-        fprintf(fp, "{\"seed\":%" PRIu64 ",\"steps\":%" PRIu64 ",\"max\":%" PRIu64 ",\"score\":%.2f,\"overflow\":%.3f}\n",
-                rec->seed, rec->preview_steps, rec->preview_max, rec->score, rec->overflow_pressure);
-    }
-    fclose(fp);
-    g_persisted_jump_count = g_jump_count;
+    if (g_ledger_owner) ttak_owner_execute(g_ledger_owner, "persist_jump", LEDGER_RESOURCE_NAME, NULL);
 }
 
 static void persist_track_records(void) {
-    FILE *fp = fopen(g_track_log_path, "a");
-    if (!fp) {
-        fprintf(stderr, "[ALIQUOT] Failed to write %s: %s\n", g_track_log_path, strerror(errno));
-        return;
-    }
-    for (size_t i = g_persisted_track_count; i < g_track_count; ++i) {
-        const track_record_t *rec = &g_track_records[i];
-        fprintf(fp,
-                "{\"seed\":%" PRIu64 ",\"steps\":%" PRIu64 ",\"bits\":%u,\"digits\":%u,"
-                "\"hash\":\"%s\",\"prefix\":\"%s\",\"ended\":\"%s\",\"ended_by\":\"%s\",\"wall_ms\":%" PRIu64 ","
-                "\"budget_ms\":%" PRIu64 ",\"score\":%.2f,\"priority\":%u,\"max_u64\":%" PRIu64 "}\n",
-                rec->seed, rec->steps, rec->max_bits, rec->max_dec_digits,
-                rec->max_hash, rec->max_prefix, rec->ended, rec->ended_by, rec->wall_time_ms,
-                rec->budget_ms, rec->scout_score, rec->priority, rec->max_u64);
-    }
-    fclose(fp);
-    g_persisted_track_count = g_track_count;
+    if (g_ledger_owner) ttak_owner_execute(g_ledger_owner, "persist_track", LEDGER_RESOURCE_NAME, NULL);
 }
 
-/* The JSON snapshot is intentionally simple so operators can inspect it by hand. */
 static void persist_queue_state(void) {
     uint64_t pending[JOB_QUEUE_CAP];
     size_t count = pending_queue_snapshot(pending, JOB_QUEUE_CAP);
-
     FILE *fp = fopen(g_queue_state_path, "w");
-    if (!fp) {
-        fprintf(stderr, "[ALIQUOT] Failed to write %s: %s\n", g_queue_state_path, strerror(errno));
-        return;
-    }
+    if (!fp) return;
     fprintf(fp, "{\"pending\":[");
-    for (size_t i = 0; i < count; ++i) {
-        fprintf(fp, "%s%" PRIu64, (i == 0) ? "" : ",", pending[i]);
-    }
+    for (size_t i = 0; i < count; ++i) fprintf(fp, "%s%" PRIu64, (i == 0) ? "" : ",", pending[i]);
     fprintf(fp, "],\"ts\":%" PRIu64 "}\n", monotonic_millis());
     fclose(fp);
 }
 
 static void flush_ledgers(void) {
     ttak_mutex_lock(&g_disk_lock);
-    persist_found_records();
-    persist_jump_records();
-    persist_track_records();
-    persist_queue_state();
+    persist_found_records(); persist_jump_records(); persist_track_records(); persist_queue_state();
     ttak_atomic_write64(&g_last_persist_ms, monotonic_millis());
     ttak_mutex_unlock(&g_disk_lock);
 }
 
 static void maybe_flush_ledgers(void) {
     uint64_t now = monotonic_millis();
-    uint64_t last = ttak_atomic_read64(&g_last_persist_ms);
-    if (now - last >= FLUSH_INTERVAL_MS) {
-        flush_ledgers();
-    }
+    if (now - ttak_atomic_read64(&g_last_persist_ms) >= FLUSH_INTERVAL_MS) flush_ledgers();
 }
 
 static void load_found_records(void) {
@@ -1180,14 +1414,12 @@ static void load_found_records(void) {
     while (fgets(line, sizeof(line), fp)) {
         found_record_t rec = {0};
         if (sscanf(line, "{\"seed\":%" SCNu64 ",\"steps\":%" SCNu64 ",\"max\":%" SCNu64 ",\"final\":%" SCNu64 ",\"cycle\":%u,\"status\":\"%23[^\"]\",\"source\":\"%15[^\"]\"}",
-                   &rec.seed, &rec.steps, &rec.max_value, &rec.final_value,
-                   &rec.cycle_length, rec.status, rec.provenance) >= 5) {
-            rehydrate_found_record(&rec);
-            seed_registry_mark(rec.seed);
+                   &rec.seed, &rec.steps, &rec.max_value, &rec.final_value, &rec.cycle_length, rec.status, rec.provenance) >= 5) {
+            rehydrate_found_record(&rec); seed_registry_mark(rec.seed);
         }
     }
     fclose(fp);
-    g_persisted_found_count = g_found_count;
+    ledger_mark_found_persisted();
 }
 
 static void load_jump_records(void) {
@@ -1196,133 +1428,123 @@ static void load_jump_records(void) {
     char line[512];
     while (fgets(line, sizeof(line), fp)) {
         jump_record_t rec = {0};
-        int matched = sscanf(line, "{\"seed\":%" SCNu64 ",\"steps\":%" SCNu64 ",\"max\":%" SCNu64 ",\"score\":%lf,\"overflow\":%lf",
-                             &rec.seed, &rec.preview_steps, &rec.preview_max, &rec.score, &rec.overflow_pressure);
-        if (matched >= 4) {
+        if (sscanf(line, "{\"seed\":%" SCNu64 ",\"steps\":%" SCNu64 ",\"max\":%" SCNu64 ",\"score\":%lf,\"overflow\":%lf",
+                   &rec.seed, &rec.preview_steps, &rec.preview_max, &rec.score, &rec.overflow_pressure) >= 4) {
             rehydrate_jump_record(&rec);
         }
     }
     fclose(fp);
-    g_persisted_jump_count = g_jump_count;
+    ledger_mark_jump_persisted();
+}
+
+static bool json_extract_string(const char *json, const char *key, char *dest, size_t dest_cap) {
+    char needle[64]; snprintf(needle, sizeof(needle), "\"%s\":\"", key);
+    const char *start = strstr(json, needle);
+    if (!start) return false;
+    start += strlen(needle);
+    const char *end = strchr(start, '"');
+    if (!end) return false;
+    size_t len = (size_t)(end - start);
+    if (len >= dest_cap) len = dest_cap - 1;
+    memcpy(dest, start, len); dest[len] = '\0';
+    return true;
+}
+
+static bool json_extract_uint64(const char *json, const char *key, uint64_t *val) {
+    char needle[64]; snprintf(needle, sizeof(needle), "\"%s\":", key);
+    const char *start = strstr(json, needle);
+    if (!start) return false;
+    start += strlen(needle);
+    char *endptr = NULL; *val = strtoull(start, &endptr, 10);
+    return endptr != start;
+}
+
+static bool json_extract_uint32(const char *json, const char *key, uint32_t *val) {
+    uint64_t tmp; if (!json_extract_uint64(json, key, &tmp)) return false;
+    *val = (uint32_t)tmp; return true;
+}
+
+static bool json_extract_double(const char *json, const char *key, double *val) {
+    char needle[64]; snprintf(needle, sizeof(needle), "\"%s\":", key);
+    const char *start = strstr(json, needle);
+    if (!start) return false;
+    start += strlen(needle);
+    char *endptr = NULL; *val = strtod(start, &endptr);
+    return endptr != start;
 }
 
 static void load_track_records(void) {
     FILE *fp = fopen(g_track_log_path, "r");
     if (!fp) return;
-    char line[768];
+    char line[2048];
     while (fgets(line, sizeof(line), fp)) {
-        track_record_t rec = {0};
-        int matched = sscanf(
-            line,
-            "{\"seed\":%" SCNu64 ",\"steps\":%" SCNu64 ",\"bits\":%u,\"digits\":%u,"
-            "\"hash\":\"%64[^\"]\",\"prefix\":\"%48[^\"]\",\"ended\":\"%23[^\"]\","
-            "\"ended_by\":\"%31[^\"]\",\"wall_ms\":%" SCNu64 ",\"budget_ms\":%" SCNu64 ","
-            "\"score\":%lf,\"priority\":%u,\"max_u64\":%" SCNu64 "}",
-            &rec.seed, &rec.steps, &rec.max_bits, &rec.max_dec_digits,
-            rec.max_hash, rec.max_prefix, rec.ended, rec.ended_by,
-            &rec.wall_time_ms, &rec.budget_ms, &rec.scout_score,
-            &rec.priority, &rec.max_u64);
-        if (matched < 13) {
-            matched = sscanf(
-                line,
-                "{\"seed\":%" SCNu64 ",\"steps\":%" SCNu64 ",\"bits\":%u,\"digits\":%u,"
-                "\"hash\":\"%64[^\"]\",\"prefix\":\"%48[^\"]\",\"ended\":\"%23[^\"]\","
-                "\"wall_ms\":%" SCNu64 ",\"budget_ms\":%" SCNu64 ",\"score\":%lf,"
-                "\"priority\":%u,\"max_u64\":%" SCNu64 "}",
-                &rec.seed, &rec.steps, &rec.max_bits, &rec.max_dec_digits,
-                rec.max_hash, rec.max_prefix, rec.ended,
-                &rec.wall_time_ms, &rec.budget_ms, &rec.scout_score,
-                &rec.priority, &rec.max_u64);
-            if (matched >= 11) {
-                snprintf(rec.ended_by, sizeof(rec.ended_by), "%s", rec.ended);
-            }
+        track_record_t rec = {0}; bool ok = true;
+        ok &= json_extract_uint64(line, "seed", &rec.seed);
+        ok &= json_extract_uint64(line, "steps", &rec.steps);
+        ok &= json_extract_uint32(line, "bits", &rec.max_bits);
+        ok &= json_extract_uint32(line, "digits", &rec.max_dec_digits);
+        ok &= json_extract_string(line, "hash", rec.max_hash, sizeof(rec.max_hash));
+        ok &= json_extract_string(line, "prefix", rec.max_prefix, sizeof(rec.max_prefix));
+        ok &= json_extract_string(line, "ended", rec.ended, sizeof(rec.ended));
+        if (!json_extract_string(line, "ended_by", rec.ended_by, sizeof(rec.ended_by)))
+            snprintf(rec.ended_by, sizeof(rec.ended_by), "%s", rec.ended);
+        ok &= json_extract_uint64(line, "wall_ms", &rec.wall_time_ms);
+        if (!json_extract_uint64(line, "wall_us", &rec.wall_time_us)) {
+            rec.wall_time_us = rec.wall_time_ms * 1000ULL;
         }
-        if (matched >= 13 || (matched >= 11 && rec.ended_by[0] != '\0')) {
-            rehydrate_track_record(&rec);
-        }
+        ok &= json_extract_uint64(line, "budget_ms", &rec.budget_ms);
+        ok &= json_extract_double(line, "score", &rec.scout_score);
+        ok &= json_extract_uint32(line, "priority", &rec.priority);
+        json_extract_uint32(line, "max_step", &rec.max_step);
+        if (ok) rehydrate_track_record(&rec);
     }
     fclose(fp);
-    g_persisted_track_count = g_track_count;
+    ledger_mark_track_persisted();
 }
 
 static bool enqueue_job(aliquot_job_t *job, const char *source_tag) {
-    if (!job || !g_thread_pool) {
-        return false;
-    }
-    /* The pending queue mirrors the work handed to the pool so disk snapshots stay honest. */
-    if (!pending_queue_add(job->seed)) {
-        fprintf(stderr, "[ALIQUOT] Job queue saturated; dropping seed %" PRIu64 " (%s)\n",
-                job->seed, source_tag ? source_tag : "unknown");
-        return false;
-    }
+    if (!job || !g_thread_pool) return false;
+    if (!pending_queue_add(job->seed)) return false;
     uint64_t now = monotonic_millis();
-    ttak_future_t *future = ttak_thread_pool_submit_task(
-        g_thread_pool, worker_process_job_wrapper, job, job->priority, now);
-    if (!future) {
-        pending_queue_remove(job->seed);
-        fprintf(stderr, "[ALIQUOT] Thread pool rejected seed %" PRIu64 " (%s)\n",
-                job->seed, source_tag ? source_tag : "unknown");
-        return false;
-    }
-    (void)future;
+    ttak_future_t *future = ttak_thread_pool_submit_task(g_thread_pool, worker_process_job_wrapper, job, job->priority, now);
+    if (!future) { pending_queue_remove(job->seed); return false; }
     return true;
 }
 
-/* Recreate outstanding work that was captured during the previous persistence pass. */
 static void load_queue_checkpoint(void) {
     if (!g_thread_pool) return;
     FILE *fp = fopen(g_queue_state_path, "r");
     if (!fp) return;
-    fseek(fp, 0, SEEK_END);
-    long sz = ftell(fp);
-    if (sz <= 0) {
-        fclose(fp);
-        return;
-    }
-    rewind(fp);
-    uint64_t now = monotonic_millis();
-    char *buffer = ttak_mem_alloc((size_t)sz + 1, __TTAK_UNSAFE_MEM_FOREVER__, now);
-    if (!buffer) {
-        fclose(fp);
-        return;
-    }
-    fread(buffer, 1, (size_t)sz, fp);
-    buffer[sz] = '\0';
-    fclose(fp);
-    char *start = strchr(buffer, '[');
-    char *end = start ? strchr(start, ']') : NULL;
-    if (start && end && end > start) {
-        char *ptr = start + 1;
-        while (ptr < end) {
-            while (ptr < end && !isdigit((unsigned char)*ptr)) ptr++;
-            if (ptr >= end) break;
-            uint64_t seed = strtoull(ptr, &ptr, 10);
+    fseek(fp, 0, SEEK_END); long sz = ftell(fp); if (sz <= 0) { fclose(fp); return; }
+    rewind(fp); uint64_t now = monotonic_millis();
+    char *buf = ttak_mem_alloc((size_t)sz + 1, __TTAK_UNSAFE_MEM_FOREVER__, now);
+    if (!buf) { fclose(fp); return; }
+    fread(buf, 1, (size_t)sz, fp); buf[sz] = '\0'; fclose(fp);
+    char *s = strchr(buf, '['), *e = s ? strchr(s, ']') : NULL;
+    if (s && e && e > s) {
+        char *p = s + 1;
+        while (p < e) {
+            while (p < e && !isdigit((unsigned char)*p)) p++;
+            if (p >= e) break;
+            uint64_t seed = strtoull(p, &p, 10);
             if (seed > 1 && seed_registry_try_add(seed)) {
-                uint64_t alloc_now = monotonic_millis();
-                aliquot_job_t *job_ptr = ttak_mem_alloc(sizeof(aliquot_job_t), __TTAK_UNSAFE_MEM_FOREVER__, alloc_now);
-                if (!job_ptr) {
-                    fprintf(stderr, "[ALIQUOT] Failed to allocate memory for checkpoint job for seed %" PRIu64 "\n", seed);
-                    continue;
-                }
-                memset(job_ptr, 0, sizeof(aliquot_job_t));
-                job_ptr->seed = seed;
-                job_ptr->priority = 1;
-                job_ptr->scout_score = 0.0;
-                snprintf(job_ptr->provenance, sizeof(job_ptr->provenance), "%s", "checkpoint");
-                if (!enqueue_job(job_ptr, "checkpoint")) {
-                    ttak_mem_free(job_ptr);
+                aliquot_job_t *job = ttak_mem_alloc(sizeof(aliquot_job_t), __TTAK_UNSAFE_MEM_FOREVER__, monotonic_millis());
+                if (job) {
+                    memset(job, 0, sizeof(*job)); job->seed = seed; job->priority = 1;
+                    snprintf(job->provenance, sizeof(job->provenance), "checkpoint");
+                    if (!enqueue_job(job, "checkpoint")) ttak_mem_free(job);
                 }
             }
         }
     }
-    ttak_mem_free(buffer);
+    ttak_mem_free(buf);
 }
 
 static void *worker_process_job_wrapper(void *arg) {
     aliquot_job_t *job = (aliquot_job_t *)arg;
     pending_queue_remove(job->seed);
     process_job(job);
-    ttak_mem_free(job); // Free the job allocated by scout_main
+    ttak_mem_free(job);
     return NULL;
 }
 
@@ -1330,151 +1552,122 @@ static void process_job(const aliquot_job_t *job) {
     if (!job) return;
     aliquot_outcome_t outcome;
     uint64_t budget_ms = determine_time_budget(job);
-
-    /* For high priority jobs, we disable the step limit to ensure persistent tracking. */
     uint32_t max_steps = (job->priority >= 3) ? 0 : LONG_RUN_MAX_STEPS;
-
     run_aliquot_sequence(job->seed, max_steps, budget_ms, true, &outcome);
 
-    /* If we hit a limit on a big integer, do not log as 'found'. Instead, re-queue with higher priority. */
     if (outcome.max_bits > 64 && outcome.hit_limit) {
-        printf("[ALIQUOT] seed=%" PRIu64 " hit big-open-limit. Re-queuing with high priority.\n", job->seed);
-
         uint64_t now = monotonic_millis();
-        aliquot_job_t *retry_job = ttak_mem_alloc(sizeof(aliquot_job_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
-        if (retry_job) {
-            memset(retry_job, 0, sizeof(*retry_job));
-            retry_job->seed = job->seed;
-            retry_job->priority = 10; /* Max priority */
-            retry_job->scout_score = job->scout_score;
-            snprintf(retry_job->provenance, sizeof(retry_job->provenance), "retry-big");
-
-            if (enqueue_job(retry_job, "retry-limit")) {
-                /* Successfully re-queued. Only log to track, not found. */
-                append_track_record(&outcome, job, budget_ms);
-                maybe_flush_ledgers();
+        aliquot_job_t *retry = ttak_mem_alloc(sizeof(aliquot_job_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
+        if (retry) {
+            memset(retry, 0, sizeof(*retry)); retry->seed = job->seed; retry->priority = 10;
+            retry->scout_score = job->scout_score; snprintf(retry->provenance, sizeof(retry->provenance), "retry-big");
+            if (enqueue_job(retry, "retry-limit")) {
+                append_track_record(&outcome, job, budget_ms); maybe_flush_ledgers(); aliquot_outcome_cleanup(&outcome);
                 return;
-            } else {
-                ttak_mem_free(retry_job);
-                fprintf(stderr, "[ALIQUOT] Failed to re-queue seed %" PRIu64 " (queue full). Logging as found fallback.\n", job->seed);
-            }
-        } else {
-            fprintf(stderr, "[ALIQUOT] Failed to allocate retry job for seed %" PRIu64 "\n", job->seed);
+            } else ttak_mem_free(retry);
         }
     }
-
     append_found_record(&outcome, job->provenance);
     append_track_record(&outcome, job, budget_ms);
     maybe_flush_ledgers();
+    aliquot_outcome_cleanup(&outcome);
 }
 
-/* Background sampler that looks for promising seeds and promotes them to the pool. */
 static void *scout_main(void *arg) {
     (void)arg;
-    while (!atomic_load_explicit(&shutdown_requested, memory_order_relaxed)) {
-        size_t depth = pending_queue_depth();
-        if (depth > JOB_QUEUE_CAP - 8) {
-            responsive_sleep(SCOUT_SLEEP_MS);
-            continue;
-        }
+    while (!ttak_atomic_read64(&shutdown_requested)) {
+        if (pending_queue_depth() > JOB_QUEUE_CAP - 8) { responsive_sleep(SCOUT_SLEEP_MS); continue; }
         uint64_t seed = random_seed_between(SCOUT_MIN_SEED, SCOUT_MAX_SEED);
-        if (!seed_registry_try_add(seed)) {
-            responsive_sleep(10);
-            continue;
-        }
-        scan_result_t scan_result;
-        if (!frontier_accept_seed(seed, &scan_result)) {
-            if (scan_result.ended_by == SCAN_END_CATALOG) {
-                printf("[SCAN] filtered catalog seed=%" PRIu64 " steps=%" PRIu64 "\n",
-                       seed, scan_result.steps);
-            }
-            responsive_sleep(5);
-            continue;
-        }
-        aliquot_outcome_t probe;
-        run_aliquot_sequence(seed, SCOUT_PREVIEW_STEPS, 0, false, &probe);
-        double score = 0.0;
-        double overflow_pressure = compute_overflow_pressure(&probe);
+        if (!seed_registry_try_add(seed)) { responsive_sleep(10); continue; }
+        scan_result_t sr;
+        if (!frontier_accept_seed(seed, &sr)) { responsive_sleep(5); continue; }
+        aliquot_outcome_t probe; run_aliquot_sequence(seed, SCOUT_PREVIEW_STEPS, 0, false, &probe);
+        double score; double op = compute_overflow_pressure(&probe);
         if (looks_long(&probe, &score)) {
-            append_jump_record(seed, probe.steps, probe.max_value, score, overflow_pressure);
-            
-            uint64_t now = monotonic_millis();
-            aliquot_job_t *job_ptr = ttak_mem_alloc(sizeof(aliquot_job_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
-            if (!job_ptr) {
-                fprintf(stderr, "[SCOUT] Failed to allocate job for seed %" PRIu64 "\n", seed);
-                responsive_sleep(SCOUT_SLEEP_MS);
-                continue;
-            }
-            memset(job_ptr, 0, sizeof(aliquot_job_t));
-            job_ptr->seed = seed;
-            job_ptr->priority = (probe.overflow || overflow_pressure >= 45.0) ? 3 : 2;
-            job_ptr->preview_steps = probe.steps;
-            job_ptr->preview_max = probe.max_value;
-            job_ptr->preview_overflow = probe.overflow || (overflow_pressure >= 45.0);
-            job_ptr->scout_score = score;
-            snprintf(job_ptr->provenance, sizeof(job_ptr->provenance), "%s", "scout");
-            if (!enqueue_job(job_ptr, "scout")) {
-                ttak_mem_free(job_ptr);
-            } else {
-                maybe_flush_ledgers();
+            append_jump_record(seed, probe.steps, probe.max_value, score, op);
+            aliquot_job_t *job = ttak_mem_alloc(sizeof(aliquot_job_t), __TTAK_UNSAFE_MEM_FOREVER__, monotonic_millis());
+            if (job) {
+                memset(job, 0, sizeof(*job)); job->seed = seed;
+                job->priority = (probe.overflow || op >= 45.0) ? 3 : 2;
+                job->preview_steps = probe.steps; job->preview_max = probe.max_value;
+                job->preview_overflow = probe.overflow || (op >= 45.0); job->scout_score = score;
+                snprintf(job->provenance, sizeof(job->provenance), "scout");
+                if (!enqueue_job(job, "scout")) ttak_mem_free(job);
+                else maybe_flush_ledgers();
             }
         }
-        responsive_sleep(SCOUT_SLEEP_MS);
+        aliquot_outcome_cleanup(&probe); responsive_sleep(SCOUT_SLEEP_MS);
     }
     return NULL;
 }
 
 int main(void) {
     printf("[ALIQUOT] Booting aliquot tracker...\n");
-    seed_rng();
-    configure_state_paths();
-    ensure_state_dir();
-    init_catalog_filters();
+    seed_rng(); configure_state_paths(); ensure_state_dir(); init_catalog_filters();
     printf("[ALIQUOT] Checkpoints at %s\n", g_state_dir);
-    struct sigaction sa = {0};
-    sa.sa_handler = handle_signal;
-    sigemptyset(&sa.sa_mask);
-    sigaction(SIGINT, &sa, NULL);
-    sigaction(SIGTERM, &sa, NULL);
-
+    if (!ledger_init_owner()) return 1;
+    struct sigaction sa = {0}; sa.sa_handler = handle_signal; sigaction(SIGINT, &sa, NULL); sigaction(SIGTERM, &sa, NULL);
     ttak_atomic_write64(&g_last_persist_ms, monotonic_millis());
-
-    load_found_records();
-    load_jump_records();
-    load_track_records();
+    load_found_records(); load_jump_records(); load_track_records();
 
     long cpus = sysconf(_SC_NPROCESSORS_ONLN);
-    if (cpus < 1) cpus = 1;
-    if (cpus > MAX_WORKERS) cpus = MAX_WORKERS;
-    
-    uint64_t now = monotonic_millis();
-    g_thread_pool = ttak_thread_pool_create((size_t)cpus, 0, now);
-    if (!g_thread_pool) {
-        fprintf(stderr, "[ALIQUOT] Failed to create thread pool.\n");
-        return 1;
+    if (cpus < 1) {
+        cpus = 1;
     }
+    if (cpus > MAX_WORKERS) {
+        cpus = MAX_WORKERS;
+    }
+    g_thread_pool = ttak_thread_pool_create((size_t)cpus, 0, monotonic_millis());
+    if (!g_thread_pool) return 1;
 
     load_queue_checkpoint();
+    pthread_t scout_thread; pthread_create(&scout_thread, NULL, scout_main, NULL);
 
-    pthread_t scout_thread;
-    pthread_create(&scout_thread, NULL, scout_main, NULL);
+    /* SELF-SEEDING BOOTSTRAP: Ensure we have work immediately */
+    if (pending_queue_depth() == 0) {
+        printf("[ALIQUOT] Warm-up: Seeding initial jobs manually...\n");
+        for (int i = 0; i < (int)cpus; i++) {
+            uint64_t seed = random_seed_between(SCOUT_MIN_SEED, SCOUT_MAX_SEED);
+            if (seed_registry_try_add(seed)) {
+                aliquot_job_t *job = ttak_mem_alloc(sizeof(aliquot_job_t), __TTAK_UNSAFE_MEM_FOREVER__, monotonic_millis());
+                if (job) {
+                    memset(job, 0, sizeof(*job)); job->seed = seed; job->priority = 1;
+                    snprintf(job->provenance, sizeof(job->provenance), "warmup");
+                    if (!enqueue_job(job, "warmup")) ttak_mem_free(job);
+                }
+            }
+        }
+    }
 
-    while (!atomic_load_explicit(&shutdown_requested, memory_order_relaxed)) {
-        responsive_sleep(1000);
+    while (!ttak_atomic_read64(&shutdown_requested)) {
+        size_t qd = pending_queue_depth();
+
+        /* ACTIVE SCHEDULING: Hunt for seeds if queue is low */
+        if (qd < (size_t)cpus) {
+            uint64_t ns = random_seed_between(SCOUT_MIN_SEED, SCOUT_MAX_SEED);
+            if (seed_registry_try_add(ns)) {
+                aliquot_job_t *job = ttak_mem_alloc(sizeof(aliquot_job_t), __TTAK_UNSAFE_MEM_FOREVER__, monotonic_millis());
+                if (job) {
+                    memset(job, 0, sizeof(*job)); job->seed = ns; job->priority = 1;
+                    snprintf(job->provenance, sizeof(job->provenance), "main_hunt");
+                    if (!enqueue_job(job, "main_hunt")) ttak_mem_free(job);
+                }
+            }
+        }
+
+        responsive_sleep(SCOUT_SLEEP_MS);
         maybe_flush_ledgers();
-        size_t queue_depth = pending_queue_depth();
+
         uint64_t completed = ttak_atomic_read64(&g_total_sequences);
         printf("[ALIQUOT] queue=%zu completed=%" PRIu64 " probes=%" PRIu64 "\n",
-               queue_depth, completed, ttak_atomic_read64(&g_total_probes));
+               qd, completed, ttak_atomic_read64(&g_total_probes));
     }
 
     printf("[ALIQUOT] Shutdown requested. Waiting for threads to exit...\n");
-    fflush(stdout);
-
     pthread_join(scout_thread, NULL);
     ttak_thread_pool_destroy(g_thread_pool);
-
     flush_ledgers();
+    ledger_destroy_owner();
     printf("[ALIQUOT] Shutdown complete.\n");
     return 0;
 }

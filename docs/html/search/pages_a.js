@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['key_20diffs_20overview_0',['Key Diffs Overview',['../md_HISTORY.html#autotoc_md3',1,'']]]
+  ['stage_20notes_0',['Stage Notes',['../md_tutorials_2modules_2notes.html',1,'']]]
 ];

@@ -1,0 +1,76 @@
+\doxysection{region.\+h}
+\hypertarget{region_8h_source}{}\label{region_8h_source}\index{include/ttak/unsafe/region.h@{include/ttak/unsafe/region.h}}
+\mbox{\hyperlink{region_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ TTAK\_UNSAFE\_REGION\_H}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ TTAK\_UNSAFE\_REGION\_H}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00008}\mbox{\hyperlink{region_8h_a99596a8898e83a96943e80034e591fd8}{00008}}\ \textcolor{preprocessor}{\#define\ \_\_TTAK\_REGION\_CANONICAL\_CTX\_\_\ 0U}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00009}\mbox{\hyperlink{region_8h_a80122b85afdab06b953482374740b7ca}{00009}}\ \textcolor{preprocessor}{\#define\ \_\_TTAK\_REGION\_CANONICAL\_ALLOC\_\_\ "{}ttak-\/canon"{}}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00010}00010\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00011}00011\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00012}00012\ \textcolor{comment}{\ *\ @brief\ Describes\ a\ raw\ memory\ span\ with\ minimal\ safety\ guarantees.}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00013}00013\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00014}\mbox{\hyperlink{structttak__unsafe__region}{00014}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__unsafe__region}{ttak\_unsafe\_region}}\ \{}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00015}\mbox{\hyperlink{structttak__unsafe__region_aadf750e793b69d9a6cbe8e13dfe386ff}{00015}}\ \ \ \ \ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{structttak__unsafe__region_aadf750e793b69d9a6cbe8e13dfe386ff}{ptr}};}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00016}\mbox{\hyperlink{structttak__unsafe__region_a0d5b35f159195f7aed840fd68890572a}{00016}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structttak__unsafe__region_a0d5b35f159195f7aed840fd68890572a}{size}};}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00017}\mbox{\hyperlink{structttak__unsafe__region_ad0a5575ed68a46576df597aa080746cc}{00017}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structttak__unsafe__region_ad0a5575ed68a46576df597aa080746cc}{capacity}};}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00018}\mbox{\hyperlink{structttak__unsafe__region_a9f2f1c8f0e278d60b2aaefd2a5439f4f}{00018}}\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{structttak__unsafe__region_a9f2f1c8f0e278d60b2aaefd2a5439f4f}{allocator\_tag}};}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00019}\mbox{\hyperlink{structttak__unsafe__region_ab321fe3ca41f8350d779a48c95c95a7b}{00019}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__unsafe__region_ab321fe3ca41f8350d779a48c95c95a7b}{ctx\_id}};}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00020}\mbox{\hyperlink{structttak__unsafe__region_a9d0037c98f07c17f86b7a50380894c00}{00020}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__unsafe__region_a9d0037c98f07c17f86b7a50380894c00}{pin\_count}};}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00021}\mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{00021}}\ \}\ \mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\_unsafe\_region\_t}};}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00022}00022\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00023}00023\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00024}00024\ \textcolor{comment}{\ *\ @brief\ Initializes\ an\ unsafe\ region\ to\ track\ a\ context\ and\ allocator\ tag.}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00025}00025\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00026}\mbox{\hyperlink{region_8h_a5358d0aa0acda59ff14e8fb3bc3791f8}{00026}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{region_8h_a5358d0aa0acda59ff14e8fb3bc3791f8}{ttak\_unsafe\_region\_init}}(\mbox{\hyperlink{structttak__unsafe__region}{ttak\_unsafe\_region\_t}}\ *region,\ uint32\_t\ ctx\_id,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *allocator\_tag);}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00027}00027\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00028}00028\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00029}00029\ \textcolor{comment}{\ *\ @brief\ Resets\ the\ region\ to\ the\ canonical\ empty\ state.}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00030}00030\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00031}\mbox{\hyperlink{region_8h_ad85f2fd69cda148c4b26d754bcc49d9c}{00031}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{region_8h_ad85f2fd69cda148c4b26d754bcc49d9c}{ttak\_unsafe\_region\_reset}}(\mbox{\hyperlink{structttak__unsafe__region}{ttak\_unsafe\_region\_t}}\ *region);}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00032}00032\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00033}00033\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00034}00034\ \textcolor{comment}{\ *\ @brief\ Returns\ true\ if\ the\ region\ currently\ owns\ no\ memory.}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00035}00035\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00036}\mbox{\hyperlink{region_8h_a1fcfeb47ea623311709790902d07eba5}{00036}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{region_8h_a1fcfeb47ea623311709790902d07eba5}{ttak\_unsafe\_region\_is\_empty}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__unsafe__region}{ttak\_unsafe\_region\_t}}\ *region);}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00037}00037\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00038}00038\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00039}00039\ \textcolor{comment}{\ *\ @brief\ Increments\ the\ pin\ counter\ to\ signal\ an\ active\ borrow.}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00040}00040\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00041}\mbox{\hyperlink{region_8h_a29e3622b42d82ad3421db4f5f3932d11}{00041}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{region_8h_a29e3622b42d82ad3421db4f5f3932d11}{ttak\_unsafe\_region\_pin}}(\mbox{\hyperlink{structttak__unsafe__region}{ttak\_unsafe\_region\_t}}\ *region);}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00042}00042\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00043}00043\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00044}00044\ \textcolor{comment}{\ *\ @brief\ Decrements\ the\ pin\ counter.}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00045}00045\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00046}\mbox{\hyperlink{region_8h_a7dc7d1fafdd11d1d88d6c4a2cf65ec14}{00046}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{region_8h_a7dc7d1fafdd11d1d88d6c4a2cf65ec14}{ttak\_unsafe\_region\_unpin}}(\mbox{\hyperlink{structttak__unsafe__region}{ttak\_unsafe\_region\_t}}\ *region);}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00047}00047\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00048}00048\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00049}00049\ \textcolor{comment}{\ *\ @brief\ Moves\ memory\ from\ src\ to\ dst\ within\ the\ same\ context/allocator.}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00050}00050\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00051}\mbox{\hyperlink{region_8h_a61f666927f8e71f34e08a93551146e57}{00051}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{region_8h_a61f666927f8e71f34e08a93551146e57}{ttak\_unsafe\_region\_move}}(\mbox{\hyperlink{structttak__unsafe__region}{ttak\_unsafe\_region\_t}}\ *dst,\ \mbox{\hyperlink{structttak__unsafe__region}{ttak\_unsafe\_region\_t}}\ *src);}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00052}00052\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00053}00053\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00054}00054\ \textcolor{comment}{\ *\ @brief\ Moves\ memory\ across\ contexts,\ overriding\ ownership\ metadata.}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00055}00055\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00056}\mbox{\hyperlink{region_8h_accc23f89515395bd88dde530d37a208c}{00056}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{region_8h_accc23f89515395bd88dde530d37a208c}{ttak\_unsafe\_region\_move\_cross\_ctx}}(\mbox{\hyperlink{structttak__unsafe__region}{ttak\_unsafe\_region\_t}}\ *dst,\ \mbox{\hyperlink{structttak__unsafe__region}{ttak\_unsafe\_region\_t}}\ *src,}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ new\_ctx\_id,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *new\_allocator\_tag);}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00058}00058\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00059}00059\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00060}00060\ \textcolor{comment}{\ *\ @brief\ Adopts\ an\ externally\ allocated\ span.}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00061}00061\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00062}\mbox{\hyperlink{region_8h_a9ae4ea2db72b9156fb12e38a0a99255a}{00062}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{region_8h_a9ae4ea2db72b9156fb12e38a0a99255a}{ttak\_unsafe\_region\_adopt}}(\mbox{\hyperlink{structttak__unsafe__region}{ttak\_unsafe\_region\_t}}\ *dst,\ \textcolor{keywordtype}{void}\ *ptr,\ \textcolor{keywordtype}{size\_t}\ size,\ \textcolor{keywordtype}{size\_t}\ capacity,}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *allocator\_tag,\ uint32\_t\ ctx\_id);}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00064}00064\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00065}00065\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00066}00066\ \textcolor{comment}{\ *\ @brief\ Steals\ ownership\ from\ src\ regardless\ of\ prior\ dst\ state.}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00067}00067\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00068}\mbox{\hyperlink{region_8h_abbaa0de0a3dcf0eb15a4126ba301a8f5}{00068}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{region_8h_abbaa0de0a3dcf0eb15a4126ba301a8f5}{ttak\_unsafe\_region\_steal}}(\mbox{\hyperlink{structttak__unsafe__region}{ttak\_unsafe\_region\_t}}\ *dst,\ \mbox{\hyperlink{structttak__unsafe__region}{ttak\_unsafe\_region\_t}}\ *src);}
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{region_8h_source_l00070}00070\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

@@ -1,15 +1,23 @@
 <map id="include/ttak/math/sum_divisors.h" name="include/ttak/math/sum_divisors.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="132,5,301,50"/>
-<area shape="rect" id="Node000002" href="$bigint_8h.html" title=" " alt="" coords="147,98,286,126"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="219,50,219,82,214,82,214,50"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="5,174,76,201"/>
-<area shape="poly" id="edge6_Node000001_Node000003" title=" " alt="" coords="192,52,137,100,66,165,63,161,133,96,189,48"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="308,174,389,201"/>
-<area shape="poly" id="edge7_Node000001_Node000005" title=" " alt="" coords="248,48,275,70,300,96,322,128,339,158,334,161,317,130,296,100,271,74,245,52"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="186,129,87,170,85,165,184,124"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="100,174,173,201"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="204,128,164,165,160,161,200,124"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="241,124,313,163,310,168,239,129"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="198,174,283,201"/>
-<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="223,125,234,158,229,160,218,127"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="167,5,337,45"/>
+<area shape="rect" id="Node000002" href="$logger_8h.html" title=" " alt="" coords="5,93,133,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="209,48,110,90,108,85,207,43"/>
+<area shape="rect" id="Node000004" href="$bigint_8h.html" title=" " alt="" coords="301,93,440,119"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="282,43,343,84,340,88,279,48"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="298,240,369,265"/>
+<area shape="poly" id="edge11_Node000001_Node000005" title=" " alt="" coords="238,47,216,77,197,114,191,134,188,154,190,173,198,191,215,210,237,224,285,242,283,247,235,229,212,214,194,193,185,174,183,154,185,133,192,112,212,74,233,44"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="601,240,684,265"/>
+<area shape="poly" id="edge12_Node000001_Node000007" title=" " alt="" coords="337,27,415,38,500,62,542,80,581,103,616,131,645,165,652,180,655,196,652,226,647,226,649,196,647,181,640,168,612,135,578,107,539,85,498,67,414,43,337,32"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="32,167,107,192"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="72,119,72,153,67,153,67,119"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="370,120,342,227,337,226,365,118"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="371,167,445,192"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="379,118,398,153,393,156,374,120"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="441,114,543,134,588,148,618,165,629,178,636,194,644,225,639,227,631,196,624,181,614,169,586,153,542,139,440,119"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="209,167,295,192"/>
+<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="353,121,285,162,282,157,350,116"/>
+<area shape="rect" id="Node000009" href="$fixed_8h.html" title=" " alt="" coords="470,167,605,192"/>
+<area shape="poly" id="edge8_Node000004_Node000009" title=" " alt="" coords="398,116,499,159,497,164,396,121"/>
+<area shape="poly" id="edge9_Node000009_Node000005" title=" " alt="" coords="505,195,380,238,378,233,504,190"/>
+<area shape="poly" id="edge10_Node000009_Node000007" title=" " alt="" coords="556,190,616,230,613,235,553,194"/>
 </map>

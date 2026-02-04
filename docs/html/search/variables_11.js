@@ -10,10 +10,8 @@ var searchData=
   ['thread_7',['thread',['../structttak__worker.html#a898cb4a5897d00b4785fd83a3324635b',1,'ttak_worker']]],
   ['tokens_8',['tokens',['../structttak__token__bucket.html#a0b2ab0fbdbea57c05eb48f2b57f16887',1,'ttak_token_bucket']]],
   ['top_9',['top',['../structttak__simple__stack__t.html#a2efd82c00fc2515e5ddeecd0e1563a8e',1,'ttak_simple_stack_t']]],
-  ['total_5fmem_5fkb_10',['total_mem_kb',['../structttak__hw__spec__t.html#a911a64aee0183a66ce44e9136fc66814',1,'ttak_hw_spec_t']]],
-  ['total_5fops_11',['total_ops',['../structttak__node__telemetry__t.html#a31f749ae8f5a0454767997952493bb97',1,'ttak_node_telemetry_t']]],
-  ['tree_12',['tree',['../structttak__epoch__gc.html#a9377dd939116b8afa03f01ba1691ee17',1,'ttak_epoch_gc::tree'],['../structttak__mem__node.html#aca7c8aefbd2124fc4f031d078c58ea01',1,'ttak_mem_node::tree']]],
-  ['ts_13',['ts',['../structttak__func__wrapper.html#a0c002b599deea32162fb5162ea9196fb',1,'ttak_func_wrapper::ts'],['../structtt__type__shared.html#aa04c9333dcd0c2a95d117afc3a2e1e18',1,'tt_type_shared::ts'],['../structttak__worker__wrapper.html#a36bdb7cda1461109b9fad24eef3338a3',1,'ttak_worker_wrapper::ts']]],
-  ['ttak_5fntt_5fprimes_14',['ttak_ntt_primes',['../include_2ttak_2math_2ntt_8h.html#a08d9004f7979851e9e96fa6dc2ec982b',1,'ntt.h']]],
-  ['type_15',['type',['../structttak__func__wrapper.html#ac367c431a12ab652127e98d77e28cda9',1,'ttak_func_wrapper::type'],['../structttak__ast__node.html#ac668549219bcbf93e667bb1782fe9a79',1,'ttak_ast_node::type']]]
+  ['tree_10',['tree',['../structttak__epoch__gc.html#a9377dd939116b8afa03f01ba1691ee17',1,'ttak_epoch_gc::tree'],['../structttak__mem__node.html#aca7c8aefbd2124fc4f031d078c58ea01',1,'ttak_mem_node::tree']]],
+  ['ts_11',['ts',['../structttak__func__wrapper.html#a0c002b599deea32162fb5162ea9196fb',1,'ttak_func_wrapper::ts'],['../structtt__type__shared.html#aa04c9333dcd0c2a95d117afc3a2e1e18',1,'tt_type_shared::ts'],['../structttak__worker__wrapper.html#a36bdb7cda1461109b9fad24eef3338a3',1,'ttak_worker_wrapper::ts']]],
+  ['ttak_5fntt_5fprimes_12',['ttak_ntt_primes',['../include_2ttak_2math_2ntt_8h.html#a08d9004f7979851e9e96fa6dc2ec982b',1,'ntt.h']]],
+  ['type_13',['type',['../structttak__func__wrapper.html#ac367c431a12ab652127e98d77e28cda9',1,'ttak_func_wrapper::type'],['../structttak__ast__node.html#ac668549219bcbf93e667bb1782fe9a79',1,'ttak_ast_node::type']]]
 ];

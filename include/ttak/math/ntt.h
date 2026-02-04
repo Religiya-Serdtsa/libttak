@@ -4,12 +4,7 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
-
-#if !defined(__SIZEOF_INT128__)
-#error "ttak_ntt requires compiler support for __int128"
-#endif
-
-typedef unsigned __int128 ttak_uint128_native_t;
+#include <ttak/types/fixed.h>
 
 /**
  * @brief Predefined prime information for NTT operations.
@@ -26,21 +21,13 @@ typedef struct ttak_ntt_prime {
 
 extern const ttak_ntt_prime_t ttak_ntt_primes[TTAK_NTT_PRIME_COUNT];
 
-/**
- * @brief Portable 128-bit container for CRT outputs.
- */
-typedef struct ttak_u128 {
-    uint64_t lo;
-    uint64_t hi;
-} ttak_u128_t;
-
 uint64_t ttak_mod_add(uint64_t a, uint64_t b, uint64_t mod);
 uint64_t ttak_mod_sub(uint64_t a, uint64_t b, uint64_t mod);
 uint64_t ttak_mod_mul(uint64_t a, uint64_t b, uint64_t mod);
 uint64_t ttak_mod_pow(uint64_t base, uint64_t exp, uint64_t mod);
 uint64_t ttak_mod_inverse(uint64_t value, uint64_t mod);
 
-uint64_t ttak_montgomery_reduce(ttak_uint128_native_t value, const ttak_ntt_prime_t *prime);
+uint64_t ttak_montgomery_reduce(ttak_u128_t value, const ttak_ntt_prime_t *prime);
 uint64_t ttak_montgomery_mul(uint64_t lhs, uint64_t rhs, const ttak_ntt_prime_t *prime);
 uint64_t ttak_montgomery_convert(uint64_t value, const ttak_ntt_prime_t *prime);
 

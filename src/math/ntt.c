@@ -47,8 +47,8 @@ uint64_t ttak_mod_sub(uint64_t a, uint64_t b, uint64_t mod) {
  * @return Modular product.
  */
 uint64_t ttak_mod_mul(uint64_t a, uint64_t b, uint64_t mod) {
-    ttak_uint128_native_t prod = (ttak_uint128_native_t)a * (ttak_uint128_native_t)b;
-    return (uint64_t)(prod % mod);
+    ttak_u128_t prod = ttak_u128_mul64(a, b);
+    return ttak_u128_mod_u64(prod, mod);
 }
 
 /**
@@ -108,13 +108,12 @@ uint64_t ttak_mod_inverse(uint64_t value, uint64_t mod) {
  * @param prime Prime parameters (including Montgomery constants).
  * @return Reduced residue.
  */
-uint64_t ttak_montgomery_reduce(ttak_uint128_native_t value, const ttak_ntt_prime_t *prime) {
-    uint64_t m = (uint64_t)value * prime->montgomery_inv;
-    ttak_uint128_native_t t = (value + (ttak_uint128_native_t)m * prime->modulus) >> 64;
-    uint64_t result = (uint64_t)t;
-    if (result >= prime->modulus) {
-        result -= prime->modulus;
-    }
+uint64_t ttak_montgomery_reduce(ttak_u128_t value, const ttak_ntt_prime_t *prime) {
+    uint64_t m = ttak_u64_mul_lo(value.lo, prime->montgomery_inv);
+    ttak_u128_t m_mod = ttak_u128_mul64(prime->modulus, m);
+    ttak_u128_t sum = ttak_u128_add(value, m_mod);
+    uint64_t result = sum.hi;
+    if (result >= prime->modulus) result -= prime->modulus;
     return result;
 }
 
@@ -127,7 +126,7 @@ uint64_t ttak_montgomery_reduce(ttak_uint128_native_t value, const ttak_ntt_prim
  * @return Product in Montgomery form.
  */
 uint64_t ttak_montgomery_mul(uint64_t lhs, uint64_t rhs, const ttak_ntt_prime_t *prime) {
-    ttak_uint128_native_t value = (ttak_uint128_native_t)lhs * (ttak_uint128_native_t)rhs;
+    ttak_u128_t value = ttak_u128_mul64(lhs, rhs);
     return ttak_montgomery_reduce(value, prime);
 }
 
@@ -140,7 +139,7 @@ uint64_t ttak_montgomery_mul(uint64_t lhs, uint64_t rhs, const ttak_ntt_prime_t 
  */
 uint64_t ttak_montgomery_convert(uint64_t value, const ttak_ntt_prime_t *prime) {
     uint64_t v = value % prime->modulus;
-    ttak_uint128_native_t converted = (ttak_uint128_native_t)v * prime->montgomery_r2;
+    ttak_u128_t converted = ttak_u128_mul64(v, prime->montgomery_r2);
     return ttak_montgomery_reduce(converted, prime);
 }
 
@@ -189,7 +188,8 @@ static void montgomery_array_convert(uint64_t *data, size_t n, const ttak_ntt_pr
  */
 static void montgomery_array_restore(uint64_t *data, size_t n, const ttak_ntt_prime_t *prime) {
     for (size_t i = 0; i < n; ++i) {
-        data[i] = ttak_montgomery_reduce((ttak_uint128_native_t)data[i], prime);
+        ttak_u128_t value = ttak_u128_make(0, data[i]);
+        data[i] = ttak_montgomery_reduce(value, prime);
     }
 }
 
@@ -300,28 +300,16 @@ size_t ttak_next_power_of_two(size_t value) {
     return value + 1;
 }
 
-/**
- * @brief Convert a native 128-bit integer into the portable struct.
- *
- * @param value Native 128-bit value.
- * @return Decomposed hi/lo representation.
- */
-static ttak_u128_t make_u128(ttak_uint128_native_t value) {
-    ttak_u128_t out;
-    out.lo = (uint64_t)value;
-    out.hi = (uint64_t)(value >> 64);
-    return out;
+static uint64_t mod128_u64(ttak_u128_t value, uint64_t mod) {
+    return ttak_u128_mod_u64(value, mod);
 }
 
-/**
- * @brief Compute value mod mod using native 128-bit arithmetic.
- *
- * @param value 128-bit value.
- * @param mod   64-bit modulus.
- * @return Reduced 64-bit residue.
- */
-static uint64_t mod128_u64(ttak_uint128_native_t value, uint64_t mod) {
-    return (uint64_t)(value % mod);
+static bool ttak_u128_mul_u64_checked(ttak_u128_t value, uint64_t factor, ttak_u128_t *out) {
+    bool overflow = false;
+    ttak_u128_t tmp = ttak_u128_mul_u64_wide(value, factor, &overflow);
+    if (overflow) return false;
+    if (out) *out = tmp;
+    return true;
 }
 
 /**
@@ -336,8 +324,8 @@ static uint64_t mod128_u64(ttak_uint128_native_t value, uint64_t mod) {
 _Bool ttak_crt_combine(const ttak_crt_term_t *terms, size_t count, ttak_u128_t *residue_out, ttak_u128_t *modulus_out) {
     if (!terms || count == 0 || !residue_out || !modulus_out) return false;
 
-    ttak_uint128_native_t result = terms[0].residue % terms[0].modulus;
-    ttak_uint128_native_t modulus = terms[0].modulus;
+    ttak_u128_t result = ttak_u128_from_u64(terms[0].residue % terms[0].modulus);
+    ttak_u128_t modulus = ttak_u128_from_u64(terms[0].modulus);
 
     for (size_t i = 1; i < count; ++i) {
         uint64_t mod_i = terms[i].modulus;
@@ -349,11 +337,14 @@ _Bool ttak_crt_combine(const ttak_crt_term_t *terms, size_t count, ttak_u128_t *
         uint64_t current_residue = mod128_u64(result, mod_i);
         uint64_t delta = ttak_mod_sub(residue_i, current_residue, mod_i);
         uint64_t k = ttak_mod_mul(delta, inverse, mod_i);
-        result += (ttak_uint128_native_t)k * modulus;
-        modulus *= mod_i;
+
+        ttak_u128_t step;
+        if (!ttak_u128_mul_u64_checked(modulus, k, &step)) return false;
+        if (ttak_u128_add_overflow(result, step, &result)) return false;
+        if (!ttak_u128_mul_u64_checked(modulus, mod_i, &modulus)) return false;
     }
 
-    *residue_out = make_u128(result);
-    *modulus_out = make_u128(modulus);
+    *residue_out = result;
+    *modulus_out = modulus;
     return true;
 }

@@ -76,13 +76,13 @@ void ttak_mem_tree_destroy(ttak_mem_tree_t *tree);
 ttak_mem_node_t *ttak_mem_tree_add(ttak_mem_tree_t *tree, void *ptr, size_t size, uint64_t expires_tick, _Bool is_root);
 
 /**
- * @brief Removes a memory block from the mem tree and frees it.
+ * @brief Removes a memory block from the mem tree bookkeeping.
  *
- * This function should only be called when the memory block is no longer referenced
- * and its lifetime has expired, or when explicitly forced.
+ * Callers are responsible for freeing the actual allocation once the node has
+ * been detached from the tree.
  *
  * @param tree Pointer to the mem tree.
- * @param node Pointer to the mem node to remove and free.
+ * @param node Pointer to the mem node to remove.
  */
 void ttak_mem_tree_remove(ttak_mem_tree_t *tree, ttak_mem_node_t *node);
 

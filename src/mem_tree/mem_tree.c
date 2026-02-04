@@ -123,14 +123,14 @@ ttak_mem_node_t *ttak_mem_tree_add(ttak_mem_tree_t *tree, void *ptr, size_t size
 }
 
 /**
- * @brief Removes a memory block from the mem tree and frees it.
+ * @brief Removes a memory block from the mem tree.
  *
- * This function is responsible for safely removing a mem node from the tree's
- * internal list and then freeing both the tracked memory block and the mem node
- * itself. It ensures thread-safe access to the tree structure.
+ * This function unlinks the node from the tree's bookkeeping list, but it does
+ * not release the underlying allocation. Callers are responsible for freeing
+ * the tracked pointer once it has been detached from the tree.
  *
  * @param tree Pointer to the mem tree.
- * @param node Pointer to the mem node to remove and free.
+ * @param node Pointer to the mem node to remove.
  */
 void ttak_mem_tree_remove(ttak_mem_tree_t *tree, ttak_mem_node_t *node) {
     if (!tree || !node) return;
@@ -149,11 +149,6 @@ void ttak_mem_tree_remove(ttak_mem_tree_t *tree, ttak_mem_node_t *node) {
 
     pthread_mutex_unlock(&tree->lock);
 
-    // Free the actual memory block
-    if (node->ptr) {
-        ttak_mem_free(node->ptr);
-        node->ptr = NULL; // Prevent double free
-    }
     pthread_mutex_destroy(&node->lock);
     free(node); // Free the mem node itself
 }

@@ -1,0 +1,37 @@
+\chapter{TCC-\/\+Oriented Build and Math Tuning}
+\hypertarget{md_docs_2TCC__OPTIMIZATION}{}\label{md_docs_2TCC__OPTIMIZATION}\index{TCC-\/Oriented Build and Math Tuning@{TCC-\/Oriented Build and Math Tuning}}
+\label{md_docs_2TCC__OPTIMIZATION_autotoc_md11}%
+\Hypertarget{md_docs_2TCC__OPTIMIZATION_autotoc_md11}%
+ {\ttfamily libttak} can now be compiled entirely with {\bfseries{Tiny C Compiler (TCC)}} at {\ttfamily -\/O0}. The project builds without relying on compiler-\/driven vectorization or loop transformations, so correctness is identical between development and production. High throughput is recovered through carefully scheduled C and portable-\/inline-\/assembly idioms that map cleanly to every major 64-\/bit ISA.\hypertarget{md_docs_2TCC__OPTIMIZATION_autotoc_md12}{}\doxysection{\texorpdfstring{Build Expectations}{Build Expectations}}\label{md_docs_2TCC__OPTIMIZATION_autotoc_md12}
+
+\begin{DoxyItemize}
+\item {\ttfamily make} defaults to {\ttfamily tcc} for every object in the library.
+\item Dependency files are emitted via {\ttfamily -\/MD/-\/\+MF} so incremental builds keep working even though TCC lacks {\ttfamily -\/MMD}.
+\item There is no optimization flag separation for math modules anymore; every translation unit is compiled with the same transparent flag set.
+\end{DoxyItemize}\hypertarget{md_docs_2TCC__OPTIMIZATION_autotoc_md13}{}\doxysection{\texorpdfstring{Hardcore C Tricks}{Hardcore C Tricks}}\label{md_docs_2TCC__OPTIMIZATION_autotoc_md13}
+The helper header {\ttfamily \doxylink{fixed_8h}{ttak/types/fixed.\+h}} packages the manual patterns that bridge the gap between “no optimization” and “high throughput”\+:
+
+
+\begin{DoxyEnumerate}
+\item {\bfseries{Portable limb arithmetic}} – {\ttfamily \doxylink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}}/{\ttfamily \doxylink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}} expose fixed-\/size containers for 128/256-\/bit math using only 64-\/bit limbs. Helper routines take care of addition, subtraction, shifts, and multiplication so Tiny\+CC can run Montgomery/\+CRT logic without native {\ttfamily \+\_\+\+\_\+int128} support.
+\item {\bfseries{Manual carry tracking}} – every helper returns the carry/overflow so call-\/sites can fall back to bigint code when values exceed two limbs. This keeps σ(n) bookkeeping predictable and cache-\/friendly without compiler help.
+\item {\bfseries{Unsigned-\/mask arithmetic}} – bit helpers (e.\+g., {\ttfamily ttak\+\_\+u128\+\_\+bit}, {\ttfamily ttak\+\_\+u128\+\_\+and}) let us apply branchless selection and masking patterns directly on the portable limbs when building modulus masks or LLT residues.
+\end{DoxyEnumerate}
+
+The guiding rules stay intact\+:
+
+
+\begin{DoxyItemize}
+\item Decompose work into ALU-\/ready primitives on the limb helpers ({\ttfamily ttak\+\_\+u128\+\_\+add}, {\ttfamily ttak\+\_\+u128\+\_\+mul\+\_\+u64}, etc.).
+\item Keep independent data streams alive so MUL latency is hidden explicitly by the call sequence (even though TCC preserves source order).
+\item Cache pointer dereferences into locals before entering tight loops; the new helpers follow the same pattern so the compiler has predictable access paths.
+\end{DoxyItemize}\hypertarget{md_docs_2TCC__OPTIMIZATION_autotoc_md14}{}\doxysection{\texorpdfstring{Portable Assembly Strategy}{Portable Assembly Strategy}}\label{md_docs_2TCC__OPTIMIZATION_autotoc_md14}
+Inline assembly is kept ISA-\/neutral by guarding each block with architecture checks and providing a pure-\/C fallback. Most math code now relies on the limb helpers instead, keeping the exported APIs ISA-\/neutral even on Tiny\+CC builds.\hypertarget{md_docs_2TCC__OPTIMIZATION_autotoc_md15}{}\doxysection{\texorpdfstring{Applying the Tricks Elsewhere}{Applying the Tricks Elsewhere}}\label{md_docs_2TCC__OPTIMIZATION_autotoc_md15}
+
+\begin{DoxyItemize}
+\item Use {\ttfamily ttak\+\_\+branchless\+\_\+select\+\_\+\texorpdfstring{$\ast$}{*}} instead of {\ttfamily if/else} whenever the predicate is derived from a simple comparison. This keeps pipelines warm and side-\/steps branch predictors that TCC never learns to micro-\/optimize for us.
+\item Whenever repeated exponentiation or polynomial expansions appear, prefer {\ttfamily ttak\+\_\+pow\+\_\+u128\+\_\+latency} (or the same pattern) so independent multiply streams stay interleaved.
+\item Prefer reciprocal multiplication (magic-\/number division) for constant divisors. TCC won’t emit it automatically, so code it by hand when the math allows it.
+\end{DoxyItemize}
+
+Following these guardrails guarantees that the “no optimization” TCC build still saturates the ALUs on x86\+\_\+64, AArch64, and RISC-\/V without sacrificing the portable, inspection-\/friendly nature of the library. 

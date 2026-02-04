@@ -1,12 +1,18 @@
 var searchData=
 [
-  ['n_0',['n',['../structttak__bplus__node.html#aa6a28cdfce9e8a6902870fa2fb6a5654',1,'ttak_bplus_node::n'],['../structttak__btree__node.html#a117b5dd0e72f19f42ef55e16c5739751',1,'ttak_btree_node::n']]],
-  ['new_20blueprints_1',['Adding New Blueprints',['..//home/yjlee/libttak/blueprints/README.md#autotoc_md10',1,'']]],
-  ['next_2',['next',['../structttak__table__entry.html#a69cc5c4b1c16e6e3ce515f007284ebc7',1,'ttak_table_entry::next'],['../structttak__mem__node.html#a6896e5888fd2214f86e0d8fd74721819',1,'ttak_mem_node::next'],['../struct____internal__ttak__qnode__t.html#a2786b0de4c9340156e8d6f75b4257c6f',1,'__internal_ttak_qnode_t::next'],['../structttak__simple__node.html#a9093ac7a5583d3055eab5a13e91f9e2d',1,'ttak_simple_node::next'],['../structttak__bplus__node.html#a93c05ada3409d34c05f10213d841b5fc',1,'ttak_bplus_node::next']]],
-  ['nice_2eh_3',['nice.h',['../nice_8h.html',1,'']]],
-  ['nice_5fval_4',['nice_val',['../structttak__worker__wrapper.html#abc393ca82fa50e83f842a56446f5f4fb',1,'ttak_worker_wrapper']]],
-  ['notes_5',['Notes',['..//home/yjlee/libttak/README.md#autotoc_md24',1,'']]],
-  ['ntt_2eh_6',['ntt.h',['../examples_2mersenne-prime_2ntt_8h.html',1,'(Global Namespace)'],['../include_2ttak_2math_2ntt_8h.html',1,'(Global Namespace)']]],
-  ['num_5fchildren_7',['num_children',['../structttak__ast__node.html#a9268b4c9f09ddde04a6e8c5d416a2f3a',1,'ttak_ast_node']]],
-  ['num_5fthreads_8',['num_threads',['../structttak__thread__pool.html#a1002801580411b0d5394db3e66b854a8',1,'ttak_thread_pool']]]
+  ['factor_2eh_0',['factor.h',['../factor_8h.html',1,'']]],
+  ['first_1',['first',['../structttak__context.html#a1766d56d80a644928c7c9bab82bd61eb',1,'ttak_context']]],
+  ['fixed_2eh_2',['fixed.h',['../fixed_8h.html',1,'']]],
+  ['flag_3',['flag',['../structttak__spin.html#a33d3c246a2db2f9c8bee949d6cdf07b7',1,'ttak_spin']]],
+  ['force_5fshutdown_4',['force_shutdown',['../structttak__thread__pool.html#aae32bd8dbffd90e3da8049b02541dc61',1,'ttak_thread_pool']]],
+  ['free_5fvalue_5',['free_value',['../structttak__ast__tree.html#aa10c77485d216b45e0e614c850e9dfcb',1,'ttak_ast_tree']]],
+  ['freed_6',['freed',['../structttak__mem__header__t.html#a86b5bea8ae5d34192969173c8ea7ef88',1,'ttak_mem_header_t']]],
+  ['full_7',['full',['../structttak__ringbuf.html#a8f02e88791c2aa5cd364535a32a4f395',1,'ttak_ringbuf']]],
+  ['fun_8',['fun',['../structttak__func__wrapper.html#a995ca0be7a03cbeee33e41a691ccda88',1,'ttak_func_wrapper']]],
+  ['func_9',['func',['../structttak__worker__wrapper.html#a13cb944f649c9617f5dbb9bb2b0f3cd7',1,'ttak_worker_wrapper']]],
+  ['func_5fhas_5fexpired_10',['func_has_expired',['../structttak__func__wrapper.html#aa10d8287d469a27cb185d8e0a5f37ba3',1,'ttak_func_wrapper']]],
+  ['func_5fwrapper_5finit_11',['func_wrapper_init',['../atomic_8h.html#aa8c8e784da856951cb1f07f0e009e34f',1,'atomic.h']]],
+  ['functions_12',['functions',['../structttak__owner.html#ad3f0f21fea12c13d2fcbddcbe3472269',1,'ttak_owner']]],
+  ['future_13',['future',['../structttak__promise.html#a928b75ed6117e337fc20745814f5a024',1,'ttak_promise']]],
+  ['future_2eh_14',['future.h',['../future_8h.html',1,'']]]
 ];

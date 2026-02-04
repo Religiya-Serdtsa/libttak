@@ -12,8 +12,8 @@
  * Used to reduce contention by pausing or yielding during busy-wait loops.
  */
 typedef struct ttak_backoff {
-    int count; /**< Current backoff iteration count. */
-    int limit; /**< Maximum iterations before yielding the thread. */
+    volatile int count; /**< Current backoff iteration count. */
+    volatile int limit; /**< Maximum iterations before yielding the thread. */
 } ttak_backoff_t;
 
 typedef ttak_backoff_t tt_backoff_t;
@@ -41,7 +41,7 @@ void ttak_backoff_pause(ttak_backoff_t *b);
  * Prefer this over mutexes for very short critical sections.
  */
 typedef struct ttak_spin {
-    atomic_flag flag; /**< Atomic flag (TAS). */
+    volatile atomic_flag flag; /**< Atomic flag (TAS). */
 } ttak_spin_t;
 
 typedef ttak_spin_t tt_spin_t;

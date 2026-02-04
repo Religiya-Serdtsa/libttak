@@ -5,35 +5,59 @@
 \DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ TTAK\_MATH\_SUM\_DIVISORS\_H}}
 \DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ TTAK\_MATH\_SUM\_DIVISORS\_H}}
 \DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00003}00003\ }
-\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{bigint_8h}{ttak/math/bigint.h}}>}}
-\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
-\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
-\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00007}00007\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00008}00008\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00009}00009\ \textcolor{comment}{\ *\ @brief\ Calculates\ the\ sum\ of\ proper\ divisors\ for\ a\ 64-\/bit\ unsigned\ integer.}}
-\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00010}00010\ \textcolor{comment}{\ *}}
-\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00011}00011\ \textcolor{comment}{\ *\ This\ function\ calculates\ sigma(n)\ -\/\ n.\ It\ uses\ 128-\/bit\ intermediate}}
-\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00012}00012\ \textcolor{comment}{\ *\ arithmetic\ to\ detect\ overflow.}}
-\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00013}00013\ \textcolor{comment}{\ *}}
-\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00014}00014\ \textcolor{comment}{\ *\ @param\ n\ The\ number.}}
-\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00015}00015\ \textcolor{comment}{\ *\ @param\ result\_out\ A\ pointer\ to\ store\ the\ sum\ of\ proper\ divisors.}}
-\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00016}00016\ \textcolor{comment}{\ *\ @return\ \`{}true`\ if\ the\ calculation\ was\ successful\ and\ fits\ in\ a\ uint64\_t.}}
-\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00017}00017\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ \`{}false`\ if\ the\ sum\ of\ divisors\ overflows\ uint64\_t.\ In\ this\ case,}}
-\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00018}00018\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ the\ value\ in\ result\_out\ is\ undefined.}}
-\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00019}00019\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00020}\mbox{\hyperlink{sum__divisors_8h_aa36d7c4d87b8d15c5bd59820d55dedc9}{00020}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{sum__divisors_8h_aa36d7c4d87b8d15c5bd59820d55dedc9}{ttak\_sum\_proper\_divisors\_u64}}(uint64\_t\ n,\ uint64\_t\ *result\_out);}
-\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00021}00021\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00022}00022\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00023}00023\ \textcolor{comment}{\ *\ @brief\ Calculates\ the\ sum\ of\ proper\ divisors\ for\ a\ big\ integer.}}
-\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00024}00024\ \textcolor{comment}{\ *}}
-\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00025}00025\ \textcolor{comment}{\ *\ @param\ n\ The\ bigint\ number.}}
-\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00026}00026\ \textcolor{comment}{\ *\ @param\ result\_out\ The\ bigint\ to\ store\ the\ sum\ of\ proper\ divisors.}}
-\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00027}00027\ \textcolor{comment}{\ *\ @param\ now\ The\ current\ timestamp\ for\ memory\ allocation.}}
-\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00028}00028\ \textcolor{comment}{\ *\ @return\ \`{}true`\ on\ success,\ \`{}false`\ on\ memory\ allocation\ failure.}}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{logger_8h}{ttak/log/logger.h}}>}}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{bigint_8h}{ttak/math/bigint.h}}>}}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00009}\mbox{\hyperlink{sum__divisors_8h_ad263c33f5701435721532071341d20d9}{00009}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \{}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00010}\mbox{\hyperlink{sum__divisors_8h_ad263c33f5701435721532071341d20d9a7eed2367085355b363b6af9a78845087}{00010}}\ \ \ \ \ \mbox{\hyperlink{sum__divisors_8h_ad263c33f5701435721532071341d20d9a7eed2367085355b363b6af9a78845087}{TTAK\_SUMDIV\_BIG\_ERROR\_NONE}}\ =\ 0,}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00011}\mbox{\hyperlink{sum__divisors_8h_ad263c33f5701435721532071341d20d9aef5113bbca5642163c5c68655c472e61}{00011}}\ \ \ \ \ \mbox{\hyperlink{sum__divisors_8h_ad263c33f5701435721532071341d20d9aef5113bbca5642163c5c68655c472e61}{TTAK\_SUMDIV\_BIG\_ERROR\_FACTOR}},}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00012}\mbox{\hyperlink{sum__divisors_8h_ad263c33f5701435721532071341d20d9aa1b5e495b3bcb2aba382c684b812a634}{00012}}\ \ \ \ \ \mbox{\hyperlink{sum__divisors_8h_ad263c33f5701435721532071341d20d9aa1b5e495b3bcb2aba382c684b812a634}{TTAK\_SUMDIV\_BIG\_ERROR\_EXPORT}},}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00013}\mbox{\hyperlink{sum__divisors_8h_ad263c33f5701435721532071341d20d9add6b1409f5a3d8817090aa25c92b1849}{00013}}\ \ \ \ \ \mbox{\hyperlink{sum__divisors_8h_ad263c33f5701435721532071341d20d9add6b1409f5a3d8817090aa25c92b1849}{TTAK\_SUMDIV\_BIG\_ERROR\_SET\_VALUE}},}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00014}\mbox{\hyperlink{sum__divisors_8h_ad263c33f5701435721532071341d20d9a39c532b65da642cc44d3babcb253695d}{00014}}\ \ \ \ \ \mbox{\hyperlink{sum__divisors_8h_ad263c33f5701435721532071341d20d9a39c532b65da642cc44d3babcb253695d}{TTAK\_SUMDIV\_BIG\_ERROR\_ARITHMETIC}},}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00015}00015\ \ \ \ \ \mbox{\hyperlink{sum__divisors_8h_ad263c33f5701435721532071341d20d9a0a52efb9ed7fb52f27495b78e1772a44}{TTAK\_SUMDIV\_BIG\_ERROR\_GENERIC}}}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00016}\mbox{\hyperlink{sum__divisors_8h_ad263c33f5701435721532071341d20d9a0a52efb9ed7fb52f27495b78e1772a44}{00016}}\ \}\ \mbox{\hyperlink{sum__divisors_8h_ad263c33f5701435721532071341d20d9}{ttak\_sumdiv\_big\_error\_t}};}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00017}00017\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00018}00018\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00019}00019\ \textcolor{comment}{\ *\ @brief\ Calculates\ the\ sum\ of\ proper\ divisors\ for\ a\ 64-\/bit\ unsigned\ integer.}}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00020}00020\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00021}00021\ \textcolor{comment}{\ *\ This\ function\ calculates\ sigma(n)\ -\/\ n.\ It\ uses\ 128-\/bit\ intermediate}}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00022}00022\ \textcolor{comment}{\ *\ arithmetic\ to\ detect\ overflow.}}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00023}00023\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00024}00024\ \textcolor{comment}{\ *\ @param\ n\ The\ number.}}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00025}00025\ \textcolor{comment}{\ *\ @param\ result\_out\ A\ pointer\ to\ store\ the\ sum\ of\ proper\ divisors.}}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00026}00026\ \textcolor{comment}{\ *\ @return\ \`{}true`\ if\ the\ calculation\ was\ successful\ and\ fits\ in\ a\ uint64\_t.}}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00027}00027\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ \`{}false`\ if\ the\ sum\ of\ divisors\ overflows\ uint64\_t.\ In\ this\ case,}}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00028}00028\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ the\ value\ in\ result\_out\ is\ undefined.}}
 \DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00029}00029\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00030}\mbox{\hyperlink{sum__divisors_8h_af34288a320578a37a35a1843a4ac9c62}{00030}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{sum__divisors_8h_af34288a320578a37a35a1843a4ac9c62}{ttak\_sum\_proper\_divisors\_big}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__bigint}{ttak\_bigint\_t}}\ *n,\ \mbox{\hyperlink{structttak__bigint}{ttak\_bigint\_t}}\ *result\_out,\ uint64\_t\ now);}
-\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00031}00031\ }
-\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00032}00032\ }
-\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00033}00033\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_MATH\_SUM\_DIVISORS\_H}}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00030}\mbox{\hyperlink{sum__divisors_8h_aa36d7c4d87b8d15c5bd59820d55dedc9}{00030}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{sum__divisors_8h_aa36d7c4d87b8d15c5bd59820d55dedc9}{ttak\_sum\_proper\_divisors\_u64}}(uint64\_t\ n,\ uint64\_t\ *result\_out);}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00031}00031\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00032}00032\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00033}00033\ \textcolor{comment}{\ *\ @brief\ Calculates\ the\ sum\ of\ proper\ divisors\ for\ a\ big\ integer.}}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00034}00034\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00035}00035\ \textcolor{comment}{\ *\ @param\ n\ The\ bigint\ number.}}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00036}00036\ \textcolor{comment}{\ *\ @param\ result\_out\ The\ bigint\ to\ store\ the\ sum\ of\ proper\ divisors.}}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00037}00037\ \textcolor{comment}{\ *\ @param\ now\ The\ current\ timestamp\ for\ memory\ allocation.}}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00038}00038\ \textcolor{comment}{\ *\ @return\ \`{}true`\ on\ success,\ \`{}false`\ on\ memory\ allocation\ failure.}}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00039}00039\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00040}\mbox{\hyperlink{sum__divisors_8h_af34288a320578a37a35a1843a4ac9c62}{00040}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{sum__divisors_8h_af34288a320578a37a35a1843a4ac9c62}{ttak\_sum\_proper\_divisors\_big}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__bigint}{ttak\_bigint\_t}}\ *n,\ \mbox{\hyperlink{structttak__bigint}{ttak\_bigint\_t}}\ *result\_out,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00041}00041\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00042}00042\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00043}00043\ \textcolor{comment}{\ *\ @brief\ Returns\ the\ last\ failure\ reason\ emitted\ by\ ttak\_sum\_proper\_divisors\_big().}}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00044}00044\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00045}\mbox{\hyperlink{sum__divisors_8h_ac4c9df7049416035314d7e29c8cf8cd0}{00045}}\ \mbox{\hyperlink{sum__divisors_8h_ad263c33f5701435721532071341d20d9}{ttak\_sumdiv\_big\_error\_t}}\ \mbox{\hyperlink{sum__divisors_8h_ac4c9df7049416035314d7e29c8cf8cd0}{ttak\_sum\_proper\_divisors\_big\_last\_error}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00046}00046\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00047}00047\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00048}00048\ \textcolor{comment}{\ *\ @brief\ Returns\ a\ short\ symbolic\ name\ for\ a\ ttak\_sumdiv\_big\_error\_t\ value.}}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00049}00049\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00050}\mbox{\hyperlink{sum__divisors_8h_ad2b7aa6679870a9c5d324fe3ede48a8b}{00050}}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{sum__divisors_8h_ad2b7aa6679870a9c5d324fe3ede48a8b}{ttak\_sum\_proper\_divisors\_big\_error\_name}}(\mbox{\hyperlink{sum__divisors_8h_ad263c33f5701435721532071341d20d9}{ttak\_sumdiv\_big\_error\_t}}\ err);}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00051}00051\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00052}00052\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00053}00053\ \textcolor{comment}{\ *\ @brief\ Attaches\ a\ logger\ for\ auto-\/heal\ stage\ reporting.}}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00054}00054\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00055}\mbox{\hyperlink{sum__divisors_8h_ace73782f1a0a16dd5fc7c21bb8122c5b}{00055}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{sum__divisors_8h_ace73782f1a0a16dd5fc7c21bb8122c5b}{ttak\_sum\_divisors\_attach\_logger}}(\mbox{\hyperlink{structttak__logger}{ttak\_logger\_t}}\ *logger);}
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{sum__divisors_8h_source_l00057}00057\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_MATH\_SUM\_DIVISORS\_H}}
 
 \end{DoxyCode}

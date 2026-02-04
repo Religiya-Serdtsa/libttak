@@ -1,0 +1,50 @@
+\chapter{Stage Notes}
+\hypertarget{md_tutorials_2modules_2notes}{}\label{md_tutorials_2modules_2notes}\index{Stage Notes@{Stage Notes}}
+\label{md_tutorials_2modules_2notes_autotoc_md44}%
+\Hypertarget{md_tutorials_2modules_2notes_autotoc_md44}%
+ Quick hints per stage from {\ttfamily \doxylink{CLONE__PATH_8md}{CLONE\+\_\+\+PATH.\+md}}. Each entry identifies pitfalls to watch for while clone-\/coding.\hypertarget{md_tutorials_2modules_2notes_autotoc_md45}{}\doxysection{\texorpdfstring{Stage 1}{Stage 1}}\label{md_tutorials_2modules_2notes_autotoc_md45}
+
+\begin{DoxyItemize}
+\item Rebuild hash-\/table chaining exactly\+: buckets live in {\ttfamily ttak\+\_\+ht\+\_\+entry}.
+\item Container clone tip\+: re-\/implement push/pop with wrap-\/around arithmetic first, then add error checks.
+\item Logger\+: keep formatting tiny—{\ttfamily snprintf} + {\ttfamily fputs} is enough.
+\end{DoxyItemize}\hypertarget{md_tutorials_2modules_2notes_autotoc_md46}{}\doxysection{\texorpdfstring{Stage 2}{Stage 2}}\label{md_tutorials_2modules_2notes_autotoc_md46}
+
+\begin{DoxyItemize}
+\item Mutex/\+RWLock wrappers simply forward to pthread. The goal is to recognize which thread-\/safe blocks you must surround.
+\item For portable atomics, follow the fallback macro layout. Ensure {\ttfamily \+\_\+\+\_\+\+TTAK\+\_\+\+NEEDS\+\_\+\+PORTABLE\+\_\+\+STDATOMIC\+\_\+\+\_\+} gets undefined at the end.
+\end{DoxyItemize}\hypertarget{md_tutorials_2modules_2notes_autotoc_md47}{}\doxysection{\texorpdfstring{Stage 3}{Stage 3}}\label{md_tutorials_2modules_2notes_autotoc_md47}
+
+\begin{DoxyItemize}
+\item Thread pool jobs carry {\ttfamily priority}; practice writing a min-\/heap to enforce it.
+\item Async scheduler uses {\ttfamily ttak\+\_\+future\+\_\+t}; draw a diagram that shows how promises resolve tasks.
+\end{DoxyItemize}\hypertarget{md_tutorials_2modules_2notes_autotoc_md48}{}\doxysection{\texorpdfstring{Stage 4}{Stage 4}}\label{md_tutorials_2modules_2notes_autotoc_md48}
+
+\begin{DoxyItemize}
+\item Token bucket math\+: call {\ttfamily \doxylink{timing_8h_ada5bc2c64ded59838280a07e7cadfbf9}{ttak\+\_\+get\+\_\+tick\+\_\+count()}} once per refill and clamp to capacity.
+\item Stats module uses running means—replicate accumulation formulas exactly.
+\end{DoxyItemize}\hypertarget{md_tutorials_2modules_2notes_autotoc_md49}{}\doxysection{\texorpdfstring{Stage 5}{Stage 5}}\label{md_tutorials_2modules_2notes_autotoc_md49}
+
+\begin{DoxyItemize}
+\item Owners guard resources with RW locks. While clone-\/coding, write down which functions grab read vs write locks.
+\item Memory tree GC references {\ttfamily ttak\+\_\+mem\+\_\+tree\+\_\+perform\+\_\+cleanup}; treat it like a sweep pass triggered by epochs.
+\end{DoxyItemize}\hypertarget{md_tutorials_2modules_2notes_autotoc_md50}{}\doxysection{\texorpdfstring{Stage 6}{Stage 6}}\label{md_tutorials_2modules_2notes_autotoc_md50}
+
+\begin{DoxyItemize}
+\item Big-\/int\+: start with SSO copies, then add dynamic limbs. Validate {\ttfamily ttak\+\_\+bigint\+\_\+set\+\_\+u256} by round-\/tripping.
+\item Sum-\/of-\/divisors\+: follow the new safe-\/mode policy; log the stage as you flip from fast to generic paths.
+\end{DoxyItemize}\hypertarget{md_tutorials_2modules_2notes_autotoc_md51}{}\doxysection{\texorpdfstring{Stage 7}{Stage 7}}\label{md_tutorials_2modules_2notes_autotoc_md51}
+
+\begin{DoxyItemize}
+\item For b+trees, practise node split diagrams on paper—then translate into code.
+\item AST walker uses recursive descent plus a stack; rebuild in two passes to keep the function list small.
+\end{DoxyItemize}\hypertarget{md_tutorials_2modules_2notes_autotoc_md52}{}\doxysection{\texorpdfstring{Stage 8}{Stage 8}}\label{md_tutorials_2modules_2notes_autotoc_md52}
+
+\begin{DoxyItemize}
+\item Aliquot tracker integrates everything\+: start with queues \& workers, then add ledger persistence, finally wire the logging/timing changes.
+\end{DoxyItemize}\hypertarget{md_tutorials_2modules_2notes_autotoc_md53}{}\doxysection{\texorpdfstring{Stage 9 (\+Dangerous)}{Stage 9 (Dangerous)}}\label{md_tutorials_2modules_2notes_autotoc_md53}
+
+\begin{DoxyItemize}
+\item {\ttfamily ttak\+\_\+context\+\_\+t} is only safe when one side owns the lock. Never assume both sides can free memory simultaneously.
+\item Read {\ttfamily \doxylink{tutorials_2DANGEROUS_2README_8md}{tutorials/\+DANGEROUS/\+README.\+md}} and the unsafe HLP file before clone-\/coding the bridge. 
+\end{DoxyItemize}

@@ -1,0 +1,149 @@
+\doxysection{include/ttak/unsafe/context.h File Reference}
+\hypertarget{context_8h}{}\label{context_8h}\index{include/ttak/unsafe/context.h@{include/ttak/unsafe/context.h}}
+{\ttfamily \#include $<$ttak/mem/owner.\+h$>$}\newline
+{\ttfamily \#include $<$ttak/sync/sync.\+h$>$}\newline
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+Include dependency graph for context.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{context_8h__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structttak__context}{ttak\+\_\+context}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{context_8h_a54796d3c55027d905e7904d5edee16b1}{\+\_\+\+\_\+\+TTAK\+\_\+\+CTX\+\_\+\+USE\+\_\+\+FIRST\+\_\+\+\_\+}}~0
+\item 
+\#define \mbox{\hyperlink{context_8h_a1b705ba49ec81f02c1102eb374b42324}{\+\_\+\+\_\+\+TTAK\+\_\+\+CTX\+\_\+\+USE\+\_\+\+SECOND\+\_\+\+\_\+}}~1
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef int \mbox{\hyperlink{context_8h_ac744a2e8f482312c1d2ebfca28d2866c}{ttak\+\_\+context\+\_\+inherit\+\_\+t}}
+\item 
+typedef void(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{context_8h_ab06610ade4898753463a5838ff440776}{ttak\+\_\+context\+\_\+callback\+\_\+t}}) (void \texorpdfstring{$\ast$}{*}shared\+\_\+mem, size\+\_\+t shared\+\_\+size, void \texorpdfstring{$\ast$}{*}arg)
+\item 
+typedef struct \mbox{\hyperlink{structttak__context}{ttak\+\_\+context}} \mbox{\hyperlink{context_8h_af1e1e607d4d863dfe439e9e537e9d6e0}{ttak\+\_\+context\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{context_8h_a5f5a054c7cb2f72194dbb187bc730fa0}{ttak\+\_\+context\+\_\+init}} (\mbox{\hyperlink{context_8h_af1e1e607d4d863dfe439e9e537e9d6e0}{ttak\+\_\+context\+\_\+t}} \texorpdfstring{$\ast$}{*}ctx, \mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}first, \mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}second, void \texorpdfstring{$\ast$}{*}shared\+\_\+mem, size\+\_\+t shared\+\_\+size, \mbox{\hyperlink{context_8h_ac744a2e8f482312c1d2ebfca28d2866c}{ttak\+\_\+context\+\_\+inherit\+\_\+t}} inherit\+\_\+side)
+\item 
+void \mbox{\hyperlink{context_8h_abdd683774b7624bca4cc13b021de2dc7}{ttak\+\_\+context\+\_\+destroy}} (\mbox{\hyperlink{context_8h_af1e1e607d4d863dfe439e9e537e9d6e0}{ttak\+\_\+context\+\_\+t}} \texorpdfstring{$\ast$}{*}ctx)
+\item 
+bool \mbox{\hyperlink{context_8h_a50c6b1c90b40b23d2fd1b715271a3d83}{ttak\+\_\+context\+\_\+run}} (\mbox{\hyperlink{context_8h_af1e1e607d4d863dfe439e9e537e9d6e0}{ttak\+\_\+context\+\_\+t}} \texorpdfstring{$\ast$}{*}ctx, \mbox{\hyperlink{context_8h_ac744a2e8f482312c1d2ebfca28d2866c}{ttak\+\_\+context\+\_\+inherit\+\_\+t}} side, \mbox{\hyperlink{context_8h_ab06610ade4898753463a5838ff440776}{ttak\+\_\+context\+\_\+callback\+\_\+t}} cb, void \texorpdfstring{$\ast$}{*}arg)
+\item 
+bool \mbox{\hyperlink{context_8h_ab825aa0d043bbb76f8de80c6f5da5594}{ttak\+\_\+context\+\_\+reassign}} (\mbox{\hyperlink{context_8h_af1e1e607d4d863dfe439e9e537e9d6e0}{ttak\+\_\+context\+\_\+t}} \texorpdfstring{$\ast$}{*}ctx, \mbox{\hyperlink{context_8h_ac744a2e8f482312c1d2ebfca28d2866c}{ttak\+\_\+context\+\_\+inherit\+\_\+t}} side)
+\item 
+\mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{context_8h_a3ce5ce1f27b068f718459c1316c97bc9}{ttak\+\_\+context\+\_\+owner}} (const \mbox{\hyperlink{context_8h_af1e1e607d4d863dfe439e9e537e9d6e0}{ttak\+\_\+context\+\_\+t}} \texorpdfstring{$\ast$}{*}ctx, \mbox{\hyperlink{context_8h_ac744a2e8f482312c1d2ebfca28d2866c}{ttak\+\_\+context\+\_\+inherit\+\_\+t}} side)
+\item 
+\mbox{\hyperlink{context_8h_ac744a2e8f482312c1d2ebfca28d2866c}{ttak\+\_\+context\+\_\+inherit\+\_\+t}} \mbox{\hyperlink{context_8h_a2821cd899c198409e01e84b4456dca17}{ttak\+\_\+context\+\_\+active}} (const \mbox{\hyperlink{context_8h_af1e1e607d4d863dfe439e9e537e9d6e0}{ttak\+\_\+context\+\_\+t}} \texorpdfstring{$\ast$}{*}ctx)
+\item 
+void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{context_8h_a46008e5e79b20072576b51266c268947}{ttak\+\_\+context\+\_\+shared}} (const \mbox{\hyperlink{context_8h_af1e1e607d4d863dfe439e9e537e9d6e0}{ttak\+\_\+context\+\_\+t}} \texorpdfstring{$\ast$}{*}ctx, size\+\_\+t \texorpdfstring{$\ast$}{*}size\+\_\+out)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{context_8h_a54796d3c55027d905e7904d5edee16b1}\label{context_8h_a54796d3c55027d905e7904d5edee16b1} 
+\index{context.h@{context.h}!\_\_TTAK\_CTX\_USE\_FIRST\_\_@{\_\_TTAK\_CTX\_USE\_FIRST\_\_}}
+\index{\_\_TTAK\_CTX\_USE\_FIRST\_\_@{\_\_TTAK\_CTX\_USE\_FIRST\_\_}!context.h@{context.h}}
+\doxysubsubsection{\texorpdfstring{\_\_TTAK\_CTX\_USE\_FIRST\_\_}{\_\_TTAK\_CTX\_USE\_FIRST\_\_}}
+{\footnotesize\ttfamily \#define \+\_\+\+\_\+\+TTAK\+\_\+\+CTX\+\_\+\+USE\+\_\+\+FIRST\+\_\+\+\_\+~0}
+
+
+
+Definition at line \mbox{\hyperlink{context_8h_source_l00009}{9}} of file \mbox{\hyperlink{context_8h_source}{context.\+h}}.
+
+\Hypertarget{context_8h_a1b705ba49ec81f02c1102eb374b42324}\label{context_8h_a1b705ba49ec81f02c1102eb374b42324} 
+\index{context.h@{context.h}!\_\_TTAK\_CTX\_USE\_SECOND\_\_@{\_\_TTAK\_CTX\_USE\_SECOND\_\_}}
+\index{\_\_TTAK\_CTX\_USE\_SECOND\_\_@{\_\_TTAK\_CTX\_USE\_SECOND\_\_}!context.h@{context.h}}
+\doxysubsubsection{\texorpdfstring{\_\_TTAK\_CTX\_USE\_SECOND\_\_}{\_\_TTAK\_CTX\_USE\_SECOND\_\_}}
+{\footnotesize\ttfamily \#define \+\_\+\+\_\+\+TTAK\+\_\+\+CTX\+\_\+\+USE\+\_\+\+SECOND\+\_\+\+\_\+~1}
+
+
+
+Definition at line \mbox{\hyperlink{context_8h_source_l00010}{10}} of file \mbox{\hyperlink{context_8h_source}{context.\+h}}.
+
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{context_8h_ab06610ade4898753463a5838ff440776}\label{context_8h_ab06610ade4898753463a5838ff440776} 
+\index{context.h@{context.h}!ttak\_context\_callback\_t@{ttak\_context\_callback\_t}}
+\index{ttak\_context\_callback\_t@{ttak\_context\_callback\_t}!context.h@{context.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_context\_callback\_t}{ttak\_context\_callback\_t}}
+{\footnotesize\ttfamily typedef void(\texorpdfstring{$\ast$}{*} ttak\+\_\+context\+\_\+callback\+\_\+t) (void \texorpdfstring{$\ast$}{*}shared\+\_\+mem, size\+\_\+t shared\+\_\+size, void \texorpdfstring{$\ast$}{*}arg)}
+
+
+
+Definition at line \mbox{\hyperlink{context_8h_source_l00014}{14}} of file \mbox{\hyperlink{context_8h_source}{context.\+h}}.
+
+\Hypertarget{context_8h_ac744a2e8f482312c1d2ebfca28d2866c}\label{context_8h_ac744a2e8f482312c1d2ebfca28d2866c} 
+\index{context.h@{context.h}!ttak\_context\_inherit\_t@{ttak\_context\_inherit\_t}}
+\index{ttak\_context\_inherit\_t@{ttak\_context\_inherit\_t}!context.h@{context.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_context\_inherit\_t}{ttak\_context\_inherit\_t}}
+{\footnotesize\ttfamily typedef int \mbox{\hyperlink{context_8h_ac744a2e8f482312c1d2ebfca28d2866c}{ttak\+\_\+context\+\_\+inherit\+\_\+t}}}
+
+
+
+Definition at line \mbox{\hyperlink{context_8h_source_l00012}{12}} of file \mbox{\hyperlink{context_8h_source}{context.\+h}}.
+
+\Hypertarget{context_8h_af1e1e607d4d863dfe439e9e537e9d6e0}\label{context_8h_af1e1e607d4d863dfe439e9e537e9d6e0} 
+\index{context.h@{context.h}!ttak\_context\_t@{ttak\_context\_t}}
+\index{ttak\_context\_t@{ttak\_context\_t}!context.h@{context.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_context\_t}{ttak\_context\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__context}{ttak\+\_\+context}} \mbox{\hyperlink{context_8h_af1e1e607d4d863dfe439e9e537e9d6e0}{ttak\+\_\+context\+\_\+t}}}
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{context_8h_a2821cd899c198409e01e84b4456dca17}\label{context_8h_a2821cd899c198409e01e84b4456dca17} 
+\index{context.h@{context.h}!ttak\_context\_active@{ttak\_context\_active}}
+\index{ttak\_context\_active@{ttak\_context\_active}!context.h@{context.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_context\_active()}{ttak\_context\_active()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{context_8h_ac744a2e8f482312c1d2ebfca28d2866c}{ttak\+\_\+context\+\_\+inherit\+\_\+t}} ttak\+\_\+context\+\_\+active (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{context_8h_af1e1e607d4d863dfe439e9e537e9d6e0}{ttak\+\_\+context\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{ctx }\end{DoxyParamCaption})}
+
+\Hypertarget{context_8h_abdd683774b7624bca4cc13b021de2dc7}\label{context_8h_abdd683774b7624bca4cc13b021de2dc7} 
+\index{context.h@{context.h}!ttak\_context\_destroy@{ttak\_context\_destroy}}
+\index{ttak\_context\_destroy@{ttak\_context\_destroy}!context.h@{context.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_context\_destroy()}{ttak\_context\_destroy()}}
+{\footnotesize\ttfamily void ttak\+\_\+context\+\_\+destroy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{context_8h_af1e1e607d4d863dfe439e9e537e9d6e0}{ttak\+\_\+context\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{ctx }\end{DoxyParamCaption})}
+
+\Hypertarget{context_8h_a5f5a054c7cb2f72194dbb187bc730fa0}\label{context_8h_a5f5a054c7cb2f72194dbb187bc730fa0} 
+\index{context.h@{context.h}!ttak\_context\_init@{ttak\_context\_init}}
+\index{ttak\_context\_init@{ttak\_context\_init}!context.h@{context.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_context\_init()}{ttak\_context\_init()}}
+{\footnotesize\ttfamily bool ttak\+\_\+context\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{context_8h_af1e1e607d4d863dfe439e9e537e9d6e0}{ttak\+\_\+context\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{ctx,  }\item[{\mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{first,  }\item[{\mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{second,  }\item[{void \texorpdfstring{$\ast$}{*}}]{shared\+\_\+mem,  }\item[{size\+\_\+t}]{shared\+\_\+size,  }\item[{\mbox{\hyperlink{context_8h_ac744a2e8f482312c1d2ebfca28d2866c}{ttak\+\_\+context\+\_\+inherit\+\_\+t}}}]{inherit\+\_\+side }\end{DoxyParamCaption})}
+
+\Hypertarget{context_8h_a3ce5ce1f27b068f718459c1316c97bc9}\label{context_8h_a3ce5ce1f27b068f718459c1316c97bc9} 
+\index{context.h@{context.h}!ttak\_context\_owner@{ttak\_context\_owner}}
+\index{ttak\_context\_owner@{ttak\_context\_owner}!context.h@{context.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_context\_owner()}{ttak\_context\_owner()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*} ttak\+\_\+context\+\_\+owner (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{context_8h_af1e1e607d4d863dfe439e9e537e9d6e0}{ttak\+\_\+context\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{ctx,  }\item[{\mbox{\hyperlink{context_8h_ac744a2e8f482312c1d2ebfca28d2866c}{ttak\+\_\+context\+\_\+inherit\+\_\+t}}}]{side }\end{DoxyParamCaption})}
+
+\Hypertarget{context_8h_ab825aa0d043bbb76f8de80c6f5da5594}\label{context_8h_ab825aa0d043bbb76f8de80c6f5da5594} 
+\index{context.h@{context.h}!ttak\_context\_reassign@{ttak\_context\_reassign}}
+\index{ttak\_context\_reassign@{ttak\_context\_reassign}!context.h@{context.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_context\_reassign()}{ttak\_context\_reassign()}}
+{\footnotesize\ttfamily bool ttak\+\_\+context\+\_\+reassign (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{context_8h_af1e1e607d4d863dfe439e9e537e9d6e0}{ttak\+\_\+context\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{ctx,  }\item[{\mbox{\hyperlink{context_8h_ac744a2e8f482312c1d2ebfca28d2866c}{ttak\+\_\+context\+\_\+inherit\+\_\+t}}}]{side }\end{DoxyParamCaption})}
+
+\Hypertarget{context_8h_a50c6b1c90b40b23d2fd1b715271a3d83}\label{context_8h_a50c6b1c90b40b23d2fd1b715271a3d83} 
+\index{context.h@{context.h}!ttak\_context\_run@{ttak\_context\_run}}
+\index{ttak\_context\_run@{ttak\_context\_run}!context.h@{context.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_context\_run()}{ttak\_context\_run()}}
+{\footnotesize\ttfamily bool ttak\+\_\+context\+\_\+run (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{context_8h_af1e1e607d4d863dfe439e9e537e9d6e0}{ttak\+\_\+context\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{ctx,  }\item[{\mbox{\hyperlink{context_8h_ac744a2e8f482312c1d2ebfca28d2866c}{ttak\+\_\+context\+\_\+inherit\+\_\+t}}}]{side,  }\item[{\mbox{\hyperlink{context_8h_ab06610ade4898753463a5838ff440776}{ttak\+\_\+context\+\_\+callback\+\_\+t}}}]{cb,  }\item[{void \texorpdfstring{$\ast$}{*}}]{arg }\end{DoxyParamCaption})}
+
+\Hypertarget{context_8h_a46008e5e79b20072576b51266c268947}\label{context_8h_a46008e5e79b20072576b51266c268947} 
+\index{context.h@{context.h}!ttak\_context\_shared@{ttak\_context\_shared}}
+\index{ttak\_context\_shared@{ttak\_context\_shared}!context.h@{context.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_context\_shared()}{ttak\_context\_shared()}}
+{\footnotesize\ttfamily void \texorpdfstring{$\ast$}{*} ttak\+\_\+context\+\_\+shared (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{context_8h_af1e1e607d4d863dfe439e9e537e9d6e0}{ttak\+\_\+context\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{ctx,  }\item[{size\+\_\+t \texorpdfstring{$\ast$}{*}}]{size\+\_\+out }\end{DoxyParamCaption})}
+

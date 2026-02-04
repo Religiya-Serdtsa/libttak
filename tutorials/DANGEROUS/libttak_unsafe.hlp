@@ -1,0 +1,20 @@
+## Context Ownership Rules
+Exactly one side owns the locks. When `__TTAK_CTX_USE_FIRST__` is active, the second side may read shared memory but must never free or reassign pointers.
+
+## Bridge Lock Purpose
+The bridge mutex serializes every callback. Without it, both owners might try to mutate shared buffers simultaneously, causing use-after-free bugs.
+
+## Macro Discipline
+All unsafe toggles follow the `__TTAK_*__` naming rule. Forgetting the trailing double underscore leaves the project in an undefined configuration.
+
+## When Not to Use Unsafe
+Do not route routine traffic through unsafe helpers. Only use them when two owners must touch the same shared payload and no other interface fits.
+
+## Region Move Patterns
+`ttak_unsafe_region_move()` is the default destructive move: dst must be empty, src becomes canonical empty immediately after. Use this whenever both regions share the same allocator + ctx.
+
+## Region Adopt Pattern
+`ttak_unsafe_region_adopt()` lets you import raw `(ptr, size, cap)` triples, but once adopted the caller is responsible for matching the original allocator. Never adopt buffers with unknown provenance.
+
+## Region Steal Pattern
+`ttak_unsafe_region_steal()` overwrites dst regardless of its previous contents. It is the “overwrite lifecycle” tool—call it only when you intentionally want to drop dst’s old state without cleanup.

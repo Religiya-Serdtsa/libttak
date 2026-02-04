@@ -1,0 +1,168 @@
+@startuml
+' This blueprint treats AliquotTracker as an external example app.
+' Green dashed arrows show an example end-to-end call flow (numbered).
+' Black arrows show static dependencies / data-flow relationships.
+
+!theme plain
+hide empty members
+skinparam packageStyle rectangle
+
+' Reduce curvy routing and make edges readable.
+left to right direction
+skinparam linetype ortho
+skinparam dpi 160
+
+skinparam class<<dangerous>> {
+    BackgroundColor #ffe6e6
+    BorderColor red
+    FontColor #a00
+}
+
+skinparam class<<app>> {
+    BackgroundColor #e9ffe9
+    BorderColor #0a0
+    FontColor #050
+}
+
+title LibTTAK – Integrated Architecture (with AliquotTracker call-flow)
+
+package "Core Data" {
+    class HashTable
+    class RingBuffer
+    class PoolAllocator
+    class SetContainer
+    class Logger
+}
+
+package "Concurrency" {
+    class Mutexes
+    class Spinlocks
+    class PortableAtomics
+}
+
+package "Async Runtime" {
+    class ThreadPool
+    class Workers
+    class AsyncScheduler
+    class PriorityQueue
+    class FuturesPromises
+}
+
+package "Runtime Services" {
+    class Timing
+    class RateLimiter
+    class Stats
+}
+
+package "Memory Systems" {
+    class OwnerSubsystem
+    class EpochGC
+    class MemTree
+    class Allocators
+}
+
+package "Math & Security" {
+    class BigInt
+    class BigMulReal
+    class DivisorsFactor
+    class NTT
+    class SHA256
+}
+
+package "Unsafe Layer" {
+    class ContextBridge <<dangerous>>
+    class UnsafeRegionMacros <<dangerous>>
+}
+
+package "Example App (not part of lib)" {
+    class AliquotTracker <<app>>
+}
+
+' ----------------------------
+' Static dependencies (black)
+' ----------------------------
+HashTable --> OwnerSubsystem : tracked by
+RingBuffer --> ThreadPool : queues
+PoolAllocator --> Allocators
+SetContainer --> HashTable
+Logger --> AliquotTracker : app logging
+
+Mutexes --> ThreadPool
+Spinlocks --> Workers
+PortableAtomics --> AsyncScheduler
+
+ThreadPool --> AsyncScheduler
+AsyncScheduler --> FuturesPromises
+PriorityQueue --> AsyncScheduler
+
+Timing --> RateLimiter
+Timing --> AsyncScheduler
+RateLimiter --> AliquotTracker : limit external effects
+
+OwnerSubsystem --> EpochGC
+EpochGC --> MemTree
+MemTree --> Allocators
+
+NTT --> BigMulReal
+
+ContextBridge --> OwnerSubsystem
+UnsafeRegionMacros --> ContextBridge
+
+note right of ContextBridge
+    NOT RECOMMENDED – shared
+    memory bridge for experts only.
+end note
+
+note right of UnsafeRegionMacros
+    NOT RECOMMENDED – raw macros
+    bypass standard ownership checks.
+end note
+
+note bottom
+    Red border classes are NOT RECOMMENDED
+    for general production use. They are
+    provided for specialized scenarios and
+    should stay isolated.
+end note
+
+' ---------------------------------------------------------
+' Example numbered execution flow (green dashed, orthogonal)
+' ---------------------------------------------------------
+' Use this as a "follow the arrows" trace for how the app
+' typically drives the library at runtime.
+
+' 1) App boot / prepare runtime primitives
+AliquotTracker -[#00aa00,dashed]-> AsyncScheduler : 1. init scheduler
+AsyncScheduler -[#00aa00,dashed]-> ThreadPool : 2. attach pool
+ThreadPool -[#00aa00,dashed]-> Workers : 3. spawn workers
+AsyncScheduler -[#00aa00,dashed]-> PriorityQueue : 4. task ordering
+AsyncScheduler -[#00aa00,dashed]-> FuturesPromises : 5. async results
+
+' 2) Memory authority chain used by app-owned objects
+AliquotTracker -[#00aa00,dashed]-> OwnerSubsystem : 6. acquire ownership realm
+OwnerSubsystem -[#00aa00,dashed]-> EpochGC : 7. epoch protection
+EpochGC -[#00aa00,dashed]-> MemTree : 8. tracked allocations
+MemTree -[#00aa00,dashed]-> Allocators : 9. allocate/free via rules
+
+' 3) Main math pipeline (aliquot work)
+AliquotTracker -[#00aa00,dashed]-> DivisorsFactor : 10. factor / sumdiv plan
+DivisorsFactor -[#00aa00,dashed]-> BigInt : 11. big arithmetic
+BigMulReal -[#00aa00,dashed]-> BigInt : 12. widened multiply (if used)
+DivisorsFactor -[#00aa00,dashed]-> BigMulReal : 13. fast mul path (optional)
+
+' 4) Runtime services around execution
+AliquotTracker -[#00aa00,dashed]-> Timing : 14. timestamps / profiling hooks
+Timing -[#00aa00,dashed]-> RateLimiter : 15. throttle policy (optional)
+AliquotTracker -[#00aa00,dashed]-> Logger : 16. structured logs
+
+' 5) Optional unsafe bridge (explicitly marked as dangerous)
+AliquotTracker -[#00aa00,dashed]-> ContextBridge : 17. optional bridge (expert)
+ContextBridge -[#00aa00,dashed]-> UnsafeRegionMacros : 18. raw escape hatch
+
+legend right
+| Color/Style | Meaning |
+| <color:#000000>solid</color> | Static dependency / data relationship |
+| <color:#00aa00>dashed</color> | Example runtime call flow (numbered) |
+endlegend
+
+@enduml

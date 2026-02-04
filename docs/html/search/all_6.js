@@ -1,29 +1,5 @@
 var searchData=
 [
-  ['c_20is_20good_20if_20you_20stay_20safe_0',['C is good, if you stay safe',['..//home/yjlee/libttak/README.md#autotoc_md18',1,'']]],
-  ['cache_20benchmark_20libttak_1',['TTL Cache Benchmark (libttak)',['../index.html',1,'']]],
-  ['cache_5fl1_5fkb_2',['cache_l1_kb',['../structttak__hw__spec__t.html#aa17b87ee1d8d2a0d75fdf85e99c9c8f6',1,'ttak_hw_spec_t']]],
-  ['cache_5fl2_5fkb_3',['cache_l2_kb',['../structttak__hw__spec__t.html#a9ad43ae38428c73e9767b47d6ec547ef',1,'ttak_hw_spec_t']]],
-  ['cache_5fl3_5fkb_4',['cache_l3_kb',['../structttak__hw__spec__t.html#aba59d8ae2171c7eb4e5de0f2759b093b',1,'ttak_hw_spec_t']]],
-  ['canary_5fend_5',['canary_end',['../structttak__mem__header__t.html#a9bc5cff0708537fe474f41e356e69284',1,'ttak_mem_header_t']]],
-  ['canary_5fstart_6',['canary_start',['../structttak__mem__header__t.html#aeb69c52bed0292761ce4ff581eae37df',1,'ttak_mem_header_t']]],
-  ['cap_7',['cap',['../structttak__map__t.html#a78c16627c9ef1b90cbaa6ca777a85531',1,'ttak_map_t::cap'],['../struct____internal__ttak__proc__priority__queue__t.html#a7f14aaf86cf1424d01be46536bb77252',1,'__internal_ttak_proc_priority_queue_t::cap']]],
-  ['cap_5fchildren_8',['cap_children',['../structttak__ast__node.html#a05ab59ed348b907f6e1bea112f1f64e1',1,'ttak_ast_node']]],
-  ['capacity_9',['capacity',['../structttak__ringbuf.html#aac5c851ef70fd84a8886a6adaed8517e',1,'ttak_ringbuf::capacity'],['../structttak__heap__tree.html#ada340f8d3200684ac87f085bb6a7218f',1,'ttak_heap_tree::capacity'],['../structttak__bigint.html#a5f013e071399db36a34cf97b00a32c07',1,'ttak_bigint::capacity'],['../structttak__object__pool.html#ad6c6f8215988b972296cc49fee97d89d',1,'ttak_object_pool::capacity'],['../structttak__table.html#a2b70a3388897ec19b7b13534c0aac9d0',1,'ttak_table::capacity']]],
-  ['checksum_10',['checksum',['../structttak__mem__header__t.html#a49f32c7dc3f8c633c289870c99841153',1,'ttak_mem_header_t']]],
-  ['children_11',['children',['../structttak__btree__node.html#a0686782a39e47e71ef85a16c3818e0c2',1,'ttak_btree_node::children'],['../structttak__ast__node.html#a6077e5f3f5257268f8d72dad396b8093',1,'ttak_ast_node::children'],['../structttak__bplus__node.html#af1224550086173ae1d94743cfce80f1b',1,'ttak_bplus_node::children']]],
-  ['cleanup_5fthread_12',['cleanup_thread',['../structttak__mem__tree.html#a05f533891d26dee4a3ee9e1997b7b6cc',1,'ttak_mem_tree']]],
-  ['cmp_13',['cmp',['../structttak__btree.html#ac4ca3eb61f7f677a2abb28736d97db87',1,'ttak_btree::cmp'],['../structttak__heap__tree.html#af2ca80a7e0420f1a674963f9f12c41eb',1,'ttak_heap_tree::cmp'],['../structttak__bplus__tree.html#a224e4a27e60f30836cecb7c4e9d51e2d',1,'ttak_bplus_tree::cmp']]],
-  ['computerid_14',['computerid',['../structapp__state__t.html#acaf0198605f77b7ef9ffd33b44f080c6',1,'app_state_t']]],
-  ['cond_15',['cond',['../structttak__mem__tree.html#a66aff4cfeb51826d80c498f97ac7754f',1,'ttak_mem_tree::cond'],['../structttak__future.html#a51864bb1d03b06e09cb18262b2bd3675',1,'ttak_future::cond']]],
-  ['cool_20is_20it_16',['How cool is it?',['..//home/yjlee/libttak/README.md#autotoc_md16',1,'']]],
-  ['count_17',['count',['../structttak__stats.html#a049a63b14d250966d575675ae4c0dcd9',1,'ttak_stats::count'],['../structttak__backoff.html#a656759f034652ed5bdf8be5d4aae9353',1,'ttak_backoff::count']]],
-  ['cpu_5fflags_18',['cpu_flags',['../structttak__hw__spec__t.html#ac5a787647378f204cb7d2311c57ca8fb',1,'ttak_hw_spec_t']]],
-  ['cpu_5ffreq_5fkhz_19',['cpu_freq_khz',['../structttak__hw__spec__t.html#ac34a9652f00dcea40a2782b8d49ac672',1,'ttak_hw_spec_t']]],
-  ['cpu_5fmodel_20',['cpu_model',['../structttak__hw__spec__t.html#aa24ec18dc361441049b719cc84f594ae',1,'ttak_hw_spec_t']]],
-  ['created_5ftick_21',['created_tick',['../structttak__mem__header__t.html#aefba5a41d63f62a6de53c3a9a6f0f51b',1,'ttak_mem_header_t']]],
-  ['creation_20build_20stabilization_22',['Initial Skeleton Creation &amp; Build Stabilization',['../md_HISTORY.html#autotoc_md13',1,'']]],
-  ['creation_5fts_23',['creation_ts',['../structttak__owner.html#a06604c5fe6dd960f99fd33e66f0156e1',1,'ttak_owner::creation_ts'],['../structttak__thread__pool.html#a3e5f0e7aff5c7d8d3c98f6614cafa405',1,'ttak_thread_pool::creation_ts']]],
-  ['ctrl_24',['ctrl',['../struct__node.html#ae3f8bb98545485738428f81dfcf6a14b',1,'_node']]],
-  ['current_5fepoch_25',['current_epoch',['../structttak__epoch__gc.html#ab3a7c8a89fbdc06128a6b176ed2132eb',1,'ttak_epoch_gc']]]
+  ['6_0',['Stage 6',['../md_tutorials_2modules_2notes.html#autotoc_md50',1,'']]],
+  ['6_20–_20math_20security_1',['Stage 6 – Math &amp; Security',['../md_tutorials_2CLONE__PATH.html#autotoc_md36',1,'']]]
 ];

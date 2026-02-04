@@ -102,6 +102,7 @@ $(document).ready(function(){initNavTree('bigint_8h.html',''); initResizable(); 
 <code>#include &lt;stddef.h&gt;</code><br />
 <code>#include &lt;stdbool.h&gt;</code><br />
 <code>#include &lt;stdalign.h&gt;</code><br />
+<code>#include &lt;<a class="el" href="fixed_8h_source.html">ttak/types/fixed.h</a>&gt;</code><br />
 </div><div class="textblock"><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Include dependency graph for bigint.h:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -109,15 +110,19 @@ $(document).ready(function(){initNavTree('bigint_8h.html',''); initResizable(); 
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="bigint_8h__incl.png" border="0" usemap="#ainclude_2ttak_2math_2bigint_8h" alt=""/></div>
 <map name="ainclude_2ttak_2math_2bigint_8h" id="ainclude_2ttak_2math_2bigint_8h">
-<area shape="rect" title=" " alt="" coords="92,5,282,33"/>
-<area shape="rect" title=" " alt="" coords="5,81,76,109"/>
-<area shape="poly" title=" " alt="" coords="162,36,81,76,79,71,160,31"/>
-<area shape="rect" title=" " alt="" coords="100,81,173,109"/>
-<area shape="poly" title=" " alt="" coords="180,35,156,70,152,66,176,32"/>
-<area shape="rect" title=" " alt="" coords="197,81,278,109"/>
-<area shape="poly" title=" " alt="" coords="198,32,222,66,218,70,194,35"/>
-<area shape="rect" title=" " alt="" coords="303,81,388,109"/>
-<area shape="poly" title=" " alt="" coords="217,31,305,72,303,77,214,36"/>
+<area shape="rect" title=" " alt="" coords="94,5,285,31"/>
+<area shape="rect" title=" " alt="" coords="78,152,149,177"/>
+<area shape="poly" title=" " alt="" coords="95,31,49,49,30,63,13,80,9,90,9,99,20,116,41,132,68,145,66,149,39,136,16,120,4,100,4,89,9,77,26,59,47,44,93,26"/>
+<area shape="rect" title=" " alt="" coords="23,79,98,104"/>
+<area shape="poly" title=" " alt="" coords="170,33,95,74,93,69,168,28"/>
+<area shape="rect" title=" " alt="" coords="224,152,307,177"/>
+<area shape="poly" title=" " alt="" coords="286,23,313,31,339,41,363,57,383,77,388,89,388,101,375,121,350,137,320,150,318,145,347,132,371,117,383,99,383,90,378,80,360,61,337,46,311,36,285,28"/>
+<area shape="rect" title=" " alt="" coords="281,79,368,104"/>
+<area shape="poly" title=" " alt="" coords="213,28,292,70,289,74,210,33"/>
+<area shape="rect" href="fixed_8h.html" title=" " alt="" coords="122,79,257,104"/>
+<area shape="poly" title=" " alt="" coords="192,31,192,65,187,65,187,31"/>
+<area shape="poly" title=" " alt="" coords="179,106,138,144,134,141,176,102"/>
+<area shape="poly" title=" " alt="" coords="204,102,245,141,242,144,200,106"/>
 </map>
 </div>
 </div><div class="textblock"><div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
@@ -183,6 +188,10 @@ Functions</h2></td></tr>
 <tr class="memitem:a88b0d07f7949605cf1c6fdc3cb1a3415" id="r_a88b0d07f7949605cf1c6fdc3cb1a3415"><td class="memItemLeft" align="right" valign="top">_Bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bigint_8h.html#a88b0d07f7949605cf1c6fdc3cb1a3415">ttak_bigint_set_u64</a> (<a class="el" href="bigint_8h.html#ad2cfb5db6b27efcca04f256dc0622bfa">ttak_bigint_t</a> *bi, uint64_t value, uint64_t now)</td></tr>
 <tr class="memdesc:a88b0d07f7949605cf1c6fdc3cb1a3415"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assigns an unsigned 64-bit value to the bigint.  <br /></td></tr>
 <tr class="separator:a88b0d07f7949605cf1c6fdc3cb1a3415"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2ecfc5d86f91946b73fecff67942753" id="r_ad2ecfc5d86f91946b73fecff67942753"><td class="memItemLeft" align="right" valign="top">_Bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bigint_8h.html#ad2ecfc5d86f91946b73fecff67942753">ttak_bigint_set_u128</a> (<a class="el" href="bigint_8h.html#ad2cfb5db6b27efcca04f256dc0622bfa">ttak_bigint_t</a> *bi, <a class="el" href="structttak__u128__t.html">ttak_u128_t</a> value, uint64_t now)</td></tr>
+<tr class="separator:ad2ecfc5d86f91946b73fecff67942753"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66b18083442e2cbfa62271dfd3f8c775" id="r_a66b18083442e2cbfa62271dfd3f8c775"><td class="memItemLeft" align="right" valign="top">_Bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bigint_8h.html#a66b18083442e2cbfa62271dfd3f8c775">ttak_bigint_set_u256</a> (<a class="el" href="bigint_8h.html#ad2cfb5db6b27efcca04f256dc0622bfa">ttak_bigint_t</a> *bi, <a class="el" href="structttak__u256__t.html">ttak_u256_t</a> value, uint64_t now)</td></tr>
+<tr class="separator:a66b18083442e2cbfa62271dfd3f8c775"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aacc6ff52c48fb44ceccff44df241c028" id="r_aacc6ff52c48fb44ceccff44df241c028"><td class="memItemLeft" align="right" valign="top">_Bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bigint_8h.html#aacc6ff52c48fb44ceccff44df241c028">ttak_bigint_copy</a> (<a class="el" href="bigint_8h.html#ad2cfb5db6b27efcca04f256dc0622bfa">ttak_bigint_t</a> *dst, const <a class="el" href="bigint_8h.html#ad2cfb5db6b27efcca04f256dc0622bfa">ttak_bigint_t</a> *src, uint64_t now)</td></tr>
 <tr class="separator:aacc6ff52c48fb44ceccff44df241c028"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a49487c985999445bea59fc58526bb6fa" id="r_a49487c985999445bea59fc58526bb6fa"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bigint_8h.html#a49487c985999445bea59fc58526bb6fa">ttak_bigint_cmp</a> (const <a class="el" href="bigint_8h.html#ad2cfb5db6b27efcca04f256dc0622bfa">ttak_bigint_t</a> *lhs, const <a class="el" href="bigint_8h.html#ad2cfb5db6b27efcca04f256dc0622bfa">ttak_bigint_t</a> *rhs)</td></tr>
@@ -218,6 +227,10 @@ Functions</h2></td></tr>
 <tr class="separator:a27bb46730e0d7dfe78c9db77022d9645"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a50c53fbcb72a68c5dd13d5b431da687d" id="r_a50c53fbcb72a68c5dd13d5b431da687d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bigint_8h.html#a50c53fbcb72a68c5dd13d5b431da687d">ttak_bigint_export_u64</a> (const <a class="el" href="bigint_8h.html#ad2cfb5db6b27efcca04f256dc0622bfa">ttak_bigint_t</a> *bi, uint64_t *value_out)</td></tr>
 <tr class="separator:a50c53fbcb72a68c5dd13d5b431da687d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f0f64bcda595609b8636f26f6ba0270" id="r_a4f0f64bcda595609b8636f26f6ba0270"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bigint_8h.html#a4f0f64bcda595609b8636f26f6ba0270">ttak_bigint_export_u128</a> (const <a class="el" href="bigint_8h.html#ad2cfb5db6b27efcca04f256dc0622bfa">ttak_bigint_t</a> *bi, <a class="el" href="structttak__u128__t.html">ttak_u128_t</a> *value_out)</td></tr>
+<tr class="separator:a4f0f64bcda595609b8636f26f6ba0270"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00a446d5050ce99eed0d74e3b06c1423" id="r_a00a446d5050ce99eed0d74e3b06c1423"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bigint_8h.html#a00a446d5050ce99eed0d74e3b06c1423">ttak_bigint_export_u256</a> (const <a class="el" href="bigint_8h.html#ad2cfb5db6b27efcca04f256dc0622bfa">ttak_bigint_t</a> *bi, <a class="el" href="structttak__u256__t.html">ttak_u256_t</a> *value_out)</td></tr>
+<tr class="separator:a00a446d5050ce99eed0d74e3b06c1423"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac4659c21c5e59a5e28e324a515adc9a0" id="r_ac4659c21c5e59a5e28e324a515adc9a0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bigint_8h.html#ac4659c21c5e59a5e28e324a515adc9a0">ttak_bigint_to_hex_hash</a> (const <a class="el" href="bigint_8h.html#ad2cfb5db6b27efcca04f256dc0622bfa">ttak_bigint_t</a> *bi, char out[65])</td></tr>
 <tr class="separator:ac4659c21c5e59a5e28e324a515adc9a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae2268b4f3ec8fc8539668d446a2d058e" id="r_ae2268b4f3ec8fc8539668d446a2d058e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bigint_8h.html#ae2268b4f3ec8fc8539668d446a2d058e">ttak_bigint_format_prefix</a> (const <a class="el" href="bigint_8h.html#ad2cfb5db6b27efcca04f256dc0622bfa">ttak_bigint_t</a> *bi, char *dest, size_t dest_cap)</td></tr>
@@ -238,7 +251,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bigint_8h_source.html#l00014">14</a> of file <a class="el" href="bigint_8h_source.html">bigint.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bigint_8h_source.html#l00015">15</a> of file <a class="el" href="bigint_8h_source.html">bigint.h</a>.</p>
 
 </div>
 </div>
@@ -255,7 +268,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bigint_8h_source.html#l00031">31</a> of file <a class="el" href="bigint_8h_source.html">bigint.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bigint_8h_source.html#l00032">32</a> of file <a class="el" href="bigint_8h_source.html">bigint.h</a>.</p>
 
 </div>
 </div>
@@ -273,7 +286,7 @@ Functions</h2></td></tr>
 
 <p>Platform-optimized word type for Raspberry Pi (ARMv7/v8). </p>
 
-<p class="definition">Definition at line <a class="el" href="bigint_8h_source.html#l00012">12</a> of file <a class="el" href="bigint_8h_source.html">bigint.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bigint_8h_source.html#l00013">13</a> of file <a class="el" href="bigint_8h_source.html">bigint.h</a>.</p>
 
 </div>
 </div>
@@ -583,6 +596,62 @@ Functions</h2></td></tr>
           <td></td>
           <td class="paramtype">uint64_t&#160;</td>
           <td class="paramname"><em>now</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4f0f64bcda595609b8636f26f6ba0270" name="a4f0f64bcda595609b8636f26f6ba0270"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f0f64bcda595609b8636f26f6ba0270">&#9670;&#160;</a></span>ttak_bigint_export_u128()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ttak_bigint_export_u128 </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="bigint_8h.html#ad2cfb5db6b27efcca04f256dc0622bfa">ttak_bigint_t</a> *&#160;</td>
+          <td class="paramname"><em>bi</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structttak__u128__t.html">ttak_u128_t</a> *&#160;</td>
+          <td class="paramname"><em>value_out</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a00a446d5050ce99eed0d74e3b06c1423" name="a00a446d5050ce99eed0d74e3b06c1423"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00a446d5050ce99eed0d74e3b06c1423">&#9670;&#160;</a></span>ttak_bigint_export_u256()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ttak_bigint_export_u256 </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="bigint_8h.html#ad2cfb5db6b27efcca04f256dc0622bfa">ttak_bigint_t</a> *&#160;</td>
+          <td class="paramname"><em>bi</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structttak__u256__t.html">ttak_u256_t</a> *&#160;</td>
+          <td class="paramname"><em>value_out</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1027,6 +1096,74 @@ Functions</h2></td></tr>
           <td></td>
           <td class="paramtype">uint64_t&#160;</td>
           <td class="paramname"><em>rhs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>now</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad2ecfc5d86f91946b73fecff67942753" name="ad2ecfc5d86f91946b73fecff67942753"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2ecfc5d86f91946b73fecff67942753">&#9670;&#160;</a></span>ttak_bigint_set_u128()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Bool ttak_bigint_set_u128 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="bigint_8h.html#ad2cfb5db6b27efcca04f256dc0622bfa">ttak_bigint_t</a> *&#160;</td>
+          <td class="paramname"><em>bi</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structttak__u128__t.html">ttak_u128_t</a>&#160;</td>
+          <td class="paramname"><em>value</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>now</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a66b18083442e2cbfa62271dfd3f8c775" name="a66b18083442e2cbfa62271dfd3f8c775"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66b18083442e2cbfa62271dfd3f8c775">&#9670;&#160;</a></span>ttak_bigint_set_u256()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Bool ttak_bigint_set_u256 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="bigint_8h.html#ad2cfb5db6b27efcca04f256dc0622bfa">ttak_bigint_t</a> *&#160;</td>
+          <td class="paramname"><em>bi</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structttak__u256__t.html">ttak_u256_t</a>&#160;</td>
+          <td class="paramname"><em>value</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>

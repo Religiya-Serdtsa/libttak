@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['development_20history_0',['Development History',['../md_HISTORY.html',1,'']]],
-  ['diffs_20overview_1',['Key Diffs Overview',['../md_HISTORY.html#autotoc_md3',1,'']]]
+  ['math_20tuning_0',['TCC-Oriented Build and Math Tuning',['../md_docs_2TCC__OPTIMIZATION.html',1,'']]]
 ];

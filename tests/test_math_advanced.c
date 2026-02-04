@@ -125,22 +125,20 @@ void test_ntt_pointwise_mul() {
 }
 
 void test_crt_combine_basic() {
-    ttak_uint128_native_t value = ((ttak_uint128_native_t)1 << 96) + 0x123456789ULL;
+    ttak_u128_t value = ttak_u128_shl(ttak_u128_from_u64(1), 96);
+    value = ttak_u128_add64(value, 0x123456789ULL);
     ttak_crt_term_t terms[2];
     terms[0].modulus = ttak_ntt_primes[0].modulus;
-    terms[0].residue = (uint64_t)(value % terms[0].modulus);
+    terms[0].residue = ttak_u128_mod_u64(value, terms[0].modulus);
     terms[1].modulus = ttak_ntt_primes[1].modulus;
-    terms[1].residue = (uint64_t)(value % terms[1].modulus);
+    terms[1].residue = ttak_u128_mod_u64(value, terms[1].modulus);
 
     ttak_u128_t result, modulus;
     ASSERT(ttak_crt_combine(terms, 2, &result, &modulus));
 
-    ttak_uint128_native_t combined = ((ttak_uint128_native_t)result.hi << 64) | result.lo;
-    ttak_uint128_native_t combined_mod = ((ttak_uint128_native_t)modulus.hi << 64) | modulus.lo;
-
-    ASSERT((combined % terms[0].modulus) == terms[0].residue);
-    ASSERT((combined % terms[1].modulus) == terms[1].residue);
-    ASSERT(combined < combined_mod);
+    ASSERT(ttak_u128_mod_u64(result, terms[0].modulus) == terms[0].residue);
+    ASSERT(ttak_u128_mod_u64(result, terms[1].modulus) == terms[1].residue);
+    ASSERT(ttak_u128_cmp(result, modulus) < 0);
 }
 
 void test_next_power_of_two() {

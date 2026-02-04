@@ -1,9 +1,19 @@
 #ifndef TTAK_MATH_SUM_DIVISORS_H
 #define TTAK_MATH_SUM_DIVISORS_H
 
+#include <ttak/log/logger.h>
 #include <ttak/math/bigint.h>
 #include <stdint.h>
 #include <stdbool.h>
+
+typedef enum {
+    TTAK_SUMDIV_BIG_ERROR_NONE = 0,
+    TTAK_SUMDIV_BIG_ERROR_FACTOR,
+    TTAK_SUMDIV_BIG_ERROR_EXPORT,
+    TTAK_SUMDIV_BIG_ERROR_SET_VALUE,
+    TTAK_SUMDIV_BIG_ERROR_ARITHMETIC,
+    TTAK_SUMDIV_BIG_ERROR_GENERIC
+} ttak_sumdiv_big_error_t;
 
 /**
  * @brief Calculates the sum of proper divisors for a 64-bit unsigned integer.
@@ -29,5 +39,19 @@ bool ttak_sum_proper_divisors_u64(uint64_t n, uint64_t *result_out);
  */
 bool ttak_sum_proper_divisors_big(const ttak_bigint_t *n, ttak_bigint_t *result_out, uint64_t now);
 
+/**
+ * @brief Returns the last failure reason emitted by ttak_sum_proper_divisors_big().
+ */
+ttak_sumdiv_big_error_t ttak_sum_proper_divisors_big_last_error(void);
+
+/**
+ * @brief Returns a short symbolic name for a ttak_sumdiv_big_error_t value.
+ */
+const char *ttak_sum_proper_divisors_big_error_name(ttak_sumdiv_big_error_t err);
+
+/**
+ * @brief Attaches a logger for auto-heal stage reporting.
+ */
+void ttak_sum_divisors_attach_logger(ttak_logger_t *logger);
 
 #endif // TTAK_MATH_SUM_DIVISORS_H

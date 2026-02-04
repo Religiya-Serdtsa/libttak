@@ -80,13 +80,13 @@
 \DoxyCodeLine{\Hypertarget{mem__tree_8h_source_l00076}\mbox{\hyperlink{mem__tree_8h_a829c009bd70438fe7468683c3cbc3222}{00076}}\ \mbox{\hyperlink{structttak__mem__node}{ttak\_mem\_node\_t}}\ *\mbox{\hyperlink{mem__tree_8h_a829c009bd70438fe7468683c3cbc3222}{ttak\_mem\_tree\_add}}(\mbox{\hyperlink{structttak__mem__tree}{ttak\_mem\_tree\_t}}\ *tree,\ \textcolor{keywordtype}{void}\ *ptr,\ \textcolor{keywordtype}{size\_t}\ size,\ uint64\_t\ expires\_tick,\ \_Bool\ is\_root);}
 \DoxyCodeLine{\Hypertarget{mem__tree_8h_source_l00077}00077\ \textcolor{comment}{}}
 \DoxyCodeLine{\Hypertarget{mem__tree_8h_source_l00078}00078\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{mem__tree_8h_source_l00079}00079\ \textcolor{comment}{\ *\ @brief\ Removes\ a\ memory\ block\ from\ the\ mem\ tree\ and\ frees\ it.}}
+\DoxyCodeLine{\Hypertarget{mem__tree_8h_source_l00079}00079\ \textcolor{comment}{\ *\ @brief\ Removes\ a\ memory\ block\ from\ the\ mem\ tree\ bookkeeping.}}
 \DoxyCodeLine{\Hypertarget{mem__tree_8h_source_l00080}00080\ \textcolor{comment}{\ *}}
-\DoxyCodeLine{\Hypertarget{mem__tree_8h_source_l00081}00081\ \textcolor{comment}{\ *\ This\ function\ should\ only\ be\ called\ when\ the\ memory\ block\ is\ no\ longer\ referenced}}
-\DoxyCodeLine{\Hypertarget{mem__tree_8h_source_l00082}00082\ \textcolor{comment}{\ *\ and\ its\ lifetime\ has\ expired,\ or\ when\ explicitly\ forced.}}
+\DoxyCodeLine{\Hypertarget{mem__tree_8h_source_l00081}00081\ \textcolor{comment}{\ *\ Callers\ are\ responsible\ for\ freeing\ the\ actual\ allocation\ once\ the\ node\ has}}
+\DoxyCodeLine{\Hypertarget{mem__tree_8h_source_l00082}00082\ \textcolor{comment}{\ *\ been\ detached\ from\ the\ tree.}}
 \DoxyCodeLine{\Hypertarget{mem__tree_8h_source_l00083}00083\ \textcolor{comment}{\ *}}
 \DoxyCodeLine{\Hypertarget{mem__tree_8h_source_l00084}00084\ \textcolor{comment}{\ *\ @param\ tree\ Pointer\ to\ the\ mem\ tree.}}
-\DoxyCodeLine{\Hypertarget{mem__tree_8h_source_l00085}00085\ \textcolor{comment}{\ *\ @param\ node\ Pointer\ to\ the\ mem\ node\ to\ remove\ and\ free.}}
+\DoxyCodeLine{\Hypertarget{mem__tree_8h_source_l00085}00085\ \textcolor{comment}{\ *\ @param\ node\ Pointer\ to\ the\ mem\ node\ to\ remove.}}
 \DoxyCodeLine{\Hypertarget{mem__tree_8h_source_l00086}00086\ \textcolor{comment}{\ */}}
 \DoxyCodeLine{\Hypertarget{mem__tree_8h_source_l00087}\mbox{\hyperlink{mem__tree_8h_a42638152eb455b0d7f23e964f946c8df}{00087}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{mem__tree_8h_a42638152eb455b0d7f23e964f946c8df}{ttak\_mem\_tree\_remove}}(\mbox{\hyperlink{structttak__mem__tree}{ttak\_mem\_tree\_t}}\ *tree,\ \mbox{\hyperlink{structttak__mem__node}{ttak\_mem\_node\_t}}\ *node);}
 \DoxyCodeLine{\Hypertarget{mem__tree_8h_source_l00088}00088\ \textcolor{comment}{}}

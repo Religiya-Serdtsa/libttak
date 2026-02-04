@@ -12,13 +12,22 @@
 #include <sys/mman.h>
 #include <unistd.h>
 #include <stdalign.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <fcntl.h>
 
 #define TTAK_CANARY_START_MAGIC 0xDEADBEEFDEADBEEFULL
 #define TTAK_CANARY_END_MAGIC   0xBEEFDEADBEEFDEADULL
 
-static uint64_t global_mem_usage = 0;
+#ifndef TTAK_THREAD_LOCAL
+#if defined(__TINYC__)
+#define TTAK_THREAD_LOCAL
+#else
+#define TTAK_THREAD_LOCAL _Thread_local
+#endif
+#endif
+
+static volatile uint64_t global_mem_usage = 0;
 static pthread_mutex_t global_map_lock = PTHREAD_MUTEX_INITIALIZER;
 static ttak_mem_tree_t global_mem_tree; // Global instance of the mem tree
 
@@ -49,11 +58,11 @@ static ttak_mem_tree_t global_mem_tree; // Global instance of the mem tree
 #define GET_HEADER(ptr) ((ttak_mem_header_t *)(ptr) - 1)
 #define GET_USER_PTR(header) ((void *)((ttak_mem_header_t *)(header) + 1))
 
-static tt_map_t *global_ptr_map = NULL;
+static volatile tt_map_t *global_ptr_map = NULL;
 static pthread_mutex_t global_init_lock = PTHREAD_MUTEX_INITIALIZER;
-static _Thread_local _Bool in_mem_op = false;
-static _Thread_local _Bool in_mem_init = false;
-static _Bool global_init_done = false;
+TTAK_THREAD_LOCAL int in_mem_op = 0;
+TTAK_THREAD_LOCAL int in_mem_init = 0;
+static volatile int global_init_done = 0;
 
 /**
  * @brief Lazily initialize the global pointer map and mem tree.
@@ -89,11 +98,11 @@ static void ensure_global_map(uint64_t now) {
  */
 void TTAK_HOT_PATH *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, uint64_t now, _Bool is_const, _Bool is_volatile, _Bool allow_direct, _Bool is_root, ttak_mem_flags_t flags) {
     size_t header_size = sizeof(ttak_mem_header_t);
-    _Bool strict_check_enabled = (flags & TTAK_MEM_STRICT_CHECK);
+    bool strict_check_enabled = (flags & TTAK_MEM_STRICT_CHECK);
     size_t canary_padding = strict_check_enabled ? (2 * sizeof(uint64_t)) : 0;
     size_t total_alloc_size = header_size + canary_padding + size;
     ttak_mem_header_t *header = NULL;
-    _Bool is_huge = false;
+    bool is_huge = false;
 
     if (flags & TTAK_MEM_HUGE_PAGES) {
         header = mmap(NULL, total_alloc_size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS | MAP_HUGETLB, -1, 0);
@@ -112,12 +121,12 @@ void TTAK_HOT_PATH *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, ui
     }
 
     if (!header && errno == ENOMEM) {
-        static _Thread_local _Bool retrying = false;
+        static TTAK_THREAD_LOCAL int retrying = 0;
         if (!retrying) {
-            retrying = true;
+            retrying = 1;
             tt_autoclean_dirty_pointers(now);
             void *res = ttak_mem_alloc_safe(size, lifetime_ticks, now, is_const, is_volatile, allow_direct, is_root, flags);
-            retrying = false;
+            retrying = 0;
             return res;
         }
     }
@@ -143,31 +152,37 @@ void TTAK_HOT_PATH *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, ui
     pthread_mutex_init(&header->lock, NULL);
     header->checksum = ttak_calc_header_checksum(header);
 
-    __atomic_add_fetch(&global_mem_usage, total_alloc_size, __ATOMIC_SEQ_CST);
+    ttak_atomic_add64(&global_mem_usage, total_alloc_size);
 
     void *user_ptr = (char *)header + header_size;
+    volatile void *volatile_user_ptr = user_ptr;
+    void *stable_user_ptr = (void *)volatile_user_ptr;
     if (strict_check_enabled) {
-        *((uint64_t *)user_ptr) = TTAK_CANARY_START_MAGIC;
-        user_ptr = (char *)user_ptr + sizeof(uint64_t);
+        *((uint64_t *)stable_user_ptr) = TTAK_CANARY_START_MAGIC;
+        stable_user_ptr = (char *)stable_user_ptr + sizeof(uint64_t);
+        volatile_user_ptr = stable_user_ptr;
     }
     
-    memset(user_ptr, 0, size);
+    memset(stable_user_ptr, 0, size);
 
     if (strict_check_enabled) {
-        *((uint64_t *)((char *)user_ptr + size)) = TTAK_CANARY_END_MAGIC;
+        *((uint64_t *)((char *)stable_user_ptr + size)) = TTAK_CANARY_END_MAGIC;
     }
 
     ensure_global_map(now);
-    if (global_init_done && !in_mem_init && !in_mem_op) {
+    tt_map_t *map_handle = (tt_map_t *)global_ptr_map;
+    if (global_init_done && !in_mem_init && !in_mem_op && map_handle) {
         pthread_mutex_lock(&global_map_lock);
         in_mem_op = true;
-        if (is_root) { ttak_insert_to_map(global_ptr_map, (uintptr_t)user_ptr, (size_t)header, now); }
-        ttak_mem_tree_add(&global_mem_tree, user_ptr, size, header->expires_tick, is_root); // Add to mem tree
+        if (is_root) { ttak_insert_to_map(map_handle, (uintptr_t)stable_user_ptr, (size_t)header, now); }
+        ttak_mem_tree_add(&global_mem_tree, stable_user_ptr, size, header->expires_tick, is_root); // Add to mem tree
         in_mem_op = false;
         pthread_mutex_unlock(&global_map_lock);
     }
 
-    return user_ptr;
+    volatile_user_ptr = stable_user_ptr;
+    (void)volatile_user_ptr;
+    return stable_user_ptr;
 }
 
 /**
@@ -189,11 +204,11 @@ void TTAK_HOT_PATH *ttak_mem_realloc_safe(void *ptr, size_t new_size, uint64_t l
 
     ttak_mem_header_t *old_header = GET_HEADER(ptr);
     pthread_mutex_lock(&old_header->lock);
-    _Bool is_const = old_header->is_const;
-    _Bool is_volatile = old_header->is_volatile;
-    _Bool allow_direct = old_header->allow_direct_access;
+    bool is_const = old_header->is_const;
+    bool is_volatile = old_header->is_volatile;
+    bool allow_direct = old_header->allow_direct_access;
     size_t old_size = old_header->size;
-    _Bool old_strict_check = old_header->strict_check; // Capture old strict_check
+    bool old_strict_check = old_header->strict_check; // Capture old strict_check
     pthread_mutex_unlock(&old_header->lock);
 
     // Pass the strict_check flag to the new allocation
@@ -220,23 +235,39 @@ void TTAK_HOT_PATH *ttak_mem_realloc_safe(void *ptr, size_t new_size, uint64_t l
  * @param ptr Pointer returned by ttak_mem_alloc_safe.
  */
 void TTAK_HOT_PATH ttak_mem_free(void *ptr) {
-    if (!ptr) return;
-    V_HEADER(ptr); // This will check canaries if strict_check is enabled
-    ttak_mem_header_t *header = GET_HEADER(ptr);
+    volatile void *volatile_ptr = ptr;
+    if (!volatile_ptr) return;
+    void *stable_ptr = (void *)volatile_ptr;
+    V_HEADER(stable_ptr); // This will check canaries if strict_check is enabled
+    ttak_mem_header_t *header = GET_HEADER(stable_ptr);
 
-    if (!in_mem_op && header->is_root) {
-        pthread_mutex_lock(&global_map_lock);
-        in_mem_op = true;
-        if (global_ptr_map) {
-            ttak_delete_from_map(global_ptr_map, (uintptr_t)ptr, 0);
+    _Bool already_locked = (_Bool)in_mem_op;
+    _Bool should_release_lock = false;
+    if (header->is_root) {
+        if (!already_locked) {
+            pthread_mutex_lock(&global_map_lock);
+            in_mem_op = 1;
+            should_release_lock = true;
+        }
+        tt_map_t *map_handle = (tt_map_t *)global_ptr_map;
+        if (map_handle) {
+            ttak_delete_from_map(map_handle, (uintptr_t)stable_ptr, 0);
         }
         // Remove from heap tree
-        ttak_mem_node_t *node_to_remove = ttak_mem_tree_find_node(&global_mem_tree, ptr);
+        ttak_mem_node_t *node_to_remove = ttak_mem_tree_find_node(&global_mem_tree, stable_ptr);
         if (node_to_remove) {
             ttak_mem_tree_remove(&global_mem_tree, node_to_remove);
         }
-        in_mem_op = false;
-        pthread_mutex_unlock(&global_map_lock);
+        if (should_release_lock) {
+            in_mem_op = 0;
+            pthread_mutex_unlock(&global_map_lock);
+        }
+    } else {
+        // Even non-root allocations participate in the mem tree.
+        ttak_mem_node_t *node_to_remove = ttak_mem_tree_find_node(&global_mem_tree, stable_ptr);
+        if (node_to_remove) {
+            ttak_mem_tree_remove(&global_mem_tree, node_to_remove);
+        }
     }
 
     pthread_mutex_lock(&header->lock);
@@ -250,13 +281,13 @@ void TTAK_HOT_PATH ttak_mem_free(void *ptr) {
     size_t total_alloc_size = sizeof(ttak_mem_header_t) + canary_padding + header->size;
 
     // Check pin count for delayed free
-    if (__atomic_load_n(&header->pin_count, __ATOMIC_SEQ_CST) > 0) {
+    if (ttak_atomic_read64(&header->pin_count) > 0) {
         // In a real implementation, we would mark it for deferred cleanup.
         // For now, we'll proceed but this is where the Pinning mechanism would act.
     }
     pthread_mutex_unlock(&header->lock);
 
-    __atomic_sub_fetch(&global_mem_usage, total_alloc_size, __ATOMIC_SEQ_CST);
+    ttak_atomic_sub64(&global_mem_usage, total_alloc_size);
     pthread_mutex_destroy(&header->lock);
 
     if (header->is_huge) {
@@ -306,8 +337,11 @@ void TTAK_COLD_PATH tt_autoclean_dirty_pointers(uint64_t now) {
     size_t count = 0;
     void **dirty = tt_inspect_dirty_pointers(now, &count);
     if (!dirty) return;
+    register int hot_slot = 0;
     for (size_t i = 0; i < count; i++) {
-        ttak_mem_free(dirty[i]);
+        hot_slot = (int)i;
+        volatile void *volatile_target = dirty[i];
+        ttak_mem_free((void *)volatile_target);
     }
     free(dirty);
 }
@@ -322,21 +356,22 @@ void TTAK_COLD_PATH tt_autoclean_dirty_pointers(uint64_t now) {
  * @return Array of pointers or NULL if inspection fails.
  */
 void TTAK_COLD_PATH **tt_inspect_dirty_pointers(uint64_t now, size_t *count_out) {
-    if (!count_out || !global_ptr_map) return NULL;
+    tt_map_t *map_handle = (tt_map_t *)global_ptr_map;
+    if (!count_out || !map_handle) return NULL;
     *count_out = 0;
 
     pthread_mutex_lock(&global_map_lock);
-    size_t cap = global_ptr_map->cap;
-    void **dirty = malloc(sizeof(void *) * global_ptr_map->size);
+    size_t cap = map_handle->cap;
+    void **dirty = malloc(sizeof(void *) * map_handle->size);
     if (!dirty) {
         pthread_mutex_unlock(&global_map_lock);
         return NULL;
     }
     size_t found = 0;
     for (size_t i = 0; i < cap; i++) {
-        if (global_ptr_map->tbl[i].ctrl == OCCUPIED) {
-            void *user_ptr = (void *)global_ptr_map->tbl[i].key;
-            ttak_mem_header_t *h = (ttak_mem_header_t *)global_ptr_map->tbl[i].value;
+        if (map_handle->tbl[i].ctrl == OCCUPIED) {
+            void *user_ptr = (void *)map_handle->tbl[i].key;
+            ttak_mem_header_t *h = (ttak_mem_header_t *)map_handle->tbl[i].value;
             if ((h->expires_tick != (uint64_t)-1 && now > h->expires_tick) ||
                 ttak_atomic_read64(&h->access_count) > 1000000) {
                 dirty[found++] = user_ptr;
@@ -364,7 +399,7 @@ void **tt_autoclean_and_inspect(uint64_t now, size_t *count_out) {
  * @brief "Conservative Mode" pressure sensor for internal schedulers.
  */
 _Bool ttak_mem_is_pressure_high(void) {
-    return __atomic_load_n(&global_mem_usage, __ATOMIC_SEQ_CST) > TTAK_MEM_HIGH_WATERMARK;
+    return ttak_atomic_read64(&global_mem_usage) > TTAK_MEM_HIGH_WATERMARK;
 }
 
 /**
