@@ -1,4 +1,4 @@
-CC = tcc
+CC ?= tcc
 CFLAGS = -Wall -std=c11 -pthread -Iinclude -O0 -g \
          -fno-inline -fno-omit-frame-pointer \
          -fno-optimize-sibling-calls \
