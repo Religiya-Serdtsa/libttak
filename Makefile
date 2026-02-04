@@ -1,6 +1,6 @@
 override CC = tcc
 
-# Standard flags for core modules: -O0 for maximum debuggability and predictable flow
+# Standard flags for core modules
 CFLAGS = -Wall -std=c11 -pthread -Iinclude -O0 -g \
          -fno-inline -fno-omit-frame-pointer \
          -fno-optimize-sibling-calls \

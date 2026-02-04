@@ -97,11 +97,11 @@ static uint64_t start_time_ns;
 
 // --- Helpers ---
 
-static uint64_t now_ns(void) {
+static inline uint64_t now_ns(void) {
     return ttak_get_tick_count_ns();
 }
 
-static uint64_t get_ns(void) {
+static inline uint64_t get_ns(void) {
     return ttak_get_tick_count_ns();
 }
 

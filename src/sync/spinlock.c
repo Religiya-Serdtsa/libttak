@@ -17,14 +17,6 @@ static inline void ttak_spin_relax(void) {
 }
 
 /**
- * @brief Initializes backoff counters.
- */
-void ttak_backoff_init(ttak_backoff_t *b) {
-    b->count = 0;
-    b->limit = 10;
-}
-
-/**
  * @brief Performs adaptive backoff.
  */
 void ttak_backoff_pause(ttak_backoff_t *b) {
@@ -42,13 +34,6 @@ void ttak_backoff_pause(ttak_backoff_t *b) {
 }
 
 /**
- * @brief Clears the lock flag.
- */
-void ttak_spin_init(ttak_spin_t *lock) {
-    atomic_flag_clear(&lock->flag);
-}
-
-/**
  * @brief Spins with backoff until acquired.
  */
 void ttak_spin_lock(ttak_spin_t *lock) {
@@ -60,21 +45,4 @@ void ttak_spin_lock(ttak_spin_t *lock) {
         ++spin_cycles;
     }
     (void)spin_cycles;
-}
-
-/**
- * @brief Non-blocking lock attempt.
- */
-bool ttak_spin_trylock(ttak_spin_t *lock) {
-    register int try_lane = !atomic_flag_test_and_set_explicit((atomic_flag *)&lock->flag, memory_order_acquire);
-    return try_lane != 0;
-}
-
-/**
- * @brief Releases lock.
- */
-void ttak_spin_unlock(ttak_spin_t *lock) {
-    register int release_lane = 1;
-    (void)release_lane;
-    atomic_flag_clear_explicit((atomic_flag *)&lock->flag, memory_order_release);
 }

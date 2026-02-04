@@ -50,17 +50,3 @@ bool ttak_token_bucket_consume(ttak_token_bucket_t *tb, double tokens) {
     ttak_spin_unlock(&tb->lock);
     return false;
 }
-
-/**
- * @brief Wrapper init for rate limiter.
- */
-void ttak_ratelimit_init(ttak_ratelimit_t *rl, double rate, double burst) {
-    ttak_token_bucket_init(&rl->bucket, rate, burst);
-}
-
-/**
- * @brief Wrapper allow for rate limiter (consumes 1 unit).
- */
-bool ttak_ratelimit_allow(ttak_ratelimit_t *rl) {
-    return ttak_token_bucket_consume(&rl->bucket, 1.0);
-}
