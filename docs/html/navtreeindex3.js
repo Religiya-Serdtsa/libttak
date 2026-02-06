@@ -1,5 +1,11 @@
 var NAVTREEINDEX3 =
 {
+"structttak__bplus__tree.html#a19e50a083d9810a1d361fae2b69041f9":[5,0,14,3],
+"structttak__bplus__tree.html#a224e4a27e60f30836cecb7c4e9d51e2d":[5,0,14,0],
+"structttak__bplus__tree.html#a8b968fd906b9f344447f07c7af2de278":[5,0,14,1],
+"structttak__bplus__tree.html#a93969fe63ba91fc114484ca959eb4794":[5,0,14,4],
+"structttak__bplus__tree.html#ae2be5027a9c0571321a08ea639e8c92d":[5,0,14,2],
+"structttak__btree.html":[5,0,15],
 "structttak__btree.html#a41b2de06225c50610c3449773c3b0eba":[5,0,15,1],
 "structttak__btree.html#a5b8b480b5cd7d4a1a3cdbc1a487538c5":[5,0,15,3],
 "structttak__btree.html#a7c3e9cf8f2d3f57e5fed47178202f800":[5,0,15,2],
@@ -56,6 +62,7 @@ var NAVTREEINDEX3 =
 "structttak__lf__queue__t.html#a9ec3a51add9c337638fdfe9218481d98":[5,0,24,1],
 "structttak__logger.html":[5,0,25],
 "structttak__logger.html#a75133a7cb19ffae0042df8c5cd970760":[5,0,25,1],
+"structttak__logger.html#a8489256cafc9961e644cd68e83e86a5f":[5,0,25,2],
 "structttak__logger.html#ad14eb5229a9a1b9546005984b0f33433":[5,0,25,0],
 "structttak__map__t.html":[5,0,26],
 "structttak__map__t.html#a78c16627c9ef1b90cbaa6ca777a85531":[5,0,26,0],
@@ -66,6 +73,7 @@ var NAVTREEINDEX3 =
 "structttak__mem__header__t.html#a0318bb3cfda8bb54cf6ec0c43e6b2584":[5,0,27,0],
 "structttak__mem__header__t.html#a0362d896df5d92be01157426136ad6b0":[5,0,27,6],
 "structttak__mem__header__t.html#a49f32c7dc3f8c633c289870c99841153":[5,0,27,4],
+"structttak__mem__header__t.html#a4c9d2514539339c34bed60e2bdd5e233":[5,0,27,19],
 "structttak__mem__header__t.html#a4de6b9462e84fa2602c694e3e9633b9e":[5,0,27,18],
 "structttak__mem__header__t.html#a576f96336f81e4af314e70b911232dda":[5,0,27,17],
 "structttak__mem__header__t.html#a5bf1a1bf467c6b8f9df7c13ff72ee660":[5,0,27,8],
@@ -241,13 +249,5 @@ var NAVTREEINDEX3 =
 "sum__divisors_8h.html#ad263c33f5701435721532071341d20d9a39c532b65da642cc44d3babcb253695d":[6,0,5,0,6,6,0,4],
 "sum__divisors_8h.html#ad263c33f5701435721532071341d20d9a7eed2367085355b363b6af9a78845087":[6,0,5,0,6,6,0,0],
 "sum__divisors_8h.html#ad263c33f5701435721532071341d20d9aa1b5e495b3bcb2aba382c684b812a634":[6,0,5,0,6,6,0,2],
-"sum__divisors_8h.html#ad263c33f5701435721532071341d20d9add6b1409f5a3d8817090aa25c92b1849":[6,0,5,0,6,6,0,3],
-"sum__divisors_8h.html#ad263c33f5701435721532071341d20d9aef5113bbca5642163c5c68655c472e61":[6,0,5,0,6,6,0,1],
-"sum__divisors_8h.html#ad2b7aa6679870a9c5d324fe3ede48a8b":[6,0,5,0,6,6,3],
-"sum__divisors_8h.html#af34288a320578a37a35a1843a4ac9c62":[6,0,5,0,6,6,2],
-"sum__divisors_8h_source.html":[6,0,5,0,6,6],
-"sync_8h.html":[6,0,5,0,12,1],
-"sync_8h.html#a099d39f1f8999756bc828ad4b337d5b6":[6,0,5,0,12,1,9],
-"sync_8h.html#a1eee1e0280f4c0ff79f2b873782a4f63":[6,0,5,0,12,1,24],
-"sync_8h.html#a20571518e2e5a832d9e0f5be839357d0":[6,0,5,0,12,1,26]
+"sum__divisors_8h.html#ad263c33f5701435721532071341d20d9add6b1409f5a3d8817090aa25c92b1849":[6,0,5,0,6,6,0,3]
 };

@@ -54,8 +54,14 @@ void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{mem_8
 \begin{DoxyCompactList}\small\item\em Inspects and returns pointers that are expired or have abnormal access counts. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{mem_8h_af73ea5e149eaa8dc0df429ad1f27cd45}{tt\+\_\+autoclean\+\_\+dirty\+\_\+pointers}} (uint64\+\_\+t now)
 \begin{DoxyCompactList}\small\item\em Automatically cleans up expired memory blocks with adaptive scheduling. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{mem_8h_ae8973d60d53321ee8b36d15b1d7698ea}{ttak\+\_\+mem\+\_\+configure\+\_\+gc}} (uint64\+\_\+t min\+\_\+interval\+\_\+ns, uint64\+\_\+t max\+\_\+interval\+\_\+ns, size\+\_\+t pressure\+\_\+threshold)
+\begin{DoxyCompactList}\small\item\em Configures the global background GC (mem\+\_\+tree) parameters. \end{DoxyCompactList}\item 
 void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{mem_8h_a23a79fc56d219a37227ec07299e4571b}{tt\+\_\+autoclean\+\_\+and\+\_\+inspect}} (uint64\+\_\+t now, size\+\_\+t \texorpdfstring{$\ast$}{*}count\+\_\+out)
-\begin{DoxyCompactList}\small\item\em Cleans up and returns abnormal pointers. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Cleans up and returns abnormal pointers. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{mem_8h_adfcac077aeb029c04c4fb47dc33116a0}{ttak\+\_\+mem\+\_\+set\+\_\+trace}} (int enable)
+\begin{DoxyCompactList}\small\item\em Sets the global memory tracing flag. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{mem_8h_a901d371e2cc570055bc60bcea5653df5}{ttak\+\_\+mem\+\_\+is\+\_\+trace\+\_\+enabled}} (void)
+\begin{DoxyCompactList}\small\item\em Returns whether memory tracing is currently enabled. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Macro Definition Documentation}
@@ -95,7 +101,7 @@ Definition at line \mbox{\hyperlink{mem_8h_source_l00011}{11}} of file \mbox{\hy
 
 
 
-Definition at line \mbox{\hyperlink{mem_8h_source_l00065}{65}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00080}{80}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
 \Hypertarget{mem_8h_a29ae926197a7e7154d98730bd3de6242}\label{mem_8h_a29ae926197a7e7154d98730bd3de6242} 
 \index{mem.h@{mem.h}!ttak\_mem\_alloc\_with\_flags@{ttak\_mem\_alloc\_with\_flags}}
@@ -105,7 +111,7 @@ Definition at line \mbox{\hyperlink{mem_8h_source_l00065}{65}} of file \mbox{\hy
 
 
 
-Definition at line \mbox{\hyperlink{mem_8h_source_l00066}{66}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00081}{81}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
 \Hypertarget{mem_8h_aecbcfc6a4045b6bd854f785a49706a77}\label{mem_8h_aecbcfc6a4045b6bd854f785a49706a77} 
 \index{mem.h@{mem.h}!ttak\_mem\_realloc@{ttak\_mem\_realloc}}
@@ -115,7 +121,7 @@ Definition at line \mbox{\hyperlink{mem_8h_source_l00066}{66}} of file \mbox{\hy
 
 
 
-Definition at line \mbox{\hyperlink{mem_8h_source_l00067}{67}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00082}{82}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
 \Hypertarget{mem_8h_ac436c1f90ce06b2759063c0d124cbd90}\label{mem_8h_ac436c1f90ce06b2759063c0d124cbd90} 
 \index{mem.h@{mem.h}!ttak\_mem\_realloc\_with\_flags@{ttak\_mem\_realloc\_with\_flags}}
@@ -125,7 +131,7 @@ Definition at line \mbox{\hyperlink{mem_8h_source_l00067}{67}} of file \mbox{\hy
 
 
 
-Definition at line \mbox{\hyperlink{mem_8h_source_l00068}{68}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00083}{83}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
 
 
@@ -138,7 +144,7 @@ Definition at line \mbox{\hyperlink{mem_8h_source_l00068}{68}} of file \mbox{\hy
 
 
 
-Definition at line \mbox{\hyperlink{mem_8h_source_l00064}{64}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00079}{79}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
 
 
@@ -228,6 +234,16 @@ Accesses the memory block, verifying its lifecycle and security.
 
 Unified memory allocation with lifecycle management and hardware optimization. 
 
+\Hypertarget{mem_8h_ae8973d60d53321ee8b36d15b1d7698ea}\label{mem_8h_ae8973d60d53321ee8b36d15b1d7698ea} 
+\index{mem.h@{mem.h}!ttak\_mem\_configure\_gc@{ttak\_mem\_configure\_gc}}
+\index{ttak\_mem\_configure\_gc@{ttak\_mem\_configure\_gc}!mem.h@{mem.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_mem\_configure\_gc()}{ttak\_mem\_configure\_gc()}}
+{\footnotesize\ttfamily void ttak\+\_\+mem\+\_\+configure\+\_\+gc (\begin{DoxyParamCaption}\item[{uint64\+\_\+t}]{min\+\_\+interval\+\_\+ns,  }\item[{uint64\+\_\+t}]{max\+\_\+interval\+\_\+ns,  }\item[{size\+\_\+t}]{pressure\+\_\+threshold }\end{DoxyParamCaption})}
+
+
+
+Configures the global background GC (mem\+\_\+tree) parameters. 
+
 \Hypertarget{mem_8h_afdcd75479e1ca4dde197214d0430de65}\label{mem_8h_afdcd75479e1ca4dde197214d0430de65} 
 \index{mem.h@{mem.h}!ttak\_mem\_free@{ttak\_mem\_free}}
 \index{ttak\_mem\_free@{ttak\_mem\_free}!mem.h@{mem.h}}
@@ -238,6 +254,16 @@ Unified memory allocation with lifecycle management and hardware optimization.
 
 Frees the memory block and removes it from the global shadow map. 
 
+\Hypertarget{mem_8h_a901d371e2cc570055bc60bcea5653df5}\label{mem_8h_a901d371e2cc570055bc60bcea5653df5} 
+\index{mem.h@{mem.h}!ttak\_mem\_is\_trace\_enabled@{ttak\_mem\_is\_trace\_enabled}}
+\index{ttak\_mem\_is\_trace\_enabled@{ttak\_mem\_is\_trace\_enabled}!mem.h@{mem.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_mem\_is\_trace\_enabled()}{ttak\_mem\_is\_trace\_enabled()}}
+{\footnotesize\ttfamily int ttak\+\_\+mem\+\_\+is\+\_\+trace\+\_\+enabled (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Returns whether memory tracing is currently enabled. 
+
 \Hypertarget{mem_8h_a7eec3d633592a863f39155500dd0227a}\label{mem_8h_a7eec3d633592a863f39155500dd0227a} 
 \index{mem.h@{mem.h}!ttak\_mem\_realloc\_safe@{ttak\_mem\_realloc\_safe}}
 \index{ttak\_mem\_realloc\_safe@{ttak\_mem\_realloc\_safe}!mem.h@{mem.h}}
@@ -247,4 +273,14 @@ Frees the memory block and removes it from the global shadow map.
 
 
 Reallocates memory with lifecycle management. 
+
+\Hypertarget{mem_8h_adfcac077aeb029c04c4fb47dc33116a0}\label{mem_8h_adfcac077aeb029c04c4fb47dc33116a0} 
+\index{mem.h@{mem.h}!ttak\_mem\_set\_trace@{ttak\_mem\_set\_trace}}
+\index{ttak\_mem\_set\_trace@{ttak\_mem\_set\_trace}!mem.h@{mem.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_mem\_set\_trace()}{ttak\_mem\_set\_trace()}}
+{\footnotesize\ttfamily void ttak\+\_\+mem\+\_\+set\+\_\+trace (\begin{DoxyParamCaption}\item[{int}]{enable }\end{DoxyParamCaption})}
+
+
+
+Sets the global memory tracing flag. 
 

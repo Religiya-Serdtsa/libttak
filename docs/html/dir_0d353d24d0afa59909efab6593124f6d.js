@@ -35,5 +35,6 @@ var dir_0d353d24d0afa59909efab6593124f6d =
     [ "33-bench-suite", "dir_463d105b4dccfce7515b06c84b404687.html", null ],
     [ "34-dangerous-primer", "dir_610ea0f5e89c32f86cb9ee5c4ef9f070.html", null ],
     [ "35-context-bridge", "dir_4d1d339a836aabe3ea7426854f495062.html", null ],
+    [ "36-trace-memory", "dir_edd4352b3ebf48f32414131210e596c2.html", null ],
     [ "DANGEROUS", "dir_a7b74cb14d16019b23286ede1db62264.html", null ]
 ];

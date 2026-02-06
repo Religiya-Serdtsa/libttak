@@ -41,6 +41,8 @@ enum \mbox{\hyperlink{logger_8h_a13b7cbf4245d32959202870c26bbd3e4}{ttak\+\_\+log
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
+void \mbox{\hyperlink{logger_8h_adfcac077aeb029c04c4fb47dc33116a0}{ttak\+\_\+mem\+\_\+set\+\_\+trace}} (int enable)
+\begin{DoxyCompactList}\small\item\em Toggles memory tracing globally and for existing allocations. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{logger_8h_a521315f19c7d983c5f323d47a86e9832}{ttak\+\_\+logger\+\_\+init}} (\mbox{\hyperlink{logger_8h_a3a653b85eb05b9b2000b5e7e20fedcda}{ttak\+\_\+logger\+\_\+t}} \texorpdfstring{$\ast$}{*}l, \mbox{\hyperlink{logger_8h_a9c88f26d8f8810ba8ff97f986e82319a}{ttak\+\_\+log\+\_\+func\+\_\+t}} func, \mbox{\hyperlink{logger_8h_a13b7cbf4245d32959202870c26bbd3e4}{ttak\+\_\+log\+\_\+level\+\_\+t}} level)
 \begin{DoxyCompactList}\small\item\em Initializes the logger. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{logger_8h_ac3cf29e97c6046fd7efcc81a18599844}{ttak\+\_\+logger\+\_\+log}} (\mbox{\hyperlink{logger_8h_a3a653b85eb05b9b2000b5e7e20fedcda}{ttak\+\_\+logger\+\_\+t}} \texorpdfstring{$\ast$}{*}l, \mbox{\hyperlink{logger_8h_a13b7cbf4245d32959202870c26bbd3e4}{ttak\+\_\+log\+\_\+level\+\_\+t}} level, const char \texorpdfstring{$\ast$}{*}fmt,...)
@@ -56,7 +58,7 @@ void \mbox{\hyperlink{logger_8h_ac3cf29e97c6046fd7efcc81a18599844}{ttak\+\_\+log
 
 
 
-Definition at line \mbox{\hyperlink{logger_8h_source_l00034}{34}} of file \mbox{\hyperlink{logger_8h_source}{logger.\+h}}.
+Definition at line \mbox{\hyperlink{logger_8h_source_l00035}{35}} of file \mbox{\hyperlink{logger_8h_source}{logger.\+h}}.
 
 \Hypertarget{logger_8h_a9c88f26d8f8810ba8ff97f986e82319a}\label{logger_8h_a9c88f26d8f8810ba8ff97f986e82319a} 
 \index{logger.h@{logger.h}!ttak\_log\_func\_t@{ttak\_log\_func\_t}}
@@ -167,3 +169,13 @@ Logs a message.
 {\em ...} & Arguments for format string. \\
 \hline
 \end{DoxyParams}
+\Hypertarget{logger_8h_adfcac077aeb029c04c4fb47dc33116a0}\label{logger_8h_adfcac077aeb029c04c4fb47dc33116a0} 
+\index{logger.h@{logger.h}!ttak\_mem\_set\_trace@{ttak\_mem\_set\_trace}}
+\index{ttak\_mem\_set\_trace@{ttak\_mem\_set\_trace}!logger.h@{logger.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_mem\_set\_trace()}{ttak\_mem\_set\_trace()}}
+{\footnotesize\ttfamily void ttak\+\_\+mem\+\_\+set\+\_\+trace (\begin{DoxyParamCaption}\item[{int}]{enable }\end{DoxyParamCaption})}
+
+
+
+Toggles memory tracing globally and for existing allocations. 
+

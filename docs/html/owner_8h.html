@@ -188,6 +188,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ae74497f47054f5c3204578fa163dc942" id="r_ae74497f47054f5c3204578fa163dc942"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="owner_8h.html#ae74497f47054f5c3204578fa163dc942">ttak_owner_register_resource</a> (<a class="el" href="owner_8h.html#a8e92d0c2dff13d75471e19a1596d4b9c">ttak_owner_t</a> *owner, const char *name, void *data)</td></tr>
 <tr class="memdesc:ae74497f47054f5c3204578fa163dc942"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers a resource (variable) into the owner's isolated context.  <br /></td></tr>
 <tr class="separator:ae74497f47054f5c3204578fa163dc942"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25bcde8cc2013baf360122bd7ccd078f" id="r_a25bcde8cc2013baf360122bd7ccd078f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="owner_8h.html#a25bcde8cc2013baf360122bd7ccd078f">ttak_owner_transfer_resource</a> (<a class="el" href="owner_8h.html#a8e92d0c2dff13d75471e19a1596d4b9c">ttak_owner_t</a> *from, <a class="el" href="owner_8h.html#a8e92d0c2dff13d75471e19a1596d4b9c">ttak_owner_t</a> *to, const char *name)</td></tr>
+<tr class="memdesc:a25bcde8cc2013baf360122bd7ccd078f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfers a resource from one owner to another.  <br /></td></tr>
+<tr class="separator:a25bcde8cc2013baf360122bd7ccd078f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac178a65367f5aec292088dcdc1e1ee36" id="r_ac178a65367f5aec292088dcdc1e1ee36"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="owner_8h.html#ac178a65367f5aec292088dcdc1e1ee36">ttak_owner_execute</a> (<a class="el" href="owner_8h.html#a8e92d0c2dff13d75471e19a1596d4b9c">ttak_owner_t</a> *owner, const char *func_name, const char *resource_name, void *args)</td></tr>
 <tr class="memdesc:ac178a65367f5aec292088dcdc1e1ee36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes a registered function within the owner's safety context.  <br /></td></tr>
 <tr class="separator:ac178a65367f5aec292088dcdc1e1ee36"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -473,6 +476,42 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if registered successfully. </dd></dl>
+
+</div>
+</div>
+<a id="a25bcde8cc2013baf360122bd7ccd078f" name="a25bcde8cc2013baf360122bd7ccd078f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25bcde8cc2013baf360122bd7ccd078f">&#9670;&#160;</a></span>ttak_owner_transfer_resource()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ttak_owner_transfer_resource </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="owner_8h.html#a8e92d0c2dff13d75471e19a1596d4b9c">ttak_owner_t</a> *&#160;</td>
+          <td class="paramname"><em>from</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="owner_8h.html#a8e92d0c2dff13d75471e19a1596d4b9c">ttak_owner_t</a> *&#160;</td>
+          <td class="paramname"><em>to</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>name</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Transfers a resource from one owner to another. </p>
 
 </div>
 </div>
