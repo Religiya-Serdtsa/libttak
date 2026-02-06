@@ -6,10 +6,9 @@
 
 *Memuh consumes the memory leftovers when the lifetime expires.*
 
-**Gentle.
-Predictable.
-Explicit.
-**
+**Gentle.**
+**Predictable.**
+**Explicit.**
 
 [Docs](https://gg582.github.io/libttak)
 
