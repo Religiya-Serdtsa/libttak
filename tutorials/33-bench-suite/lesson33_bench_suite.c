@@ -1,3 +1,4 @@
+#define _XOPEN_SOURCE 700
 #include <inttypes.h>
 #include <stdio.h>
 #include <ttak/stats/stats.h>

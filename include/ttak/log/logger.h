@@ -29,9 +29,15 @@ typedef void (*ttak_log_func_t)(ttak_log_level_t level, const char *msg);
 typedef struct ttak_logger {
     ttak_log_level_t min_level; /**< Minimum severity to log. */
     ttak_log_func_t log_func;   /**< Callback function for processing logs. */
+    void (*should_trace)(int enable); /**< Toggle memory tracing for all objects. */
 } ttak_logger_t;
 
 typedef ttak_logger_t tt_logger_t;
+
+/**
+ * @brief Toggles memory tracing globally and for existing allocations.
+ */
+void ttak_mem_set_trace(int enable);
 
 /**
  * @brief Initializes the logger.

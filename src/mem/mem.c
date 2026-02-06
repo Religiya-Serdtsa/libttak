@@ -30,6 +30,7 @@
 static volatile uint64_t global_mem_usage = 0;
 static pthread_mutex_t global_map_lock = PTHREAD_MUTEX_INITIALIZER;
 static ttak_mem_tree_t global_mem_tree; // Global instance of the mem tree
+static int global_trace_enabled = 0;
 
 /**
  * @brief Internal validation macro.
@@ -42,12 +43,11 @@ static ttak_mem_tree_t global_mem_tree; // Global instance of the mem tree
         abort(); \
     } \
     if (_h->strict_check) { \
-        uint64_t *canary_start_ptr = (uint64_t *)((char *)_h + sizeof(ttak_mem_header_t)); \
-        uint64_t *canary_end_ptr = (uint64_t *)((char *)_h + sizeof(ttak_mem_header_t) + sizeof(uint64_t) + _h->size); \
-        if (*canary_start_ptr != TTAK_CANARY_START_MAGIC) { \
-            fprintf(stderr, "[FATAL] TTAK Memory Corruption detected at %p (Start canary corrupted)\n", (void*)ptr); \
+        if (_h->canary_start != TTAK_CANARY_START_MAGIC) { \
+            fprintf(stderr, "[FATAL] TTAK Memory Corruption detected at %p (Start canary corrupted in header)\n", (void*)ptr); \
             abort(); \
         } \
+        uint64_t *canary_end_ptr = (uint64_t *)((char *)ptr + _h->size); \
         if (*canary_end_ptr != TTAK_CANARY_END_MAGIC) { \
             fprintf(stderr, "[FATAL] TTAK Memory Corruption detected at %p (End canary corrupted)\n", (void*)ptr); \
             abort(); \
@@ -63,6 +63,43 @@ static pthread_mutex_t global_init_lock = PTHREAD_MUTEX_INITIALIZER;
 TTAK_THREAD_LOCAL int in_mem_op = 0;
 TTAK_THREAD_LOCAL int in_mem_init = 0;
 static volatile int global_init_done = 0;
+
+/**
+ * @brief Returns whether memory tracing is currently enabled.
+ */
+int ttak_mem_is_trace_enabled(void) {
+    return global_trace_enabled;
+}
+
+/**
+ * @brief Toggles memory tracing globally and for all existing allocations.
+ */
+void ttak_mem_set_trace(int enable) {
+    global_trace_enabled = enable;
+    if (!global_init_done) return;
+
+    pthread_mutex_lock(&global_map_lock);
+    tt_map_t *map_handle = (tt_map_t *)global_ptr_map;
+    if (map_handle) {
+        for (size_t i = 0; i < map_handle->cap; i++) {
+            if (map_handle->tbl[i].ctrl == OCCUPIED) {
+                ttak_mem_header_t *h = (ttak_mem_header_t *)map_handle->tbl[i].value;
+                pthread_mutex_lock(&h->lock);
+                if (enable && !h->tracking_log) {
+                    h->tracking_log = malloc(1024);
+                    if (h->tracking_log) {
+                        snprintf(h->tracking_log, 1024, "{\"event\":\"trace_enabled\",\"ts\":%lu}", ttak_get_tick_count());
+                    }
+                } else if (!enable && h->tracking_log) {
+                    free(h->tracking_log);
+                    h->tracking_log = NULL;
+                }
+                pthread_mutex_unlock(&h->lock);
+            }
+        }
+    }
+    pthread_mutex_unlock(&global_map_lock);
+}
 
 /**
  * @brief Lazily initialize the global pointer map and mem tree.
@@ -99,7 +136,7 @@ static void ensure_global_map(uint64_t now) {
 void TTAK_HOT_PATH *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, uint64_t now, _Bool is_const, _Bool is_volatile, _Bool allow_direct, _Bool is_root, ttak_mem_flags_t flags) {
     size_t header_size = sizeof(ttak_mem_header_t);
     bool strict_check_enabled = (flags & TTAK_MEM_STRICT_CHECK);
-    size_t canary_padding = strict_check_enabled ? (2 * sizeof(uint64_t)) : 0;
+    size_t canary_padding = strict_check_enabled ? sizeof(uint64_t) : 0;
     size_t total_alloc_size = header_size + canary_padding + size;
     ttak_mem_header_t *header = NULL;
     bool is_huge = false;
@@ -152,21 +189,25 @@ void TTAK_HOT_PATH *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, ui
     pthread_mutex_init(&header->lock, NULL);
     header->checksum = ttak_calc_header_checksum(header);
 
+    if (global_trace_enabled) {
+        header->tracking_log = malloc(1024);
+        if (header->tracking_log) {
+            snprintf(header->tracking_log, 1024, 
+                     "{\"event\":\"alloc\",\"ptr\":\"%p\",\"size\":%zu,\"ts\":%lu,\"root\":%d}", 
+                     (void*)((char*)header + header_size), size, now, (int)is_root);
+            fprintf(stderr, "[MEM_TRACK] %s\n", header->tracking_log);
+        }
+    } else {
+        header->tracking_log = NULL;
+    }
+
     ttak_atomic_add64(&global_mem_usage, total_alloc_size);
 
     void *user_ptr = (char *)header + header_size;
-    volatile void *volatile_user_ptr = user_ptr;
-    void *stable_user_ptr = (void *)volatile_user_ptr;
-    if (strict_check_enabled) {
-        *((uint64_t *)stable_user_ptr) = TTAK_CANARY_START_MAGIC;
-        stable_user_ptr = (char *)stable_user_ptr + sizeof(uint64_t);
-        volatile_user_ptr = stable_user_ptr;
-    }
-    
-    memset(stable_user_ptr, 0, size);
+    memset(user_ptr, 0, size);
 
     if (strict_check_enabled) {
-        *((uint64_t *)((char *)stable_user_ptr + size)) = TTAK_CANARY_END_MAGIC;
+        *((uint64_t *)((char *)user_ptr + size)) = TTAK_CANARY_END_MAGIC;
     }
 
     ensure_global_map(now);
@@ -174,15 +215,13 @@ void TTAK_HOT_PATH *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, ui
     if (global_init_done && !in_mem_init && !in_mem_op && map_handle) {
         pthread_mutex_lock(&global_map_lock);
         in_mem_op = true;
-        if (is_root) { ttak_insert_to_map(map_handle, (uintptr_t)stable_user_ptr, (size_t)header, now); }
-        ttak_mem_tree_add(&global_mem_tree, stable_user_ptr, size, header->expires_tick, is_root); // Add to mem tree
+        if (is_root) { ttak_insert_to_map(map_handle, (uintptr_t)user_ptr, (size_t)header, now); }
+        ttak_mem_tree_add(&global_mem_tree, user_ptr, size, header->expires_tick, is_root); // Add to mem tree
         in_mem_op = false;
         pthread_mutex_unlock(&global_map_lock);
     }
 
-    volatile_user_ptr = stable_user_ptr;
-    (void)volatile_user_ptr;
-    return stable_user_ptr;
+    return user_ptr;
 }
 
 /**
@@ -277,7 +316,14 @@ void TTAK_HOT_PATH ttak_mem_free(void *ptr) {
     }
     header->freed = true;
     
-    size_t canary_padding = header->strict_check ? (2 * sizeof(uint64_t)) : 0;
+    if (header->tracking_log) {
+        snprintf(header->tracking_log, 1024, "{\"event\":\"free\",\"ptr\":\"%p\",\"ts\":%lu}", stable_ptr, ttak_get_tick_count());
+        fprintf(stderr, "[MEM_TRACK] %s\n", header->tracking_log);
+        free(header->tracking_log);
+        header->tracking_log = NULL;
+    }
+
+    size_t canary_padding = header->strict_check ? sizeof(uint64_t) : 0;
     size_t total_alloc_size = sizeof(ttak_mem_header_t) + canary_padding + header->size;
 
     // Check pin count for delayed free
@@ -323,9 +369,25 @@ void TTAK_HOT_PATH *ttak_mem_access(void *ptr, uint64_t now) {
     ttak_atomic_inc64(&header->access_count);
     ttak_atomic_inc64(&header->pin_count);
 
+    if (header->tracking_log) {
+        snprintf(header->tracking_log, 1024, "{\"event\":\"access\",\"ptr\":\"%p\",\"count\":%lu,\"ts\":%lu}", 
+                 ptr, ttak_atomic_read64(&header->access_count), now);
+        fprintf(stderr, "[MEM_TRACK] %s\n", header->tracking_log);
+    }
+
     pthread_mutex_unlock(&header->lock);
 
     return ptr;
+}
+
+/**
+ * @brief Configures the global background GC (mem_tree) parameters.
+ */
+void ttak_mem_configure_gc(uint64_t min_interval_ns, uint64_t max_interval_ns, size_t pressure_threshold) {
+    uint64_t now = ttak_get_tick_count();
+    ensure_global_map(now);
+    ttak_mem_tree_set_cleaning_intervals(&global_mem_tree, min_interval_ns, max_interval_ns);
+    ttak_mem_tree_set_pressure_threshold(&global_mem_tree, pressure_threshold);
 }
 
 /**

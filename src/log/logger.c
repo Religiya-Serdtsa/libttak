@@ -22,6 +22,7 @@ static void default_log_func(ttak_log_level_t level, const char *msg) {
 void ttak_logger_init(ttak_logger_t *l, ttak_log_func_t func, ttak_log_level_t level) {
     l->log_func = func ? func : default_log_func;
     l->min_level = level;
+    l->should_trace = ttak_mem_set_trace;
 }
 
 /**
