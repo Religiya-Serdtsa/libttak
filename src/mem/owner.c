@@ -4,6 +4,7 @@
 #include <ttak/timing/timing.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 /**
  * @brief Hashing helper for string keys.
@@ -72,7 +73,38 @@ bool ttak_owner_register_resource(ttak_owner_t *owner, const char *name, void *d
     
     ttak_insert_to_map(owner->resources, key, (size_t)data, ttak_get_tick_count());
     
+    if (ttak_mem_is_trace_enabled()) {
+        fprintf(stderr, "[MEM_TRACK] {\"event\":\"register\",\"ptr\":\"%p\",\"owner\":\"%p\",\"name\":\"%s\",\"ts\":%lu}\n", 
+                data, (void*)owner, name, ttak_get_tick_count());
+    }
+
     ttak_rwlock_unlock(&owner->lock);
+    return true;
+}
+
+bool ttak_owner_transfer_resource(ttak_owner_t *from, ttak_owner_t *to, const char *name) {
+    if (!from || !to || !name) return false;
+
+    uintptr_t key = _hash_str(name);
+    size_t data_val = 0;
+
+    ttak_rwlock_wrlock(&from->lock);
+    if (!ttak_map_get_key(from->resources, key, &data_val, ttak_get_tick_count())) {
+        ttak_rwlock_unlock(&from->lock);
+        return false;
+    }
+    ttak_delete_from_map(from->resources, key, 0);
+    ttak_rwlock_unlock(&from->lock);
+
+    ttak_rwlock_wrlock(&to->lock);
+    ttak_insert_to_map(to->resources, key, data_val, ttak_get_tick_count());
+    
+    if (ttak_mem_is_trace_enabled()) {
+        fprintf(stderr, "[MEM_TRACK] {\"event\":\"transfer\",\"ptr\":\"%p\",\"from\":\"%p\",\"to\":\"%p\",\"name\":\"%s\",\"ts\":%lu}\n", 
+                (void*)data_val, (void*)from, (void*)to, name, ttak_get_tick_count());
+    }
+
+    ttak_rwlock_unlock(&to->lock);
     return true;
 }
 

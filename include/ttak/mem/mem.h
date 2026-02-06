@@ -56,9 +56,24 @@ void **tt_inspect_dirty_pointers(uint64_t now, size_t *count_out);
 void tt_autoclean_dirty_pointers(uint64_t now);
 
 /**
+ * @brief Configures the global background GC (mem_tree) parameters.
+ */
+void ttak_mem_configure_gc(uint64_t min_interval_ns, uint64_t max_interval_ns, size_t pressure_threshold);
+
+/**
  * @brief Cleans up and returns abnormal pointers.
  */
 void **tt_autoclean_and_inspect(uint64_t now, size_t *count_out);
+
+/**
+ * @brief Sets the global memory tracing flag.
+ */
+void ttak_mem_set_trace(int enable);
+
+/**
+ * @brief Returns whether memory tracing is currently enabled.
+ */
+int ttak_mem_is_trace_enabled(void);
 
 /* Compatibility macros */
 typedef void ttak_lifecycle_obj_t;

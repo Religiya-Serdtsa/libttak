@@ -1,3 +1,4 @@
+#define _XOPEN_SOURCE 700
 #include <stdio.h>
 #include <ttak/async/future.h>
 #include <ttak/async/promise.h>

@@ -1,4 +1,4 @@
-CC ?= tcc
+CC ?= gcc
 AR ?= ar
 
 COMMON_WARNINGS = -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700

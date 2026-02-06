@@ -78,6 +78,11 @@ bool ttak_owner_register_func(ttak_owner_t *owner, const char *name, ttak_owner_
 bool ttak_owner_register_resource(ttak_owner_t *owner, const char *name, void *data);
 
 /**
+ * @brief Transfers a resource from one owner to another.
+ */
+bool ttak_owner_transfer_resource(ttak_owner_t *from, ttak_owner_t *to, const char *name);
+
+/**
  * @brief Executes a registered function within the owner's safety context.
  * 
  * @param owner The owner context.

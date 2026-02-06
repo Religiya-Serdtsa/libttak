@@ -1,9 +1,8 @@
 
-override CC = tcc
-PREFIX ?= /usr/local
-CFLAGS ?= -Wall -Wextra -pedantic -std=c11 -g
-LIBTTAK_CFLAGS ?= -I$(PREFIX)/include
-LIBTTAK_LDFLAGS ?= -L$(PREFIX)/lib -lttak -lpthread -lm
+CC ?= tcc
+CFLAGS ?= -Wall -Wextra -pedantic -std=c11 -g -D_XOPEN_SOURCE=700
+LIBTTAK_CFLAGS ?=
+LIBTTAK_LDFLAGS ?= -lttak -lpthread -lm
 TARGET = lesson21_epoch_gc
 SOURCE = lesson21_epoch_gc.c
 

@@ -10,7 +10,7 @@ This folder hosts the hands-on assets that accompany [`modules/01-getting-starte
 
 ## Building the sample
 
-The provided `Makefile` assumes that `libttak` lives under `/usr/local`. Adjust `PREFIX`, `CFLAGS`, or `LDFLAGS` when your installation lives elsewhere.
+The provided `Makefile` links against `libttak` using standard system paths. Adjust `CFLAGS` or `LDFLAGS` if your installation requires custom flags.
 
 ```bash
 cd tutorials/01-getting-started
