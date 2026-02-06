@@ -48,6 +48,8 @@ uint64\+\_\+t \mbox{\hyperlink{structttak__mem__header__t_aeb69c52bed0292761ce4f
 \item 
 uint64\+\_\+t \mbox{\hyperlink{structttak__mem__header__t_a9bc5cff0708537fe474f41e356e69284}{canary\+\_\+end}}
 \item 
+char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__mem__header__t_a4c9d2514539339c34bed60e2bdd5e233}{tracking\+\_\+log}}
+\item 
 char \mbox{\hyperlink{structttak__mem__header__t_acc4f1b34d6e7f6d2e71755779a88ffa3}{reserved}} \mbox{[}11\mbox{]}
 \end{DoxyCompactItemize}
 
@@ -224,9 +226,9 @@ Definition at line \mbox{\hyperlink{app__types_8h_source_l00077}{77}} of file \m
 \doxysubsubsection{\texorpdfstring{reserved}{reserved}}
 {\footnotesize\ttfamily char ttak\+\_\+mem\+\_\+header\+\_\+t\+::reserved\mbox{[}11\mbox{]}}
 
-Explicit padding for 128-\/byte header on x64 
+Explicit padding for header alignment 
 
-Definition at line \mbox{\hyperlink{app__types_8h_source_l00089}{89}} of file \mbox{\hyperlink{app__types_8h_source}{app\+\_\+types.\+h}}.
+Definition at line \mbox{\hyperlink{app__types_8h_source_l00090}{90}} of file \mbox{\hyperlink{app__types_8h_source}{app\+\_\+types.\+h}}.
 
 \Hypertarget{structttak__mem__header__t_a8430c7b034f0da69e2fe16ae2a999e2d}\label{structttak__mem__header__t_a8430c7b034f0da69e2fe16ae2a999e2d} 
 \index{ttak\_mem\_header\_t@{ttak\_mem\_header\_t}!should\_join@{should\_join}}
@@ -257,6 +259,16 @@ Definition at line \mbox{\hyperlink{app__types_8h_source_l00078}{78}} of file \m
 
 
 Definition at line \mbox{\hyperlink{app__types_8h_source_l00086}{86}} of file \mbox{\hyperlink{app__types_8h_source}{app\+\_\+types.\+h}}.
+
+\Hypertarget{structttak__mem__header__t_a4c9d2514539339c34bed60e2bdd5e233}\label{structttak__mem__header__t_a4c9d2514539339c34bed60e2bdd5e233} 
+\index{ttak\_mem\_header\_t@{ttak\_mem\_header\_t}!tracking\_log@{tracking\_log}}
+\index{tracking\_log@{tracking\_log}!ttak\_mem\_header\_t@{ttak\_mem\_header\_t}}
+\doxysubsubsection{\texorpdfstring{tracking\_log}{tracking\_log}}
+{\footnotesize\ttfamily char\texorpdfstring{$\ast$}{*} ttak\+\_\+mem\+\_\+header\+\_\+t\+::tracking\+\_\+log}
+
+Memory operation tracking log (dynamic) 
+
+Definition at line \mbox{\hyperlink{app__types_8h_source_l00089}{89}} of file \mbox{\hyperlink{app__types_8h_source}{app\+\_\+types.\+h}}.
 
 
 

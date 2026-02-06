@@ -1,5 +1,6 @@
 var NAVTREEINDEX1 =
 {
+"factor_8h.html#ae6b18eac3f9615ae93f70bbe09218716":[6,0,5,0,6,4,3],
 "factor_8h_source.html":[6,0,5,0,6,4],
 "fake__root_2usr_2local_2include_2stdatomic_8h.html":[6,0,4,0,0,0,0],
 "fake__root_2usr_2local_2include_2stdatomic_8h.html#a58014a490f8aa8f5dd78cd9203229cdf":[6,0,4,0,0,0,0,0],
@@ -41,8 +42,8 @@ var NAVTREEINDEX1 =
 "fixed_8h.html#aeaacfff748e4338ade685b01de358b41":[6,0,5,0,16,0,18],
 "fixed_8h.html#aef708ed2f0eac735910ce6103eceef17":[6,0,5,0,16,0,19],
 "fixed_8h_source.html":[6,0,5,0,16,0],
-"functions.html":[5,2,0,0],
 "functions.html":[5,2,0],
+"functions.html":[5,2,0,0],
 "functions_a.html":[5,2,0,1],
 "functions_b.html":[5,2,0,2],
 "functions_c.html":[5,2,0,3],
@@ -63,8 +64,8 @@ var NAVTREEINDEX1 =
 "functions_t.html":[5,2,0,18],
 "functions_u.html":[5,2,0,19],
 "functions_v.html":[5,2,0,20],
-"functions_vars.html":[5,2,1],
 "functions_vars.html":[5,2,1,0],
+"functions_vars.html":[5,2,1],
 "functions_vars_a.html":[5,2,1,1],
 "functions_vars_b.html":[5,2,1,2],
 "functions_vars_c.html":[5,2,1,3],
@@ -91,8 +92,8 @@ var NAVTREEINDEX1 =
 "future_8h.html#a56ca146ef4be9bd1d67a1250de2ce2c2":[6,0,5,0,0,0,1],
 "future_8h.html#a5c44aae0f472071a500c1c6a265ba7d0":[6,0,5,0,0,0,2],
 "future_8h_source.html":[6,0,5,0,0,0],
-"globals.html":[6,1,0],
 "globals.html":[6,1,0,0],
+"globals.html":[6,1,0],
 "globals_a.html":[6,1,0,1],
 "globals_d.html":[6,1,0,2],
 "globals_defs.html":[6,1,6],
@@ -100,8 +101,8 @@ var NAVTREEINDEX1 =
 "globals_enum.html":[6,1,4],
 "globals_eval.html":[6,1,5],
 "globals_f.html":[6,1,0,4],
-"globals_func.html":[6,1,1,0],
 "globals_func.html":[6,1,1],
+"globals_func.html":[6,1,1,0],
 "globals_func_f.html":[6,1,1,1],
 "globals_func_g.html":[6,1,1,2],
 "globals_func_s.html":[6,1,1,3],
@@ -223,6 +224,7 @@ var NAVTREEINDEX1 =
 "logger_8h.html#a521315f19c7d983c5f323d47a86e9832":[6,0,5,0,5,0,5],
 "logger_8h.html#a9c88f26d8f8810ba8ff97f986e82319a":[6,0,5,0,5,0,2],
 "logger_8h.html#ac3cf29e97c6046fd7efcc81a18599844":[6,0,5,0,5,0,6],
+"logger_8h.html#adfcac077aeb029c04c4fb47dc33116a0":[6,0,5,0,5,0,7],
 "logger_8h_source.html":[6,0,5,0,5,0],
 "map_8h.html":[6,0,5,0,3,1],
 "map_8h.html#a0da5008a7fc916608a4d15b37c0cd0fe":[6,0,5,0,3,1,4],
@@ -247,7 +249,5 @@ var NAVTREEINDEX1 =
 "md_docs_2TCC__OPTIMIZATION.html#autotoc_md15":[2,2],
 "md_docs_2TCC__OPTIMIZATION.html#autotoc_md16":[2,3],
 "md_tutorials_2CLONE__PATH.html":[4],
-"mem_8h.html":[6,0,5,0,7,1],
-"mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdad":[6,0,5,0,7,1,7],
-"mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdada0b16ffc2f709ae7e7a5439e0ca8d7d86":[6,0,5,0,7,1,7,3]
+"mem_8h.html":[6,0,5,0,7,1]
 };

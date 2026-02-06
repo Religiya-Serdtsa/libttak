@@ -82,16 +82,21 @@
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00078}\mbox{\hyperlink{owner_8h_ae74497f47054f5c3204578fa163dc942}{00078}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{owner_8h_ae74497f47054f5c3204578fa163dc942}{ttak\_owner\_register\_resource}}(\mbox{\hyperlink{structttak__owner}{ttak\_owner\_t}}\ *owner,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *name,\ \textcolor{keywordtype}{void}\ *data);}
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00079}00079\ \textcolor{comment}{}}
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00080}00080\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{owner_8h_source_l00081}00081\ \textcolor{comment}{\ *\ @brief\ Executes\ a\ registered\ function\ within\ the\ owner's\ safety\ context.}}
-\DoxyCodeLine{\Hypertarget{owner_8h_source_l00082}00082\ \textcolor{comment}{\ *\ }}
-\DoxyCodeLine{\Hypertarget{owner_8h_source_l00083}00083\ \textcolor{comment}{\ *\ @param\ owner\ The\ owner\ context.}}
-\DoxyCodeLine{\Hypertarget{owner_8h_source_l00084}00084\ \textcolor{comment}{\ *\ @param\ func\_name\ Name\ of\ the\ function\ to\ execute.}}
-\DoxyCodeLine{\Hypertarget{owner_8h_source_l00085}00085\ \textcolor{comment}{\ *\ @param\ resource\_name\ Name\ of\ the\ registered\ resource\ to\ pass\ as\ 'ctx'\ (optional,\ can\ be\ NULL).}}
-\DoxyCodeLine{\Hypertarget{owner_8h_source_l00086}00086\ \textcolor{comment}{\ *\ @param\ args\ runtime\ arguments\ to\ pass\ to\ the\ function.}}
-\DoxyCodeLine{\Hypertarget{owner_8h_source_l00087}00087\ \textcolor{comment}{\ *\ @return\ true\ if\ execution\ was\ permitted\ and\ successful.}}
-\DoxyCodeLine{\Hypertarget{owner_8h_source_l00088}00088\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{owner_8h_source_l00089}\mbox{\hyperlink{owner_8h_ac178a65367f5aec292088dcdc1e1ee36}{00089}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{owner_8h_ac178a65367f5aec292088dcdc1e1ee36}{ttak\_owner\_execute}}(\mbox{\hyperlink{structttak__owner}{ttak\_owner\_t}}\ *owner,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *func\_name,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *resource\_name,\ \textcolor{keywordtype}{void}\ *args);}
-\DoxyCodeLine{\Hypertarget{owner_8h_source_l00090}00090\ }
-\DoxyCodeLine{\Hypertarget{owner_8h_source_l00091}00091\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_MEM\_OWNER\_H}}
+\DoxyCodeLine{\Hypertarget{owner_8h_source_l00081}00081\ \textcolor{comment}{\ *\ @brief\ Transfers\ a\ resource\ from\ one\ owner\ to\ another.}}
+\DoxyCodeLine{\Hypertarget{owner_8h_source_l00082}00082\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{owner_8h_source_l00083}\mbox{\hyperlink{owner_8h_a25bcde8cc2013baf360122bd7ccd078f}{00083}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{owner_8h_a25bcde8cc2013baf360122bd7ccd078f}{ttak\_owner\_transfer\_resource}}(\mbox{\hyperlink{structttak__owner}{ttak\_owner\_t}}\ *from,\ \mbox{\hyperlink{structttak__owner}{ttak\_owner\_t}}\ *to,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *name);}
+\DoxyCodeLine{\Hypertarget{owner_8h_source_l00084}00084\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{owner_8h_source_l00085}00085\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{owner_8h_source_l00086}00086\ \textcolor{comment}{\ *\ @brief\ Executes\ a\ registered\ function\ within\ the\ owner's\ safety\ context.}}
+\DoxyCodeLine{\Hypertarget{owner_8h_source_l00087}00087\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{owner_8h_source_l00088}00088\ \textcolor{comment}{\ *\ @param\ owner\ The\ owner\ context.}}
+\DoxyCodeLine{\Hypertarget{owner_8h_source_l00089}00089\ \textcolor{comment}{\ *\ @param\ func\_name\ Name\ of\ the\ function\ to\ execute.}}
+\DoxyCodeLine{\Hypertarget{owner_8h_source_l00090}00090\ \textcolor{comment}{\ *\ @param\ resource\_name\ Name\ of\ the\ registered\ resource\ to\ pass\ as\ 'ctx'\ (optional,\ can\ be\ NULL).}}
+\DoxyCodeLine{\Hypertarget{owner_8h_source_l00091}00091\ \textcolor{comment}{\ *\ @param\ args\ runtime\ arguments\ to\ pass\ to\ the\ function.}}
+\DoxyCodeLine{\Hypertarget{owner_8h_source_l00092}00092\ \textcolor{comment}{\ *\ @return\ true\ if\ execution\ was\ permitted\ and\ successful.}}
+\DoxyCodeLine{\Hypertarget{owner_8h_source_l00093}00093\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{owner_8h_source_l00094}\mbox{\hyperlink{owner_8h_ac178a65367f5aec292088dcdc1e1ee36}{00094}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{owner_8h_ac178a65367f5aec292088dcdc1e1ee36}{ttak\_owner\_execute}}(\mbox{\hyperlink{structttak__owner}{ttak\_owner\_t}}\ *owner,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *func\_name,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *resource\_name,\ \textcolor{keywordtype}{void}\ *args);}
+\DoxyCodeLine{\Hypertarget{owner_8h_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{owner_8h_source_l00096}00096\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_MEM\_OWNER\_H}}
 
 \end{DoxyCode}

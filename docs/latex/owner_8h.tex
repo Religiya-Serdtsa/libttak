@@ -52,6 +52,8 @@ bool \mbox{\hyperlink{owner_8h_ac4a9d4c89369dd2c3c208633fb41d9a8}{ttak\+\_\+owne
 \begin{DoxyCompactList}\small\item\em Registers a function into the owner\textquotesingle{}s isolated context. \end{DoxyCompactList}\item 
 bool \mbox{\hyperlink{owner_8h_ae74497f47054f5c3204578fa163dc942}{ttak\+\_\+owner\+\_\+register\+\_\+resource}} (\mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}owner, const char \texorpdfstring{$\ast$}{*}name, void \texorpdfstring{$\ast$}{*}data)
 \begin{DoxyCompactList}\small\item\em Registers a resource (variable) into the owner\textquotesingle{}s isolated context. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{owner_8h_a25bcde8cc2013baf360122bd7ccd078f}{ttak\+\_\+owner\+\_\+transfer\+\_\+resource}} (\mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}from, \mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}to, const char \texorpdfstring{$\ast$}{*}name)
+\begin{DoxyCompactList}\small\item\em Transfers a resource from one owner to another. \end{DoxyCompactList}\item 
 bool \mbox{\hyperlink{owner_8h_ac178a65367f5aec292088dcdc1e1ee36}{ttak\+\_\+owner\+\_\+execute}} (\mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}owner, const char \texorpdfstring{$\ast$}{*}func\+\_\+name, const char \texorpdfstring{$\ast$}{*}resource\+\_\+name, void \texorpdfstring{$\ast$}{*}args)
 \begin{DoxyCompactList}\small\item\em Executes a registered function within the owner\textquotesingle{}s safety context. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
@@ -239,3 +241,13 @@ Registers a resource (variable) into the owner\textquotesingle{}s isolated conte
 \begin{DoxyReturn}{Returns}
 true if registered successfully. 
 \end{DoxyReturn}
+\Hypertarget{owner_8h_a25bcde8cc2013baf360122bd7ccd078f}\label{owner_8h_a25bcde8cc2013baf360122bd7ccd078f} 
+\index{owner.h@{owner.h}!ttak\_owner\_transfer\_resource@{ttak\_owner\_transfer\_resource}}
+\index{ttak\_owner\_transfer\_resource@{ttak\_owner\_transfer\_resource}!owner.h@{owner.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_owner\_transfer\_resource()}{ttak\_owner\_transfer\_resource()}}
+{\footnotesize\ttfamily bool ttak\+\_\+owner\+\_\+transfer\+\_\+resource (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{from,  }\item[{\mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{to,  }\item[{const char \texorpdfstring{$\ast$}{*}}]{name }\end{DoxyParamCaption})}
+
+
+
+Transfers a resource from one owner to another. 
+

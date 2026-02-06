@@ -11,5 +11,6 @@ var logger_8h =
       [ "TTAK_LOG_ERROR", "logger_8h.html#a13b7cbf4245d32959202870c26bbd3e4a3c15d82ae51223aa509051b77801dbc5", null ]
     ] ],
     [ "ttak_logger_init", "logger_8h.html#a521315f19c7d983c5f323d47a86e9832", null ],
-    [ "ttak_logger_log", "logger_8h.html#ac3cf29e97c6046fd7efcc81a18599844", null ]
+    [ "ttak_logger_log", "logger_8h.html#ac3cf29e97c6046fd7efcc81a18599844", null ],
+    [ "ttak_mem_set_trace", "logger_8h.html#adfcac077aeb029c04c4fb47dc33116a0", null ]
 ];

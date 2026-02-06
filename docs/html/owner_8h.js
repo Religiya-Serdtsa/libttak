@@ -14,5 +14,6 @@ var owner_8h =
     [ "ttak_owner_destroy", "owner_8h.html#a73e3bd2628d53ed3e2b168de4f999c16", null ],
     [ "ttak_owner_execute", "owner_8h.html#ac178a65367f5aec292088dcdc1e1ee36", null ],
     [ "ttak_owner_register_func", "owner_8h.html#ac4a9d4c89369dd2c3c208633fb41d9a8", null ],
-    [ "ttak_owner_register_resource", "owner_8h.html#ae74497f47054f5c3204578fa163dc942", null ]
+    [ "ttak_owner_register_resource", "owner_8h.html#ae74497f47054f5c3204578fa163dc942", null ],
+    [ "ttak_owner_transfer_resource", "owner_8h.html#a25bcde8cc2013baf360122bd7ccd078f", null ]
 ];

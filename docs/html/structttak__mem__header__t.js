@@ -18,5 +18,6 @@ var structttak__mem__header__t =
     [ "reserved", "structttak__mem__header__t.html#acc4f1b34d6e7f6d2e71755779a88ffa3", null ],
     [ "should_join", "structttak__mem__header__t.html#a8430c7b034f0da69e2fe16ae2a999e2d", null ],
     [ "size", "structttak__mem__header__t.html#a576f96336f81e4af314e70b911232dda", null ],
-    [ "strict_check", "structttak__mem__header__t.html#a4de6b9462e84fa2602c694e3e9633b9e", null ]
+    [ "strict_check", "structttak__mem__header__t.html#a4de6b9462e84fa2602c694e3e9633b9e", null ],
+    [ "tracking_log", "structttak__mem__header__t.html#a4c9d2514539339c34bed60e2bdd5e233", null ]
 ];

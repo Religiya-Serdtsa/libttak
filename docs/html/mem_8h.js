@@ -18,6 +18,9 @@ var mem_8h =
     [ "tt_inspect_dirty_pointers", "mem_8h.html#ada3d51eee9ddc6a5859312387539df65", null ],
     [ "ttak_mem_access", "mem_8h.html#a2dacee529eb86de1f9f589fd417d0fe3", null ],
     [ "ttak_mem_alloc_safe", "mem_8h.html#aff3d4e6c920caf8bdeee3b2561a2ae46", null ],
+    [ "ttak_mem_configure_gc", "mem_8h.html#ae8973d60d53321ee8b36d15b1d7698ea", null ],
     [ "ttak_mem_free", "mem_8h.html#afdcd75479e1ca4dde197214d0430de65", null ],
-    [ "ttak_mem_realloc_safe", "mem_8h.html#a7eec3d633592a863f39155500dd0227a", null ]
+    [ "ttak_mem_is_trace_enabled", "mem_8h.html#a901d371e2cc570055bc60bcea5653df5", null ],
+    [ "ttak_mem_realloc_safe", "mem_8h.html#a7eec3d633592a863f39155500dd0227a", null ],
+    [ "ttak_mem_set_trace", "mem_8h.html#adfcac077aeb029c04c4fb47dc33116a0", null ]
 ];
