@@ -31,6 +31,7 @@ typedef enum {
  * Ensures isolation and enforces safety policies.
  */
 typedef struct ttak_owner {
+    uint32_t id;                /**< Unique ID for bitmap tracking. */
     ttak_map_t *resources;      /**< Map storing owned resources (isolated variables). */
     ttak_map_t *functions;      /**< Map storing registered functions. */
     ttak_rwlock_t lock;         /**< RWLock for thread-safe access to the owner's state. */

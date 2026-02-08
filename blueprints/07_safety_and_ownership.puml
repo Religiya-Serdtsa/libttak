@@ -10,6 +10,7 @@ skinparam class<<dangerous>> {
 
 package "Safety & Ownership (mem/)" {
     class ttak_owner_t {
+        + id : uint32_t
         + resources : ttak_map_t*
         + functions : ttak_map_t*
         + lock : ttak_rwlock_t
@@ -22,6 +23,25 @@ package "Safety & Ownership (mem/)" {
         + register_resource(name, data)
         + execute(func_name, resource_name, args)
     }
+
+    class ttak_shared_t {
+        + shared : void*
+        + size : size_t
+        + owners_mask : ttak_dynamic_mask_t
+        + last_sync_ts : uint64_t[]
+        + rwlock : ttak_rwlock_t
+        + status : ttak_shared_status_t
+        + level : ttak_shared_level_t
+        + ts : uint64_t
+        __
+        + allocate(size, level)
+        + add_owner(owner)
+        + access(claimant, result)
+        + sync_all(claimant, affected)
+        + release()
+    }
+
+    ttak_shared_t o-- ttak_owner_t : "tracks via bitmap ID"
 
     enum ttak_owner_policy_t {
         TTAK_OWNER_SAFE_DEFAULT
