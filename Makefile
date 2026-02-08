@@ -40,7 +40,7 @@ INCDIR = $(PREFIX)/include
 SRC_DIRS = src/ht src/thread src/timing src/mem src/async src/priority \
            src/atomic src/sync src/math src/tree src/container \
            src/security src/mem_tree src/limit src/stats src/log \
-           src/unsafe
+           src/unsafe src/shared src/mask
 
 SRCS = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
 OBJS = $(patsubst src/%.c,obj/%.o,$(SRCS))

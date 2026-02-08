@@ -2,9 +2,12 @@
 #include <ttak/ht/hash.h>
 #include <ttak/mem/mem.h>
 #include <ttak/timing/timing.h>
+#include <stdatomic.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+
+static _Atomic uint32_t g_owner_id_counter = 0;
 
 /**
  * @brief Hashing helper for string keys.
@@ -23,6 +26,8 @@ static inline uintptr_t _hash_str(const char *str) {
 ttak_owner_t *ttak_owner_create(uint32_t policy) {
     ttak_owner_t *owner = malloc(sizeof(ttak_owner_t));
     if (!owner) return NULL;
+
+    owner->id = atomic_fetch_add(&g_owner_id_counter, 1);
 
     uint64_t now = ttak_get_tick_count();
     

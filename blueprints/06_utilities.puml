@@ -55,5 +55,20 @@ package "Utilities" {
             + lock : ttak_spin_t
         }
     }
+
+    package "Masking (mask/)" {
+        class ttak_dynamic_mask_t {
+            + bits : uint64_t*
+            + capacity : uint32_t
+            + count : uint32_t
+            + lock : ttak_rwlock_t
+            __
+            + init()
+            + destroy()
+            + set(bit_idx)
+            + clear(bit_idx)
+            + test(bit_idx)
+        }
+    }
 }
 @enduml

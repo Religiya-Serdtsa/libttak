@@ -1,168 +1,106 @@
 @startuml
-' This blueprint treats AliquotTracker as an external example app.
-' Green dashed arrows show an example end-to-end call flow (numbered).
-' Black arrows show static dependencies / data-flow relationships.
-
+' libttak - Integrated System Map (Blueprints 01-08)
 !theme plain
 hide empty members
 skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam nodesep 100
+skinparam ranksep 70
+skinparam componentStyle uml2
 
-' Reduce curvy routing and make edges readable.
-left to right direction
-skinparam linetype ortho
-skinparam dpi 160
+title libttak: Integrated Architectural Map (01-08)
 
-skinparam class<<dangerous>> {
-    BackgroundColor #ffe6e6
-    BorderColor red
-    FontColor #a00
+' --- APPLICATION LAYER ---
+' Defined as a class with a stereotype for visual distinction
+class "AliquotTracker (Example)" as App << (A,#E9FFE9) App >> #E9FFE9
+
+' --- LOGIC LAYER (04, 08) ---
+package "Specialized Logic [04, 08]" #E1F5FE {
+    component Math [
+        <b>Math Subsystem</b>
+        (BigInt, NTT, Factor)
+    ]
+    component Trees [
+        <b>Tree Structures</b>
+        (B+, AST, MemTree)
+    ]
 }
 
-skinparam class<<app>> {
-    BackgroundColor #e9ffe9
-    BorderColor #0a0
-    FontColor #050
+' --- EXECUTION LAYER (01, 05) ---
+package "Execution Runtime [01, 05]" #E8F5E9 {
+    component Async [
+        <b>Async Engine</b>
+        (Scheduler, Futures)
+    ]
+    component Sched [
+        <b>Priority Scheduling</b>
+        (P-Queue, Nice)
+    ]
 }
 
-title LibTTAK – Integrated Architecture (with AliquotTracker call-flow)
-
-package "Core Data" {
-    class HashTable
-    class RingBuffer
-    class PoolAllocator
-    class SetContainer
-    class Logger
+' --- RESOURCE LAYER (02, 07) ---
+package "Resource Safety [02, 07]" #FFF3E0 {
+    component Safety [
+        <b>Ownership & GC</b>
+        (Owner, Epoch, Shared)
+    ]
+    component DS [
+        <b>Data Structures</b>
+        (HT, RingBuffer, Pool)
+    ]
 }
 
-package "Concurrency" {
-    class Mutexes
-    class Spinlocks
-    class PortableAtomics
+' --- FOUNDATION LAYER (03, 06) ---
+package "System Foundation [03, 06]" #F5F5F5 {
+    component Foundation [
+        <b>Concurrency</b>
+        (Thread Pool, Sync)
+    ]
+    component Utils [
+        <b>Utilities & Services</b>
+        (Timing, Log, Stats)
+    ]
 }
 
-package "Async Runtime" {
-    class ThreadPool
-    class Workers
-    class AsyncScheduler
-    class PriorityQueue
-    class FuturesPromises
+' --- DANGEROUS AREA ---
+package "Dangerous Area" #FFEBEE {
+    ' Uses the <<dangerous>> stereotype as requested
+    component Bridge <<dangerous>> [
+        <b>Context Bridge</b>
+        (Expert Only)
+    ]
 }
 
-package "Runtime Services" {
-    class Timing
-    class RateLimiter
-    class Stats
-}
+' --- INTEGRATION FLOWS ---
 
-package "Memory Systems" {
-    class OwnerSubsystem
-    class EpochGC
-    class MemTree
-    class Allocators
-}
+' Application Entry Points
+App -down-> Math : "computational logic"
+App -down-> Async : "task orchestration"
+App -down-> Safety : "resource boundaries"
 
-package "Math & Security" {
-    class BigInt
-    class BigMulReal
-    class DivisorsFactor
-    class NTT
-    class SHA256
-}
+' Logic Dependencies
+Math -down-> Async : "parallel processing"
+Math -down-> Safety : "resource tracking"
+Trees -down-> DS : "internal containers"
+Safety -down-> Trees : "uses MemTree for GC"
 
-package "Unsafe Layer" {
-    class ContextBridge <<dangerous>>
-    class UnsafeRegionMacros <<dangerous>>
-}
+' Execution Dependencies
+Async -down-> Sched : "task prioritization"
+Async -down-> Foundation : "drives thread pool"
+Sched -down-> Utils : "monitors timing"
 
-package "Example App (not part of lib)" {
-    class AliquotTracker <<app>>
-}
+' Resource & Foundation Dependencies
+Safety -down-> Utils : "epoch management"
+Safety -down-> DS : "metadata storage"
+DS -down-> Foundation : "sync primitives"
 
-' ----------------------------
-' Static dependencies (black)
-' ----------------------------
-HashTable --> OwnerSubsystem : tracked by
-RingBuffer --> ThreadPool : queues
-PoolAllocator --> Allocators
-SetContainer --> HashTable
-Logger --> AliquotTracker : app logging
+' Dangerous Bypass
+Bridge .up.> Safety : "bypasses standard checks"
 
-Mutexes --> ThreadPool
-Spinlocks --> Workers
-PortableAtomics --> AsyncScheduler
-
-ThreadPool --> AsyncScheduler
-AsyncScheduler --> FuturesPromises
-PriorityQueue --> AsyncScheduler
-
-Timing --> RateLimiter
-Timing --> AsyncScheduler
-RateLimiter --> AliquotTracker : limit external effects
-
-OwnerSubsystem --> EpochGC
-EpochGC --> MemTree
-MemTree --> Allocators
-
-NTT --> BigMulReal
-
-ContextBridge --> OwnerSubsystem
-UnsafeRegionMacros --> ContextBridge
-
-note right of ContextBridge
-    NOT RECOMMENDED – shared
-    memory bridge for experts only.
-end note
-
-note right of UnsafeRegionMacros
-    NOT RECOMMENDED – raw macros
-    bypass standard ownership checks.
-end note
-
-note bottom
-    Red border classes are NOT RECOMMENDED
-    for general production use. They are
-    provided for specialized scenarios and
-    should stay isolated.
-end note
-
-' ---------------------------------------------------------
-' Example numbered execution flow (green dashed, orthogonal)
-' ---------------------------------------------------------
-' Use this as a "follow the arrows" trace for how the app
-' typically drives the library at runtime.
-
-' 1) App boot / prepare runtime primitives
-AliquotTracker -[#00aa00,dashed]-> AsyncScheduler : 1. init scheduler
-AsyncScheduler -[#00aa00,dashed]-> ThreadPool : 2. attach pool
-ThreadPool -[#00aa00,dashed]-> Workers : 3. spawn workers
-AsyncScheduler -[#00aa00,dashed]-> PriorityQueue : 4. task ordering
-AsyncScheduler -[#00aa00,dashed]-> FuturesPromises : 5. async results
-
-' 2) Memory authority chain used by app-owned objects
-AliquotTracker -[#00aa00,dashed]-> OwnerSubsystem : 6. acquire ownership realm
-OwnerSubsystem -[#00aa00,dashed]-> EpochGC : 7. epoch protection
-EpochGC -[#00aa00,dashed]-> MemTree : 8. tracked allocations
-MemTree -[#00aa00,dashed]-> Allocators : 9. allocate/free via rules
-
-' 3) Main math pipeline (aliquot work)
-AliquotTracker -[#00aa00,dashed]-> DivisorsFactor : 10. factor / sumdiv plan
-DivisorsFactor -[#00aa00,dashed]-> BigInt : 11. big arithmetic
-BigMulReal -[#00aa00,dashed]-> BigInt : 12. widened multiply (if used)
-DivisorsFactor -[#00aa00,dashed]-> BigMulReal : 13. fast mul path (optional)
-
-' 4) Runtime services around execution
-AliquotTracker -[#00aa00,dashed]-> Timing : 14. timestamps / profiling hooks
-Timing -[#00aa00,dashed]-> RateLimiter : 15. throttle policy (optional)
-AliquotTracker -[#00aa00,dashed]-> Logger : 16. structured logs
-
-' 5) Optional unsafe bridge (explicitly marked as dangerous)
-AliquotTracker -[#00aa00,dashed]-> ContextBridge : 17. optional bridge (expert)
-ContextBridge -[#00aa00,dashed]-> UnsafeRegionMacros : 18. raw escape hatch
-
-legend right
-| Color/Style | Meaning |
-| <color:#000000>solid</color> | Static dependency / data relationship |
-| <color:#00aa00>dashed</color> | Example runtime call flow (numbered) |
+legend bottom
+  **Blueprint Scope:**
+  [01] Async Layer | [02] Data Structures | [03] Memory & Threads | [04] Math Library
+  [05] Priority Scheduling | [06] Utilities | [07] Safety & Ownership | [08] Tree Structures
 endlegend
 
 @enduml
