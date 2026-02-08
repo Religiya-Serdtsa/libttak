@@ -7,6 +7,7 @@
 
 #include <ttak/shared/shared.h>
 #include <ttak/timing/timing.h>
+#include <ttak/mem/mem.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -59,10 +60,11 @@ static ttak_shared_result_t _ttak_shared_validate_owner(ttak_shared_t *self, tta
 static ttak_shared_result_t ttak_shared_allocate_impl(ttak_shared_t *self, size_t size, ttak_shared_level_t level) {
     if (!self || size == 0) return TTAK_OWNER_INVALID;
 
-    self->shared = malloc(size);
+    uint64_t now = ttak_get_tick_count();
+    self->shared = ttak_mem_alloc(size, __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!self->shared) return TTAK_OWNER_SHARE_DENIED;
 
-    memset(self->shared, 0, size);
+    self->cleanup = ttak_mem_free;
     self->size = size;
     self->level = level;
     self->status = TTAK_SHARED_READY;

@@ -269,7 +269,7 @@ def main() -> int:
 
         match_bits = (vr.peak_bits == c_bits)
         match_ended = (vr.ended == c_ended) or (c_ended.startswith("cycle") and vr.ended.startswith("cycle"))
-        # final: C는 big 경로에서 u64 export 실패면 UINT64_MAX 넣는 경우가 있어서, 그때는 비교 보류가 합리적
+        # final: C might put UINT64_MAX if u64 export fails in the big path, so it's reasonable to hold comparison in that case.
         match_final = True
 
         note = ""
