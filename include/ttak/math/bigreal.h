@@ -26,7 +26,14 @@ _Bool ttak_bigreal_copy(ttak_bigreal_t *dst, const ttak_bigreal_t *src, uint64_t
 _Bool ttak_bigreal_align(ttak_bigreal_t *a, ttak_bigreal_t *b, uint64_t now);
 
 /**
- * @brief Arithmetic operations.
+ * @brief Deep copy a bigreal number.
+ */
+_Bool ttak_bigreal_copy(ttak_bigreal_t *dst, const ttak_bigreal_t *src, uint64_t now);
+
+/**
+ * @brief Adds two bigreal numbers with matching exponents.
+ *
+ * Returns false if exponents differ or on allocation failure.
  */
 _Bool ttak_bigreal_add(ttak_bigreal_t *dst, const ttak_bigreal_t *lhs, const ttak_bigreal_t *rhs, uint64_t now);
 _Bool ttak_bigreal_sub(ttak_bigreal_t *dst, const ttak_bigreal_t *lhs, const ttak_bigreal_t *rhs, uint64_t now);
