@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   # 1. Standard Targets: Linux (All Arch) & Windows x64
-  # Handled by existing cross-build script in a Debian container
+  # Built on Debian Trixie (current stable/testing)
   standard-build:
     runs-on: ubuntu-latest
     container:
@@ -34,7 +34,7 @@ jobs:
           name: standard-binaries
           path: dist/*.tar.gz
 
-  # 2. Windows ARM64: Manual Build via Dedicated Container
+  # 2. Windows ARM64: Manual Build
   build-win-arm64:
     runs-on: ubuntu-latest
     container:
@@ -44,7 +44,6 @@ jobs:
       - name: Manual Build and Package
         run: |
           make clean
-          # Force GCC for Windows ARM64
           CC=aarch64-w64-mingw32-gcc AR=aarch64-w64-mingw32-ar \
           PERF_STACK_FLAGS="-O3 -pipe -flto -fomit-frame-pointer -DNDEBUG" \
           EXTRA_CFLAGS="-fPIC -D_WIN32_WINNT=0x0600 -D_GNU_SOURCE" make -j$(nproc)
@@ -54,13 +53,13 @@ jobs:
           cp -r include/* "dist/${TAG}/include/"
           cp lib/libttak.a "dist/${TAG}/lib/"
           cd dist && tar -czf "${TAG}.tar.gz" "${TAG}"
-      - name: Upload
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: win-arm64-binary
           path: dist/*.tar.gz
 
-  # 3. macOS: Manual Native Build (Darwin)
+  # 3. macOS: Native Build (Darwin)
   build-macos:
     runs-on: macos-latest
     strategy:
@@ -71,8 +70,8 @@ jobs:
       - name: Manual Build and Package
         run: |
           make clean
-          # Override flags to prevent Clang errors (e.g., -ffat-lto-objects)
-          # Define MAP_HUGETLB as 0 to bypass Darwin's mmap limitation
+          # Overriding flags to prevent unsupported GCC options on Clang
+          # Define MAP_HUGETLB=0 to prevent mmap failure on Darwin
           CC=clang AR=ar \
           PERF_STACK_FLAGS="-O3 -pipe -flto -fomit-frame-pointer -DNDEBUG" \
           EXTRA_CFLAGS="-arch ${{ matrix.arch }} -fPIC -D_DARWIN_C_SOURCE -DMAP_HUGETLB=0" make -j$(sysctl -n hw.ncpu)
@@ -82,13 +81,13 @@ jobs:
           cp -r include/* "dist/${TAG}/include/"
           cp lib/libttak.a "dist/${TAG}/lib/"
           cd dist && tar -czf "${TAG}.tar.gz" "${TAG}"
-      - name: Upload
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: macos-${{ matrix.arch }}-binary
           path: dist/*.tar.gz
 
-  # 4. BSD Family: Latest Release & Rolling (Current)
+  # 4. BSD Family: Latest Release, Legacy Release, and Rolling (Current)
   build-bsd:
     runs-on: ubuntu-latest
     strategy:
@@ -96,13 +95,15 @@ jobs:
       matrix:
         include:
           - os: freebsd
-            version: '14.1'
+            version: '15.0'        # Latest major release
           - os: freebsd
-            version: '15-CURRENT'
+            version: '14.2'        # Stable release
+          - os: freebsd
+            version: '15-CURRENT' # Rolling/Development
           - os: openbsd
-            version: '7.6'
+            version: '7.8'        # Latest OpenBSD release (2026)
           - os: netbsd
-            version: '10.0'
+            version: '10.0'       # NetBSD stable
     name: Build ${{ matrix.os }} (${{ matrix.version }})
     steps:
       - uses: actions/checkout@v4
@@ -112,7 +113,7 @@ jobs:
           operating_system: ${{ matrix.os }}
           version: ${{ matrix.version }}
           run: |
-            # Detect package manager and install dependencies
+            # Native toolchain setup based on BSD package manager
             if [ "${{ matrix.os }}" = "freebsd" ]; then
               sudo pkg install -y gmake gcc
               MAKE_CMD=gmake
@@ -124,8 +125,8 @@ jobs:
               MAKE_CMD=gmake
             fi
             
-            # Use safe flags for BSD-native GCC
             $MAKE_CMD clean
+            # Force CC=gcc and safe optimization flags for BSD native builds
             CC=gcc AR=ar \
             PERF_STACK_FLAGS="-O3 -pipe -fomit-frame-pointer -DNDEBUG" \
             EXTRA_CFLAGS="-fPIC -D__BSD_VISIBLE=1 -DMAP_HUGETLB=0" $MAKE_CMD -j$(nproc 2>/dev/null || sysctl -n hw.ncpu)
@@ -135,13 +136,13 @@ jobs:
             cp -r include/* "dist/${TAG}/include/"
             cp lib/libttak.a "dist/${TAG}/lib/"
             cd dist && tar -czf "${TAG}.tar.gz" "${TAG}"
-      - name: Upload
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.os }}-${{ matrix.version }}-binary
           path: dist/*.tar.gz
 
-  # 5. Global Nightly Release
+  # 5. Nightly Release Assembly
   release:
     needs: [standard-build, build-win-arm64, build-macos, build-bsd]
     runs-on: ubuntu-latest
@@ -153,8 +154,8 @@ jobs:
       - uses: softprops/action-gh-release@v1
         with:
           tag_name: nightly-${{ github.run_id }}
-          name: LibTTAK Nightly Build
+          name: LibTTAK Nightly Build (Universal Support)
           files: dist/*.tar.gz
           prerelease: true
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
