@@ -1,4 +1,4 @@
-name: Nightly Segmented Native Build
+name: Nightly Efficient Build
 
 on:
   schedule:
@@ -9,119 +9,110 @@ permissions:
   contents: write
 
 jobs:
-  # Segmentation for Linux/Windows via Container
-  build-container-targets:
-    name: Build for ${{ matrix.target-tag }}
+  # 1. Standard Cross-Build (Linux All-Arch + Windows x64)
+  # This job handles everything that can be built on a standard Debian container.
+  standard-cross-build:
+    name: Standard Cross-Build (Linux & Win-x64)
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - target-tag: linux-amd64
-            os-name: linux
-            image: debian:trixie-slim
-            cc: gcc
-          - target-tag: linux-arm64
-            os-name: linux
-            image: debian:trixie-slim
-            cc: aarch64-linux-gnu-gcc
-          - target-tag: windows-amd64
-            os-name: windows
-            image: debian:trixie-slim
-            cc: x86_64-w64-mingw32-gcc
-          - target-tag: windows-arm64
-            os-name: windows
-            image: dockcross/windows-arm64:latest
-            cc: aarch64-w64-mingw32-gcc
-
     container:
-      image: ${{ matrix.image }}
-
+      image: debian:trixie-slim
     steps:
       - uses: actions/checkout@v4
-      - name: Install Toolchain
-        if: matrix.image == 'debian:trixie-slim'
+      - name: Install All Toolchains
         run: |
-          apt-get update && apt-get install -y build-essential make tar
-          if [ "${{ matrix.target-tag }}" = "linux-arm64" ]; then
-            apt-get install -y gcc-aarch64-linux-gnu
-          elif [ "${{ matrix.target-tag }}" = "windows-amd64" ]; then
-            apt-get install -y gcc-mingw-w64-x86-64
-          fi
-      - name: Build
+          apt-get update && apt-get install -y build-essential make tar \
+          gcc-aarch64-linux-gnu gcc-riscv64-linux-gnu \
+          gcc-powerpc64le-linux-gnu gcc-mips64el-linux-gnuabi64 \
+          gcc-mingw-w64-x86-64
+      - name: Run Multi-target Build
         run: |
           chmod +x scripts/cross_build_from_debian_13_x64.sh
-          ./scripts/cross_build_from_debian_13_x64.sh --os-only ${{ matrix.os-name }}
-        env:
-          CC: ${{ matrix.cc }}
+          # Executes the script for Linux and Windows targets
+          ./scripts/cross_build_from_debian_13_x64.sh --os-only linux
+          ./scripts/cross_build_from_debian_13_x64.sh --os-only windows
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: standard-artifacts
+          path: dist/*.tar.gz
 
-  # Segmentation for Darwin (macOS) via Native Runner
-  build-darwin:
-    name: Build for ${{ matrix.target-tag }}
+  # 2. Windows ARM64 (Dedicated Container)
+  build-windows-arm64:
+    name: Build Windows ARM64
+    runs-on: ubuntu-latest
+    container:
+      image: dockcross/windows-arm64:latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Build
+        run: |
+          chmod +x scripts/cross_build_from_debian_13_x64.sh
+          ./scripts/cross_build_from_debian_13_x64.sh --os-only windows
+        env:
+          CC: aarch64-w64-mingw32-gcc
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: win-arm64-artifacts
+          path: dist/*.tar.gz
+
+  # 3. macOS (Native Runner)
+  build-macos:
+    name: Build macOS (Darwin)
     runs-on: macos-latest
     strategy:
-      fail-fast: false
       matrix:
-        include:
-          - target-tag: darwin-amd64
-            arch: x86_64
-          - target-tag: darwin-arm64
-            arch: arm64
+        arch: [x86_64, arm64]
     steps:
       - uses: actions/checkout@v4
-      - name: Build
+      - name: Run Build
         run: |
           chmod +x scripts/cross_build_from_debian_13_x64.sh
-          ./scripts/cross_build_from_debian_13_x64.sh --os-only macos
+          ./scripts/cross_build_from_debian_13_x64.sh --os-only darwin
         env:
           CC: clang
-          # Pass architecture flags specifically for Darwin
           EXTRA_CFLAGS: "-arch ${{ matrix.arch }}"
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-${{ matrix.arch }}-artifacts
+          path: dist/*.tar.gz
 
-  # Segmentation for BSDs via VM
+  # 4. BSD Family (Native VMs)
   build-bsd:
-    name: Build for ${{ matrix.target-tag }}
+    name: Build ${{ matrix.os }} (Native VM)
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: false
       matrix:
-        include:
-          - target-tag: freebsd-amd64
-            os: freebsd
-            arch: x86_64
-          - target-tag: freebsd-arm64
-            os: freebsd
-            arch: aarch64
-          - target-tag: openbsd-amd64
-            os: openbsd
-            arch: x86_64
-          - target-tag: netbsd-amd64
-            os: netbsd
-            arch: x86_64
+        os: [freebsd, openbsd, netbsd]
     steps:
       - uses: actions/checkout@v4
       - name: Build in VM
         uses: cross-platform-actions/action@v0.25.0
         with:
           operating_system: ${{ matrix.os }}
-          architecture: ${{ matrix.arch }}
           run: |
             if [ "${{ matrix.os }}" = "freebsd" ]; then
               sudo pkg install -y gmake gcc
-              export CC_NAME=gcc
+              export CC_EXEC=gcc
             elif [ "${{ matrix.os }}" = "openbsd" ]; then
               sudo pkg_add gmake gcc
-              export CC_NAME=gcc
+              export CC_EXEC=gcc
             else
               sudo pkgin install -y gmake gcc
-              export CC_NAME=gcc
+              export CC_EXEC=gcc
             fi
             chmod +x scripts/cross_build_from_debian_13_x64.sh
-            CC=$CC_NAME ./scripts/cross_build_from_debian_13_x64.sh --os-only ${{ matrix.os }}
+            CC=$CC_EXEC AR=ar ./scripts/cross_build_from_debian_13_x64.sh --os-only ${{ matrix.os }}
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.os }}-artifacts
+          path: dist/*.tar.gz
 
-  # Release Job
+  # 5. Global Nightly Release
   release:
-    needs: [build-container-targets, build-darwin, build-bsd]
+    needs: [standard-cross-build, build-windows-arm64, build-macos, build-bsd]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v4
@@ -131,7 +122,7 @@ jobs:
       - uses: softprops/action-gh-release@v1
         with:
           tag_name: nightly-${{ github.run_id }}
-          name: LibTTAK Nightly Build (Fully Segmented)
+          name: LibTTAK Nightly Build (Full Universal Support)
           files: dist/*.tar.gz
           prerelease: true
         env:
