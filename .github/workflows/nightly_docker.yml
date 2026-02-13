@@ -115,20 +115,23 @@ jobs:
               sudo env IGNORE_OSVERSION=yes pkg update -f
               sudo pkg install -y gmake gcc
               MAKE_CMD=gmake
+              BSD_CC=gcc
             elif [ "${{ matrix.os }}" = "openbsd" ]; then
-              sudo pkg_add -v gmake gcc
+              sudo pkg_add -v gmake
               MAKE_CMD=gmake
+              BSD_CC=cc
             else
               # NetBSD base system already includes gcc; only install gmake
               sudo pkgin -y install gmake
               MAKE_CMD=gmake
+              BSD_CC=gcc
             fi
 
             $MAKE_CMD clean
             # Inject native CC/AR and bypass Linux-only MAP_HUGETLB
-            CC=gcc AR=ar \
+            CC=$BSD_CC AR=ar \
             PERF_STACK_FLAGS="-O3 -pipe -fomit-frame-pointer -DNDEBUG" \
-            EXTRA_CFLAGS="-fPIC -D__BSD_VISIBLE=1 -DMAP_HUGETLB=0" $MAKE_CMD -j$(nproc 2>/dev/null || sysctl -n hw.ncpu)
+            EXTRA_CFLAGS="-fPIC -D__BSD_VISIBLE=1 -DMAP_HUGETLB=0" $MAKE_CMD -j$(nproc 2>/dev/null || /sbin/sysctl -n hw.ncpu 2>/dev/null || echo 1)
 
             TAG="libttak-${{ matrix.os }}-${{ matrix.version }}-amd64"
             mkdir -p "dist/${TAG}/include" "dist/${TAG}/lib"
