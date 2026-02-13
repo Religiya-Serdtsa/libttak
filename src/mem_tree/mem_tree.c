@@ -372,7 +372,7 @@ static void *cleanup_thread_func(void *arg) {
             clock_gettime(CLOCK_REALTIME, &ts);
             ts.tv_sec += current_sleep_ns / 1000000000ULL;
             ts.tv_nsec += current_sleep_ns % 1000000000ULL;
-            if (ts.tv_nsec >= 1000000000ULL) {
+            if ((unsigned long long int) ts.tv_nsec >= 1000000000ULL) {
                 ts.tv_sec++;
                 ts.tv_nsec -= 1000000000ULL;
             }

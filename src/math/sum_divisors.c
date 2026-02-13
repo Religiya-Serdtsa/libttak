@@ -84,6 +84,8 @@ static bool sumdiv_policy_handle_failure(ttak_sumdiv_big_error_t err, size_t bit
             }
             sumdiv_policy_log_stage("factor-backoff", err, bitlen, already_safe, g_sumdiv_policy.factor_cooldown);
             break;
+        /* fall through */
+        case TTAK_SUMDIV_BIG_ERROR_NONE:
         default:
             break;
     }

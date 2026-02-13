@@ -3,7 +3,15 @@
 #include <ttak/timing/timing.h>
 #include <sched.h>
 #include <stddef.h>
-#include <unistd.h>
+// Windows headers stuff
+#ifdef _WIN32
+    #ifndef WIN32_LEAN_AND_MEAN
+        #define WIN32_LEAN_AND_MEAN
+    #endif
+    #include <windows.h>
+#else
+    #include <unistd.h>
+#endif
 
 ttak_thread_pool_t *async_pool = NULL; /**< Global async thread pool instance. */
 
@@ -13,7 +21,14 @@ ttak_thread_pool_t *async_pool = NULL; /**< Global async thread pool instance. *
  * @param nice Nice value applied to worker threads.
  */
 void ttak_async_init(int nice) {
-    long available_cores = sysconf(_SC_NPROCESSORS_ONLN);
+    long available_cores;
+#ifdef _WIN32
+    SYSTEM_INFO sysinfo;
+    GetSystemInfo(&sysinfo);
+    available_cores = sysinfo.dwNumberOfProcessors;
+#else
+    sysconf(_SC_NPROCESSORS_ONLN);
+#endif
     size_t target_threads = (available_cores > 0) ? (size_t)available_cores / 4 : 0;
     if (target_threads == 0) target_threads = 1;
 
