@@ -1,0 +1,99 @@
+name: Global Multi-Platform Nightly Build
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  # Job to build for multiple platforms using a matrix strategy
+  build-all:
+    name: Build for ${{ matrix.target }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Linux Targets (Using standard Debian-based builder)
+          - target: linux-amd64
+            image: debian:trixie-slim
+            env_cc: x86_64-linux-gnu-gcc
+          - target: linux-arm64
+            image: debian:trixie-slim
+            env_cc: aarch64-linux-gnu-gcc
+          
+          # Windows Target (Using MinGW-w64 on Linux)
+          - target: windows-amd64
+            image: debian:trixie-slim
+            env_cc: x86_64-w64-mingw32-gcc
+
+          # Apple/Darwin Target (Requires custom image with osxcross)
+          - target: darwin-amd64
+            image: ghcr.io/tpoechtrager/osxcross:latest
+            env_cc: x86_64-apple-darwin21.1-clang
+
+          # BSD Targets (Requires custom image with BSD toolchain)
+          - target: freebsd-amd64
+            image: ghcr.io/cross-platform/freebsd-cross:latest
+            env_cc: x86_64-unknown-freebsd14-gcc
+
+    container:
+      image: ${{ matrix.image }}
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      # Setup build environment inside the container
+      - name: Prepare Build Environment
+        run: |
+          if [ -f /etc/debian_version ]; then
+            apt-get update && apt-get install -y build-essential make tar \
+            gcc-x86-64-linux-gnu gcc-aarch64-linux-gnu gcc-mingw-w64-x86-64
+          fi
+
+      # Execute the cross-build for the specific matrix target
+      - name: Run Build
+        run: |
+          mkdir -p dist logs
+          # We call the build script by passing the matrix parameters
+          # This ensures each container handles only its designated target
+          chmod +x scripts/cross_build_libttak_full.sh
+          ./scripts/cross_build_libttak_full.sh --single-target ${{ matrix.target }}
+        env:
+          CC: ${{ matrix.env_cc }}
+
+      # Upload artifacts temporarily to merge them in the release step
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.target }}-bin
+          path: dist/*.tar.gz
+
+  # Final job to collect all artifacts and create a GitHub Release
+  release:
+    needs: build-all
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download All Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: dist/
+          merge-multiple: true
+
+      - name: Generate Checksums
+        run: |
+          cd dist
+          sha256sum *.tar.gz > SHA256SUMS
+
+      - name: Create Nightly Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: nightly-${{ github.run_id }}
+          name: LibTTAK Nightly (${{ github.run_id }})
+          files: |
+            dist/*.tar.gz
+            dist/SHA256SUMS
+          prerelease: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
