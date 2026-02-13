@@ -37,6 +37,14 @@
 #define TTAK_COLD_PATH
 #endif
 
+#ifndef TTAK_THREAD_LOCAL
+#if defined(__TINYC__)
+#define TTAK_THREAD_LOCAL
+#else
+#define TTAK_THREAD_LOCAL _Thread_local
+#endif
+#endif
+
 /**
  * @brief Time unit macros for converting to nanoseconds.
  */

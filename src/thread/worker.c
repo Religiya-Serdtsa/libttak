@@ -6,21 +6,33 @@
 #include <sys/resource.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include "../../internal/app_types.h"
+
+static TTAK_THREAD_LOCAL ttak_worker_t *current_worker = NULL;
+
+void ttak_worker_abort(void) {
+    if (current_worker && current_worker->wrapper) {
+        longjmp(current_worker->wrapper->env, 1);
+    }
+}
 
 /**
  * @brief Threaded function wrapper that validates memory every tick.
  */
 static void threaded_function_wrapper(ttak_worker_t *worker, ttak_task_t *task) {
-    (void)worker;
     uint64_t now = ttak_get_tick_count();
     
     // Validate all tracked pointers for this task (demonstration)
     size_t count = 0;
     void **dirty = tt_inspect_dirty_pointers(now, &count);
-    if (dirty) {
-        // If critical memory for task is dirty, we might need to longjmp
-        // For now, autoclean
-        tt_autoclean_dirty_pointers(now);
+    if (dirty && count > 0) {
+        // If critical memory for task is dirty, we trigger a longjmp to recover the worker thread
+        // This is a practical use of setjmp/longjmp for error recovery in a task execution context.
+        free(dirty);
+        if (worker->wrapper) {
+            longjmp(worker->wrapper->env, 1);
+        }
+    } else if (dirty) {
         free(dirty);
     }
 
@@ -46,6 +58,8 @@ static void threaded_function_wrapper(ttak_worker_t *worker, ttak_task_t *task) 
 void *ttak_worker_routine(void *arg) {
     ttak_worker_t *self = (ttak_worker_t *)arg;
     ttak_thread_pool_t *pool = self->pool;
+
+    current_worker = self;
 
     if (self->wrapper) {
         setpriority(PRIO_PROCESS, 0, self->wrapper->nice_val);
