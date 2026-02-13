@@ -19,14 +19,6 @@
 #define TTAK_CANARY_START_MAGIC 0xDEADBEEFDEADBEEFULL
 #define TTAK_CANARY_END_MAGIC   0xBEEFDEADBEEFDEADULL
 
-#ifndef TTAK_THREAD_LOCAL
-#if defined(__TINYC__)
-#define TTAK_THREAD_LOCAL
-#else
-#define TTAK_THREAD_LOCAL _Thread_local
-#endif
-#endif
-
 static volatile uint64_t global_mem_usage = 0;
 static pthread_mutex_t global_map_lock = PTHREAD_MUTEX_INITIALIZER;
 static ttak_mem_tree_t global_mem_tree; // Global instance of the mem tree

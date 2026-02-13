@@ -29,4 +29,10 @@ typedef struct ttak_worker {
 
 void *ttak_worker_routine(void *arg);
 
+/**
+ * @brief Aborts the current task execution using longjmp.
+ * Must be called from within a worker thread during task execution.
+ */
+void ttak_worker_abort(void);
+
 #endif // TTAK_THREAD_WORKER_H
