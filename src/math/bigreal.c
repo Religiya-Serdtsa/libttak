@@ -12,11 +12,18 @@ void ttak_bigreal_init_u64(ttak_bigreal_t *br, uint64_t value, uint64_t now) {
     br->exponent = 0;
 }
 
+/**
+ * @brief Release the mantissa storage inside the big real.
+ *
+ * @param br  Big real to destroy.
+ * @param now Timestamp forwarded to bigint free.
+ */
 void ttak_bigreal_free(ttak_bigreal_t *br, uint64_t now) {
     ttak_bigint_free(&br->mantissa, now);
 }
 
 _Bool ttak_bigreal_copy(ttak_bigreal_t *dst, const ttak_bigreal_t *src, uint64_t now) {
+    if (dst == src) return true;
     dst->exponent = src->exponent;
     return ttak_bigint_copy(&dst->mantissa, &src->mantissa, now);
 }
@@ -52,6 +59,15 @@ _Bool ttak_bigreal_align(ttak_bigreal_t *a, ttak_bigreal_t *b, uint64_t now) {
     return true;
 }
 
+/**
+ * @brief Add two big reals with matching exponents.
+ *
+ * @param dst Destination big real.
+ * @param lhs Left operand.
+ * @param rhs Right operand.
+ * @param now Timestamp for bigint arithmetic.
+ * @return true on success, false if exponents differ.
+ */
 _Bool ttak_bigreal_add(ttak_bigreal_t *dst, const ttak_bigreal_t *lhs, const ttak_bigreal_t *rhs, uint64_t now) {
     ttak_bigreal_t l, r;
     ttak_bigreal_init(&l, now);

@@ -39,6 +39,51 @@ void ttak_stats_record(ttak_stats_t *s, uint64_t value) {
     ttak_spin_unlock(&s->lock);
 }
 
+#include <stdlib.h>
+#include <ttak/math/bigreal.h>
+
+static int compare_u64(const void *a, const void *b) {
+    uint64_t val_a = *(const uint64_t *)a;
+    uint64_t val_b = *(const uint64_t *)b;
+    if (val_a < val_b) return -1;
+    if (val_a > val_b) return 1;
+    return 0;
+}
+
+void ttak_stats_compute_percentiles(uint64_t *data, size_t count, 
+                                   ttak_bigreal_t *p50, ttak_bigreal_t *p95, 
+                                   ttak_bigreal_t *p99, ttak_bigreal_t *p999, 
+                                   uint64_t now) {
+    if (count == 0) return;
+    
+    // Sort a copy of the data
+    uint64_t *sorted = malloc(count * sizeof(uint64_t));
+    if (!sorted) return;
+    memcpy(sorted, data, count * sizeof(uint64_t));
+    qsort(sorted, count, sizeof(uint64_t), compare_u64);
+    
+    size_t i50 = (count * 50) / 100;
+    size_t i95 = (count * 95) / 100;
+    size_t i99 = (count * 99) / 100;
+    size_t i999 = (count * 999) / 1000;
+    
+    if (i50 >= count) i50 = count - 1;
+    if (i95 >= count) i95 = count - 1;
+    if (i99 >= count) i99 = count - 1;
+    if (i999 >= count) i999 = count - 1;
+    
+    ttak_bigint_set_u64(&p50->mantissa, sorted[i50], now);
+    p50->exponent = 0;
+    ttak_bigint_set_u64(&p95->mantissa, sorted[i95], now);
+    p95->exponent = 0;
+    ttak_bigint_set_u64(&p99->mantissa, sorted[i99], now);
+    p99->exponent = 0;
+    ttak_bigint_set_u64(&p999->mantissa, sorted[i999], now);
+    p999->exponent = 0;
+    
+    free(sorted);
+}
+
 /**
  * @brief Calculates mean.
  */
