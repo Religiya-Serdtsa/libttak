@@ -9,7 +9,6 @@ permissions:
   contents: write
 
 jobs:
-  # Build binaries grouped by Operating System to optimize toolchain setup
   build-by-os:
     name: Build for ${{ matrix.os }}
     runs-on: ubuntu-latest
@@ -21,12 +20,14 @@ jobs:
             image: debian:trixie-slim
           - os: windows
             image: debian:trixie-slim
-          - os: freebsd
-            image: ghcr.io/cross-platform/freebsd-cross:latest
-          - os: openbsd
-            image: ghcr.io/cross-platform/openbsd-cross:latest
           - os: macos
-            image: ghcr.io/tpoechtrager/osxcross:latest
+            image: multiarch/crossbuild:latest
+          - os: freebsd
+            image: multiarch/crossbuild:latest
+          - os: openbsd
+            image: multiarch/crossbuild:latest
+          - os: netbsd
+            image: multiarch/crossbuild:latest
 
     container:
       image: ${{ matrix.image }}
@@ -35,31 +36,30 @@ jobs:
       - name: Checkout Source
         uses: actions/checkout@v4
 
-      - name: Install Essential Tools
+      - name: Install Tools (Linux/Windows targets only)
+        if: matrix.os == 'linux' || matrix.os == 'windows'
         run: |
-          if [ -f /etc/debian_version ]; then
-            apt-get update && apt-get install -y build-essential make tar
-            # Install only required compilers for the specific OS
-            if [ "${{ matrix.os }}" = "linux" ]; then
-              apt-get install -y gcc-aarch64-linux-gnu gcc-riscv64-linux-gnu gcc-powerpc64le-linux-gnu gcc-mips64el-linux-gnuabi64
-            elif [ "${{ matrix.os }}" = "windows" ]; then
-              apt-get install -y gcc-mingw-w64-x86-64 gcc-mingw-w64-aarch64
-            fi
+          apt-get update && apt-get install -y build-essential make tar
+          if [ "${{ matrix.os }}" = "linux" ]; then
+            apt-get install -y gcc-aarch64-linux-gnu gcc-riscv64-linux-gnu \
+                               gcc-powerpc64le-linux-gnu gcc-mips64el-linux-gnuabi64
+          else
+            apt-get install -y gcc-mingw-w64-x86-64 gcc-mingw-w64-aarch64
           fi
 
-      - name: Run Build Script for OS Group
+      - name: Run Build Script for ${{ matrix.os }}
         run: |
           chmod +x scripts/cross_build_from_debian_13_x64.sh
-          # Pass the OS name to the script to build all architectures for that OS
           ./scripts/cross_build_from_debian_13_x64.sh --os-only ${{ matrix.os }}
+        env:
+          PATH: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-      - name: Upload OS Artifacts
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.os }}-artifacts
           path: dist/*.tar.gz
 
-  # Finalize and Release
   release:
     needs: build-by-os
     runs-on: ubuntu-latest
