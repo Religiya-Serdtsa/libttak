@@ -1,4 +1,4 @@
-name: Nightly Native Build
+name: Nightly Segmented Native Build
 
 on:
   schedule:
@@ -9,123 +9,129 @@ permissions:
   contents: write
 
 jobs:
-  # Linux & Windows: Use standard Docker containers
-  build-linux-windows:
-    name: Build for ${{ matrix.os-tag }}
+  # Segmentation for Linux/Windows via Container
+  build-container-targets:
+    name: Build for ${{ matrix.target-tag }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         include:
-          - os-tag: linux
+          - target-tag: linux-amd64
             os-name: linux
             image: debian:trixie-slim
-          - os-tag: windows-x64
+            cc: gcc
+          - target-tag: linux-arm64
+            os-name: linux
+            image: debian:trixie-slim
+            cc: aarch64-linux-gnu-gcc
+          - target-tag: windows-amd64
             os-name: windows
             image: debian:trixie-slim
-          - os-tag: windows-arm64
+            cc: x86_64-w64-mingw32-gcc
+          - target-tag: windows-arm64
             os-name: windows
             image: dockcross/windows-arm64:latest
+            cc: aarch64-w64-mingw32-gcc
 
     container:
       image: ${{ matrix.image }}
 
     steps:
-      - name: Checkout Source
-        uses: actions/checkout@v4
-
-      - name: Install Toolchains
+      - uses: actions/checkout@v4
+      - name: Install Toolchain
         if: matrix.image == 'debian:trixie-slim'
         run: |
           apt-get update && apt-get install -y build-essential make tar
-          if [ "${{ matrix.os-tag }}" = "linux" ]; then
-            apt-get install -y gcc-aarch64-linux-gnu gcc-riscv64-linux-gnu \
-                               gcc-powerpc64le-linux-gnu gcc-mips64el-linux-gnuabi64
-          else
+          if [ "${{ matrix.target-tag }}" = "linux-arm64" ]; then
+            apt-get install -y gcc-aarch64-linux-gnu
+          elif [ "${{ matrix.target-tag }}" = "windows-amd64" ]; then
             apt-get install -y gcc-mingw-w64-x86-64
           fi
-
-      - name: Run Build
+      - name: Build
         run: |
           chmod +x scripts/cross_build_from_debian_13_x64.sh
           ./scripts/cross_build_from_debian_13_x64.sh --os-only ${{ matrix.os-name }}
+        env:
+          CC: ${{ matrix.cc }}
 
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ matrix.os-tag }}-artifacts
-          path: dist/*.tar.gz
-
-  # macOS: Use Native macOS Runner (Actual Darwin Environment)
-  build-macos:
-    name: Build for macOS
+  # Segmentation for Darwin (macOS) via Native Runner
+  build-darwin:
+    name: Build for ${{ matrix.target-tag }}
     runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target-tag: darwin-amd64
+            arch: x86_64
+          - target-tag: darwin-arm64
+            arch: arm64
     steps:
-      - name: Checkout Source
-        uses: actions/checkout@v4
-
-      - name: Run Build
+      - uses: actions/checkout@v4
+      - name: Build
         run: |
           chmod +x scripts/cross_build_from_debian_13_x64.sh
           ./scripts/cross_build_from_debian_13_x64.sh --os-only macos
+        env:
+          CC: clang
+          # Pass architecture flags specifically for Darwin
+          EXTRA_CFLAGS: "-arch ${{ matrix.arch }}"
 
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: macos-artifacts
-          path: dist/*.tar.gz
-
-  # BSD Family: Use QEMU Virtual Machines (Actual BSD Environment)
+  # Segmentation for BSDs via VM
   build-bsd:
-    name: Build for ${{ matrix.os }}
+    name: Build for ${{ matrix.target-tag }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        os: [freebsd, openbsd, netbsd]
+        include:
+          - target-tag: freebsd-amd64
+            os: freebsd
+            arch: x86_64
+          - target-tag: freebsd-arm64
+            os: freebsd
+            arch: aarch64
+          - target-tag: openbsd-amd64
+            os: openbsd
+            arch: x86_64
+          - target-tag: netbsd-amd64
+            os: netbsd
+            arch: x86_64
     steps:
-      - name: Checkout Source
-        uses: actions/checkout@v4
-
+      - uses: actions/checkout@v4
       - name: Build in VM
         uses: cross-platform-actions/action@v0.25.0
         with:
           operating_system: ${{ matrix.os }}
-          version: 'latest'
+          architecture: ${{ matrix.arch }}
           run: |
-            # Install build tools inside the actual BSD VM
             if [ "${{ matrix.os }}" = "freebsd" ]; then
               sudo pkg install -y gmake gcc
-            else
+              export CC_NAME=gcc
+            elif [ "${{ matrix.os }}" = "openbsd" ]; then
               sudo pkg_add gmake gcc
+              export CC_NAME=gcc
+            else
+              sudo pkgin install -y gmake gcc
+              export CC_NAME=gcc
             fi
-            # Use gmake because BSD make syntax differs from GNU make
-            gmake clean
             chmod +x scripts/cross_build_from_debian_13_x64.sh
-            ./scripts/cross_build_from_debian_13_x64.sh --os-only ${{ matrix.os }}
+            CC=$CC_NAME ./scripts/cross_build_from_debian_13_x64.sh --os-only ${{ matrix.os }}
 
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ matrix.os }}-artifacts
-          path: dist/*.tar.gz
-
-  # Final Release
+  # Release Job
   release:
-    needs: [build-linux-windows, build-macos, build-bsd]
+    needs: [build-container-targets, build-darwin, build-bsd]
     runs-on: ubuntu-latest
     steps:
-      - name: Download All Artifacts
-        uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v4
         with:
           path: dist/
           merge-multiple: true
-
-      - name: Create Release
-        uses: softprops/action-gh-release@v1
+      - uses: softprops/action-gh-release@v1
         with:
           tag_name: nightly-${{ github.run_id }}
-          name: LibTTAK Nightly Build
+          name: LibTTAK Nightly Build (Fully Segmented)
           files: dist/*.tar.gz
           prerelease: true
         env:
