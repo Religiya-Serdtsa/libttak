@@ -16,15 +16,18 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          # Use Debian for standard Linux and Windows x64 targets
           - os-tag: linux
             os-name: linux
             image: debian:trixie-slim
           - os-tag: windows-x64
             os-name: windows
             image: debian:trixie-slim
+
+          # Use dedicated dockcross images for ARM64 and BSD/macOS to ensure toolchain compatibility
           - os-tag: windows-arm64
             os-name: windows
-            image: debian:trixie-slim
+            image: dockcross/windows-arm64:latest
           - os-tag: macos
             os-name: macos
             image: dockcross/base:latest
@@ -45,31 +48,25 @@ jobs:
       - name: Checkout Source
         uses: actions/checkout@v4
 
-      - name: Install Toolchains
+      - name: Install Toolchains (Debian-based only)
+        if: matrix.image == 'debian:trixie-slim'
         run: |
-          if [ -f /etc/debian_version ]; then
-            apt-get update && apt-get install -y build-essential make tar
-            if [ "${{ matrix.os-tag }}" = "linux" ]; then
-              apt-get install -y gcc-aarch64-linux-gnu gcc-riscv64-linux-gnu \
-                                 gcc-powerpc64le-linux-gnu gcc-mips64el-linux-gnuabi64
-            elif [ "${{ matrix.os-tag }}" = "windows-x64" ]; then
-              apt-get install -y gcc-mingw-w64-x86-64
-            elif [ "${{ matrix.os-tag }}" = "windows-arm64" ]; then
-              apt-get install -y gcc-mingw-w64-aarch64-bootstrap || apt-get install -y gcc-mingw-w64
-            fi
-          else
-            # For dockcross based images, toolchains are usually pre-installed or
-            # we rely on the internal build script to fetch specific BSD headers.
-            yum install -y make tar gcc || apk add make tar gcc || true
+          apt-get update && apt-get install -y build-essential make tar
+          if [ "${{ matrix.os-tag }}" = "linux" ]; then
+            apt-get install -y gcc-aarch64-linux-gnu gcc-riscv64-linux-gnu \
+                               gcc-powerpc64le-linux-gnu gcc-mips64el-linux-gnuabi64
+          elif [ "${{ matrix.os-tag }}" = "windows-x64" ]; then
+            apt-get install -y gcc-mingw-w64-x86-64
           fi
 
       - name: Run Build Script
         run: |
+          # Ensure execution permission for the build script
           chmod +x scripts/cross_build_from_debian_13_x64.sh
-          # Pass os-name to match the script's internal logic
+          # Execute build script filtering by OS group
           ./scripts/cross_build_from_debian_13_x64.sh --os-only ${{ matrix.os-name }}
         env:
-          # If building for windows-arm64, we can specify the CC override if needed
+          # Explicitly set CC for windows-arm64 container if default is missing
           CC: ${{ matrix.os-tag == 'windows-arm64' && 'aarch64-w64-mingw32-gcc' || '' }}
 
       - name: Upload Artifacts
