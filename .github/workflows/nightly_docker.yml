@@ -1,4 +1,4 @@
-name: Nightly Efficient Build
+name: Nightly Build
 
 on:
   schedule:
@@ -9,110 +9,124 @@ permissions:
   contents: write
 
 jobs:
-  # 1. Standard Cross-Build (Linux All-Arch + Windows x64)
-  # This job handles everything that can be built on a standard Debian container.
-  standard-cross-build:
-    name: Standard Cross-Build (Linux & Win-x64)
+  # 1. Standard Targets: Linux (All Arch) & Windows x64
+  # These are handled by the existing cross-build script in a Debian container.
+  standard-build:
+    name: Standard Build (Linux & Win-x64)
     runs-on: ubuntu-latest
     container:
       image: debian:trixie-slim
     steps:
       - uses: actions/checkout@v4
-      - name: Install All Toolchains
+      - name: Install Toolchains
         run: |
           apt-get update && apt-get install -y build-essential make tar \
           gcc-aarch64-linux-gnu gcc-riscv64-linux-gnu \
           gcc-powerpc64le-linux-gnu gcc-mips64el-linux-gnuabi64 \
           gcc-mingw-w64-x86-64
-      - name: Run Multi-target Build
+      - name: Run Cross-Build Script
         run: |
           chmod +x scripts/cross_build_from_debian_13_x64.sh
-          # Executes the script for Linux and Windows targets
           ./scripts/cross_build_from_debian_13_x64.sh --os-only linux
           ./scripts/cross_build_from_debian_13_x64.sh --os-only windows
-      - name: Upload Artifacts
+      - name: Upload
         uses: actions/upload-artifact@v4
         with:
-          name: standard-artifacts
+          name: standard-binaries
           path: dist/*.tar.gz
 
-  # 2. Windows ARM64 (Dedicated Container)
-  build-windows-arm64:
+  # 2. Windows ARM64: Manual Build via Dedicated Container
+  build-win-arm64:
     name: Build Windows ARM64
     runs-on: ubuntu-latest
     container:
       image: dockcross/windows-arm64:latest
     steps:
       - uses: actions/checkout@v4
-      - name: Run Build
+      - name: Manual Build and Package
         run: |
-          chmod +x scripts/cross_build_from_debian_13_x64.sh
-          ./scripts/cross_build_from_debian_13_x64.sh --os-only windows
-        env:
-          CC: aarch64-w64-mingw32-gcc
-      - name: Upload Artifacts
+          make clean
+          CC=aarch64-w64-mingw32-gcc AR=aarch64-w64-mingw32-ar \
+          EXTRA_CFLAGS="-fPIC -D_WIN32_WINNT=0x0600 -D_GNU_SOURCE" make -j$(nproc)
+          
+          TAG="libttak-windows-arm64"
+          mkdir -p "dist/${TAG}/include" "dist/${TAG}/lib"
+          cp -r include/* "dist/${TAG}/include/"
+          cp lib/libttak.a "dist/${TAG}/lib/"
+          cd dist && tar -czf "${TAG}.tar.gz" "${TAG}"
+      - name: Upload
         uses: actions/upload-artifact@v4
         with:
-          name: win-arm64-artifacts
+          name: win-arm64-binary
           path: dist/*.tar.gz
 
-  # 3. macOS (Native Runner)
+  # 3. macOS: Manual Native Build
   build-macos:
-    name: Build macOS (Darwin)
+    name: Build macOS (${{ matrix.arch }})
     runs-on: macos-latest
     strategy:
       matrix:
         arch: [x86_64, arm64]
     steps:
       - uses: actions/checkout@v4
-      - name: Run Build
+      - name: Manual Build and Package
         run: |
-          chmod +x scripts/cross_build_from_debian_13_x64.sh
-          ./scripts/cross_build_from_debian_13_x64.sh --os-only darwin
-        env:
-          CC: clang
-          EXTRA_CFLAGS: "-arch ${{ matrix.arch }}"
-      - name: Upload Artifacts
+          make clean
+          CC=clang AR=ar EXTRA_CFLAGS="-arch ${{ matrix.arch }} -fPIC -D_DARWIN_C_SOURCE" make -j$(sysctl -n hw.ncpu)
+          
+          TAG="libttak-darwin-${{ matrix.arch }}"
+          mkdir -p "dist/${TAG}/include" "dist/${TAG}/lib"
+          cp -r include/* "dist/${TAG}/include/"
+          cp lib/libttak.a "dist/${TAG}/lib/"
+          cd dist && tar -czf "${TAG}.tar.gz" "${TAG}"
+      - name: Upload
         uses: actions/upload-artifact@v4
         with:
-          name: macos-${{ matrix.arch }}-artifacts
+          name: macos-${{ matrix.arch }}-binary
           path: dist/*.tar.gz
 
-  # 4. BSD Family (Native VMs)
+  # 4. BSD Family: Manual Build via VM
   build-bsd:
-    name: Build ${{ matrix.os }} (Native VM)
+    name: Build ${{ matrix.os }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
         os: [freebsd, openbsd, netbsd]
     steps:
       - uses: actions/checkout@v4
-      - name: Build in VM
+      - name: Manual Build in VM
         uses: cross-platform-actions/action@v0.25.0
         with:
           operating_system: ${{ matrix.os }}
           run: |
             if [ "${{ matrix.os }}" = "freebsd" ]; then
               sudo pkg install -y gmake gcc
-              export CC_EXEC=gcc
+              MAKE_CMD=gmake
             elif [ "${{ matrix.os }}" = "openbsd" ]; then
               sudo pkg_add gmake gcc
-              export CC_EXEC=gcc
+              MAKE_CMD=gmake
             else
               sudo pkgin install -y gmake gcc
-              export CC_EXEC=gcc
+              MAKE_CMD=gmake
             fi
-            chmod +x scripts/cross_build_from_debian_13_x64.sh
-            CC=$CC_EXEC AR=ar ./scripts/cross_build_from_debian_13_x64.sh --os-only ${{ matrix.os }}
-      - name: Upload Artifacts
+            
+            $MAKE_CMD clean
+            CC=gcc AR=ar EXTRA_CFLAGS="-fPIC -D__BSD_VISIBLE=1" $MAKE_CMD -j$(nproc 2>/dev/null || sysctl -n hw.ncpu)
+            
+            TAG="libttak-${{ matrix.os }}-amd64"
+            mkdir -p "dist/${TAG}/include" "dist/${TAG}/lib"
+            cp -r include/* "dist/${TAG}/include/"
+            cp lib/libttak.a "dist/${TAG}/lib/"
+            cd dist && tar -czf "${TAG}.tar.gz" "${TAG}"
+      - name: Upload
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.os }}-artifacts
+          name: ${{ matrix.os }}-binary
           path: dist/*.tar.gz
 
   # 5. Global Nightly Release
   release:
-    needs: [standard-cross-build, build-windows-arm64, build-macos, build-bsd]
+    needs: [standard-build, build-win-arm64, build-macos, build-bsd]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v4
@@ -122,7 +136,7 @@ jobs:
       - uses: softprops/action-gh-release@v1
         with:
           tag_name: nightly-${{ github.run_id }}
-          name: LibTTAK Nightly Build (Full Universal Support)
+          name: LibTTAK Nightly Build
           files: dist/*.tar.gz
           prerelease: true
         env:
