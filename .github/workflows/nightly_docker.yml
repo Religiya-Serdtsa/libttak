@@ -1,0 +1,99 @@
+name: Nightly Build and Documentation
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  # 1. Cross-Build Job (Docker Matrix)
+  build-binaries:
+    name: Build for ${{ matrix.target }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: linux-amd64
+            image: debian:trixie-slim
+            env_cc: x86_64-linux-gnu-gcc
+          - target: windows-amd64
+            image: debian:trixie-slim
+            env_cc: x86_64-w64-mingw32-gcc
+          # Add other targets (Darwin, BSD) as needed
+
+    container:
+      image: ${{ matrix.image }}
+
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+
+      - name: Prepare and Build
+        run: |
+          apt-get update && apt-get install -y build-essential make tar gcc-x86-64-linux-gnu gcc-mingw-w64-x86-64
+          mkdir -p dist logs
+          chmod +x scripts/cross_build_libttak_full.sh
+          ./scripts/cross_build_libttak_full.sh --single-target ${{ matrix.target }}
+        env:
+          CC: ${{ matrix.env_cc }}
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.target }}-bin
+          path: dist/*.tar.gz
+
+  # 2. Doxygen Documentation Job
+  build-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+
+      - name: Install Doxygen
+        run: sudo apt-get install -y doxygen graphviz
+
+      - name: Generate Documentation
+        run: doxygen Doxyfile # Assuming your Doxyfile outputs to 'html/'
+
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: html/
+
+  # 3. Deployment Job (Releases & Pages)
+  deploy:
+    needs: [build-binaries, build-docs]
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      # A. Deploy Doxygen to GitHub Pages
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      # B. Download and Release Binaries
+      - name: Download Binaries
+        uses: actions/download-artifact@v4
+        with:
+          path: dist/
+          merge-multiple: true
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: nightly-${{ github.run_id }}
+          name: LibTTAK Nightly Build
+          files: |
+            dist/*.tar.gz
+          prerelease: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
