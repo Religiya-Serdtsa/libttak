@@ -34,7 +34,8 @@ void ttak_async_init(int nice) {
     int mib[2] = { CTL_HW, HW_NCPU };
     int ncpu = 1;
     size_t len = sizeof(ncpu);
-    sysctl(mib, 2, &ncpu, &len, NULL, 0);
+    if (sysctl(mib, 2, &ncpu, &len, NULL, 0) == -1 || ncpu < 1)
+        ncpu = 1;
     available_cores = ncpu;
 #else
     available_cores = sysconf(_SC_NPROCESSORS_ONLN);
