@@ -9,10 +9,8 @@ permissions:
   contents: write
 
 jobs:
-  # 1. Standard Targets: Linux (All Arch) & Windows x64
-  # These are handled by the existing cross-build script in a Debian container.
+  # 1. Standard Targets (Linux All-Arch & Win-x64)
   standard-build:
-    name: Standard Build (Linux & Win-x64)
     runs-on: ubuntu-latest
     container:
       image: debian:trixie-slim
@@ -24,7 +22,7 @@ jobs:
           gcc-aarch64-linux-gnu gcc-riscv64-linux-gnu \
           gcc-powerpc64le-linux-gnu gcc-mips64el-linux-gnuabi64 \
           gcc-mingw-w64-x86-64
-      - name: Run Cross-Build Script
+      - name: Build
         run: |
           chmod +x scripts/cross_build_from_debian_13_x64.sh
           ./scripts/cross_build_from_debian_13_x64.sh --os-only linux
@@ -35,18 +33,19 @@ jobs:
           name: standard-binaries
           path: dist/*.tar.gz
 
-  # 2. Windows ARM64: Manual Build via Dedicated Container
+  # 2. Windows ARM64 (Manual Build)
   build-win-arm64:
-    name: Build Windows ARM64
     runs-on: ubuntu-latest
     container:
       image: dockcross/windows-arm64:latest
     steps:
       - uses: actions/checkout@v4
-      - name: Manual Build and Package
+      - name: Build and Package
         run: |
           make clean
+          # Clean override of performance flags for MinGW ARM64
           CC=aarch64-w64-mingw32-gcc AR=aarch64-w64-mingw32-ar \
+          PERF_STACK_FLAGS="-O3 -pipe -flto -fomit-frame-pointer -DNDEBUG" \
           EXTRA_CFLAGS="-fPIC -D_WIN32_WINNT=0x0600 -D_GNU_SOURCE" make -j$(nproc)
           
           TAG="libttak-windows-arm64"
@@ -60,19 +59,21 @@ jobs:
           name: win-arm64-binary
           path: dist/*.tar.gz
 
-  # 3. macOS: Manual Native Build
+  # 3. macOS (Native Build)
   build-macos:
-    name: Build macOS (${{ matrix.arch }})
     runs-on: macos-latest
     strategy:
       matrix:
         arch: [x86_64, arm64]
     steps:
       - uses: actions/checkout@v4
-      - name: Manual Build and Package
+      - name: Build and Package
         run: |
           make clean
-          CC=clang AR=ar EXTRA_CFLAGS="-arch ${{ matrix.arch }} -fPIC -D_DARWIN_C_SOURCE" make -j$(sysctl -n hw.ncpu)
+          # Remove GCC-specific '-ffat-lto-objects' and '-march=native' which fail on Clang
+          CC=clang AR=ar \
+          PERF_STACK_FLAGS="-O3 -pipe -flto -fomit-frame-pointer -DNDEBUG" \
+          EXTRA_CFLAGS="-arch ${{ matrix.arch }} -fPIC -D_DARWIN_C_SOURCE" make -j$(sysctl -n hw.ncpu)
           
           TAG="libttak-darwin-${{ matrix.arch }}"
           mkdir -p "dist/${TAG}/include" "dist/${TAG}/lib"
@@ -85,16 +86,15 @@ jobs:
           name: macos-${{ matrix.arch }}-binary
           path: dist/*.tar.gz
 
-  # 4. BSD Family: Manual Build via VM
+  # 4. BSD Family (Native Build via VM)
   build-bsd:
-    name: Build ${{ matrix.os }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
         os: [freebsd, openbsd, netbsd]
     steps:
       - uses: actions/checkout@v4
-      - name: Manual Build in VM
+      - name: Build in VM
         uses: cross-platform-actions/action@v0.25.0
         with:
           operating_system: ${{ matrix.os }}
@@ -111,7 +111,10 @@ jobs:
             fi
             
             $MAKE_CMD clean
-            CC=gcc AR=ar EXTRA_CFLAGS="-fPIC -D__BSD_VISIBLE=1" $MAKE_CMD -j$(nproc 2>/dev/null || sysctl -n hw.ncpu)
+            # Use safe performance flags that work across different GCC versions on BSD
+            CC=gcc AR=ar \
+            PERF_STACK_FLAGS="-O3 -pipe -fomit-frame-pointer -DNDEBUG" \
+            EXTRA_CFLAGS="-fPIC -D__BSD_VISIBLE=1" $MAKE_CMD -j$(nproc 2>/dev/null || sysctl -n hw.ncpu)
             
             TAG="libttak-${{ matrix.os }}-amd64"
             mkdir -p "dist/${TAG}/include" "dist/${TAG}/lib"
@@ -124,7 +127,7 @@ jobs:
           name: ${{ matrix.os }}-binary
           path: dist/*.tar.gz
 
-  # 5. Global Nightly Release
+  # 5. Global Release
   release:
     needs: [standard-build, build-win-arm64, build-macos, build-bsd]
     runs-on: ubuntu-latest
