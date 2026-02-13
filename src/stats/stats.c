@@ -50,15 +50,15 @@ static int compare_u64(const void *a, const void *b) {
     return 0;
 }
 
-void ttak_stats_compute_percentiles(uint64_t *data, size_t count, 
+_Bool ttak_stats_compute_percentiles(uint64_t *data, size_t count, 
                                    ttak_bigreal_t *p50, ttak_bigreal_t *p95, 
                                    ttak_bigreal_t *p99, ttak_bigreal_t *p999, 
                                    uint64_t now) {
-    if (count == 0) return;
+    if (!data || count == 0) return false;
     
     // Sort a copy of the data
     uint64_t *sorted = malloc(count * sizeof(uint64_t));
-    if (!sorted) return;
+    if (!sorted) return false;
     memcpy(sorted, data, count * sizeof(uint64_t));
     qsort(sorted, count, sizeof(uint64_t), compare_u64);
     
@@ -82,6 +82,7 @@ void ttak_stats_compute_percentiles(uint64_t *data, size_t count,
     p999->exponent = 0;
     
     free(sorted);
+    return true;
 }
 
 /**
