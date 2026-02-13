@@ -21,6 +21,10 @@
     #include <unistd.h>
 #endif
 
+#ifndef MAP_HUGETLB
+    #define MAP_HUGETLB 0x0
+#endif
+
 // Windows MSVC/MinGW stuff
 #ifdef _WIN32
 static int posix_memalign(void **memptr, size_t alignment, size_t size) {

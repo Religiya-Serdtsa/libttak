@@ -9,7 +9,8 @@ permissions:
   contents: write
 
 jobs:
-  # 1. Standard Targets (Linux All-Arch & Win-x64)
+  # 1. Standard Targets: Linux (All Arch) & Windows x64
+  # Handled by existing cross-build script in a Debian container
   standard-build:
     runs-on: ubuntu-latest
     container:
@@ -22,28 +23,28 @@ jobs:
           gcc-aarch64-linux-gnu gcc-riscv64-linux-gnu \
           gcc-powerpc64le-linux-gnu gcc-mips64el-linux-gnuabi64 \
           gcc-mingw-w64-x86-64
-      - name: Build
+      - name: Build Standard Targets
         run: |
           chmod +x scripts/cross_build_from_debian_13_x64.sh
           ./scripts/cross_build_from_debian_13_x64.sh --os-only linux
           ./scripts/cross_build_from_debian_13_x64.sh --os-only windows
-      - name: Upload
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: standard-binaries
           path: dist/*.tar.gz
 
-  # 2. Windows ARM64 (Manual Build)
+  # 2. Windows ARM64: Manual Build via Dedicated Container
   build-win-arm64:
     runs-on: ubuntu-latest
     container:
       image: dockcross/windows-arm64:latest
     steps:
       - uses: actions/checkout@v4
-      - name: Build and Package
+      - name: Manual Build and Package
         run: |
           make clean
-          # Clean override of performance flags for MinGW ARM64
+          # Force GCC for Windows ARM64
           CC=aarch64-w64-mingw32-gcc AR=aarch64-w64-mingw32-ar \
           PERF_STACK_FLAGS="-O3 -pipe -flto -fomit-frame-pointer -DNDEBUG" \
           EXTRA_CFLAGS="-fPIC -D_WIN32_WINNT=0x0600 -D_GNU_SOURCE" make -j$(nproc)
@@ -59,7 +60,7 @@ jobs:
           name: win-arm64-binary
           path: dist/*.tar.gz
 
-  # 3. macOS (Native Build)
+  # 3. macOS: Manual Native Build (Darwin)
   build-macos:
     runs-on: macos-latest
     strategy:
@@ -67,13 +68,14 @@ jobs:
         arch: [x86_64, arm64]
     steps:
       - uses: actions/checkout@v4
-      - name: Build and Package
+      - name: Manual Build and Package
         run: |
           make clean
-          # Remove GCC-specific '-ffat-lto-objects' and '-march=native' which fail on Clang
+          # Override flags to prevent Clang errors (e.g., -ffat-lto-objects)
+          # Define MAP_HUGETLB as 0 to bypass Darwin's mmap limitation
           CC=clang AR=ar \
           PERF_STACK_FLAGS="-O3 -pipe -flto -fomit-frame-pointer -DNDEBUG" \
-          EXTRA_CFLAGS="-arch ${{ matrix.arch }} -fPIC -D_DARWIN_C_SOURCE" make -j$(sysctl -n hw.ncpu)
+          EXTRA_CFLAGS="-arch ${{ matrix.arch }} -fPIC -D_DARWIN_C_SOURCE -DMAP_HUGETLB=0" make -j$(sysctl -n hw.ncpu)
           
           TAG="libttak-darwin-${{ matrix.arch }}"
           mkdir -p "dist/${TAG}/include" "dist/${TAG}/lib"
@@ -86,19 +88,31 @@ jobs:
           name: macos-${{ matrix.arch }}-binary
           path: dist/*.tar.gz
 
-  # 4. BSD Family (Native Build via VM)
+  # 4. BSD Family: Latest Release & Rolling (Current)
   build-bsd:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        os: [freebsd, openbsd, netbsd]
+        include:
+          - os: freebsd
+            version: '14.1'
+          - os: freebsd
+            version: '15-CURRENT'
+          - os: openbsd
+            version: '7.6'
+          - os: netbsd
+            version: '10.0'
+    name: Build ${{ matrix.os }} (${{ matrix.version }})
     steps:
       - uses: actions/checkout@v4
-      - name: Build in VM
+      - name: Build in Native VM
         uses: cross-platform-actions/action@v0.25.0
         with:
           operating_system: ${{ matrix.os }}
+          version: ${{ matrix.version }}
           run: |
+            # Detect package manager and install dependencies
             if [ "${{ matrix.os }}" = "freebsd" ]; then
               sudo pkg install -y gmake gcc
               MAKE_CMD=gmake
@@ -110,13 +124,13 @@ jobs:
               MAKE_CMD=gmake
             fi
             
+            # Use safe flags for BSD-native GCC
             $MAKE_CMD clean
-            # Use safe performance flags that work across different GCC versions on BSD
             CC=gcc AR=ar \
             PERF_STACK_FLAGS="-O3 -pipe -fomit-frame-pointer -DNDEBUG" \
-            EXTRA_CFLAGS="-fPIC -D__BSD_VISIBLE=1" $MAKE_CMD -j$(nproc 2>/dev/null || sysctl -n hw.ncpu)
+            EXTRA_CFLAGS="-fPIC -D__BSD_VISIBLE=1 -DMAP_HUGETLB=0" $MAKE_CMD -j$(nproc 2>/dev/null || sysctl -n hw.ncpu)
             
-            TAG="libttak-${{ matrix.os }}-amd64"
+            TAG="libttak-${{ matrix.os }}-${{ matrix.version }}-amd64"
             mkdir -p "dist/${TAG}/include" "dist/${TAG}/lib"
             cp -r include/* "dist/${TAG}/include/"
             cp lib/libttak.a "dist/${TAG}/lib/"
@@ -124,10 +138,10 @@ jobs:
       - name: Upload
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.os }}-binary
+          name: ${{ matrix.os }}-${{ matrix.version }}-binary
           path: dist/*.tar.gz
 
-  # 5. Global Release
+  # 5. Global Nightly Release
   release:
     needs: [standard-build, build-win-arm64, build-macos, build-bsd]
     runs-on: ubuntu-latest

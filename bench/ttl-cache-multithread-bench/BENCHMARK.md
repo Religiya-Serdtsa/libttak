@@ -1,4 +1,5 @@
 ## Performance Comparison Report
+(Linux x64, Ryzen 5600X, 64GB DDR4 3200MHz)
 
 | Metric Category | Metric | GCC -O3 | TCC -O3 | Clang -O3 |
 | --- | --- | --- | --- | --- |
