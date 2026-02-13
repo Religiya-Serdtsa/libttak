@@ -16,30 +16,39 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # Use Debian for standard Linux and Windows x64 targets
+          # Standard Linux: Multi-arch GCC is available on Debian Trixie
           - os-tag: linux
             os-name: linux
             image: debian:trixie-slim
+
+          # Windows x64: Debian Trixie has robust mingw-w64 packages
           - os-tag: windows-x64
             os-name: windows
             image: debian:trixie-slim
 
-          # Use dedicated dockcross images for ARM64 and BSD/macOS to ensure toolchain compatibility
+          # Windows ARM64: Dedicated dockcross image for windows-arm64
           - os-tag: windows-arm64
             os-name: windows
             image: dockcross/windows-arm64:latest
+
+          # macOS: Using specialized osxcross-based image
           - os-tag: macos
             os-name: macos
-            image: dockcross/base:latest
+            image: ghcr.io/osxcross/osxcross:latest
+
+          # FreeBSD: Dedicated cross-compiler image for FreeBSD
           - os-tag: freebsd
             os-name: freebsd
-            image: dockcross/base:latest
+            image: emaste/freebsd-cross-build:latest
+
+          # OpenBSD/NetBSD: Multiarch crossbuild often covers these via specific tags
+          # If specific images fail, they require a custom Dockerfile with their toolchain
           - os-tag: openbsd
             os-name: openbsd
-            image: dockcross/base:latest
+            image: multiarch/crossbuild:latest
           - os-tag: netbsd
             os-name: netbsd
-            image: dockcross/base:latest
+            image: multiarch/crossbuild:latest
 
     container:
       image: ${{ matrix.image }}
@@ -48,7 +57,7 @@ jobs:
       - name: Checkout Source
         uses: actions/checkout@v4
 
-      - name: Install Toolchains (Debian-based only)
+      - name: Install Toolchains (Debian Only)
         if: matrix.image == 'debian:trixie-slim'
         run: |
           apt-get update && apt-get install -y build-essential make tar
@@ -61,13 +70,9 @@ jobs:
 
       - name: Run Build Script
         run: |
-          # Ensure execution permission for the build script
           chmod +x scripts/cross_build_from_debian_13_x64.sh
-          # Execute build script filtering by OS group
+          # Pass only the OS name to filter targets within the script
           ./scripts/cross_build_from_debian_13_x64.sh --os-only ${{ matrix.os-name }}
-        env:
-          # Explicitly set CC for windows-arm64 container if default is missing
-          CC: ${{ matrix.os-tag == 'windows-arm64' && 'aarch64-w64-mingw32-gcc' || '' }}
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
