@@ -12,8 +12,7 @@
 #else
     #include <unistd.h>
     #if defined(__NetBSD__) || defined(__OpenBSD__)
-        #include <sys/param.h>
-        #include <sys/sysctl.h>
+        #include "../../internal/compat/bsd_sysctl.h"
     #endif
 #endif
 
