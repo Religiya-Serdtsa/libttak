@@ -65,7 +65,7 @@ double ttak_stats_mean(ttak_stats_t *s);
 /**
  * @brief Computes percentiles from raw data and outputs them as bigreal numbers.
  */
-void ttak_stats_compute_percentiles(uint64_t *data, size_t count, 
+_Bool ttak_stats_compute_percentiles(uint64_t *data, size_t count, 
                                    ttak_bigreal_t *p50, ttak_bigreal_t *p95, 
                                    ttak_bigreal_t *p99, ttak_bigreal_t *p999, 
                                    uint64_t now);
