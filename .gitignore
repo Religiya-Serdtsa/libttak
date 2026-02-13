@@ -1,3 +1,7 @@
 obj/
 lib/
 dist/
+tests/test_*
+!tests/test_*.c
+!tests/test_*.h
+_codeql_detected_source_root
