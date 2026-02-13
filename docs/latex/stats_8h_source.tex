@@ -64,6 +64,16 @@
 \DoxyCodeLine{\Hypertarget{stats_8h_source_l00060}00060\ \textcolor{comment}{\ */}}
 \DoxyCodeLine{\Hypertarget{stats_8h_source_l00061}\mbox{\hyperlink{stats_8h_a54b911aa8d10ae214de24d79a3c00357}{00061}}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{stats_8h_a54b911aa8d10ae214de24d79a3c00357}{ttak\_stats\_mean}}(\mbox{\hyperlink{structttak__stats}{ttak\_stats\_t}}\ *s);}
 \DoxyCodeLine{\Hypertarget{stats_8h_source_l00062}00062\ }
-\DoxyCodeLine{\Hypertarget{stats_8h_source_l00063}00063\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_STATS\_STATS\_H}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00063}00063\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{bigreal_8h}{ttak/math/bigreal.h}}>}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00064}00064\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00065}00065\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00066}00066\ \textcolor{comment}{\ *\ @brief\ Computes\ percentiles\ from\ raw\ data\ and\ outputs\ them\ as\ bigreal\ numbers.}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00067}00067\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00068}\mbox{\hyperlink{stats_8h_a46f4cd5bf33f9ada8fdb7dccb120a664}{00068}}\ \_Bool\ \mbox{\hyperlink{stats_8h_a46f4cd5bf33f9ada8fdb7dccb120a664}{ttak\_stats\_compute\_percentiles}}(uint64\_t\ *data,\ \textcolor{keywordtype}{size\_t}\ count,\ }
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *p50,\ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *p95,\ }
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *p99,\ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *p999,\ }
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{stats_8h_source_l00073}00073\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_STATS\_STATS\_H}}
 
 \end{DoxyCode}

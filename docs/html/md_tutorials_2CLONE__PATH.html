@@ -93,15 +93,15 @@ $(document).ready(function(){initNavTree('md_tutorials_2CLONE__PATH.html',''); i
   <div class="headertitle"><div class="title">Clone Coding Path</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md114"></a> Follow these stages sequentially. Each block references the original sources you should imitate, the lesson files to open inside <code>tutorials/modules</code>, and the verification goal you should reach before moving on.</p>
-<h2><a class="anchor" id="autotoc_md115"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md119"></a> Follow these stages sequentially. Each block references the original sources you should imitate, the lesson files to open inside <code>tutorials/modules</code>, and the verification goal you should reach before moving on.</p>
+<h2><a class="anchor" id="autotoc_md120"></a>
 Orientation – Setup + Helper</h2>
 <ul>
 <li><b>Lessons:</b> 01–02</li>
 <li><b>Goal:</b> prepare your workspace, branch, and helper tool.</li>
 <li><b>Checklist:</b> helper builds cleanly; you have a log ready for “What I learned” notes.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md116"></a>
+<h2><a class="anchor" id="autotoc_md121"></a>
 Stage 1 – Core Data + Logging</h2>
 <ul>
 <li><b>Lessons:</b> 03–08</li>
@@ -109,7 +109,7 @@ Stage 1 – Core Data + Logging</h2>
 <li><b>Clone:</b> <code>src/ht/{hash.c,map.c,table.c}</code>, <code>src/container/{pool.c,ringbuf.c,set.c}</code>, <code>src/log/logger.c</code>.</li>
 <li><b>Checklist:</b> re-implement map insert/find/remove; rebuild ring buffer push/pop; ensure <code>ttak_logger_log</code> prints to stderr.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md117"></a>
+<h2><a class="anchor" id="autotoc_md122"></a>
 Stage 2 – Concurrency Primitives</h2>
 <ul>
 <li><b>Lessons:</b> 09–11</li>
@@ -117,7 +117,7 @@ Stage 2 – Concurrency Primitives</h2>
 <li><b>Clone:</b> <code>src/sync/{sync.c,spinlock.c}</code>, <code>src/atomic/atomic.c</code>, <code>include/stdatomic.h</code>.</li>
 <li><b>Checklist:</b> mutexes map directly onto pthreads; spinlock warning-free build; portable stdatomic fallback compiles on TCC.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md118"></a>
+<h2><a class="anchor" id="autotoc_md123"></a>
 Stage 3 – Thread Pool &amp; Async</h2>
 <ul>
 <li><b>Lessons:</b> 12–16</li>
@@ -125,7 +125,7 @@ Stage 3 – Thread Pool &amp; Async</h2>
 <li><b>Clone:</b> <code>src/thread/{pool.c,worker.c}</code>, <code>src/async/{task.c,promise.c,future.c,sched.c}</code>, <code>src/priority/{queue.c,heap.c,scheduler.c}</code>.</li>
 <li><b>Checklist:</b> submit jobs, complete them in order; understand <code>ttak_owner_t</code> callback usage.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md119"></a>
+<h2><a class="anchor" id="autotoc_md124"></a>
 Stage 4 – Timing + Limiters + Stats</h2>
 <ul>
 <li><b>Lessons:</b> 17–19</li>
@@ -133,7 +133,7 @@ Stage 4 – Timing + Limiters + Stats</h2>
 <li><b>Clone:</b> <code>src/timing/{timing.c,deadline.c}</code>, <code>src/limit/limit.c</code>, <code>src/stats/stats.c</code>.</li>
 <li><b>Checklist:</b> <code>ttak_get_tick_count</code> millisecond + nanosecond paths; token-bucket refill math; stats aggregator resets correctly.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md120"></a>
+<h2><a class="anchor" id="autotoc_md125"></a>
 Stage 5 – Memory Systems</h2>
 <ul>
 <li><b>Lessons:</b> 20–22</li>
@@ -141,7 +141,7 @@ Stage 5 – Memory Systems</h2>
 <li><b>Clone:</b> <code>src/mem/{mem.c,owner.c,epoch_gc.c}</code>, <code>src/mem_tree/mem_tree.c</code>.</li>
 <li><b>Checklist:</b> owner resource register/execute flows; epoch GC rotates safely; <code>_Thread_local</code> guards compile.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md121"></a>
+<h2><a class="anchor" id="autotoc_md126"></a>
 Stage 6 – Math &amp; Security</h2>
 <ul>
 <li><b>Lessons:</b> 23–28</li>
@@ -149,7 +149,7 @@ Stage 6 – Math &amp; Security</h2>
 <li><b>Clone:</b> <code>src/math/{bigint.c,bigmul.c,bigreal.c,sum_divisors.c,factor.c,ntt.c}</code>, <code>src/security/sha256.c</code>.</li>
 <li><b>Checklist:</b> big-int SSO path, safe-mode policy for divisor sums, SHA-256 test vectors.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md122"></a>
+<h2><a class="anchor" id="autotoc_md127"></a>
 Stage 7 – Trees + AST</h2>
 <ul>
 <li><b>Lessons:</b> 29–31</li>
@@ -157,7 +157,7 @@ Stage 7 – Trees + AST</h2>
 <li><b>Clone:</b> <code>src/tree/{ast.c,bplus.c,btree.c}</code>.</li>
 <li><b>Checklist:</b> b+tree split/merge; AST visitor evaluation.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md123"></a>
+<h2><a class="anchor" id="autotoc_md128"></a>
 Stage 8 – Application Layer</h2>
 <ul>
 <li><b>Lessons:</b> 32–33</li>
@@ -165,7 +165,7 @@ Stage 8 – Application Layer</h2>
 <li><b>Clone:</b> <code>apps/aliquot-tracker/src/main.c</code> (selected subsystems per section), <code>apps/bench</code> as optional exercises.</li>
 <li><b>Checklist:</b> job queue, ledger persistence, bigint auto-heal logging.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md124"></a>
+<h2><a class="anchor" id="autotoc_md129"></a>
 Stage 9 – DANGEROUS (Unsafe)</h2>
 <ul>
 <li><b>Lessons:</b> 34–35</li>

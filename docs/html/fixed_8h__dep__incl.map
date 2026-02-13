@@ -1,17 +1,29 @@
 <map id="include/ttak/types/fixed.h" name="include/ttak/types/fixed.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="470,5,609,45"/>
-<area shape="rect" id="Node000002" href="$bigint_8h.html" title=" " alt="" coords="341,93,532,119"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="505,56,454,95,450,91,502,52"/>
-<area shape="rect" id="Node000008" href="$include_2ttak_2math_2ntt_8h.html" title=" " alt="" coords="557,93,727,119"/>
-<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="577,52,628,91,625,95,574,56"/>
-<area shape="rect" id="Node000003" href="$bigmul_8h.html" title=" " alt="" coords="5,174,204,199"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="376,124,154,177,152,171,375,119"/>
-<area shape="rect" id="Node000004" href="$bigreal_8h.html" title=" " alt="" coords="228,174,427,199"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="411,129,345,176,342,172,408,125"/>
-<area shape="rect" id="Node000006" href="$factor_8h.html" title=" " alt="" coords="451,174,641,199"/>
-<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="466,125,531,172,528,176,463,129"/>
-<area shape="rect" id="Node000007" href="$sum__divisors_8h.html" title=" " alt="" coords="665,167,835,207"/>
-<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="496,119,675,164,674,169,495,125"/>
-<area shape="rect" id="Node000005" href="$bigcomplex_8h.html" title=" " alt="" coords="213,255,442,280"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="330,213,330,254,325,254,325,213"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="964,5,1103,45"/>
+<area shape="rect" id="Node000002" href="$bigint_8h.html" title=" " alt="" coords="835,93,1026,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="999,56,948,95,944,91,996,52"/>
+<area shape="rect" id="Node000013" href="$include_2ttak_2math_2ntt_8h.html" title=" " alt="" coords="1051,93,1221,119"/>
+<area shape="poly" id="edge14_Node000001_Node000013" title=" " alt="" coords="1071,52,1122,91,1119,95,1068,56"/>
+<area shape="rect" id="Node000003" href="$bigmul_8h.html" title=" " alt="" coords="453,174,651,199"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="863,124,608,177,607,171,862,119"/>
+<area shape="rect" id="Node000004" href="$bigreal_8h.html" title=" " alt="" coords="675,174,874,199"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="897,127,799,176,796,172,895,122"/>
+<area shape="rect" id="Node000010" href="$stats__ext_8h.html" title=" " alt="" coords="813,343,947,383"/>
+<area shape="poly" id="edge13_Node000002_Node000010" title=" " alt="" coords="928,133,886,343,881,342,923,132"/>
+<area shape="rect" id="Node000011" href="$factor_8h.html" title=" " alt="" coords="969,174,1159,199"/>
+<area shape="poly" id="edge11_Node000002_Node000011" title=" " alt="" coords="963,123,1046,171,1043,176,961,128"/>
+<area shape="rect" id="Node000012" href="$sum__divisors_8h.html" title=" " alt="" coords="1183,167,1353,207"/>
+<area shape="poly" id="edge12_Node000002_Node000012" title=" " alt="" coords="994,119,1188,164,1186,169,992,124"/>
+<area shape="rect" id="Node000005" href="$bigcomplex_8h.html" title=" " alt="" coords="5,262,235,287"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="697,204,664,209,456,234,247,257,195,265,194,259,246,252,455,229,664,204,697,199"/>
+<area shape="rect" id="Node000006" href="$calculus_8h.html" title=" " alt="" coords="259,262,466,287"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="707,205,418,265,417,259,705,200"/>
+<area shape="rect" id="Node000007" href="$vector_8h.html" title=" " alt="" coords="490,262,683,287"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="738,208,613,264,611,259,736,203"/>
+<area shape="rect" id="Node000009" href="$stats_8h.html" title=" " alt="" coords="707,255,842,295"/>
+<area shape="poly" id="edge8_Node000004_Node000009" title=" " alt="" coords="777,213,777,254,772,254,772,213"/>
+<area shape="poly" id="edge10_Node000004_Node000010" title=" " alt="" coords="808,205,834,226,857,253,868,276,875,300,882,342,876,343,870,301,863,278,852,256,830,230,805,209"/>
+<area shape="rect" id="Node000008" href="$matrix_8h.html" title=" " alt="" coords="489,350,685,375"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="589,301,589,349,584,349,584,301"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="810,301,858,340,855,345,807,305"/>
 </map>

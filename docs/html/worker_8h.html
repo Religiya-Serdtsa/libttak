@@ -188,6 +188,9 @@ Typedefs</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:afdb21bc290370c6055f5f8ce3e204337" id="r_afdb21bc290370c6055f5f8ce3e204337"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="worker_8h.html#afdb21bc290370c6055f5f8ce3e204337">ttak_worker_routine</a> (void *arg)</td></tr>
 <tr class="separator:afdb21bc290370c6055f5f8ce3e204337"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64a121d1facc0899dd991c138f56c3be" id="r_a64a121d1facc0899dd991c138f56c3be"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="worker_8h.html#a64a121d1facc0899dd991c138f56c3be">ttak_worker_abort</a> (void)</td></tr>
+<tr class="memdesc:a64a121d1facc0899dd991c138f56c3be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts the current task execution using longjmp. Must be called from within a worker thread during task execution.  <br /></td></tr>
+<tr class="separator:a64a121d1facc0899dd991c138f56c3be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="abf4f2175a2fdbc6712b1929ef8078d8d" name="abf4f2175a2fdbc6712b1929ef8078d8d"></a>
@@ -268,6 +271,26 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a64a121d1facc0899dd991c138f56c3be" name="a64a121d1facc0899dd991c138f56c3be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a64a121d1facc0899dd991c138f56c3be">&#9670;&#160;</a></span>ttak_worker_abort()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ttak_worker_abort </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Aborts the current task execution using longjmp. Must be called from within a worker thread during task execution. </p>
+
+</div>
+</div>
 <a id="afdb21bc290370c6055f5f8ce3e204337" name="afdb21bc290370c6055f5f8ce3e204337"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#afdb21bc290370c6055f5f8ce3e204337">&#9670;&#160;</a></span>ttak_worker_routine()</h2>
 

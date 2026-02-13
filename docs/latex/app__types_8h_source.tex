@@ -40,104 +40,112 @@
 \DoxyCodeLine{\Hypertarget{app__types_8h_source_l00036}\mbox{\hyperlink{app__types_8h_a9f804bdef8f3eaa64b7090504f3790d1}{00036}}\ \textcolor{preprocessor}{\#define\ TTAK\_HOT\_PATH}}
 \DoxyCodeLine{\Hypertarget{app__types_8h_source_l00037}\mbox{\hyperlink{app__types_8h_a5ba4b50baa645717996dbe107641cf43}{00037}}\ \textcolor{preprocessor}{\#define\ TTAK\_COLD\_PATH}}
 \DoxyCodeLine{\Hypertarget{app__types_8h_source_l00038}00038\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00039}00039\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00040}00040\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00041}00041\ \textcolor{comment}{\ *\ @brief\ Time\ unit\ macros\ for\ converting\ to\ nanoseconds.}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00042}00042\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00043}\mbox{\hyperlink{app__types_8h_a8f73ed891f186c57f1a72da390592879}{00043}}\ \textcolor{preprocessor}{\#define\ TT\_NANO\_SECOND(n)\ \ \ ((uint64\_t)(n))}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00044}\mbox{\hyperlink{app__types_8h_ac02e371a9ce7c79927fcd1250ad5f082}{00044}}\ \textcolor{preprocessor}{\#define\ TT\_MICRO\_SECOND(n)\ \ ((uint64\_t)(n)\ *\ 1000ULL)}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00045}\mbox{\hyperlink{app__types_8h_a706d706dd7fd86c64eca603344ecd44d}{00045}}\ \textcolor{preprocessor}{\#define\ TT\_MILLI\_SECOND(n)\ \ ((uint64\_t)(n)\ *\ 1000ULL\ *\ 1000ULL)}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00046}\mbox{\hyperlink{app__types_8h_a751dbf1f1d796405a9b2fe2f7ffa945e}{00046}}\ \textcolor{preprocessor}{\#define\ TT\_SECOND(n)\ \ \ \ \ \ \ \ ((uint64\_t)(n)\ *\ 1000ULL\ *\ 1000ULL\ *\ 1000ULL)}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00047}\mbox{\hyperlink{app__types_8h_a3209654bf799b3cadd064970c008a32a}{00047}}\ \textcolor{preprocessor}{\#define\ TT\_MINUTE(n)\ \ \ \ \ \ \ \ ((uint64\_t)(n)\ *\ 60ULL\ *\ 1000ULL\ *\ 1000ULL\ *\ 1000ULL)}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00048}\mbox{\hyperlink{app__types_8h_a19035333be330bdd7cb30b014a4075fe}{00048}}\ \textcolor{preprocessor}{\#define\ TT\_HOUR(n)\ \ \ \ \ \ \ \ \ \ ((uint64\_t)(n)\ *\ 60ULL\ *\ 60ULL\ *\ 1000ULL\ *\ 1000ULL\ *\ 1000ULL)}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00049}00049\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00050}00050\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00051}00051\ \textcolor{comment}{\ *\ @brief\ Sentinel\ for\ invalidated\ references.}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00052}00052\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00053}\mbox{\hyperlink{app__types_8h_ac5b096c74969e7dbd5e24d44a446c015}{00053}}\ \textcolor{preprocessor}{\#define\ SAFE\_NULL\ NULL}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00054}00054\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00055}00055\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00056}00056\ \textcolor{comment}{\ *\ @brief\ Recommended\ pattern\ for\ resource-\/managing\ structures:}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00057}00057\ \textcolor{comment}{\ *\ All\ structures\ that\ manage\ dynamic\ resources\ (e.g.,\ memory,\ threads,\ file\ handles)}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00058}00058\ \textcolor{comment}{\ *\ should\ follow\ an\ \_init\ and\ \_destroy\ pattern.}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00059}00059\ \textcolor{comment}{\ *\ -\/\ \`{}void\ ttak\_struct\_init(ttak\_struct\_t\ *s,\ ...)`:\ Initializes\ the\ structure,}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00060}00060\ \textcolor{comment}{\ *\ \ \ allocating\ necessary\ resources.}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00061}00061\ \textcolor{comment}{\ *\ -\/\ \`{}void\ ttak\_struct\_destroy(ttak\_struct\_t\ *s,\ ...)`:\ Frees\ all\ resources}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00062}00062\ \textcolor{comment}{\ *\ \ \ held\ by\ the\ structure.}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00063}00063\ \textcolor{comment}{\ *\ This\ ensures\ strict\ lifetime\ management\ and\ proper\ cleanup.}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00064}00064\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00065}00065\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00066}00066\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00067}00067\ \textcolor{comment}{\ *\ @brief\ "{}Fortress"{}\ Memory\ Header.}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00068}00068\ \textcolor{comment}{\ *\ 64-\/byte\ aligned\ to\ prevent\ False\ Sharing\ and\ ensure\ user\ pointer\ alignment.}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00069}00069\ \textcolor{comment}{\ *\ Total\ size\ is\ 128\ bytes\ to\ maintain\ 64-\/byte\ alignment\ for\ user\ data.}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00070}00070\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00071}\mbox{\hyperlink{structttak__mem__header__t}{00071}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00072}\mbox{\hyperlink{structttak__mem__header__t_a63c543d0e2277438790686ca125adadf}{00072}}\ \ \ \ \ \textcolor{keyword}{alignas}(64)\ uint32\_t\ magic;\ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ 0x5454414B\ */}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00073}\mbox{\hyperlink{structttak__mem__header__t_a49f32c7dc3f8c633c289870c99841153}{00073}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__mem__header__t_a49f32c7dc3f8c633c289870c99841153}{checksum}};\ \ \ \ \ \ \textcolor{comment}{/**<\ Metadata\ checksum\ */}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00074}\mbox{\hyperlink{structttak__mem__header__t_aefba5a41d63f62a6de53c3a9a6f0f51b}{00074}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__mem__header__t_aefba5a41d63f62a6de53c3a9a6f0f51b}{created\_tick}};\ \ \textcolor{comment}{/**<\ Creation\ timestamp\ */}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00075}\mbox{\hyperlink{structttak__mem__header__t_a0362d896df5d92be01157426136ad6b0}{00075}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__mem__header__t_a0362d896df5d92be01157426136ad6b0}{expires\_tick}};\ \ \textcolor{comment}{/**<\ Expiration\ timestamp\ */}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00076}\mbox{\hyperlink{structttak__mem__header__t_a0318bb3cfda8bb54cf6ec0c43e6b2584}{00076}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__mem__header__t_a0318bb3cfda8bb54cf6ec0c43e6b2584}{access\_count}};\ \ \textcolor{comment}{/**<\ Atomic\ access\ audit\ counter\ */}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00077}\mbox{\hyperlink{structttak__mem__header__t_a6f56f8247cfdee283312f6d76b0625a1}{00077}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__mem__header__t_a6f56f8247cfdee283312f6d76b0625a1}{pin\_count}};\ \ \ \ \ \textcolor{comment}{/**<\ Atomic\ reference\ count\ for\ pinning\ */}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00078}\mbox{\hyperlink{structttak__mem__header__t_a576f96336f81e4af314e70b911232dda}{00078}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \ \ \mbox{\hyperlink{structttak__mem__header__t_a576f96336f81e4af314e70b911232dda}{size}};\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ User-\/requested\ size\ */}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00079}\mbox{\hyperlink{structttak__mem__header__t_a5c63e95556a7b6528834155059dae312}{00079}}\ \ \ \ \ pthread\_mutex\_t\ \mbox{\hyperlink{structttak__mem__header__t_a5c63e95556a7b6528834155059dae312}{lock}};\ \ \ \textcolor{comment}{/**<\ Per-\/header\ synchronization\ */}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00080}\mbox{\hyperlink{structttak__mem__header__t_a86b5bea8ae5d34192969173c8ea7ef88}{00080}}\ \ \ \ \ \_Bool\ \ \ \ \mbox{\hyperlink{structttak__mem__header__t_a86b5bea8ae5d34192969173c8ea7ef88}{freed}};\ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Allocation\ status\ */}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00081}\mbox{\hyperlink{structttak__mem__header__t_a5bf1a1bf467c6b8f9df7c13ff72ee660}{00081}}\ \ \ \ \ \_Bool\ \ \ \ \mbox{\hyperlink{structttak__mem__header__t_a5bf1a1bf467c6b8f9df7c13ff72ee660}{is\_const}};\ \ \ \ \ \ \textcolor{comment}{/**<\ Immutability\ hint\ */}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00082}\mbox{\hyperlink{structttak__mem__header__t_a69a6983e3aa59121684422c82714b3c9}{00082}}\ \ \ \ \ \_Bool\ \ \ \ \mbox{\hyperlink{structttak__mem__header__t_a69a6983e3aa59121684422c82714b3c9}{is\_volatile}};\ \ \ \textcolor{comment}{/**<\ Volatility\ hint\ */}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00083}\mbox{\hyperlink{structttak__mem__header__t_afebc4673ac816dd1ca85e2368dee4694}{00083}}\ \ \ \ \ \_Bool\ \ \ \ \mbox{\hyperlink{structttak__mem__header__t_afebc4673ac816dd1ca85e2368dee4694}{allow\_direct\_access}};\ \textcolor{comment}{/**<\ Safety\ bypass\ flag\ */}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00084}\mbox{\hyperlink{structttak__mem__header__t_aec81dfe0c2ad6a934ac1daae25d1c823}{00084}}\ \ \ \ \ \_Bool\ \ \ \ \mbox{\hyperlink{structttak__mem__header__t_aec81dfe0c2ad6a934ac1daae25d1c823}{is\_huge}};\ \ \ \ \ \ \ \textcolor{comment}{/**<\ Mapped\ via\ hugepages\ */}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00085}\mbox{\hyperlink{structttak__mem__header__t_a8430c7b034f0da69e2fe16ae2a999e2d}{00085}}\ \ \ \ \ \_Bool\ \ \ \ \mbox{\hyperlink{structttak__mem__header__t_a8430c7b034f0da69e2fe16ae2a999e2d}{should\_join}};\ \ \ \textcolor{comment}{/**<\ Indicates\ if\ associated\ resource\ needs\ joining\ */}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00086}\mbox{\hyperlink{structttak__mem__header__t_ad1189a2d1c2973b2537c1e4d34a0d439}{00086}}\ \ \ \ \ \_Bool\ \ \ \ strict\_check;\ \_Bool\ \ \ \ \mbox{\hyperlink{structttak__mem__header__t_ad1189a2d1c2973b2537c1e4d34a0d439}{is\_root}};\ \ \textcolor{comment}{/**<\ Enable\ strict\ memory\ boundary\ checks\ */}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00087}\mbox{\hyperlink{structttak__mem__header__t_aeb69c52bed0292761ce4ff581eae37df}{00087}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__mem__header__t_aeb69c52bed0292761ce4ff581eae37df}{canary\_start}};\ \ \textcolor{comment}{/**<\ Magic\ number\ for\ start\ of\ user\ data\ */}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00088}\mbox{\hyperlink{structttak__mem__header__t_a9bc5cff0708537fe474f41e356e69284}{00088}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__mem__header__t_a9bc5cff0708537fe474f41e356e69284}{canary\_end}};\ \ \ \ \textcolor{comment}{/**<\ Magic\ number\ for\ end\ of\ user\ data\ */}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00089}\mbox{\hyperlink{structttak__mem__header__t_a4c9d2514539339c34bed60e2bdd5e233}{00089}}\ \ \ \ \ \textcolor{keywordtype}{char}\ \ \ \ \ *\mbox{\hyperlink{structttak__mem__header__t_a4c9d2514539339c34bed60e2bdd5e233}{tracking\_log}};\ \ \textcolor{comment}{/**<\ Memory\ operation\ tracking\ log\ (dynamic)\ */}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00090}\mbox{\hyperlink{structttak__mem__header__t_acc4f1b34d6e7f6d2e71755779a88ffa3}{00090}}\ \ \ \ \ \textcolor{keywordtype}{char}\ \ \ \ \ reserved[11];\ \ \textcolor{comment}{/**<\ Explicit\ padding\ for\ header\ alignment\ */}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00091}00091\ \}\ \mbox{\hyperlink{structttak__mem__header__t}{ttak\_mem\_header\_t}};}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00092}00092\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00093}00093\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00094}00094\ \textcolor{comment}{\ *\ @brief\ Calculates\ a\ 32-\/bit\ checksum\ for\ the\ memory\ header.}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00095}00095\ \textcolor{comment}{\ *\ *\ This\ implementation\ breaks\ the\ serial\ XOR\ chain\ into\ two\ independent}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00096}00096\ \textcolor{comment}{\ *\ accumulators\ (sum1,\ sum2)\ to\ encourage\ Instruction\ Level\ Parallelism\ (ILP).}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00097}00097\ \textcolor{comment}{\ *\ By\ breaking\ the\ data\ dependency,\ even\ a\ simple\ compiler\ like\ TCC\ can}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00098}00098\ \textcolor{comment}{\ *\ produce\ assembly\ that\ utilizes\ multiple\ execution\ units\ simultaneously,}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00099}00099\ \textcolor{comment}{\ *\ making\ the\ optimization\ compiler-\/agnostic.}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00100}00100\ \textcolor{comment}{\ *\ *\ @param\ h\ Pointer\ to\ the\ memory\ header\ to\ be\ checksummed.}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00101}00101\ \textcolor{comment}{\ *\ @return\ uint32\_t\ The\ resulting\ 32-\/bit\ checksum.}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00102}00102\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00103}\mbox{\hyperlink{app__types_8h_ad663cf355d411491ef16fbaba940be07}{00103}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ uint32\_t\ \mbox{\hyperlink{app__types_8h_ad663cf355d411491ef16fbaba940be07}{ttak\_calc\_header\_checksum}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__mem__header__t}{ttak\_mem\_header\_t}}\ *h)\ \{}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00104}00104\ \ \ \ \ \textcolor{comment}{/*\ Split\ the\ workload\ into\ two\ independent\ streams\ to\ exploit\ ILP\ */}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00105}00105\ \ \ \ \ uint32\_t\ sum1\ =\ h-\/>\mbox{\hyperlink{structttak__mem__header__t_a63c543d0e2277438790686ca125adadf}{magic}};}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00106}00106\ \ \ \ \ uint32\_t\ sum2\ =\ (uint32\_t)h-\/>\mbox{\hyperlink{structttak__mem__header__t_aefba5a41d63f62a6de53c3a9a6f0f51b}{created\_tick}};}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00107}00107\ }
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00108}00108\ \ \ \ \ \textcolor{comment}{/*\ Process\ created\_tick\ (upper)\ and\ expires\_tick\ (lower)\ */}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00109}00109\ \ \ \ \ sum1\ \string^=\ (uint32\_t)(h-\/>\mbox{\hyperlink{structttak__mem__header__t_aefba5a41d63f62a6de53c3a9a6f0f51b}{created\_tick}}\ >>\ 32);}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00110}00110\ \ \ \ \ sum2\ \string^=\ (uint32\_t)h-\/>\mbox{\hyperlink{structttak__mem__header__t_a0362d896df5d92be01157426136ad6b0}{expires\_tick}};}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00111}00111\ }
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00112}00112\ \ \ \ \ \textcolor{comment}{/*\ Process\ expires\_tick\ (upper)\ and\ size\ (lower)\ */}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00113}00113\ \ \ \ \ sum1\ \string^=\ (uint32\_t)(h-\/>\mbox{\hyperlink{structttak__mem__header__t_a0362d896df5d92be01157426136ad6b0}{expires\_tick}}\ >>\ 32);}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00114}00114\ \ \ \ \ sum2\ \string^=\ (uint32\_t)h-\/>\mbox{\hyperlink{structttak__mem__header__t_a576f96336f81e4af314e70b911232dda}{size}};}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00040}00040\ \textcolor{preprocessor}{\#ifndef\ TTAK\_THREAD\_LOCAL}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00041}00041\ \textcolor{preprocessor}{\#if\ defined(\_\_TINYC\_\_)}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00042}00042\ \textcolor{preprocessor}{\#define\ TTAK\_THREAD\_LOCAL}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00043}00043\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00044}\mbox{\hyperlink{app__types_8h_a75cdd26ec56c06d5e1abe50b17a8f837}{00044}}\ \textcolor{preprocessor}{\#define\ TTAK\_THREAD\_LOCAL\ \_Thread\_local}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00045}00045\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00046}00046\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00047}00047\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00048}00048\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00049}00049\ \textcolor{comment}{\ *\ @brief\ Time\ unit\ macros\ for\ converting\ to\ nanoseconds.}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00050}00050\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00051}\mbox{\hyperlink{app__types_8h_a8f73ed891f186c57f1a72da390592879}{00051}}\ \textcolor{preprocessor}{\#define\ TT\_NANO\_SECOND(n)\ \ \ ((uint64\_t)(n))}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00052}\mbox{\hyperlink{app__types_8h_ac02e371a9ce7c79927fcd1250ad5f082}{00052}}\ \textcolor{preprocessor}{\#define\ TT\_MICRO\_SECOND(n)\ \ ((uint64\_t)(n)\ *\ 1000ULL)}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00053}\mbox{\hyperlink{app__types_8h_a706d706dd7fd86c64eca603344ecd44d}{00053}}\ \textcolor{preprocessor}{\#define\ TT\_MILLI\_SECOND(n)\ \ ((uint64\_t)(n)\ *\ 1000ULL\ *\ 1000ULL)}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00054}\mbox{\hyperlink{app__types_8h_a751dbf1f1d796405a9b2fe2f7ffa945e}{00054}}\ \textcolor{preprocessor}{\#define\ TT\_SECOND(n)\ \ \ \ \ \ \ \ ((uint64\_t)(n)\ *\ 1000ULL\ *\ 1000ULL\ *\ 1000ULL)}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00055}\mbox{\hyperlink{app__types_8h_a3209654bf799b3cadd064970c008a32a}{00055}}\ \textcolor{preprocessor}{\#define\ TT\_MINUTE(n)\ \ \ \ \ \ \ \ ((uint64\_t)(n)\ *\ 60ULL\ *\ 1000ULL\ *\ 1000ULL\ *\ 1000ULL)}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00056}\mbox{\hyperlink{app__types_8h_a19035333be330bdd7cb30b014a4075fe}{00056}}\ \textcolor{preprocessor}{\#define\ TT\_HOUR(n)\ \ \ \ \ \ \ \ \ \ ((uint64\_t)(n)\ *\ 60ULL\ *\ 60ULL\ *\ 1000ULL\ *\ 1000ULL\ *\ 1000ULL)}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00057}00057\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00058}00058\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00059}00059\ \textcolor{comment}{\ *\ @brief\ Sentinel\ for\ invalidated\ references.}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00060}00060\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00061}\mbox{\hyperlink{app__types_8h_ac5b096c74969e7dbd5e24d44a446c015}{00061}}\ \textcolor{preprocessor}{\#define\ SAFE\_NULL\ NULL}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00062}00062\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00063}00063\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00064}00064\ \textcolor{comment}{\ *\ @brief\ Recommended\ pattern\ for\ resource-\/managing\ structures:}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00065}00065\ \textcolor{comment}{\ *\ All\ structures\ that\ manage\ dynamic\ resources\ (e.g.,\ memory,\ threads,\ file\ handles)}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00066}00066\ \textcolor{comment}{\ *\ should\ follow\ an\ \_init\ and\ \_destroy\ pattern.}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00067}00067\ \textcolor{comment}{\ *\ -\/\ \`{}void\ ttak\_struct\_init(ttak\_struct\_t\ *s,\ ...)`:\ Initializes\ the\ structure,}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00068}00068\ \textcolor{comment}{\ *\ \ \ allocating\ necessary\ resources.}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00069}00069\ \textcolor{comment}{\ *\ -\/\ \`{}void\ ttak\_struct\_destroy(ttak\_struct\_t\ *s,\ ...)`:\ Frees\ all\ resources}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00070}00070\ \textcolor{comment}{\ *\ \ \ held\ by\ the\ structure.}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00071}00071\ \textcolor{comment}{\ *\ This\ ensures\ strict\ lifetime\ management\ and\ proper\ cleanup.}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00072}00072\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00073}00073\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00074}00074\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00075}00075\ \textcolor{comment}{\ *\ @brief\ "{}Fortress"{}\ Memory\ Header.}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00076}00076\ \textcolor{comment}{\ *\ 64-\/byte\ aligned\ to\ prevent\ False\ Sharing\ and\ ensure\ user\ pointer\ alignment.}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00077}00077\ \textcolor{comment}{\ *\ Total\ size\ is\ 128\ bytes\ to\ maintain\ 64-\/byte\ alignment\ for\ user\ data.}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00078}00078\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00079}\mbox{\hyperlink{structttak__mem__header__t}{00079}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00080}\mbox{\hyperlink{structttak__mem__header__t_a63c543d0e2277438790686ca125adadf}{00080}}\ \ \ \ \ \textcolor{keyword}{alignas}(64)\ uint32\_t\ magic;\ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ 0x5454414B\ */}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00081}\mbox{\hyperlink{structttak__mem__header__t_a49f32c7dc3f8c633c289870c99841153}{00081}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__mem__header__t_a49f32c7dc3f8c633c289870c99841153}{checksum}};\ \ \ \ \ \ \textcolor{comment}{/**<\ Metadata\ checksum\ */}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00082}\mbox{\hyperlink{structttak__mem__header__t_aefba5a41d63f62a6de53c3a9a6f0f51b}{00082}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__mem__header__t_aefba5a41d63f62a6de53c3a9a6f0f51b}{created\_tick}};\ \ \textcolor{comment}{/**<\ Creation\ timestamp\ */}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00083}\mbox{\hyperlink{structttak__mem__header__t_a0362d896df5d92be01157426136ad6b0}{00083}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__mem__header__t_a0362d896df5d92be01157426136ad6b0}{expires\_tick}};\ \ \textcolor{comment}{/**<\ Expiration\ timestamp\ */}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00084}\mbox{\hyperlink{structttak__mem__header__t_a0318bb3cfda8bb54cf6ec0c43e6b2584}{00084}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__mem__header__t_a0318bb3cfda8bb54cf6ec0c43e6b2584}{access\_count}};\ \ \textcolor{comment}{/**<\ Atomic\ access\ audit\ counter\ */}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00085}\mbox{\hyperlink{structttak__mem__header__t_a6f56f8247cfdee283312f6d76b0625a1}{00085}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__mem__header__t_a6f56f8247cfdee283312f6d76b0625a1}{pin\_count}};\ \ \ \ \ \textcolor{comment}{/**<\ Atomic\ reference\ count\ for\ pinning\ */}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00086}\mbox{\hyperlink{structttak__mem__header__t_a576f96336f81e4af314e70b911232dda}{00086}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \ \ \mbox{\hyperlink{structttak__mem__header__t_a576f96336f81e4af314e70b911232dda}{size}};\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ User-\/requested\ size\ */}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00087}\mbox{\hyperlink{structttak__mem__header__t_a5c63e95556a7b6528834155059dae312}{00087}}\ \ \ \ \ pthread\_mutex\_t\ \mbox{\hyperlink{structttak__mem__header__t_a5c63e95556a7b6528834155059dae312}{lock}};\ \ \ \textcolor{comment}{/**<\ Per-\/header\ synchronization\ */}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00088}\mbox{\hyperlink{structttak__mem__header__t_a86b5bea8ae5d34192969173c8ea7ef88}{00088}}\ \ \ \ \ \_Bool\ \ \ \ \mbox{\hyperlink{structttak__mem__header__t_a86b5bea8ae5d34192969173c8ea7ef88}{freed}};\ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Allocation\ status\ */}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00089}\mbox{\hyperlink{structttak__mem__header__t_a5bf1a1bf467c6b8f9df7c13ff72ee660}{00089}}\ \ \ \ \ \_Bool\ \ \ \ \mbox{\hyperlink{structttak__mem__header__t_a5bf1a1bf467c6b8f9df7c13ff72ee660}{is\_const}};\ \ \ \ \ \ \textcolor{comment}{/**<\ Immutability\ hint\ */}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00090}\mbox{\hyperlink{structttak__mem__header__t_a69a6983e3aa59121684422c82714b3c9}{00090}}\ \ \ \ \ \_Bool\ \ \ \ \mbox{\hyperlink{structttak__mem__header__t_a69a6983e3aa59121684422c82714b3c9}{is\_volatile}};\ \ \ \textcolor{comment}{/**<\ Volatility\ hint\ */}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00091}\mbox{\hyperlink{structttak__mem__header__t_afebc4673ac816dd1ca85e2368dee4694}{00091}}\ \ \ \ \ \_Bool\ \ \ \ \mbox{\hyperlink{structttak__mem__header__t_afebc4673ac816dd1ca85e2368dee4694}{allow\_direct\_access}};\ \textcolor{comment}{/**<\ Safety\ bypass\ flag\ */}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00092}\mbox{\hyperlink{structttak__mem__header__t_aec81dfe0c2ad6a934ac1daae25d1c823}{00092}}\ \ \ \ \ \_Bool\ \ \ \ \mbox{\hyperlink{structttak__mem__header__t_aec81dfe0c2ad6a934ac1daae25d1c823}{is\_huge}};\ \ \ \ \ \ \ \textcolor{comment}{/**<\ Mapped\ via\ hugepages\ */}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00093}\mbox{\hyperlink{structttak__mem__header__t_a8430c7b034f0da69e2fe16ae2a999e2d}{00093}}\ \ \ \ \ \_Bool\ \ \ \ \mbox{\hyperlink{structttak__mem__header__t_a8430c7b034f0da69e2fe16ae2a999e2d}{should\_join}};\ \ \ \textcolor{comment}{/**<\ Indicates\ if\ associated\ resource\ needs\ joining\ */}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00094}\mbox{\hyperlink{structttak__mem__header__t_ad1189a2d1c2973b2537c1e4d34a0d439}{00094}}\ \ \ \ \ \_Bool\ \ \ \ strict\_check;\ \_Bool\ \ \ \ \mbox{\hyperlink{structttak__mem__header__t_ad1189a2d1c2973b2537c1e4d34a0d439}{is\_root}};\ \ \textcolor{comment}{/**<\ Enable\ strict\ memory\ boundary\ checks\ */}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00095}\mbox{\hyperlink{structttak__mem__header__t_aeb69c52bed0292761ce4ff581eae37df}{00095}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__mem__header__t_aeb69c52bed0292761ce4ff581eae37df}{canary\_start}};\ \ \textcolor{comment}{/**<\ Magic\ number\ for\ start\ of\ user\ data\ */}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00096}\mbox{\hyperlink{structttak__mem__header__t_a9bc5cff0708537fe474f41e356e69284}{00096}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__mem__header__t_a9bc5cff0708537fe474f41e356e69284}{canary\_end}};\ \ \ \ \textcolor{comment}{/**<\ Magic\ number\ for\ end\ of\ user\ data\ */}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00097}\mbox{\hyperlink{structttak__mem__header__t_a4c9d2514539339c34bed60e2bdd5e233}{00097}}\ \ \ \ \ \textcolor{keywordtype}{char}\ \ \ \ \ *\mbox{\hyperlink{structttak__mem__header__t_a4c9d2514539339c34bed60e2bdd5e233}{tracking\_log}};\ \ \textcolor{comment}{/**<\ Memory\ operation\ tracking\ log\ (dynamic)\ */}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00098}\mbox{\hyperlink{structttak__mem__header__t_acc4f1b34d6e7f6d2e71755779a88ffa3}{00098}}\ \ \ \ \ \textcolor{keywordtype}{char}\ \ \ \ \ reserved[11];\ \ \textcolor{comment}{/**<\ Explicit\ padding\ for\ header\ alignment\ */}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00099}00099\ \}\ \mbox{\hyperlink{structttak__mem__header__t}{ttak\_mem\_header\_t}};}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00100}00100\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00101}00101\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00102}00102\ \textcolor{comment}{\ *\ @brief\ Calculates\ a\ 32-\/bit\ checksum\ for\ the\ memory\ header.}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00103}00103\ \textcolor{comment}{\ *\ *\ This\ implementation\ breaks\ the\ serial\ XOR\ chain\ into\ two\ independent}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00104}00104\ \textcolor{comment}{\ *\ accumulators\ (sum1,\ sum2)\ to\ encourage\ Instruction\ Level\ Parallelism\ (ILP).}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00105}00105\ \textcolor{comment}{\ *\ By\ breaking\ the\ data\ dependency,\ even\ a\ simple\ compiler\ like\ TCC\ can}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00106}00106\ \textcolor{comment}{\ *\ produce\ assembly\ that\ utilizes\ multiple\ execution\ units\ simultaneously,}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00107}00107\ \textcolor{comment}{\ *\ making\ the\ optimization\ compiler-\/agnostic.}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00108}00108\ \textcolor{comment}{\ *\ *\ @param\ h\ Pointer\ to\ the\ memory\ header\ to\ be\ checksummed.}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00109}00109\ \textcolor{comment}{\ *\ @return\ uint32\_t\ The\ resulting\ 32-\/bit\ checksum.}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00110}00110\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00111}\mbox{\hyperlink{app__types_8h_ad663cf355d411491ef16fbaba940be07}{00111}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ uint32\_t\ \mbox{\hyperlink{app__types_8h_ad663cf355d411491ef16fbaba940be07}{ttak\_calc\_header\_checksum}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__mem__header__t}{ttak\_mem\_header\_t}}\ *h)\ \{}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00112}00112\ \ \ \ \ \textcolor{comment}{/*\ Split\ the\ workload\ into\ two\ independent\ streams\ to\ exploit\ ILP\ */}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00113}00113\ \ \ \ \ uint32\_t\ sum1\ =\ h-\/>\mbox{\hyperlink{structttak__mem__header__t_a63c543d0e2277438790686ca125adadf}{magic}};}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00114}00114\ \ \ \ \ uint32\_t\ sum2\ =\ (uint32\_t)h-\/>\mbox{\hyperlink{structttak__mem__header__t_aefba5a41d63f62a6de53c3a9a6f0f51b}{created\_tick}};}
 \DoxyCodeLine{\Hypertarget{app__types_8h_source_l00115}00115\ }
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00116}00116\ \textcolor{preprocessor}{\#if\ defined(\_\_LP64\_\_)\ ||\ defined(\_WIN64)}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00117}00117\ \ \ \ \ \textcolor{comment}{/*\ Process\ size\ (upper)\ on\ 64-\/bit\ systems\ */}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00118}00118\ \ \ \ \ sum1\ \string^=\ (uint32\_t)(h-\/>\mbox{\hyperlink{structttak__mem__header__t_a576f96336f81e4af314e70b911232dda}{size}}\ >>\ 32);}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00119}00119\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00120}00120\ }
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00121}00121\ \ \ \ \ \textcolor{comment}{/*\ Mix\ in\ boolean\ flags\ and\ status\ fields\ */}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00122}00122\ \ \ \ \ sum2\ \string^=\ (uint32\_t)h-\/>\mbox{\hyperlink{structttak__mem__header__t_a8430c7b034f0da69e2fe16ae2a999e2d}{should\_join}};}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00123}00123\ \ \ \ \ sum1\ \string^=\ (uint32\_t)h-\/>\mbox{\hyperlink{structttak__mem__header__t_a4de6b9462e84fa2602c694e3e9633b9e}{strict\_check}};}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00124}00124\ \ \ \ \ sum2\ \string^=\ (uint32\_t)h-\/>\mbox{\hyperlink{structttak__mem__header__t_ad1189a2d1c2973b2537c1e4d34a0d439}{is\_root}};}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00125}00125\ }
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00126}00126\ \ \ \ \ \textcolor{comment}{/*\ Process\ canary\ boundaries\ */}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00127}00127\ \ \ \ \ sum1\ \string^=\ (uint32\_t)h-\/>\mbox{\hyperlink{structttak__mem__header__t_aeb69c52bed0292761ce4ff581eae37df}{canary\_start}};}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00128}00128\ \ \ \ \ sum2\ \string^=\ (uint32\_t)(h-\/>\mbox{\hyperlink{structttak__mem__header__t_aeb69c52bed0292761ce4ff581eae37df}{canary\_start}}\ >>\ 32);}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00129}00129\ }
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00130}00130\ \ \ \ \ sum1\ \string^=\ (uint32\_t)h-\/>\mbox{\hyperlink{structttak__mem__header__t_a9bc5cff0708537fe474f41e356e69284}{canary\_end}};}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00131}00131\ \ \ \ \ sum2\ \string^=\ (uint32\_t)(h-\/>\mbox{\hyperlink{structttak__mem__header__t_a9bc5cff0708537fe474f41e356e69284}{canary\_end}}\ >>\ 32);}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00132}00132\ }
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00133}00133\ \ \ \ \ \textcolor{comment}{/*\ Final\ merge\ of\ the\ two\ streams\ */}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00134}00134\ \ \ \ \ \textcolor{keywordflow}{return}\ sum1\ \string^\ sum2;}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00135}00135\ \}}
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00136}00136\ }
-\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00137}00137\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_INTERNAL\_APP\_TYPES\_H}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00116}00116\ \ \ \ \ \textcolor{comment}{/*\ Process\ created\_tick\ (upper)\ and\ expires\_tick\ (lower)\ */}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00117}00117\ \ \ \ \ sum1\ \string^=\ (uint32\_t)(h-\/>\mbox{\hyperlink{structttak__mem__header__t_aefba5a41d63f62a6de53c3a9a6f0f51b}{created\_tick}}\ >>\ 32);}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00118}00118\ \ \ \ \ sum2\ \string^=\ (uint32\_t)h-\/>\mbox{\hyperlink{structttak__mem__header__t_a0362d896df5d92be01157426136ad6b0}{expires\_tick}};}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00119}00119\ }
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00120}00120\ \ \ \ \ \textcolor{comment}{/*\ Process\ expires\_tick\ (upper)\ and\ size\ (lower)\ */}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00121}00121\ \ \ \ \ sum1\ \string^=\ (uint32\_t)(h-\/>\mbox{\hyperlink{structttak__mem__header__t_a0362d896df5d92be01157426136ad6b0}{expires\_tick}}\ >>\ 32);}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00122}00122\ \ \ \ \ sum2\ \string^=\ (uint32\_t)h-\/>\mbox{\hyperlink{structttak__mem__header__t_a576f96336f81e4af314e70b911232dda}{size}};}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00123}00123\ }
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00124}00124\ \textcolor{preprocessor}{\#if\ defined(\_\_LP64\_\_)\ ||\ defined(\_WIN64)}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00125}00125\ \ \ \ \ \textcolor{comment}{/*\ Process\ size\ (upper)\ on\ 64-\/bit\ systems\ */}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00126}00126\ \ \ \ \ sum1\ \string^=\ (uint32\_t)(h-\/>\mbox{\hyperlink{structttak__mem__header__t_a576f96336f81e4af314e70b911232dda}{size}}\ >>\ 32);}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00127}00127\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00128}00128\ }
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00129}00129\ \ \ \ \ \textcolor{comment}{/*\ Mix\ in\ boolean\ flags\ and\ status\ fields\ */}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00130}00130\ \ \ \ \ sum2\ \string^=\ (uint32\_t)h-\/>\mbox{\hyperlink{structttak__mem__header__t_a8430c7b034f0da69e2fe16ae2a999e2d}{should\_join}};}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00131}00131\ \ \ \ \ sum1\ \string^=\ (uint32\_t)h-\/>\mbox{\hyperlink{structttak__mem__header__t_a4de6b9462e84fa2602c694e3e9633b9e}{strict\_check}};}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00132}00132\ \ \ \ \ sum2\ \string^=\ (uint32\_t)h-\/>\mbox{\hyperlink{structttak__mem__header__t_ad1189a2d1c2973b2537c1e4d34a0d439}{is\_root}};}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00133}00133\ }
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00134}00134\ \ \ \ \ \textcolor{comment}{/*\ Process\ canary\ boundaries\ */}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00135}00135\ \ \ \ \ sum1\ \string^=\ (uint32\_t)h-\/>\mbox{\hyperlink{structttak__mem__header__t_aeb69c52bed0292761ce4ff581eae37df}{canary\_start}};}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00136}00136\ \ \ \ \ sum2\ \string^=\ (uint32\_t)(h-\/>\mbox{\hyperlink{structttak__mem__header__t_aeb69c52bed0292761ce4ff581eae37df}{canary\_start}}\ >>\ 32);}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00137}00137\ }
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00138}00138\ \ \ \ \ sum1\ \string^=\ (uint32\_t)h-\/>\mbox{\hyperlink{structttak__mem__header__t_a9bc5cff0708537fe474f41e356e69284}{canary\_end}};}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00139}00139\ \ \ \ \ sum2\ \string^=\ (uint32\_t)(h-\/>\mbox{\hyperlink{structttak__mem__header__t_a9bc5cff0708537fe474f41e356e69284}{canary\_end}}\ >>\ 32);}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00140}00140\ }
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00141}00141\ \ \ \ \ \textcolor{comment}{/*\ Final\ merge\ of\ the\ two\ streams\ */}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00142}00142\ \ \ \ \ \textcolor{keywordflow}{return}\ sum1\ \string^\ sum2;}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00143}00143\ \}}
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00144}00144\ }
+\DoxyCodeLine{\Hypertarget{app__types_8h_source_l00145}00145\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_INTERNAL\_APP\_TYPES\_H}}
 
 \end{DoxyCode}

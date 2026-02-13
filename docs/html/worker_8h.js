@@ -7,5 +7,6 @@ var worker_8h =
     [ "TTAK_ERR_SHUTDOWN_RETRY", "worker_8h.html#a2f35c31672151f0fb0cd32d74ee03cd7", null ],
     [ "ttak_worker_t", "worker_8h.html#a0003749eead12470661f5e9d7d4cc842", null ],
     [ "ttak_worker_wrapper_t", "worker_8h.html#a0f54418484a47d2ee2bb2e3d8b471b7d", null ],
+    [ "ttak_worker_abort", "worker_8h.html#a64a121d1facc0899dd991c138f56c3be", null ],
     [ "ttak_worker_routine", "worker_8h.html#afdb21bc290370c6055f5f8ce3e204337", null ]
 ];

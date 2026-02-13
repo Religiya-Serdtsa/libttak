@@ -15,5 +15,6 @@ var app__types_8h =
     [ "TTAK_MAGIC_NUMBER", "app__types_8h.html#a02d61fafa21eadc8010ca9803d77bafb", null ],
     [ "TTAK_MAX_LIMB_LIMIT", "app__types_8h.html#afb038556e0b1b0989b6a6ddf3fa399f2", null ],
     [ "TTAK_MEM_HIGH_WATERMARK", "app__types_8h.html#a57726742a27442de442d3f964b17136e", null ],
+    [ "TTAK_THREAD_LOCAL", "app__types_8h.html#a75cdd26ec56c06d5e1abe50b17a8f837", null ],
     [ "ttak_calc_header_checksum", "app__types_8h.html#ad663cf355d411491ef16fbaba940be07", null ]
 ];

@@ -1,0 +1,197 @@
+\doxysection{include/ttak/stats/stats\+\_\+ext.h File Reference}
+\hypertarget{stats__ext_8h}{}\label{stats__ext_8h}\index{include/ttak/stats/stats\_ext.h@{include/ttak/stats/stats\_ext.h}}
+{\ttfamily \#include $<$ttak/stats/stats.\+h$>$}\newline
+{\ttfamily \#include $<$ttak/math/bigint.\+h$>$}\newline
+{\ttfamily \#include $<$ttak/math/bigreal.\+h$>$}\newline
+{\ttfamily \#include $<$ttak/priority/scheduler.\+h$>$}\newline
+Include dependency graph for stats\+\_\+ext.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{stats__ext_8h__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structttak__stats__ext}{ttak\+\_\+stats\+\_\+ext}}
+\begin{DoxyCompactList}\small\item\em Extended statistics structure with automatic promotion and high precision. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \mbox{\hyperlink{structttak__stats__ext}{ttak\+\_\+stats\+\_\+ext}} \mbox{\hyperlink{stats__ext_8h_ab3f22a124c19073b03ecf0bd84bd313d}{ttak\+\_\+stats\+\_\+ext\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Extended statistics structure with automatic promotion and high precision. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{stats__ext_8h_ac3070911c28f9b189bd7606923a7db46}{ttak\+\_\+stats\+\_\+ext\+\_\+init}} (\mbox{\hyperlink{stats__ext_8h_ab3f22a124c19073b03ecf0bd84bd313d}{ttak\+\_\+stats\+\_\+ext\+\_\+t}} \texorpdfstring{$\ast$}{*}s, uint64\+\_\+t now)
+\begin{DoxyCompactList}\small\item\em Initializes the extended statistics. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{stats__ext_8h_af045398104d52042b5e6e5b83dd3b1a7}{ttak\+\_\+stats\+\_\+ext\+\_\+record}} (\mbox{\hyperlink{stats__ext_8h_ab3f22a124c19073b03ecf0bd84bd313d}{ttak\+\_\+stats\+\_\+ext\+\_\+t}} \texorpdfstring{$\ast$}{*}s, uint64\+\_\+t x, uint64\+\_\+t y, uint64\+\_\+t now)
+\begin{DoxyCompactList}\small\item\em Records a sample pair (x, y) for correlation/regression. If y is not needed, pass 0. \end{DoxyCompactList}\item 
+\+\_\+\+Bool \mbox{\hyperlink{stats__ext_8h_a87f2ac05cb20d3eb35808f97af0b0a1b}{ttak\+\_\+stats\+\_\+ext\+\_\+variance}} (\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}res, \mbox{\hyperlink{stats__ext_8h_ab3f22a124c19073b03ecf0bd84bd313d}{ttak\+\_\+stats\+\_\+ext\+\_\+t}} \texorpdfstring{$\ast$}{*}s, uint64\+\_\+t now)
+\begin{DoxyCompactList}\small\item\em Calculates the variance. \end{DoxyCompactList}\item 
+\+\_\+\+Bool \mbox{\hyperlink{stats__ext_8h_a5911941421b5e10c59a74758c1ace45d}{ttak\+\_\+stats\+\_\+ext\+\_\+stddev}} (\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}res, \mbox{\hyperlink{stats__ext_8h_ab3f22a124c19073b03ecf0bd84bd313d}{ttak\+\_\+stats\+\_\+ext\+\_\+t}} \texorpdfstring{$\ast$}{*}s, uint64\+\_\+t now)
+\begin{DoxyCompactList}\small\item\em Calculates the standard deviation. \end{DoxyCompactList}\item 
+\+\_\+\+Bool \mbox{\hyperlink{stats__ext_8h_a58662776bc77c2c64be505f0e791ab62}{ttak\+\_\+stats\+\_\+ext\+\_\+correlation}} (\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}res, \mbox{\hyperlink{stats__ext_8h_ab3f22a124c19073b03ecf0bd84bd313d}{ttak\+\_\+stats\+\_\+ext\+\_\+t}} \texorpdfstring{$\ast$}{*}s, uint64\+\_\+t now)
+\begin{DoxyCompactList}\small\item\em Calculates the correlation coefficient. \end{DoxyCompactList}\item 
+\+\_\+\+Bool \mbox{\hyperlink{stats__ext_8h_a0a8355c117a97bf386db48db95888303}{ttak\+\_\+stats\+\_\+ext\+\_\+linear\+\_\+regression}} (\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}slope, \mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}intercept, \mbox{\hyperlink{stats__ext_8h_ab3f22a124c19073b03ecf0bd84bd313d}{ttak\+\_\+stats\+\_\+ext\+\_\+t}} \texorpdfstring{$\ast$}{*}s, uint64\+\_\+t now)
+\begin{DoxyCompactList}\small\item\em Performs linear regression, returning slope and intercept. \end{DoxyCompactList}\item 
+\+\_\+\+Bool \mbox{\hyperlink{stats__ext_8h_a1e3b4280e14725ef2c42c7ae95a76813}{ttak\+\_\+stats\+\_\+dist\+\_\+normal}} (\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}res, const \mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}x, const \mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}mu, const \mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}sigma, uint64\+\_\+t now)
+\begin{DoxyCompactList}\small\item\em Distribution analysis\+: Normal PDF. \end{DoxyCompactList}\item 
+\+\_\+\+Bool \mbox{\hyperlink{stats__ext_8h_ae7f36dde69e3aa9be8349b4f57a20355}{ttak\+\_\+stats\+\_\+dist\+\_\+poisson}} (\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}res, uint64\+\_\+t k, const \mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}lambda, uint64\+\_\+t now)
+\begin{DoxyCompactList}\small\item\em Distribution analysis\+: Poisson PDF. \end{DoxyCompactList}\item 
+\+\_\+\+Bool \mbox{\hyperlink{stats__ext_8h_a46918f26904db1b531d9233782a21506}{ttak\+\_\+stats\+\_\+dist\+\_\+binomial}} (\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}res, uint64\+\_\+t k, uint64\+\_\+t n, const \mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}p, uint64\+\_\+t now)
+\begin{DoxyCompactList}\small\item\em Distribution analysis\+: Binomial PDF. \end{DoxyCompactList}\item 
+\+\_\+\+Bool \mbox{\hyperlink{stats__ext_8h_a7e4a387be5f7469ea7b36a92fe45d2cc}{ttak\+\_\+stats\+\_\+parallel\+\_\+process}} (\mbox{\hyperlink{stats__ext_8h_ab3f22a124c19073b03ecf0bd84bd313d}{ttak\+\_\+stats\+\_\+ext\+\_\+t}} \texorpdfstring{$\ast$}{*}s, uint64\+\_\+t \texorpdfstring{$\ast$}{*}data, size\+\_\+t count, \mbox{\hyperlink{scheduler_8h_ac3b38b93cbc96685a8e81488999d7717}{ttak\+\_\+scheduler\+\_\+t}} \texorpdfstring{$\ast$}{*}sched, uint64\+\_\+t now)
+\begin{DoxyCompactList}\small\item\em Parallel mean/variance calculation for large datasets. \end{DoxyCompactList}\item 
+\+\_\+\+Bool \mbox{\hyperlink{stats__ext_8h_a46f4cd5bf33f9ada8fdb7dccb120a664}{ttak\+\_\+stats\+\_\+compute\+\_\+percentiles}} (uint64\+\_\+t \texorpdfstring{$\ast$}{*}data, size\+\_\+t count, \mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}p50, \mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}p95, \mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}p99, \mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}p999, uint64\+\_\+t now)
+\begin{DoxyCompactList}\small\item\em Calculates specific percentiles (P50, P95, P99, P99.\+9) from a dataset. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{stats__ext_8h_ab3f22a124c19073b03ecf0bd84bd313d}\label{stats__ext_8h_ab3f22a124c19073b03ecf0bd84bd313d} 
+\index{stats\_ext.h@{stats\_ext.h}!ttak\_stats\_ext\_t@{ttak\_stats\_ext\_t}}
+\index{ttak\_stats\_ext\_t@{ttak\_stats\_ext\_t}!stats\_ext.h@{stats\_ext.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_stats\_ext\_t}{ttak\_stats\_ext\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__stats__ext}{ttak\+\_\+stats\+\_\+ext}} \mbox{\hyperlink{stats__ext_8h_ab3f22a124c19073b03ecf0bd84bd313d}{ttak\+\_\+stats\+\_\+ext\+\_\+t}}}
+
+
+
+Extended statistics structure with automatic promotion and high precision. 
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{stats__ext_8h_a46f4cd5bf33f9ada8fdb7dccb120a664}\label{stats__ext_8h_a46f4cd5bf33f9ada8fdb7dccb120a664} 
+\index{stats\_ext.h@{stats\_ext.h}!ttak\_stats\_compute\_percentiles@{ttak\_stats\_compute\_percentiles}}
+\index{ttak\_stats\_compute\_percentiles@{ttak\_stats\_compute\_percentiles}!stats\_ext.h@{stats\_ext.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_stats\_compute\_percentiles()}{ttak\_stats\_compute\_percentiles()}}
+{\footnotesize\ttfamily \+\_\+\+Bool ttak\+\_\+stats\+\_\+compute\+\_\+percentiles (\begin{DoxyParamCaption}\item[{uint64\+\_\+t \texorpdfstring{$\ast$}{*}}]{data,  }\item[{size\+\_\+t}]{count,  }\item[{\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{p50,  }\item[{\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{p95,  }\item[{\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{p99,  }\item[{\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{p999,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+
+
+Calculates specific percentiles (P50, P95, P99, P99.\+9) from a dataset. 
+
+Note\+: This operation modifies the input \textquotesingle{}data\textquotesingle{} array by sorting it.
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & Array of samples. \\
+\hline
+{\em count} & Number of samples. \\
+\hline
+{\em p50} & Result for the 50th percentile (Median). \\
+\hline
+{\em p95} & Result for the 95th percentile. \\
+\hline
+{\em p99} & Result for the 99th percentile. \\
+\hline
+{\em p999} & Result for the 99.\+9th percentile. \\
+\hline
+{\em now} & Timestamp for result initialization. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if successful. 
+\end{DoxyReturn}
+\Hypertarget{stats__ext_8h_a46918f26904db1b531d9233782a21506}\label{stats__ext_8h_a46918f26904db1b531d9233782a21506} 
+\index{stats\_ext.h@{stats\_ext.h}!ttak\_stats\_dist\_binomial@{ttak\_stats\_dist\_binomial}}
+\index{ttak\_stats\_dist\_binomial@{ttak\_stats\_dist\_binomial}!stats\_ext.h@{stats\_ext.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_stats\_dist\_binomial()}{ttak\_stats\_dist\_binomial()}}
+{\footnotesize\ttfamily \+\_\+\+Bool ttak\+\_\+stats\+\_\+dist\+\_\+binomial (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{res,  }\item[{uint64\+\_\+t}]{k,  }\item[{uint64\+\_\+t}]{n,  }\item[{const \mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{p,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+
+
+Distribution analysis\+: Binomial PDF. 
+
+\Hypertarget{stats__ext_8h_a1e3b4280e14725ef2c42c7ae95a76813}\label{stats__ext_8h_a1e3b4280e14725ef2c42c7ae95a76813} 
+\index{stats\_ext.h@{stats\_ext.h}!ttak\_stats\_dist\_normal@{ttak\_stats\_dist\_normal}}
+\index{ttak\_stats\_dist\_normal@{ttak\_stats\_dist\_normal}!stats\_ext.h@{stats\_ext.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_stats\_dist\_normal()}{ttak\_stats\_dist\_normal()}}
+{\footnotesize\ttfamily \+\_\+\+Bool ttak\+\_\+stats\+\_\+dist\+\_\+normal (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{res,  }\item[{const \mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{x,  }\item[{const \mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{mu,  }\item[{const \mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{sigma,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+
+
+Distribution analysis\+: Normal PDF. 
+
+\Hypertarget{stats__ext_8h_ae7f36dde69e3aa9be8349b4f57a20355}\label{stats__ext_8h_ae7f36dde69e3aa9be8349b4f57a20355} 
+\index{stats\_ext.h@{stats\_ext.h}!ttak\_stats\_dist\_poisson@{ttak\_stats\_dist\_poisson}}
+\index{ttak\_stats\_dist\_poisson@{ttak\_stats\_dist\_poisson}!stats\_ext.h@{stats\_ext.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_stats\_dist\_poisson()}{ttak\_stats\_dist\_poisson()}}
+{\footnotesize\ttfamily \+\_\+\+Bool ttak\+\_\+stats\+\_\+dist\+\_\+poisson (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{res,  }\item[{uint64\+\_\+t}]{k,  }\item[{const \mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{lambda,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+
+
+Distribution analysis\+: Poisson PDF. 
+
+\Hypertarget{stats__ext_8h_a58662776bc77c2c64be505f0e791ab62}\label{stats__ext_8h_a58662776bc77c2c64be505f0e791ab62} 
+\index{stats\_ext.h@{stats\_ext.h}!ttak\_stats\_ext\_correlation@{ttak\_stats\_ext\_correlation}}
+\index{ttak\_stats\_ext\_correlation@{ttak\_stats\_ext\_correlation}!stats\_ext.h@{stats\_ext.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_stats\_ext\_correlation()}{ttak\_stats\_ext\_correlation()}}
+{\footnotesize\ttfamily \+\_\+\+Bool ttak\+\_\+stats\+\_\+ext\+\_\+correlation (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{res,  }\item[{\mbox{\hyperlink{stats__ext_8h_ab3f22a124c19073b03ecf0bd84bd313d}{ttak\+\_\+stats\+\_\+ext\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{s,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+
+
+Calculates the correlation coefficient. 
+
+\Hypertarget{stats__ext_8h_ac3070911c28f9b189bd7606923a7db46}\label{stats__ext_8h_ac3070911c28f9b189bd7606923a7db46} 
+\index{stats\_ext.h@{stats\_ext.h}!ttak\_stats\_ext\_init@{ttak\_stats\_ext\_init}}
+\index{ttak\_stats\_ext\_init@{ttak\_stats\_ext\_init}!stats\_ext.h@{stats\_ext.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_stats\_ext\_init()}{ttak\_stats\_ext\_init()}}
+{\footnotesize\ttfamily void ttak\+\_\+stats\+\_\+ext\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{stats__ext_8h_ab3f22a124c19073b03ecf0bd84bd313d}{ttak\+\_\+stats\+\_\+ext\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{s,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+
+
+Initializes the extended statistics. 
+
+\Hypertarget{stats__ext_8h_a0a8355c117a97bf386db48db95888303}\label{stats__ext_8h_a0a8355c117a97bf386db48db95888303} 
+\index{stats\_ext.h@{stats\_ext.h}!ttak\_stats\_ext\_linear\_regression@{ttak\_stats\_ext\_linear\_regression}}
+\index{ttak\_stats\_ext\_linear\_regression@{ttak\_stats\_ext\_linear\_regression}!stats\_ext.h@{stats\_ext.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_stats\_ext\_linear\_regression()}{ttak\_stats\_ext\_linear\_regression()}}
+{\footnotesize\ttfamily \+\_\+\+Bool ttak\+\_\+stats\+\_\+ext\+\_\+linear\+\_\+regression (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{slope,  }\item[{\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{intercept,  }\item[{\mbox{\hyperlink{stats__ext_8h_ab3f22a124c19073b03ecf0bd84bd313d}{ttak\+\_\+stats\+\_\+ext\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{s,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+
+
+Performs linear regression, returning slope and intercept. 
+
+\Hypertarget{stats__ext_8h_af045398104d52042b5e6e5b83dd3b1a7}\label{stats__ext_8h_af045398104d52042b5e6e5b83dd3b1a7} 
+\index{stats\_ext.h@{stats\_ext.h}!ttak\_stats\_ext\_record@{ttak\_stats\_ext\_record}}
+\index{ttak\_stats\_ext\_record@{ttak\_stats\_ext\_record}!stats\_ext.h@{stats\_ext.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_stats\_ext\_record()}{ttak\_stats\_ext\_record()}}
+{\footnotesize\ttfamily void ttak\+\_\+stats\+\_\+ext\+\_\+record (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{stats__ext_8h_ab3f22a124c19073b03ecf0bd84bd313d}{ttak\+\_\+stats\+\_\+ext\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{s,  }\item[{uint64\+\_\+t}]{x,  }\item[{uint64\+\_\+t}]{y,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+
+
+Records a sample pair (x, y) for correlation/regression. If y is not needed, pass 0. 
+
+\Hypertarget{stats__ext_8h_a5911941421b5e10c59a74758c1ace45d}\label{stats__ext_8h_a5911941421b5e10c59a74758c1ace45d} 
+\index{stats\_ext.h@{stats\_ext.h}!ttak\_stats\_ext\_stddev@{ttak\_stats\_ext\_stddev}}
+\index{ttak\_stats\_ext\_stddev@{ttak\_stats\_ext\_stddev}!stats\_ext.h@{stats\_ext.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_stats\_ext\_stddev()}{ttak\_stats\_ext\_stddev()}}
+{\footnotesize\ttfamily \+\_\+\+Bool ttak\+\_\+stats\+\_\+ext\+\_\+stddev (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{res,  }\item[{\mbox{\hyperlink{stats__ext_8h_ab3f22a124c19073b03ecf0bd84bd313d}{ttak\+\_\+stats\+\_\+ext\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{s,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+
+
+Calculates the standard deviation. 
+
+\Hypertarget{stats__ext_8h_a87f2ac05cb20d3eb35808f97af0b0a1b}\label{stats__ext_8h_a87f2ac05cb20d3eb35808f97af0b0a1b} 
+\index{stats\_ext.h@{stats\_ext.h}!ttak\_stats\_ext\_variance@{ttak\_stats\_ext\_variance}}
+\index{ttak\_stats\_ext\_variance@{ttak\_stats\_ext\_variance}!stats\_ext.h@{stats\_ext.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_stats\_ext\_variance()}{ttak\_stats\_ext\_variance()}}
+{\footnotesize\ttfamily \+\_\+\+Bool ttak\+\_\+stats\+\_\+ext\+\_\+variance (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{res,  }\item[{\mbox{\hyperlink{stats__ext_8h_ab3f22a124c19073b03ecf0bd84bd313d}{ttak\+\_\+stats\+\_\+ext\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{s,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+
+
+Calculates the variance. 
+
+\Hypertarget{stats__ext_8h_a7e4a387be5f7469ea7b36a92fe45d2cc}\label{stats__ext_8h_a7e4a387be5f7469ea7b36a92fe45d2cc} 
+\index{stats\_ext.h@{stats\_ext.h}!ttak\_stats\_parallel\_process@{ttak\_stats\_parallel\_process}}
+\index{ttak\_stats\_parallel\_process@{ttak\_stats\_parallel\_process}!stats\_ext.h@{stats\_ext.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_stats\_parallel\_process()}{ttak\_stats\_parallel\_process()}}
+{\footnotesize\ttfamily \+\_\+\+Bool ttak\+\_\+stats\+\_\+parallel\+\_\+process (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{stats__ext_8h_ab3f22a124c19073b03ecf0bd84bd313d}{ttak\+\_\+stats\+\_\+ext\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{s,  }\item[{uint64\+\_\+t \texorpdfstring{$\ast$}{*}}]{data,  }\item[{size\+\_\+t}]{count,  }\item[{\mbox{\hyperlink{scheduler_8h_ac3b38b93cbc96685a8e81488999d7717}{ttak\+\_\+scheduler\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{sched,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+
+
+Parallel mean/variance calculation for large datasets. 
+

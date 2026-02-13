@@ -12,7 +12,10 @@ var searchData=
   ['top_9',['top',['../structttak__simple__stack__t.html#a2efd82c00fc2515e5ddeecd0e1563a8e',1,'ttak_simple_stack_t']]],
   ['tracking_5flog_10',['tracking_log',['../structttak__mem__header__t.html#a4c9d2514539339c34bed60e2bdd5e233',1,'ttak_mem_header_t']]],
   ['tree_11',['tree',['../structttak__epoch__gc.html#a9377dd939116b8afa03f01ba1691ee17',1,'ttak_epoch_gc::tree'],['../structttak__mem__node.html#aca7c8aefbd2124fc4f031d078c58ea01',1,'ttak_mem_node::tree']]],
-  ['ts_12',['ts',['../structttak__func__wrapper.html#a0c002b599deea32162fb5162ea9196fb',1,'ttak_func_wrapper::ts'],['../structtt__type__shared.html#aa04c9333dcd0c2a95d117afc3a2e1e18',1,'tt_type_shared::ts'],['../structttak__worker__wrapper.html#a36bdb7cda1461109b9fad24eef3338a3',1,'ttak_worker_wrapper::ts']]],
-  ['ttak_5fntt_5fprimes_13',['ttak_ntt_primes',['../include_2ttak_2math_2ntt_8h.html#a08d9004f7979851e9e96fa6dc2ec982b',1,'ntt.h']]],
-  ['type_14',['type',['../structttak__func__wrapper.html#ac367c431a12ab652127e98d77e28cda9',1,'ttak_func_wrapper::type'],['../structttak__ast__node.html#ac668549219bcbf93e667bb1782fe9a79',1,'ttak_ast_node::type']]]
+  ['ts_12',['ts',['../structttak__func__wrapper.html#a0c002b599deea32162fb5162ea9196fb',1,'ttak_func_wrapper::ts'],['../structttak__shared__s.html#a195013c2e4f21633b1854e8c67c0b418',1,'ttak_shared_s::ts'],['../structtt__type__shared.html#aa04c9333dcd0c2a95d117afc3a2e1e18',1,'tt_type_shared::ts'],['../structttak__worker__wrapper.html#a36bdb7cda1461109b9fad24eef3338a3',1,'ttak_worker_wrapper::ts']]],
+  ['ts_5fcapacity_13',['ts_capacity',['../structttak__shared__s.html#a11f44c1998580cb32afddc93dbc0316f',1,'ttak_shared_s']]],
+  ['ttak_5fntt_5fprimes_14',['ttak_ntt_primes',['../include_2ttak_2math_2ntt_8h.html#a08d9004f7979851e9e96fa6dc2ec982b',1,'ntt.h']]],
+  ['type_15',['type',['../structttak__func__wrapper.html#ac367c431a12ab652127e98d77e28cda9',1,'ttak_func_wrapper::type'],['../structttak__ast__node.html#ac668549219bcbf93e667bb1782fe9a79',1,'ttak_ast_node::type']]],
+  ['type_5fid_16',['type_id',['../structttak__shared__s.html#addcea0e45ca5d63153ed55e7f7cc7b60',1,'ttak_shared_s']]],
+  ['type_5fname_17',['type_name',['../structttak__shared__s.html#a376ba9c57928a57dcc04408e2d1c0807',1,'ttak_shared_s']]]
 ];

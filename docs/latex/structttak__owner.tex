@@ -21,6 +21,8 @@ Collaboration diagram for ttak\+\_\+owner\+:\nopagebreak
 \doxysubsubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
+uint32\+\_\+t \mbox{\hyperlink{structttak__owner_add18ecf2606c356f5699fcc49fce70fb}{id}}
+\item 
 \mbox{\hyperlink{structttak__map__t}{ttak\+\_\+map\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__owner_af8f1a51f68b2d8255dff9d232d2c7435}{resources}}
 \item 
 \mbox{\hyperlink{structttak__map__t}{ttak\+\_\+map\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__owner_ad3f0f21fea12c13d2fcbddcbe3472269}{functions}}
@@ -51,7 +53,7 @@ Definition at line \mbox{\hyperlink{owner_8h_source_l00033}{33}} of file \mbox{\
 
 Timestamp when this owner was created. 
 
-Definition at line \mbox{\hyperlink{owner_8h_source_l00037}{37}} of file \mbox{\hyperlink{owner_8h_source}{owner.\+h}}.
+Definition at line \mbox{\hyperlink{owner_8h_source_l00038}{38}} of file \mbox{\hyperlink{owner_8h_source}{owner.\+h}}.
 
 \Hypertarget{structttak__owner_ad3f0f21fea12c13d2fcbddcbe3472269}\label{structttak__owner_ad3f0f21fea12c13d2fcbddcbe3472269} 
 \index{ttak\_owner@{ttak\_owner}!functions@{functions}}
@@ -61,7 +63,17 @@ Definition at line \mbox{\hyperlink{owner_8h_source_l00037}{37}} of file \mbox{\
 
 Map storing registered functions. 
 
-Definition at line \mbox{\hyperlink{owner_8h_source_l00035}{35}} of file \mbox{\hyperlink{owner_8h_source}{owner.\+h}}.
+Definition at line \mbox{\hyperlink{owner_8h_source_l00036}{36}} of file \mbox{\hyperlink{owner_8h_source}{owner.\+h}}.
+
+\Hypertarget{structttak__owner_add18ecf2606c356f5699fcc49fce70fb}\label{structttak__owner_add18ecf2606c356f5699fcc49fce70fb} 
+\index{ttak\_owner@{ttak\_owner}!id@{id}}
+\index{id@{id}!ttak\_owner@{ttak\_owner}}
+\doxysubsubsection{\texorpdfstring{id}{id}}
+{\footnotesize\ttfamily uint32\+\_\+t ttak\+\_\+owner\+::id}
+
+Unique ID for bitmap tracking. 
+
+Definition at line \mbox{\hyperlink{owner_8h_source_l00034}{34}} of file \mbox{\hyperlink{owner_8h_source}{owner.\+h}}.
 
 \Hypertarget{structttak__owner_a1e5a9809a7e68de76c8473de3fddf53d}\label{structttak__owner_a1e5a9809a7e68de76c8473de3fddf53d} 
 \index{ttak\_owner@{ttak\_owner}!lock@{lock}}
@@ -71,7 +83,7 @@ Definition at line \mbox{\hyperlink{owner_8h_source_l00035}{35}} of file \mbox{\
 
 RWLock for thread-\/safe access to the owner\textquotesingle{}s state. 
 
-Definition at line \mbox{\hyperlink{owner_8h_source_l00036}{36}} of file \mbox{\hyperlink{owner_8h_source}{owner.\+h}}.
+Definition at line \mbox{\hyperlink{owner_8h_source_l00037}{37}} of file \mbox{\hyperlink{owner_8h_source}{owner.\+h}}.
 
 \Hypertarget{structttak__owner_a870e95008012760ad3712fe902a39c20}\label{structttak__owner_a870e95008012760ad3712fe902a39c20} 
 \index{ttak\_owner@{ttak\_owner}!policy\_flags@{policy\_flags}}
@@ -81,7 +93,7 @@ Definition at line \mbox{\hyperlink{owner_8h_source_l00036}{36}} of file \mbox{\
 
 Safety policy bitmask. 
 
-Definition at line \mbox{\hyperlink{owner_8h_source_l00038}{38}} of file \mbox{\hyperlink{owner_8h_source}{owner.\+h}}.
+Definition at line \mbox{\hyperlink{owner_8h_source_l00039}{39}} of file \mbox{\hyperlink{owner_8h_source}{owner.\+h}}.
 
 \Hypertarget{structttak__owner_af8f1a51f68b2d8255dff9d232d2c7435}\label{structttak__owner_af8f1a51f68b2d8255dff9d232d2c7435} 
 \index{ttak\_owner@{ttak\_owner}!resources@{resources}}
@@ -91,7 +103,7 @@ Definition at line \mbox{\hyperlink{owner_8h_source_l00038}{38}} of file \mbox{\
 
 Map storing owned resources (isolated variables). 
 
-Definition at line \mbox{\hyperlink{owner_8h_source_l00034}{34}} of file \mbox{\hyperlink{owner_8h_source}{owner.\+h}}.
+Definition at line \mbox{\hyperlink{owner_8h_source_l00035}{35}} of file \mbox{\hyperlink{owner_8h_source}{owner.\+h}}.
 
 
 

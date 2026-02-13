@@ -3,11 +3,21 @@
 {\ttfamily \#include $<$stdint.\+h$>$}\newline
 {\ttfamily \#include $<$ttak/sync/sync.\+h$>$}\newline
 {\ttfamily \#include $<$ttak/sync/spinlock.\+h$>$}\newline
-Include dependency graph for stats.\+h\+:\nopagebreak
+{\ttfamily \#include $<$ttak/math/bigreal.\+h$>$}\newline
+Include dependency graph for stats.\+h\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=350pt]{stats_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=181pt]{stats_8h__dep__incl}
 \end{center}
 \end{figure}
 \doxysubsubsection*{Classes}
@@ -37,7 +47,9 @@ void \mbox{\hyperlink{stats_8h_ad02dbf59493719ca258726aff1de4641}{ttak\+\_\+stat
 void \mbox{\hyperlink{stats_8h_a002bb2dfd3e80a61693eb3223901753e}{ttak\+\_\+stats\+\_\+print\+\_\+ascii}} (\mbox{\hyperlink{stats_8h_a897b5aaf1addd7acb495025c2129969a}{ttak\+\_\+stats\+\_\+t}} \texorpdfstring{$\ast$}{*}s)
 \begin{DoxyCompactList}\small\item\em Prints the statistics to stdout in ASCII format. \end{DoxyCompactList}\item 
 double \mbox{\hyperlink{stats_8h_a54b911aa8d10ae214de24d79a3c00357}{ttak\+\_\+stats\+\_\+mean}} (\mbox{\hyperlink{stats_8h_a897b5aaf1addd7acb495025c2129969a}{ttak\+\_\+stats\+\_\+t}} \texorpdfstring{$\ast$}{*}s)
-\begin{DoxyCompactList}\small\item\em Calculates the arithmetic mean. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Calculates the arithmetic mean. \end{DoxyCompactList}\item 
+\+\_\+\+Bool \mbox{\hyperlink{stats_8h_a46f4cd5bf33f9ada8fdb7dccb120a664}{ttak\+\_\+stats\+\_\+compute\+\_\+percentiles}} (uint64\+\_\+t \texorpdfstring{$\ast$}{*}data, size\+\_\+t count, \mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}p50, \mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}p95, \mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}p99, \mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}p999, uint64\+\_\+t now)
+\begin{DoxyCompactList}\small\item\em Computes percentiles from raw data and outputs them as bigreal numbers. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Macro Definition Documentation}
@@ -77,6 +89,16 @@ Thread-\/safe Statistics structure.
 Tracks count, sum, min, max, and a simple histogram. 
 
 \doxysubsection{Function Documentation}
+\Hypertarget{stats_8h_a46f4cd5bf33f9ada8fdb7dccb120a664}\label{stats_8h_a46f4cd5bf33f9ada8fdb7dccb120a664} 
+\index{stats.h@{stats.h}!ttak\_stats\_compute\_percentiles@{ttak\_stats\_compute\_percentiles}}
+\index{ttak\_stats\_compute\_percentiles@{ttak\_stats\_compute\_percentiles}!stats.h@{stats.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_stats\_compute\_percentiles()}{ttak\_stats\_compute\_percentiles()}}
+{\footnotesize\ttfamily \+\_\+\+Bool ttak\+\_\+stats\+\_\+compute\+\_\+percentiles (\begin{DoxyParamCaption}\item[{uint64\+\_\+t \texorpdfstring{$\ast$}{*}}]{data,  }\item[{size\+\_\+t}]{count,  }\item[{\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{p50,  }\item[{\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{p95,  }\item[{\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{p99,  }\item[{\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{p999,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+
+
+Computes percentiles from raw data and outputs them as bigreal numbers. 
+
 \Hypertarget{stats_8h_abb915be3d13f3f1a2d348e008d230265}\label{stats_8h_abb915be3d13f3f1a2d348e008d230265} 
 \index{stats.h@{stats.h}!ttak\_stats\_init@{ttak\_stats\_init}}
 \index{ttak\_stats\_init@{ttak\_stats\_init}!stats.h@{stats.h}}

@@ -45,7 +45,9 @@ typedef struct \mbox{\hyperlink{structttak__worker}{ttak\+\_\+worker}} \mbox{\hy
 \begin{DoxyCompactItemize}
 \item 
 void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{worker_8h_afdb21bc290370c6055f5f8ce3e204337}{ttak\+\_\+worker\+\_\+routine}} (void \texorpdfstring{$\ast$}{*}arg)
-\end{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{worker_8h_a64a121d1facc0899dd991c138f56c3be}{ttak\+\_\+worker\+\_\+abort}} (void)
+\begin{DoxyCompactList}\small\item\em Aborts the current task execution using longjmp. Must be called from within a worker thread during task execution. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Macro Definition Documentation}
@@ -97,6 +99,16 @@ Definition at line \mbox{\hyperlink{worker_8h_source_l00010}{10}} of file \mbox{
 
 
 \doxysubsection{Function Documentation}
+\Hypertarget{worker_8h_a64a121d1facc0899dd991c138f56c3be}\label{worker_8h_a64a121d1facc0899dd991c138f56c3be} 
+\index{worker.h@{worker.h}!ttak\_worker\_abort@{ttak\_worker\_abort}}
+\index{ttak\_worker\_abort@{ttak\_worker\_abort}!worker.h@{worker.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_worker\_abort()}{ttak\_worker\_abort()}}
+{\footnotesize\ttfamily void ttak\+\_\+worker\+\_\+abort (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Aborts the current task execution using longjmp. Must be called from within a worker thread during task execution. 
+
 \Hypertarget{worker_8h_afdb21bc290370c6055f5f8ce3e204337}\label{worker_8h_afdb21bc290370c6055f5f8ce3e204337} 
 \index{worker.h@{worker.h}!ttak\_worker\_routine@{ttak\_worker\_routine}}
 \index{ttak\_worker\_routine@{ttak\_worker\_routine}!worker.h@{worker.h}}

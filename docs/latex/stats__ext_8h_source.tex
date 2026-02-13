@@ -1,0 +1,103 @@
+\doxysection{stats\+\_\+ext.\+h}
+\hypertarget{stats__ext_8h_source}{}\label{stats__ext_8h_source}\index{include/ttak/stats/stats\_ext.h@{include/ttak/stats/stats\_ext.h}}
+\mbox{\hyperlink{stats__ext_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ TTAK\_STATS\_STATS\_EXT\_H}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ TTAK\_STATS\_STATS\_EXT\_H}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{stats_8h}{ttak/stats/stats.h}}>}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{bigint_8h}{ttak/math/bigint.h}}>}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{bigreal_8h}{ttak/math/bigreal.h}}>}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{scheduler_8h}{ttak/priority/scheduler.h}}>}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00008}00008\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00009}00009\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00010}00010\ \textcolor{comment}{\ *\ @brief\ Extended\ statistics\ structure\ with\ automatic\ promotion\ and\ high\ precision.}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00011}00011\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00012}\mbox{\hyperlink{structttak__stats__ext}{00012}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__stats__ext}{ttak\_stats\_ext}}\ \{}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00013}\mbox{\hyperlink{structttak__stats__ext_a42369ced8c84f8b45dbe8e9e1305e040}{00013}}\ \ \ \ \ \mbox{\hyperlink{structttak__stats}{ttak\_stats\_t}}\ \mbox{\hyperlink{structttak__stats__ext_a42369ced8c84f8b45dbe8e9e1305e040}{base}};}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00014}\mbox{\hyperlink{structttak__stats__ext_a4eaa5d3938a17332a42b11e453c5c37c}{00014}}\ \ \ \ \ \_Bool\ \mbox{\hyperlink{structttak__stats__ext_a4eaa5d3938a17332a42b11e453c5c37c}{promoted}};}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00015}00015\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00016}00016\ \ \ \ \ \textcolor{comment}{//\ High\ precision\ accumulators\ (used\ if\ promoted\ or\ for\ complex\ stats)}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00017}\mbox{\hyperlink{structttak__stats__ext_a8c24e32c90c44f284b147506011cab2d}{00017}}\ \ \ \ \ \mbox{\hyperlink{structttak__bigint}{ttak\_bigint\_t}}\ \mbox{\hyperlink{structttak__stats__ext_a8c24e32c90c44f284b147506011cab2d}{count\_big}};}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00018}\mbox{\hyperlink{structttak__stats__ext_a6f60bf188520625d8d4ac7a98aa73e55}{00018}}\ \ \ \ \ \mbox{\hyperlink{structttak__bigint}{ttak\_bigint\_t}}\ \mbox{\hyperlink{structttak__stats__ext_a6f60bf188520625d8d4ac7a98aa73e55}{sum\_x\_big}};}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00019}\mbox{\hyperlink{structttak__stats__ext_a6c07f8543ec8f014f3f0e5f829d94ad9}{00019}}\ \ \ \ \ \mbox{\hyperlink{structttak__bigint}{ttak\_bigint\_t}}\ \mbox{\hyperlink{structttak__stats__ext_a6c07f8543ec8f014f3f0e5f829d94ad9}{sum\_x\_sq\_big}};}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00020}\mbox{\hyperlink{structttak__stats__ext_a208e0c44c7a9e3d0e8746d3718095284}{00020}}\ \ \ \ \ \mbox{\hyperlink{structttak__bigint}{ttak\_bigint\_t}}\ \mbox{\hyperlink{structttak__stats__ext_a208e0c44c7a9e3d0e8746d3718095284}{sum\_y\_big}};}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00021}\mbox{\hyperlink{structttak__stats__ext_a41f152bf5153b3dae1ab43c31f97cbab}{00021}}\ \ \ \ \ \mbox{\hyperlink{structttak__bigint}{ttak\_bigint\_t}}\ \mbox{\hyperlink{structttak__stats__ext_a41f152bf5153b3dae1ab43c31f97cbab}{sum\_y\_sq\_big}};}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00022}\mbox{\hyperlink{structttak__stats__ext_a0bec36250f04139341160ed86b354318}{00022}}\ \ \ \ \ \mbox{\hyperlink{structttak__bigint}{ttak\_bigint\_t}}\ \mbox{\hyperlink{structttak__stats__ext_a0bec36250f04139341160ed86b354318}{sum\_xy\_big}};}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00024}\mbox{\hyperlink{structttak__stats__ext_afe453d26882368789c391d0fa06f1ced}{00024}}\ \ \ \ \ \mbox{\hyperlink{structttak__spin}{ttak\_spin\_t}}\ \mbox{\hyperlink{structttak__stats__ext_afe453d26882368789c391d0fa06f1ced}{lock\_ext}};}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00025}\mbox{\hyperlink{stats__ext_8h_ab3f22a124c19073b03ecf0bd84bd313d}{00025}}\ \}\ \mbox{\hyperlink{stats__ext_8h_ab3f22a124c19073b03ecf0bd84bd313d}{ttak\_stats\_ext\_t}};}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00026}00026\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00027}00027\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00028}00028\ \textcolor{comment}{\ *\ @brief\ Initializes\ the\ extended\ statistics.}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00029}00029\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00030}\mbox{\hyperlink{stats__ext_8h_ac3070911c28f9b189bd7606923a7db46}{00030}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{stats__ext_8h_ac3070911c28f9b189bd7606923a7db46}{ttak\_stats\_ext\_init}}(\mbox{\hyperlink{structttak__stats__ext}{ttak\_stats\_ext\_t}}\ *s,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00031}00031\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00032}00032\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00033}00033\ \textcolor{comment}{\ *\ @brief\ Records\ a\ sample\ pair\ (x,\ y)\ for\ correlation/regression.}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00034}00034\ \textcolor{comment}{\ *\ If\ y\ is\ not\ needed,\ pass\ 0.}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00035}00035\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00036}\mbox{\hyperlink{stats__ext_8h_af045398104d52042b5e6e5b83dd3b1a7}{00036}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{stats__ext_8h_af045398104d52042b5e6e5b83dd3b1a7}{ttak\_stats\_ext\_record}}(\mbox{\hyperlink{structttak__stats__ext}{ttak\_stats\_ext\_t}}\ *s,\ uint64\_t\ x,\ uint64\_t\ y,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00037}00037\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00038}00038\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00039}00039\ \textcolor{comment}{\ *\ @brief\ Calculates\ the\ variance.}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00040}00040\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00041}\mbox{\hyperlink{stats__ext_8h_a87f2ac05cb20d3eb35808f97af0b0a1b}{00041}}\ \_Bool\ \mbox{\hyperlink{stats__ext_8h_a87f2ac05cb20d3eb35808f97af0b0a1b}{ttak\_stats\_ext\_variance}}(\mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *res,\ \mbox{\hyperlink{structttak__stats__ext}{ttak\_stats\_ext\_t}}\ *s,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00042}00042\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00043}00043\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00044}00044\ \textcolor{comment}{\ *\ @brief\ Calculates\ the\ standard\ deviation.}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00045}00045\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00046}\mbox{\hyperlink{stats__ext_8h_a5911941421b5e10c59a74758c1ace45d}{00046}}\ \_Bool\ \mbox{\hyperlink{stats__ext_8h_a5911941421b5e10c59a74758c1ace45d}{ttak\_stats\_ext\_stddev}}(\mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *res,\ \mbox{\hyperlink{structttak__stats__ext}{ttak\_stats\_ext\_t}}\ *s,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00047}00047\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00048}00048\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00049}00049\ \textcolor{comment}{\ *\ @brief\ Calculates\ the\ correlation\ coefficient.}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00050}00050\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00051}\mbox{\hyperlink{stats__ext_8h_a58662776bc77c2c64be505f0e791ab62}{00051}}\ \_Bool\ \mbox{\hyperlink{stats__ext_8h_a58662776bc77c2c64be505f0e791ab62}{ttak\_stats\_ext\_correlation}}(\mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *res,\ \mbox{\hyperlink{structttak__stats__ext}{ttak\_stats\_ext\_t}}\ *s,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00052}00052\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00053}00053\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00054}00054\ \textcolor{comment}{\ *\ @brief\ Performs\ linear\ regression,\ returning\ slope\ and\ intercept.}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00055}00055\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00056}\mbox{\hyperlink{stats__ext_8h_a0a8355c117a97bf386db48db95888303}{00056}}\ \_Bool\ \mbox{\hyperlink{stats__ext_8h_a0a8355c117a97bf386db48db95888303}{ttak\_stats\_ext\_linear\_regression}}(\mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *slope,\ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *intercept,\ \mbox{\hyperlink{structttak__stats__ext}{ttak\_stats\_ext\_t}}\ *s,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00057}00057\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00058}00058\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00059}00059\ \textcolor{comment}{\ *\ @brief\ Distribution\ analysis:\ Normal\ PDF.}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00060}00060\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00061}\mbox{\hyperlink{stats__ext_8h_a1e3b4280e14725ef2c42c7ae95a76813}{00061}}\ \_Bool\ \mbox{\hyperlink{stats__ext_8h_a1e3b4280e14725ef2c42c7ae95a76813}{ttak\_stats\_dist\_normal}}(\mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *res,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *x,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *mu,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *sigma,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00062}00062\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00063}00063\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00064}00064\ \textcolor{comment}{\ *\ @brief\ Distribution\ analysis:\ Poisson\ PDF.}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00065}00065\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00066}\mbox{\hyperlink{stats__ext_8h_ae7f36dde69e3aa9be8349b4f57a20355}{00066}}\ \_Bool\ \mbox{\hyperlink{stats__ext_8h_ae7f36dde69e3aa9be8349b4f57a20355}{ttak\_stats\_dist\_poisson}}(\mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *res,\ uint64\_t\ k,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *lambda,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00067}00067\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00068}00068\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00069}00069\ \textcolor{comment}{\ *\ @brief\ Distribution\ analysis:\ Binomial\ PDF.}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00070}00070\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00071}\mbox{\hyperlink{stats__ext_8h_a46918f26904db1b531d9233782a21506}{00071}}\ \_Bool\ \mbox{\hyperlink{stats__ext_8h_a46918f26904db1b531d9233782a21506}{ttak\_stats\_dist\_binomial}}(\mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *res,\ uint64\_t\ k,\ uint64\_t\ n,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *p,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00072}00072\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00073}00073\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00074}00074\ \textcolor{comment}{\ *\ @brief\ Parallel\ mean/variance\ calculation\ for\ large\ datasets.}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00075}00075\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00076}\mbox{\hyperlink{stats__ext_8h_a7e4a387be5f7469ea7b36a92fe45d2cc}{00076}}\ \_Bool\ \mbox{\hyperlink{stats__ext_8h_a7e4a387be5f7469ea7b36a92fe45d2cc}{ttak\_stats\_parallel\_process}}(\mbox{\hyperlink{structttak__stats__ext}{ttak\_stats\_ext\_t}}\ *s,\ uint64\_t\ *data,\ \textcolor{keywordtype}{size\_t}\ count,\ \mbox{\hyperlink{structttak__scheduler}{ttak\_scheduler\_t}}\ *sched,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00077}00077\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00078}00078\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00079}00079\ \textcolor{comment}{\ *\ @brief\ Calculates\ specific\ percentiles\ (P50,\ P95,\ P99,\ P99.9)\ from\ a\ dataset.}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00080}00080\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00081}00081\ \textcolor{comment}{\ *\ Note:\ This\ operation\ modifies\ the\ input\ 'data'\ array\ by\ sorting\ it.}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00082}00082\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00083}00083\ \textcolor{comment}{\ *\ @param\ data\ Array\ of\ samples.}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00084}00084\ \textcolor{comment}{\ *\ @param\ count\ Number\ of\ samples.}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00085}00085\ \textcolor{comment}{\ *\ @param\ p50\ Result\ for\ the\ 50th\ percentile\ (Median).}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00086}00086\ \textcolor{comment}{\ *\ @param\ p95\ Result\ for\ the\ 95th\ percentile.}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00087}00087\ \textcolor{comment}{\ *\ @param\ p99\ Result\ for\ the\ 99th\ percentile.}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00088}00088\ \textcolor{comment}{\ *\ @param\ p999\ Result\ for\ the\ 99.9th\ percentile.}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00089}00089\ \textcolor{comment}{\ *\ @param\ now\ Timestamp\ for\ result\ initialization.}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00090}00090\ \textcolor{comment}{\ *\ @return\ true\ if\ successful.}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00091}00091\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00092}\mbox{\hyperlink{stats__ext_8h_a46f4cd5bf33f9ada8fdb7dccb120a664}{00092}}\ \_Bool\ \mbox{\hyperlink{stats__ext_8h_a46f4cd5bf33f9ada8fdb7dccb120a664}{ttak\_stats\_compute\_percentiles}}(uint64\_t\ *data,\ \textcolor{keywordtype}{size\_t}\ count,}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *p50,\ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *p95,}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *p99,\ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *p999,}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00096}00096\ }
+\DoxyCodeLine{\Hypertarget{stats__ext_8h_source_l00097}00097\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_STATS\_STATS\_EXT\_H}}
+
+\end{DoxyCode}

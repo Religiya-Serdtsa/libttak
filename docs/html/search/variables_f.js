@@ -15,6 +15,7 @@ var searchData=
   ['priority_12',['priority',['../struct____internal__ttak__qnode__t.html#ab72f67b87a5ededef5a7b13e719b7a97',1,'__internal_ttak_qnode_t']]],
   ['product_13',['product',['../structttak__bigmul.html#aca0681bb45e464d0194f7a7dd4b0355c',1,'ttak_bigmul']]],
   ['promise_14',['promise',['../structttak__worker__wrapper.html#ac9fe79d88ef76f3726f154afac405ad1',1,'ttak_worker_wrapper']]],
-  ['ptr_15',['ptr',['../structttak__mem__node.html#a23a25a9a5600d18e2666c96ad38608e5',1,'ttak_mem_node::ptr'],['../structttak__unsafe__region.html#aadf750e793b69d9a6cbe8e13dfe386ff',1,'ttak_unsafe_region::ptr']]],
-  ['push_16',['push',['../struct____internal__ttak__proc__priority__queue__t.html#a6e905df5cb0dd39ba5e87a656d8213d5',1,'__internal_ttak_proc_priority_queue_t']]]
+  ['promoted_15',['promoted',['../structttak__stats__ext.html#a4eaa5d3938a17332a42b11e453c5c37c',1,'ttak_stats_ext']]],
+  ['ptr_16',['ptr',['../structttak__mem__node.html#a23a25a9a5600d18e2666c96ad38608e5',1,'ttak_mem_node::ptr'],['../structttak__unsafe__region.html#aadf750e793b69d9a6cbe8e13dfe386ff',1,'ttak_unsafe_region::ptr']]],
+  ['push_17',['push',['../struct____internal__ttak__proc__priority__queue__t.html#a6e905df5cb0dd39ba5e87a656d8213d5',1,'__internal_ttak_proc_priority_queue_t']]]
 ];

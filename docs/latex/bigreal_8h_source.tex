@@ -9,25 +9,43 @@
 \DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00005}00005\ \textcolor{comment}{}}
 \DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00006}00006\ \textcolor{comment}{/**}}
 \DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00007}00007\ \textcolor{comment}{\ *\ @brief\ Arbitrary-\/precision\ real\ number\ engine.}}
-\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00008}00008\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00009}\mbox{\hyperlink{structttak__bigreal}{00009}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal}}\ \{}
-\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00010}\mbox{\hyperlink{structttak__bigreal_a2d0316af334c85eafe39462d356f1c33}{00010}}\ \ \ \ \ \mbox{\hyperlink{structttak__bigint}{ttak\_bigint\_t}}\ \mbox{\hyperlink{structttak__bigreal_a2d0316af334c85eafe39462d356f1c33}{mantissa}};}
-\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00011}\mbox{\hyperlink{structttak__bigreal_a9b799814a1f37e7a84b72439ddf8805c}{00011}}\ \ \ \ \ int64\_t\ \ \ \ \ \ \ \mbox{\hyperlink{structttak__bigreal_a9b799814a1f37e7a84b72439ddf8805c}{exponent}};}
-\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00012}\mbox{\hyperlink{structttak__bigreal_a03842a3b24f4f4c6989bc89175452478}{00012}}\ \ \ \ \ \textcolor{keyword}{alignas}(max\_align\_t)\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{structttak__bigreal_a03842a3b24f4f4c6989bc89175452478}{padding}}[0];}
-\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00013}\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{00013}}\ \}\ \mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\_bigreal\_t}};}
-\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00014}00014\ }
-\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00015}\mbox{\hyperlink{bigreal_8h_a0ebfa0d15fd75ec78a69e3042901081c}{00015}}\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ \mbox{\hyperlink{bigreal_8h_a0ebfa0d15fd75ec78a69e3042901081c}{tt\_big\_r\_t}};}
-\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00016}00016\ }
-\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00017}\mbox{\hyperlink{bigreal_8h_a280b4b2ff365c2619ca4085afca86abf}{00017}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{bigreal_8h_a280b4b2ff365c2619ca4085afca86abf}{ttak\_bigreal\_init}}(\mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *br,\ uint64\_t\ now);}
-\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00018}\mbox{\hyperlink{bigreal_8h_a679ac569471c7b5607e83ef7bc1295fd}{00018}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{bigreal_8h_a679ac569471c7b5607e83ef7bc1295fd}{ttak\_bigreal\_free}}(\mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *br,\ uint64\_t\ now);}
-\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00019}00019\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00020}00020\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00021}00021\ \textcolor{comment}{\ *\ @brief\ Adds\ two\ bigreal\ numbers\ with\ matching\ exponents.}}
-\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00022}00022\ \textcolor{comment}{\ *}}
-\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00023}00023\ \textcolor{comment}{\ *\ Returns\ false\ if\ exponents\ differ\ or\ on\ allocation\ failure.}}
-\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00024}00024\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00025}\mbox{\hyperlink{bigreal_8h_a9312bd3775b65fba8aed793fdf9ae6f5}{00025}}\ \_Bool\ \mbox{\hyperlink{bigreal_8h_a9312bd3775b65fba8aed793fdf9ae6f5}{ttak\_bigreal\_add}}(\mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *dst,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *lhs,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *rhs,\ uint64\_t\ now);}
-\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00026}00026\ }
-\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00027}00027\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_MATH\_BIGREAL\_H}}
+\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00008}00008\ \textcolor{comment}{\ *\ Represents\ value\ =\ mantissa\ *\ 10\string^exponent.}}
+\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00009}00009\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00010}\mbox{\hyperlink{structttak__bigreal}{00010}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal}}\ \{}
+\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00011}\mbox{\hyperlink{structttak__bigreal_a2d0316af334c85eafe39462d356f1c33}{00011}}\ \ \ \ \ \mbox{\hyperlink{structttak__bigint}{ttak\_bigint\_t}}\ \mbox{\hyperlink{structttak__bigreal_a2d0316af334c85eafe39462d356f1c33}{mantissa}};}
+\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00012}\mbox{\hyperlink{structttak__bigreal_a9b799814a1f37e7a84b72439ddf8805c}{00012}}\ \ \ \ \ int64\_t\ \ \ \ \ \ \ \mbox{\hyperlink{structttak__bigreal_a9b799814a1f37e7a84b72439ddf8805c}{exponent}};}
+\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00013}\mbox{\hyperlink{structttak__bigreal_a03842a3b24f4f4c6989bc89175452478}{00013}}\ \ \ \ \ \textcolor{keyword}{alignas}(max\_align\_t)\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{structttak__bigreal_a03842a3b24f4f4c6989bc89175452478}{padding}}[0];}
+\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00014}\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{00014}}\ \}\ \mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\_bigreal\_t}};}
+\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00016}\mbox{\hyperlink{bigreal_8h_a0ebfa0d15fd75ec78a69e3042901081c}{00016}}\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ \mbox{\hyperlink{bigreal_8h_a0ebfa0d15fd75ec78a69e3042901081c}{tt\_big\_r\_t}};}
+\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00018}\mbox{\hyperlink{bigreal_8h_a280b4b2ff365c2619ca4085afca86abf}{00018}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{bigreal_8h_a280b4b2ff365c2619ca4085afca86abf}{ttak\_bigreal\_init}}(\mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *br,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00019}\mbox{\hyperlink{bigreal_8h_a573187ca0ac0b8dd7a0e641b0c710470}{00019}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{bigreal_8h_a573187ca0ac0b8dd7a0e641b0c710470}{ttak\_bigreal\_init\_u64}}(\mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *br,\ uint64\_t\ value,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00020}\mbox{\hyperlink{bigreal_8h_a679ac569471c7b5607e83ef7bc1295fd}{00020}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{bigreal_8h_a679ac569471c7b5607e83ef7bc1295fd}{ttak\_bigreal\_free}}(\mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *br,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00021}\mbox{\hyperlink{bigreal_8h_a89d7a965d28554b1667c12fb309356af}{00021}}\ \_Bool\ \mbox{\hyperlink{bigreal_8h_a89d7a965d28554b1667c12fb309356af}{ttak\_bigreal\_copy}}(\mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *dst,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *src,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00022}00022\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00023}00023\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00024}00024\ \textcolor{comment}{\ *\ @brief\ Aligns\ the\ exponents\ of\ two\ bigreals\ to\ the\ smaller\ one.}}
+\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00025}00025\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00026}\mbox{\hyperlink{bigreal_8h_a69685a98966acb241a9a78f775a97556}{00026}}\ \_Bool\ \mbox{\hyperlink{bigreal_8h_a69685a98966acb241a9a78f775a97556}{ttak\_bigreal\_align}}(\mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *a,\ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *b,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00027}00027\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00028}00028\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00029}00029\ \textcolor{comment}{\ *\ @brief\ Deep\ copy\ a\ bigreal\ number.}}
+\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00030}00030\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00031}00031\ \_Bool\ \mbox{\hyperlink{bigreal_8h_a89d7a965d28554b1667c12fb309356af}{ttak\_bigreal\_copy}}(\mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *dst,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *src,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00032}00032\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00033}00033\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00034}00034\ \textcolor{comment}{\ *\ @brief\ Adds\ two\ bigreal\ numbers\ with\ matching\ exponents.}}
+\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00035}00035\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00036}00036\ \textcolor{comment}{\ *\ Returns\ false\ if\ exponents\ differ\ or\ on\ allocation\ failure.}}
+\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00037}00037\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00038}\mbox{\hyperlink{bigreal_8h_a9312bd3775b65fba8aed793fdf9ae6f5}{00038}}\ \_Bool\ \mbox{\hyperlink{bigreal_8h_a9312bd3775b65fba8aed793fdf9ae6f5}{ttak\_bigreal\_add}}(\mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *dst,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *lhs,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *rhs,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00039}\mbox{\hyperlink{bigreal_8h_a59718f953f5d3ecc7ec397e06be7e186}{00039}}\ \_Bool\ \mbox{\hyperlink{bigreal_8h_a59718f953f5d3ecc7ec397e06be7e186}{ttak\_bigreal\_sub}}(\mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *dst,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *lhs,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *rhs,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00040}\mbox{\hyperlink{bigreal_8h_afb22699ddeb5c1c039ffedcd68bed9a6}{00040}}\ \_Bool\ \mbox{\hyperlink{bigreal_8h_afb22699ddeb5c1c039ffedcd68bed9a6}{ttak\_bigreal\_mul}}(\mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *dst,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *lhs,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *rhs,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00041}\mbox{\hyperlink{bigreal_8h_a548b6fa8a369624f75fcfec218186403}{00041}}\ \_Bool\ \mbox{\hyperlink{bigreal_8h_a548b6fa8a369624f75fcfec218186403}{ttak\_bigreal\_div}}(\mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *dst,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *lhs,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *rhs,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00043}\mbox{\hyperlink{bigreal_8h_ae2a6c7d4c2787d3432d797bf846a3027}{00043}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{bigreal_8h_ae2a6c7d4c2787d3432d797bf846a3027}{ttak\_bigreal\_cmp}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *lhs,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *rhs,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{bigreal_8h_source_l00045}00045\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_MATH\_BIGREAL\_H}}
 
 \end{DoxyCode}
