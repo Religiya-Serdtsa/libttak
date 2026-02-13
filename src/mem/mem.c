@@ -9,8 +9,32 @@
 #include <pthread.h>
 #include <limits.h>
 #include <errno.h>
-#include <sys/mman.h>
-#include <unistd.h>
+
+// Windows header stuff
+#ifdef _WIN32
+    #include <windows.h>
+    #include <io.h>
+    #define fsync(fd) _commit(fd)
+    #define unlink _unlink
+#else
+    #include <sys/mman.h>
+    #include <unistd.h>
+#endif
+
+// Windows MSVC/MinGW stuff
+#ifdef _WIN32
+static int posix_memalign(void **memptr, size_t alignment, size_t size) {
+    *memptr = _aligned_malloc(size, alignment);
+    return (*memptr) ? 0 : 1;
+}
+#ifndef MAP_FAILED
+    #define MAP_FAILED ((void *)-1)
+#endif
+#define posix_memfree(ptr) _aligned_free(ptr)
+#else
+#define posix_memfree(ptr) free(ptr)
+#endif
+
 #include <stdalign.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -134,7 +158,11 @@ void TTAK_HOT_PATH *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, ui
     bool is_huge = false;
 
     if (flags & TTAK_MEM_HUGE_PAGES) {
+#ifdef _WIN32
+        header = VirtualAlloc(NULL, total_alloc_size, MEM_COMMIT | MEM_RESERVE | MEM_LARGE_PAGES, PAGE_READWRITE);
+#else
         header = mmap(NULL, total_alloc_size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS | MAP_HUGETLB, -1, 0);
+#endif
         if (header != MAP_FAILED) {
             is_huge = true;
         } else {
@@ -184,8 +212,8 @@ void TTAK_HOT_PATH *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, ui
     if (global_trace_enabled) {
         header->tracking_log = malloc(1024);
         if (header->tracking_log) {
-            snprintf(header->tracking_log, 1024, 
-                     "{\"event\":\"alloc\",\"ptr\":\"%p\",\"size\":%zu,\"ts\":%lu,\"root\":%d}", 
+            snprintf(header->tracking_log, 1024,
+                     "{\"event\":\"alloc\",\"ptr\":\"%p\",\"size\":%zu,\"ts\":%lu,\"root\":%d}",
                      (void*)((char*)header + header_size), size, now, (int)is_root);
             fprintf(stderr, "[MEM_TRACK] %s\n", header->tracking_log);
         }
@@ -307,7 +335,7 @@ void TTAK_HOT_PATH ttak_mem_free(void *ptr) {
         return;
     }
     header->freed = true;
-    
+
     if (header->tracking_log) {
         snprintf(header->tracking_log, 1024, "{\"event\":\"free\",\"ptr\":\"%p\",\"ts\":%lu}", stable_ptr, ttak_get_tick_count());
         fprintf(stderr, "[MEM_TRACK] %s\n", header->tracking_log);
@@ -329,9 +357,17 @@ void TTAK_HOT_PATH ttak_mem_free(void *ptr) {
     pthread_mutex_destroy(&header->lock);
 
     if (header->is_huge) {
+#ifdef _WIN32
+        VirtualFree(header, 0, MEM_RELEASE);
+#else
         munmap(header, total_alloc_size);
+#endif
     } else {
+#ifdef _WIN32
+        _aligned_free(header);
+#else
         free(header);
+#endif
     }
 }
 
@@ -362,7 +398,7 @@ void TTAK_HOT_PATH *ttak_mem_access(void *ptr, uint64_t now) {
     ttak_atomic_inc64(&header->pin_count);
 
     if (header->tracking_log) {
-        snprintf(header->tracking_log, 1024, "{\"event\":\"access\",\"ptr\":\"%p\",\"count\":%lu,\"ts\":%lu}", 
+        snprintf(header->tracking_log, 1024, "{\"event\":\"access\",\"ptr\":\"%p\",\"count\":%lu,\"ts\":%lu}",
                  ptr, ttak_atomic_read64(&header->access_count), now);
         fprintf(stderr, "[MEM_TRACK] %s\n", header->tracking_log);
     }
@@ -391,9 +427,7 @@ void TTAK_COLD_PATH tt_autoclean_dirty_pointers(uint64_t now) {
     size_t count = 0;
     void **dirty = tt_inspect_dirty_pointers(now, &count);
     if (!dirty) return;
-    register int hot_slot = 0;
     for (size_t i = 0; i < count; i++) {
-        hot_slot = (int)i;
         volatile void *volatile_target = dirty[i];
         ttak_mem_free((void *)volatile_target);
     }
@@ -485,10 +519,12 @@ void save_current_progress(const char *filename, const void *data, size_t size) 
         return;
     }
 
+#ifndef _WIN32
     // Sync parent directory
     int dfd = open(".", O_RDONLY | O_DIRECTORY);
     if (dfd >= 0) {
         fsync(dfd);
         close(dfd);
     }
+#endif
 }

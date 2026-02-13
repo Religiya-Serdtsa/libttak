@@ -3,8 +3,12 @@
 #include <ttak/mem/mem.h>
 #include <ttak/timing/timing.h>
 #include <ttak/priority/scheduler.h>
-#include <sys/resource.h>
-#include <unistd.h>
+#ifdef _WIN32
+    #include <windows.h>
+#else
+    #include <sys/resource.h>
+    #include <unistd.h>
+#endif
 #include <stdlib.h>
 #include "../../internal/app_types.h"
 
@@ -62,7 +66,16 @@ void *ttak_worker_routine(void *arg) {
     current_worker = self;
 
     if (self->wrapper) {
+#ifdef _WIN32
+        int p = THREAD_PRIORITY_NORMAL;
+        if (self->wrapper->nice_val <= -10) p = THREAD_PRIORITY_HIGHEST;
+        else if (self->wrapper->nice_val < 0) p = THREAD_PRIORITY_ABOVE_NORMAL;
+        else if (self->wrapper->nice_val > 10) p = THREAD_PRIORITY_LOWEST;
+        else if (self->wrapper->nice_val > 0) p = THREAD_PRIORITY_BELOW_NORMAL;
+        SetThreadPriority(GetCurrentThread(), p);
+#else
         setpriority(PRIO_PROCESS, 0, self->wrapper->nice_val);
+#endif
     }
 
     while (!self->should_stop) {
