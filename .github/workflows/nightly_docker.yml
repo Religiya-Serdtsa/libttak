@@ -1,4 +1,4 @@
-name: Nightly Build
+name: Nightly Native Build
 
 on:
   schedule:
@@ -9,46 +9,23 @@ permissions:
   contents: write
 
 jobs:
-  build-by-os:
+  # Linux & Windows: Use standard Docker containers
+  build-linux-windows:
     name: Build for ${{ matrix.os-tag }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         include:
-          # Standard Linux: Multi-arch GCC is available on Debian Trixie
           - os-tag: linux
             os-name: linux
             image: debian:trixie-slim
-
-          # Windows x64: Debian Trixie has robust mingw-w64 packages
           - os-tag: windows-x64
             os-name: windows
             image: debian:trixie-slim
-
-          # Windows ARM64: Dedicated dockcross image for windows-arm64
           - os-tag: windows-arm64
             os-name: windows
             image: dockcross/windows-arm64:latest
-
-          # macOS: Using specialized osxcross-based image
-          - os-tag: macos
-            os-name: macos
-            image: ghcr.io/osxcross/osxcross:latest
-
-          # FreeBSD: Dedicated cross-compiler image for FreeBSD
-          - os-tag: freebsd
-            os-name: freebsd
-            image: emaste/freebsd-cross-build:latest
-
-          # OpenBSD/NetBSD: Multiarch crossbuild often covers these via specific tags
-          # If specific images fail, they require a custom Dockerfile with their toolchain
-          - os-tag: openbsd
-            os-name: openbsd
-            image: multiarch/crossbuild:latest
-          - os-tag: netbsd
-            os-name: netbsd
-            image: multiarch/crossbuild:latest
 
     container:
       image: ${{ matrix.image }}
@@ -57,21 +34,20 @@ jobs:
       - name: Checkout Source
         uses: actions/checkout@v4
 
-      - name: Install Toolchains (Debian Only)
+      - name: Install Toolchains
         if: matrix.image == 'debian:trixie-slim'
         run: |
           apt-get update && apt-get install -y build-essential make tar
           if [ "${{ matrix.os-tag }}" = "linux" ]; then
             apt-get install -y gcc-aarch64-linux-gnu gcc-riscv64-linux-gnu \
                                gcc-powerpc64le-linux-gnu gcc-mips64el-linux-gnuabi64
-          elif [ "${{ matrix.os-tag }}" = "windows-x64" ]; then
+          else
             apt-get install -y gcc-mingw-w64-x86-64
           fi
 
-      - name: Run Build Script
+      - name: Run Build
         run: |
           chmod +x scripts/cross_build_from_debian_13_x64.sh
-          # Pass only the OS name to filter targets within the script
           ./scripts/cross_build_from_debian_13_x64.sh --os-only ${{ matrix.os-name }}
 
       - name: Upload Artifacts
@@ -80,8 +56,63 @@ jobs:
           name: ${{ matrix.os-tag }}-artifacts
           path: dist/*.tar.gz
 
+  # macOS: Use Native macOS Runner (Actual Darwin Environment)
+  build-macos:
+    name: Build for macOS
+    runs-on: macos-latest
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+
+      - name: Run Build
+        run: |
+          chmod +x scripts/cross_build_from_debian_13_x64.sh
+          ./scripts/cross_build_from_debian_13_x64.sh --os-only macos
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-artifacts
+          path: dist/*.tar.gz
+
+  # BSD Family: Use QEMU Virtual Machines (Actual BSD Environment)
+  build-bsd:
+    name: Build for ${{ matrix.os }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [freebsd, openbsd, netbsd]
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+
+      - name: Build in VM
+        uses: cross-platform-actions/action@v0.25.0
+        with:
+          operating_system: ${{ matrix.os }}
+          version: 'latest'
+          run: |
+            # Install build tools inside the actual BSD VM
+            if [ "${{ matrix.os }}" = "freebsd" ]; then
+              sudo pkg install -y gmake gcc
+            else
+              sudo pkg_add gmake gcc
+            fi
+            # Use gmake because BSD make syntax differs from GNU make
+            gmake clean
+            chmod +x scripts/cross_build_from_debian_13_x64.sh
+            ./scripts/cross_build_from_debian_13_x64.sh --os-only ${{ matrix.os }}
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.os }}-artifacts
+          path: dist/*.tar.gz
+
+  # Final Release
   release:
-    needs: build-by-os
+    needs: [build-linux-windows, build-macos, build-bsd]
     runs-on: ubuntu-latest
     steps:
       - name: Download All Artifacts
@@ -90,7 +121,7 @@ jobs:
           path: dist/
           merge-multiple: true
 
-      - name: Create Nightly Release
+      - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: nightly-${{ github.run_id }}
