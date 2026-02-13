@@ -11,13 +11,13 @@ ifneq (,$(findstring tcc,$(notdir $(CC))))
 BUILD_PROFILE = tcc
 endif
 
-TCC_STACK_FLAGS = -O3 -g \
+TCC_STACK_FLAGS ?= -O3 -g \
                   -fno-inline \
                   -fno-omit-frame-pointer \
                   -fno-optimize-sibling-calls
 
-PERF_WARNINGS = -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum
-PERF_STACK_FLAGS = -O3 -march=native -mtune=native -pipe -flto -ffat-lto-objects \
+PERF_WARNINGS ?= -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum
+PERF_STACK_FLAGS ?= -O3 -march=native -mtune=native -pipe -flto -ffat-lto-objects \
                    -fomit-frame-pointer -funroll-loops \
                    -fstrict-aliasing -ffunction-sections -fdata-sections \
                    -fvisibility=hidden -DNDEBUG
