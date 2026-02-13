@@ -11,6 +11,10 @@
     #include <windows.h>
 #else
     #include <unistd.h>
+    #if defined(__NetBSD__) || defined(__OpenBSD__)
+        #include <sys/param.h>
+        #include <sys/sysctl.h>
+    #endif
 #endif
 
 ttak_thread_pool_t *async_pool = NULL; /**< Global async thread pool instance. */
@@ -26,8 +30,15 @@ void ttak_async_init(int nice) {
     SYSTEM_INFO sysinfo;
     GetSystemInfo(&sysinfo);
     available_cores = sysinfo.dwNumberOfProcessors;
+#elif defined(__NetBSD__) || defined(__OpenBSD__)
+    int mib[2] = { CTL_HW, HW_NCPU };
+    int ncpu = 1;
+    size_t len = sizeof(ncpu);
+    if (sysctl(mib, 2, &ncpu, &len, NULL, 0) == -1 || ncpu < 1)
+        ncpu = 1;
+    available_cores = ncpu;
 #else
-    sysconf(_SC_NPROCESSORS_ONLN);
+    available_cores = sysconf(_SC_NPROCESSORS_ONLN);
 #endif
     size_t target_threads = (available_cores > 0) ? (size_t)available_cores / 4 : 0;
     if (target_threads == 0) target_threads = 1;
