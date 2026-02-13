@@ -32,10 +32,11 @@
 #  include <sys/param.h>
 
 /*  -- NetBSD: devmajor_t and u_int are gated on _NETBSD_SOURCE ---
- *  If <sys/featuretest.h> was already processed while _XOPEN_SOURCE
- *  was active, _NETBSD_SOURCE was never defined and the types are
- *  missing.  Provide them explicitly so <sys/sysctl.h> compiles.   */
-#  if defined(__NetBSD__) && !defined(_NETBSD_SOURCE)
+ *  If <sys/types.h> was already processed while _XOPEN_SOURCE was
+ *  active, its include guard prevents re-processing even after we
+ *  undef _XOPEN_SOURCE, so the BSD types remain hidden.
+ *  Provide them explicitly so <sys/sysctl.h> compiles.              */
+#  if defined(__NetBSD__) && defined(_TTAK_SAVED_XOPEN)
 #    include <stdint.h>
      typedef int32_t      devmajor_t;
      typedef unsigned int u_int;
