@@ -1,6 +1,6 @@
 CC ?= tcc
 CFLAGS ?= -std=c11 -Wall -Wextra -pedantic
-LDFLAGS ?=
+LDFLAGS ?= -lttak
 TARGET ?= helper
 
 all: $(TARGET)

@@ -20,6 +20,9 @@
 #include <errno.h>
 #include <strings.h>
 
+#include <ttak/mem/mem.h>
+#include <ttak/timing/timing.h>
+
 typedef struct {
     char *title;
     char *body;
@@ -70,13 +73,13 @@ static void enable_raw_mode(void) {
     atexit(disable_raw_mode);
 }
 
-static void free_help_doc(help_doc_t *doc) {
+static void ttak_mem_free_help_doc(help_doc_t *doc) {
     if (!doc || !doc->items) return;
     for (size_t i = 0; i < doc->count; ++i) {
-        free(doc->items[i].title);
-        free(doc->items[i].body);
+        ttak_mem_free(doc->items[i].title);
+        ttak_mem_free(doc->items[i].body);
     }
-    free(doc->items);
+    ttak_mem_free(doc->items);
     doc->items = NULL;
     doc->count = 0;
 }
@@ -104,7 +107,7 @@ static char *trim_spaces(char *s) {
 static char *dup_string(const char *src) {
     if (!src) return NULL;
     size_t len = strlen(src) + 1;
-    char *copy = malloc(len);
+    char *copy = ttak_mem_alloc(len, __TTAK_UNSAFE_MEM_FOREVER__, ttak_get_tick_count_ns());
     if (!copy) return NULL;
     memcpy(copy, src, len);
     return copy;
@@ -116,7 +119,7 @@ static bool append_text(char **buf, size_t *cap, size_t *len, const char *src) {
     if (*len + need + 1 >= *cap) {
         size_t new_cap = (*cap == 0) ? 256 : *cap * 2;
         while (new_cap <= *len + need + 1) new_cap *= 2;
-        char *tmp = realloc(*buf, new_cap);
+        char *tmp = ttak_mem_realloc(*buf, new_cap, __TTAK_UNSAFE_MEM_FOREVER__, ttak_get_tick_count_ns());
         if (!tmp) return false;
         *buf = tmp;
         *cap = new_cap;
@@ -130,7 +133,7 @@ static bool append_text(char **buf, size_t *cap, size_t *len, const char *src) {
 static bool add_section(help_doc_t *doc, char *title, char *body) {
     if (!doc || !title || !body) return false;
     help_section_t *tmp =
-        realloc(doc->items, (doc->count + 1) * sizeof(help_section_t));
+        ttak_mem_realloc(doc->items, (doc->count + 1) * sizeof(help_section_t), __TTAK_UNSAFE_MEM_FOREVER__, ttak_get_tick_count_ns());
     if (!tmp) return false;
     doc->items = tmp;
     doc->items[doc->count].title = title;
@@ -174,7 +177,7 @@ static bool load_help_file(const char *path, help_doc_t *doc) {
         }
         if (current_title) {
             if (!current_body) {
-                current_body = malloc(1);
+                current_body = ttak_mem_alloc(1, __TTAK_UNSAFE_MEM_FOREVER__, ttak_get_tick_count_ns());
                 if (!current_body) {
                     fclose(fp);
                     return false;
@@ -224,16 +227,16 @@ static void render_section(const help_doc_t *doc, size_t index) {
     fflush(stdout);
 }
 
-static void free_tutorial_index(tutorial_index_t *index) {
+static void ttak_mem_free_tutorial_index(tutorial_index_t *index) {
     if (!index) return;
     for (size_t i = 0; i < index->count; ++i) {
-        free(index->items[i].key);
-        free(index->items[i].title);
-        free(index->items[i].readme_path);
-        free(index->items[i].code_path);
-        free(index->items[i].body);
+        ttak_mem_free(index->items[i].key);
+        ttak_mem_free(index->items[i].title);
+        ttak_mem_free(index->items[i].readme_path);
+        ttak_mem_free(index->items[i].code_path);
+        ttak_mem_free(index->items[i].body);
     }
-    free(index->items);
+    ttak_mem_free(index->items);
     index->items = NULL;
     index->count = 0;
 }
@@ -252,7 +255,7 @@ static char *read_entire_file(const char *path) {
         return NULL;
     }
     rewind(fp);
-    char *buf = malloc((size_t)len + 1);
+    char *buf = ttak_mem_alloc((size_t)len + 1, __TTAK_UNSAFE_MEM_FOREVER__, ttak_get_tick_count_ns());
     if (!buf) {
         fclose(fp);
         return NULL;
@@ -294,7 +297,7 @@ static bool append_tutorial_entry(tutorial_index_t *index,
                                   bool missing) {
     if (!index || !key || !title) return false;
     tutorial_entry_t *tmp =
-        realloc(index->items, (index->count + 1) * sizeof(*index->items));
+        ttak_mem_realloc(index->items, (index->count + 1) * sizeof(*index->items), __TTAK_UNSAFE_MEM_FOREVER__, ttak_get_tick_count_ns());
     if (!tmp) return false;
     index->items = tmp;
     tutorial_entry_t *entry = &index->items[index->count];
@@ -420,10 +423,10 @@ static bool build_tutorial_index(const char *tutorial_root,
                                    path_buf,
                                    NULL,
                                    file_missing(path_buf))) {
-            free(title);
+            ttak_mem_free(title);
             return false;
         }
-        free(title);
+        ttak_mem_free(title);
     }
 
     snprintf(path_buf, sizeof(path_buf), "%s/README.md", tutorial_root);
@@ -435,10 +438,10 @@ static bool build_tutorial_index(const char *tutorial_root,
                                    path_buf,
                                    NULL,
                                    file_missing(path_buf))) {
-            free(title);
+            ttak_mem_free(title);
             return false;
         }
-        free(title);
+        ttak_mem_free(title);
     }
 
     snprintf(path_buf, sizeof(path_buf), "%s/DANGEROUS/README.md",
@@ -451,10 +454,10 @@ static bool build_tutorial_index(const char *tutorial_root,
                                    path_buf,
                                    NULL,
                                    file_missing(path_buf))) {
-            free(title);
+            ttak_mem_free(title);
             return false;
         }
-        free(title);
+        ttak_mem_free(title);
     }
 
     struct dirent **list = NULL;
@@ -465,11 +468,13 @@ static bool build_tutorial_index(const char *tutorial_root,
     }
 
     for (int i = 0; i < count; ++i) {
-        char dir_path[PATH_MAX];
+        char dir_path[PATH_MAX - 11];
         snprintf(dir_path, sizeof(dir_path), "%s/%s", tutorial_root,
                  list[i]->d_name);
         struct stat st;
         if (stat(dir_path, &st) != 0 || !S_ISDIR(st.st_mode)) {
+            // scandir is not a ttak function.
+            // this is included in dirent.h
             free(list[i]);
             continue;
         }
@@ -484,15 +489,21 @@ static bool build_tutorial_index(const char *tutorial_root,
                                    path_buf,
                                    code_path,
                                    missing)) {
-            free(title);
-            free(code_path);
+            ttak_mem_free(title);
+            ttak_mem_free(code_path);
+            // scandir is not a ttak function.
+            // this is included in dirent.h
             free(list[i]);
             continue;
         }
-        free(title);
-        free(code_path);
+        ttak_mem_free(title);
+        ttak_mem_free(code_path);
+        // scandir is not a ttak function.
+        // this is included in dirent.h
         free(list[i]);
     }
+    // scandir is not a ttak function.
+    // this is included in dirent.h
     free(list);
     return index->count > 0;
 }
@@ -667,7 +678,7 @@ static int run_tutorial_mode(const char *tutorial_root) {
     }
 
     disable_raw_mode();
-    free_tutorial_index(&index);
+    ttak_mem_free_tutorial_index(&index);
     printf("\nGoodbye!\n");
     return 0;
 }
@@ -704,7 +715,7 @@ static int run_manual_mode(const char *path) {
     }
 
     disable_raw_mode();
-    free_help_doc(&doc);
+    ttak_mem_free_help_doc(&doc);
     printf("\nGoodbye!\n");
     return 0;
 }
