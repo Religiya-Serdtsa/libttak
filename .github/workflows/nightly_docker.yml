@@ -10,24 +10,33 @@ permissions:
 
 jobs:
   build-by-os:
-    name: Build for ${{ matrix.os }}
+    name: Build for ${{ matrix.os-tag }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         include:
-          - os: linux
+          - os-tag: linux
+            os-name: linux
             image: debian:trixie-slim
-          - os: windows
+          - os-tag: windows-x64
+            os-name: windows
             image: debian:trixie-slim
-          - os: macos
-            image: multiarch/crossbuild:latest
-          - os: freebsd
-            image: multiarch/crossbuild:latest
-          - os: openbsd
-            image: multiarch/crossbuild:latest
-          - os: netbsd
-            image: multiarch/crossbuild:latest
+          - os-tag: windows-arm64
+            os-name: windows
+            image: debian:trixie-slim
+          - os-tag: macos
+            os-name: macos
+            image: dockcross/base:latest
+          - os-tag: freebsd
+            os-name: freebsd
+            image: dockcross/base:latest
+          - os-tag: openbsd
+            os-name: openbsd
+            image: dockcross/base:latest
+          - os-tag: netbsd
+            os-name: netbsd
+            image: dockcross/base:latest
 
     container:
       image: ${{ matrix.image }}
@@ -36,28 +45,37 @@ jobs:
       - name: Checkout Source
         uses: actions/checkout@v4
 
-      - name: Install Tools (Linux/Windows targets only)
-        if: matrix.os == 'linux' || matrix.os == 'windows'
+      - name: Install Toolchains
         run: |
-          apt-get update && apt-get install -y build-essential make tar
-          if [ "${{ matrix.os }}" = "linux" ]; then
-            apt-get install -y gcc-aarch64-linux-gnu gcc-riscv64-linux-gnu \
-                               gcc-powerpc64le-linux-gnu gcc-mips64el-linux-gnuabi64
+          if [ -f /etc/debian_version ]; then
+            apt-get update && apt-get install -y build-essential make tar
+            if [ "${{ matrix.os-tag }}" = "linux" ]; then
+              apt-get install -y gcc-aarch64-linux-gnu gcc-riscv64-linux-gnu \
+                                 gcc-powerpc64le-linux-gnu gcc-mips64el-linux-gnuabi64
+            elif [ "${{ matrix.os-tag }}" = "windows-x64" ]; then
+              apt-get install -y gcc-mingw-w64-x86-64
+            elif [ "${{ matrix.os-tag }}" = "windows-arm64" ]; then
+              apt-get install -y gcc-mingw-w64-aarch64-bootstrap || apt-get install -y gcc-mingw-w64
+            fi
           else
-            apt-get install -y gcc-mingw-w64-x86-64 gcc-mingw-w64-aarch64
+            # For dockcross based images, toolchains are usually pre-installed or
+            # we rely on the internal build script to fetch specific BSD headers.
+            yum install -y make tar gcc || apk add make tar gcc || true
           fi
 
-      - name: Run Build Script for ${{ matrix.os }}
+      - name: Run Build Script
         run: |
           chmod +x scripts/cross_build_from_debian_13_x64.sh
-          ./scripts/cross_build_from_debian_13_x64.sh --os-only ${{ matrix.os }}
+          # Pass os-name to match the script's internal logic
+          ./scripts/cross_build_from_debian_13_x64.sh --os-only ${{ matrix.os-name }}
         env:
-          PATH: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+          # If building for windows-arm64, we can specify the CC override if needed
+          CC: ${{ matrix.os-tag == 'windows-arm64' && 'aarch64-w64-mingw32-gcc' || '' }}
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.os }}-artifacts
+          name: ${{ matrix.os-tag }}-artifacts
           path: dist/*.tar.gz
 
   release:
