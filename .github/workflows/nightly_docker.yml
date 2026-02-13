@@ -1,4 +1,4 @@
-name: Nightly Build and Documentation
+name: Nightly Build
 
 on:
   schedule:
@@ -7,11 +7,9 @@ on:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
 
 jobs:
-  # 1. Cross-Build Job (Docker Matrix)
+  # 1. Multi-platform Binary Build (Only focuses on Artifacts)
   build-binaries:
     name: Build for ${{ matrix.target }}
     runs-on: ubuntu-latest
@@ -25,7 +23,6 @@ jobs:
           - target: windows-amd64
             image: debian:trixie-slim
             env_cc: x86_64-w64-mingw32-gcc
-          # Add other targets (Darwin, BSD) as needed
 
     container:
       image: ${{ matrix.image }}
@@ -38,8 +35,9 @@ jobs:
         run: |
           apt-get update && apt-get install -y build-essential make tar gcc-x86-64-linux-gnu gcc-mingw-w64-x86-64
           mkdir -p dist logs
-          chmod +x scripts/cross_build_libttak_full.sh
-          ./scripts/cross_build_libttak_full.sh --single-target ${{ matrix.target }}
+          # Fixed script name to match your local file: cross_build_from_debian_13_x64.sh
+          chmod +x scripts/cross_build_from_debian_13_x64.sh
+          ./scripts/cross_build_from_debian_13_x64.sh --single-target ${{ matrix.target }}
         env:
           CC: ${{ matrix.env_cc }}
 
@@ -49,39 +47,12 @@ jobs:
           name: ${{ matrix.target }}-bin
           path: dist/*.tar.gz
 
-  # 2. Doxygen Documentation Job
-  build-docs:
+  # 2. Release Job (Only handles Binary Assets)
+  release:
+    needs: build-binaries
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Source
-        uses: actions/checkout@v4
-
-      - name: Install Doxygen
-        run: sudo apt-get install -y doxygen graphviz
-
-      - name: Generate Documentation
-        run: doxygen Doxyfile # Assuming your Doxyfile outputs to 'html/'
-
-      - name: Upload Pages Artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: html/
-
-  # 3. Deployment Job (Releases & Pages)
-  deploy:
-    needs: [build-binaries, build-docs]
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      # A. Deploy Doxygen to GitHub Pages
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-
-      # B. Download and Release Binaries
-      - name: Download Binaries
+      - name: Download All Binaries
         uses: actions/download-artifact@v4
         with:
           path: dist/
