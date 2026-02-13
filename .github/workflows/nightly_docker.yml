@@ -9,20 +9,24 @@ permissions:
   contents: write
 
 jobs:
-  # 1. Multi-platform Binary Build (Only focuses on Artifacts)
-  build-binaries:
-    name: Build for ${{ matrix.target }}
+  # Build binaries grouped by Operating System to optimize toolchain setup
+  build-by-os:
+    name: Build for ${{ matrix.os }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         include:
-          - target: linux-amd64
+          - os: linux
             image: debian:trixie-slim
-            env_cc: x86_64-linux-gnu-gcc
-          - target: windows-amd64
+          - os: windows
             image: debian:trixie-slim
-            env_cc: x86_64-w64-mingw32-gcc
+          - os: freebsd
+            image: ghcr.io/cross-platform/freebsd-cross:latest
+          - os: openbsd
+            image: ghcr.io/cross-platform/openbsd-cross:latest
+          - os: macos
+            image: ghcr.io/tpoechtrager/osxcross:latest
 
     container:
       image: ${{ matrix.image }}
@@ -31,40 +35,47 @@ jobs:
       - name: Checkout Source
         uses: actions/checkout@v4
 
-      - name: Prepare and Build
+      - name: Install Essential Tools
         run: |
-          apt-get update && apt-get install -y build-essential make tar gcc-x86-64-linux-gnu gcc-mingw-w64-x86-64
-          mkdir -p dist logs
-          # Fixed script name to match your local file: cross_build_from_debian_13_x64.sh
-          chmod +x scripts/cross_build_from_debian_13_x64.sh
-          ./scripts/cross_build_from_debian_13_x64.sh --single-target ${{ matrix.target }}
-        env:
-          CC: ${{ matrix.env_cc }}
+          if [ -f /etc/debian_version ]; then
+            apt-get update && apt-get install -y build-essential make tar
+            # Install only required compilers for the specific OS
+            if [ "${{ matrix.os }}" = "linux" ]; then
+              apt-get install -y gcc-aarch64-linux-gnu gcc-riscv64-linux-gnu gcc-powerpc64le-linux-gnu gcc-mips64el-linux-gnuabi64
+            elif [ "${{ matrix.os }}" = "windows" ]; then
+              apt-get install -y gcc-mingw-w64-x86-64 gcc-mingw-w64-aarch64
+            fi
+          fi
 
-      - name: Upload Artifacts
+      - name: Run Build Script for OS Group
+        run: |
+          chmod +x scripts/cross_build_from_debian_13_x64.sh
+          # Pass the OS name to the script to build all architectures for that OS
+          ./scripts/cross_build_from_debian_13_x64.sh --os-only ${{ matrix.os }}
+
+      - name: Upload OS Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.target }}-bin
+          name: ${{ matrix.os }}-artifacts
           path: dist/*.tar.gz
 
-  # 2. Release Job (Only handles Binary Assets)
+  # Finalize and Release
   release:
-    needs: build-binaries
+    needs: build-by-os
     runs-on: ubuntu-latest
     steps:
-      - name: Download All Binaries
+      - name: Download All Artifacts
         uses: actions/download-artifact@v4
         with:
           path: dist/
           merge-multiple: true
 
-      - name: Create GitHub Release
+      - name: Create Nightly Release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: nightly-${{ github.run_id }}
           name: LibTTAK Nightly Build
-          files: |
-            dist/*.tar.gz
+          files: dist/*.tar.gz
           prerelease: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
