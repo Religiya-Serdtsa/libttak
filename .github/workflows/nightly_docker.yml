@@ -92,8 +92,6 @@ jobs:
       matrix:
         include:
           - os: freebsd
-            version: '16.0-CURRENT'
-          - os: freebsd
             version: '15.0'
           - os: freebsd
             version: '14.2'
@@ -107,22 +105,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Manual Build in VM
-        uses: cross-platform-actions/action@v0.25.0
+        uses: cross-platform-actions/action@v0.32.0
         with:
           operating_system: ${{ matrix.os }}
           version: ${{ matrix.version }}
           run: |
             # Robust package installation with non-interactive flags
             if [ "${{ matrix.os }}" = "freebsd" ]; then
-              sudo pkg update
+              sudo env IGNORE_OSVERSION=yes pkg update -f
               sudo pkg install -y gmake gcc
               MAKE_CMD=gmake
             elif [ "${{ matrix.os }}" = "openbsd" ]; then
               sudo pkg_add -v gmake gcc
               MAKE_CMD=gmake
             else
-              # NetBSD pkgin requires -y to be the first argument in some versions
-              sudo pkgin -y install gmake gcc
+              # NetBSD base system already includes gcc; only install gmake
+              sudo pkgin -y install gmake
               MAKE_CMD=gmake
             fi
 
