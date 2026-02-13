@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['5_20–_20memory_20systems_0',['Stage 5 – Memory Systems',['../md_tutorials_2CLONE__PATH.html#autotoc_md120',1,'']]]
+  ['4_20–_20timing_20limiters_20stats_0',['Stage 4 – Timing + Limiters + Stats',['../md_tutorials_2CLONE__PATH.html#autotoc_md124',1,'']]]
 ];

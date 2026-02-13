@@ -1,0 +1,27 @@
+var shared_8h =
+[
+    [ "ttak_shared_s", "structttak__shared__s.html", "structttak__shared__s" ],
+    [ "tt_shared_access", "shared_8h.html#aff22de6f9a1bb6a54ed2dfa0efb78f9b", null ],
+    [ "TTAK_OWNER_CORRUPTED", "shared_8h.html#a2d32c5e6e1fe6b47c116509da86d9db1", null ],
+    [ "TTAK_OWNER_INVALID", "shared_8h.html#a11a718e774b3a65a5221ee162b8b0c48", null ],
+    [ "TTAK_OWNER_SHARE_DENIED", "shared_8h.html#a175f4cbf2e24c7ea490888c4908fa84f", null ],
+    [ "TTAK_OWNER_SUCCESS", "shared_8h.html#af42b1ce7ca73a7e2257f5007239646b8", null ],
+    [ "TTAK_OWNER_VALID", "shared_8h.html#accf5253af94e3cae56352947e0437382", null ],
+    [ "TTAK_SHARED_DEFINE_WRAPPER", "shared_8h.html#a23651acba69b58a505231b47b0802839", null ],
+    [ "TTAK_SHARED_DIRTY", "shared_8h.html#a0eed16dad2e7bfc141ab672405661d46", null ],
+    [ "TTAK_SHARED_EXPIRED", "shared_8h.html#a0ce11efa90d8c4cc7edabef8401df0a1", null ],
+    [ "TTAK_SHARED_READONLY", "shared_8h.html#a93e6e9c880f7131184558a4d765fe4ff", null ],
+    [ "TTAK_SHARED_READY", "shared_8h.html#a4429ac81de20a6b3aef42d08be582341", null ],
+    [ "TTAK_SHARED_ZOMBIE", "shared_8h.html#aa3472a7306725939b2dac4980272c86c", null ],
+    [ "ttak_shared_result_t", "shared_8h.html#a9e87115c8ab89cdc85a268b523179cef", null ],
+    [ "ttak_shared_status_t", "shared_8h.html#afc1d0f23f5c77517287701c56cd25f6d", null ],
+    [ "ttak_shared_t", "shared_8h.html#a1ade2a1add56282521d3408196b3a4cb", null ],
+    [ "ttak_shared_level_t", "shared_8h.html#ae6eb27b055588903d427f15cc0cec6f5", [
+      [ "TTAK_SHARED_LEVEL_3", "shared_8h.html#ae6eb27b055588903d427f15cc0cec6f5a577c57951143ba8e64aff010c9383d78", null ],
+      [ "TTAK_SHARED_LEVEL_2", "shared_8h.html#ae6eb27b055588903d427f15cc0cec6f5a8be541e9c283c883dc14a00f8a900f38", null ],
+      [ "TTAK_SHARED_LEVEL_1", "shared_8h.html#ae6eb27b055588903d427f15cc0cec6f5abeee3bdcc7161760aea197605d2805fc", null ],
+      [ "TTAK_SHARED_NO_LEVEL", "shared_8h.html#ae6eb27b055588903d427f15cc0cec6f5a4526896883edb6c2d7241925d422e81e", null ]
+    ] ],
+    [ "ttak_shared_destroy", "shared_8h.html#a789f3fa21456d890914293c4faf04ad0", null ],
+    [ "ttak_shared_init", "shared_8h.html#a32180ab208d8a2290565861adba3f4a7", null ]
+];

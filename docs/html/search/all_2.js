@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['2_20–_20concurrency_20primitives_0',['Stage 2 – Concurrency Primitives',['../md_tutorials_2CLONE__PATH.html#autotoc_md117',1,'']]],
-  ['2026_2001_2030_1',['2026-01-30',['../md_HISTORY.html#autotoc_md18',1,'']]]
+  ['1_20–_20core_20data_20logging_0',['Stage 1 – Core Data + Logging',['../md_tutorials_2CLONE__PATH.html#autotoc_md121',1,'']]],
+  ['1_20_24_1',['Why $O(1)$?',['..//home/yjlee/libttak/tutorials/37-shared-memory-ownership/README.md#autotoc_md118',1,'']]]
 ];

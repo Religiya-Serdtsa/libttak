@@ -1,0 +1,90 @@
+\doxysection{include/ttak/math/calculus.h File Reference}
+\hypertarget{calculus_8h}{}\label{calculus_8h}\index{include/ttak/math/calculus.h@{include/ttak/math/calculus.h}}
+{\ttfamily \#include $<$ttak/math/bigreal.\+h$>$}\newline
+{\ttfamily \#include $<$ttak/priority/scheduler.\+h$>$}\newline
+Include dependency graph for calculus.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{calculus_8h__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef \+\_\+\+Bool(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{calculus_8h_af5ab65970ac1f025b3795157144fb68f}{ttak\+\_\+math\+\_\+func\+\_\+t}}) (\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}res, const \mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}x, void \texorpdfstring{$\ast$}{*}ctx, uint64\+\_\+t now)
+\begin{DoxyCompactList}\small\item\em Function signature for numerical methods. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\+\_\+\+Bool \mbox{\hyperlink{calculus_8h_aae9c077b1cef771441e2551820508bc5}{ttak\+\_\+calculus\+\_\+diff}} (\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}res, \mbox{\hyperlink{calculus_8h_af5ab65970ac1f025b3795157144fb68f}{ttak\+\_\+math\+\_\+func\+\_\+t}} f, const \mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}x, void \texorpdfstring{$\ast$}{*}ctx, uint64\+\_\+t now)
+\begin{DoxyCompactList}\small\item\em Numerical differentiation at point x. \end{DoxyCompactList}\item 
+\+\_\+\+Bool \mbox{\hyperlink{calculus_8h_af6cc0f406da707d38d8773b5bba98f5d}{ttak\+\_\+calculus\+\_\+partial\+\_\+diff}} (\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}res, \mbox{\hyperlink{calculus_8h_af5ab65970ac1f025b3795157144fb68f}{ttak\+\_\+math\+\_\+func\+\_\+t}} f, const \mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}x\+\_\+vec, uint8\+\_\+t dim, void \texorpdfstring{$\ast$}{*}ctx, uint64\+\_\+t now)
+\begin{DoxyCompactList}\small\item\em Partial differentiation at point x for a specific dimension. \end{DoxyCompactList}\item 
+\+\_\+\+Bool \mbox{\hyperlink{calculus_8h_a30cf8358f6f87f7be75b55c0f5decee6}{ttak\+\_\+calculus\+\_\+integrate}} (\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}res, \mbox{\hyperlink{calculus_8h_af5ab65970ac1f025b3795157144fb68f}{ttak\+\_\+math\+\_\+func\+\_\+t}} f, const \mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}a, const \mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}b, void \texorpdfstring{$\ast$}{*}ctx, uint64\+\_\+t now)
+\begin{DoxyCompactList}\small\item\em Numerical definite integration over \mbox{[}a, b\mbox{]}. Uses adaptive methods and can be parallelized. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{calculus_8h_af5ab65970ac1f025b3795157144fb68f}\label{calculus_8h_af5ab65970ac1f025b3795157144fb68f} 
+\index{calculus.h@{calculus.h}!ttak\_math\_func\_t@{ttak\_math\_func\_t}}
+\index{ttak\_math\_func\_t@{ttak\_math\_func\_t}!calculus.h@{calculus.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_math\_func\_t}{ttak\_math\_func\_t}}
+{\footnotesize\ttfamily typedef \+\_\+\+Bool(\texorpdfstring{$\ast$}{*} ttak\+\_\+math\+\_\+func\+\_\+t) (\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}res, const \mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}x, void \texorpdfstring{$\ast$}{*}ctx, uint64\+\_\+t now)}
+
+
+
+Function signature for numerical methods. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em res} & Destination for the function value. \\
+\hline
+{\em x} & Input value. \\
+\hline
+{\em ctx} & User context. \\
+\hline
+{\em now} & Timestamp. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{calculus_8h_source_l00015}{15}} of file \mbox{\hyperlink{calculus_8h_source}{calculus.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{calculus_8h_aae9c077b1cef771441e2551820508bc5}\label{calculus_8h_aae9c077b1cef771441e2551820508bc5} 
+\index{calculus.h@{calculus.h}!ttak\_calculus\_diff@{ttak\_calculus\_diff}}
+\index{ttak\_calculus\_diff@{ttak\_calculus\_diff}!calculus.h@{calculus.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_calculus\_diff()}{ttak\_calculus\_diff()}}
+{\footnotesize\ttfamily \+\_\+\+Bool ttak\+\_\+calculus\+\_\+diff (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{res,  }\item[{\mbox{\hyperlink{calculus_8h_af5ab65970ac1f025b3795157144fb68f}{ttak\+\_\+math\+\_\+func\+\_\+t}}}]{f,  }\item[{const \mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{x,  }\item[{void \texorpdfstring{$\ast$}{*}}]{ctx,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+
+
+Numerical differentiation at point x. 
+
+\Hypertarget{calculus_8h_a30cf8358f6f87f7be75b55c0f5decee6}\label{calculus_8h_a30cf8358f6f87f7be75b55c0f5decee6} 
+\index{calculus.h@{calculus.h}!ttak\_calculus\_integrate@{ttak\_calculus\_integrate}}
+\index{ttak\_calculus\_integrate@{ttak\_calculus\_integrate}!calculus.h@{calculus.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_calculus\_integrate()}{ttak\_calculus\_integrate()}}
+{\footnotesize\ttfamily \+\_\+\+Bool ttak\+\_\+calculus\+\_\+integrate (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{res,  }\item[{\mbox{\hyperlink{calculus_8h_af5ab65970ac1f025b3795157144fb68f}{ttak\+\_\+math\+\_\+func\+\_\+t}}}]{f,  }\item[{const \mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{a,  }\item[{const \mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{b,  }\item[{void \texorpdfstring{$\ast$}{*}}]{ctx,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+
+
+Numerical definite integration over \mbox{[}a, b\mbox{]}. Uses adaptive methods and can be parallelized. 
+
+\Hypertarget{calculus_8h_af6cc0f406da707d38d8773b5bba98f5d}\label{calculus_8h_af6cc0f406da707d38d8773b5bba98f5d} 
+\index{calculus.h@{calculus.h}!ttak\_calculus\_partial\_diff@{ttak\_calculus\_partial\_diff}}
+\index{ttak\_calculus\_partial\_diff@{ttak\_calculus\_partial\_diff}!calculus.h@{calculus.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_calculus\_partial\_diff()}{ttak\_calculus\_partial\_diff()}}
+{\footnotesize\ttfamily \+\_\+\+Bool ttak\+\_\+calculus\+\_\+partial\+\_\+diff (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{res,  }\item[{\mbox{\hyperlink{calculus_8h_af5ab65970ac1f025b3795157144fb68f}{ttak\+\_\+math\+\_\+func\+\_\+t}}}]{f,  }\item[{const \mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{x\+\_\+vec,  }\item[{uint8\+\_\+t}]{dim,  }\item[{void \texorpdfstring{$\ast$}{*}}]{ctx,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+
+
+Partial differentiation at point x for a specific dimension. 
+

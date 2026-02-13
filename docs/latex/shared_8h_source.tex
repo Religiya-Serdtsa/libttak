@@ -1,0 +1,198 @@
+\doxysection{shared.\+h}
+\hypertarget{shared_8h_source}{}\label{shared_8h_source}\index{include/ttak/shared/shared.h@{include/ttak/shared/shared.h}}
+\mbox{\hyperlink{shared_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00001}00001\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00002}00002\ \textcolor{comment}{\ *\ @file\ ttak\_shared.h}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00003}00003\ \textcolor{comment}{\ *\ @brief\ Shared\ memory\ resource\ management\ with\ ownership-\/based\ access\ control.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00004}00004\ \textcolor{comment}{\ *\ @author\ Gemini}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00005}00005\ \textcolor{comment}{\ *\ @date\ 2026-\/02-\/07}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00006}00006\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00008}00008\ \textcolor{preprocessor}{\#ifndef\ TTAK\_SHARED\_H}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00009}00009\ \textcolor{preprocessor}{\#define\ TTAK\_SHARED\_H}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{owner_8h}{ttak/mem/owner.h}}>}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{sync_8h}{ttak/sync/sync.h}}>}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{dynamic__mask_8h}{ttak/mask/dynamic\_mask.h}}>}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00014}00014\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00015}00015\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00016}00016\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00017}00017\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00018}00018\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00019}00019\ \textcolor{comment}{\ *\ @brief\ Bitmask\ flags\ representing\ the\ current\ status\ of\ the\ shared\ resource.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00020}00020\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00021}\mbox{\hyperlink{shared_8h_afc1d0f23f5c77517287701c56cd25f6d}{00021}}\ \textcolor{keyword}{typedef}\ uint32\_t\ \mbox{\hyperlink{shared_8h_afc1d0f23f5c77517287701c56cd25f6d}{ttak\_shared\_status\_t}};}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00022}\mbox{\hyperlink{shared_8h_a4429ac81de20a6b3aef42d08be582341}{00022}}\ \textcolor{preprocessor}{\#define\ TTAK\_SHARED\_READY\ \ \ \ (0)\ \ \ \ \ \ \ }\textcolor{comment}{/**<\ Resource\ is\ stable\ and\ ready\ for\ use\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00023}\mbox{\hyperlink{shared_8h_a0eed16dad2e7bfc141ab672405661d46}{00023}}\ \textcolor{preprocessor}{\#define\ TTAK\_SHARED\_DIRTY\ \ \ \ (1\ <<\ 0)\ \ }\textcolor{comment}{/**<\ Data\ has\ been\ modified\ but\ not\ synchronized\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00024}\mbox{\hyperlink{shared_8h_a0ce11efa90d8c4cc7edabef8401df0a1}{00024}}\ \textcolor{preprocessor}{\#define\ TTAK\_SHARED\_EXPIRED\ \ (1\ <<\ 1)\ \ }\textcolor{comment}{/**<\ Resource\ timestamp\ is\ outdated\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00025}\mbox{\hyperlink{shared_8h_aa3472a7306725939b2dac4980272c86c}{00025}}\ \textcolor{preprocessor}{\#define\ TTAK\_SHARED\_ZOMBIE\ \ \ (1\ <<\ 2)\ \ }\textcolor{comment}{/**<\ No\ active\ owners;\ pending\ deallocation\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00026}\mbox{\hyperlink{shared_8h_a93e6e9c880f7131184558a4d765fe4ff}{00026}}\ \textcolor{preprocessor}{\#define\ TTAK\_SHARED\_READONLY\ (1\ <<\ 3)\ \ }\textcolor{comment}{/**<\ Resource\ is\ in\ read-\/only\ mode\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00027}00027\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00028}00028\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00029}00029\ \textcolor{comment}{\ *\ @brief\ Operational\ result\ codes\ for\ shared\ memory\ actions.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00030}00030\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00031}\mbox{\hyperlink{shared_8h_a9e87115c8ab89cdc85a268b523179cef}{00031}}\ \textcolor{keyword}{typedef}\ uint32\_t\ \mbox{\hyperlink{shared_8h_a9e87115c8ab89cdc85a268b523179cef}{ttak\_shared\_result\_t}};}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00032}\mbox{\hyperlink{shared_8h_accf5253af94e3cae56352947e0437382}{00032}}\ \textcolor{preprocessor}{\#define\ TTAK\_OWNER\_VALID\ \ \ \ \ \ \ \ (0)\ \ \ \ \ \ }\textcolor{comment}{/**<\ Level\ 3:\ Pure\ safety\ guaranteed\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00033}\mbox{\hyperlink{shared_8h_a2d32c5e6e1fe6b47c116509da86d9db1}{00033}}\ \textcolor{preprocessor}{\#define\ TTAK\_OWNER\_CORRUPTED\ \ \ \ (1\ <<\ 0)\ }\textcolor{comment}{/**<\ Level\ 2:\ Timestamp\ mismatch\ detected\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00034}\mbox{\hyperlink{shared_8h_a11a718e774b3a65a5221ee162b8b0c48}{00034}}\ \textcolor{preprocessor}{\#define\ TTAK\_OWNER\_INVALID\ \ \ \ \ \ (1\ <<\ 1)\ }\textcolor{comment}{/**<\ Level\ 1:\ Owner\ information\ mismatch\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00035}\mbox{\hyperlink{shared_8h_a175f4cbf2e24c7ea490888c4908fa84f}{00035}}\ \textcolor{preprocessor}{\#define\ TTAK\_OWNER\_SHARE\_DENIED\ (1\ <<\ 2)\ }\textcolor{comment}{/**<\ Error:\ Failed\ to\ register\ new\ owner\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00036}\mbox{\hyperlink{shared_8h_af42b1ce7ca73a7e2257f5007239646b8}{00036}}\ \textcolor{preprocessor}{\#define\ TTAK\_OWNER\_SUCCESS\ \ \ \ \ \ (1\ <<\ 3)\ }\textcolor{comment}{/**<\ Operation\ completed\ successfully\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00037}00037\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00038}00038\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00039}00039\ \textcolor{comment}{\ *\ @brief\ Security\ enforcement\ levels\ for\ ownership\ validation.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00040}00040\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00041}\mbox{\hyperlink{shared_8h_ae6eb27b055588903d427f15cc0cec6f5}{00041}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \{}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00042}\mbox{\hyperlink{shared_8h_ae6eb27b055588903d427f15cc0cec6f5a577c57951143ba8e64aff010c9383d78}{00042}}\ \ \ \ \ \mbox{\hyperlink{shared_8h_ae6eb27b055588903d427f15cc0cec6f5a577c57951143ba8e64aff010c9383d78}{TTAK\_SHARED\_LEVEL\_3}},\ \textcolor{comment}{/**<\ Strict:\ Full\ ownership\ and\ timestamp\ validation\ */}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00043}\mbox{\hyperlink{shared_8h_ae6eb27b055588903d427f15cc0cec6f5a8be541e9c283c883dc14a00f8a900f38}{00043}}\ \ \ \ \ \mbox{\hyperlink{shared_8h_ae6eb27b055588903d427f15cc0cec6f5a8be541e9c283c883dc14a00f8a900f38}{TTAK\_SHARED\_LEVEL\_2}},\ \textcolor{comment}{/**<\ Moderate:\ Allows\ slight\ timestamp\ drift\ */}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00044}\mbox{\hyperlink{shared_8h_ae6eb27b055588903d427f15cc0cec6f5abeee3bdcc7161760aea197605d2805fc}{00044}}\ \ \ \ \ \mbox{\hyperlink{shared_8h_ae6eb27b055588903d427f15cc0cec6f5abeee3bdcc7161760aea197605d2805fc}{TTAK\_SHARED\_LEVEL\_1}},\ \textcolor{comment}{/**<\ Loose:\ Basic\ owner\ check\ only;\ not\ recommended\ */}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00045}00045\ \ \ \ \ \mbox{\hyperlink{shared_8h_ae6eb27b055588903d427f15cc0cec6f5a4526896883edb6c2d7241925d422e81e}{TTAK\_SHARED\_NO\_LEVEL}}\ \ \textcolor{comment}{/**<\ None:\ No\ ownership\ check;\ maximum\ performance/danger\ */}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00046}\mbox{\hyperlink{shared_8h_ae6eb27b055588903d427f15cc0cec6f5a4526896883edb6c2d7241925d422e81e}{00046}}\ \}\ \mbox{\hyperlink{shared_8h_ae6eb27b055588903d427f15cc0cec6f5}{ttak\_shared\_level\_t}};}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00047}00047\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00048}00048\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00049}\mbox{\hyperlink{structttak__shared__t}{00049}}\ \textcolor{comment}{\ *\ @struct\ ttak\_shared\_t}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00050}00050\ \textcolor{comment}{\ *\ @brief\ Core\ structure\ for\ managing\ shared\ variables\ among\ multiple\ owners.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00051}00051\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00052}\mbox{\hyperlink{structttak__shared__s}{00052}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__shared__s}{ttak\_shared\_s}}\ \{}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00053}\mbox{\hyperlink{structttak__shared__s_a59475eb1b0d144017b47b7fc30ef9819}{00053}}\ \ \ \ \ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{structttak__shared__s_a59475eb1b0d144017b47b7fc30ef9819}{shared}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Pointer\ to\ the\ actual\ data\ payload\ */}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00054}\mbox{\hyperlink{structttak__shared__s_a651cb63b390a7507b0596d63cb108acb}{00054}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structttak__shared__s_a651cb63b390a7507b0596d63cb108acb}{size}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Total\ byte\ size\ of\ the\ payload\ */}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00055}\mbox{\hyperlink{structttak__shared__s_a376ba9c57928a57dcc04408e2d1c0807}{00055}}\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{structttak__shared__s_a376ba9c57928a57dcc04408e2d1c0807}{type\_name}};\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ String\ representation\ of\ the\ payload\ type\ */}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00056}\mbox{\hyperlink{structttak__shared__s_addcea0e45ca5d63153ed55e7f7cc7b60}{00056}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__shared__s_addcea0e45ca5d63153ed55e7f7cc7b60}{type\_id}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Optional\ numeric\ ID\ for\ the\ type\ */}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00058}\mbox{\hyperlink{structttak__shared__s_a90b2c98f4e669cf13405e2dc67d8ba13}{00058}}\ \ \ \ \ \mbox{\hyperlink{structttak__dynamic__mask__t}{ttak\_dynamic\_mask\_t}}\ \mbox{\hyperlink{structttak__shared__s_a90b2c98f4e669cf13405e2dc67d8ba13}{owners\_mask}};\ \textcolor{comment}{/**<\ Thread-\/safe\ dynamic\ mask\ for\ ownership\ */}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00059}\mbox{\hyperlink{structttak__shared__s_a77ca8d3a4a6ac245bec3b74606b3f196}{00059}}\ \ \ \ \ uint64\_t\ *\mbox{\hyperlink{structttak__shared__s_a77ca8d3a4a6ac245bec3b74606b3f196}{last\_sync\_ts}};\ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Array\ of\ timestamps,\ indexed\ by\ owner\ ID\ */}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00060}\mbox{\hyperlink{structttak__shared__s_a11f44c1998580cb32afddc93dbc0316f}{00060}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__shared__s_a11f44c1998580cb32afddc93dbc0316f}{ts\_capacity}};\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Max\ owner\ ID\ supported\ by\ last\_sync\_ts\ array\ */}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00061}\mbox{\hyperlink{structttak__shared__s_a195013c2e4f21633b1854e8c67c0b418}{00061}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__shared__s_a195013c2e4f21633b1854e8c67c0b418}{ts}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Timestamp\ to\ track\ its\ lifetime\ */}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00063}\mbox{\hyperlink{structttak__shared__s_a755e6430599aa01a19ce36b3730f5b92}{00063}}\ \ \ \ \ \mbox{\hyperlink{sync_8h_ad3f9b08e4c066e7bb7b1ed98d2a90386}{ttak\_rwlock\_t}}\ \mbox{\hyperlink{structttak__shared__s_a755e6430599aa01a19ce36b3730f5b92}{rwlock}};\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ R/W\ lock\ for\ thread-\/safe\ access\ to\ payload\ and\ timestamps\ */}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00064}\mbox{\hyperlink{structttak__shared__s_a2fbcd0afe98fccba6eff8753653f6beb}{00064}}\ \ \ \ \ \mbox{\hyperlink{shared_8h_afc1d0f23f5c77517287701c56cd25f6d}{ttak\_shared\_status\_t}}\ \mbox{\hyperlink{structttak__shared__s_a2fbcd0afe98fccba6eff8753653f6beb}{status}};\ \ \ \ \textcolor{comment}{/**<\ Current\ status\ flags\ (DIRTY,\ EXPIRED,\ etc.)\ */}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00065}\mbox{\hyperlink{structttak__shared__s_ac1587dc550d76c0aa66b5634f3952227}{00065}}\ \ \ \ \ \mbox{\hyperlink{shared_8h_ae6eb27b055588903d427f15cc0cec6f5}{ttak\_shared\_level\_t}}\ \mbox{\hyperlink{structttak__shared__s_ac1587dc550d76c0aa66b5634f3952227}{level}};\ \ \ \ \ \ \textcolor{comment}{/**<\ Enforced\ security\ level\ for\ this\ resource\ */}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00066}\mbox{\hyperlink{structttak__shared__s_a5545262c3ef21dce6c7eab22473c61a7}{00066}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structttak__shared__s_a5545262c3ef21dce6c7eab22473c61a7}{is\_atomic\_read}};\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Flag\ to\ enable/disable\ atomic\ read\ operations\ */}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00067}00067\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00068}00068\ \textcolor{comment}{\ \ \ \ /**}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00069}00069\ \textcolor{comment}{\ \ \ \ \ *\ @brief\ Custom\ destructor\ for\ the\ shared\ payload.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00070}00070\ \textcolor{comment}{\ \ \ \ \ *\ @param\ data\ Pointer\ to\ the\ payload\ to\ be\ cleaned\ up.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00071}00071\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00072}\mbox{\hyperlink{structttak__shared__s_aeeb9302b804cc0eb54209d52313b6059}{00072}}\ \ \ \ \ void\ (*\mbox{\hyperlink{structttak__shared__s_aeeb9302b804cc0eb54209d52313b6059}{cleanup}})(\textcolor{keywordtype}{void}\ *data);}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00073}00073\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00074}00074\ \textcolor{comment}{\ \ \ \ /**}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00075}00075\ \textcolor{comment}{\ \ \ \ \ *\ @brief\ Initializes\ and\ allocates\ the\ shared\ resource.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00076}00076\ \textcolor{comment}{\ \ \ \ \ *\ @param\ self\ Pointer\ to\ the\ ttak\_shared\_t\ instance.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00077}00077\ \textcolor{comment}{\ \ \ \ \ *\ @param\ size\ Size\ of\ the\ data\ to\ allocate.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00078}00078\ \textcolor{comment}{\ \ \ \ \ *\ @param\ level\ Security\ level\ to\ be\ applied.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00079}00079\ \textcolor{comment}{\ \ \ \ \ *\ @return\ Result\ code\ of\ the\ allocation.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00080}00080\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00081}\mbox{\hyperlink{structttak__shared__s_a8a74b0b7c836d561d50adb7c2fad0324}{00081}}\ \ \ \ \ \mbox{\hyperlink{shared_8h_a9e87115c8ab89cdc85a268b523179cef}{ttak\_shared\_result\_t}}\ (*\mbox{\hyperlink{structttak__shared__s_a8a74b0b7c836d561d50adb7c2fad0324}{allocate}})(\textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__shared__s}{ttak\_shared\_s}}\ *self,\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structttak__shared__s_a651cb63b390a7507b0596d63cb108acb}{size}},\ \mbox{\hyperlink{shared_8h_ae6eb27b055588903d427f15cc0cec6f5}{ttak\_shared\_level\_t}}\ \mbox{\hyperlink{structttak__shared__s_ac1587dc550d76c0aa66b5634f3952227}{level}});}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00082}00082\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00083}00083\ \textcolor{comment}{\ \ \ \ /**}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00084}00084\ \textcolor{comment}{\ \ \ \ \ *\ @brief\ Initializes\ and\ allocates\ the\ shared\ resource\ with\ a\ type\ name.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00085}00085\ \textcolor{comment}{\ \ \ \ \ *\ @param\ self\ Pointer\ to\ the\ ttak\_shared\_t\ instance.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00086}00086\ \textcolor{comment}{\ \ \ \ \ *\ @param\ size\ Size\ of\ the\ data\ to\ allocate.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00087}00087\ \textcolor{comment}{\ \ \ \ \ *\ @param\ type\_name\ Name\ of\ the\ type\ being\ allocated.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00088}00088\ \textcolor{comment}{\ \ \ \ \ *\ @param\ level\ Security\ level\ to\ be\ applied.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00089}00089\ \textcolor{comment}{\ \ \ \ \ *\ @return\ Result\ code\ of\ the\ allocation.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00090}00090\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00091}\mbox{\hyperlink{structttak__shared__s_a2b93d3794fba03f6a5fe3a77d8a89666}{00091}}\ \ \ \ \ \mbox{\hyperlink{shared_8h_a9e87115c8ab89cdc85a268b523179cef}{ttak\_shared\_result\_t}}\ (*\mbox{\hyperlink{structttak__shared__s_a2b93d3794fba03f6a5fe3a77d8a89666}{allocate\_typed}})(\textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__shared__s}{ttak\_shared\_s}}\ *self,\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structttak__shared__s_a651cb63b390a7507b0596d63cb108acb}{size}},\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{structttak__shared__s_a376ba9c57928a57dcc04408e2d1c0807}{type\_name}},\ \mbox{\hyperlink{shared_8h_ae6eb27b055588903d427f15cc0cec6f5}{ttak\_shared\_level\_t}}\ \mbox{\hyperlink{structttak__shared__s_ac1587dc550d76c0aa66b5634f3952227}{level}});}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00092}00092\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00093}00093\ \textcolor{comment}{\ \ \ \ /**}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00094}00094\ \textcolor{comment}{\ \ \ \ \ *\ @brief\ Adds\ a\ new\ owner\ to\ the\ shared\ resource.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00095}00095\ \textcolor{comment}{\ \ \ \ \ *\ @param\ self\ Pointer\ to\ the\ ttak\_shared\_t\ instance.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00096}00096\ \textcolor{comment}{\ \ \ \ \ *\ @param\ owner\ The\ owner\ to\ add.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00097}00097\ \textcolor{comment}{\ \ \ \ \ *\ @return\ Result\ code\ of\ the\ operation.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00098}00098\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00099}\mbox{\hyperlink{structttak__shared__s_aa3ed576e6146a3d1f6d1a22d19d5d5cb}{00099}}\ \ \ \ \ \mbox{\hyperlink{shared_8h_a9e87115c8ab89cdc85a268b523179cef}{ttak\_shared\_result\_t}}\ (*\mbox{\hyperlink{structttak__shared__s_aa3ed576e6146a3d1f6d1a22d19d5d5cb}{add\_owner}})(\textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__shared__s}{ttak\_shared\_s}}\ *self,\ \mbox{\hyperlink{structttak__owner}{ttak\_owner\_t}}\ *owner);}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00100}00100\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00101}00101\ \textcolor{comment}{\ \ \ \ /**}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00102}00102\ \textcolor{comment}{\ \ \ \ \ *\ @brief\ Validates\ and\ grants\ access\ to\ the\ shared\ data.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00103}00103\ \textcolor{comment}{\ \ \ \ \ *\ @param\ self\ Pointer\ to\ the\ ttak\_shared\_t\ instance.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00104}00104\ \textcolor{comment}{\ \ \ \ \ *\ @param\ claimant\ The\ owner\ requesting\ access.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00105}00105\ \textcolor{comment}{\ \ \ \ \ *\ @param\ result\ Pointer\ to\ store\ the\ detailed\ validation\ result.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00106}00106\ \textcolor{comment}{\ \ \ \ \ *\ @return\ Const\ pointer\ to\ the\ shared\ data,\ or\ NULL\ if\ denied.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00107}00107\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00108}\mbox{\hyperlink{structttak__shared__s_a42f2e13886e5802246e449e67eef376e}{00108}}\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *(*access)(\textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__shared__s}{ttak\_shared\_s}}\ *self,\ \mbox{\hyperlink{structttak__owner}{ttak\_owner\_t}}\ *claimant,\ \mbox{\hyperlink{shared_8h_a9e87115c8ab89cdc85a268b523179cef}{ttak\_shared\_result\_t}}\ *result);}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00109}00109\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00110}00110\ \textcolor{comment}{\ \ \ \ /**}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00111}00111\ \textcolor{comment}{\ \ \ \ \ *\ @brief\ Releases\ the\ access\ acquired\ via\ access().}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00112}00112\ \textcolor{comment}{\ \ \ \ \ *\ @param\ self\ Pointer\ to\ the\ ttak\_shared\_t\ instance.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00113}00113\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00114}\mbox{\hyperlink{structttak__shared__s_a1c3be42a22a37a517e0ce1fc309b15fe}{00114}}\ \ \ \ \ void\ (*\mbox{\hyperlink{structttak__shared__s_a1c3be42a22a37a517e0ce1fc309b15fe}{release}})(\textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__shared__s}{ttak\_shared\_s}}\ *self);}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00115}00115\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00116}00116\ \textcolor{comment}{\ \ \ \ /**}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00117}00117\ \textcolor{comment}{\ \ \ \ \ *\ @brief\ Synchronizes\ changes\ across\ all\ registered\ owners.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00118}00118\ \textcolor{comment}{\ \ \ \ \ *\ @param\ self\ Pointer\ to\ the\ ttak\_shared\_t\ instance.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00119}00119\ \textcolor{comment}{\ \ \ \ \ *\ @param\ claimant\ The\ owner\ initiating\ the\ sync.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00120}00120\ \textcolor{comment}{\ \ \ \ \ *\ @param\ affected\ Pointer\ to\ store\ the\ number\ of\ owners\ updated.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00121}00121\ \textcolor{comment}{\ \ \ \ \ *\ @return\ Result\ code\ of\ the\ synchronization.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00122}00122\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00123}\mbox{\hyperlink{structttak__shared__s_aaeaee3f499617ca0022b63aeb9cb29eb}{00123}}\ \ \ \ \ \mbox{\hyperlink{shared_8h_a9e87115c8ab89cdc85a268b523179cef}{ttak\_shared\_result\_t}}\ (*\mbox{\hyperlink{structttak__shared__s_aaeaee3f499617ca0022b63aeb9cb29eb}{sync\_all}})(\textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__shared__s}{ttak\_shared\_s}}\ *self,\ \mbox{\hyperlink{structttak__owner}{ttak\_owner\_t}}\ *claimant,\ \textcolor{keywordtype}{int}\ *affected);}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00124}00124\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00125}00125\ \textcolor{comment}{\ \ \ \ /**}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00126}00126\ \textcolor{comment}{\ \ \ \ \ *\ @brief\ Sets\ the\ resource\ to\ read-\/only\ mode.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00127}00127\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00128}\mbox{\hyperlink{structttak__shared__s_a69b1a845bf81bf13089f9053935ff755}{00128}}\ \ \ \ \ \mbox{\hyperlink{shared_8h_a9e87115c8ab89cdc85a268b523179cef}{ttak\_shared\_result\_t}}\ (*\mbox{\hyperlink{structttak__shared__s_a69b1a845bf81bf13089f9053935ff755}{set\_ro}})(\textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__shared__s}{ttak\_shared\_s}}\ *self);}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00129}00129\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00130}00130\ \textcolor{comment}{\ \ \ \ /**}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00131}00131\ \textcolor{comment}{\ \ \ \ \ *\ @brief\ Sets\ the\ resource\ to\ read-\/write\ mode.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00132}00132\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00133}\mbox{\hyperlink{structttak__shared__s_ac24a590b08d7cb645c41d6676a50ce82}{00133}}\ \ \ \ \ \mbox{\hyperlink{shared_8h_a9e87115c8ab89cdc85a268b523179cef}{ttak\_shared\_result\_t}}\ (*\mbox{\hyperlink{structttak__shared__s_ac24a590b08d7cb645c41d6676a50ce82}{set\_rw}})(\textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__shared__s}{ttak\_shared\_s}}\ *self);}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00134}00134\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00135}00135\ \textcolor{comment}{\ \ \ \ /**}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00136}00136\ \textcolor{comment}{\ \ \ \ \ *\ @brief\ Toggles\ atomic\ read\ mode.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00137}00137\ \textcolor{comment}{\ \ \ \ \ *\ @param\ self\ Pointer\ to\ the\ ttak\_shared\_t\ instance.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00138}00138\ \textcolor{comment}{\ \ \ \ \ *\ @param\ enable\ Boolean\ value\ to\ set\ the\ atomic\ state.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00139}00139\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00140}\mbox{\hyperlink{structttak__shared__s_a4a8ff886d5db811829985c2a1ac78bff}{00140}}\ \ \ \ \ \mbox{\hyperlink{shared_8h_a9e87115c8ab89cdc85a268b523179cef}{ttak\_shared\_result\_t}}\ (*\mbox{\hyperlink{structttak__shared__s_a4a8ff886d5db811829985c2a1ac78bff}{set\_atomic\_read}})(\textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__shared__s}{ttak\_shared\_s}}\ *self,\ \textcolor{keywordtype}{bool}\ enable);}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00141}00141\ }
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00142}\mbox{\hyperlink{shared_8h_a1ade2a1add56282521d3408196b3a4cb}{00142}}\ \}\ \mbox{\hyperlink{shared_8h_a1ade2a1add56282521d3408196b3a4cb}{ttak\_shared\_t}};}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00143}00143\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00144}00144\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00145}00145\ \textcolor{comment}{\ *\ @brief\ Helper\ macro\ for\ typed\ access\ to\ shared\ data.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00146}00146\ \textcolor{comment}{\ *\ @param\ type\ The\ type\ to\ cast\ the\ shared\ data\ to.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00147}00147\ \textcolor{comment}{\ *\ @param\ shared\_ptr\ Pointer\ to\ the\ ttak\_shared\_t\ instance.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00148}00148\ \textcolor{comment}{\ *\ @param\ owner\ The\ owner\ requesting\ access.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00149}00149\ \textcolor{comment}{\ *\ @param\ res\_ptr\ Pointer\ to\ store\ the\ result\ code.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00150}00150\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00151}\mbox{\hyperlink{shared_8h_aff22de6f9a1bb6a54ed2dfa0efb78f9b}{00151}}\ \textcolor{preprocessor}{\#define\ tt\_shared\_access(type,\ shared\_ptr,\ owner,\ res\_ptr)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00152}00152\ \textcolor{preprocessor}{\ \ \ \ ((type\ *)((shared\_ptr)-\/>access(shared\_ptr,\ owner,\ res\_ptr)))}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00153}00153\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00154}00154\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00155}00155\ \textcolor{comment}{\ *\ @brief\ Macro\ to\ define\ a\ typed\ wrapper\ for\ ttak\_shared\_t.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00156}00156\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00157}00157\ \textcolor{comment}{\ *\ This\ creates\ a\ new\ struct\ type\ and\ helper\ functions\ for\ a\ specific\ payload\ type,}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00158}00158\ \textcolor{comment}{\ *\ making\ the\ fields\ and\ type\ information\ explicit\ in\ the\ code.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00159}00159\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00160}00160\ \textcolor{comment}{\ *\ @param\ name\ The\ suffix\ for\ the\ generated\ type\ and\ functions.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00161}00161\ \textcolor{comment}{\ *\ @param\ struct\_type\ The\ actual\ C\ type\ of\ the\ payload.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00162}00162\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00163}\mbox{\hyperlink{shared_8h_a23651acba69b58a505231b47b0802839}{00163}}\ \textcolor{preprocessor}{\#define\ TTAK\_SHARED\_DEFINE\_WRAPPER(name,\ struct\_type)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00164}00164\ \textcolor{preprocessor}{\ \ \ \ typedef\ struct\ \{\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00165}00165\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ ttak\_shared\_t\ base;\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00166}00166\ \textcolor{preprocessor}{\ \ \ \ \}\ ttak\_shared\_\#\#name\#\#\_t;\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00167}00167\ \textcolor{preprocessor}{\ \ \ \ static\ inline\ void\ ttak\_shared\_\#\#name\#\#\_init(ttak\_shared\_\#\#name\#\#\_t\ *s)\ \{\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00168}00168\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ ttak\_shared\_init(\&s-\/>base);\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00169}00169\ \textcolor{preprocessor}{\ \ \ \ \}\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00170}00170\ \textcolor{preprocessor}{\ \ \ \ static\ inline\ ttak\_shared\_result\_t\ ttak\_shared\_\#\#name\#\#\_allocate(ttak\_shared\_\#\#name\#\#\_t\ *s,\ ttak\_shared\_level\_t\ level)\ \{\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00171}00171\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ return\ s-\/>base.allocate\_typed(\&s-\/>base,\ sizeof(struct\_type),\ \#struct\_type,\ level);\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00172}00172\ \textcolor{preprocessor}{\ \ \ \ \}\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00173}00173\ \textcolor{preprocessor}{\ \ \ \ static\ inline\ struct\_type\ *ttak\_shared\_\#\#name\#\#\_access(ttak\_shared\_\#\#name\#\#\_t\ *s,\ ttak\_owner\_t\ *owner,\ ttak\_shared\_result\_t\ *res)\ \{\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00174}00174\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ return\ (struct\_type\ *)s-\/>base.access(\&s-\/>base,\ owner,\ res);\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00175}00175\ \textcolor{preprocessor}{\ \ \ \ \}\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00176}00176\ \textcolor{preprocessor}{\ \ \ \ static\ inline\ void\ ttak\_shared\_\#\#name\#\#\_release(ttak\_shared\_\#\#name\#\#\_t\ *s)\ \{\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00177}00177\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ s-\/>base.release(\&s-\/>base);\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00178}00178\ \textcolor{preprocessor}{\ \ \ \ \}}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00179}00179\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00180}00180\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00181}00181\ \textcolor{comment}{\ *\ @brief\ Constructor\ for\ ttak\_shared\_t.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00182}00182\ \textcolor{comment}{\ *\ @param\ self\ Pointer\ to\ the\ ttak\_shared\_t\ instance.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00183}00183\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00184}\mbox{\hyperlink{shared_8h_a32180ab208d8a2290565861adba3f4a7}{00184}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{shared_8h_a32180ab208d8a2290565861adba3f4a7}{ttak\_shared\_init}}(\mbox{\hyperlink{structttak__shared__t}{ttak\_shared\_t}}\ *self);}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00185}00185\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00186}00186\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00187}00187\ \textcolor{comment}{\ *\ @brief\ Destructor\ for\ ttak\_shared\_t.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00188}00188\ \textcolor{comment}{\ *\ @param\ self\ Pointer\ to\ the\ ttak\_shared\_t\ instance.}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00189}00189\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00190}\mbox{\hyperlink{shared_8h_a789f3fa21456d890914293c4faf04ad0}{00190}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{shared_8h_a789f3fa21456d890914293c4faf04ad0}{ttak\_shared\_destroy}}(\mbox{\hyperlink{structttak__shared__t}{ttak\_shared\_t}}\ *self);}
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00191}00191\ }
+\DoxyCodeLine{\Hypertarget{shared_8h_source_l00192}00192\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ TTAK\_SHARED\_H\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

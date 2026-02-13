@@ -1,0 +1,140 @@
+\doxysection{include/ttak/mask/dynamic\+\_\+mask.h File Reference}
+\hypertarget{dynamic__mask_8h}{}\label{dynamic__mask_8h}\index{include/ttak/mask/dynamic\_mask.h@{include/ttak/mask/dynamic\_mask.h}}
+
+
+Dynamic bitmap utility with thread-\/safe access.  
+
+
+{\ttfamily \#include $<$ttak/sync/sync.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+Include dependency graph for dynamic\+\_\+mask.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dynamic__mask_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=229pt]{dynamic__mask_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structttak__dynamic__mask__t}{ttak\+\_\+dynamic\+\_\+mask\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Thread-\/safe dynamic bitmap. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{dynamic__mask_8h_ac44bc237a9016822d81068b04a8fed79}{ttak\+\_\+dynamic\+\_\+mask\+\_\+init}} (\mbox{\hyperlink{structttak__dynamic__mask__t}{ttak\+\_\+dynamic\+\_\+mask\+\_\+t}} \texorpdfstring{$\ast$}{*}mask)
+\begin{DoxyCompactList}\small\item\em Initializes a dynamic mask. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{dynamic__mask_8h_ae5e98a0d786c120cff06094eff57d74c}{ttak\+\_\+dynamic\+\_\+mask\+\_\+destroy}} (\mbox{\hyperlink{structttak__dynamic__mask__t}{ttak\+\_\+dynamic\+\_\+mask\+\_\+t}} \texorpdfstring{$\ast$}{*}mask)
+\begin{DoxyCompactList}\small\item\em Destroys a dynamic mask and frees memory. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{dynamic__mask_8h_a3ecf206227c2c4eebfe097a26726bd73}{ttak\+\_\+dynamic\+\_\+mask\+\_\+set}} (\mbox{\hyperlink{structttak__dynamic__mask__t}{ttak\+\_\+dynamic\+\_\+mask\+\_\+t}} \texorpdfstring{$\ast$}{*}mask, uint32\+\_\+t bit\+\_\+idx)
+\begin{DoxyCompactList}\small\item\em Sets a bit at the given index, expanding the mask if necessary. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{dynamic__mask_8h_a61feb521a2fb8a2ce4eb5b59154e153e}{ttak\+\_\+dynamic\+\_\+mask\+\_\+clear}} (\mbox{\hyperlink{structttak__dynamic__mask__t}{ttak\+\_\+dynamic\+\_\+mask\+\_\+t}} \texorpdfstring{$\ast$}{*}mask, uint32\+\_\+t bit\+\_\+idx)
+\begin{DoxyCompactList}\small\item\em Clears a bit at the given index. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{dynamic__mask_8h_a7f1d36492b26269414cfc46715bfb1c2}{ttak\+\_\+dynamic\+\_\+mask\+\_\+test}} (\mbox{\hyperlink{structttak__dynamic__mask__t}{ttak\+\_\+dynamic\+\_\+mask\+\_\+t}} \texorpdfstring{$\ast$}{*}mask, uint32\+\_\+t bit\+\_\+idx)
+\begin{DoxyCompactList}\small\item\em Checks if a bit is set at the given index. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{dynamic__mask_8h_adaeb7baf3f3c17b035b18a793c3861a4}{ttak\+\_\+dynamic\+\_\+mask\+\_\+test\+\_\+unsafe}} (\mbox{\hyperlink{structttak__dynamic__mask__t}{ttak\+\_\+dynamic\+\_\+mask\+\_\+t}} \texorpdfstring{$\ast$}{*}mask, uint32\+\_\+t bit\+\_\+idx)
+\begin{DoxyCompactList}\small\item\em Checks if a bit is set without taking a lock (use with external lock). \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{dynamic__mask_8h_af2702abe5f6707178b26d4782fcfeb0d}{ttak\+\_\+dynamic\+\_\+mask\+\_\+ensure}} (\mbox{\hyperlink{structttak__dynamic__mask__t}{ttak\+\_\+dynamic\+\_\+mask\+\_\+t}} \texorpdfstring{$\ast$}{*}mask, uint32\+\_\+t bit\+\_\+idx)
+\begin{DoxyCompactList}\small\item\em Ensures the mask has capacity for the given bit index. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Dynamic bitmap utility with thread-\/safe access. 
+
+\begin{DoxyAuthor}{Author}
+Gemini 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2026-\/02-\/08 
+\end{DoxyDate}
+
+
+Definition in file \mbox{\hyperlink{dynamic__mask_8h_source}{dynamic\+\_\+mask.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{dynamic__mask_8h_a61feb521a2fb8a2ce4eb5b59154e153e}\label{dynamic__mask_8h_a61feb521a2fb8a2ce4eb5b59154e153e} 
+\index{dynamic\_mask.h@{dynamic\_mask.h}!ttak\_dynamic\_mask\_clear@{ttak\_dynamic\_mask\_clear}}
+\index{ttak\_dynamic\_mask\_clear@{ttak\_dynamic\_mask\_clear}!dynamic\_mask.h@{dynamic\_mask.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_dynamic\_mask\_clear()}{ttak\_dynamic\_mask\_clear()}}
+{\footnotesize\ttfamily void ttak\+\_\+dynamic\+\_\+mask\+\_\+clear (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structttak__dynamic__mask__t}{ttak\+\_\+dynamic\+\_\+mask\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{mask,  }\item[{uint32\+\_\+t}]{bit\+\_\+idx }\end{DoxyParamCaption})}
+
+
+
+Clears a bit at the given index. 
+
+\Hypertarget{dynamic__mask_8h_ae5e98a0d786c120cff06094eff57d74c}\label{dynamic__mask_8h_ae5e98a0d786c120cff06094eff57d74c} 
+\index{dynamic\_mask.h@{dynamic\_mask.h}!ttak\_dynamic\_mask\_destroy@{ttak\_dynamic\_mask\_destroy}}
+\index{ttak\_dynamic\_mask\_destroy@{ttak\_dynamic\_mask\_destroy}!dynamic\_mask.h@{dynamic\_mask.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_dynamic\_mask\_destroy()}{ttak\_dynamic\_mask\_destroy()}}
+{\footnotesize\ttfamily void ttak\+\_\+dynamic\+\_\+mask\+\_\+destroy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structttak__dynamic__mask__t}{ttak\+\_\+dynamic\+\_\+mask\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{mask }\end{DoxyParamCaption})}
+
+
+
+Destroys a dynamic mask and frees memory. 
+
+\Hypertarget{dynamic__mask_8h_af2702abe5f6707178b26d4782fcfeb0d}\label{dynamic__mask_8h_af2702abe5f6707178b26d4782fcfeb0d} 
+\index{dynamic\_mask.h@{dynamic\_mask.h}!ttak\_dynamic\_mask\_ensure@{ttak\_dynamic\_mask\_ensure}}
+\index{ttak\_dynamic\_mask\_ensure@{ttak\_dynamic\_mask\_ensure}!dynamic\_mask.h@{dynamic\_mask.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_dynamic\_mask\_ensure()}{ttak\_dynamic\_mask\_ensure()}}
+{\footnotesize\ttfamily bool ttak\+\_\+dynamic\+\_\+mask\+\_\+ensure (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structttak__dynamic__mask__t}{ttak\+\_\+dynamic\+\_\+mask\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{mask,  }\item[{uint32\+\_\+t}]{bit\+\_\+idx }\end{DoxyParamCaption})}
+
+
+
+Ensures the mask has capacity for the given bit index. 
+
+\Hypertarget{dynamic__mask_8h_ac44bc237a9016822d81068b04a8fed79}\label{dynamic__mask_8h_ac44bc237a9016822d81068b04a8fed79} 
+\index{dynamic\_mask.h@{dynamic\_mask.h}!ttak\_dynamic\_mask\_init@{ttak\_dynamic\_mask\_init}}
+\index{ttak\_dynamic\_mask\_init@{ttak\_dynamic\_mask\_init}!dynamic\_mask.h@{dynamic\_mask.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_dynamic\_mask\_init()}{ttak\_dynamic\_mask\_init()}}
+{\footnotesize\ttfamily void ttak\+\_\+dynamic\+\_\+mask\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structttak__dynamic__mask__t}{ttak\+\_\+dynamic\+\_\+mask\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{mask }\end{DoxyParamCaption})}
+
+
+
+Initializes a dynamic mask. 
+
+\Hypertarget{dynamic__mask_8h_a3ecf206227c2c4eebfe097a26726bd73}\label{dynamic__mask_8h_a3ecf206227c2c4eebfe097a26726bd73} 
+\index{dynamic\_mask.h@{dynamic\_mask.h}!ttak\_dynamic\_mask\_set@{ttak\_dynamic\_mask\_set}}
+\index{ttak\_dynamic\_mask\_set@{ttak\_dynamic\_mask\_set}!dynamic\_mask.h@{dynamic\_mask.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_dynamic\_mask\_set()}{ttak\_dynamic\_mask\_set()}}
+{\footnotesize\ttfamily bool ttak\+\_\+dynamic\+\_\+mask\+\_\+set (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structttak__dynamic__mask__t}{ttak\+\_\+dynamic\+\_\+mask\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{mask,  }\item[{uint32\+\_\+t}]{bit\+\_\+idx }\end{DoxyParamCaption})}
+
+
+
+Sets a bit at the given index, expanding the mask if necessary. 
+
+\begin{DoxyReturn}{Returns}
+true if successful. 
+\end{DoxyReturn}
+\Hypertarget{dynamic__mask_8h_a7f1d36492b26269414cfc46715bfb1c2}\label{dynamic__mask_8h_a7f1d36492b26269414cfc46715bfb1c2} 
+\index{dynamic\_mask.h@{dynamic\_mask.h}!ttak\_dynamic\_mask\_test@{ttak\_dynamic\_mask\_test}}
+\index{ttak\_dynamic\_mask\_test@{ttak\_dynamic\_mask\_test}!dynamic\_mask.h@{dynamic\_mask.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_dynamic\_mask\_test()}{ttak\_dynamic\_mask\_test()}}
+{\footnotesize\ttfamily bool ttak\+\_\+dynamic\+\_\+mask\+\_\+test (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structttak__dynamic__mask__t}{ttak\+\_\+dynamic\+\_\+mask\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{mask,  }\item[{uint32\+\_\+t}]{bit\+\_\+idx }\end{DoxyParamCaption})}
+
+
+
+Checks if a bit is set at the given index. 
+
+\Hypertarget{dynamic__mask_8h_adaeb7baf3f3c17b035b18a793c3861a4}\label{dynamic__mask_8h_adaeb7baf3f3c17b035b18a793c3861a4} 
+\index{dynamic\_mask.h@{dynamic\_mask.h}!ttak\_dynamic\_mask\_test\_unsafe@{ttak\_dynamic\_mask\_test\_unsafe}}
+\index{ttak\_dynamic\_mask\_test\_unsafe@{ttak\_dynamic\_mask\_test\_unsafe}!dynamic\_mask.h@{dynamic\_mask.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_dynamic\_mask\_test\_unsafe()}{ttak\_dynamic\_mask\_test\_unsafe()}}
+{\footnotesize\ttfamily bool ttak\+\_\+dynamic\+\_\+mask\+\_\+test\+\_\+unsafe (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structttak__dynamic__mask__t}{ttak\+\_\+dynamic\+\_\+mask\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{mask,  }\item[{uint32\+\_\+t}]{bit\+\_\+idx }\end{DoxyParamCaption})}
+
+
+
+Checks if a bit is set without taking a lock (use with external lock). 
+

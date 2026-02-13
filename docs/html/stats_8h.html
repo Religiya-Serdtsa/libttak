@@ -101,6 +101,7 @@ $(document).ready(function(){initNavTree('stats_8h.html',''); initResizable(); }
 <div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
 <code>#include &lt;<a class="el" href="sync_8h_source.html">ttak/sync/sync.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="spinlock_8h_source.html">ttak/sync/spinlock.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="bigreal_8h_source.html">ttak/math/bigreal.h</a>&gt;</code><br />
 </div><div class="textblock"><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Include dependency graph for stats.h:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -108,23 +109,49 @@ $(document).ready(function(){initNavTree('stats_8h.html',''); initResizable(); }
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="stats_8h__incl.png" border="0" usemap="#ainclude_2ttak_2stats_2stats_8h" alt=""/></div>
 <map name="ainclude_2ttak_2stats_2stats_8h" id="ainclude_2ttak_2stats_2stats_8h">
-<area shape="rect" title=" " alt="" coords="103,5,238,45"/>
-<area shape="rect" title=" " alt="" coords="135,167,206,192"/>
-<area shape="poly" title=" " alt="" coords="173,46,173,153,168,153,168,46"/>
-<area shape="rect" href="sync_8h.html" title=" " alt="" coords="5,93,133,119"/>
-<area shape="poly" title=" " alt="" coords="148,48,97,87,94,82,145,43"/>
-<area shape="rect" href="spinlock_8h.html" title=" " alt="" coords="208,93,360,119"/>
-<area shape="poly" title=" " alt="" coords="200,43,257,83,254,87,197,48"/>
-<area shape="poly" title=" " alt="" coords="87,116,144,156,141,161,84,121"/>
-<area shape="rect" title=" " alt="" coords="27,167,111,192"/>
-<area shape="poly" title=" " alt="" coords="72,119,72,153,67,153,67,119"/>
-<area shape="poly" title=" " alt="" coords="267,121,202,162,199,157,264,116"/>
-<area shape="rect" title=" " alt="" coords="319,167,417,192"/>
-<area shape="poly" title=" " alt="" coords="299,117,345,155,342,160,296,121"/>
-<area shape="rect" title=" " alt="" coords="441,167,524,192"/>
-<area shape="poly" title=" " alt="" coords="317,116,438,159,436,164,315,121"/>
-<area shape="rect" title=" " alt="" coords="231,167,295,192"/>
-<area shape="poly" title=" " alt="" coords="283,120,273,154,267,153,278,118"/>
+<area shape="rect" title=" " alt="" coords="190,5,325,45"/>
+<area shape="rect" title=" " alt="" coords="160,313,230,339"/>
+<area shape="poly" title=" " alt="" coords="191,42,140,58,87,84,63,100,42,119,25,142,12,167,8,192,14,215,28,235,47,254,97,285,148,307,146,312,94,290,44,258,23,239,9,217,3,192,7,166,20,139,38,116,60,96,84,79,138,53,189,37"/>
+<area shape="rect" href="sync_8h.html" title=" " alt="" coords="80,93,208,119"/>
+<area shape="poly" title=" " alt="" coords="232,48,174,87,171,83,229,43"/>
+<area shape="rect" href="spinlock_8h.html" title=" " alt="" coords="652,240,804,265"/>
+<area shape="poly" title=" " alt="" coords="310,43,427,91,579,167,697,231,695,235,577,171,425,96,308,48"/>
+<area shape="rect" href="bigreal_8h.html" title=" " alt="" coords="267,93,414,119"/>
+<area shape="poly" title=" " alt="" coords="279,44,320,82,316,86,276,47"/>
+<area shape="poly" title=" " alt="" coords="150,118,192,299,187,300,144,120"/>
+<area shape="rect" title=" " alt="" coords="22,167,106,192"/>
+<area shape="poly" title=" " alt="" coords="133,121,89,160,86,156,130,117"/>
+<area shape="poly" title=" " alt="" coords="652,267,244,321,244,316,652,261"/>
+<area shape="rect" title=" " alt="" coords="679,313,778,339"/>
+<area shape="poly" title=" " alt="" coords="731,266,731,300,726,300,726,266"/>
+<area shape="rect" title=" " alt="" coords="572,313,655,339"/>
+<area shape="poly" title=" " alt="" coords="711,268,645,308,642,304,708,263"/>
+<area shape="rect" title=" " alt="" coords="802,313,866,339"/>
+<area shape="poly" title=" " alt="" coords="747,263,807,303,804,308,744,268"/>
+<area shape="rect" href="bigint_8h.html" title=" " alt="" coords="290,167,428,192"/>
+<area shape="poly" title=" " alt="" coords="346,118,355,153,350,154,341,120"/>
+<area shape="poly" title=" " alt="" coords="306,195,261,212,240,226,222,242,207,270,200,300,194,298,202,268,218,238,237,221,259,208,304,190"/>
+<area shape="poly" title=" " alt="" coords="429,188,524,208,564,222,591,238,602,252,609,268,616,299,610,300,604,269,597,255,588,242,562,227,522,213,428,193"/>
+<area shape="rect" title=" " alt="" coords="232,240,307,265"/>
+<area shape="poly" title=" " alt="" coords="346,194,297,233,293,229,343,190"/>
+<area shape="rect" title=" " alt="" coords="332,240,418,265"/>
+<area shape="poly" title=" " alt="" coords="364,192,372,226,367,227,359,193"/>
+<area shape="rect" href="fixed_8h.html" title=" " alt="" coords="442,240,577,265"/>
+<area shape="poly" title=" " alt="" coords="384,190,474,232,471,236,382,194"/>
+<area shape="poly" title=" " alt="" coords="460,268,245,316,243,311,458,263"/>
+<area shape="poly" title=" " alt="" coords="528,263,587,303,584,307,525,268"/>
+</map>
+</div>
+</div><div class="textblock"><div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-1-trigger" src="closed.png" alt="+"/> This graph shows which files directly or indirectly include this file:</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="stats_8h__dep__incl.png" border="0" usemap="#ainclude_2ttak_2stats_2stats_8hdep" alt=""/></div>
+<map name="ainclude_2ttak_2stats_2stats_8hdep" id="ainclude_2ttak_2stats_2stats_8hdep">
+<area shape="rect" title=" " alt="" coords="5,5,140,45"/>
+<area shape="rect" href="stats__ext_8h.html" title=" " alt="" coords="5,93,140,133"/>
+<area shape="poly" title=" " alt="" coords="75,59,75,93,70,93,70,59"/>
 </map>
 </div>
 </div>
@@ -163,6 +190,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a54b911aa8d10ae214de24d79a3c00357" id="r_a54b911aa8d10ae214de24d79a3c00357"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stats_8h.html#a54b911aa8d10ae214de24d79a3c00357">ttak_stats_mean</a> (<a class="el" href="stats_8h.html#a897b5aaf1addd7acb495025c2129969a">ttak_stats_t</a> *s)</td></tr>
 <tr class="memdesc:a54b911aa8d10ae214de24d79a3c00357"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the arithmetic mean.  <br /></td></tr>
 <tr class="separator:a54b911aa8d10ae214de24d79a3c00357"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46f4cd5bf33f9ada8fdb7dccb120a664" id="r_a46f4cd5bf33f9ada8fdb7dccb120a664"><td class="memItemLeft" align="right" valign="top">_Bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stats_8h.html#a46f4cd5bf33f9ada8fdb7dccb120a664">ttak_stats_compute_percentiles</a> (uint64_t *data, size_t count, <a class="el" href="bigreal_8h.html#ab9368b32d51ca2bce882ba0dbf872b4a">ttak_bigreal_t</a> *p50, <a class="el" href="bigreal_8h.html#ab9368b32d51ca2bce882ba0dbf872b4a">ttak_bigreal_t</a> *p95, <a class="el" href="bigreal_8h.html#ab9368b32d51ca2bce882ba0dbf872b4a">ttak_bigreal_t</a> *p99, <a class="el" href="bigreal_8h.html#ab9368b32d51ca2bce882ba0dbf872b4a">ttak_bigreal_t</a> *p999, uint64_t now)</td></tr>
+<tr class="memdesc:a46f4cd5bf33f9ada8fdb7dccb120a664"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes percentiles from raw data and outputs them as bigreal numbers.  <br /></td></tr>
+<tr class="separator:a46f4cd5bf33f9ada8fdb7dccb120a664"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="a7d7878976b4f1d8dbb22a4c3af8ceb8f" name="a7d7878976b4f1d8dbb22a4c3af8ceb8f"></a>
@@ -216,6 +246,66 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a46f4cd5bf33f9ada8fdb7dccb120a664" name="a46f4cd5bf33f9ada8fdb7dccb120a664"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a46f4cd5bf33f9ada8fdb7dccb120a664">&#9670;&#160;</a></span>ttak_stats_compute_percentiles()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Bool ttak_stats_compute_percentiles </td>
+          <td>(</td>
+          <td class="paramtype">uint64_t *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>count</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="bigreal_8h.html#ab9368b32d51ca2bce882ba0dbf872b4a">ttak_bigreal_t</a> *&#160;</td>
+          <td class="paramname"><em>p50</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="bigreal_8h.html#ab9368b32d51ca2bce882ba0dbf872b4a">ttak_bigreal_t</a> *&#160;</td>
+          <td class="paramname"><em>p95</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="bigreal_8h.html#ab9368b32d51ca2bce882ba0dbf872b4a">ttak_bigreal_t</a> *&#160;</td>
+          <td class="paramname"><em>p99</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="bigreal_8h.html#ab9368b32d51ca2bce882ba0dbf872b4a">ttak_bigreal_t</a> *&#160;</td>
+          <td class="paramname"><em>p999</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>now</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Computes percentiles from raw data and outputs them as bigreal numbers. </p>
+
+</div>
+</div>
 <a id="abb915be3d13f3f1a2d348e008d230265" name="abb915be3d13f3f1a2d348e008d230265"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#abb915be3d13f3f1a2d348e008d230265">&#9670;&#160;</a></span>ttak_stats_init()</h2>
 

@@ -1,0 +1,39 @@
+\doxysection{calculus.\+h}
+\hypertarget{calculus_8h_source}{}\label{calculus_8h_source}\index{include/ttak/math/calculus.h@{include/ttak/math/calculus.h}}
+\mbox{\hyperlink{calculus_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{calculus_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ TTAK\_MATH\_CALCULUS\_H}}
+\DoxyCodeLine{\Hypertarget{calculus_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ TTAK\_MATH\_CALCULUS\_H}}
+\DoxyCodeLine{\Hypertarget{calculus_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{calculus_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{bigreal_8h}{ttak/math/bigreal.h}}>}}
+\DoxyCodeLine{\Hypertarget{calculus_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{scheduler_8h}{ttak/priority/scheduler.h}}>}}
+\DoxyCodeLine{\Hypertarget{calculus_8h_source_l00006}00006\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{calculus_8h_source_l00007}00007\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{calculus_8h_source_l00008}00008\ \textcolor{comment}{\ *\ @brief\ Function\ signature\ for\ numerical\ methods.}}
+\DoxyCodeLine{\Hypertarget{calculus_8h_source_l00009}00009\ \textcolor{comment}{\ *\ @param\ res\ Destination\ for\ the\ function\ value.}}
+\DoxyCodeLine{\Hypertarget{calculus_8h_source_l00010}00010\ \textcolor{comment}{\ *\ @param\ x\ Input\ value.}}
+\DoxyCodeLine{\Hypertarget{calculus_8h_source_l00011}00011\ \textcolor{comment}{\ *\ @param\ ctx\ User\ context.}}
+\DoxyCodeLine{\Hypertarget{calculus_8h_source_l00012}00012\ \textcolor{comment}{\ *\ @param\ now\ Timestamp.}}
+\DoxyCodeLine{\Hypertarget{calculus_8h_source_l00013}00013\ \textcolor{comment}{\ *\ @return\ true\ on\ success.}}
+\DoxyCodeLine{\Hypertarget{calculus_8h_source_l00014}00014\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{calculus_8h_source_l00015}\mbox{\hyperlink{calculus_8h_af5ab65970ac1f025b3795157144fb68f}{00015}}\ \textcolor{keyword}{typedef}\ \_Bool\ (*\mbox{\hyperlink{calculus_8h_af5ab65970ac1f025b3795157144fb68f}{ttak\_math\_func\_t}})(\mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *res,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *x,\ \textcolor{keywordtype}{void}\ *ctx,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{calculus_8h_source_l00016}00016\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{calculus_8h_source_l00017}00017\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{calculus_8h_source_l00018}00018\ \textcolor{comment}{\ *\ @brief\ Numerical\ differentiation\ at\ point\ x.}}
+\DoxyCodeLine{\Hypertarget{calculus_8h_source_l00019}00019\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{calculus_8h_source_l00020}\mbox{\hyperlink{calculus_8h_aae9c077b1cef771441e2551820508bc5}{00020}}\ \_Bool\ \mbox{\hyperlink{calculus_8h_aae9c077b1cef771441e2551820508bc5}{ttak\_calculus\_diff}}(\mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *res,\ \mbox{\hyperlink{calculus_8h_af5ab65970ac1f025b3795157144fb68f}{ttak\_math\_func\_t}}\ f,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *x,\ \textcolor{keywordtype}{void}\ *ctx,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{calculus_8h_source_l00021}00021\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{calculus_8h_source_l00022}00022\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{calculus_8h_source_l00023}00023\ \textcolor{comment}{\ *\ @brief\ Partial\ differentiation\ at\ point\ x\ for\ a\ specific\ dimension.}}
+\DoxyCodeLine{\Hypertarget{calculus_8h_source_l00024}00024\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{calculus_8h_source_l00025}\mbox{\hyperlink{calculus_8h_af6cc0f406da707d38d8773b5bba98f5d}{00025}}\ \_Bool\ \mbox{\hyperlink{calculus_8h_af6cc0f406da707d38d8773b5bba98f5d}{ttak\_calculus\_partial\_diff}}(\mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *res,\ \mbox{\hyperlink{calculus_8h_af5ab65970ac1f025b3795157144fb68f}{ttak\_math\_func\_t}}\ f,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *x\_vec,\ uint8\_t\ dim,\ \textcolor{keywordtype}{void}\ *ctx,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{calculus_8h_source_l00026}00026\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{calculus_8h_source_l00027}00027\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{calculus_8h_source_l00028}00028\ \textcolor{comment}{\ *\ @brief\ Numerical\ definite\ integration\ over\ [a,\ b].}}
+\DoxyCodeLine{\Hypertarget{calculus_8h_source_l00029}00029\ \textcolor{comment}{\ *\ Uses\ adaptive\ methods\ and\ can\ be\ parallelized.}}
+\DoxyCodeLine{\Hypertarget{calculus_8h_source_l00030}00030\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{calculus_8h_source_l00031}\mbox{\hyperlink{calculus_8h_a30cf8358f6f87f7be75b55c0f5decee6}{00031}}\ \_Bool\ \mbox{\hyperlink{calculus_8h_a30cf8358f6f87f7be75b55c0f5decee6}{ttak\_calculus\_integrate}}(\mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *res,\ \mbox{\hyperlink{calculus_8h_af5ab65970ac1f025b3795157144fb68f}{ttak\_math\_func\_t}}\ f,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *a,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *b,\ \textcolor{keywordtype}{void}\ *ctx,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{calculus_8h_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{calculus_8h_source_l00033}00033\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_MATH\_CALCULUS\_H}}
+
+\end{DoxyCode}

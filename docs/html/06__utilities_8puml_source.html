@@ -155,8 +155,23 @@ $(document).ready(function(){initNavTree('06__utilities_8puml_source.html',''); 
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>            + lock : ttak_spin_t</div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        }</div>
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    }</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>}</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>@enduml</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    package &quot;Masking (mask/)&quot; {</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        class ttak_dynamic_mask_t {</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>            + bits : uint64_t*</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>            + capacity : uint32_t</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>            + count : uint32_t</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>            + lock : ttak_rwlock_t</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>            __</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>            + init()</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>            + destroy()</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>            + set(bit_idx)</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>            + clear(bit_idx)</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>            + test(bit_idx)</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        }</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    }</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>}</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>@enduml</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
