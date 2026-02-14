@@ -178,6 +178,20 @@ typedef struct ttak_shared_s {
 ttak_shared_result_t ttak_shared_swap_ebr(ttak_shared_t *self, void *new_shared, size_t new_size);
 
 /**
+ * @brief Retrieves the size of the payload from the implicit header.
+ * @param ptr Pointer returned by access() or access_ebr().
+ * @return Size of the payload in bytes.
+ */
+size_t ttak_shared_get_payload_size(const void *ptr);
+
+/**
+ * @brief Retrieves the timestamp of the payload from the implicit header.
+ * @param ptr Pointer returned by access() or access_ebr().
+ * @return Timestamp of the payload.
+ */
+uint64_t ttak_shared_get_payload_ts(const void *ptr);
+
+/**
  * @brief Helper macro for typed access to shared data.
  * @param type The type to cast the shared data to.
  * @param shared_ptr Pointer to the ttak_shared_t instance.
