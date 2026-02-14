@@ -11,10 +11,21 @@ ifneq (,$(findstring tcc,$(notdir $(CC))))
 BUILD_PROFILE = tcc
 endif
 
+# Clang detection and specific flags
+ifneq (,$(findstring clang,$(notdir $(CC))))
+PERF_STACK_FLAGS += -flto=thin -mllvm -inline-threshold=600
+LDFLAGS += -flto=thin
+endif
+
 TCC_STACK_FLAGS ?= -O3 -g \
                   -fno-inline \
                   -fno-omit-frame-pointer \
-                  -fno-optimize-sibling-calls
+                  -fno-optimize-sibling-calls \
+				  -fno-semantic-interposition \
+				  -fno-trapping-math \
+				  -falign-functions=32 \
+				  -fno-plt \
+				  -fno-math-errno
 
 PERF_WARNINGS ?= -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum
 PERF_STACK_FLAGS ?= -O3 -march=native -mtune=native -pipe -flto -ffat-lto-objects \
