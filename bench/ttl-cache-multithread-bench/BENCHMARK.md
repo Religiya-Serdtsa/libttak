@@ -32,7 +32,6 @@ Benchmark program's optimization was left as `-O0`, while following the same com
 
 ### Throughput & Bottleneck Trends
 
-```html
 <div id="throughput_chart" style="width:100%; height:400px;"></div>
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <script>
@@ -54,11 +53,8 @@ Benchmark program's optimization was left as `-O0`, while following the same com
     Plotly.newPlot('throughput_chart', [trace1, trace2, trace3, bottlenecks], layout);
 </script>
 
-```
-
 ### Memory Utilization & Peak Analysis
 
-```html
 <div id="memory_chart" style="width:100%; height:400px;"></div>
 <script>
     var gcc_rss = [1.27, 1.27, 1.20, 1.20, 1.20, 1.19, 1.18, 1.17, 1.17];
@@ -83,8 +79,6 @@ Benchmark program's optimization was left as `-O0`, while following the same com
     };
     Plotly.newPlot('memory_chart', [trace_gcc, trace_clang, trace_tcc, peaks], layout_mem);
 </script>
-
-```
 
 ---
 
