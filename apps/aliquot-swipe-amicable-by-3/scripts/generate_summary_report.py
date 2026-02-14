@@ -35,9 +35,9 @@ def generate_summary_report(jsonl_filepath, report_filepath, app_name="ALIQUOT")
     data.sort(key=lambda x: int(x.get('seed', '0')))
 
     # Determine reporting parameters
-    total_seeds_recorded = len(data) # This means found/track records, not all scanned.
+    total_seeds_recorded = len(data) # Count of discovered or tracked records
     
-    # Initialize values for summary
+    # Initialize summary statistics
     first_seed = data[0].get('seed', 'N/A')
     last_seed = data[-1].get('seed', 'N/A')
     max_value_seen = 0
@@ -63,9 +63,9 @@ def generate_summary_report(jsonl_filepath, report_filepath, app_name="ALIQUOT")
             found_amicable_count += 1
         elif status == 'perfect':
             found_perfect_count += 1
-        elif 'cycle' in status: # Catch 'cycle' and 'big-cycle'
+        elif 'cycle' in status: # Categorize 'cycle' and 'big-cycle'
             found_cycle_count += 1
-        elif 'terminated' in status: # Catch 'terminated' and 'big-terminated'
+        elif 'terminated' in status: # Categorize 'terminated' and 'big-terminated'
             found_terminated_count += 1
         elif status == 'overflow':
             found_overflow_count += 1
@@ -91,7 +91,7 @@ def generate_summary_report(jsonl_filepath, report_filepath, app_name="ALIQUOT")
             f.write(f"  Last Seed:  {last_seed.ljust(20)}
 ")
             f.write(f"Total Unique Seeds Recorded: {total_seeds_recorded}
-") # Adjusted wording
+") # Unique seed count
             f.write(f"Max Value Reached: {str(max_value_seen).ljust(20)} (from seed {max_value_seed})
 
 ")

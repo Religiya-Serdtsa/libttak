@@ -12,11 +12,11 @@ from typing import Dict, Iterable, Optional, Tuple
 
 def factorize_trial_then_pollard_rho(n: int) -> Dict[int, int]:
     """
-    Deterministic-ish factorization helper for <= ~70-80 bits workload.
-    Uses:
-      - small prime trial division
-      - Pollard Rho for leftovers
-    Not meant for 150+ bits; for that you should call external tools.
+    Factorization helper optimized for operands up to approximately 80 bits.
+    Implementation details:
+      - Trial division using small primes.
+      - Pollard's Rho algorithm for remaining composite factors.
+    For operands exceeding 150 bits, external specialized tools are recommended.
     """
     if n < 2:
         return {}
@@ -36,7 +36,7 @@ def factorize_trial_then_pollard_rho(n: int) -> Dict[int, int]:
                 cnt += 1
             add_factor(p, cnt)
 
-    # Wheel-ish trial up to a limit
+    # Wheel factorization trial division up to specified limit
     limit = 20000
     f = 41
     step = 2
@@ -83,7 +83,7 @@ def factorize_trial_then_pollard_rho(n: int) -> Dict[int, int]:
             return
         d = rho(n_)
         if d == n_:
-            # fallback: tweak and retry
+            # Heuristic fallback: retry with alternative parameterization
             for c in [3, 5, 7, 11, 13]:
                 x = 2
                 y = 2
@@ -114,8 +114,8 @@ def is_probable_prime(n: int) -> bool:
         if n % p == 0:
             return False
 
-    # deterministic MR bases for 64-bit are known; for ~70-bit this is still fine in practice.
-    # Using a slightly larger base set.
+    # Utilizes known deterministic Miller-Rabin bases for 64-bit integers.
+    # Empirically effective for values up to approximately 70 bits.
     d = n - 1
     s = 0
     while d % 2 == 0:
@@ -254,7 +254,7 @@ def main() -> int:
         c_ended = str(rec.get("ended", ""))
         max_value_field = rec.get("max_value")
         if max_value_field is None:
-            # Legacy records lack the new exact max field; skip until tracker is upgraded.
+            # Skip records lacking exact maximum value field (requires tracker update)
             continue
         if isinstance(max_value_field, str):
             if max_value_field.strip() == "":
@@ -269,8 +269,7 @@ def main() -> int:
 
         match_bits = (vr.peak_bits == c_bits)
         match_ended = (vr.ended == c_ended) or (c_ended.startswith("cycle") and vr.ended.startswith("cycle"))
-        # final: If u64 export fails in the big path, UINT64_MAX might be used.
-        # In such cases, deferring comparison is reasonable.
+        # Match final state: defer comparison if UINT64_MAX export occurs in BigInt path.
         match_final = True
 
         note = ""

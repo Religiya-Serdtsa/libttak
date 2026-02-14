@@ -21,7 +21,7 @@ def is_probable_prime(n: int) -> bool:
         d >>= 1
         s += 1
 
-    # Deterministic bases for 64-bit; works well in practice for larger too.
+    # Deterministic Miller-Rabin bases for 64-bit integers.
     bases = [2, 325, 9375, 28178, 450775, 9780504, 1795265022]
     for a in bases:
         a %= n
@@ -114,8 +114,7 @@ def run_aliquot(seed: int, steps: int, trace: bool, max_print: int):
     for i in range(1, steps + 1):
         nxt = aliquot_next(n)
 
-        # Rule check: by construction nxt is s(n). This is here to make it explicit.
-        # If you later plug another engine's output, compare against nxt.
+        # Update current value to the computed aliquot sum s(n).
         n = nxt
 
         if n > peak:

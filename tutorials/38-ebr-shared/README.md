@@ -24,19 +24,29 @@ Enters the EBR critical section. Even if `swap_ebr` occurs during access, the me
 ### `retire`
 Replaces `destroy`. Instead of freeing immediately (which would crash active readers), it schedules the container itself for destruction once all current readers have exited their epoch.
 
+### EBR and EpochGC Integration
+
+In advanced or high-load systems, **EBR** should be used in conjunction with **EpochGC** (Epoch-based Garbage Collection).
+
+*   **EBR (`ttak_epoch_reclaim`)**: Manages the "micro" lifecycle of pointers swapped via `ttak_shared_swap_ebr`. It ensures that a pointer is only freed once all threads have moved past the epoch in which it was retired.
+*   **EpochGC (`ttak_epoch_gc_rotate`)**: Manages the "macro" lifecycle of containers and memory trees. It provides a structured way to trigger cleanup passes and ensures that orphaned or retired containers (via `retire`) are eventually reclaimed.
+
+**Best Practice**: Always pair `ttak_epoch_reclaim()` with `ttak_epoch_gc_rotate()` in your main loop or worker tick to maintain overall system memory health.
+
 ## Building and Running
 
-```bash
-gcc -o ebr_demo ebr_demo.c -I../../include -L../../lib -lttak -lpthread
-./ebr_demo
-```
+Use the provided `Makefile`:
 
-(Note: You may need to compile `libttak` first or link against the object files in `../../src/shared/shared.c` and `../../src/mem/epoch.c`)
+```bash
+make
+./lesson38_ebr_shared
+```
 
 ## Code Walkthrough
 
-See `ebr_demo.c` for a complete example of:
-1.  Initializing the shared object.
-2.  Reader threads using `access_ebr`.
-3.  Writer thread using `swap_ebr` and `ttak_epoch_reclaim`.
-4.  Safe container destruction with `retire`.
+See `lesson38_ebr_shared.c` for a complete example of:
+1.  Initializing the shared object and allocating its payload.
+2.  Registering reader threads with `ttak_epoch_register_thread`.
+3.  Reader threads using `access_ebr` with EBR protection.
+4.  Writer thread using `ttak_shared_swap_ebr` and manually triggering `ttak_epoch_reclaim`.
+5.  Safe container destruction using `retire` followed by final epoch flushes.

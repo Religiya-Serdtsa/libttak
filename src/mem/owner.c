@@ -24,12 +24,11 @@ static inline uintptr_t _hash_str(const char *str) {
 }
 
 ttak_owner_t *ttak_owner_create(uint32_t policy) {
-    ttak_owner_t *owner = malloc(sizeof(ttak_owner_t));
+    uint64_t now = ttak_get_tick_count();
+    ttak_owner_t *owner = ttak_mem_alloc(sizeof(ttak_owner_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!owner) return NULL;
 
     owner->id = atomic_fetch_add(&g_owner_id_counter, 1);
-
-    uint64_t now = ttak_get_tick_count();
     
     // Initialize resource and function maps
     owner->resources = ttak_create_map(32, now);
@@ -54,7 +53,7 @@ void ttak_owner_destroy(ttak_owner_t *owner) {
     
     ttak_rwlock_unlock(&owner->lock);
     ttak_rwlock_destroy(&owner->lock);
-    free(owner);
+    ttak_mem_free(owner);
 }
 
 bool ttak_owner_register_func(ttak_owner_t *owner, const char *name, ttak_owner_func_t func) {
