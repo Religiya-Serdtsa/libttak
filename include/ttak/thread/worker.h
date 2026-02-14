@@ -11,7 +11,11 @@
 #define TTAK_ERR_FATAL_EXIT      -103
 
 typedef struct ttak_worker_wrapper {
+#ifdef _WIN32
+    jmp_buf         env;
+#else
     sigjmp_buf      env;
+#endif
     void            *(*func)(void *);
     void            *arg;
     ttak_promise_t  *promise;
