@@ -8,6 +8,7 @@
 #include <ttak/shared/shared.h>
 #include <ttak/timing/timing.h>
 #include <ttak/mem/mem.h>
+#include <ttak/mem/epoch.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -70,6 +71,7 @@ static ttak_shared_result_t ttak_shared_allocate_impl(ttak_shared_t *self, size_
     self->status = TTAK_SHARED_READY;
     self->ts = ttak_get_tick_count_ns();
     self->type_name = "raw_buffer";
+    atomic_init(&self->retired_ptr, (void *)0);
 
     return TTAK_OWNER_SUCCESS;
 }
@@ -125,11 +127,42 @@ static const void *ttak_shared_access_impl(ttak_shared_t *self, ttak_owner_t *cl
     return self->shared;
 }
 
+/**
+ * @brief EBR-aware access implementation.
+ */
+static const void *ttak_shared_access_ebr_impl(ttak_shared_t *self, ttak_owner_t *claimant, bool protected, ttak_shared_result_t *result) {
+    if (!self) return NULL;
+
+    if (protected) {
+        ttak_epoch_enter();
+    }
+
+    ttak_shared_result_t res = _ttak_shared_validate_owner(self, claimant);
+    if (result) *result = res;
+
+    if (res != TTAK_OWNER_SUCCESS && self->level == TTAK_SHARED_LEVEL_3) {
+        if (protected) ttak_epoch_exit();
+        return NULL;
+    }
+
+    /* 
+     * In EBR mode, even if swap_ebr happens concurrently, the old pointer 
+     * (which we might read here) is guaranteed to remain valid until we exit.
+     */
+    return self->shared;
+}
+
 static void ttak_shared_release_impl(ttak_shared_t *self) {
     if (!self) return;
     if (self->is_atomic_read) {
         ttak_rwlock_unlock(&self->rwlock);
     }
+}
+
+static void ttak_shared_release_ebr_impl(ttak_shared_t *self) {
+    (void)self;
+    /* Assumes caller used protected=true in access_ebr */
+    ttak_epoch_exit();
 }
 
 /**
@@ -198,6 +231,33 @@ static ttak_shared_result_t ttak_shared_set_atomic_read_impl(ttak_shared_t *self
     return TTAK_OWNER_SUCCESS;
 }
 
+/* Helper for retired container cleanup */
+static void _ttak_shared_container_cleanup(void *ptr) {
+    ttak_shared_t *self = (ttak_shared_t *)ptr;
+    if (!self) return;
+
+    /* Free resources other than self->shared (which is already retired) */
+    free(self->last_sync_ts);
+    ttak_dynamic_mask_destroy(&self->owners_mask);
+    ttak_rwlock_destroy(&self->rwlock);
+    
+    /* Finally free the container itself */
+    free(self);
+}
+
+static void ttak_shared_retire_impl(ttak_shared_t *self) {
+    if (!self) return;
+
+    /* Retire the internal data if it exists */
+    if (self->shared) {
+        ttak_epoch_retire(self->shared, self->cleanup ? self->cleanup : free);
+        self->shared = NULL; 
+    }
+
+    /* Retire the container itself */
+    ttak_epoch_retire(self, _ttak_shared_container_cleanup);
+}
+
 /**
  * @brief Constructor for ttak_shared_t.
  * @note This initializes the function pointers to default implementations.
@@ -209,17 +269,21 @@ void ttak_shared_init(ttak_shared_t *self) {
     
     ttak_rwlock_init(&self->rwlock);
     ttak_dynamic_mask_init(&self->owners_mask);
+    atomic_init(&self->retired_ptr, (void *)0);
 
     /* Bind implementations */
     self->allocate = ttak_shared_allocate_impl;
     self->allocate_typed = ttak_shared_allocate_typed_impl;
     self->add_owner = ttak_shared_add_owner_impl;
     self->access = ttak_shared_access_impl;
+    self->access_ebr = ttak_shared_access_ebr_impl;
     self->release = ttak_shared_release_impl;
+    self->release_ebr = ttak_shared_release_ebr_impl;
     self->sync_all = ttak_shared_sync_all_impl;
     self->set_ro = ttak_shared_set_ro_impl;
     self->set_rw = ttak_shared_set_rw_impl;
     self->set_atomic_read = ttak_shared_set_atomic_read_impl;
+    self->retire = ttak_shared_retire_impl;
 }
 
 /**
@@ -232,7 +296,7 @@ void ttak_shared_destroy(ttak_shared_t *self) {
     
     if (self->cleanup && self->shared) {
         self->cleanup(self->shared);
-    } else {
+    } else if (self->shared) {
         free(self->shared);
     }
 
@@ -241,4 +305,27 @@ void ttak_shared_destroy(ttak_shared_t *self) {
     
     ttak_rwlock_unlock(&self->rwlock);
     ttak_rwlock_destroy(&self->rwlock);
+}
+
+ttak_shared_result_t ttak_shared_swap_ebr(ttak_shared_t *self, void *new_shared, size_t new_size) {
+    if (!self || !new_shared) return TTAK_OWNER_INVALID;
+
+    ttak_rwlock_wrlock(&self->rwlock);
+    self->status |= TTAK_SHARED_SWAPPING;
+
+    /* 1. Move existing data to retirement queue */
+    if (self->shared) {
+        ttak_epoch_retire(self->shared, self->cleanup ? self->cleanup : free);
+    }
+
+    /* 2. Swap pointer and update timestamp */
+    self->shared = new_shared;
+    self->size = new_size;
+    self->ts = ttak_get_tick_count_ns();
+    
+    self->status &= ~TTAK_SHARED_SWAPPING;
+    self->status |= TTAK_SHARED_DIRTY;
+    ttak_rwlock_unlock(&self->rwlock);
+
+    return TTAK_OWNER_SUCCESS;
 }

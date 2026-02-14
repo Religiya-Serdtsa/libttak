@@ -11,6 +11,7 @@
 #include <ttak/mem/owner.h>
 #include <ttak/sync/sync.h>
 #include <ttak/mask/dynamic_mask.h>
+#include <ttak/mem/epoch.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
@@ -24,6 +25,8 @@ typedef uint32_t ttak_shared_status_t;
 #define TTAK_SHARED_EXPIRED  (1 << 1)  /**< Resource timestamp is outdated */
 #define TTAK_SHARED_ZOMBIE   (1 << 2)  /**< No active owners; pending deallocation */
 #define TTAK_SHARED_READONLY (1 << 3)  /**< Resource is in read-only mode */
+#define TTAK_SHARED_USE_EBR  (1 << 4)  /**< EBR protection enabled */
+#define TTAK_SHARED_SWAPPING (1 << 5)  /**< Data is currently being swapped */
 
 /**
  * @brief Operational result codes for shared memory actions.
@@ -64,6 +67,8 @@ typedef struct ttak_shared_s {
 	ttak_shared_status_t status;    /**< Current status flags (DIRTY, EXPIRED, etc.) */
 	ttak_shared_level_t level;      /**< Enforced security level for this resource */
 	bool is_atomic_read;            /**< Flag to enable/disable atomic read operations */
+
+	_Atomic(void *) retired_ptr;    /**< Pointer currently being retired (internal use) */
 
 	/**
 	 * @brief Custom destructor for the shared payload.
@@ -108,10 +113,26 @@ typedef struct ttak_shared_s {
 	const void *(*access)(struct ttak_shared_s *self, ttak_owner_t *claimant, ttak_shared_result_t *result);
 
 	/**
+	 * @brief Validates and grants access with optional EBR protection.
+	 * @param self Pointer to the ttak_shared_t instance.
+	 * @param claimant The owner requesting access.
+	 * @param protected If true, enters EBR critical section.
+	 * @param result Pointer to store the detailed validation result.
+	 * @return Const pointer to the shared data, or NULL if denied.
+	 */
+	const void *(*access_ebr)(struct ttak_shared_s *self, ttak_owner_t *claimant, bool protected, ttak_shared_result_t *result);
+
+	/**
 	 * @brief Releases the access acquired via access().
 	 * @param self Pointer to the ttak_shared_t instance.
 	 */
 	void (*release)(struct ttak_shared_s *self);
+
+	/**
+	 * @brief Releases access acquired via access_ebr().
+	 * @param self Pointer to the ttak_shared_t instance.
+	 */
+	void (*release_ebr)(struct ttak_shared_s *self);
 
 	/**
 	 * @brief Synchronizes changes across all registered owners.
@@ -139,7 +160,22 @@ typedef struct ttak_shared_s {
 	 */
 	ttak_shared_result_t (*set_atomic_read)(struct ttak_shared_s *self, bool enable);
 
+	/**
+	 * @brief Retires the entire container safely using EBR.
+	 * @param self Pointer to the ttak_shared_t instance.
+	 */
+	void (*retire)(struct ttak_shared_s *self);
+
 } ttak_shared_t;
+
+/**
+ * @brief Swaps the internal data pointer using EBR for safety.
+ * @param self Pointer to the ttak_shared_t instance.
+ * @param new_shared Pointer to the new data.
+ * @param new_size Size of the new data.
+ * @return Result code of the operation.
+ */
+ttak_shared_result_t ttak_shared_swap_ebr(ttak_shared_t *self, void *new_shared, size_t new_size);
 
 /**
  * @brief Helper macro for typed access to shared data.
