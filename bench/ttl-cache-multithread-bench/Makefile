@@ -2,19 +2,32 @@ CC ?= gcc
 CFLAGS = -Wall -std=c11 -pthread -I../../include -O3 -march=native -flto -D_GNU_SOURCE
 LDFLAGS = -L../../lib -lttak -lpthread -flto
 
-TARGET = ttl_cache_bench
-SRCS = ttl_cache_bench.c
-OBJS = $(SRCS:.c=.o)
+# Define all targets
+TARGETS = ttl_cache_bench ttl_cache_bench_lockfree
 
-all: $(TARGET)
+# Source files for each target
+SRCS_BENCH = ttl_cache_bench.c
+SRCS_LOCKFREE = ttl_cache_bench_lockfree.c
 
-$(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(TARGET) $(LDFLAGS)
+# Object files
+OBJS_BENCH = $(SRCS_BENCH:.c=.o)
+OBJS_LOCKFREE = $(SRCS_LOCKFREE:.c=.o)
 
+all: $(TARGETS)
+
+# Target for the original benchmark
+ttl_cache_bench: $(OBJS_BENCH)
+	$(CC) $(CFLAGS) $(OBJS_BENCH) -o $@ $(LDFLAGS)
+
+# Target for the lock-free benchmark
+ttl_cache_bench_lockfree: $(OBJS_LOCKFREE)
+	$(CC) $(CFLAGS) $(OBJS_LOCKFREE) -o $@ $(LDFLAGS)
+
+# Pattern rule for object files
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(TARGET) $(OBJS)
+	rm -f $(TARGETS) $(OBJS_BENCH) $(OBJS_LOCKFREE)
 
 .PHONY: all clean

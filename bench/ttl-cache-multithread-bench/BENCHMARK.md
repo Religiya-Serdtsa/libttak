@@ -1,5 +1,3 @@
-데이터 정리가 누락되었군요. 벤치마크 로그에서 확인된 최종 수치들을 바탕으로 **BENCHMARK.md**에 들어갈 내용을 완성했습니다.
-
 ## Performance Comparison Report
 
 (Linux x64, Ryzen 5600X, 64GB DDR4 3200MHz)
@@ -17,7 +15,7 @@
 ---
 
 LibTTAK and this benchmark had a same compiler (e.g. GCC LibTTAK/GCC Benchmark) in this experiment.
-Benchmark program's optimization was left as `-O0`, while following the same compiler.
+Benchmark program's optimization was `-O3`, while following the same compiler.
 
 ## Detailed Performance Analysis
 
