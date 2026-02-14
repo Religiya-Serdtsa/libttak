@@ -165,7 +165,7 @@ static const void *ttak_shared_access_ebr_impl(ttak_shared_t *self, ttak_owner_t
     }
 
     /* Atomic load with acquire barrier to see the header contents */
-    void *ptr = atomic_load_explicit((_Atomic(void *)*)&self->shared, memory_order_acquire);
+    void *ptr = atomic_load_explicit((void * _Atomic *)&self->shared, memory_order_acquire);
     uint64_t current_ts = ptr ? TTAK_GET_HEADER(ptr)->ts : self->ts;
 
     ttak_shared_result_t res = _ttak_shared_validate_owner(self, claimant, current_ts);
@@ -349,6 +349,8 @@ ttak_shared_result_t ttak_shared_swap_ebr(ttak_shared_t *self, void *new_shared,
 
     header->size = new_size;
     header->ts = ttak_get_tick_count_ns();
+    
+    /* Using optimized duplication if possible, but here we are copying from raw buffer to payload */
     memcpy(header->data, new_shared, new_size);
 
     ttak_rwlock_wrlock(&self->rwlock);
@@ -361,7 +363,7 @@ ttak_shared_result_t ttak_shared_swap_ebr(ttak_shared_t *self, void *new_shared,
     }
 
     /* 3. Atomic pointer swap (Release barrier ensures header content is visible) */
-    atomic_store_explicit((_Atomic(void *)*)&self->shared, header->data, memory_order_release);
+    atomic_store_explicit((void * _Atomic *)&self->shared, header->data, memory_order_release);
     
     /* 4. Update shadow members for rough access */
     self->size = new_size;

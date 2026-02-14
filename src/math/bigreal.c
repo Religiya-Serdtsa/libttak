@@ -35,7 +35,7 @@ _Bool ttak_bigreal_align(ttak_bigreal_t *a, ttak_bigreal_t *b, uint64_t now) {
     ttak_bigint_init(&tmp, now);
 
     if (a->exponent > b->exponent) {
-        // Shift a left
+        // Shift a left to match smaller exponent b
         uint64_t diff = a->exponent - b->exponent;
         if (diff > 60) {
             ttak_bigint_free(&tmp, now);
@@ -45,7 +45,7 @@ _Bool ttak_bigreal_align(ttak_bigreal_t *a, ttak_bigreal_t *b, uint64_t now) {
         ttak_bigint_copy(&a->mantissa, &tmp, now);
         a->exponent = b->exponent;
     } else {
-        // Shift b left
+        // Shift b left to match smaller exponent a
         uint64_t diff = b->exponent - a->exponent;
         if (diff > 60) {
             ttak_bigint_free(&tmp, now);

@@ -78,6 +78,12 @@ extern pthread_mutex_t __ttak_atomic_global_lock;
 #define atomic_fetch_sub(obj, operand) \
     atomic_fetch_sub_explicit((obj), (operand), memory_order_seq_cst)
 
+#define atomic_exchange_explicit(obj, desired, order) \
+    ({ __TT_ATOMIC_LOCK(); __typeof__(*(obj)) __old = *(obj); *(obj) = (desired); (void)(order); __TT_ATOMIC_UNLOCK(); __old; })
+
+#define atomic_exchange(obj, desired) \
+    atomic_exchange_explicit((obj), (desired), memory_order_seq_cst)
+
 #define atomic_compare_exchange_weak_explicit(obj, expected, desired, success, failure) \
     ({ bool __ok; (void)(success); (void)(failure); __TT_ATOMIC_LOCK(); \
        if (*(obj) == *(expected)) { *(obj) = (desired); __ok = true; } \
