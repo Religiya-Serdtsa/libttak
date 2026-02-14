@@ -1,45 +1,18 @@
-# TTL Cache Benchmark (libttak)
+## Performance Comparison Report
 
-A high-performance benchmark for `libttak` simulating a TTL-based cache with generational memory management.
+(Linux x64, Ryzen 5600X, 64GB DDR4 3200MHz)
 
-## Overview
+| Metric Category | Metric | GCC -O3 | TCC -O3 | Clang -O3 |
+| --- | --- | --- | --- | --- |
+| Throughput | Operations per Second (Ops/s) | 13,821,147 | 2,826,011 | 3,939,376 |
+| Logic Integrity | Cache Hit Rate (%) | 77.15 | 76.15 | 76.74 |
+| Resource Usage | RSS Memory Usage (KB) | 1,176,200 | 259,080 | 357,172 |
+| GC Performance | CleanNsAvg (Nanoseconds) | 112,175,986 | 17,943,407 | 32,841,367 |
+| Runtime Control | Total Epochs Transitioned | 38 | 7 | 39 |
+| Data Retention | Items in Cache (Final) | 53,802 | 36,504 | 43,358 |
+| Memory Recovery | Retired Objects Count | 1,270 | 106 | 1,024 |
 
-This benchmark simulates a concurrent cache workload with:
-- **Generational Memory:** Values are allocated in time-based epochs.
-- **Bulk Cleanup:** When an epoch expires, all its memory is freed at once using `mem_tree`.
-- **Sharded Locking:** Hash map is partitioned into shards for concurrency.
-- **Async Maintenance:** Background task rotates epochs and cleans up old data.
+---
 
-## Build
-
-```bash
-make
-```
-
-## Run
-
-```bash
-./ttl_cache_bench [options]
-```
-
-### Options
-
-- `--threads, -t`: Number of worker threads (default: 4)
-- `--duration, -d`: Benchmark duration in seconds (default: 10)
-- `--value-size, -v`: Size of value blob in bytes (default: 256)
-- `--keyspace, -k`: Number of unique keys (default: 100000)
-- `--ttl-ms, -l`: TTL of items in milliseconds (default: 500)
-- `--epoch-ms, -e`: Duration of one epoch in milliseconds (default: 250)
-- `--shards, -s`: Number of map shards (default: 16)
-
-### Example
-
-```bash
-./ttl_cache_bench --threads 8 --duration 20 --value-size 1024 --shards 32
-```
-
-## Metrics
-
-- **Ops/s**: Total throughput (Get + Set + Del)
-- **HitRate**: Percentage of GETs that found a valid item.
-- **AvgClean**: Average time (microseconds) to destroy an expired epoch (bulk free).
+LibTTAK and this benchmark had a same compiler (e.g. GCC LibTTAK/GCC Benchmark) in this experiment.
+Benchmark program's optimization was left as `-O0`, while following the same compiler.

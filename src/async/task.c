@@ -95,7 +95,7 @@ void ttak_task_execute(ttak_task_t *task, uint64_t now) {
  */
 ttak_task_t *ttak_task_clone(const ttak_task_t *task, uint64_t now) {
     if (!ttak_mem_access((void *)task, now)) return NULL;
-    return ttak_task_create(task->func, task->arg, task->promise, now);
+    return ttak_mem_dup(task, sizeof(ttak_task_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
 }
 
 /**

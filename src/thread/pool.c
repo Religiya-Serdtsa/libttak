@@ -62,6 +62,9 @@ ttak_thread_pool_t *ttak_thread_pool_create(size_t num_threads, int default_nice
         pool->workers[i]->wrapper = (ttak_worker_wrapper_t *)ttak_mem_alloc(sizeof(ttak_worker_wrapper_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
         pool->workers[i]->wrapper->nice_val = default_nice;
         pool->workers[i]->wrapper->ts = now;
+        /* Pre-initialize jump magic so abort checks don't fail before first setjmp */
+        pool->workers[i]->wrapper->jmp_magic = 0; 
+        pool->workers[i]->wrapper->jmp_tid = 0;
 
         pthread_create(&pool->workers[i]->thread, NULL, ttak_worker_routine, pool->workers[i]);
     }

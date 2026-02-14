@@ -68,7 +68,7 @@ typedef struct ttak_shared_s {
 	ttak_shared_level_t level;      /**< Enforced security level for this resource */
 	bool is_atomic_read;            /**< Flag to enable/disable atomic read operations */
 
-	_Atomic(void *) retired_ptr;    /**< Pointer currently being retired (internal use) */
+	void * _Atomic retired_ptr;    /**< Pointer currently being retired (internal use) */
 
 	/**
 	 * @brief Custom destructor for the shared payload.

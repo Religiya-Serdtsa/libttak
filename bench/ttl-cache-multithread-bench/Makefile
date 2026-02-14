@@ -1,13 +1,6 @@
-CC ?= tcc
-CFLAGS = -Wall -std=c11 -pthread -Iinclude -O0 -g \
-         -fno-inline -fno-omit-frame-pointer \
-         -fno-optimize-sibling-calls \
-         -fno-jump-tables -fno-builtin \
-         -fno-strict-aliasing -fno-common \
-         -fno-stack-protector -fno-asynchronous-unwind-tables \
-         -fno-exceptions -fno-tree-vectorize -fno-strict-overflow \
-         -ffunction-sections -fdata-sections
-LDFLAGS = -lttak -lpthread
+CC ?= gcc
+CFLAGS = -Wall -std=c11 -pthread -I../../include -O3 -march=native -flto -D_GNU_SOURCE
+LDFLAGS = -L../../lib -lttak -lpthread -flto
 
 TARGET = ttl_cache_bench
 SRCS = ttl_cache_bench.c

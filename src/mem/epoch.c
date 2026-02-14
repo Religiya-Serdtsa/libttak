@@ -21,7 +21,7 @@ typedef struct ttak_thread_node {
     struct ttak_thread_node *next;
 } ttak_thread_node_t;
 
-static _Atomic(ttak_thread_node_t *) g_thread_list = NULL;
+static ttak_thread_node_t * _Atomic g_thread_list = NULL;
 
 void ttak_epoch_register_thread(void) {
     if (t_local_state) return;

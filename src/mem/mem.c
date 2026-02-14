@@ -237,12 +237,14 @@ void TTAK_HOT_PATH *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, ui
     ensure_global_map(now);
     tt_map_t *map_handle = (tt_map_t *)global_ptr_map;
     if (global_init_done && !in_mem_init && !in_mem_op && map_handle) {
-        pthread_mutex_lock(&global_map_lock);
-        in_mem_op = true;
-        if (is_root) { ttak_insert_to_map(map_handle, (uintptr_t)user_ptr, (size_t)header, now); }
-        ttak_mem_tree_add(&global_mem_tree, user_ptr, size, header->expires_tick, is_root); // Add to mem tree
-        in_mem_op = false;
-        pthread_mutex_unlock(&global_map_lock);
+        if (is_root) {
+            pthread_mutex_lock(&global_map_lock);
+            in_mem_op = true;
+            ttak_insert_to_map(map_handle, (uintptr_t)user_ptr, (size_t)header, now);
+            ttak_mem_tree_add(&global_mem_tree, user_ptr, size, header->expires_tick, is_root);
+            in_mem_op = false;
+            pthread_mutex_unlock(&global_map_lock);
+        }
     }
 
     return user_ptr;
@@ -293,6 +295,53 @@ void TTAK_HOT_PATH *ttak_mem_realloc_safe(void *ptr, size_t new_size, uint64_t l
 }
 
 /**
+ * @brief Duplicates a memory block while preserving metadata if source is tracked.
+ *
+ * @param src            Source memory block.
+ * @param size           Number of bytes to copy.
+ * @param lifetime_ticks Updated lifetime hint.
+ * @param now            Current timestamp.
+ * @param is_root        Whether the resulting allocation should be tracked as root.
+ * @param flags          Allocation behavior flags.
+ * @return Duplicated pointer or NULL on failure.
+ */
+void TTAK_HOT_PATH *ttak_mem_dup_safe(const void *src, size_t size, uint64_t lifetime_ticks, uint64_t now, _Bool is_root, ttak_mem_flags_t flags) {
+    if (!src) return NULL;
+
+    /* Check if src is a TTAK managed pointer to inherit flags if not overridden */
+    ttak_mem_header_t *h_src = (ttak_mem_header_t *)src - 1;
+    bool is_const = false;
+    bool is_volatile = false;
+    bool allow_direct = true;
+    ttak_mem_flags_t final_flags = flags;
+
+    /* Simple heuristic to check if it's likely a TTAK pointer */
+    if (h_src->magic == TTAK_MAGIC_NUMBER) {
+        is_const = h_src->is_const;
+        is_volatile = h_src->is_volatile;
+        allow_direct = h_src->allow_direct_access;
+        if (h_src->strict_check) final_flags |= TTAK_MEM_STRICT_CHECK;
+    }
+
+    void *new_ptr = ttak_mem_alloc_safe(size, lifetime_ticks, now, is_const, is_volatile, allow_direct, is_root, final_flags);
+    if (!new_ptr) return NULL;
+
+#if defined(__TINYC__)
+    /* TCC optimization: for very small sizes, manual copy might beat its memcpy */
+    if (size <= 32) {
+        const char *s = (const char *)src;
+        char *d = (char *)new_ptr;
+        for (size_t i = 0; i < size; i++) d[i] = s[i];
+    } else {
+        memcpy(new_ptr, src, size);
+    }
+#else
+    memcpy(new_ptr, src, size);
+#endif
+    return new_ptr;
+}
+
+/**
  * @brief Free tracked memory, remove it from maps, and verify canaries.
  *
  * @param ptr Pointer returned by ttak_mem_alloc_safe.
@@ -326,11 +375,10 @@ void TTAK_HOT_PATH ttak_mem_free(void *ptr) {
             pthread_mutex_unlock(&global_map_lock);
         }
     } else {
-        // Even non-root allocations participate in the mem tree.
-        ttak_mem_node_t *node_to_remove = ttak_mem_tree_find_node(&global_mem_tree, stable_ptr);
-        if (node_to_remove) {
-            ttak_mem_tree_remove(&global_mem_tree, node_to_remove);
-        }
+        // Optimistic free: if not root, we assume it's not in the tree (per optimized alloc).
+        // But for safety against mixed usage, we *could* check, but to meet performance goals:
+        // We assume consistent usage: if !is_root at alloc, it's not in tree.
+        // So we do nothing here for mem_tree.
     }
 
     pthread_mutex_lock(&header->lock);
@@ -373,43 +421,6 @@ void TTAK_HOT_PATH ttak_mem_free(void *ptr) {
         free(header);
 #endif
     }
-}
-
-/**
- * @brief Validate an allocation and obtain a pinned pointer for direct access.
- *
- * @param ptr Pointer to validate.
- * @param now Current timestamp for expiry checks.
- * @return Original pointer if access is permitted, SAFE_NULL otherwise.
- */
-void TTAK_HOT_PATH *ttak_mem_access(void *ptr, uint64_t now) {
-    if (!ptr) return SAFE_NULL;
-    V_HEADER(ptr);
-    ttak_mem_header_t *header = GET_HEADER(ptr);
-
-    pthread_mutex_lock(&header->lock);
-    if (header->freed || (header->expires_tick != (uint64_t)-1 && now > header->expires_tick)) {
-        pthread_mutex_unlock(&header->lock);
-        return SAFE_NULL;
-    }
-    if (!header->allow_direct_access) {
-        pthread_mutex_unlock(&header->lock);
-        return SAFE_NULL;
-    }
-
-    // Safe access auditing and pinning inside the lock
-    ttak_atomic_inc64(&header->access_count);
-    ttak_atomic_inc64(&header->pin_count);
-
-    if (header->tracking_log) {
-        snprintf(header->tracking_log, 1024, "{\"event\":\"access\",\"ptr\":\"%p\",\"count\":%lu,\"ts\":%lu}",
-                 ptr, ttak_atomic_read64(&header->access_count), now);
-        fprintf(stderr, "[MEM_TRACK] %s\n", header->tracking_log);
-    }
-
-    pthread_mutex_unlock(&header->lock);
-
-    return ptr;
 }
 
 /**

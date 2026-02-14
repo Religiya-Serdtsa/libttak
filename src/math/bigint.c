@@ -55,9 +55,12 @@ static _Bool ensure_capacity(ttak_bigint_t *bi, size_t required, uint64_t now) {
     if (bi->is_dynamic) {
         new_buf = ttak_mem_realloc(bi->data.dyn_ptr, new_size, __TTAK_UNSAFE_MEM_FOREVER__, now);
     } else {
-        new_buf = ttak_mem_alloc(new_size, __TTAK_UNSAFE_MEM_FOREVER__, now);
+        new_buf = ttak_mem_dup(bi->data.sso_buf, bi->used * sizeof(limb_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
         if (new_buf) {
-            memcpy(new_buf, bi->data.sso_buf, bi->used * sizeof(limb_t));
+            /* If we duped but requested more than was in SSO, zero the rest */
+            if (new_capacity > bi->used) {
+                 memset(new_buf + bi->used, 0, (new_capacity - bi->used) * sizeof(limb_t));
+            }
         }
     }
 
@@ -589,8 +592,12 @@ _Bool ttak_bigint_mul_u64(ttak_bigint_t *dst, const ttak_bigint_t *lhs, uint64_t
             d[i+j] = (limb_t)prod;
             carry = prod >> 32;
         }
-        if (carry) {
-            d[i + rhs_used] += (limb_t)carry;
+        size_t k = i + rhs_used;
+        while (carry && k < dst->capacity) {
+            uint64_t sum = (uint64_t)d[k] + carry;
+            d[k] = (limb_t)sum;
+            carry = sum >> 32;
+            k++;
         }
     }
 

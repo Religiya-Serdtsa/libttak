@@ -11,12 +11,16 @@
 #endif
 #include <stdlib.h>
 #include "../../internal/app_types.h"
+#include "../../internal/tt_jmp.h"
 
 static TTAK_THREAD_LOCAL ttak_worker_t *current_worker = NULL;
 
 void ttak_worker_abort(void) {
-    if (current_worker && current_worker->wrapper) {
-        longjmp(current_worker->wrapper->env, 1);
+    if (current_worker && current_worker->wrapper && current_worker->wrapper->jmp_magic == TT_JMP_MAGIC) {
+        tt_longjmp(current_worker->wrapper->env,
+                   &current_worker->wrapper->jmp_magic,
+                   &current_worker->wrapper->jmp_tid,
+                   1);
     }
 }
 
@@ -34,7 +38,10 @@ static void threaded_function_wrapper(ttak_worker_t *worker, ttak_task_t *task) 
         // This is a practical use of setjmp/longjmp for error recovery in a task execution context.
         free(dirty);
         if (worker->wrapper) {
-            longjmp(worker->wrapper->env, 1);
+            tt_longjmp(worker->wrapper->env,
+                       &worker->wrapper->jmp_magic,
+                       &worker->wrapper->jmp_tid,
+                       1);
         }
     } else if (dirty) {
         free(dirty);
@@ -94,7 +101,7 @@ void *ttak_worker_routine(void *arg) {
         pthread_mutex_unlock(&pool->pool_lock);
 
         if (task) {
-            if (setjmp(self->wrapper->env) == 0) {
+            if (tt_setjmp(self->wrapper->env, &self->wrapper->jmp_magic, &self->wrapper->jmp_tid) == 0) {
                 threaded_function_wrapper(self, task);
             } else {
                 // Recovered from longjmp
