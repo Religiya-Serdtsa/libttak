@@ -35,7 +35,8 @@ static bool _ttak_shared_ensure_ts_capacity(ttak_shared_t *self, uint32_t owner_
     }
 
     uint32_t new_capacity = ((owner_id / 64) + 1) * 64;
-    uint64_t *new_ts = realloc(self->last_sync_ts, sizeof(uint64_t) * new_capacity);
+    uint64_t now = ttak_get_tick_count();
+    uint64_t *new_ts = ttak_mem_realloc(self->last_sync_ts, sizeof(uint64_t) * new_capacity, __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!new_ts) return false;
 
     memset(new_ts + self->ts_capacity, 0, sizeof(uint64_t) * (new_capacity - self->ts_capacity));
@@ -268,12 +269,12 @@ static void _ttak_shared_container_cleanup(void *ptr) {
     if (!self) return;
 
     /* Free resources other than self->shared (which is already retired) */
-    free(self->last_sync_ts);
+    ttak_mem_free(self->last_sync_ts);
     ttak_dynamic_mask_destroy(&self->owners_mask);
     ttak_rwlock_destroy(&self->rwlock);
     
     /* Finally free the container itself */
-    free(self);
+    ttak_mem_free(self);
 }
 
 static void ttak_shared_retire_impl(ttak_shared_t *self) {
@@ -281,7 +282,7 @@ static void ttak_shared_retire_impl(ttak_shared_t *self) {
 
     /* Retire the internal data if it exists */
     if (self->shared) {
-        ttak_epoch_retire(self->shared, self->cleanup ? self->cleanup : free);
+        ttak_epoch_retire(self->shared, self->cleanup ? self->cleanup : ttak_mem_free);
         self->shared = NULL; 
     }
 
@@ -328,10 +329,10 @@ void ttak_shared_destroy(ttak_shared_t *self) {
     if (self->cleanup && self->shared) {
         self->cleanup(self->shared);
     } else if (self->shared) {
-        free(self->shared);
+        ttak_mem_free(self->shared);
     }
 
-    free(self->last_sync_ts);
+    ttak_mem_free(self->last_sync_ts);
     ttak_dynamic_mask_destroy(&self->owners_mask);
     
     ttak_rwlock_unlock(&self->rwlock);
@@ -356,7 +357,7 @@ ttak_shared_result_t ttak_shared_swap_ebr(ttak_shared_t *self, void *new_shared,
     /* 2. Move existing shared pointer (with its header) to retirement queue */
     if (self->shared) {
         /* self->cleanup is expected to be _ttak_shared_payload_free */
-        ttak_epoch_retire(self->shared, self->cleanup ? self->cleanup : free);
+        ttak_epoch_retire(self->shared, self->cleanup ? self->cleanup : ttak_mem_free);
     }
 
     /* 3. Atomic pointer swap (Release barrier ensures header content is visible) */

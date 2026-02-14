@@ -1,8 +1,8 @@
 CC ?= gcc
 CFLAGS ?= -Wall -Wextra -std=c11 -g -I../../include -D_XOPEN_SOURCE=700
-LDFLAGS ?= -L../../lib -lttak -lpthread -lm -lc
-TARGET = ebr_demo
-SOURCE = ebr_demo.c
+LDFLAGS ?= -lttak -lpthread -lm -lc
+TARGET = lesson38_ebr_shared
+SOURCE = lesson38_ebr_shared.c
 
 .PHONY: all clean run
 

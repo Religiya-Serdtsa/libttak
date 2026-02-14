@@ -1,17 +1,18 @@
 /**
  * @file main.c
- * @brief High-Performance Period-3 Sociable Number Scanner (Dirty Play Edition)
+ * @brief High-Performance Period-3 Sociable Number Scanner
  *
- * This scanner is designed for "Range Dominance". Instead of random hunting,
- * it sweeps ranges sequentially, generating cryptographic proofs (SHA-256)
- * of the work done. This allows the user to claim indisputable priority
- * over specific number ranges.
+ * This scanner performs sequential range sweeps for period-3 sociable numbers.
+ * It generates cryptographic proofs (SHA-256) of the computational work
+ * to ensure verifiability and establish priority over specific numerical ranges.
  *
  * STRATEGY:
- * 1. BigInt Precision: Uses libttak's BigInt for all sum-div calculations to avoid overflow.
- * 2. 3-Step Sieve: Checks n -> s(n) -> s(s(n)) -> s(s(s(n))) == n ONLY.
- * 3. Range Hashing: Hashes the vector of results for a range to prove coverage.
- * 4. Verification Mode: Detailed trace to refute false claims by others.
+ * 1. Precision: Utilizes libttak BigInt for aliquot sum calculations to prevent overflow.
+ * 2. Cycle Detection: Implements a 3-step iteration: n -> s(n) -> s(s(n)) -> s(s(s(n))).
+ *    Validates if s(s(s(n))) == n.
+ * 3. Range Verification: Computes a SHA-256 hash of the result vector for each range
+ *    to provide proof of coverage.
+ * 4. Trace Mode: Provides detailed step-by-step aliquot sequence transition logs.
  */
 
 #define _GNU_SOURCE
@@ -37,10 +38,10 @@
 #include <ttak/security/sha256.h>
 
 /* --- Configuration --- */
-#define BLOCK_SIZE          10000ULL  // Number of seeds per work unit
-#define DEFAULT_START_SEED  1000ULL   // Where to start if no checkpoint
+#define BLOCK_SIZE          10000ULL  // Number of seeds per computational unit
+#define DEFAULT_START_SEED  1000ULL   // Initial seed value if no checkpoint exists
 #define STATE_DIR           "/opt/aliquot-3"
-#define HASH_LOG_NAME       "range_proofs.log" // The "Receipts"
+#define HASH_LOG_NAME       "range_proofs.log" // Range coverage proofs
 #define FOUND_LOG_NAME      "sociable_found.jsonl"
 #define CHECKPOINT_FILE     "scanner_checkpoint.txt"
 
@@ -103,9 +104,7 @@ static void load_checkpoint(void) {
 }
 
 static void save_checkpoint(uint64_t val) {
-    // Simple save: acts as a "high water mark". 
-    // In a real distributed system, we'd need more complex state management,
-    // but for a single-node dominator, this suffices.
+    // Persists the current scan progress as a high-water mark.
     FILE *fp = fopen(g_checkpoint_path, "w");
     if (fp) {
         fprintf(fp, "%" PRIu64 "\n", val);
@@ -135,7 +134,7 @@ static void log_found(const char *json_record) {
     pthread_mutex_unlock(&g_log_lock);
 }
 
-/* --- The Engine --- */
+/* --- Core Processing Logic --- */
 
 typedef struct {
     uint64_t start;
@@ -148,11 +147,11 @@ static void *worker_scan_range(void *arg) {
     uint64_t count = task->count;
     uint64_t now = monotonic_millis();
     
-    // Cryptographic Context for Range Proof
+    // Initialize cryptographic context for range proof
     SHA256_CTX sha_ctx;
     sha256_init(&sha_ctx);
 
-    // Reuse BigInts to minimize allocation overhead
+    // Reuse BigInt structures to minimize allocation overhead
     ttak_bigint_t bn_curr, bn_next, bn_s2, bn_s3;
     ttak_bigint_init(&bn_curr, now);
     ttak_bigint_init(&bn_next, now);
@@ -167,26 +166,18 @@ static void *worker_scan_range(void *arg) {
         // --- Step 0: Load Seed ---
         ttak_bigint_set_u64(&bn_curr, seed_val, now);
         
-        // Update Proof Hash with Seed (Proof we visited this seed)
-        // We hash the raw bytes of the seed.
-        // Endianness matters for reproduction, assuming Little Endian (x86 default).
+        // Update hash context with seed value to prove iteration
         sha256_update(&sha_ctx, (uint8_t*)&seed_val, sizeof(seed_val));
 
         // --- Step 1: seed -> s1 ---
-        // sum_proper_divisors_big returns false on allocation failure, 
-        // but for standard ranges it shouldn't fail.
         ttak_sum_proper_divisors_big(&bn_curr, &bn_next, now);
         
-        // Update Proof Hash with result (Proof we calculated it)
-        // We hash the lower 64 bits of the result for speed/compactness in the proof,
-        // or the full string if we want absolute pedantry. 
-        // Let's hash the 64-bit export for performance.
+        // Update hash context with 64-bit result export for performance
         uint64_t export_u64 = 0;
         ttak_bigint_export_u64(&bn_next, &export_u64); 
         sha256_update(&sha_ctx, (uint8_t*)&export_u64, sizeof(export_u64));
 
-        // Optimization: If s1 == seed (Perfect), ignore (known).
-        // If s1 == 1 (Prime/Terminated), ignore.
+        // Optimization: Skip perfect numbers (s1 == seed) and terminated sequences (s1 <= 1)
         if (ttak_bigint_cmp(&bn_next, &bn_curr) == 0 || ttak_bigint_cmp_u64(&bn_next, 1) <= 0) {
              continue;
         }
@@ -194,20 +185,16 @@ static void *worker_scan_range(void *arg) {
         // --- Step 2: s1 -> s2 ---
         ttak_sum_proper_divisors_big(&bn_next, &bn_s2, now);
         
-        // Amicable check (s2 == seed)
+        // Check for amicable pair (s2 == seed)
         if (ttak_bigint_cmp(&bn_s2, &bn_curr) == 0) {
-            // Found Amicable pair. Log it? 
-            // The prompt focuses on Period-3, but amicable is cool.
-            // Let's just hash it and move on to prioritize speed.
             continue;
         }
         
         // --- Step 3: s2 -> s3 ---
         ttak_sum_proper_divisors_big(&bn_s2, &bn_s3, now);
         
-        // Sociable-3 check (s3 == seed)
+        // Check for sociable-3 sequence (s3 == seed)
         if (ttak_bigint_cmp(&bn_s3, &bn_curr) == 0) {
-            // *** HIT ***
             char *s_seed = ttak_bigint_to_string(&bn_curr, now);
             char *s_s1 = ttak_bigint_to_string(&bn_next, now);
             char *s_s2 = ttak_bigint_to_string(&bn_s2, now);
@@ -227,17 +214,16 @@ static void *worker_scan_range(void *arg) {
         }
     }
 
-    // Finalize Proof
+    // Finalize range proof
     uint8_t hash[32];
     sha256_final(&sha_ctx, hash);
     
     char hash_hex[65];
     for(int j=0; j<32; j++) sprintf(hash_hex + (j*2), "%02x", hash[j]);
     
-    // Log the receipt
     log_proof(start, count, hash_hex);
 
-    // Cleanup
+    // Cleanup resources
     ttak_bigint_free(&bn_curr, now);
     ttak_bigint_free(&bn_next, now);
     ttak_bigint_free(&bn_s2, now);
@@ -249,14 +235,14 @@ static void *worker_scan_range(void *arg) {
     return NULL;
 }
 
-/* --- Verification Mode (The "Debunker") --- */
+/* --- Verification Mode --- */
 void perform_deep_verification(const char *seed_str) {
     uint64_t now = monotonic_millis();
     ttak_bigint_t val;
     
-    printf("--- [VERIFY MODE] Deep Trace for Seed: %s ---\n", seed_str);
+    printf("--- [VERIFY MODE] Aliquot Sequence Trace: %s ---\n", seed_str);
     printf("Timestamp: %" PRIu64 "\n", now);
-    printf("Precision: libttak BigInt (Arbitrary Precision)\n\n");
+    printf("Arithmetic: libttak BigInt (Arbitrary Precision)\n\n");
 
     if (!ttak_bigint_init_from_string(&val, seed_str, now)) {
         printf("Error: Invalid seed format.\n");
@@ -278,7 +264,7 @@ void perform_deep_verification(const char *seed_str) {
         
         printf("Step %d: %s -> %s\n", step, curr_s ? curr_s : "?", next_s ? next_s : "?");
         
-        // Check for cycle return
+        // Cycle detection
         if (ttak_bigint_cmp(&next, &original) == 0) {
             printf("\n>>> CYCLE DETECTED at Step %d (Period-%d) <<<\n", step, step);
             if (step == 3) printf(">>> CONFIRMED: Period-3 Sociable Number <<<\n");
@@ -287,7 +273,7 @@ void perform_deep_verification(const char *seed_str) {
             break;
         }
         
-        // Check for termination
+        // Sequence termination check
         if (ttak_bigint_cmp_u64(&next, 1) <= 0) {
             printf("\n>>> TERMINATED at Step %d <<<\n", step);
             if (curr_s) ttak_mem_free(curr_s);
@@ -339,25 +325,19 @@ int main(int argc, char **argv) {
     uint64_t start_time = last_report;
 
     while (!ttak_atomic_read64(&g_shutdown_requested)) {
-        // Backpressure logic: If submit returns NULL, the queue is full.
-        // Try to keep pipeline full blindly, but back off if rejected.
+        // Implement backpressure: handle task submission rejections when the queue is saturated.
         
         bool rejected = false;
-        // Try to maintain 2x tasks per CPU
+        // Attempt to maintain a task density of 2x per CPU.
         for (int k = 0; k < cpus * 2; k++) {
-             // We don't have get_pending_tasks, so we just push and handle rejection
-             // But wait, submit_task is the only way to know. 
-             // To avoid spamming atomic_add if queue is full, we need a heuristic.
-             // Since we can't check queue depth easily via public API, 
-             // we will just throttle the production loop with a sleep.
+             // Task rejection via submit_task is utilized as the primary indicator of queue saturation,
+             // as the public API does not expose queue depth.
              break; 
         }
 
-        // Simpler approach compatible with limited API:
-        // Just submit one task per iteration loop, then sleep a tiny bit.
-        // This is less efficient than "fill the queue", but safer without queue inspection APIs.
-        // IMPROVEMENT: Use atomic_add to claim a range, try submit. If submit fails, 
-        // we must revert the atomic_add or just process it inline (fallback).
+        // Sequential task submission with periodic yielding.
+        // If submission fails due to queue saturation, the range is processed synchronously
+        // to ensure data integrity for the claimed numerical range.
         
         uint64_t current_start = ttak_atomic_add64(&g_next_range_start, BLOCK_SIZE) - BLOCK_SIZE;
         
@@ -366,22 +346,18 @@ int main(int argc, char **argv) {
             task->start = current_start;
             task->count = BLOCK_SIZE;
             
-            // Priority 0. If this returns NULL, it means queue is full or error.
+            // Priority 0 submission. Returns NULL on queue saturation or internal error.
             if (!ttak_thread_pool_submit_task(pool, worker_scan_range, task, 0, monotonic_millis())) {
-                // Queue full! Process inline to avoid losing the claimed range (Robustness)
-                // printf("[WARN] Queue full, processing inline range %lu\n", current_start);
+                // Fallback: Synchronous execution to prevent data loss for the claimed range.
                 worker_scan_range(task); 
-                ttak_mem_free(task); // wrapper frees arg? No, wrapper frees task structure usually, but here we called function directly.
-                // Wait, if submit fails, we own the memory. worker_scan_range frees 'task' at end.
-                // So calling worker_scan_range(task) is correct memory-wise.
                 
-                // Backoff slightly to let queue drain
+                // Temporal backoff to allow for asynchronous queue depletion.
                 struct timespec ts = {0, 50000000}; // 50ms
                 nanosleep(&ts, NULL);
             }
         }
 
-        // Dry, Academic Reporting (every 5 seconds)
+        // Status Reporting (Interval: 5 seconds)
         uint64_t now = monotonic_millis();
         if (now - last_report > 5000) {
             double elapsed = (now - start_time) / 1000.0;
@@ -395,20 +371,16 @@ int main(int argc, char **argv) {
             last_report = now;
         }
 
-        // Throttle loop slightly to prevent tight spinning if queue is full
-        // Since we are doing 1 task (10k items) per loop, we don't need much sleep.
-        // But if we want to saturate, we should loop faster. 
-        // Let's rely on the inline fallback to handle "too fast" production.
-        // Just a micro-sleep to yield CPU.
+        // Micro-sleep to yield CPU and prevent high-frequency polling
         struct timespec ts = {0, 1000}; // 1us
         nanosleep(&ts, NULL);
     }
 
-    printf("\n[SYSTEM] Shutdown requested. Draining pool...\n");
-    ttak_thread_pool_destroy(pool); // Waits for pending tasks
+    printf("\n[SYSTEM] Shutdown requested. Draining thread pool...\n");
+    ttak_thread_pool_destroy(pool); // Synchronizes and terminates worker threads
     save_checkpoint(ttak_atomic_read64(&g_next_range_start));
     printf("[SYSTEM] Final Checkpoint: %" PRIu64 "\n", ttak_atomic_read64(&g_next_range_start));
-    printf("[SYSTEM] All proofs secured.\n");
+    printf("[SYSTEM] Range proofs synchronized.\n");
 
     return 0;
 }

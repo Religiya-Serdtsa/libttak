@@ -1,5 +1,6 @@
 #include <ttak/mem/epoch.h>
-#include <stdlib.h>
+#include <ttak/timing/timing.h>
+#include <ttak/mem/mem.h>
 #include <stdatomic.h>
 #include <string.h>
 
@@ -25,12 +26,13 @@ static _Atomic(ttak_thread_node_t *) g_thread_list = NULL;
 void ttak_epoch_register_thread(void) {
     if (t_local_state) return;
 
-    t_local_state = malloc(sizeof(ttak_thread_state_t));
+    uint64_t now = ttak_get_tick_count();
+    t_local_state = ttak_mem_alloc(sizeof(ttak_thread_state_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
     atomic_init(&t_local_state->local_epoch, 0);
     atomic_init(&t_local_state->active, false);
 
     /* Add to global list */
-    ttak_thread_node_t *node = malloc(sizeof(ttak_thread_node_t));
+    ttak_thread_node_t *node = ttak_mem_alloc(sizeof(ttak_thread_node_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
     node->state = t_local_state;
     
     ttak_thread_node_t *old_head;
@@ -71,7 +73,7 @@ void ttak_epoch_exit(void) {
 void ttak_epoch_retire(void *ptr, void (*cleanup)(void *)) {
     if (!ptr) return;
 
-    ttak_retired_node_t *node = malloc(sizeof(ttak_retired_node_t));
+    ttak_retired_node_t *node = ttak_mem_alloc(sizeof(ttak_retired_node_t), __TTAK_UNSAFE_MEM_FOREVER__, ttak_get_tick_count());
     node->ptr = ptr;
     node->cleanup = cleanup;
 
@@ -177,7 +179,7 @@ void ttak_epoch_reclaim(void) {
     while (to_free) {
         ttak_retired_node_t *next = to_free->next;
         if (to_free->cleanup) to_free->cleanup(to_free->ptr);
-        free(to_free);
+        ttak_mem_free(to_free);
         to_free = next;
     }
 }
