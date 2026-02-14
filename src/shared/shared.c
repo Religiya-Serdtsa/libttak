@@ -11,6 +11,22 @@
 #include <ttak/mem/epoch.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stddef.h>
+
+/* Internal payload header for atomic consistency of size, ts, and data */
+typedef struct {
+    size_t size;
+    uint64_t ts;
+    uint8_t data[] __attribute__((aligned(TTAK_CACHE_LINE_SIZE)));
+} ttak_payload_header_t;
+
+#define TTAK_GET_HEADER(ptr) ((ttak_payload_header_t *)((uint8_t *)(ptr) - offsetof(ttak_payload_header_t, data)))
+
+static void _ttak_shared_payload_free(void *ptr) {
+    if (!ptr) return;
+    ttak_payload_header_t *header = TTAK_GET_HEADER(ptr);
+    ttak_mem_free(header);
+}
 
 /* Internal helper to ensure timestamp array capacity */
 static bool _ttak_shared_ensure_ts_capacity(ttak_shared_t *self, uint32_t owner_id) {
@@ -30,7 +46,7 @@ static bool _ttak_shared_ensure_ts_capacity(ttak_shared_t *self, uint32_t owner_
 }
 
 /* Internal helper for O(1) ownership validation */
-static ttak_shared_result_t _ttak_shared_validate_owner(ttak_shared_t *self, ttak_owner_t *claimant) {
+static ttak_shared_result_t _ttak_shared_validate_owner(ttak_shared_t *self, ttak_owner_t *claimant, uint64_t current_ts) {
     if (self->level == TTAK_SHARED_NO_LEVEL) {
         return TTAK_OWNER_SUCCESS;
     }
@@ -47,7 +63,7 @@ static ttak_shared_result_t _ttak_shared_validate_owner(ttak_shared_t *self, tta
     if (self->level >= TTAK_SHARED_LEVEL_2) {
         /* Check for timestamp drift or corruption */
         /* Note: accessing last_sync_ts should ideally be inside self->rwlock */
-        if (claimant->id >= self->ts_capacity || self->last_sync_ts[claimant->id] < self->ts) {
+        if (claimant->id >= self->ts_capacity || self->last_sync_ts[claimant->id] < current_ts) {
             return TTAK_OWNER_CORRUPTED;
         }
     }
@@ -62,14 +78,20 @@ static ttak_shared_result_t ttak_shared_allocate_impl(ttak_shared_t *self, size_
     if (!self || size == 0) return TTAK_OWNER_INVALID;
 
     uint64_t now = ttak_get_tick_count();
-    self->shared = ttak_mem_alloc(size, __TTAK_UNSAFE_MEM_FOREVER__, now);
-    if (!self->shared) return TTAK_OWNER_SHARE_DENIED;
+    size_t total_size = sizeof(ttak_payload_header_t) + size;
+    
+    ttak_payload_header_t *header = ttak_mem_alloc(total_size, __TTAK_UNSAFE_MEM_FOREVER__, now);
+    if (!header) return TTAK_OWNER_SHARE_DENIED;
 
-    self->cleanup = ttak_mem_free;
+    header->size = size;
+    header->ts = ttak_get_tick_count_ns();
+    
+    self->shared = header->data;
+    self->cleanup = _ttak_shared_payload_free;
     self->size = size;
     self->level = level;
     self->status = TTAK_SHARED_READY;
-    self->ts = ttak_get_tick_count_ns();
+    self->ts = header->ts;
     self->type_name = "raw_buffer";
     atomic_init(&self->retired_ptr, (void *)0);
 
@@ -114,7 +136,11 @@ static const void *ttak_shared_access_impl(ttak_shared_t *self, ttak_owner_t *cl
         ttak_rwlock_rdlock(&self->rwlock);
     }
 
-    ttak_shared_result_t res = _ttak_shared_validate_owner(self, claimant);
+    /* Rough load */
+    void *ptr = self->shared;
+    uint64_t current_ts = ptr ? TTAK_GET_HEADER(ptr)->ts : self->ts;
+
+    ttak_shared_result_t res = _ttak_shared_validate_owner(self, claimant, current_ts);
     if (result) *result = res;
 
     if (res != TTAK_OWNER_SUCCESS && self->level == TTAK_SHARED_LEVEL_3) {
@@ -124,7 +150,7 @@ static const void *ttak_shared_access_impl(ttak_shared_t *self, ttak_owner_t *cl
         return NULL;
     }
 
-    return self->shared;
+    return ptr;
 }
 
 /**
@@ -137,7 +163,11 @@ static const void *ttak_shared_access_ebr_impl(ttak_shared_t *self, ttak_owner_t
         ttak_epoch_enter();
     }
 
-    ttak_shared_result_t res = _ttak_shared_validate_owner(self, claimant);
+    /* Atomic load with acquire barrier to see the header contents */
+    void *ptr = atomic_load_explicit((_Atomic(void *)*)&self->shared, memory_order_acquire);
+    uint64_t current_ts = ptr ? TTAK_GET_HEADER(ptr)->ts : self->ts;
+
+    ttak_shared_result_t res = _ttak_shared_validate_owner(self, claimant, current_ts);
     if (result) *result = res;
 
     if (res != TTAK_OWNER_SUCCESS && self->level == TTAK_SHARED_LEVEL_3) {
@@ -147,9 +177,10 @@ static const void *ttak_shared_access_ebr_impl(ttak_shared_t *self, ttak_owner_t
 
     /* 
      * In EBR mode, even if swap_ebr happens concurrently, the old pointer 
-     * (which we might read here) is guaranteed to remain valid until we exit.
+     * (which we just loaded) is guaranteed to remain valid until we exit.
+     * The metadata (size, ts) can be retrieved from TTAK_GET_HEADER(ptr).
      */
-    return self->shared;
+    return ptr;
 }
 
 static void ttak_shared_release_impl(ttak_shared_t *self) {
@@ -173,7 +204,7 @@ static ttak_shared_result_t ttak_shared_sync_all_impl(ttak_shared_t *self, ttak_
 
     ttak_rwlock_wrlock(&self->rwlock);
 
-    ttak_shared_result_t res = _ttak_shared_validate_owner(self, claimant);
+    ttak_shared_result_t res = _ttak_shared_validate_owner(self, claimant, self->ts);
     if (res != TTAK_OWNER_SUCCESS && self->level == TTAK_SHARED_LEVEL_3) {
         ttak_rwlock_unlock(&self->rwlock);
         return res;
@@ -310,22 +341,46 @@ void ttak_shared_destroy(ttak_shared_t *self) {
 ttak_shared_result_t ttak_shared_swap_ebr(ttak_shared_t *self, void *new_shared, size_t new_size) {
     if (!self || !new_shared) return TTAK_OWNER_INVALID;
 
+    /* 1. Create new implicit payload */
+    size_t total_size = sizeof(ttak_payload_header_t) + new_size;
+    ttak_payload_header_t *header = ttak_mem_alloc(total_size, __TTAK_UNSAFE_MEM_FOREVER__, ttak_get_tick_count());
+    if (!header) return TTAK_OWNER_SHARE_DENIED;
+
+    header->size = new_size;
+    header->ts = ttak_get_tick_count_ns();
+    memcpy(header->data, new_shared, new_size);
+
     ttak_rwlock_wrlock(&self->rwlock);
     self->status |= TTAK_SHARED_SWAPPING;
 
-    /* 1. Move existing data to retirement queue */
+    /* 2. Move existing shared pointer (with its header) to retirement queue */
     if (self->shared) {
+        /* self->cleanup is expected to be _ttak_shared_payload_free */
         ttak_epoch_retire(self->shared, self->cleanup ? self->cleanup : free);
     }
 
-    /* 2. Swap pointer and update timestamp */
-    self->shared = new_shared;
-    self->size = new_size;
-    self->ts = ttak_get_tick_count_ns();
+    /* 3. Atomic pointer swap (Release barrier ensures header content is visible) */
+    atomic_store_explicit((_Atomic(void *)*)&self->shared, header->data, memory_order_release);
     
+    /* 4. Update shadow members for rough access */
+    self->size = new_size;
+    self->ts = header->ts;
+    self->cleanup = _ttak_shared_payload_free;
+
     self->status &= ~TTAK_SHARED_SWAPPING;
     self->status |= TTAK_SHARED_DIRTY;
     ttak_rwlock_unlock(&self->rwlock);
 
     return TTAK_OWNER_SUCCESS;
 }
+
+size_t ttak_shared_get_payload_size(const void *ptr) {
+    if (!ptr) return 0;
+    return TTAK_GET_HEADER(ptr)->size;
+}
+
+uint64_t ttak_shared_get_payload_ts(const void *ptr) {
+    if (!ptr) return 0;
+    return TTAK_GET_HEADER(ptr)->ts;
+}
+
