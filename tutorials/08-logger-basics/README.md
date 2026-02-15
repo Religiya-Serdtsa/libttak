@@ -8,5 +8,5 @@
 
 1. Read through the lesson with `include/ttak/log/logger.h` open so you know how callbacks and log levels are represented.
 2. Experiment with alternate sinks (files, ring buffers, stderr) by editing the driver and capturing the behavior in this folder.
-3. After cloning the implementation, run `make tests/test_new_features` to exercise the logger assertions baked into that suite.
+3. After cloning the implementation, run `make tests/test_logger` to exercise the logger assertions baked into that suite.
 4. Write down the edge cases you found (e.g., NULL sink, format truncation) so you can reference them when these APIs are used in later lessons.

@@ -22,6 +22,7 @@ Key ideas:
 - **Application Layer (Lessons 32–33).** `apps/aliquot-tracker` and the optional bench suite.
 - **Dangerous (Lessons 34–35).** Unsafe reading plus the context bridge once you opt in.
 - **Detachable Memory (Lesson 39).** Optional final pass that layers detachable arenas and signal guards on top of epochs.
+- **Arena Memory (Lesson 40).** Demonstrates how tracked arena rows plug into the mem tree + epoch GC combo that powers the lock-free cache bench.
 
 ## Coverage Guarantees
 

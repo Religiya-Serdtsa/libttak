@@ -1,0 +1,122 @@
+@startuml
+!theme plain
+hide empty members
+
+skinparam class {
+    BackgroundColor white
+    BorderColor black
+}
+
+title Arena Memory Lifecycle [11]
+
+package "Arena Generations (Lesson 40 Harness)" {
+    class arena_env_t {
+        + ttak_epoch_gc_t gc
+        + generation_bytes : size_t
+        + chunk_bytes : size_t
+        + next_generation()
+    }
+
+    class arena_generation_t {
+        + base : void*
+        + capacity : size_t
+        + used : size_t
+        + epoch_id : uint32_t
+        + claim(chunk)
+        + retire()
+    }
+
+    arena_env_t o-- arena_generation_t : "init/retire per epoch"
+
+    note right of arena_generation_t
+        Each generation is a cache-aligned slab carved into
+        deterministic chunks. Retire() releases the pointer
+        so the mem tree can drop the node on the next epoch rotation.
+    end note
+}
+
+package "Memory Tracking Core" {
+    class ttak_mem_header_t {
+        + magic/checksum
+        + created_tick/expires_tick
+        + size
+        + strict_check : _Bool
+        + allow_direct_access : _Bool
+        + lock : pthread_mutex_t
+    }
+
+    class ttak_mem_tree_t {
+        + head : ttak_mem_node_t*
+        + lock : pthread_mutex_t
+        + garbage_pressure : atomic_size_t
+        + use_manual_cleanup : atomic_bool
+        + report_pressure(sz)
+        + perform_cleanup(now)
+    }
+
+    class ttak_mem_node_t {
+        + ptr : void*
+        + size : size_t
+        + expires_tick : uint64_t
+        + ref_count : atomic_uint
+        + is_root : _Bool
+    }
+
+    ttak_mem_tree_t o-- ttak_mem_node_t : "tracks allocations"
+    ttak_mem_node_t --> ttak_mem_header_t : "wraps header/user buffer"
+
+    note bottom of ttak_mem_tree_t
+        `ttak_mem_alloc_with_flags(..., is_root=true)` inserts
+        the allocation into the mem tree. Freeing or retiring a generation
+        removes the node or drops its reference count so cleanup can fire.
+    end note
+}
+
+package "Epoch GC Wrapper" {
+    class ttak_epoch_gc_t {
+        + tree : ttak_mem_tree_t
+        + current_epoch : uint64_t
+        + last_cleanup_ts : uint64_t
+        + register(ptr, size)
+        + rotate()
+    }
+
+    class "ttak_epoch_gc_register" as register_fn
+    class "ttak_epoch_gc_rotate" as rotate_fn
+
+    register_fn ..> ttak_epoch_gc_t : "pins node into current epoch"
+    rotate_fn ..> ttak_epoch_gc_t : "advances epoch + cleanup"
+    ttak_epoch_gc_t o-- ttak_mem_tree_t : "manual cleanup mode"
+}
+
+package "Bench Reference" {
+    class "ttl_cache_bench_lockfree.c" as bench {
+        + g_arenas[4] : ttak_object_pool_t*
+        + per_epoch_rows : size_t
+        + rotate_epoch_rows()
+    }
+
+    bench ..> ttak_epoch_gc_t : "demonstrates reuse across epochs"
+    bench ..> arena_generation_t : "mirrors slab sizing logic"
+
+    note right of bench
+        The lock-free TTL cache seeds four arenas per epoch,
+        aligning slab size (generation_bytes) with hot cache lines to
+        keep RSS stable as generations are recycled.
+    end note
+}
+
+arena_env_t ..> ttak_epoch_gc_t : "calls register/rotate"
+arena_generation_t ..> ttak_mem_tree_t : "retire() finds node + release"
+ttak_mem_header_t ..> arena_generation_t : "backing buffer owned by generation"
+
+legend right
+  **Lifecycle**
+  1. arena_env_t allocates a cache-aligned generation via ttak_mem_alloc_with_flags.
+  2. Generation registered with ttak_epoch_gc_register → mem tree node is pinned.
+  3. Chunks are handed out deterministically; retire() drops the reference.
+  4. ttak_epoch_gc_rotate() triggers mem_tree cleanup ⇒ buffer freed.
+  5. Lock-free bench mirrors this flow to keep multiple arenas recycling.
+endlegend
+
+@enduml
