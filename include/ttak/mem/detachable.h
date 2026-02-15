@@ -4,7 +4,9 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
+#ifndef _WIN32
 #include <signal.h>
+#endif
 #include <pthread.h>
 #include <stdatomic.h>
 
@@ -181,6 +183,7 @@ ttak_detachable_allocation_t ttak_detachable_mem_alloc(ttak_detachable_context_t
  */
 void ttak_detachable_mem_free(ttak_detachable_context_t *ctx, ttak_detachable_allocation_t *alloc);
 
+#ifndef _WIN32
 /**
  * @brief Registers signal handlers that gracefully flush detachable arenas and exit.
  *
@@ -198,6 +201,7 @@ int ttak_hard_kill_graceful_exit(sigset_t signals, int *ret);
  * @return 0 on success, -1 on failure.
  */
 int ttak_hard_kill_exit(sigset_t signals, int *ret);
+#endif
 
 #ifdef __cplusplus
 }
