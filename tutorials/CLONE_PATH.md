@@ -61,10 +61,10 @@ Follow these stages sequentially. Each block references the original sources you
 - **Clone:** `src/unsafe/context.c`, `include/ttak/unsafe/context.h`, macros in `include/stdatomic.h`, and review `temp_include`.
 - **Checklist:** read `tutorials/DANGEROUS/README.md`, use `libttak_unsafe.hlp`, verify helper program with the unsafe file, and document your understanding of ownership inheritance.
 
-### Stage 10 – Detachable Arenas & Signal Guards
-- **Lessons:** [39](39-detachable-memory/README.md)
-- **Goal:** practice the detachable allocator, cache heuristics, and the hard-kill signal hooks.
-- **Clone:** `src/mem/detachable.c`, `include/ttak/mem/detachable.h`, `internal/tt_jmp.h`.
-- **Checklist:** configure a detachable context with epoch protection, watch cache reuse vs. arena flush, and verify that `ttak_hard_kill_graceful_exit` drains the registry before exiting.
+### Stage 10 – Arena Families & Signal Guards
+- **Lessons:** [39](39-detachable-memory/README.md)–[40](40-arena-memory/README.md)
+- **Goal:** practice the detachable allocator + cache heuristics, then replay the arena row lifecycle with the mem tree + epoch GC plumbing.
+- **Clone:** `src/mem/detachable.c`, `include/ttak/mem/detachable.h`, `internal/tt_jmp.h`, `src/mem/{mem.c,epoch_gc.c}`, `src/mem_tree/mem_tree.c`, and the arena portions of `bench/ttl-cache-multithread-bench/ttl_cache_bench_lockfree.c`.
+- **Checklist:** configure a detachable context with epoch protection, watch cache reuse vs. arena flush, wire a tracked arena row that releases its mem-tree node, and verify that `ttak_epoch_gc_rotate` frees the retired buffer in the sample.
 
 After each stage, summarize what you rebuilt and link to the commit/diff. By the end you will have cloned every module in the project (the flow is also captured visually in `blueprints/09_tutorial_curriculum.puml`).

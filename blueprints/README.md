@@ -12,6 +12,7 @@ This directory contains the architecture blueprints for `libttak` in PlantUML fo
 
 - `09_epoch_reclamation.puml`: Shows how epoch registration, retirement queues, and shared-pointer integration cooperate (Scope [09]).
 - `10_detachable_memory.puml`: Describes the detachable memory allocator, cache, signal hooks, and graceful termination path (Scope [10]).
+- `11_arena_memory.puml`: Captures the cache-aligned arena row lifecycle, mem-tree bookkeeping, and epoch GC flow referenced by Lesson 40 + the TTL cache bench (Scope [11]).
 - `abstract.puml`: High-level view of a web server that integrates libttak runtime blocks (Async, Detachable Memory, Epoch).
 
 ## Rendering Blueprints
