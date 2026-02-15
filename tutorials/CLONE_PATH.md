@@ -61,4 +61,10 @@ Follow these stages sequentially. Each block references the original sources you
 - **Clone:** `src/unsafe/context.c`, `include/ttak/unsafe/context.h`, macros in `include/stdatomic.h`, and review `temp_include`.
 - **Checklist:** read `tutorials/DANGEROUS/README.md`, use `libttak_unsafe.hlp`, verify helper program with the unsafe file, and document your understanding of ownership inheritance.
 
+### Stage 10 – Detachable Arenas & Signal Guards
+- **Lessons:** [39](39-detachable-memory/README.md)
+- **Goal:** practice the detachable allocator, cache heuristics, and the hard-kill signal hooks.
+- **Clone:** `src/mem/detachable.c`, `include/ttak/mem/detachable.h`, `internal/tt_jmp.h`.
+- **Checklist:** configure a detachable context with epoch protection, watch cache reuse vs. arena flush, and verify that `ttak_hard_kill_graceful_exit` drains the registry before exiting.
+
 After each stage, summarize what you rebuilt and link to the commit/diff. By the end you will have cloned every module in the project (the flow is also captured visually in `blueprints/09_tutorial_curriculum.puml`).

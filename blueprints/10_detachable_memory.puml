@@ -1,0 +1,115 @@
+@startuml
+!theme plain
+hide empty members
+
+skinparam class {
+    BackgroundColor white
+    BorderColor black
+}
+
+title Detachable Memory & Epoch Integration [10]
+
+package "Detachable Core" {
+
+    class ttak_detach_status_t {
+        + bits : uint8_t
+        + pad[4] : _Bool
+        + reset()
+        + mark_known()
+        + converge()
+    }
+
+    note right of ttak_detach_status_t
+        Status byte converges to UNKNOWN unless
+        the STATUS_KNOWN bit is asserted. Partial
+        cache detours and DETACH_NOCHECK are tracked.
+    end note
+
+    class ttak_detachable_cache_t {
+        + chunk_size : size_t
+        + capacity : size_t
+        + count : size_t
+        + head/tail : size_t
+        + slots : void**
+        + hits/misses : uint64_t
+        + lock : pthread_mutex_t
+        + take(requested)
+        + store(ptr, size)
+        + drain()
+    }
+
+    class ttak_detachable_generation_row_t {
+        + columns : void**
+        + len : size_t
+        + cap : size_t
+    }
+
+    class ttak_detachable_context_t {
+        + matrix_rows : uint8_t
+        + active_row : uint8_t
+        + epoch_delay : uint16_t
+        + flags : uint32_t
+        + base_status : ttak_detach_status_t
+        + small_cache : ttak_detachable_cache_t
+        + rows[8] : ttak_detachable_generation_row_t
+        + arena_lock : pthread_rwlock_t
+        + global_epoch_hint : atomic_uint_fast64_t
+        + context_init(flags)
+        + mem_alloc(sz, epoch_hint)
+        + mem_free(allocation)
+    }
+
+    class ttak_detachable_allocation_t {
+        + data : void*
+        + size : size_t
+        + detach_status : ttak_detach_status_t
+        + cache : ttak_detachable_cache_t*
+    }
+
+    ttak_detachable_context_t o-- ttak_detachable_cache_t : "owns small-cache"
+    ttak_detachable_context_t o-- ttak_detachable_generation_row_t : "tracks arena rows"
+    ttak_detachable_context_t o-- ttak_detach_status_t : "base status template"
+    ttak_detachable_context_t --> ttak_detachable_allocation_t : "produces"
+    ttak_detachable_allocation_t o-- ttak_detach_status_t
+}
+
+package "Epoch & Signals" {
+    class ttak_epoch_manager_t {
+        + global_epoch : atomic_uint
+        + retired_queues[3] : _Atomic ttak_retired_node_t*
+    }
+
+    class ttak_signal_guard_t {
+        + triggered : atomic_bool
+        + graceful : _Bool
+        + exit_code : int
+    }
+
+    class "Signal Hooks" as Hooks {
+        + ttak_hard_kill_graceful_exit(signals, ret)
+        + ttak_hard_kill_exit(signals, ret)
+        + ttak_detachable_global_shutdown(flush)
+    }
+
+    Hooks ..> ttak_signal_guard_t
+    Hooks ..> ttak_detachable_context_t : "flush caches/rows"
+    ttak_detachable_context_t ..> ttak_epoch_manager_t : "retire/free"
+}
+
+note right of ttak_detachable_cache_t
+    16-byte-or-less chunks re-enter through
+    an approximate LRU queue. Urgent arenas
+    evict aggressively; async-opt arenas
+    call madvise(MADV_DONTFORK).
+end note
+
+legend right
+  **Lifecycle**
+  1. Context initialized (flags define epoch/async rules).
+  2. Allocation tries small-cache, else calloc + epoch enter/exit.
+  3. Pointer tracked inside 2D arena rows for generation flush.
+  4. Free path caches tiny chunks unless DETACH_NOCHECK is set.
+  5. Signal hooks drain caches; graceful mode also flushes rows.
+endlegend
+
+@enduml

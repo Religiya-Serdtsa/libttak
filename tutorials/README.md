@@ -21,6 +21,7 @@ Key ideas:
 - **Trees + AST (Lessons 29–31).** AST walker and both tree variants.
 - **Application Layer (Lessons 32–33).** `apps/aliquot-tracker` and the optional bench suite.
 - **Dangerous (Lessons 34–35).** Unsafe reading plus the context bridge once you opt in.
+- **Detachable Memory (Lesson 39).** Optional final pass that layers detachable arenas and signal guards on top of epochs.
 
 ## Coverage Guarantees
 

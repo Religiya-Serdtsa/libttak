@@ -8,6 +8,12 @@ This directory contains the architecture blueprints for `libttak` in PlantUML fo
 - `png/`: Automatically generated PNG images of the blueprints.
 - `scripts/`: Conversion scripts.
 
+### Notable Blueprints
+
+- `09_epoch_reclamation.puml`: Shows how epoch registration, retirement queues, and shared-pointer integration cooperate (Scope [09]).
+- `10_detachable_memory.puml`: Describes the detachable memory allocator, cache, signal hooks, and graceful termination path (Scope [10]).
+- `abstract.puml`: High-level view of a web server that integrates libttak runtime blocks (Async, Detachable Memory, Epoch).
+
 ## Rendering Blueprints
 
 To update the PNG files from the `.puml` sources, run the following command from the project root:
