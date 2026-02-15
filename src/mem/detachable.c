@@ -3,18 +3,33 @@
 #include <stdatomic.h>
 #include <stdlib.h>
 #include <string.h>
+#ifndef _WIN32
 #include <signal.h>
 #include <unistd.h>
+#endif
 
 #ifdef __linux__
     #include <sys/mman.h>
 #endif
 
+#ifndef _WIN32
+#ifndef NSIG
+#ifdef _NSIG
+#define NSIG _NSIG
+#else
+/* 64 real-time signals + 1; covers Linux and most BSD defaults */
+#define NSIG 65
+#endif
+#endif
+#endif
+
+#ifndef _WIN32
 typedef struct {
     atomic_bool triggered;
     _Bool graceful;
     int exit_code;
 } ttak_signal_guard_t;
+#endif
 
 static pthread_once_t g_default_ctx_once = PTHREAD_ONCE_INIT;
 static ttak_detachable_context_t g_default_ctx;
@@ -24,11 +39,13 @@ static ttak_detachable_context_t **g_ctx_registry = NULL;
 static size_t g_ctx_registry_len = 0;
 static size_t g_ctx_registry_cap = 0;
 
+#ifndef _WIN32
 static ttak_signal_guard_t g_signal_guard = {
     .triggered = ATOMIC_VAR_INIT(false),
     .graceful = true,
     .exit_code = -1
 };
+#endif
 
 static void ttak_detachable_register_context(ttak_detachable_context_t *ctx);
 static void ttak_detachable_unregister_context(ttak_detachable_context_t *ctx);
@@ -40,8 +57,10 @@ static bool ttak_detachable_cache_store(ttak_detachable_context_t *ctx, ttak_det
 static void *ttak_detachable_cache_take(ttak_detachable_cache_t *cache, size_t requested);
 static void ttak_detachable_cache_drain(ttak_detachable_context_t *ctx, ttak_detachable_cache_t *cache, bool release_storage);
 static void ttak_detachable_global_shutdown(_Bool flush_rows);
+#ifndef _WIN32
 static void ttak_detachable_signal_handler(int signo);
 static int ttak_hard_kill_configure(sigset_t signals, int *ret, _Bool graceful);
+#endif
 
 static inline _Bool ttak_detachable_need_lock(const ttak_detachable_context_t *ctx) {
     return (ctx->flags & TTAK_ARENA_USE_LOCKED_ACCESS) && !(ctx->flags & TTAK_ARENA_IS_SINGLE_THREAD);
@@ -227,6 +246,7 @@ void ttak_detachable_mem_free(ttak_detachable_context_t *ctx, ttak_detachable_al
     ttak_detach_status_reset(&alloc->detach_status);
 }
 
+#ifndef _WIN32
 int ttak_hard_kill_graceful_exit(sigset_t signals, int *ret) {
     return ttak_hard_kill_configure(signals, ret, true);
 }
@@ -234,6 +254,7 @@ int ttak_hard_kill_graceful_exit(sigset_t signals, int *ret) {
 int ttak_hard_kill_exit(sigset_t signals, int *ret) {
     return ttak_hard_kill_configure(signals, ret, false);
 }
+#endif
 
 static void ttak_detachable_register_context(ttak_detachable_context_t *ctx) {
     pthread_mutex_lock(&g_ctx_registry_lock);
@@ -418,6 +439,7 @@ static void ttak_detachable_global_shutdown(_Bool flush_rows) {
     pthread_mutex_unlock(&g_ctx_registry_lock);
 }
 
+#ifndef _WIN32
 static void ttak_detachable_signal_handler(int signo) {
     bool expected = false;
     if (!atomic_compare_exchange_strong(&g_signal_guard.triggered, &expected, true)) {
@@ -457,3 +479,4 @@ static int ttak_hard_kill_configure(sigset_t signals, int *ret, _Bool graceful) 
 
     return 0;
 }
+#endif
