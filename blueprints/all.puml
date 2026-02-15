@@ -1,5 +1,5 @@
 @startuml
-' libttak - Integrated System Map (Blueprints 01-08)
+' libttak - Integrated System Map (Blueprints 01-10)
 !theme plain
 hide empty members
 skinparam packageStyle rectangle
@@ -8,7 +8,7 @@ skinparam nodesep 100
 skinparam ranksep 70
 skinparam componentStyle uml2
 
-title libttak: Integrated Architectural Map (01-08)
+title libttak: Integrated Architectural Map (01-10)
 
 ' --- APPLICATION LAYER ---
 ' Defined as a class with a stereotype for visual distinction
@@ -38,15 +38,19 @@ package "Execution Runtime [01, 05]" #E8F5E9 {
     ]
 }
 
-' --- RESOURCE LAYER (02, 07) ---
-package "Resource Safety [02, 07]" #FFF3E0 {
+' --- RESOURCE LAYER (02, 07, 09) ---
+package "Resource Safety [02, 07, 09, 10]" #FFF3E0 {
     component Safety [
-        <b>Ownership & GC</b>
+        <b>Ownership & EBR</b>
         (Owner, Epoch, Shared)
     ]
     component DS [
         <b>Data Structures</b>
         (HT, RingBuffer, Pool)
+    ]
+    component Detach [
+        <b>Detachable Memory</b>
+        (Cache + Epoch Rows)
     ]
 }
 
@@ -92,6 +96,9 @@ Sched -down-> Utils : "monitors timing"
 ' Resource & Foundation Dependencies
 Safety -down-> Utils : "epoch management"
 Safety -down-> DS : "metadata storage"
+Safety -down-> Detach : "detachable policies"
+Detach -down-> DS : "tracking rows"
+Detach -down-> Foundation : "calloc/thread integration"
 DS -down-> Foundation : "sync primitives"
 
 ' Dangerous Bypass
@@ -101,6 +108,7 @@ legend bottom
   **Blueprint Scope:**
   [01] Async Layer | [02] Data Structures | [03] Memory & Threads | [04] Math Library
   [05] Priority Scheduling | [06] Utilities | [07] Safety & Ownership | [08] Tree Structures
+  [09] Epoch Reclamation | [10] Detachable Memory
 endlegend
 
 @enduml

@@ -1,0 +1,72 @@
+@startuml
+!theme plain
+hide empty members
+
+skinparam class {
+    BackgroundColor white
+    BorderColor black
+}
+
+package "Epoch-Based Reclamation (EBR) [09]" {
+
+    class ttak_retired_node_t {
+        + ptr : void*
+        + cleanup : void(*)(void*)
+        + next : ttak_retired_node_t*
+    }
+
+    class ttak_epoch_manager_t {
+        + global_epoch : _Atomic unsigned int
+        + retired_queues[3] : _Atomic ttak_retired_node_t*
+    }
+
+    class ttak_thread_state_t {
+        + local_epoch : _Atomic unsigned int
+        + active : _Atomic bool
+    }
+
+    note top of ttak_epoch_manager_t
+        Global state managing 3 epoch sessions.
+        Uses lock-free atomic queues.
+    end note
+
+    ttak_epoch_manager_t o-- ttak_retired_node_t : "manages retired pointers"
+    
+    package "Thread Local" {
+        entity "t_local_state" as TLS << (L,#FF7700) >>
+        TLS ..> ttak_thread_state_t : "_Thread_local pointer"
+    }
+
+    class "EBR Operations" as Ops {
+        + ttak_epoch_register_thread()
+        + ttak_epoch_enter()
+        + ttak_epoch_exit()
+        + ttak_epoch_retire(ptr, cleanup)
+        + ttak_epoch_reclaim()
+    }
+
+    Ops ..> ttak_epoch_manager_t : "updates"
+    Ops ..> ttak_thread_state_t : "manages local state"
+
+    package "Integration: Shared Pointers" {
+        class ttak_shared_t {
+            + ...
+            + access_ebr()
+            + release_ebr()
+            + swap_ebr()
+        }
+        
+        ttak_shared_t ..> Ops : "uses for safe concurrent access"
+    }
+}
+
+legend right
+  **EBR Workflow:**
+  1. Thread enters epoch (announces intent).
+  2. Accesses shared data safely.
+  3. Retire: Marks old data for later deletion.
+  4. Reclaim: When all threads pass the epoch,
+     it's safe to free retired nodes.
+endlegend
+
+@enduml
