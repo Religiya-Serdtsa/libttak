@@ -1,14 +1,30 @@
+#ifndef _GNU_SOURCE
 #define _GNU_SOURCE
+#endif
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
 #include <stdbool.h>
-#include <unistd.h>
-#include <pthread.h>
-#include <time.h>
-#include <getopt.h>
+#include <inttypes.h>
 #include <stdatomic.h>
+
+#ifdef _WIN32
+#  include <windows.h>
+#  include <psapi.h>
+#  define bench_sleep_s(s)    Sleep((DWORD)((s) * 1000u))
+#  define bench_usleep_us(us) Sleep((DWORD)((us) / 1000 > 0 ? (us) / 1000 : 1))
+#else
+#  include <unistd.h>
+#  define bench_sleep_s(s)    sleep((unsigned)(s))
+#  define bench_usleep_us(us) usleep((useconds_t)(us))
+#endif
+
+#ifndef _WIN32
+#  include <pthread.h>
+#  include <getopt.h>
+#endif
+#include <time.h>
 
 // libttak includes
 #include <ttak/ht/map.h>
@@ -106,6 +122,12 @@ static inline uint64_t get_ns(void) {
 }
 
 static long get_rss_kb(void) {
+#ifdef _WIN32
+    PROCESS_MEMORY_COUNTERS pmc;
+    if (GetProcessMemoryInfo(GetCurrentProcess(), &pmc, sizeof(pmc)))
+        return (long)(pmc.WorkingSetSize / 1024);
+    return 0;
+#else
     long rss = 0;
     FILE* fp = fopen("/proc/self/statm", "r");
     if (fp) {
@@ -116,6 +138,7 @@ static long get_rss_kb(void) {
         fclose(fp);
     }
     return rss;
+#endif
 }
 
 // Simple seeded random for deterministic keys
@@ -316,7 +339,7 @@ static void *maintenance_task(void *arg) {
                 }
 
                 // Small grace period to reduce immediate reuse pressure.
-                usleep(20000);
+                bench_usleep_us(20000);
 
                 ttak_mutex_lock(&target_epoch->items_lock);
                 for (size_t i = 0; i < target_epoch->item_count; i++) {
@@ -335,7 +358,7 @@ static void *maintenance_task(void *arg) {
         }
 
         ttak_async_yield();
-        usleep(10000);
+        bench_usleep_us(10000);
     }
     atomic_store(&maintenance_active, false);
     return NULL;
@@ -394,7 +417,7 @@ void print_stats(void) {
 
     uint64_t elapsed_sec = (now - start_time_ns) / 1000000000ULL;
 
-    printf("STATS: %lu sec | Ops: %lu/s | HitRate: %.2f%% | Epochs: %lu | RSS: %ld KB | Items: %lu | Retired: %lu | CleanNsAvg: %lu\n",
+    printf("STATS: %" PRIu64 " sec | Ops: %" PRIu64 "/s | HitRate: %.2f%% | Epochs: %" PRIu64 " | RSS: %ld KB | Items: %" PRIu64 " | Retired: %" PRIu64 " | CleanNsAvg: %" PRIu64 "\n",
            elapsed_sec,
            ops_per_sec,
            hit_rate,
@@ -413,6 +436,7 @@ void print_stats(void) {
 }
 
 int main(int argc, char **argv) {
+#ifndef _WIN32
     int opt;
     static struct option long_options[] = {
         {"threads", required_argument, 0, 't'},
@@ -436,6 +460,9 @@ int main(int argc, char **argv) {
             case 's': cfg.shards = atoi(optarg); break;
         }
     }
+#else
+    (void)argc; (void)argv;
+#endif
 
     printf("Starting TTL Cache Bench\n");
     printf("Threads: %d, Duration: %ds, Value: %dB, Keys: %d, TTL: %dms, Epoch: %dms, Shards: %d\n",
@@ -472,14 +499,14 @@ int main(int argc, char **argv) {
     ttak_thread_pool_submit_task(pool, maintenance_task, NULL, 0, ttak_get_tick_count());
 
     for (int i = 0; i < cfg.duration_sec; i++) {
-        sleep(1);
+        bench_sleep_s(1);
         print_stats();
     }
 
     atomic_store(&running, false);
     ttak_thread_pool_destroy(pool);
     ttak_async_shutdown();
-    sleep(1);
+    bench_sleep_s(1);
 
     print_stats();
     printf("Benchmark Complete.\n");

@@ -5,7 +5,36 @@
 #include <stdbool.h>
 #include <stdatomic.h>
 #include <stdalign.h>
-#include <unistd.h>
+#include <stdint.h>
+#include <inttypes.h>
+
+#ifdef _WIN32
+#  include <windows.h>
+#  include <psapi.h>
+#  define bench_sleep_s(s)    Sleep((DWORD)((s) * 1000u))
+#  define bench_usleep_us(us) Sleep((DWORD)((us) / 1000 > 0 ? (us) / 1000 : 1))
+static long get_rss_kb(void) {
+    PROCESS_MEMORY_COUNTERS pmc;
+    if (GetProcessMemoryInfo(GetCurrentProcess(), &pmc, sizeof(pmc)))
+        return (long)(pmc.WorkingSetSize / 1024);
+    return 0;
+}
+#else
+#  include <unistd.h>
+#  define bench_sleep_s(s)    sleep((unsigned)(s))
+#  define bench_usleep_us(us) usleep((useconds_t)(us))
+static long get_rss_kb(void) {
+    long rss = 0;
+    FILE *fp = fopen("/proc/self/statm", "r");
+    if (fp) {
+        long resident;
+        if (fscanf(fp, "%*s %ld", &resident) == 1)
+            rss = resident * (sysconf(_SC_PAGESIZE) / 1024);
+        fclose(fp);
+    }
+    return rss;
+}
+#endif
 
 #include <ttak/mem/mem.h>
 #include <ttak/mem/epoch.h>
@@ -98,7 +127,7 @@ static void *worker_func(void *arg) {
 static void *maintenance_task(void *arg) {
     (void)arg;
     while (atomic_load(&g_running)) {
-        usleep(100000); 
+        bench_usleep_us(100000); 
         ttak_epoch_reclaim();
         ttak_epoch_gc_rotate(&g_gc);
     }
@@ -127,17 +156,16 @@ int main(void) {
     printf("----------------------------------------------------------\n");
 
     for (int i = 1; i <= cfg.duration_sec; i++) {
-        sleep(1);
+        bench_sleep_s(1);
         uint64_t ops = atomic_exchange(&stats.ops, 0);
         uint64_t ns = atomic_exchange(&stats.total_ns, 0);
         uint64_t swaps = atomic_exchange(&stats.swaps, 0);
         uint64_t lat = (ops > 0) ? (ns / ops) : 0;
         
-        long rss = 0;
-        FILE* fp = fopen("/proc/self/statm", "r");
-        if (fp) { fscanf(fp, "%*s %ld", &rss); fclose(fp); rss *= (sysconf(_SC_PAGESIZE)/1024); }
+        long rss = get_rss_kb();
 
-        printf("%2ds | %8lu | %11lu | %7lu | %5lu | %ld\n", i, ops, lat, swaps, g_gc.current_epoch, rss);
+        printf("%2ds | %8" PRIu64 " | %11" PRIu64 " | %7" PRIu64 " | %5" PRIu64 " | %ld\n",
+               i, ops, lat, swaps, (uint64_t)g_gc.current_epoch, rss);
     }
 
     atomic_store(&g_running, false);
