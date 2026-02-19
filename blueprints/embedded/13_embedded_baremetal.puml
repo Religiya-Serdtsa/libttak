@@ -1,0 +1,42 @@
+@startuml
+!theme plain
+hide empty members
+
+package "Memory Core" #FFF8E1 {
+  class "Buddy Zone" as Buddy {
+    +pool_start
+    +pool_len
+    +free_lists[0..Max]
+    +embedded_mode
+  }
+  class "ttak_mem_buddy_alloc" as BuddyAlloc
+  class "ttak_mem_set_embedded_pool" as BuddyConfig
+  Buddy -- BuddyAlloc
+  BuddyConfig ..> Buddy : reset pool
+}
+
+package "Allocator Frontend" #E1F5FE {
+  class "ttak_mem_alloc_safe" as AllocSafe
+  class "ttak_mem_free" as FreeSafe
+}
+
+package "Net Port" #E3F2FD {
+  class "ttak_net_driver_ops_t" as Driver {
+    +socket_open()
+    +socket_connect()
+    +poll_wait()
+  }
+  class "ttak_net_driver_detect" as DriverDetect
+  class "ttak_net_session_mgr" as SessionMgr
+  class "ttak_net_endpoint_restart" as EndpointRestart
+}
+
+BuddyAlloc --> AllocSafe
+Buddy -> FreeSafe
+AllocSafe ..> Driver : Baremetal hook (buddy-backed)
+DriverDetect ..> Driver : fills per-platform table
+SessionMgr ..> Driver : uses ops
+EndpointRestart ..> Driver : reopen sockets
+DriverDetect --> BuddyConfig : (baremetal spec can supply buddy pool)
+
+@enduml

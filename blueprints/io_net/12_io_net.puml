@@ -1,0 +1,103 @@
+@startuml
+!theme plain
+hide empty members
+
+skinparam packageStyle rectangle
+skinparam componentStyle uml2
+
+package "IO Core (io/)" #E6F4EA {
+    class "ttak_io_guard_t" as IoGuard {
+        +fd : int
+        +ttl_ns : uint64_t
+        +resource_tag[32]
+        __
+        +init(owner, ttl)
+        +refresh()
+        +close()
+    }
+
+    class "ttak_io_buffer_t" as IoBuffer {
+        +staging : detachable_allocation
+        +mode : BUFFER_READ/WRITE
+        __
+        +acquire(ptr, len, mode)
+        +sync_in()
+        +sync_out()
+        +release()
+    }
+
+    class "ttak_io_zerocopy_region_t" as ZeroCopy {
+        +data : uint8_t*
+        +len : size_t
+        +arena : detachable_ctx
+        __
+        +recv(guard, max_len, flags)
+        +release()
+    }
+
+    class "ttak_io_poll_wait" as IoPoll {
+        +schedule_async : bool
+        +callback(fd, revents, user)
+    }
+
+    IoBuffer --> IoGuard : validates before syscalls
+    ZeroCopy --> IoGuard : reuses TTL window
+    IoPoll ..> "ttak_async_schedule" : "non-blocking path"
+}
+
+package "Networking (net/)" #E3F2FD {
+    class "ttak_net_endpoint_t" as Endpoint {
+        +fd : int
+        +type : ipv4/ipv6/unix
+        +guard : ttak_io_guard_t
+        +addr_bytes[128]
+        __
+        +bind_fd(fd, addr, ttl_ns)
+        +close()
+    }
+
+    class "ttak_net_view_t" as NetView {
+        +region : ttak_io_zerocopy_region_t
+        +birth_ns : uint64_t
+        __
+        +from_endpoint(endpoint, max_len, flags)
+        +release()
+    }
+
+    class "ttak_net_session_mgr_t" as SessionMgr {
+        +head : session*
+        +gc : ttak_epoch_gc_t
+        +lock : rwlock
+        __
+        +create(endpoint, parent)
+        +close(session)
+        +rotate()
+    }
+
+    Endpoint o-- IoGuard
+    NetView --> ZeroCopy : "zero-copy recv()"
+    SessionMgr ..> Endpoint : "manages hierarchies"
+    SessionMgr ..> "ttak_epoch_gc / EBR" : "retire + rotate"
+}
+
+package "Consumers" #FFF8E1 {
+    component AsyncTasks [
+        Async Tasks / Promises
+    ]
+    component Owners [
+        ttak_owner_t
+    ]
+}
+
+AsyncTasks ..> IoPoll : "callbacks"
+Owners ..> IoGuard : "resource registry"
+Owners ..> Endpoint : "shared wrapper"
+
+note bottom
+IO buffers enforce arena-backed staging before kernel calls.
+Net view hands readonly regions derived from ttak_io_zerocopy_region_t.
+Session manager chains endpoints and retires entire descendant trees
+when an ancestor socket becomes unreachable.
+end note
+
+@enduml

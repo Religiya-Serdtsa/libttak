@@ -39,6 +39,7 @@ static int posix_memalign(void **memptr, size_t alignment, size_t size) {
 #define posix_memfree(ptr) free(ptr)
 #endif
 
+
 #include <stdalign.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -80,6 +81,14 @@ static int global_trace_enabled = 0;
 
 static volatile tt_map_t *global_ptr_map = NULL;
 static pthread_mutex_t global_init_lock = PTHREAD_MUTEX_INITIALIZER;
+#if EMBEDDED
+static TTAK_THREAD_LOCAL uint8_t buddy_pool[1 << 20];
+static pthread_once_t buddy_once = PTHREAD_ONCE_INIT;
+static void buddy_bootstrap(void) {
+    ttak_mem_buddy_init(buddy_pool, sizeof(buddy_pool), 1);
+}
+#endif
+
 TTAK_THREAD_LOCAL int in_mem_op = 0;
 TTAK_THREAD_LOCAL int in_mem_init = 0;
 static volatile int global_init_done = 0;
@@ -154,6 +163,18 @@ static void ensure_global_map(uint64_t now) {
  * @return Pointer to zeroed user memory or NULL on failure.
  */
 void TTAK_HOT_PATH *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, uint64_t now, _Bool is_const, _Bool is_volatile, _Bool allow_direct, _Bool is_root, ttak_mem_flags_t flags) {
+#if EMBEDDED
+    pthread_once(&buddy_once, buddy_bootstrap);
+    ttak_mem_req_t req = {
+        .size_bytes = size + sizeof(ttak_mem_header_t),
+        .priority = TTAK_PRIORITY_BEST_FIT,
+        .owner_tag = 0,
+        .call_safety = 0,
+        .flags = 0
+    };
+    ttak_mem_header_t *header = ttak_mem_buddy_alloc(&req);
+    if (!header) return NULL;
+#else
     size_t header_size = sizeof(ttak_mem_header_t);
     bool strict_check_enabled = (flags & TTAK_MEM_STRICT_CHECK);
     size_t canary_padding = strict_check_enabled ? sizeof(uint64_t) : 0;
@@ -193,6 +214,7 @@ void TTAK_HOT_PATH *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, ui
     }
 
     if (!header) return NULL;
+#endif
 
     header->magic = TTAK_MAGIC_NUMBER;
     header->created_tick = now;
@@ -408,6 +430,9 @@ void TTAK_HOT_PATH ttak_mem_free(void *ptr) {
     ttak_atomic_sub64(&global_mem_usage, total_alloc_size);
     pthread_mutex_destroy(&header->lock);
 
+#if EMBEDDED
+    ttak_mem_buddy_free(header);
+#else
     if (header->is_huge) {
 #ifdef _WIN32
         VirtualFree(header, 0, MEM_RELEASE);
@@ -421,6 +446,7 @@ void TTAK_HOT_PATH ttak_mem_free(void *ptr) {
         free(header);
 #endif
     }
+#endif
 }
 
 /**
@@ -543,3 +569,17 @@ void save_current_progress(const char *filename, const void *data, size_t size) 
     }
 #endif
 }
+#if EMBEDDED
+#include <ttak/phys/mem/buddy.h>
+static TTAK_THREAD_LOCAL uint8_t buddy_pool[1 << 20];
+static pthread_once_t buddy_once = PTHREAD_ONCE_INIT;
+static void buddy_bootstrap(void) {
+    ttak_mem_buddy_init(buddy_pool, sizeof(buddy_pool), 1);
+}
+
+void ttak_mem_set_embedded_pool(void *pool_start, size_t pool_len) {
+    if (!pool_start || pool_len == 0) return;
+    pthread_once(&buddy_once, buddy_bootstrap);
+    ttak_mem_buddy_set_pool(pool_start, pool_len);
+}
+#endif
