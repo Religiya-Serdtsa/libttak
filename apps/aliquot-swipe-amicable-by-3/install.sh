@@ -11,7 +11,7 @@ echo "[aliquot-3] Building libttak base library..."
 cd "$REPO_ROOT"
 make
 
-echo "[aliquot-3] Building swipe binary..."
+echo "[aliquot-3] Building swipe/cross-verify binaries..."
 cd "$SCRIPT_DIR"
 make clean
 make
@@ -19,6 +19,7 @@ make
 echo "[aliquot-3] Staging binary into $INSTALL_DIR ..."
 sudo mkdir -p "$BIN_DIR"
 sudo cp "$SCRIPT_DIR/bin/aliquot_swipe" "$BIN_DIR/"
+sudo cp "$SCRIPT_DIR/bin/aliquot_cross_verify" "$BIN_DIR/"
 
 # Ensure ownership so git operations run under the invoking user.
 sudo chown -R "$STATE_OWNER":"$STATE_OWNER" "$INSTALL_DIR"
@@ -42,11 +43,14 @@ done
 
 cat <<EOFMSG
 [aliquot-3] Deployment complete.
-- Binary: $BIN_DIR/aliquot_swipe
+- Binaries:
+    - $BIN_DIR/aliquot_swipe
+    - $BIN_DIR/aliquot_cross_verify
 - Ledger repo: $INSTALL_DIR (owned by $STATE_OWNER)
 Edit or add a git remote under $INSTALL_DIR to sync ledgers, then run git pull/push
 whenever you want to compare JSON diffs across systems.
 
 Run manually:
   ALIQUOT_STATE_DIR=$INSTALL_DIR $BIN_DIR/aliquot_swipe
+  $BIN_DIR/aliquot_cross_verify
 EOFMSG

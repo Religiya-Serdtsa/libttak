@@ -14,11 +14,19 @@ TARGET = $(BIN_DIR)/aliquot_swipe
 SRCS = $(SRC_DIR)/main.c
 OBJS = $(SRCS:.c=.o)
 
-all: $(TARGET)
+CROSS_VERIFY_TARGET = $(BIN_DIR)/aliquot_cross_verify
+CROSS_VERIFY_SRCS = $(SRC_DIR)/cross_verify.c
+CROSS_VERIFY_OBJS = $(CROSS_VERIFY_SRCS:.c=.o)
+
+all: $(TARGET) $(CROSS_VERIFY_TARGET)
 
 $(TARGET): $(OBJS) $(LIBTTK)
 	@mkdir -p $(BIN_DIR)
 	$(CC) $(CFLAGS) $(OBJS) -o $@ $(LDFLAGS)
+
+$(CROSS_VERIFY_TARGET): $(CROSS_VERIFY_OBJS) $(LIBTTK)
+	@mkdir -p $(BIN_DIR)
+	$(CC) $(CFLAGS) $(CROSS_VERIFY_OBJS) -o $@ $(LDFLAGS)
 
 %.o: %.c
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
@@ -27,6 +35,8 @@ $(LIBTTK):
 	$(MAKE) -C $(ROOT) lib/libttak.a
 
 clean:
-	rm -f $(OBJS) $(TARGET)
+	rm -f $(OBJS) $(TARGET) $(CROSS_VERIFY_OBJS) $(CROSS_VERIFY_TARGET)
 
-.PHONY: all clean
+.PHONY: all clean cross_verify
+
+cross_verify: $(CROSS_VERIFY_TARGET)

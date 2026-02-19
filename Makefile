@@ -69,20 +69,20 @@ CUDA_SRCS =
 ROCM_SRCS =
 
 ifeq ($(USE_CUDA),1)
-CUDA_SRCS += src/accel/accel_cuda.cu
+CUDA_SRCS += src/accel/accel_cuda.cu src/accel/bigint_cuda.cu
 CFLAGS += -DENABLE_CUDA
 NVCCFLAGS ?= -std=c++14 -Iinclude -DENABLE_CUDA
 endif
 
 ifeq ($(USE_OPENCL),1)
-C_OPTIONAL_SRCS += src/accel/accel_opencl.c
+C_OPTIONAL_SRCS += src/accel/accel_opencl.c src/accel/bigint_opencl.c
 CFLAGS += -DENABLE_OPENCL
 OPENCL_LIBS ?= -lOpenCL
 LDFLAGS += $(OPENCL_LIBS)
 endif
 
 ifeq ($(USE_ROCM),1)
-ROCM_SRCS += src/accel/accel_rocm.cpp
+ROCM_SRCS += src/accel/accel_rocm.cpp src/accel/bigint_rocm.cpp
 CFLAGS += -DENABLE_ROCM
 HIPCCFLAGS ?= -std=c++17 -Iinclude -DENABLE_ROCM
 endif
