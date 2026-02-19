@@ -7,6 +7,8 @@ var include_2stdatomic_8h =
     [ "_Atomic", "include_2stdatomic_8h.html#a94674db2fe3c7496dfdcaa9b81486e79", null ],
     [ "atomic_compare_exchange_weak", "include_2stdatomic_8h.html#a55257ac5977e775b87563bb8cc955863", null ],
     [ "atomic_compare_exchange_weak_explicit", "include_2stdatomic_8h.html#a97a5f3e6f5f733e94b1ddeff904d3bc0", null ],
+    [ "atomic_exchange", "include_2stdatomic_8h.html#a5c1dada141423cb165cf2d4f3a38f89f", null ],
+    [ "atomic_exchange_explicit", "include_2stdatomic_8h.html#a182d869f2a69147266c1cfbf8ef62d71", null ],
     [ "atomic_fetch_add", "include_2stdatomic_8h.html#ac0a4bfbcb6b982cae35b44fc104a09b6", null ],
     [ "atomic_fetch_add_explicit", "include_2stdatomic_8h.html#ace8ab452db03f62569b8d4dbedf8ff09", null ],
     [ "atomic_fetch_sub", "include_2stdatomic_8h.html#a5911a234da3c1fce86bbebea7650e562", null ],

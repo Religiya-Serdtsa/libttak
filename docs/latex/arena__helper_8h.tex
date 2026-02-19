@@ -1,0 +1,212 @@
+\doxysection{include/ttak/mem/arena\+\_\+helper.h File Reference}
+\hypertarget{arena__helper_8h}{}\label{arena__helper_8h}\index{include/ttak/mem/arena\_helper.h@{include/ttak/mem/arena\_helper.h}}
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$ttak/mem/mem.\+h$>$}\newline
+{\ttfamily \#include $<$ttak/mem/epoch\+\_\+gc.\+h$>$}\newline
+Include dependency graph for arena\+\_\+helper.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{arena__helper_8h__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structttak__arena__env__config}{ttak\+\_\+arena\+\_\+env\+\_\+config}}
+\begin{DoxyCompactList}\small\item\em Configuration for arena helpers. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structttak__arena__env}{ttak\+\_\+arena\+\_\+env}}
+\begin{DoxyCompactList}\small\item\em Helper state coordinating arena generations and epoch rotation. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structttak__arena__generation}{ttak\+\_\+arena\+\_\+generation}}
+\begin{DoxyCompactList}\small\item\em Fixed-\/width arena generation descriptor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \mbox{\hyperlink{structttak__arena__env__config}{ttak\+\_\+arena\+\_\+env\+\_\+config}} \mbox{\hyperlink{arena__helper_8h_aa58191614cc9e89012716c07a58ff076}{ttak\+\_\+arena\+\_\+env\+\_\+config\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Configuration for arena helpers. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structttak__arena__env}{ttak\+\_\+arena\+\_\+env}} \mbox{\hyperlink{arena__helper_8h_ab96290538ecb1f2ca8dfec621c7cff25}{ttak\+\_\+arena\+\_\+env\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Helper state coordinating arena generations and epoch rotation. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structttak__arena__generation}{ttak\+\_\+arena\+\_\+generation}} \mbox{\hyperlink{arena__helper_8h_ab23849d4450be18c9d5a665b2d80c63d}{ttak\+\_\+arena\+\_\+generation\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Fixed-\/width arena generation descriptor. \end{DoxyCompactList}\item 
+typedef bool(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{arena__helper_8h_a26501f82a81b1bdc445cd9069a257709}{ttak\+\_\+arena\+\_\+chunk\+\_\+handler\+\_\+t}}) (void \texorpdfstring{$\ast$}{*}chunk, size\+\_\+t chunk\+\_\+bytes, size\+\_\+t chunk\+\_\+index, void \texorpdfstring{$\ast$}{*}ctx)
+\begin{DoxyCompactList}\small\item\em Callback invoked for each carved chunk inside a generation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{arena__helper_8h_abc81c986d1448ff27ba6a562aa5fba89}{ttak\+\_\+arena\+\_\+env\+\_\+config\+\_\+init}} (\mbox{\hyperlink{arena__helper_8h_aa58191614cc9e89012716c07a58ff076}{ttak\+\_\+arena\+\_\+env\+\_\+config\+\_\+t}} \texorpdfstring{$\ast$}{*}config)
+\begin{DoxyCompactList}\small\item\em Initializes the config structure with conservative defaults. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{arena__helper_8h_a453b5bb7946f36004d2fe63178f6f0ad}{ttak\+\_\+arena\+\_\+env\+\_\+init}} (\mbox{\hyperlink{arena__helper_8h_ab96290538ecb1f2ca8dfec621c7cff25}{ttak\+\_\+arena\+\_\+env\+\_\+t}} \texorpdfstring{$\ast$}{*}env, const \mbox{\hyperlink{arena__helper_8h_aa58191614cc9e89012716c07a58ff076}{ttak\+\_\+arena\+\_\+env\+\_\+config\+\_\+t}} \texorpdfstring{$\ast$}{*}config)
+\begin{DoxyCompactList}\small\item\em Initializes an arena helper context. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{arena__helper_8h_ad40c0b13b10951fc33827f7ca33c87a0}{ttak\+\_\+arena\+\_\+env\+\_\+destroy}} (\mbox{\hyperlink{arena__helper_8h_ab96290538ecb1f2ca8dfec621c7cff25}{ttak\+\_\+arena\+\_\+env\+\_\+t}} \texorpdfstring{$\ast$}{*}env)
+\begin{DoxyCompactList}\small\item\em Destroys an arena helper context and owned GC state. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{arena__helper_8h_a095df399f96b12cc4c06139b81ac90a4}{ttak\+\_\+arena\+\_\+generation\+\_\+begin}} (\mbox{\hyperlink{arena__helper_8h_ab96290538ecb1f2ca8dfec621c7cff25}{ttak\+\_\+arena\+\_\+env\+\_\+t}} \texorpdfstring{$\ast$}{*}env, \mbox{\hyperlink{arena__helper_8h_ab23849d4450be18c9d5a665b2d80c63d}{ttak\+\_\+arena\+\_\+generation\+\_\+t}} \texorpdfstring{$\ast$}{*}generation, uint32\+\_\+t epoch\+\_\+id)
+\begin{DoxyCompactList}\small\item\em Allocates and registers a new generation buffer. \end{DoxyCompactList}\item 
+void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{arena__helper_8h_a8413879148e33cd64300c653d4e92fc4}{ttak\+\_\+arena\+\_\+generation\+\_\+claim}} (\mbox{\hyperlink{arena__helper_8h_ab96290538ecb1f2ca8dfec621c7cff25}{ttak\+\_\+arena\+\_\+env\+\_\+t}} \texorpdfstring{$\ast$}{*}env, \mbox{\hyperlink{arena__helper_8h_ab23849d4450be18c9d5a665b2d80c63d}{ttak\+\_\+arena\+\_\+generation\+\_\+t}} \texorpdfstring{$\ast$}{*}generation, size\+\_\+t bytes)
+\begin{DoxyCompactList}\small\item\em Claims a chunk from a generation, using the config chunk\+\_\+bytes when bytes is zero. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{arena__helper_8h_ada6b26961ac63a95133472b4ab6ed81a}{ttak\+\_\+arena\+\_\+generation\+\_\+remaining}} (const \mbox{\hyperlink{arena__helper_8h_ab23849d4450be18c9d5a665b2d80c63d}{ttak\+\_\+arena\+\_\+generation\+\_\+t}} \texorpdfstring{$\ast$}{*}generation)
+\begin{DoxyCompactList}\small\item\em Returns the remaining capacity inside the generation. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{arena__helper_8h_a09d343e3cfe82d3307c88ec1b426eaf7}{ttak\+\_\+arena\+\_\+generation\+\_\+retire}} (\mbox{\hyperlink{arena__helper_8h_ab96290538ecb1f2ca8dfec621c7cff25}{ttak\+\_\+arena\+\_\+env\+\_\+t}} \texorpdfstring{$\ast$}{*}env, \mbox{\hyperlink{arena__helper_8h_ab23849d4450be18c9d5a665b2d80c63d}{ttak\+\_\+arena\+\_\+generation\+\_\+t}} \texorpdfstring{$\ast$}{*}generation)
+\begin{DoxyCompactList}\small\item\em Retires the generation, dropping the mem-\/tree reference and resetting the descriptor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{arena__helper_8h_ab0fed7974aeaa4ddc7021c9c2f1d041c}{ttak\+\_\+arena\+\_\+env\+\_\+rotate}} (\mbox{\hyperlink{arena__helper_8h_ab96290538ecb1f2ca8dfec621c7cff25}{ttak\+\_\+arena\+\_\+env\+\_\+t}} \texorpdfstring{$\ast$}{*}env)
+\begin{DoxyCompactList}\small\item\em Convenience helper that rotates the underlying epoch GC. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{arena__helper_8h_ae43a5438402e6350c1d320c49009e3b9}{ttak\+\_\+arena\+\_\+generation\+\_\+for\+\_\+each}} (\mbox{\hyperlink{arena__helper_8h_ab96290538ecb1f2ca8dfec621c7cff25}{ttak\+\_\+arena\+\_\+env\+\_\+t}} \texorpdfstring{$\ast$}{*}env, \mbox{\hyperlink{arena__helper_8h_ab23849d4450be18c9d5a665b2d80c63d}{ttak\+\_\+arena\+\_\+generation\+\_\+t}} \texorpdfstring{$\ast$}{*}generation, size\+\_\+t chunk\+\_\+bytes, \mbox{\hyperlink{arena__helper_8h_a26501f82a81b1bdc445cd9069a257709}{ttak\+\_\+arena\+\_\+chunk\+\_\+handler\+\_\+t}} handler, void \texorpdfstring{$\ast$}{*}ctx)
+\begin{DoxyCompactList}\small\item\em Walks every chunk inside the generation and invokes the handler. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{arena__helper_8h_a26501f82a81b1bdc445cd9069a257709}\label{arena__helper_8h_a26501f82a81b1bdc445cd9069a257709} 
+\index{arena\_helper.h@{arena\_helper.h}!ttak\_arena\_chunk\_handler\_t@{ttak\_arena\_chunk\_handler\_t}}
+\index{ttak\_arena\_chunk\_handler\_t@{ttak\_arena\_chunk\_handler\_t}!arena\_helper.h@{arena\_helper.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_arena\_chunk\_handler\_t}{ttak\_arena\_chunk\_handler\_t}}
+{\footnotesize\ttfamily typedef bool(\texorpdfstring{$\ast$}{*} ttak\+\_\+arena\+\_\+chunk\+\_\+handler\+\_\+t) (void \texorpdfstring{$\ast$}{*}chunk, size\+\_\+t chunk\+\_\+bytes, size\+\_\+t chunk\+\_\+index, void \texorpdfstring{$\ast$}{*}ctx)}
+
+
+
+Callback invoked for each carved chunk inside a generation. 
+
+Returning false stops iteration early. 
+
+Definition at line \mbox{\hyperlink{arena__helper_8h_source_l00047}{47}} of file \mbox{\hyperlink{arena__helper_8h_source}{arena\+\_\+helper.\+h}}.
+
+\Hypertarget{arena__helper_8h_aa58191614cc9e89012716c07a58ff076}\label{arena__helper_8h_aa58191614cc9e89012716c07a58ff076} 
+\index{arena\_helper.h@{arena\_helper.h}!ttak\_arena\_env\_config\_t@{ttak\_arena\_env\_config\_t}}
+\index{ttak\_arena\_env\_config\_t@{ttak\_arena\_env\_config\_t}!arena\_helper.h@{arena\_helper.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_arena\_env\_config\_t}{ttak\_arena\_env\_config\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__arena__env__config}{ttak\+\_\+arena\+\_\+env\+\_\+config}} \mbox{\hyperlink{arena__helper_8h_aa58191614cc9e89012716c07a58ff076}{ttak\+\_\+arena\+\_\+env\+\_\+config\+\_\+t}}}
+
+
+
+Configuration for arena helpers. 
+
+\Hypertarget{arena__helper_8h_ab96290538ecb1f2ca8dfec621c7cff25}\label{arena__helper_8h_ab96290538ecb1f2ca8dfec621c7cff25} 
+\index{arena\_helper.h@{arena\_helper.h}!ttak\_arena\_env\_t@{ttak\_arena\_env\_t}}
+\index{ttak\_arena\_env\_t@{ttak\_arena\_env\_t}!arena\_helper.h@{arena\_helper.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_arena\_env\_t}{ttak\_arena\_env\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__arena__env}{ttak\+\_\+arena\+\_\+env}} \mbox{\hyperlink{arena__helper_8h_ab96290538ecb1f2ca8dfec621c7cff25}{ttak\+\_\+arena\+\_\+env\+\_\+t}}}
+
+
+
+Helper state coordinating arena generations and epoch rotation. 
+
+\Hypertarget{arena__helper_8h_ab23849d4450be18c9d5a665b2d80c63d}\label{arena__helper_8h_ab23849d4450be18c9d5a665b2d80c63d} 
+\index{arena\_helper.h@{arena\_helper.h}!ttak\_arena\_generation\_t@{ttak\_arena\_generation\_t}}
+\index{ttak\_arena\_generation\_t@{ttak\_arena\_generation\_t}!arena\_helper.h@{arena\_helper.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_arena\_generation\_t}{ttak\_arena\_generation\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__arena__generation}{ttak\+\_\+arena\+\_\+generation}} \mbox{\hyperlink{arena__helper_8h_ab23849d4450be18c9d5a665b2d80c63d}{ttak\+\_\+arena\+\_\+generation\+\_\+t}}}
+
+
+
+Fixed-\/width arena generation descriptor. 
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{arena__helper_8h_abc81c986d1448ff27ba6a562aa5fba89}\label{arena__helper_8h_abc81c986d1448ff27ba6a562aa5fba89} 
+\index{arena\_helper.h@{arena\_helper.h}!ttak\_arena\_env\_config\_init@{ttak\_arena\_env\_config\_init}}
+\index{ttak\_arena\_env\_config\_init@{ttak\_arena\_env\_config\_init}!arena\_helper.h@{arena\_helper.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_arena\_env\_config\_init()}{ttak\_arena\_env\_config\_init()}}
+{\footnotesize\ttfamily void ttak\+\_\+arena\+\_\+env\+\_\+config\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{arena__helper_8h_aa58191614cc9e89012716c07a58ff076}{ttak\+\_\+arena\+\_\+env\+\_\+config\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{config }\end{DoxyParamCaption})}
+
+
+
+Initializes the config structure with conservative defaults. 
+
+\Hypertarget{arena__helper_8h_ad40c0b13b10951fc33827f7ca33c87a0}\label{arena__helper_8h_ad40c0b13b10951fc33827f7ca33c87a0} 
+\index{arena\_helper.h@{arena\_helper.h}!ttak\_arena\_env\_destroy@{ttak\_arena\_env\_destroy}}
+\index{ttak\_arena\_env\_destroy@{ttak\_arena\_env\_destroy}!arena\_helper.h@{arena\_helper.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_arena\_env\_destroy()}{ttak\_arena\_env\_destroy()}}
+{\footnotesize\ttfamily void ttak\+\_\+arena\+\_\+env\+\_\+destroy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{arena__helper_8h_ab96290538ecb1f2ca8dfec621c7cff25}{ttak\+\_\+arena\+\_\+env\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{env }\end{DoxyParamCaption})}
+
+
+
+Destroys an arena helper context and owned GC state. 
+
+\Hypertarget{arena__helper_8h_a453b5bb7946f36004d2fe63178f6f0ad}\label{arena__helper_8h_a453b5bb7946f36004d2fe63178f6f0ad} 
+\index{arena\_helper.h@{arena\_helper.h}!ttak\_arena\_env\_init@{ttak\_arena\_env\_init}}
+\index{ttak\_arena\_env\_init@{ttak\_arena\_env\_init}!arena\_helper.h@{arena\_helper.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_arena\_env\_init()}{ttak\_arena\_env\_init()}}
+{\footnotesize\ttfamily bool ttak\+\_\+arena\+\_\+env\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{arena__helper_8h_ab96290538ecb1f2ca8dfec621c7cff25}{ttak\+\_\+arena\+\_\+env\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{env,  }\item[{const \mbox{\hyperlink{arena__helper_8h_aa58191614cc9e89012716c07a58ff076}{ttak\+\_\+arena\+\_\+env\+\_\+config\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{config }\end{DoxyParamCaption})}
+
+
+
+Initializes an arena helper context. 
+
+Uses the config\textquotesingle{}s GC if provided, otherwise provisions a local GC. \Hypertarget{arena__helper_8h_ab0fed7974aeaa4ddc7021c9c2f1d041c}\label{arena__helper_8h_ab0fed7974aeaa4ddc7021c9c2f1d041c} 
+\index{arena\_helper.h@{arena\_helper.h}!ttak\_arena\_env\_rotate@{ttak\_arena\_env\_rotate}}
+\index{ttak\_arena\_env\_rotate@{ttak\_arena\_env\_rotate}!arena\_helper.h@{arena\_helper.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_arena\_env\_rotate()}{ttak\_arena\_env\_rotate()}}
+{\footnotesize\ttfamily void ttak\+\_\+arena\+\_\+env\+\_\+rotate (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{arena__helper_8h_ab96290538ecb1f2ca8dfec621c7cff25}{ttak\+\_\+arena\+\_\+env\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{env }\end{DoxyParamCaption})}
+
+
+
+Convenience helper that rotates the underlying epoch GC. 
+
+\Hypertarget{arena__helper_8h_a095df399f96b12cc4c06139b81ac90a4}\label{arena__helper_8h_a095df399f96b12cc4c06139b81ac90a4} 
+\index{arena\_helper.h@{arena\_helper.h}!ttak\_arena\_generation\_begin@{ttak\_arena\_generation\_begin}}
+\index{ttak\_arena\_generation\_begin@{ttak\_arena\_generation\_begin}!arena\_helper.h@{arena\_helper.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_arena\_generation\_begin()}{ttak\_arena\_generation\_begin()}}
+{\footnotesize\ttfamily bool ttak\+\_\+arena\+\_\+generation\+\_\+begin (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{arena__helper_8h_ab96290538ecb1f2ca8dfec621c7cff25}{ttak\+\_\+arena\+\_\+env\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{env,  }\item[{\mbox{\hyperlink{arena__helper_8h_ab23849d4450be18c9d5a665b2d80c63d}{ttak\+\_\+arena\+\_\+generation\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{generation,  }\item[{uint32\+\_\+t}]{epoch\+\_\+id }\end{DoxyParamCaption})}
+
+
+
+Allocates and registers a new generation buffer. 
+
+\Hypertarget{arena__helper_8h_a8413879148e33cd64300c653d4e92fc4}\label{arena__helper_8h_a8413879148e33cd64300c653d4e92fc4} 
+\index{arena\_helper.h@{arena\_helper.h}!ttak\_arena\_generation\_claim@{ttak\_arena\_generation\_claim}}
+\index{ttak\_arena\_generation\_claim@{ttak\_arena\_generation\_claim}!arena\_helper.h@{arena\_helper.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_arena\_generation\_claim()}{ttak\_arena\_generation\_claim()}}
+{\footnotesize\ttfamily void \texorpdfstring{$\ast$}{*} ttak\+\_\+arena\+\_\+generation\+\_\+claim (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{arena__helper_8h_ab96290538ecb1f2ca8dfec621c7cff25}{ttak\+\_\+arena\+\_\+env\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{env,  }\item[{\mbox{\hyperlink{arena__helper_8h_ab23849d4450be18c9d5a665b2d80c63d}{ttak\+\_\+arena\+\_\+generation\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{generation,  }\item[{size\+\_\+t}]{bytes }\end{DoxyParamCaption})}
+
+
+
+Claims a chunk from a generation, using the config chunk\+\_\+bytes when bytes is zero. 
+
+\Hypertarget{arena__helper_8h_ae43a5438402e6350c1d320c49009e3b9}\label{arena__helper_8h_ae43a5438402e6350c1d320c49009e3b9} 
+\index{arena\_helper.h@{arena\_helper.h}!ttak\_arena\_generation\_for\_each@{ttak\_arena\_generation\_for\_each}}
+\index{ttak\_arena\_generation\_for\_each@{ttak\_arena\_generation\_for\_each}!arena\_helper.h@{arena\_helper.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_arena\_generation\_for\_each()}{ttak\_arena\_generation\_for\_each()}}
+{\footnotesize\ttfamily size\+\_\+t ttak\+\_\+arena\+\_\+generation\+\_\+for\+\_\+each (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{arena__helper_8h_ab96290538ecb1f2ca8dfec621c7cff25}{ttak\+\_\+arena\+\_\+env\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{env,  }\item[{\mbox{\hyperlink{arena__helper_8h_ab23849d4450be18c9d5a665b2d80c63d}{ttak\+\_\+arena\+\_\+generation\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{generation,  }\item[{size\+\_\+t}]{chunk\+\_\+bytes,  }\item[{\mbox{\hyperlink{arena__helper_8h_a26501f82a81b1bdc445cd9069a257709}{ttak\+\_\+arena\+\_\+chunk\+\_\+handler\+\_\+t}}}]{handler,  }\item[{void \texorpdfstring{$\ast$}{*}}]{ctx }\end{DoxyParamCaption})}
+
+
+
+Walks every chunk inside the generation and invokes the handler. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em env} & Arena helper context. \\
+\hline
+{\em generation} & Active generation descriptor. \\
+\hline
+{\em chunk\+\_\+bytes} & Size of each chunk; falls back to config.\+chunk\+\_\+bytes when zero. \\
+\hline
+{\em handler} & Callback invoked for each carved chunk. \\
+\hline
+{\em ctx} & User context forwarded to the handler. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Number of chunks processed. 
+\end{DoxyReturn}
+\Hypertarget{arena__helper_8h_ada6b26961ac63a95133472b4ab6ed81a}\label{arena__helper_8h_ada6b26961ac63a95133472b4ab6ed81a} 
+\index{arena\_helper.h@{arena\_helper.h}!ttak\_arena\_generation\_remaining@{ttak\_arena\_generation\_remaining}}
+\index{ttak\_arena\_generation\_remaining@{ttak\_arena\_generation\_remaining}!arena\_helper.h@{arena\_helper.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_arena\_generation\_remaining()}{ttak\_arena\_generation\_remaining()}}
+{\footnotesize\ttfamily size\+\_\+t ttak\+\_\+arena\+\_\+generation\+\_\+remaining (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{arena__helper_8h_ab23849d4450be18c9d5a665b2d80c63d}{ttak\+\_\+arena\+\_\+generation\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{generation }\end{DoxyParamCaption})}
+
+
+
+Returns the remaining capacity inside the generation. 
+
+\Hypertarget{arena__helper_8h_a09d343e3cfe82d3307c88ec1b426eaf7}\label{arena__helper_8h_a09d343e3cfe82d3307c88ec1b426eaf7} 
+\index{arena\_helper.h@{arena\_helper.h}!ttak\_arena\_generation\_retire@{ttak\_arena\_generation\_retire}}
+\index{ttak\_arena\_generation\_retire@{ttak\_arena\_generation\_retire}!arena\_helper.h@{arena\_helper.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_arena\_generation\_retire()}{ttak\_arena\_generation\_retire()}}
+{\footnotesize\ttfamily bool ttak\+\_\+arena\+\_\+generation\+\_\+retire (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{arena__helper_8h_ab96290538ecb1f2ca8dfec621c7cff25}{ttak\+\_\+arena\+\_\+env\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{env,  }\item[{\mbox{\hyperlink{arena__helper_8h_ab23849d4450be18c9d5a665b2d80c63d}{ttak\+\_\+arena\+\_\+generation\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{generation }\end{DoxyParamCaption})}
+
+
+
+Retires the generation, dropping the mem-\/tree reference and resetting the descriptor. 
+

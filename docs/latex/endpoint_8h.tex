@@ -1,0 +1,291 @@
+\doxysection{include/ttak/net/endpoint.h File Reference}
+\hypertarget{endpoint_8h}{}\label{endpoint_8h}\index{include/ttak/net/endpoint.h@{include/ttak/net/endpoint.h}}
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$ttak/shared/shared.\+h$>$}\newline
+{\ttfamily \#include $<$ttak/io/io.\+h$>$}\newline
+Include dependency graph for endpoint.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{endpoint_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{endpoint_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structttak__net__endpoint}{ttak\+\_\+net\+\_\+endpoint}}
+\begin{DoxyCompactList}\small\item\em Shared socket wrapper guarded by ttak\+\_\+io\+\_\+guard\+\_\+t and owner policies. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structttak__net__guard__snapshot}{ttak\+\_\+net\+\_\+guard\+\_\+snapshot}}
+\item 
+struct \mbox{\hyperlink{structttak__net__endpoint__attr}{ttak\+\_\+net\+\_\+endpoint\+\_\+attr}}
+\begin{DoxyCompactList}\small\item\em Role configuration passed to \doxylink{endpoint_8h_af9eccfebee007d36c94b48975d845c23}{ttak\+\_\+net\+\_\+endpoint\+\_\+set\+\_\+role()}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef enum \mbox{\hyperlink{endpoint_8h_a90d039f18d1593c634513881f837b80c}{ttak\+\_\+net\+\_\+endpoint\+\_\+type}} \mbox{\hyperlink{endpoint_8h_ab973004a32270bbe3ae4566c99f2d22a}{ttak\+\_\+net\+\_\+endpoint\+\_\+type\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Transport families supported by the endpoint wrapper. \end{DoxyCompactList}\item 
+typedef enum \mbox{\hyperlink{endpoint_8h_a5e04a88fbb25550b7b9ef37621e7d701}{ttak\+\_\+net\+\_\+endpoint\+\_\+role}} \mbox{\hyperlink{endpoint_8h_a18e3c0e209156165e8b7cb4b661da975}{ttak\+\_\+net\+\_\+endpoint\+\_\+role\+\_\+t}}
+\item 
+typedef \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}}(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{endpoint_8h_aec10d4f037ec1a4bc3cc70cbccc34f67}{ttak\+\_\+net\+\_\+restart\+\_\+op}}) (struct \mbox{\hyperlink{structttak__net__endpoint}{ttak\+\_\+net\+\_\+endpoint}} \texorpdfstring{$\ast$}{*}ep, uint64\+\_\+t now)
+\item 
+typedef struct \mbox{\hyperlink{structttak__net__endpoint}{ttak\+\_\+net\+\_\+endpoint}} \mbox{\hyperlink{endpoint_8h_a87c093171506552622516da1d6311a96}{ttak\+\_\+net\+\_\+endpoint\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Shared socket wrapper guarded by ttak\+\_\+io\+\_\+guard\+\_\+t and owner policies. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structttak__net__guard__snapshot}{ttak\+\_\+net\+\_\+guard\+\_\+snapshot}} \mbox{\hyperlink{endpoint_8h_a91a67532c3983f0038ed434f624f7555}{ttak\+\_\+net\+\_\+guard\+\_\+snapshot\+\_\+t}}
+\item 
+typedef struct \mbox{\hyperlink{structttak__net__endpoint__attr}{ttak\+\_\+net\+\_\+endpoint\+\_\+attr}} \mbox{\hyperlink{endpoint_8h_aba7e4de0209ccde55ac69497c59b5c90}{ttak\+\_\+net\+\_\+endpoint\+\_\+attr\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Role configuration passed to \doxylink{endpoint_8h_af9eccfebee007d36c94b48975d845c23}{ttak\+\_\+net\+\_\+endpoint\+\_\+set\+\_\+role()}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{endpoint_8h_a90d039f18d1593c634513881f837b80c}{ttak\+\_\+net\+\_\+endpoint\+\_\+type}} \{ \mbox{\hyperlink{endpoint_8h_a90d039f18d1593c634513881f837b80cae5e7c9cefccf4b5874449e42a817ab5f}{TTAK\+\_\+\+NET\+\_\+\+ENDPOINT\+\_\+\+IPV4}} = 0
+, \mbox{\hyperlink{endpoint_8h_a90d039f18d1593c634513881f837b80ca9b0c48408089c41b0fbcd423ff7abdde}{TTAK\+\_\+\+NET\+\_\+\+ENDPOINT\+\_\+\+IPV6}} = 1
+, \mbox{\hyperlink{endpoint_8h_a90d039f18d1593c634513881f837b80ca7a3cdadb751cdacb80ef64ca6349b0c3}{TTAK\+\_\+\+NET\+\_\+\+ENDPOINT\+\_\+\+UNIX}} = 2
+ \}
+\begin{DoxyCompactList}\small\item\em Transport families supported by the endpoint wrapper. \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{endpoint_8h_a5e04a88fbb25550b7b9ef37621e7d701}{ttak\+\_\+net\+\_\+endpoint\+\_\+role}} \{ \mbox{\hyperlink{endpoint_8h_a5e04a88fbb25550b7b9ef37621e7d701ac9290097fdb4170238fd482074651b6d}{TTAK\+\_\+\+NET\+\_\+\+ROLE\+\_\+\+CLIENT}} = (1u \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 0)
+, \mbox{\hyperlink{endpoint_8h_a5e04a88fbb25550b7b9ef37621e7d701af67f15d969b62ba00b07db2470b4bc05}{TTAK\+\_\+\+NET\+\_\+\+ROLE\+\_\+\+SERVER}} = (1u \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1)
+, \mbox{\hyperlink{endpoint_8h_a5e04a88fbb25550b7b9ef37621e7d701ae2d23504f4c9c32e566398e9c5115381}{TTAK\+\_\+\+NET\+\_\+\+ROLE\+\_\+\+CUSTOM}} = (1u \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 2)
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+ttak\+\_\+shared\+\_\+net\+\_\+endpoint\+\_\+t \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{endpoint_8h_a6f7b076106e03025e711ca7c8e56a5e3}{ttak\+\_\+net\+\_\+endpoint\+\_\+create}} (\mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}owner, uint64\+\_\+t now)
+\begin{DoxyCompactList}\small\item\em Constructs a shared endpoint bound to {\ttfamily owner}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{endpoint_8h_a8d3676882b7a1b913e330f0e5b7698c9}{ttak\+\_\+net\+\_\+endpoint\+\_\+destroy}} (ttak\+\_\+shared\+\_\+net\+\_\+endpoint\+\_\+t \texorpdfstring{$\ast$}{*}endpoint, \mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}owner, uint64\+\_\+t now)
+\begin{DoxyCompactList}\small\item\em Closes and destroys the shared endpoint. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} \mbox{\hyperlink{endpoint_8h_ae7fa8743864c858ae149bf27e9b5a053}{ttak\+\_\+net\+\_\+endpoint\+\_\+bind\+\_\+fd}} (ttak\+\_\+shared\+\_\+net\+\_\+endpoint\+\_\+t \texorpdfstring{$\ast$}{*}endpoint, \mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}owner, int fd, int domain, int socktype, int protocol, const void \texorpdfstring{$\ast$}{*}addr\+\_\+bytes, uint8\+\_\+t addr\+\_\+len, \mbox{\hyperlink{endpoint_8h_ab973004a32270bbe3ae4566c99f2d22a}{ttak\+\_\+net\+\_\+endpoint\+\_\+type\+\_\+t}} type, uint64\+\_\+t ttl\+\_\+ns, uint64\+\_\+t now)
+\begin{DoxyCompactList}\small\item\em Binds an existing descriptor into the endpoint wrapper. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{endpoint_8h_af9eccfebee007d36c94b48975d845c23}{ttak\+\_\+net\+\_\+endpoint\+\_\+set\+\_\+role}} (ttak\+\_\+shared\+\_\+net\+\_\+endpoint\+\_\+t \texorpdfstring{$\ast$}{*}endpoint, const \mbox{\hyperlink{endpoint_8h_aba7e4de0209ccde55ac69497c59b5c90}{ttak\+\_\+net\+\_\+endpoint\+\_\+attr\+\_\+t}} \texorpdfstring{$\ast$}{*}attr, \mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}owner, uint64\+\_\+t now)
+\begin{DoxyCompactList}\small\item\em Configures the semantic role for restart handling. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} \mbox{\hyperlink{endpoint_8h_aeec35d0ff1a02ab39bb0b25d384fc05b}{ttak\+\_\+net\+\_\+endpoint\+\_\+close}} (ttak\+\_\+shared\+\_\+net\+\_\+endpoint\+\_\+t \texorpdfstring{$\ast$}{*}endpoint, \mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}owner, uint64\+\_\+t now)
+\begin{DoxyCompactList}\small\item\em Closes the descriptor tracked by the endpoint. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} \mbox{\hyperlink{endpoint_8h_a65f7406c2ef2a73afc35f7860ff84285}{ttak\+\_\+net\+\_\+endpoint\+\_\+snapshot\+\_\+guard}} (ttak\+\_\+shared\+\_\+net\+\_\+endpoint\+\_\+t \texorpdfstring{$\ast$}{*}endpoint, \mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}owner, \mbox{\hyperlink{endpoint_8h_a91a67532c3983f0038ed434f624f7555}{ttak\+\_\+net\+\_\+guard\+\_\+snapshot\+\_\+t}} \texorpdfstring{$\ast$}{*}snapshot, uint64\+\_\+t now)
+\begin{DoxyCompactList}\small\item\em Captures guard metadata so callers can use the fd safely after releasing shared access. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} \mbox{\hyperlink{endpoint_8h_a7dda0da5ff1f07d1061791730e8c5d8d}{ttak\+\_\+net\+\_\+endpoint\+\_\+guard\+\_\+commit}} (const \mbox{\hyperlink{endpoint_8h_a91a67532c3983f0038ed434f624f7555}{ttak\+\_\+net\+\_\+guard\+\_\+snapshot\+\_\+t}} \texorpdfstring{$\ast$}{*}snapshot, uint64\+\_\+t now)
+\begin{DoxyCompactList}\small\item\em Reapplies TTL refresh once the caller finishes using the snapshot. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} \mbox{\hyperlink{endpoint_8h_a5c8b97ad9a71a423a041b787829bbe84}{ttak\+\_\+net\+\_\+endpoint\+\_\+force\+\_\+restart}} (ttak\+\_\+shared\+\_\+net\+\_\+endpoint\+\_\+t \texorpdfstring{$\ast$}{*}endpoint, \mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}owner, uint64\+\_\+t now)
+\begin{DoxyCompactList}\small\item\em Attempts to recreate the socket using stored domain/protocol info. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{endpoint_8h_aba7e4de0209ccde55ac69497c59b5c90}\label{endpoint_8h_aba7e4de0209ccde55ac69497c59b5c90} 
+\index{endpoint.h@{endpoint.h}!ttak\_net\_endpoint\_attr\_t@{ttak\_net\_endpoint\_attr\_t}}
+\index{ttak\_net\_endpoint\_attr\_t@{ttak\_net\_endpoint\_attr\_t}!endpoint.h@{endpoint.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_net\_endpoint\_attr\_t}{ttak\_net\_endpoint\_attr\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__net__endpoint__attr}{ttak\+\_\+net\+\_\+endpoint\+\_\+attr}} \mbox{\hyperlink{endpoint_8h_aba7e4de0209ccde55ac69497c59b5c90}{ttak\+\_\+net\+\_\+endpoint\+\_\+attr\+\_\+t}}}
+
+
+
+Role configuration passed to \doxylink{endpoint_8h_af9eccfebee007d36c94b48975d845c23}{ttak\+\_\+net\+\_\+endpoint\+\_\+set\+\_\+role()}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em role\+\_\+flags} & Combination of \doxylink{endpoint_8h_a5e04a88fbb25550b7b9ef37621e7d701}{ttak\+\_\+net\+\_\+endpoint\+\_\+role} flags. \\
+\hline
+{\em listen\+\_\+backlog} & Desired backlog for server sockets (falls back to SOMAXCONN). \\
+\hline
+{\em restart\+\_\+ctx} & Optional user context forwarded to custom restart hooks. \\
+\hline
+{\em restart\+\_\+cb} & Optional custom restart handler. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{endpoint_8h_a18e3c0e209156165e8b7cb4b661da975}\label{endpoint_8h_a18e3c0e209156165e8b7cb4b661da975} 
+\index{endpoint.h@{endpoint.h}!ttak\_net\_endpoint\_role\_t@{ttak\_net\_endpoint\_role\_t}}
+\index{ttak\_net\_endpoint\_role\_t@{ttak\_net\_endpoint\_role\_t}!endpoint.h@{endpoint.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_net\_endpoint\_role\_t}{ttak\_net\_endpoint\_role\_t}}
+{\footnotesize\ttfamily typedef enum \mbox{\hyperlink{endpoint_8h_a5e04a88fbb25550b7b9ef37621e7d701}{ttak\+\_\+net\+\_\+endpoint\+\_\+role}} \mbox{\hyperlink{endpoint_8h_a18e3c0e209156165e8b7cb4b661da975}{ttak\+\_\+net\+\_\+endpoint\+\_\+role\+\_\+t}}}
+
+\Hypertarget{endpoint_8h_a87c093171506552622516da1d6311a96}\label{endpoint_8h_a87c093171506552622516da1d6311a96} 
+\index{endpoint.h@{endpoint.h}!ttak\_net\_endpoint\_t@{ttak\_net\_endpoint\_t}}
+\index{ttak\_net\_endpoint\_t@{ttak\_net\_endpoint\_t}!endpoint.h@{endpoint.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_net\_endpoint\_t}{ttak\_net\_endpoint\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__net__endpoint}{ttak\+\_\+net\+\_\+endpoint}} \mbox{\hyperlink{endpoint_8h_a87c093171506552622516da1d6311a96}{ttak\+\_\+net\+\_\+endpoint\+\_\+t}}}
+
+
+
+Shared socket wrapper guarded by ttak\+\_\+io\+\_\+guard\+\_\+t and owner policies. 
+
+\Hypertarget{endpoint_8h_ab973004a32270bbe3ae4566c99f2d22a}\label{endpoint_8h_ab973004a32270bbe3ae4566c99f2d22a} 
+\index{endpoint.h@{endpoint.h}!ttak\_net\_endpoint\_type\_t@{ttak\_net\_endpoint\_type\_t}}
+\index{ttak\_net\_endpoint\_type\_t@{ttak\_net\_endpoint\_type\_t}!endpoint.h@{endpoint.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_net\_endpoint\_type\_t}{ttak\_net\_endpoint\_type\_t}}
+{\footnotesize\ttfamily typedef enum \mbox{\hyperlink{endpoint_8h_a90d039f18d1593c634513881f837b80c}{ttak\+\_\+net\+\_\+endpoint\+\_\+type}} \mbox{\hyperlink{endpoint_8h_ab973004a32270bbe3ae4566c99f2d22a}{ttak\+\_\+net\+\_\+endpoint\+\_\+type\+\_\+t}}}
+
+
+
+Transport families supported by the endpoint wrapper. 
+
+\Hypertarget{endpoint_8h_a91a67532c3983f0038ed434f624f7555}\label{endpoint_8h_a91a67532c3983f0038ed434f624f7555} 
+\index{endpoint.h@{endpoint.h}!ttak\_net\_guard\_snapshot\_t@{ttak\_net\_guard\_snapshot\_t}}
+\index{ttak\_net\_guard\_snapshot\_t@{ttak\_net\_guard\_snapshot\_t}!endpoint.h@{endpoint.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_net\_guard\_snapshot\_t}{ttak\_net\_guard\_snapshot\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__net__guard__snapshot}{ttak\+\_\+net\+\_\+guard\+\_\+snapshot}} \mbox{\hyperlink{endpoint_8h_a91a67532c3983f0038ed434f624f7555}{ttak\+\_\+net\+\_\+guard\+\_\+snapshot\+\_\+t}}}
+
+\Hypertarget{endpoint_8h_aec10d4f037ec1a4bc3cc70cbccc34f67}\label{endpoint_8h_aec10d4f037ec1a4bc3cc70cbccc34f67} 
+\index{endpoint.h@{endpoint.h}!ttak\_net\_restart\_op@{ttak\_net\_restart\_op}}
+\index{ttak\_net\_restart\_op@{ttak\_net\_restart\_op}!endpoint.h@{endpoint.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_net\_restart\_op}{ttak\_net\_restart\_op}}
+{\footnotesize\ttfamily typedef \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}}(\texorpdfstring{$\ast$}{*} ttak\+\_\+net\+\_\+restart\+\_\+op) (struct \mbox{\hyperlink{structttak__net__endpoint}{ttak\+\_\+net\+\_\+endpoint}} \texorpdfstring{$\ast$}{*}ep, uint64\+\_\+t now)}
+
+
+
+Definition at line \mbox{\hyperlink{endpoint_8h_source_l00030}{30}} of file \mbox{\hyperlink{endpoint_8h_source}{endpoint.\+h}}.
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{endpoint_8h_a5e04a88fbb25550b7b9ef37621e7d701}\label{endpoint_8h_a5e04a88fbb25550b7b9ef37621e7d701} 
+\index{endpoint.h@{endpoint.h}!ttak\_net\_endpoint\_role@{ttak\_net\_endpoint\_role}}
+\index{ttak\_net\_endpoint\_role@{ttak\_net\_endpoint\_role}!endpoint.h@{endpoint.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_net\_endpoint\_role}{ttak\_net\_endpoint\_role}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{endpoint_8h_a5e04a88fbb25550b7b9ef37621e7d701}{ttak\+\_\+net\+\_\+endpoint\+\_\+role}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_NET\_ROLE\_CLIENT@{TTAK\_NET\_ROLE\_CLIENT}!endpoint.h@{endpoint.h}}\index{endpoint.h@{endpoint.h}!TTAK\_NET\_ROLE\_CLIENT@{TTAK\_NET\_ROLE\_CLIENT}}}\Hypertarget{endpoint_8h_a5e04a88fbb25550b7b9ef37621e7d701ac9290097fdb4170238fd482074651b6d}\label{endpoint_8h_a5e04a88fbb25550b7b9ef37621e7d701ac9290097fdb4170238fd482074651b6d} 
+TTAK\+\_\+\+NET\+\_\+\+ROLE\+\_\+\+CLIENT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_NET\_ROLE\_SERVER@{TTAK\_NET\_ROLE\_SERVER}!endpoint.h@{endpoint.h}}\index{endpoint.h@{endpoint.h}!TTAK\_NET\_ROLE\_SERVER@{TTAK\_NET\_ROLE\_SERVER}}}\Hypertarget{endpoint_8h_a5e04a88fbb25550b7b9ef37621e7d701af67f15d969b62ba00b07db2470b4bc05}\label{endpoint_8h_a5e04a88fbb25550b7b9ef37621e7d701af67f15d969b62ba00b07db2470b4bc05} 
+TTAK\+\_\+\+NET\+\_\+\+ROLE\+\_\+\+SERVER&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_NET\_ROLE\_CUSTOM@{TTAK\_NET\_ROLE\_CUSTOM}!endpoint.h@{endpoint.h}}\index{endpoint.h@{endpoint.h}!TTAK\_NET\_ROLE\_CUSTOM@{TTAK\_NET\_ROLE\_CUSTOM}}}\Hypertarget{endpoint_8h_a5e04a88fbb25550b7b9ef37621e7d701ae2d23504f4c9c32e566398e9c5115381}\label{endpoint_8h_a5e04a88fbb25550b7b9ef37621e7d701ae2d23504f4c9c32e566398e9c5115381} 
+TTAK\+\_\+\+NET\+\_\+\+ROLE\+\_\+\+CUSTOM&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{endpoint_8h_source_l00023}{23}} of file \mbox{\hyperlink{endpoint_8h_source}{endpoint.\+h}}.
+
+\Hypertarget{endpoint_8h_a90d039f18d1593c634513881f837b80c}\label{endpoint_8h_a90d039f18d1593c634513881f837b80c} 
+\index{endpoint.h@{endpoint.h}!ttak\_net\_endpoint\_type@{ttak\_net\_endpoint\_type}}
+\index{ttak\_net\_endpoint\_type@{ttak\_net\_endpoint\_type}!endpoint.h@{endpoint.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_net\_endpoint\_type}{ttak\_net\_endpoint\_type}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{endpoint_8h_a90d039f18d1593c634513881f837b80c}{ttak\+\_\+net\+\_\+endpoint\+\_\+type}}}
+
+
+
+Transport families supported by the endpoint wrapper. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_NET\_ENDPOINT\_IPV4@{TTAK\_NET\_ENDPOINT\_IPV4}!endpoint.h@{endpoint.h}}\index{endpoint.h@{endpoint.h}!TTAK\_NET\_ENDPOINT\_IPV4@{TTAK\_NET\_ENDPOINT\_IPV4}}}\Hypertarget{endpoint_8h_a90d039f18d1593c634513881f837b80cae5e7c9cefccf4b5874449e42a817ab5f}\label{endpoint_8h_a90d039f18d1593c634513881f837b80cae5e7c9cefccf4b5874449e42a817ab5f} 
+TTAK\+\_\+\+NET\+\_\+\+ENDPOINT\+\_\+\+IPV4&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_NET\_ENDPOINT\_IPV6@{TTAK\_NET\_ENDPOINT\_IPV6}!endpoint.h@{endpoint.h}}\index{endpoint.h@{endpoint.h}!TTAK\_NET\_ENDPOINT\_IPV6@{TTAK\_NET\_ENDPOINT\_IPV6}}}\Hypertarget{endpoint_8h_a90d039f18d1593c634513881f837b80ca9b0c48408089c41b0fbcd423ff7abdde}\label{endpoint_8h_a90d039f18d1593c634513881f837b80ca9b0c48408089c41b0fbcd423ff7abdde} 
+TTAK\+\_\+\+NET\+\_\+\+ENDPOINT\+\_\+\+IPV6&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_NET\_ENDPOINT\_UNIX@{TTAK\_NET\_ENDPOINT\_UNIX}!endpoint.h@{endpoint.h}}\index{endpoint.h@{endpoint.h}!TTAK\_NET\_ENDPOINT\_UNIX@{TTAK\_NET\_ENDPOINT\_UNIX}}}\Hypertarget{endpoint_8h_a90d039f18d1593c634513881f837b80ca7a3cdadb751cdacb80ef64ca6349b0c3}\label{endpoint_8h_a90d039f18d1593c634513881f837b80ca7a3cdadb751cdacb80ef64ca6349b0c3} 
+TTAK\+\_\+\+NET\+\_\+\+ENDPOINT\+\_\+\+UNIX&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{endpoint_8h_source_l00017}{17}} of file \mbox{\hyperlink{endpoint_8h_source}{endpoint.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{endpoint_8h_ae7fa8743864c858ae149bf27e9b5a053}\label{endpoint_8h_ae7fa8743864c858ae149bf27e9b5a053} 
+\index{endpoint.h@{endpoint.h}!ttak\_net\_endpoint\_bind\_fd@{ttak\_net\_endpoint\_bind\_fd}}
+\index{ttak\_net\_endpoint\_bind\_fd@{ttak\_net\_endpoint\_bind\_fd}!endpoint.h@{endpoint.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_net\_endpoint\_bind\_fd()}{ttak\_net\_endpoint\_bind\_fd()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} ttak\+\_\+net\+\_\+endpoint\+\_\+bind\+\_\+fd (\begin{DoxyParamCaption}\item[{ttak\+\_\+shared\+\_\+net\+\_\+endpoint\+\_\+t \texorpdfstring{$\ast$}{*}}]{endpoint,  }\item[{\mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{owner,  }\item[{int}]{fd,  }\item[{int}]{domain,  }\item[{int}]{socktype,  }\item[{int}]{protocol,  }\item[{const void \texorpdfstring{$\ast$}{*}}]{addr\+\_\+bytes,  }\item[{uint8\+\_\+t}]{addr\+\_\+len,  }\item[{\mbox{\hyperlink{endpoint_8h_ab973004a32270bbe3ae4566c99f2d22a}{ttak\+\_\+net\+\_\+endpoint\+\_\+type\+\_\+t}}}]{type,  }\item[{uint64\+\_\+t}]{ttl\+\_\+ns,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+
+
+Binds an existing descriptor into the endpoint wrapper. 
+
+\Hypertarget{endpoint_8h_aeec35d0ff1a02ab39bb0b25d384fc05b}\label{endpoint_8h_aeec35d0ff1a02ab39bb0b25d384fc05b} 
+\index{endpoint.h@{endpoint.h}!ttak\_net\_endpoint\_close@{ttak\_net\_endpoint\_close}}
+\index{ttak\_net\_endpoint\_close@{ttak\_net\_endpoint\_close}!endpoint.h@{endpoint.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_net\_endpoint\_close()}{ttak\_net\_endpoint\_close()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} ttak\+\_\+net\+\_\+endpoint\+\_\+close (\begin{DoxyParamCaption}\item[{ttak\+\_\+shared\+\_\+net\+\_\+endpoint\+\_\+t \texorpdfstring{$\ast$}{*}}]{endpoint,  }\item[{\mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{owner,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+
+
+Closes the descriptor tracked by the endpoint. 
+
+\Hypertarget{endpoint_8h_a6f7b076106e03025e711ca7c8e56a5e3}\label{endpoint_8h_a6f7b076106e03025e711ca7c8e56a5e3} 
+\index{endpoint.h@{endpoint.h}!ttak\_net\_endpoint\_create@{ttak\_net\_endpoint\_create}}
+\index{ttak\_net\_endpoint\_create@{ttak\_net\_endpoint\_create}!endpoint.h@{endpoint.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_net\_endpoint\_create()}{ttak\_net\_endpoint\_create()}}
+{\footnotesize\ttfamily ttak\+\_\+shared\+\_\+net\+\_\+endpoint\+\_\+t \texorpdfstring{$\ast$}{*} ttak\+\_\+net\+\_\+endpoint\+\_\+create (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{owner,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+
+
+Constructs a shared endpoint bound to {\ttfamily owner}. 
+
+\Hypertarget{endpoint_8h_a8d3676882b7a1b913e330f0e5b7698c9}\label{endpoint_8h_a8d3676882b7a1b913e330f0e5b7698c9} 
+\index{endpoint.h@{endpoint.h}!ttak\_net\_endpoint\_destroy@{ttak\_net\_endpoint\_destroy}}
+\index{ttak\_net\_endpoint\_destroy@{ttak\_net\_endpoint\_destroy}!endpoint.h@{endpoint.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_net\_endpoint\_destroy()}{ttak\_net\_endpoint\_destroy()}}
+{\footnotesize\ttfamily void ttak\+\_\+net\+\_\+endpoint\+\_\+destroy (\begin{DoxyParamCaption}\item[{ttak\+\_\+shared\+\_\+net\+\_\+endpoint\+\_\+t \texorpdfstring{$\ast$}{*}}]{endpoint,  }\item[{\mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{owner,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+
+
+Closes and destroys the shared endpoint. 
+
+\Hypertarget{endpoint_8h_a5c8b97ad9a71a423a041b787829bbe84}\label{endpoint_8h_a5c8b97ad9a71a423a041b787829bbe84} 
+\index{endpoint.h@{endpoint.h}!ttak\_net\_endpoint\_force\_restart@{ttak\_net\_endpoint\_force\_restart}}
+\index{ttak\_net\_endpoint\_force\_restart@{ttak\_net\_endpoint\_force\_restart}!endpoint.h@{endpoint.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_net\_endpoint\_force\_restart()}{ttak\_net\_endpoint\_force\_restart()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} ttak\+\_\+net\+\_\+endpoint\+\_\+force\+\_\+restart (\begin{DoxyParamCaption}\item[{ttak\+\_\+shared\+\_\+net\+\_\+endpoint\+\_\+t \texorpdfstring{$\ast$}{*}}]{endpoint,  }\item[{\mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{owner,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+
+
+Attempts to recreate the socket using stored domain/protocol info. 
+
+\Hypertarget{endpoint_8h_a7dda0da5ff1f07d1061791730e8c5d8d}\label{endpoint_8h_a7dda0da5ff1f07d1061791730e8c5d8d} 
+\index{endpoint.h@{endpoint.h}!ttak\_net\_endpoint\_guard\_commit@{ttak\_net\_endpoint\_guard\_commit}}
+\index{ttak\_net\_endpoint\_guard\_commit@{ttak\_net\_endpoint\_guard\_commit}!endpoint.h@{endpoint.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_net\_endpoint\_guard\_commit()}{ttak\_net\_endpoint\_guard\_commit()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} ttak\+\_\+net\+\_\+endpoint\+\_\+guard\+\_\+commit (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{endpoint_8h_a91a67532c3983f0038ed434f624f7555}{ttak\+\_\+net\+\_\+guard\+\_\+snapshot\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{snapshot,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+
+
+Reapplies TTL refresh once the caller finishes using the snapshot. 
+
+\Hypertarget{endpoint_8h_af9eccfebee007d36c94b48975d845c23}\label{endpoint_8h_af9eccfebee007d36c94b48975d845c23} 
+\index{endpoint.h@{endpoint.h}!ttak\_net\_endpoint\_set\_role@{ttak\_net\_endpoint\_set\_role}}
+\index{ttak\_net\_endpoint\_set\_role@{ttak\_net\_endpoint\_set\_role}!endpoint.h@{endpoint.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_net\_endpoint\_set\_role()}{ttak\_net\_endpoint\_set\_role()}}
+{\footnotesize\ttfamily void ttak\+\_\+net\+\_\+endpoint\+\_\+set\+\_\+role (\begin{DoxyParamCaption}\item[{ttak\+\_\+shared\+\_\+net\+\_\+endpoint\+\_\+t \texorpdfstring{$\ast$}{*}}]{endpoint,  }\item[{const \mbox{\hyperlink{endpoint_8h_aba7e4de0209ccde55ac69497c59b5c90}{ttak\+\_\+net\+\_\+endpoint\+\_\+attr\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{attr,  }\item[{\mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{owner,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+
+
+Configures the semantic role for restart handling. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em endpoint} & Shared endpoint instance. \\
+\hline
+{\em role\+\_\+flags} & Bitmask composed of \doxylink{endpoint_8h_a18e3c0e209156165e8b7cb4b661da975}{ttak\+\_\+net\+\_\+endpoint\+\_\+role\+\_\+t} constants. \\
+\hline
+{\em restart\+\_\+cb} & Optional custom restart hook (pass NULL to use defaults). \\
+\hline
+\end{DoxyParams}
+\Hypertarget{endpoint_8h_a65f7406c2ef2a73afc35f7860ff84285}\label{endpoint_8h_a65f7406c2ef2a73afc35f7860ff84285} 
+\index{endpoint.h@{endpoint.h}!ttak\_net\_endpoint\_snapshot\_guard@{ttak\_net\_endpoint\_snapshot\_guard}}
+\index{ttak\_net\_endpoint\_snapshot\_guard@{ttak\_net\_endpoint\_snapshot\_guard}!endpoint.h@{endpoint.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_net\_endpoint\_snapshot\_guard()}{ttak\_net\_endpoint\_snapshot\_guard()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} ttak\+\_\+net\+\_\+endpoint\+\_\+snapshot\+\_\+guard (\begin{DoxyParamCaption}\item[{ttak\+\_\+shared\+\_\+net\+\_\+endpoint\+\_\+t \texorpdfstring{$\ast$}{*}}]{endpoint,  }\item[{\mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{owner,  }\item[{\mbox{\hyperlink{endpoint_8h_a91a67532c3983f0038ed434f624f7555}{ttak\+\_\+net\+\_\+guard\+\_\+snapshot\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{snapshot,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+
+
+Captures guard metadata so callers can use the fd safely after releasing shared access. 
+

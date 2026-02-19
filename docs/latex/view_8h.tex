@@ -1,0 +1,91 @@
+\doxysection{include/ttak/net/view.h File Reference}
+\hypertarget{view_8h}{}\label{view_8h}\index{include/ttak/net/view.h@{include/ttak/net/view.h}}
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$ttak/net/endpoint.\+h$>$}\newline
+{\ttfamily \#include $<$ttak/io/zerocopy.\+h$>$}\newline
+Include dependency graph for view.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{view_8h__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structttak__net__view}{ttak\+\_\+net\+\_\+view}}
+\begin{DoxyCompactList}\small\item\em Read-\/only zero-\/copy snapshot returned by \doxylink{view_8h_a06a3edf488055485ebf9862be3604086}{ttak\+\_\+net\+\_\+view\+\_\+from\+\_\+endpoint()}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \mbox{\hyperlink{structttak__net__view}{ttak\+\_\+net\+\_\+view}} \mbox{\hyperlink{view_8h_a764bf4963c58bc00051fe1e24de7afc8}{ttak\+\_\+net\+\_\+view\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Read-\/only zero-\/copy snapshot returned by \doxylink{view_8h_a06a3edf488055485ebf9862be3604086}{ttak\+\_\+net\+\_\+view\+\_\+from\+\_\+endpoint()}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{view_8h_adcd0063d2f8a24038c7a73e486f012fe}{ttak\+\_\+net\+\_\+view\+\_\+init}} (\mbox{\hyperlink{view_8h_a764bf4963c58bc00051fe1e24de7afc8}{ttak\+\_\+net\+\_\+view\+\_\+t}} \texorpdfstring{$\ast$}{*}view)
+\begin{DoxyCompactList}\small\item\em Initializes a view structure. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} \mbox{\hyperlink{view_8h_a06a3edf488055485ebf9862be3604086}{ttak\+\_\+net\+\_\+view\+\_\+from\+\_\+endpoint}} (\mbox{\hyperlink{view_8h_a764bf4963c58bc00051fe1e24de7afc8}{ttak\+\_\+net\+\_\+view\+\_\+t}} \texorpdfstring{$\ast$}{*}view, ttak\+\_\+shared\+\_\+net\+\_\+endpoint\+\_\+t \texorpdfstring{$\ast$}{*}endpoint, \mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}owner, size\+\_\+t max\+\_\+len, int flags, uint64\+\_\+t now)
+\begin{DoxyCompactList}\small\item\em Reads from {\ttfamily endpoint} into a detachable buffer and wires it to {\ttfamily view}. \end{DoxyCompactList}\item 
+const uint8\+\_\+t \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{view_8h_a51f5626d87222172f2a0d026ec0f5d20}{ttak\+\_\+net\+\_\+view\+\_\+data}} (const \mbox{\hyperlink{view_8h_a764bf4963c58bc00051fe1e24de7afc8}{ttak\+\_\+net\+\_\+view\+\_\+t}} \texorpdfstring{$\ast$}{*}view)
+\begin{DoxyCompactList}\small\item\em Returns the immutable payload pointer held by the view. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{view_8h_adb7955f44cd0dba998ea1c744b28f031}{ttak\+\_\+net\+\_\+view\+\_\+release}} (\mbox{\hyperlink{view_8h_a764bf4963c58bc00051fe1e24de7afc8}{ttak\+\_\+net\+\_\+view\+\_\+t}} \texorpdfstring{$\ast$}{*}view)
+\begin{DoxyCompactList}\small\item\em Releases detachable resources associated with the view. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{view_8h_a764bf4963c58bc00051fe1e24de7afc8}\label{view_8h_a764bf4963c58bc00051fe1e24de7afc8} 
+\index{view.h@{view.h}!ttak\_net\_view\_t@{ttak\_net\_view\_t}}
+\index{ttak\_net\_view\_t@{ttak\_net\_view\_t}!view.h@{view.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_net\_view\_t}{ttak\_net\_view\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__net__view}{ttak\+\_\+net\+\_\+view}} \mbox{\hyperlink{view_8h_a764bf4963c58bc00051fe1e24de7afc8}{ttak\+\_\+net\+\_\+view\+\_\+t}}}
+
+
+
+Read-\/only zero-\/copy snapshot returned by \doxylink{view_8h_a06a3edf488055485ebf9862be3604086}{ttak\+\_\+net\+\_\+view\+\_\+from\+\_\+endpoint()}. 
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{view_8h_a51f5626d87222172f2a0d026ec0f5d20}\label{view_8h_a51f5626d87222172f2a0d026ec0f5d20} 
+\index{view.h@{view.h}!ttak\_net\_view\_data@{ttak\_net\_view\_data}}
+\index{ttak\_net\_view\_data@{ttak\_net\_view\_data}!view.h@{view.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_net\_view\_data()}{ttak\_net\_view\_data()}}
+{\footnotesize\ttfamily const uint8\+\_\+t \texorpdfstring{$\ast$}{*} ttak\+\_\+net\+\_\+view\+\_\+data (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{view_8h_a764bf4963c58bc00051fe1e24de7afc8}{ttak\+\_\+net\+\_\+view\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{view }\end{DoxyParamCaption})}
+
+
+
+Returns the immutable payload pointer held by the view. 
+
+\Hypertarget{view_8h_a06a3edf488055485ebf9862be3604086}\label{view_8h_a06a3edf488055485ebf9862be3604086} 
+\index{view.h@{view.h}!ttak\_net\_view\_from\_endpoint@{ttak\_net\_view\_from\_endpoint}}
+\index{ttak\_net\_view\_from\_endpoint@{ttak\_net\_view\_from\_endpoint}!view.h@{view.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_net\_view\_from\_endpoint()}{ttak\_net\_view\_from\_endpoint()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} ttak\+\_\+net\+\_\+view\+\_\+from\+\_\+endpoint (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{view_8h_a764bf4963c58bc00051fe1e24de7afc8}{ttak\+\_\+net\+\_\+view\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{view,  }\item[{ttak\+\_\+shared\+\_\+net\+\_\+endpoint\+\_\+t \texorpdfstring{$\ast$}{*}}]{endpoint,  }\item[{\mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{owner,  }\item[{size\+\_\+t}]{max\+\_\+len,  }\item[{int}]{flags,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+
+
+Reads from {\ttfamily endpoint} into a detachable buffer and wires it to {\ttfamily view}. 
+
+\Hypertarget{view_8h_adcd0063d2f8a24038c7a73e486f012fe}\label{view_8h_adcd0063d2f8a24038c7a73e486f012fe} 
+\index{view.h@{view.h}!ttak\_net\_view\_init@{ttak\_net\_view\_init}}
+\index{ttak\_net\_view\_init@{ttak\_net\_view\_init}!view.h@{view.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_net\_view\_init()}{ttak\_net\_view\_init()}}
+{\footnotesize\ttfamily void ttak\+\_\+net\+\_\+view\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{view_8h_a764bf4963c58bc00051fe1e24de7afc8}{ttak\+\_\+net\+\_\+view\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{view }\end{DoxyParamCaption})}
+
+
+
+Initializes a view structure. 
+
+\Hypertarget{view_8h_adb7955f44cd0dba998ea1c744b28f031}\label{view_8h_adb7955f44cd0dba998ea1c744b28f031} 
+\index{view.h@{view.h}!ttak\_net\_view\_release@{ttak\_net\_view\_release}}
+\index{ttak\_net\_view\_release@{ttak\_net\_view\_release}!view.h@{view.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_net\_view\_release()}{ttak\_net\_view\_release()}}
+{\footnotesize\ttfamily void ttak\+\_\+net\+\_\+view\+\_\+release (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{view_8h_a764bf4963c58bc00051fe1e24de7afc8}{ttak\+\_\+net\+\_\+view\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{view }\end{DoxyParamCaption})}
+
+
+
+Releases detachable resources associated with the view. 
+

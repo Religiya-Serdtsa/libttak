@@ -1,0 +1,18 @@
+<map id="include/ttak/io/io.h" name="include/ttak/io/io.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="388,5,531,31"/>
+<area shape="rect" id="Node000002" href="$async_8h.html" title=" " alt="" coords="5,79,175,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="387,36,150,81,149,76,386,31"/>
+<area shape="rect" id="Node000003" href="$bits_8h.html" title=" " alt="" coords="199,79,354,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="418,38,308,81,306,76,416,33"/>
+<area shape="rect" id="Node000004" href="$io_2sync_8h.html" title=" " alt="" coords="379,79,540,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="462,44,462,79,457,79,457,44"/>
+<area shape="rect" id="Node000005" href="$zerocopy_8h.html" title=" " alt="" coords="564,79,752,104"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="505,33,626,76,625,81,503,38"/>
+<area shape="rect" id="Node000007" href="$endpoint_8h.html" title=" " alt="" coords="777,79,974,104"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="540,30,809,76,808,81,539,36"/>
+<area shape="rect" id="Node000006" href="$view_8h.html" title=" " alt="" coords="579,152,750,177"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="663,118,666,152,661,152,658,118"/>
+<area shape="poly" id="edge8_Node000007_Node000006" title=" " alt="" coords="830,111,700,154,698,149,828,106"/>
+<area shape="rect" id="Node000008" href="$session_8h.html" title=" " alt="" coords="781,152,970,177"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="878,118,878,152,873,152,873,118"/>
+</map>

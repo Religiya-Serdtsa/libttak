@@ -1,0 +1,86 @@
+\doxysection{epoch.\+h}
+\hypertarget{epoch_8h_source}{}\label{epoch_8h_source}\index{include/ttak/mem/epoch.h@{include/ttak/mem/epoch.h}}
+\mbox{\hyperlink{epoch_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ TTAK\_MEM\_EPOCH\_H}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ TTAK\_MEM\_EPOCH\_H}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <stdatomic.h>}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00007}00007\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00008}00008\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00009}00009\ \textcolor{comment}{\ *\ Handle\ tcc's\ lack\ of\ C11\ support\ for\ \_Atomic\ and\ \_Thread\_local.}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00010}00010\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00011}00011\ \textcolor{preprocessor}{\#if\ defined(\_\_TINYC\_\_)}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00012}00012\ \textcolor{preprocessor}{\ \ \ \ \#undef\ \_Atomic}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00013}00013\ \textcolor{preprocessor}{\ \ \ \ \#define\ \_Atomic}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00014}00014\ \ \ \ \ \textcolor{comment}{/*\ TCC\ doesn't\ support\ \_Thread\_local\ /\ \_\_thread\ in\ many\ environments\ */}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00015}00015\ \textcolor{preprocessor}{\ \ \ \ \#ifndef\ \_Thread\_local}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00016}00016\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#define\ \_Thread\_local}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00017}00017\ \textcolor{preprocessor}{\ \ \ \ \#endif}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00018}00018\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00020}\mbox{\hyperlink{epoch_8h_a1f0bc5e67927ea3e33e0e7c5d86b3588}{00020}}\ \textcolor{preprocessor}{\#define\ TTAK\_EPOCH\_SESSIONS\ 3}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00022}\mbox{\hyperlink{structttak__retired__node}{00022}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__retired__node}{ttak\_retired\_node}}\ \{}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00023}\mbox{\hyperlink{structttak__retired__node_a0079ce009a75daaf259d97db594f396c}{00023}}\ \ \ \ \ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{structttak__retired__node_a0079ce009a75daaf259d97db594f396c}{ptr}};}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00024}\mbox{\hyperlink{structttak__retired__node_a6f00f86687465e62e45ad0c38b8cb20a}{00024}}\ \ \ \ \ void\ (*\mbox{\hyperlink{structttak__retired__node_a6f00f86687465e62e45ad0c38b8cb20a}{cleanup}})(\textcolor{keywordtype}{void}\ *);}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00025}\mbox{\hyperlink{structttak__retired__node_a04d41b2783555abbfebe11f28d8f7b4e}{00025}}\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__retired__node}{ttak\_retired\_node}}\ *\mbox{\hyperlink{structttak__retired__node_a04d41b2783555abbfebe11f28d8f7b4e}{next}};}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00026}\mbox{\hyperlink{epoch_8h_ab7801ef33599e02cd1bdd04ab1ea4e4c}{00026}}\ \}\ \mbox{\hyperlink{epoch_8h_ab7801ef33599e02cd1bdd04ab1ea4e4c}{ttak\_retired\_node\_t}};}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00028}\mbox{\hyperlink{structttak__epoch__manager__t}{00028}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00029}\mbox{\hyperlink{structttak__epoch__manager__t_a5e79f21c60f892598501e3015781812b}{00029}}\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\_Atomic}}\ \mbox{\hyperlink{structttak__epoch__manager__t_a5e79f21c60f892598501e3015781812b}{global\_epoch}};}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00030}\mbox{\hyperlink{structttak__epoch__manager__t_a4b2853290f37ef5c7730dc3ca1ded734}{00030}}\ \ \ \ \ \mbox{\hyperlink{structttak__retired__node}{ttak\_retired\_node\_t}}\ *\ \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\_Atomic}}\ retired\_queues[\mbox{\hyperlink{epoch_8h_a1f0bc5e67927ea3e33e0e7c5d86b3588}{TTAK\_EPOCH\_SESSIONS}}];}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00031}00031\ \}\ \mbox{\hyperlink{structttak__epoch__manager__t}{ttak\_epoch\_manager\_t}};}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00033}\mbox{\hyperlink{structttak__thread__state__t}{00033}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00034}\mbox{\hyperlink{structttak__thread__state__t_a430a6c6702208eef272f285e349cada0}{00034}}\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\_Atomic}}\ \mbox{\hyperlink{structttak__thread__state__t_a430a6c6702208eef272f285e349cada0}{local\_epoch}};}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00035}\mbox{\hyperlink{structttak__thread__state__t_ad1f5cc3075d804b050f1202425e3d8c3}{00035}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\_Atomic}}\ \mbox{\hyperlink{structttak__thread__state__t_ad1f5cc3075d804b050f1202425e3d8c3}{active}};}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00036}00036\ \}\ \mbox{\hyperlink{structttak__thread__state__t}{ttak\_thread\_state\_t}};}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00038}00038\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{structttak__epoch__manager__t}{ttak\_epoch\_manager\_t}}\ \mbox{\hyperlink{epoch_8h_a2192db0d487496ef34e4fa90b8b49329}{g\_epoch\_mgr}};}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00040}00040\ \textcolor{comment}{/*\ For\ tcc\ compatibility,\ avoid\ combining\ extern\ and\ \_Thread\_local\ if\ possible,\ }}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00041}00041\ \textcolor{comment}{\ \ \ or\ ensure\ the\ compiler-\/specific\ keyword\ is\ used.\ */}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00042}00042\ \textcolor{preprocessor}{\#if\ defined(\_\_TINYC\_\_)}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00043}00043\ \ \ \ \ \textcolor{keyword}{extern}\ \mbox{\hyperlink{structttak__thread__state__t}{ttak\_thread\_state\_t}}\ *\mbox{\hyperlink{epoch_8h_a862025158e19b2f5766ecc4f483613a4}{t\_local\_state}};}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00044}00044\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00045}00045\ \ \ \ \ \textcolor{keyword}{extern}\ \_Thread\_local\ \mbox{\hyperlink{structttak__thread__state__t}{ttak\_thread\_state\_t}}\ *\mbox{\hyperlink{epoch_8h_a862025158e19b2f5766ecc4f483613a4}{t\_local\_state}};}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00046}00046\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00047}00047\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00048}00048\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00049}00049\ \textcolor{comment}{\ *\ @brief\ Registers\ the\ current\ thread\ with\ the\ epoch\ manager.}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00050}00050\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00051}\mbox{\hyperlink{epoch_8h_ae1b722f4861fbbb0cfa8de22e3fa76b0}{00051}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{epoch_8h_ae1b722f4861fbbb0cfa8de22e3fa76b0}{ttak\_epoch\_register\_thread}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00052}00052\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00053}00053\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00054}00054\ \textcolor{comment}{\ *\ @brief\ Deregisters\ the\ current\ thread.}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00055}00055\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00056}\mbox{\hyperlink{epoch_8h_a6da4eee69992f96efead4de621c26b71}{00056}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{epoch_8h_a6da4eee69992f96efead4de621c26b71}{ttak\_epoch\_deregister\_thread}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00057}00057\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00058}00058\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00059}00059\ \textcolor{comment}{\ *\ @brief\ Enters\ a\ critical\ section\ protected\ by\ EBR.}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00060}00060\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00061}\mbox{\hyperlink{epoch_8h_acc975f53f787fd4d2b91a3c25c56cf11}{00061}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{epoch_8h_acc975f53f787fd4d2b91a3c25c56cf11}{ttak\_epoch\_enter}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00062}00062\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00063}00063\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00064}00064\ \textcolor{comment}{\ *\ @brief\ Exits\ the\ EBR\ critical\ section.}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00065}00065\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00066}\mbox{\hyperlink{epoch_8h_a542bce7d6579bcdb816aa4111263662a}{00066}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{epoch_8h_a542bce7d6579bcdb816aa4111263662a}{ttak\_epoch\_exit}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00067}00067\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00068}00068\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00069}00069\ \textcolor{comment}{\ *\ @brief\ Retires\ a\ pointer\ for\ deferred\ reclamation.}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00070}00070\ \textcolor{comment}{\ *\ *\ @param\ ptr\ The\ pointer\ to\ retire.}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00071}00071\ \textcolor{comment}{\ *\ @param\ cleanup\ Optional\ cleanup\ function\ (e.g.,\ free).}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00072}00072\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00073}\mbox{\hyperlink{epoch_8h_aba162a5defc4e35caa4857dacc526a7d}{00073}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{epoch_8h_aba162a5defc4e35caa4857dacc526a7d}{ttak\_epoch\_retire}}(\textcolor{keywordtype}{void}\ *ptr,\ \textcolor{keywordtype}{void}\ (*cleanup)(\textcolor{keywordtype}{void}\ *));}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00074}00074\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00075}00075\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00076}00076\ \textcolor{comment}{\ *\ @brief\ Attempts\ to\ reclaim\ memory\ from\ safe\ epochs.}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00077}00077\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00078}\mbox{\hyperlink{epoch_8h_aa6be6071c276481154cceb40f5720f32}{00078}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{epoch_8h_aa6be6071c276481154cceb40f5720f32}{ttak\_epoch\_reclaim}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00079}00079\ }
+\DoxyCodeLine{\Hypertarget{epoch_8h_source_l00080}00080\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_MEM\_EPOCH\_H}}
+
+\end{DoxyCode}

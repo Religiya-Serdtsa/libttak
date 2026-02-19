@@ -1,6 +1,5 @@
 var app__types_8h =
 [
-    [ "ttak_mem_header_t", "structttak__mem__header__t.html", "structttak__mem__header__t" ],
     [ "ERR_TTAK_INV_ACC", "app__types_8h.html#a1a83af89a777d8df64b1697e388679d9", null ],
     [ "ERR_TTAK_MATH_ERR", "app__types_8h.html#a147a8eb4940f2cc5a8e3b1b8dae3ddae", null ],
     [ "SAFE_NULL", "app__types_8h.html#ac5b096c74969e7dbd5e24d44a446c015", null ],
@@ -12,9 +11,7 @@ var app__types_8h =
     [ "TT_SECOND", "app__types_8h.html#a751dbf1f1d796405a9b2fe2f7ffa945e", null ],
     [ "TTAK_COLD_PATH", "app__types_8h.html#a5ba4b50baa645717996dbe107641cf43", null ],
     [ "TTAK_HOT_PATH", "app__types_8h.html#a9f804bdef8f3eaa64b7090504f3790d1", null ],
-    [ "TTAK_MAGIC_NUMBER", "app__types_8h.html#a02d61fafa21eadc8010ca9803d77bafb", null ],
     [ "TTAK_MAX_LIMB_LIMIT", "app__types_8h.html#afb038556e0b1b0989b6a6ddf3fa399f2", null ],
     [ "TTAK_MEM_HIGH_WATERMARK", "app__types_8h.html#a57726742a27442de442d3f964b17136e", null ],
-    [ "TTAK_THREAD_LOCAL", "app__types_8h.html#a75cdd26ec56c06d5e1abe50b17a8f837", null ],
-    [ "ttak_calc_header_checksum", "app__types_8h.html#ad663cf355d411491ef16fbaba940be07", null ]
+    [ "TTAK_THREAD_LOCAL", "app__types_8h.html#a75cdd26ec56c06d5e1abe50b17a8f837", null ]
 ];

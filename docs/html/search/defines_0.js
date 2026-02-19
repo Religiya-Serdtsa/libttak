@@ -15,10 +15,10 @@ var searchData=
   ['_5f_5ftt_5fsched_5furgent_5f_5f_12',['__TT_SCHED_URGENT__',['../nice_8h.html#ac2e106fbfccc8b53f046946ceb69b4bb',1,'nice.h']]],
   ['_5f_5fttak_5fctx_5fuse_5ffirst_5f_5f_13',['__TTAK_CTX_USE_FIRST__',['../context_8h.html#a54796d3c55027d905e7904d5edee16b1',1,'context.h']]],
   ['_5f_5fttak_5fctx_5fuse_5fsecond_5f_5f_14',['__TTAK_CTX_USE_SECOND__',['../context_8h.html#a1b705ba49ec81f02c1102eb374b42324',1,'context.h']]],
-  ['_5f_5fttak_5fneeds_5fportable_5fstdatomic_5f_5f_15',['__ttak_needs_portable_stdatomic__',['../fake__root_2usr_2local_2include_2stdatomic_8h.html#a58014a490f8aa8f5dd78cd9203229cdf',1,'__TTAK_NEEDS_PORTABLE_STDATOMIC__:&#160;stdatomic.h'],['../include_2stdatomic_8h.html#a58014a490f8aa8f5dd78cd9203229cdf',1,'__TTAK_NEEDS_PORTABLE_STDATOMIC__:&#160;stdatomic.h'],['../temp__include_2stdatomic_8h.html#a58014a490f8aa8f5dd78cd9203229cdf',1,'__TTAK_NEEDS_PORTABLE_STDATOMIC__:&#160;stdatomic.h']]],
+  ['_5f_5fttak_5fneeds_5fportable_5fstdatomic_5f_5f_15',['__ttak_needs_portable_stdatomic__',['../include_2stdatomic_8h.html#a58014a490f8aa8f5dd78cd9203229cdf',1,'__TTAK_NEEDS_PORTABLE_STDATOMIC__:&#160;stdatomic.h'],['../temp__include_2stdatomic_8h.html#a58014a490f8aa8f5dd78cd9203229cdf',1,'__TTAK_NEEDS_PORTABLE_STDATOMIC__:&#160;stdatomic.h']]],
   ['_5f_5fttak_5fregion_5fcanonical_5falloc_5f_5f_16',['__TTAK_REGION_CANONICAL_ALLOC__',['../region_8h.html#a80122b85afdab06b953482374740b7ca',1,'region.h']]],
   ['_5f_5fttak_5fregion_5fcanonical_5fctx_5f_5f_17',['__TTAK_REGION_CANONICAL_CTX__',['../region_8h.html#a99596a8898e83a96943e80034e591fd8',1,'region.h']]],
   ['_5f_5fttak_5funsafe_5fmem_5fforever_5f_5f_18',['__TTAK_UNSAFE_MEM_FOREVER__',['../mem_8h.html#a798ceb4ce7e1d84af3001d7ec38d3da2',1,'mem.h']]],
   ['_5fatomic_19',['_Atomic',['../include_2stdatomic_8h.html#a94674db2fe3c7496dfdcaa9b81486e79',1,'stdatomic.h']]],
-  ['_5fxopen_5fsource_20',['_XOPEN_SOURCE',['../sync_8h.html#a78c99ffd76a7bb3c8c74db76207e9ab4',1,'sync.h']]]
+  ['_5fxopen_5fsource_20',['_XOPEN_SOURCE',['../sync_2sync_8h.html#a78c99ffd76a7bb3c8c74db76207e9ab4',1,'sync.h']]]
 ];

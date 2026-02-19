@@ -1,0 +1,115 @@
+\doxysection{ttak\+\_\+accel\+\_\+batch\+\_\+item Struct Reference}
+\hypertarget{structttak__accel__batch__item}{}\label{structttak__accel__batch__item}\index{ttak\_accel\_batch\_item@{ttak\_accel\_batch\_item}}
+
+
+Work fragment passed to an accelerator implementation.  
+
+
+
+
+{\ttfamily \#include $<$ttak\+\_\+accelerator.\+h$>$}
+
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const uint8\+\_\+t \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__accel__batch__item_ab55dab014cfce96fe3e5c9938bcbb1c3}{input}}
+\item 
+size\+\_\+t \mbox{\hyperlink{structttak__accel__batch__item_a8c658d933968a97b1bdb0e2113885cea}{input\+\_\+len}}
+\item 
+uint8\+\_\+t \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__accel__batch__item_a827c6f868d56e006a6e77d15b17a2a04}{output}}
+\item 
+size\+\_\+t \mbox{\hyperlink{structttak__accel__batch__item_acbda298b4da4bfaa53eb1cd70f6866da}{output\+\_\+len}}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{structttak__accel__batch__item_a57ff5d59619759907a9ec70245a02b68}{mask\+\_\+seed}}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{structttak__accel__batch__item_ab5cee442fa3e2f7fb118dbfe24b376dd}{checksum\+\_\+salt}}
+\item 
+uint32\+\_\+t \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__accel__batch__item_a6e030697ef381a474229dc2756a77b5f}{checksum\+\_\+out}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Work fragment passed to an accelerator implementation. 
+
+All pointers must remain valid for the duration of the call. Every buffer is guarded with a byte length to preserve bounds. 
+
+Definition at line \mbox{\hyperlink{ttak__accelerator_8h_source_l00047}{47}} of file \mbox{\hyperlink{ttak__accelerator_8h_source}{ttak\+\_\+accelerator.\+h}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structttak__accel__batch__item_a6e030697ef381a474229dc2756a77b5f}\label{structttak__accel__batch__item_a6e030697ef381a474229dc2756a77b5f} 
+\index{ttak\_accel\_batch\_item@{ttak\_accel\_batch\_item}!checksum\_out@{checksum\_out}}
+\index{checksum\_out@{checksum\_out}!ttak\_accel\_batch\_item@{ttak\_accel\_batch\_item}}
+\doxysubsubsection{\texorpdfstring{checksum\_out}{checksum\_out}}
+{\footnotesize\ttfamily uint32\+\_\+t\texorpdfstring{$\ast$}{*} ttak\+\_\+accel\+\_\+batch\+\_\+item\+::checksum\+\_\+out}
+
+
+
+Definition at line \mbox{\hyperlink{ttak__accelerator_8h_source_l00054}{54}} of file \mbox{\hyperlink{ttak__accelerator_8h_source}{ttak\+\_\+accelerator.\+h}}.
+
+\Hypertarget{structttak__accel__batch__item_ab5cee442fa3e2f7fb118dbfe24b376dd}\label{structttak__accel__batch__item_ab5cee442fa3e2f7fb118dbfe24b376dd} 
+\index{ttak\_accel\_batch\_item@{ttak\_accel\_batch\_item}!checksum\_salt@{checksum\_salt}}
+\index{checksum\_salt@{checksum\_salt}!ttak\_accel\_batch\_item@{ttak\_accel\_batch\_item}}
+\doxysubsubsection{\texorpdfstring{checksum\_salt}{checksum\_salt}}
+{\footnotesize\ttfamily uint32\+\_\+t ttak\+\_\+accel\+\_\+batch\+\_\+item\+::checksum\+\_\+salt}
+
+
+
+Definition at line \mbox{\hyperlink{ttak__accelerator_8h_source_l00053}{53}} of file \mbox{\hyperlink{ttak__accelerator_8h_source}{ttak\+\_\+accelerator.\+h}}.
+
+\Hypertarget{structttak__accel__batch__item_ab55dab014cfce96fe3e5c9938bcbb1c3}\label{structttak__accel__batch__item_ab55dab014cfce96fe3e5c9938bcbb1c3} 
+\index{ttak\_accel\_batch\_item@{ttak\_accel\_batch\_item}!input@{input}}
+\index{input@{input}!ttak\_accel\_batch\_item@{ttak\_accel\_batch\_item}}
+\doxysubsubsection{\texorpdfstring{input}{input}}
+{\footnotesize\ttfamily const uint8\+\_\+t\texorpdfstring{$\ast$}{*} ttak\+\_\+accel\+\_\+batch\+\_\+item\+::input}
+
+
+
+Definition at line \mbox{\hyperlink{ttak__accelerator_8h_source_l00048}{48}} of file \mbox{\hyperlink{ttak__accelerator_8h_source}{ttak\+\_\+accelerator.\+h}}.
+
+\Hypertarget{structttak__accel__batch__item_a8c658d933968a97b1bdb0e2113885cea}\label{structttak__accel__batch__item_a8c658d933968a97b1bdb0e2113885cea} 
+\index{ttak\_accel\_batch\_item@{ttak\_accel\_batch\_item}!input\_len@{input\_len}}
+\index{input\_len@{input\_len}!ttak\_accel\_batch\_item@{ttak\_accel\_batch\_item}}
+\doxysubsubsection{\texorpdfstring{input\_len}{input\_len}}
+{\footnotesize\ttfamily size\+\_\+t ttak\+\_\+accel\+\_\+batch\+\_\+item\+::input\+\_\+len}
+
+
+
+Definition at line \mbox{\hyperlink{ttak__accelerator_8h_source_l00049}{49}} of file \mbox{\hyperlink{ttak__accelerator_8h_source}{ttak\+\_\+accelerator.\+h}}.
+
+\Hypertarget{structttak__accel__batch__item_a57ff5d59619759907a9ec70245a02b68}\label{structttak__accel__batch__item_a57ff5d59619759907a9ec70245a02b68} 
+\index{ttak\_accel\_batch\_item@{ttak\_accel\_batch\_item}!mask\_seed@{mask\_seed}}
+\index{mask\_seed@{mask\_seed}!ttak\_accel\_batch\_item@{ttak\_accel\_batch\_item}}
+\doxysubsubsection{\texorpdfstring{mask\_seed}{mask\_seed}}
+{\footnotesize\ttfamily uint32\+\_\+t ttak\+\_\+accel\+\_\+batch\+\_\+item\+::mask\+\_\+seed}
+
+
+
+Definition at line \mbox{\hyperlink{ttak__accelerator_8h_source_l00052}{52}} of file \mbox{\hyperlink{ttak__accelerator_8h_source}{ttak\+\_\+accelerator.\+h}}.
+
+\Hypertarget{structttak__accel__batch__item_a827c6f868d56e006a6e77d15b17a2a04}\label{structttak__accel__batch__item_a827c6f868d56e006a6e77d15b17a2a04} 
+\index{ttak\_accel\_batch\_item@{ttak\_accel\_batch\_item}!output@{output}}
+\index{output@{output}!ttak\_accel\_batch\_item@{ttak\_accel\_batch\_item}}
+\doxysubsubsection{\texorpdfstring{output}{output}}
+{\footnotesize\ttfamily uint8\+\_\+t\texorpdfstring{$\ast$}{*} ttak\+\_\+accel\+\_\+batch\+\_\+item\+::output}
+
+
+
+Definition at line \mbox{\hyperlink{ttak__accelerator_8h_source_l00050}{50}} of file \mbox{\hyperlink{ttak__accelerator_8h_source}{ttak\+\_\+accelerator.\+h}}.
+
+\Hypertarget{structttak__accel__batch__item_acbda298b4da4bfaa53eb1cd70f6866da}\label{structttak__accel__batch__item_acbda298b4da4bfaa53eb1cd70f6866da} 
+\index{ttak\_accel\_batch\_item@{ttak\_accel\_batch\_item}!output\_len@{output\_len}}
+\index{output\_len@{output\_len}!ttak\_accel\_batch\_item@{ttak\_accel\_batch\_item}}
+\doxysubsubsection{\texorpdfstring{output\_len}{output\_len}}
+{\footnotesize\ttfamily size\+\_\+t ttak\+\_\+accel\+\_\+batch\+\_\+item\+::output\+\_\+len}
+
+
+
+Definition at line \mbox{\hyperlink{ttak__accelerator_8h_source_l00051}{51}} of file \mbox{\hyperlink{ttak__accelerator_8h_source}{ttak\+\_\+accelerator.\+h}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/ttak/\mbox{\hyperlink{ttak__accelerator_8h}{ttak\+\_\+accelerator.\+h}}\end{DoxyCompactItemize}

@@ -1,0 +1,100 @@
+\doxysection{ttak\+\_\+net\+\_\+endpoint\+\_\+attr Struct Reference}
+\hypertarget{structttak__net__endpoint__attr}{}\label{structttak__net__endpoint__attr}\index{ttak\_net\_endpoint\_attr@{ttak\_net\_endpoint\_attr}}
+
+
+Role configuration passed to \doxylink{endpoint_8h_af9eccfebee007d36c94b48975d845c23}{ttak\+\_\+net\+\_\+endpoint\+\_\+set\+\_\+role()}.  
+
+
+
+
+{\ttfamily \#include $<$endpoint.\+h$>$}
+
+
+
+Collaboration diagram for ttak\+\_\+net\+\_\+endpoint\+\_\+attr\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=251pt]{structttak__net__endpoint__attr__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{structttak__net__endpoint__attr_aabfb09c7c1f412e9bf2e76cbc4fccf48}{role\+\_\+flags}}
+\item 
+int \mbox{\hyperlink{structttak__net__endpoint__attr_ab72c9fc65bca40694860e689622c4f88}{listen\+\_\+backlog}}
+\item 
+void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__net__endpoint__attr_a998a78fa8c150d7c1f54d7f8d078f24e}{restart\+\_\+ctx}}
+\item 
+\mbox{\hyperlink{endpoint_8h_aec10d4f037ec1a4bc3cc70cbccc34f67}{ttak\+\_\+net\+\_\+restart\+\_\+op}} \mbox{\hyperlink{structttak__net__endpoint__attr_acb9bda49aebb5ef2768f33172c6a6c8b}{restart\+\_\+cb}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Role configuration passed to \doxylink{endpoint_8h_af9eccfebee007d36c94b48975d845c23}{ttak\+\_\+net\+\_\+endpoint\+\_\+set\+\_\+role()}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em role\+\_\+flags} & Combination of \doxylink{endpoint_8h_a5e04a88fbb25550b7b9ef37621e7d701}{ttak\+\_\+net\+\_\+endpoint\+\_\+role} flags. \\
+\hline
+{\em listen\+\_\+backlog} & Desired backlog for server sockets (falls back to SOMAXCONN). \\
+\hline
+{\em restart\+\_\+ctx} & Optional user context forwarded to custom restart hooks. \\
+\hline
+{\em restart\+\_\+cb} & Optional custom restart handler. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{endpoint_8h_source_l00071}{71}} of file \mbox{\hyperlink{endpoint_8h_source}{endpoint.\+h}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structttak__net__endpoint__attr_ab72c9fc65bca40694860e689622c4f88}\label{structttak__net__endpoint__attr_ab72c9fc65bca40694860e689622c4f88} 
+\index{ttak\_net\_endpoint\_attr@{ttak\_net\_endpoint\_attr}!listen\_backlog@{listen\_backlog}}
+\index{listen\_backlog@{listen\_backlog}!ttak\_net\_endpoint\_attr@{ttak\_net\_endpoint\_attr}}
+\doxysubsubsection{\texorpdfstring{listen\_backlog}{listen\_backlog}}
+{\footnotesize\ttfamily int ttak\+\_\+net\+\_\+endpoint\+\_\+attr\+::listen\+\_\+backlog}
+
+
+
+Definition at line \mbox{\hyperlink{endpoint_8h_source_l00073}{73}} of file \mbox{\hyperlink{endpoint_8h_source}{endpoint.\+h}}.
+
+\Hypertarget{structttak__net__endpoint__attr_acb9bda49aebb5ef2768f33172c6a6c8b}\label{structttak__net__endpoint__attr_acb9bda49aebb5ef2768f33172c6a6c8b} 
+\index{ttak\_net\_endpoint\_attr@{ttak\_net\_endpoint\_attr}!restart\_cb@{restart\_cb}}
+\index{restart\_cb@{restart\_cb}!ttak\_net\_endpoint\_attr@{ttak\_net\_endpoint\_attr}}
+\doxysubsubsection{\texorpdfstring{restart\_cb}{restart\_cb}}
+{\footnotesize\ttfamily \mbox{\hyperlink{endpoint_8h_aec10d4f037ec1a4bc3cc70cbccc34f67}{ttak\+\_\+net\+\_\+restart\+\_\+op}} ttak\+\_\+net\+\_\+endpoint\+\_\+attr\+::restart\+\_\+cb}
+
+
+
+Definition at line \mbox{\hyperlink{endpoint_8h_source_l00075}{75}} of file \mbox{\hyperlink{endpoint_8h_source}{endpoint.\+h}}.
+
+\Hypertarget{structttak__net__endpoint__attr_a998a78fa8c150d7c1f54d7f8d078f24e}\label{structttak__net__endpoint__attr_a998a78fa8c150d7c1f54d7f8d078f24e} 
+\index{ttak\_net\_endpoint\_attr@{ttak\_net\_endpoint\_attr}!restart\_ctx@{restart\_ctx}}
+\index{restart\_ctx@{restart\_ctx}!ttak\_net\_endpoint\_attr@{ttak\_net\_endpoint\_attr}}
+\doxysubsubsection{\texorpdfstring{restart\_ctx}{restart\_ctx}}
+{\footnotesize\ttfamily void\texorpdfstring{$\ast$}{*} ttak\+\_\+net\+\_\+endpoint\+\_\+attr\+::restart\+\_\+ctx}
+
+
+
+Definition at line \mbox{\hyperlink{endpoint_8h_source_l00074}{74}} of file \mbox{\hyperlink{endpoint_8h_source}{endpoint.\+h}}.
+
+\Hypertarget{structttak__net__endpoint__attr_aabfb09c7c1f412e9bf2e76cbc4fccf48}\label{structttak__net__endpoint__attr_aabfb09c7c1f412e9bf2e76cbc4fccf48} 
+\index{ttak\_net\_endpoint\_attr@{ttak\_net\_endpoint\_attr}!role\_flags@{role\_flags}}
+\index{role\_flags@{role\_flags}!ttak\_net\_endpoint\_attr@{ttak\_net\_endpoint\_attr}}
+\doxysubsubsection{\texorpdfstring{role\_flags}{role\_flags}}
+{\footnotesize\ttfamily uint32\+\_\+t ttak\+\_\+net\+\_\+endpoint\+\_\+attr\+::role\+\_\+flags}
+
+
+
+Definition at line \mbox{\hyperlink{endpoint_8h_source_l00072}{72}} of file \mbox{\hyperlink{endpoint_8h_source}{endpoint.\+h}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/ttak/net/\mbox{\hyperlink{endpoint_8h}{endpoint.\+h}}\end{DoxyCompactItemize}

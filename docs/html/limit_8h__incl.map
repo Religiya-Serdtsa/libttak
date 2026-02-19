@@ -4,7 +4,7 @@
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="193,47,163,154,158,153,188,45"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="213,167,296,192"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="206,45,248,153,243,155,201,47"/>
-<area shape="rect" id="Node000004" href="$sync_8h.html" title=" " alt="" coords="5,93,133,119"/>
+<area shape="rect" id="Node000004" href="$sync_2sync_8h.html" title=" " alt="" coords="5,93,133,119"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="167,48,101,88,98,84,164,43"/>
 <area shape="rect" id="Node000006" href="$spinlock_8h.html" title=" " alt="" coords="259,93,411,119"/>
 <area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="231,43,303,84,301,89,228,48"/>

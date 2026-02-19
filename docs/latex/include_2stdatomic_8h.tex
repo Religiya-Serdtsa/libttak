@@ -51,6 +51,10 @@ struct \mbox{\hyperlink{structatomic__flag}{atomic\+\_\+flag}}
 \item 
 \#define \mbox{\hyperlink{include_2stdatomic_8h_a5911a234da3c1fce86bbebea7650e562}{atomic\+\_\+fetch\+\_\+sub}}(obj,  operand)~    \mbox{\hyperlink{include_2stdatomic_8h_af4371ce6237310eedf5a1036178ada1f}{atomic\+\_\+fetch\+\_\+sub\+\_\+explicit}}((obj), (operand), \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752}{memory\+\_\+order\+\_\+seq\+\_\+cst}})
 \item 
+\#define \mbox{\hyperlink{include_2stdatomic_8h_a182d869f2a69147266c1cfbf8ef62d71}{atomic\+\_\+exchange\+\_\+explicit}}(obj,  desired,  order)~    (\{ \mbox{\hyperlink{include_2stdatomic_8h_a7b82615cb418a296137e2abcff7db14e}{\+\_\+\+\_\+\+TT\+\_\+\+ATOMIC\+\_\+\+LOCK}}(); \+\_\+\+\_\+typeof\+\_\+\+\_\+(\texorpdfstring{$\ast$}{*}(obj)) \+\_\+\+\_\+old = \texorpdfstring{$\ast$}{*}(obj); \texorpdfstring{$\ast$}{*}(obj) = (desired); (void)(order); \mbox{\hyperlink{include_2stdatomic_8h_a078ff22b16930edd2268d1cb679445a5}{\+\_\+\+\_\+\+TT\+\_\+\+ATOMIC\+\_\+\+UNLOCK}}(); \+\_\+\+\_\+old; \})
+\item 
+\#define \mbox{\hyperlink{include_2stdatomic_8h_a5c1dada141423cb165cf2d4f3a38f89f}{atomic\+\_\+exchange}}(obj,  desired)~    \mbox{\hyperlink{include_2stdatomic_8h_a182d869f2a69147266c1cfbf8ef62d71}{atomic\+\_\+exchange\+\_\+explicit}}((obj), (desired), \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752}{memory\+\_\+order\+\_\+seq\+\_\+cst}})
+\item 
 \#define \mbox{\hyperlink{include_2stdatomic_8h_a97a5f3e6f5f733e94b1ddeff904d3bc0}{atomic\+\_\+compare\+\_\+exchange\+\_\+weak\+\_\+explicit}}(obj,  expected,  desired,  success,  failure)
 \item 
 \#define \mbox{\hyperlink{include_2stdatomic_8h_a55257ac5977e775b87563bb8cc955863}{atomic\+\_\+compare\+\_\+exchange\+\_\+weak}}(obj,  expected,  desired)~    \mbox{\hyperlink{include_2stdatomic_8h_a97a5f3e6f5f733e94b1ddeff904d3bc0}{atomic\+\_\+compare\+\_\+exchange\+\_\+weak\+\_\+explicit}}((obj), (expected), (desired), \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752}{memory\+\_\+order\+\_\+seq\+\_\+cst}}, \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752}{memory\+\_\+order\+\_\+seq\+\_\+cst}})
@@ -144,7 +148,7 @@ Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00025}{25}} of
 
 
 
-Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00087}{87}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00093}{93}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
 
 \Hypertarget{include_2stdatomic_8h_a97a5f3e6f5f733e94b1ddeff904d3bc0}\label{include_2stdatomic_8h_a97a5f3e6f5f733e94b1ddeff904d3bc0} 
 \index{stdatomic.h@{stdatomic.h}!atomic\_compare\_exchange\_weak\_explicit@{atomic\_compare\_exchange\_weak\_explicit}}
@@ -160,6 +164,26 @@ Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00087}{87}} of
 \DoxyCodeLine{\ \ \ \ \ \ \ \_\_TT\_ATOMIC\_UNLOCK();\ \_\_ok;\ \})}
 
 \end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00087}{87}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
+\Hypertarget{include_2stdatomic_8h_a5c1dada141423cb165cf2d4f3a38f89f}\label{include_2stdatomic_8h_a5c1dada141423cb165cf2d4f3a38f89f} 
+\index{stdatomic.h@{stdatomic.h}!atomic\_exchange@{atomic\_exchange}}
+\index{atomic\_exchange@{atomic\_exchange}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{atomic\_exchange}{atomic\_exchange}}
+{\footnotesize\ttfamily \#define atomic\+\_\+exchange(\begin{DoxyParamCaption}\item[{}]{obj,  }\item[{}]{desired }\end{DoxyParamCaption})~    \mbox{\hyperlink{include_2stdatomic_8h_a182d869f2a69147266c1cfbf8ef62d71}{atomic\+\_\+exchange\+\_\+explicit}}((obj), (desired), \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752}{memory\+\_\+order\+\_\+seq\+\_\+cst}})}
+
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00084}{84}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
+\Hypertarget{include_2stdatomic_8h_a182d869f2a69147266c1cfbf8ef62d71}\label{include_2stdatomic_8h_a182d869f2a69147266c1cfbf8ef62d71} 
+\index{stdatomic.h@{stdatomic.h}!atomic\_exchange\_explicit@{atomic\_exchange\_explicit}}
+\index{atomic\_exchange\_explicit@{atomic\_exchange\_explicit}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{atomic\_exchange\_explicit}{atomic\_exchange\_explicit}}
+{\footnotesize\ttfamily \#define atomic\+\_\+exchange\+\_\+explicit(\begin{DoxyParamCaption}\item[{}]{obj,  }\item[{}]{desired,  }\item[{}]{order }\end{DoxyParamCaption})~    (\{ \mbox{\hyperlink{include_2stdatomic_8h_a7b82615cb418a296137e2abcff7db14e}{\+\_\+\+\_\+\+TT\+\_\+\+ATOMIC\+\_\+\+LOCK}}(); \+\_\+\+\_\+typeof\+\_\+\+\_\+(\texorpdfstring{$\ast$}{*}(obj)) \+\_\+\+\_\+old = \texorpdfstring{$\ast$}{*}(obj); \texorpdfstring{$\ast$}{*}(obj) = (desired); (void)(order); \mbox{\hyperlink{include_2stdatomic_8h_a078ff22b16930edd2268d1cb679445a5}{\+\_\+\+\_\+\+TT\+\_\+\+ATOMIC\+\_\+\+UNLOCK}}(); \+\_\+\+\_\+old; \})}
+
 
 
 Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00081}{81}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
@@ -212,7 +236,7 @@ Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00075}{75}} of
 
 
 
-Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00109}{109}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00115}{115}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
 
 \Hypertarget{include_2stdatomic_8h_a3cf6ded3b463faf0cedce1718caaa695}\label{include_2stdatomic_8h_a3cf6ded3b463faf0cedce1718caaa695} 
 \index{stdatomic.h@{stdatomic.h}!ATOMIC\_FLAG\_INIT@{ATOMIC\_FLAG\_INIT}}
@@ -232,7 +256,7 @@ Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00047}{47}} of
 
 
 
-Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00106}{106}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00112}{112}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
 
 \Hypertarget{include_2stdatomic_8h_af8a9cbe9495fcafaa892b24b383acf96}\label{include_2stdatomic_8h_af8a9cbe9495fcafaa892b24b383acf96} 
 \index{stdatomic.h@{stdatomic.h}!atomic\_init@{atomic\_init}}
@@ -387,7 +411,7 @@ Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00028}{28}} of
 
 
 
-Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00099}{99}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00105}{105}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
 
 Here is the caller graph for this function\+:\nopagebreak
 \begin{figure}[H]
@@ -404,7 +428,7 @@ Here is the caller graph for this function\+:\nopagebreak
 
 
 
-Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00090}{90}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00096}{96}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
 
 Here is the caller graph for this function\+:\nopagebreak
 \begin{figure}[H]

@@ -1,14 +1,23 @@
 var searchData=
 [
-  ['a_0',['a',['../structttak__prime__factor__t.html#a020c18d6bd799199afcb738691cfa769',1,'ttak_prime_factor_t::a'],['../structttak__prime__factor__big__t.html#a6f4d585de07028f67feabd49022e2879',1,'ttak_prime_factor_big_t::a']]],
+  ['a_0',['a',['../structttak__prime__factor__big__t.html#a6f4d585de07028f67feabd49022e2879',1,'ttak_prime_factor_big_t::a'],['../structttak__prime__factor__t.html#a020c18d6bd799199afcb738691cfa769',1,'ttak_prime_factor_t::a']]],
   ['access_1',['access',['../structttak__shared__s.html#a42f2e13886e5802246e449e67eef376e',1,'ttak_shared_s']]],
   ['access_5fcount_2',['access_count',['../structttak__mem__header__t.html#a0318bb3cfda8bb54cf6ec0c43e6b2584',1,'ttak_mem_header_t']]],
-  ['add_5fowner_3',['add_owner',['../structttak__shared__s.html#aa3ed576e6146a3d1f6d1a22d19d5d5cb',1,'ttak_shared_s']]],
-  ['allocate_4',['allocate',['../structttak__shared__s.html#a8a74b0b7c836d561d50adb7c2fad0324',1,'ttak_shared_s']]],
-  ['allocate_5ftyped_5',['allocate_typed',['../structttak__shared__s.html#a2b93d3794fba03f6a5fe3a77d8a89666',1,'ttak_shared_s']]],
-  ['allocator_5ftag_6',['allocator_tag',['../structttak__unsafe__region.html#a9f2f1c8f0e278d60b2aaefd2a5439f4f',1,'ttak_unsafe_region']]],
-  ['allow_5fdirect_5faccess_7',['allow_direct_access',['../structttak__mem__header__t.html#afebc4673ac816dd1ca85e2368dee4694',1,'ttak_mem_header_t']]],
-  ['arg_8',['arg',['../structttak__worker__wrapper.html#a633e8fb8c8e9dc0e4ce10329574dc484',1,'ttak_worker_wrapper']]],
-  ['args_9',['args',['../structttak__func__wrapper.html#af0597208068d1204048cfca6f64ece75',1,'ttak_func_wrapper']]],
-  ['async_5fpool_10',['async_pool',['../thread_2pool_8h.html#a5d1afca1eeeddf9e4fd83c80da10efcc',1,'pool.h']]]
+  ['access_5febr_3',['access_ebr',['../structttak__shared__s.html#a9645bfee9cee6ff603729da217b4242c',1,'ttak_shared_s']]],
+  ['active_4',['active',['../structttak__thread__state__t.html#ad1f5cc3075d804b050f1202425e3d8c3',1,'ttak_thread_state_t']]],
+  ['active_5frow_5',['active_row',['../structttak__detachable__context.html#a0595619890f563b6a6c7165e800c876c',1,'ttak_detachable_context']]],
+  ['add_5fowner_6',['add_owner',['../structttak__shared__s.html#aa3ed576e6146a3d1f6d1a22d19d5d5cb',1,'ttak_shared_s']]],
+  ['addr_7',['addr',['../structttak__net__endpoint.html#a3ab7e7442e2e13b2492e24eee9119655',1,'ttak_net_endpoint']]],
+  ['alloc_5fflags_8',['alloc_flags',['../structttak__arena__env__config.html#a09d5b498f40c94842de4ed6bfbf9db90',1,'ttak_arena_env_config']]],
+  ['allocate_9',['allocate',['../structttak__shared__s.html#a8a74b0b7c836d561d50adb7c2fad0324',1,'ttak_shared_s']]],
+  ['allocate_5ftyped_10',['allocate_typed',['../structttak__shared__s.html#a2b93d3794fba03f6a5fe3a77d8a89666',1,'ttak_shared_s']]],
+  ['allocation_11',['allocation',['../structttak__io__zerocopy__region.html#ab23af8d27768603c84ca2380ffd0eb1c',1,'ttak_io_zerocopy_region']]],
+  ['allocator_5ftag_12',['allocator_tag',['../structttak__unsafe__region.html#a9f2f1c8f0e278d60b2aaefd2a5439f4f',1,'ttak_unsafe_region']]],
+  ['allow_5fdirect_5faccess_13',['allow_direct_access',['../structttak__mem__header__t.html#afebc4673ac816dd1ca85e2368dee4694',1,'ttak_mem_header_t']]],
+  ['arena_14',['arena',['../structttak__io__buffer.html#ad3e952477b8f3ec28ce495bfbf1ba467',1,'ttak_io_buffer::arena'],['../structttak__io__zerocopy__region.html#ae33fc4988fcaaee200c453ccb7c8fc3e',1,'ttak_io_zerocopy_region::arena']]],
+  ['arena_5flock_15',['arena_lock',['../structttak__detachable__context.html#ab593f6766b76681753cd854d73740bf5',1,'ttak_detachable_context']]],
+  ['arg_16',['arg',['../structttak__worker__wrapper.html#a633e8fb8c8e9dc0e4ce10329574dc484',1,'ttak_worker_wrapper']]],
+  ['args_17',['args',['../structttak__func__wrapper.html#af0597208068d1204048cfca6f64ece75',1,'ttak_func_wrapper']]],
+  ['async_5foffload_18',['async_offload',['../structttak__net__session__mgr.html#af6f7cedb05c55dae5b10d91f4399bc28',1,'ttak_net_session_mgr']]],
+  ['async_5fpool_19',['async_pool',['../thread_2pool_8h.html#a5d1afca1eeeddf9e4fd83c80da10efcc',1,'pool.h']]]
 ];

@@ -1,0 +1,225 @@
+\doxysection{include/ttak/net/session.h File Reference}
+\hypertarget{session_8h}{}\label{session_8h}\index{include/ttak/net/session.h@{include/ttak/net/session.h}}
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$ttak/net/endpoint.\+h$>$}\newline
+{\ttfamily \#include $<$ttak/net/core/port.\+h$>$}\newline
+{\ttfamily \#include $<$ttak/mem/epoch.\+h$>$}\newline
+{\ttfamily \#include $<$ttak/sync/sync.\+h$>$}\newline
+Include dependency graph for session.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{session_8h__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structttak__net__session}{ttak\+\_\+net\+\_\+session}}
+\begin{DoxyCompactList}\small\item\em Logical connection wrapper that ties an endpoint to parent/child relationships. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structttak__net__session__mgr}{ttak\+\_\+net\+\_\+session\+\_\+mgr}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef enum \mbox{\hyperlink{session_8h_a3ad0ec759aace8fad3ac4f92be02c9de}{ttak\+\_\+net\+\_\+session\+\_\+state}} \mbox{\hyperlink{session_8h_acbcf5dc8dc8c9ba30a37533f169c734a}{ttak\+\_\+net\+\_\+session\+\_\+state\+\_\+t}}
+\item 
+typedef enum \mbox{\hyperlink{session_8h_a1ee2864eca3738a402609ca3979d76a9}{ttak\+\_\+net\+\_\+session\+\_\+policy}} \mbox{\hyperlink{session_8h_adb724618f030f6faec117b0537d6f14a}{ttak\+\_\+net\+\_\+session\+\_\+policy\+\_\+t}}
+\item 
+typedef struct \mbox{\hyperlink{structttak__net__session}{ttak\+\_\+net\+\_\+session}} \mbox{\hyperlink{session_8h_ac32b6b38691347d072d73f580c9a742f}{ttak\+\_\+net\+\_\+session\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Logical connection wrapper that ties an endpoint to parent/child relationships. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structttak__net__session__mgr}{ttak\+\_\+net\+\_\+session\+\_\+mgr}} \mbox{\hyperlink{session_8h_a3598ff01f8c011939240eb993b224783}{ttak\+\_\+net\+\_\+session\+\_\+mgr\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{session_8h_a3ad0ec759aace8fad3ac4f92be02c9de}{ttak\+\_\+net\+\_\+session\+\_\+state}} \{ \newline
+\mbox{\hyperlink{session_8h_a3ad0ec759aace8fad3ac4f92be02c9dea46ddd5a82fab9e8f632e1114d71f9dec}{TTAK\+\_\+\+NET\+\_\+\+SESSION\+\_\+\+ACTIVE}} = (1u \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 0)
+, \mbox{\hyperlink{session_8h_a3ad0ec759aace8fad3ac4f92be02c9dea00cc7b0490c0cb2de8376d251483563a}{TTAK\+\_\+\+NET\+\_\+\+SESSION\+\_\+\+ZOMBIE}} = (1u \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1)
+, \mbox{\hyperlink{session_8h_a3ad0ec759aace8fad3ac4f92be02c9dea95ecac49c68b2ad7c31fe9626291d125}{TTAK\+\_\+\+NET\+\_\+\+SESSION\+\_\+\+ALERTED}} = (1u \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 2)
+, \mbox{\hyperlink{session_8h_a3ad0ec759aace8fad3ac4f92be02c9deaeac6345cc53f8299e094792209f59f2b}{TTAK\+\_\+\+NET\+\_\+\+SESSION\+\_\+\+NEEDS\+\_\+\+RESTART}} = (1u \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 3)
+, \newline
+\mbox{\hyperlink{session_8h_a3ad0ec759aace8fad3ac4f92be02c9dea8716018d58d669b06ad41f217ecd0032}{TTAK\+\_\+\+NET\+\_\+\+SESSION\+\_\+\+IMMORTAL}} = (1u \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 4)
+, \mbox{\hyperlink{session_8h_a3ad0ec759aace8fad3ac4f92be02c9dea9a31eeabd1f30b02c3a6fda41256a4bd}{TTAK\+\_\+\+NET\+\_\+\+SESSION\+\_\+\+FAULTING}} = (1u \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 5)
+, \mbox{\hyperlink{session_8h_a3ad0ec759aace8fad3ac4f92be02c9deab09f370952b930c8ebe0fc15171eb04f}{TTAK\+\_\+\+NET\+\_\+\+SESSION\+\_\+\+DETACHED}} = (1u \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 6)
+ \}
+\item 
+enum \mbox{\hyperlink{session_8h_a1ee2864eca3738a402609ca3979d76a9}{ttak\+\_\+net\+\_\+session\+\_\+policy}} \{ \mbox{\hyperlink{session_8h_a1ee2864eca3738a402609ca3979d76a9a8c64df664e68e9d72a2c0b7ed8cf26cb}{TTAK\+\_\+\+SOCK\+\_\+\+ALERT}} = (1u \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 0)
+, \mbox{\hyperlink{session_8h_a1ee2864eca3738a402609ca3979d76a9afd83464cc4ef857d691d2909d7710210}{TTAK\+\_\+\+SOCK\+\_\+\+RESTART}} = (1u \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1)
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{session_8h_a2d762951d1224927bf5a8751855bf64f}{ttak\+\_\+net\+\_\+session\+\_\+mgr\+\_\+init}} (\mbox{\hyperlink{session_8h_a3598ff01f8c011939240eb993b224783}{ttak\+\_\+net\+\_\+session\+\_\+mgr\+\_\+t}} \texorpdfstring{$\ast$}{*}mgr, bool async\+\_\+offload)
+\begin{DoxyCompactList}\small\item\em Initializes the manager state. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{session_8h_a963a2b40b186c0b6bf4cd8599e256fd4}{ttak\+\_\+net\+\_\+session\+\_\+mgr\+\_\+destroy}} (\mbox{\hyperlink{session_8h_a3598ff01f8c011939240eb993b224783}{ttak\+\_\+net\+\_\+session\+\_\+mgr\+\_\+t}} \texorpdfstring{$\ast$}{*}mgr, uint64\+\_\+t now)
+\begin{DoxyCompactList}\small\item\em Tears down all sessions asynchronously and releases resources. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{session_8h_ac32b6b38691347d072d73f580c9a742f}{ttak\+\_\+net\+\_\+session\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{session_8h_a1ec2a3bb1afeb18977094a1c70b8c1be}{ttak\+\_\+net\+\_\+session\+\_\+mgr\+\_\+create}} (\mbox{\hyperlink{session_8h_a3598ff01f8c011939240eb993b224783}{ttak\+\_\+net\+\_\+session\+\_\+mgr\+\_\+t}} \texorpdfstring{$\ast$}{*}mgr, ttak\+\_\+shared\+\_\+net\+\_\+endpoint\+\_\+t \texorpdfstring{$\ast$}{*}endpoint, \mbox{\hyperlink{session_8h_ac32b6b38691347d072d73f580c9a742f}{ttak\+\_\+net\+\_\+session\+\_\+t}} \texorpdfstring{$\ast$}{*}parent, \mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}owner, uint64\+\_\+t now)
+\begin{DoxyCompactList}\small\item\em Registers a new session, optionally attaching it to a parent. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{session_8h_a7d232d0409f2d48425cc50bdc099c9ac}{ttak\+\_\+net\+\_\+session\+\_\+mgr\+\_\+close}} (\mbox{\hyperlink{session_8h_a3598ff01f8c011939240eb993b224783}{ttak\+\_\+net\+\_\+session\+\_\+mgr\+\_\+t}} \texorpdfstring{$\ast$}{*}mgr, \mbox{\hyperlink{session_8h_ac32b6b38691347d072d73f580c9a742f}{ttak\+\_\+net\+\_\+session\+\_\+t}} \texorpdfstring{$\ast$}{*}session, uint64\+\_\+t now)
+\begin{DoxyCompactList}\small\item\em Closes a session and retires its descendants. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{session_8h_a2e82e8606e724c037cac7e82954db88c}{ttak\+\_\+net\+\_\+session\+\_\+mgr\+\_\+tick}} (\mbox{\hyperlink{session_8h_a3598ff01f8c011939240eb993b224783}{ttak\+\_\+net\+\_\+session\+\_\+mgr\+\_\+t}} \texorpdfstring{$\ast$}{*}mgr, uint64\+\_\+t now)
+\begin{DoxyCompactList}\small\item\em Periodic heartbeat for immortal sockets\+: runs sanity checks and applies policy. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{session_8h_ace96cb1cf5f1aaa7d05d13a61bc4ef98}{ttak\+\_\+net\+\_\+session\+\_\+mgr\+\_\+set\+\_\+policy}} (\mbox{\hyperlink{session_8h_a3598ff01f8c011939240eb993b224783}{ttak\+\_\+net\+\_\+session\+\_\+mgr\+\_\+t}} \texorpdfstring{$\ast$}{*}mgr, uint32\+\_\+t flags)
+\begin{DoxyCompactList}\small\item\em Configures alert/restart behavior. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{session_8h_a3598ff01f8c011939240eb993b224783}\label{session_8h_a3598ff01f8c011939240eb993b224783} 
+\index{session.h@{session.h}!ttak\_net\_session\_mgr\_t@{ttak\_net\_session\_mgr\_t}}
+\index{ttak\_net\_session\_mgr\_t@{ttak\_net\_session\_mgr\_t}!session.h@{session.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_net\_session\_mgr\_t}{ttak\_net\_session\_mgr\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__net__session__mgr}{ttak\+\_\+net\+\_\+session\+\_\+mgr}} \mbox{\hyperlink{session_8h_a3598ff01f8c011939240eb993b224783}{ttak\+\_\+net\+\_\+session\+\_\+mgr\+\_\+t}}}
+
+\Hypertarget{session_8h_adb724618f030f6faec117b0537d6f14a}\label{session_8h_adb724618f030f6faec117b0537d6f14a} 
+\index{session.h@{session.h}!ttak\_net\_session\_policy\_t@{ttak\_net\_session\_policy\_t}}
+\index{ttak\_net\_session\_policy\_t@{ttak\_net\_session\_policy\_t}!session.h@{session.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_net\_session\_policy\_t}{ttak\_net\_session\_policy\_t}}
+{\footnotesize\ttfamily typedef enum \mbox{\hyperlink{session_8h_a1ee2864eca3738a402609ca3979d76a9}{ttak\+\_\+net\+\_\+session\+\_\+policy}} \mbox{\hyperlink{session_8h_adb724618f030f6faec117b0537d6f14a}{ttak\+\_\+net\+\_\+session\+\_\+policy\+\_\+t}}}
+
+\Hypertarget{session_8h_acbcf5dc8dc8c9ba30a37533f169c734a}\label{session_8h_acbcf5dc8dc8c9ba30a37533f169c734a} 
+\index{session.h@{session.h}!ttak\_net\_session\_state\_t@{ttak\_net\_session\_state\_t}}
+\index{ttak\_net\_session\_state\_t@{ttak\_net\_session\_state\_t}!session.h@{session.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_net\_session\_state\_t}{ttak\_net\_session\_state\_t}}
+{\footnotesize\ttfamily typedef enum \mbox{\hyperlink{session_8h_a3ad0ec759aace8fad3ac4f92be02c9de}{ttak\+\_\+net\+\_\+session\+\_\+state}} \mbox{\hyperlink{session_8h_acbcf5dc8dc8c9ba30a37533f169c734a}{ttak\+\_\+net\+\_\+session\+\_\+state\+\_\+t}}}
+
+\Hypertarget{session_8h_ac32b6b38691347d072d73f580c9a742f}\label{session_8h_ac32b6b38691347d072d73f580c9a742f} 
+\index{session.h@{session.h}!ttak\_net\_session\_t@{ttak\_net\_session\_t}}
+\index{ttak\_net\_session\_t@{ttak\_net\_session\_t}!session.h@{session.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_net\_session\_t}{ttak\_net\_session\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__net__session}{ttak\+\_\+net\+\_\+session}} \mbox{\hyperlink{session_8h_ac32b6b38691347d072d73f580c9a742f}{ttak\+\_\+net\+\_\+session\+\_\+t}}}
+
+
+
+Logical connection wrapper that ties an endpoint to parent/child relationships. 
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{session_8h_a1ee2864eca3738a402609ca3979d76a9}\label{session_8h_a1ee2864eca3738a402609ca3979d76a9} 
+\index{session.h@{session.h}!ttak\_net\_session\_policy@{ttak\_net\_session\_policy}}
+\index{ttak\_net\_session\_policy@{ttak\_net\_session\_policy}!session.h@{session.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_net\_session\_policy}{ttak\_net\_session\_policy}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{session_8h_a1ee2864eca3738a402609ca3979d76a9}{ttak\+\_\+net\+\_\+session\+\_\+policy}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_SOCK\_ALERT@{TTAK\_SOCK\_ALERT}!session.h@{session.h}}\index{session.h@{session.h}!TTAK\_SOCK\_ALERT@{TTAK\_SOCK\_ALERT}}}\Hypertarget{session_8h_a1ee2864eca3738a402609ca3979d76a9a8c64df664e68e9d72a2c0b7ed8cf26cb}\label{session_8h_a1ee2864eca3738a402609ca3979d76a9a8c64df664e68e9d72a2c0b7ed8cf26cb} 
+TTAK\+\_\+\+SOCK\+\_\+\+ALERT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_SOCK\_RESTART@{TTAK\_SOCK\_RESTART}!session.h@{session.h}}\index{session.h@{session.h}!TTAK\_SOCK\_RESTART@{TTAK\_SOCK\_RESTART}}}\Hypertarget{session_8h_a1ee2864eca3738a402609ca3979d76a9afd83464cc4ef857d691d2909d7710210}\label{session_8h_a1ee2864eca3738a402609ca3979d76a9afd83464cc4ef857d691d2909d7710210} 
+TTAK\+\_\+\+SOCK\+\_\+\+RESTART&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{session_8h_source_l00027}{27}} of file \mbox{\hyperlink{session_8h_source}{session.\+h}}.
+
+\Hypertarget{session_8h_a3ad0ec759aace8fad3ac4f92be02c9de}\label{session_8h_a3ad0ec759aace8fad3ac4f92be02c9de} 
+\index{session.h@{session.h}!ttak\_net\_session\_state@{ttak\_net\_session\_state}}
+\index{ttak\_net\_session\_state@{ttak\_net\_session\_state}!session.h@{session.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_net\_session\_state}{ttak\_net\_session\_state}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{session_8h_a3ad0ec759aace8fad3ac4f92be02c9de}{ttak\+\_\+net\+\_\+session\+\_\+state}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_NET\_SESSION\_ACTIVE@{TTAK\_NET\_SESSION\_ACTIVE}!session.h@{session.h}}\index{session.h@{session.h}!TTAK\_NET\_SESSION\_ACTIVE@{TTAK\_NET\_SESSION\_ACTIVE}}}\Hypertarget{session_8h_a3ad0ec759aace8fad3ac4f92be02c9dea46ddd5a82fab9e8f632e1114d71f9dec}\label{session_8h_a3ad0ec759aace8fad3ac4f92be02c9dea46ddd5a82fab9e8f632e1114d71f9dec} 
+TTAK\+\_\+\+NET\+\_\+\+SESSION\+\_\+\+ACTIVE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_NET\_SESSION\_ZOMBIE@{TTAK\_NET\_SESSION\_ZOMBIE}!session.h@{session.h}}\index{session.h@{session.h}!TTAK\_NET\_SESSION\_ZOMBIE@{TTAK\_NET\_SESSION\_ZOMBIE}}}\Hypertarget{session_8h_a3ad0ec759aace8fad3ac4f92be02c9dea00cc7b0490c0cb2de8376d251483563a}\label{session_8h_a3ad0ec759aace8fad3ac4f92be02c9dea00cc7b0490c0cb2de8376d251483563a} 
+TTAK\+\_\+\+NET\+\_\+\+SESSION\+\_\+\+ZOMBIE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_NET\_SESSION\_ALERTED@{TTAK\_NET\_SESSION\_ALERTED}!session.h@{session.h}}\index{session.h@{session.h}!TTAK\_NET\_SESSION\_ALERTED@{TTAK\_NET\_SESSION\_ALERTED}}}\Hypertarget{session_8h_a3ad0ec759aace8fad3ac4f92be02c9dea95ecac49c68b2ad7c31fe9626291d125}\label{session_8h_a3ad0ec759aace8fad3ac4f92be02c9dea95ecac49c68b2ad7c31fe9626291d125} 
+TTAK\+\_\+\+NET\+\_\+\+SESSION\+\_\+\+ALERTED&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_NET\_SESSION\_NEEDS\_RESTART@{TTAK\_NET\_SESSION\_NEEDS\_RESTART}!session.h@{session.h}}\index{session.h@{session.h}!TTAK\_NET\_SESSION\_NEEDS\_RESTART@{TTAK\_NET\_SESSION\_NEEDS\_RESTART}}}\Hypertarget{session_8h_a3ad0ec759aace8fad3ac4f92be02c9deaeac6345cc53f8299e094792209f59f2b}\label{session_8h_a3ad0ec759aace8fad3ac4f92be02c9deaeac6345cc53f8299e094792209f59f2b} 
+TTAK\+\_\+\+NET\+\_\+\+SESSION\+\_\+\+NEEDS\+\_\+\+RESTART&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_NET\_SESSION\_IMMORTAL@{TTAK\_NET\_SESSION\_IMMORTAL}!session.h@{session.h}}\index{session.h@{session.h}!TTAK\_NET\_SESSION\_IMMORTAL@{TTAK\_NET\_SESSION\_IMMORTAL}}}\Hypertarget{session_8h_a3ad0ec759aace8fad3ac4f92be02c9dea8716018d58d669b06ad41f217ecd0032}\label{session_8h_a3ad0ec759aace8fad3ac4f92be02c9dea8716018d58d669b06ad41f217ecd0032} 
+TTAK\+\_\+\+NET\+\_\+\+SESSION\+\_\+\+IMMORTAL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_NET\_SESSION\_FAULTING@{TTAK\_NET\_SESSION\_FAULTING}!session.h@{session.h}}\index{session.h@{session.h}!TTAK\_NET\_SESSION\_FAULTING@{TTAK\_NET\_SESSION\_FAULTING}}}\Hypertarget{session_8h_a3ad0ec759aace8fad3ac4f92be02c9dea9a31eeabd1f30b02c3a6fda41256a4bd}\label{session_8h_a3ad0ec759aace8fad3ac4f92be02c9dea9a31eeabd1f30b02c3a6fda41256a4bd} 
+TTAK\+\_\+\+NET\+\_\+\+SESSION\+\_\+\+FAULTING&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_NET\_SESSION\_DETACHED@{TTAK\_NET\_SESSION\_DETACHED}!session.h@{session.h}}\index{session.h@{session.h}!TTAK\_NET\_SESSION\_DETACHED@{TTAK\_NET\_SESSION\_DETACHED}}}\Hypertarget{session_8h_a3ad0ec759aace8fad3ac4f92be02c9deab09f370952b930c8ebe0fc15171eb04f}\label{session_8h_a3ad0ec759aace8fad3ac4f92be02c9deab09f370952b930c8ebe0fc15171eb04f} 
+TTAK\+\_\+\+NET\+\_\+\+SESSION\+\_\+\+DETACHED&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{session_8h_source_l00017}{17}} of file \mbox{\hyperlink{session_8h_source}{session.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{session_8h_a7d232d0409f2d48425cc50bdc099c9ac}\label{session_8h_a7d232d0409f2d48425cc50bdc099c9ac} 
+\index{session.h@{session.h}!ttak\_net\_session\_mgr\_close@{ttak\_net\_session\_mgr\_close}}
+\index{ttak\_net\_session\_mgr\_close@{ttak\_net\_session\_mgr\_close}!session.h@{session.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_net\_session\_mgr\_close()}{ttak\_net\_session\_mgr\_close()}}
+{\footnotesize\ttfamily void ttak\+\_\+net\+\_\+session\+\_\+mgr\+\_\+close (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{session_8h_a3598ff01f8c011939240eb993b224783}{ttak\+\_\+net\+\_\+session\+\_\+mgr\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{mgr,  }\item[{\mbox{\hyperlink{session_8h_ac32b6b38691347d072d73f580c9a742f}{ttak\+\_\+net\+\_\+session\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{session,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+
+
+Closes a session and retires its descendants. 
+
+\Hypertarget{session_8h_a1ec2a3bb1afeb18977094a1c70b8c1be}\label{session_8h_a1ec2a3bb1afeb18977094a1c70b8c1be} 
+\index{session.h@{session.h}!ttak\_net\_session\_mgr\_create@{ttak\_net\_session\_mgr\_create}}
+\index{ttak\_net\_session\_mgr\_create@{ttak\_net\_session\_mgr\_create}!session.h@{session.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_net\_session\_mgr\_create()}{ttak\_net\_session\_mgr\_create()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{session_8h_ac32b6b38691347d072d73f580c9a742f}{ttak\+\_\+net\+\_\+session\+\_\+t}} \texorpdfstring{$\ast$}{*} ttak\+\_\+net\+\_\+session\+\_\+mgr\+\_\+create (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{session_8h_a3598ff01f8c011939240eb993b224783}{ttak\+\_\+net\+\_\+session\+\_\+mgr\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{mgr,  }\item[{ttak\+\_\+shared\+\_\+net\+\_\+endpoint\+\_\+t \texorpdfstring{$\ast$}{*}}]{endpoint,  }\item[{\mbox{\hyperlink{session_8h_ac32b6b38691347d072d73f580c9a742f}{ttak\+\_\+net\+\_\+session\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{parent,  }\item[{\mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{owner,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+
+
+Registers a new session, optionally attaching it to a parent. 
+
+\Hypertarget{session_8h_a963a2b40b186c0b6bf4cd8599e256fd4}\label{session_8h_a963a2b40b186c0b6bf4cd8599e256fd4} 
+\index{session.h@{session.h}!ttak\_net\_session\_mgr\_destroy@{ttak\_net\_session\_mgr\_destroy}}
+\index{ttak\_net\_session\_mgr\_destroy@{ttak\_net\_session\_mgr\_destroy}!session.h@{session.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_net\_session\_mgr\_destroy()}{ttak\_net\_session\_mgr\_destroy()}}
+{\footnotesize\ttfamily void ttak\+\_\+net\+\_\+session\+\_\+mgr\+\_\+destroy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{session_8h_a3598ff01f8c011939240eb993b224783}{ttak\+\_\+net\+\_\+session\+\_\+mgr\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{mgr,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+
+
+Tears down all sessions asynchronously and releases resources. 
+
+\Hypertarget{session_8h_a2d762951d1224927bf5a8751855bf64f}\label{session_8h_a2d762951d1224927bf5a8751855bf64f} 
+\index{session.h@{session.h}!ttak\_net\_session\_mgr\_init@{ttak\_net\_session\_mgr\_init}}
+\index{ttak\_net\_session\_mgr\_init@{ttak\_net\_session\_mgr\_init}!session.h@{session.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_net\_session\_mgr\_init()}{ttak\_net\_session\_mgr\_init()}}
+{\footnotesize\ttfamily void ttak\+\_\+net\+\_\+session\+\_\+mgr\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{session_8h_a3598ff01f8c011939240eb993b224783}{ttak\+\_\+net\+\_\+session\+\_\+mgr\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{mgr,  }\item[{bool}]{async\+\_\+offload }\end{DoxyParamCaption})}
+
+
+
+Initializes the manager state. 
+
+\Hypertarget{session_8h_ace96cb1cf5f1aaa7d05d13a61bc4ef98}\label{session_8h_ace96cb1cf5f1aaa7d05d13a61bc4ef98} 
+\index{session.h@{session.h}!ttak\_net\_session\_mgr\_set\_policy@{ttak\_net\_session\_mgr\_set\_policy}}
+\index{ttak\_net\_session\_mgr\_set\_policy@{ttak\_net\_session\_mgr\_set\_policy}!session.h@{session.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_net\_session\_mgr\_set\_policy()}{ttak\_net\_session\_mgr\_set\_policy()}}
+{\footnotesize\ttfamily void ttak\+\_\+net\+\_\+session\+\_\+mgr\+\_\+set\+\_\+policy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{session_8h_a3598ff01f8c011939240eb993b224783}{ttak\+\_\+net\+\_\+session\+\_\+mgr\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{mgr,  }\item[{uint32\+\_\+t}]{flags }\end{DoxyParamCaption})}
+
+
+
+Configures alert/restart behavior. 
+
+\Hypertarget{session_8h_a2e82e8606e724c037cac7e82954db88c}\label{session_8h_a2e82e8606e724c037cac7e82954db88c} 
+\index{session.h@{session.h}!ttak\_net\_session\_mgr\_tick@{ttak\_net\_session\_mgr\_tick}}
+\index{ttak\_net\_session\_mgr\_tick@{ttak\_net\_session\_mgr\_tick}!session.h@{session.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_net\_session\_mgr\_tick()}{ttak\_net\_session\_mgr\_tick()}}
+{\footnotesize\ttfamily void ttak\+\_\+net\+\_\+session\+\_\+mgr\+\_\+tick (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{session_8h_a3598ff01f8c011939240eb993b224783}{ttak\+\_\+net\+\_\+session\+\_\+mgr\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{mgr,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+
+
+Periodic heartbeat for immortal sockets\+: runs sanity checks and applies policy. 
+

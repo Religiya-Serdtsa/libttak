@@ -1,0 +1,108 @@
+\doxysection{session.\+h}
+\hypertarget{session_8h_source}{}\label{session_8h_source}\index{include/ttak/net/session.h@{include/ttak/net/session.h}}
+\mbox{\hyperlink{session_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ TTAK\_NET\_SESSION\_H}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ TTAK\_NET\_SESSION\_H}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{endpoint_8h}{ttak/net/endpoint.h}}>}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{port_8h}{ttak/net/core/port.h}}>}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{epoch_8h}{ttak/mem/epoch.h}}>}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{sync_2sync_8h}{ttak/sync/sync.h}}>}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00013}00013\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00014}00014\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00015}00015\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00017}\mbox{\hyperlink{session_8h_a3ad0ec759aace8fad3ac4f92be02c9de}{00017}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{session_8h_a3ad0ec759aace8fad3ac4f92be02c9de}{ttak\_net\_session\_state}}\ \{}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00018}\mbox{\hyperlink{session_8h_a3ad0ec759aace8fad3ac4f92be02c9dea46ddd5a82fab9e8f632e1114d71f9dec}{00018}}\ \ \ \ \ \mbox{\hyperlink{session_8h_a3ad0ec759aace8fad3ac4f92be02c9dea46ddd5a82fab9e8f632e1114d71f9dec}{TTAK\_NET\_SESSION\_ACTIVE}}\ \ \ =\ (1u\ <<\ 0),}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00019}\mbox{\hyperlink{session_8h_a3ad0ec759aace8fad3ac4f92be02c9dea00cc7b0490c0cb2de8376d251483563a}{00019}}\ \ \ \ \ \mbox{\hyperlink{session_8h_a3ad0ec759aace8fad3ac4f92be02c9dea00cc7b0490c0cb2de8376d251483563a}{TTAK\_NET\_SESSION\_ZOMBIE}}\ \ \ =\ (1u\ <<\ 1),}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00020}\mbox{\hyperlink{session_8h_a3ad0ec759aace8fad3ac4f92be02c9dea95ecac49c68b2ad7c31fe9626291d125}{00020}}\ \ \ \ \ \mbox{\hyperlink{session_8h_a3ad0ec759aace8fad3ac4f92be02c9dea95ecac49c68b2ad7c31fe9626291d125}{TTAK\_NET\_SESSION\_ALERTED}}\ \ =\ (1u\ <<\ 2),}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00021}\mbox{\hyperlink{session_8h_a3ad0ec759aace8fad3ac4f92be02c9deaeac6345cc53f8299e094792209f59f2b}{00021}}\ \ \ \ \ \mbox{\hyperlink{session_8h_a3ad0ec759aace8fad3ac4f92be02c9deaeac6345cc53f8299e094792209f59f2b}{TTAK\_NET\_SESSION\_NEEDS\_RESTART}}\ =\ (1u\ <<\ 3),}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00022}\mbox{\hyperlink{session_8h_a3ad0ec759aace8fad3ac4f92be02c9dea8716018d58d669b06ad41f217ecd0032}{00022}}\ \ \ \ \ \mbox{\hyperlink{session_8h_a3ad0ec759aace8fad3ac4f92be02c9dea8716018d58d669b06ad41f217ecd0032}{TTAK\_NET\_SESSION\_IMMORTAL}}\ =\ (1u\ <<\ 4),}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00023}\mbox{\hyperlink{session_8h_a3ad0ec759aace8fad3ac4f92be02c9dea9a31eeabd1f30b02c3a6fda41256a4bd}{00023}}\ \ \ \ \ \mbox{\hyperlink{session_8h_a3ad0ec759aace8fad3ac4f92be02c9dea9a31eeabd1f30b02c3a6fda41256a4bd}{TTAK\_NET\_SESSION\_FAULTING}}\ =\ (1u\ <<\ 5),}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00024}00024\ \ \ \ \ \mbox{\hyperlink{session_8h_a3ad0ec759aace8fad3ac4f92be02c9deab09f370952b930c8ebe0fc15171eb04f}{TTAK\_NET\_SESSION\_DETACHED}}\ =\ (1u\ <<\ 6)}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00025}\mbox{\hyperlink{session_8h_a3ad0ec759aace8fad3ac4f92be02c9deab09f370952b930c8ebe0fc15171eb04f}{00025}}\ \}\ \mbox{\hyperlink{session_8h_acbcf5dc8dc8c9ba30a37533f169c734a}{ttak\_net\_session\_state\_t}};}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00027}\mbox{\hyperlink{session_8h_a1ee2864eca3738a402609ca3979d76a9}{00027}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{session_8h_a1ee2864eca3738a402609ca3979d76a9}{ttak\_net\_session\_policy}}\ \{}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00028}\mbox{\hyperlink{session_8h_a1ee2864eca3738a402609ca3979d76a9a8c64df664e68e9d72a2c0b7ed8cf26cb}{00028}}\ \ \ \ \ \mbox{\hyperlink{session_8h_a1ee2864eca3738a402609ca3979d76a9a8c64df664e68e9d72a2c0b7ed8cf26cb}{TTAK\_SOCK\_ALERT}}\ \ \ =\ (1u\ <<\ 0),}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00029}00029\ \ \ \ \ \mbox{\hyperlink{session_8h_a1ee2864eca3738a402609ca3979d76a9afd83464cc4ef857d691d2909d7710210}{TTAK\_SOCK\_RESTART}}\ =\ (1u\ <<\ 1)}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00030}\mbox{\hyperlink{session_8h_adb724618f030f6faec117b0537d6f14a}{00030}}\ \}\ \mbox{\hyperlink{session_8h_adb724618f030f6faec117b0537d6f14a}{ttak\_net\_session\_policy\_t}};}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00031}00031\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00032}00032\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00033}00033\ \textcolor{comment}{\ *\ @brief\ Logical\ connection\ wrapper\ that\ ties\ an\ endpoint\ to\ parent/child\ relationships.}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00034}00034\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00035}\mbox{\hyperlink{structttak__net__session}{00035}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__net__session}{ttak\_net\_session}}\ \{}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00036}\mbox{\hyperlink{structttak__net__session_a83097499d4bdf9f3d36f6075cedcc873}{00036}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__net__session_a83097499d4bdf9f3d36f6075cedcc873}{id}};}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00037}\mbox{\hyperlink{structttak__net__session_a6fe018d43a66a8e0b47cbd89b854e073}{00037}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__net__session_a6fe018d43a66a8e0b47cbd89b854e073}{generation}};}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00038}\mbox{\hyperlink{structttak__net__session_a0e515e8adcb0e96ebc85a5c52cb57295}{00038}}\ \ \ \ \ ttak\_shared\_net\_endpoint\_t\ *\mbox{\hyperlink{structttak__net__session_a0e515e8adcb0e96ebc85a5c52cb57295}{endpoint}};}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00039}\mbox{\hyperlink{structttak__net__session_a0913c931b71c92f4a532f1c63d655518}{00039}}\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__net__session}{ttak\_net\_session}}\ *\mbox{\hyperlink{structttak__net__session_a0913c931b71c92f4a532f1c63d655518}{parent}};}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00040}\mbox{\hyperlink{structttak__net__session_adcfd436d062310276f9207a9467b49c7}{00040}}\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__net__session}{ttak\_net\_session}}\ *\mbox{\hyperlink{structttak__net__session_adcfd436d062310276f9207a9467b49c7}{first\_child}};}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00041}\mbox{\hyperlink{structttak__net__session_ad34d9baac9f813c2293b5f362b2c6440}{00041}}\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__net__session}{ttak\_net\_session}}\ *\mbox{\hyperlink{structttak__net__session_ad34d9baac9f813c2293b5f362b2c6440}{next\_sibling}};}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00042}\mbox{\hyperlink{structttak__net__session_a863cd166c3f9a81b48cf7c13b38dda76}{00042}}\ \ \ \ \ \mbox{\hyperlink{structttak__owner}{ttak\_owner\_t}}\ *\mbox{\hyperlink{structttak__net__session_a863cd166c3f9a81b48cf7c13b38dda76}{owner}};}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00043}\mbox{\hyperlink{structttak__net__session_a72b0a355ba883b3595e5aaff845fc472}{00043}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__net__session_a72b0a355ba883b3595e5aaff845fc472}{state\_flags}};}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00044}\mbox{\hyperlink{structttak__net__session_a9e96b483ca0778bc67f1dd215d2d1cf8}{00044}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__net__session_a9e96b483ca0778bc67f1dd215d2d1cf8}{lifetime\_ns}};}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00045}\mbox{\hyperlink{structttak__net__session_a3638bb2347f4ec93811802939be0a8cc}{00045}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__net__session_a3638bb2347f4ec93811802939be0a8cc}{next\_sanity\_ns}};}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00046}\mbox{\hyperlink{structttak__net__session_a235669630f45fe4c9333ef1d67d0c033}{00046}}\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__net__session}{ttak\_net\_session}}\ *\mbox{\hyperlink{structttak__net__session_a235669630f45fe4c9333ef1d67d0c033}{next\_retire}};}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00047}\mbox{\hyperlink{structttak__net__session_a4e223514047b00ad96d9689d537eccc4}{00047}}\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__net__session}{ttak\_net\_session}}\ *\mbox{\hyperlink{structttak__net__session_a4e223514047b00ad96d9689d537eccc4}{sanity\_next}};}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00048}\mbox{\hyperlink{structttak__net__session_a757051e8a5d8eb36e4e4bb4c1c888381}{00048}}\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__net__session}{ttak\_net\_session}}\ *\mbox{\hyperlink{structttak__net__session_a757051e8a5d8eb36e4e4bb4c1c888381}{fault\_next}};}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00049}\mbox{\hyperlink{session_8h_ac32b6b38691347d072d73f580c9a742f}{00049}}\ \}\ \mbox{\hyperlink{session_8h_ac32b6b38691347d072d73f580c9a742f}{ttak\_net\_session\_t}};}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00051}\mbox{\hyperlink{structttak__net__session__mgr}{00051}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__net__session__mgr}{ttak\_net\_session\_mgr}}\ \{}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00052}\mbox{\hyperlink{structttak__net__session__mgr_a37d06a45a8238e49b9a1d4888112dbf6}{00052}}\ \ \ \ \ \mbox{\hyperlink{sync_2sync_8h_ad3f9b08e4c066e7bb7b1ed98d2a90386}{ttak\_rwlock\_t}}\ \mbox{\hyperlink{structttak__net__session__mgr_a37d06a45a8238e49b9a1d4888112dbf6}{lock}};}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00053}\mbox{\hyperlink{structttak__net__session__mgr_af6290905892b96876f0d5ea7f6ea5ccd}{00053}}\ \ \ \ \ \mbox{\hyperlink{structttak__net__session}{ttak\_net\_session\_t}}\ *\mbox{\hyperlink{structttak__net__session__mgr_af6290905892b96876f0d5ea7f6ea5ccd}{head}};}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00054}\mbox{\hyperlink{structttak__net__session__mgr_a380d3ee1e45ab0594e504ca262116f6f}{00054}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__net__session__mgr_a380d3ee1e45ab0594e504ca262116f6f}{next\_id}};}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00055}\mbox{\hyperlink{structttak__net__session__mgr_abd585492da9cb44f80ce9bfd76fb199f}{00055}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__net__session__mgr_abd585492da9cb44f80ce9bfd76fb199f}{policy\_flags}};}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00056}\mbox{\hyperlink{structttak__net__session__mgr_a702cd8b97cfc694be4c99cc733283f6c}{00056}}\ \ \ \ \ \mbox{\hyperlink{structttak__net__session}{ttak\_net\_session\_t}}\ *\mbox{\hyperlink{structttak__net__session__mgr_a702cd8b97cfc694be4c99cc733283f6c}{retire\_head}};}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00057}\mbox{\hyperlink{structttak__net__session__mgr_ac03a795917799f777f0647cab9fb6bdf}{00057}}\ \ \ \ \ \mbox{\hyperlink{structttak__net__session}{ttak\_net\_session\_t}}\ *\mbox{\hyperlink{structttak__net__session__mgr_ac03a795917799f777f0647cab9fb6bdf}{fault\_head}};}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00058}\mbox{\hyperlink{structttak__net__session__mgr_af6f7cedb05c55dae5b10d91f4399bc28}{00058}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structttak__net__session__mgr_af6f7cedb05c55dae5b10d91f4399bc28}{async\_offload}};}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00059}\mbox{\hyperlink{structttak__net__session__mgr_adfeac91031f301923a1bbf516e305c88}{00059}}\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__net__driver__ops}{ttak\_net\_driver\_ops\_t}}\ *\mbox{\hyperlink{structttak__net__session__mgr_adfeac91031f301923a1bbf516e305c88}{net\_ops}};}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00060}\mbox{\hyperlink{session_8h_a3598ff01f8c011939240eb993b224783}{00060}}\ \}\ \mbox{\hyperlink{session_8h_a3598ff01f8c011939240eb993b224783}{ttak\_net\_session\_mgr\_t}};}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00061}00061\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00062}00062\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00063}00063\ \textcolor{comment}{\ *\ @brief\ Initializes\ the\ manager\ state.}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00064}00064\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00065}\mbox{\hyperlink{session_8h_a2d762951d1224927bf5a8751855bf64f}{00065}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{session_8h_a2d762951d1224927bf5a8751855bf64f}{ttak\_net\_session\_mgr\_init}}(\mbox{\hyperlink{structttak__net__session__mgr}{ttak\_net\_session\_mgr\_t}}\ *mgr,\ \textcolor{keywordtype}{bool}\ async\_offload);}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00066}00066\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00067}00067\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00068}00068\ \textcolor{comment}{\ *\ @brief\ Tears\ down\ all\ sessions\ asynchronously\ and\ releases\ resources.}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00069}00069\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00070}\mbox{\hyperlink{session_8h_a963a2b40b186c0b6bf4cd8599e256fd4}{00070}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{session_8h_a963a2b40b186c0b6bf4cd8599e256fd4}{ttak\_net\_session\_mgr\_destroy}}(\mbox{\hyperlink{structttak__net__session__mgr}{ttak\_net\_session\_mgr\_t}}\ *mgr,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00071}00071\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00072}00072\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00073}00073\ \textcolor{comment}{\ *\ @brief\ Registers\ a\ new\ session,\ optionally\ attaching\ it\ to\ a\ parent.}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00074}00074\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00075}\mbox{\hyperlink{session_8h_a1ec2a3bb1afeb18977094a1c70b8c1be}{00075}}\ \mbox{\hyperlink{structttak__net__session}{ttak\_net\_session\_t}}\ *\mbox{\hyperlink{session_8h_a1ec2a3bb1afeb18977094a1c70b8c1be}{ttak\_net\_session\_mgr\_create}}(\mbox{\hyperlink{structttak__net__session__mgr}{ttak\_net\_session\_mgr\_t}}\ *mgr,}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ttak\_shared\_net\_endpoint\_t\ *endpoint,}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structttak__net__session}{ttak\_net\_session\_t}}\ *parent,}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structttak__owner}{ttak\_owner\_t}}\ *owner,}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00080}00080\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00081}00081\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00082}00082\ \textcolor{comment}{\ *\ @brief\ Closes\ a\ session\ and\ retires\ its\ descendants.}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00083}00083\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00084}\mbox{\hyperlink{session_8h_a7d232d0409f2d48425cc50bdc099c9ac}{00084}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{session_8h_a7d232d0409f2d48425cc50bdc099c9ac}{ttak\_net\_session\_mgr\_close}}(\mbox{\hyperlink{structttak__net__session__mgr}{ttak\_net\_session\_mgr\_t}}\ *mgr,}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structttak__net__session}{ttak\_net\_session\_t}}\ *session,}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00087}00087\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00088}00088\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00089}00089\ \textcolor{comment}{\ *\ @brief\ Periodic\ heartbeat\ for\ immortal\ sockets:\ runs\ sanity\ checks\ and\ applies\ policy.}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00090}00090\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00091}\mbox{\hyperlink{session_8h_a2e82e8606e724c037cac7e82954db88c}{00091}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{session_8h_a2e82e8606e724c037cac7e82954db88c}{ttak\_net\_session\_mgr\_tick}}(\mbox{\hyperlink{structttak__net__session__mgr}{ttak\_net\_session\_mgr\_t}}\ *mgr,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00092}00092\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00093}00093\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00094}00094\ \textcolor{comment}{\ *\ @brief\ Configures\ alert/restart\ behavior.}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00095}00095\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00096}\mbox{\hyperlink{session_8h_ace96cb1cf5f1aaa7d05d13a61bc4ef98}{00096}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{session_8h_ace96cb1cf5f1aaa7d05d13a61bc4ef98}{ttak\_net\_session\_mgr\_set\_policy}}(\mbox{\hyperlink{structttak__net__session__mgr}{ttak\_net\_session\_mgr\_t}}\ *mgr,\ uint32\_t\ flags);}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00097}00097\ }
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00098}00098\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00099}00099\ \}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00100}00100\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00101}00101\ }
+\DoxyCodeLine{\Hypertarget{session_8h_source_l00102}00102\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ TTAK\_NET\_SESSION\_H\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

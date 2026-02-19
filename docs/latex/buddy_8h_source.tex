@@ -1,0 +1,44 @@
+\doxysection{buddy.\+h}
+\hypertarget{buddy_8h_source}{}\label{buddy_8h_source}\index{include/ttak/phys/mem/buddy.h@{include/ttak/phys/mem/buddy.h}}
+\mbox{\hyperlink{buddy_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{buddy_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ TTAK\_PHYS\_MEM\_BUDDY\_H}}
+\DoxyCodeLine{\Hypertarget{buddy_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ TTAK\_PHYS\_MEM\_BUDDY\_H}}
+\DoxyCodeLine{\Hypertarget{buddy_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{buddy_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
+\DoxyCodeLine{\Hypertarget{buddy_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{buddy_8h_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{buddy_8h_source_l00007}00007\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{buddy_8h_source_l00008}00008\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{}
+\DoxyCodeLine{\Hypertarget{buddy_8h_source_l00009}00009\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{buddy_8h_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{buddy_8h_source_l00011}00011\ \textcolor{preprocessor}{\#ifndef\ EMBEDDED}}
+\DoxyCodeLine{\Hypertarget{buddy_8h_source_l00012}\mbox{\hyperlink{buddy_8h_ae47a1cb6076cec70cf9ea8efc1d5f3ff}{00012}}\ \textcolor{preprocessor}{\#define\ EMBEDDED\ 0}}
+\DoxyCodeLine{\Hypertarget{buddy_8h_source_l00013}00013\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{buddy_8h_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{buddy_8h_source_l00015}\mbox{\hyperlink{buddy_8h_a3273cde05aae384fc401209911116e37}{00015}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{buddy_8h_a3273cde05aae384fc401209911116e37}{ttak\_priority}}\ \{}
+\DoxyCodeLine{\Hypertarget{buddy_8h_source_l00016}\mbox{\hyperlink{buddy_8h_a3273cde05aae384fc401209911116e37aefaf60fe23bce74faa038d73be8d5e0f}{00016}}\ \ \ \ \ \mbox{\hyperlink{buddy_8h_a3273cde05aae384fc401209911116e37aefaf60fe23bce74faa038d73be8d5e0f}{TTAK\_PRIORITY\_BEST\_FIT}},}
+\DoxyCodeLine{\Hypertarget{buddy_8h_source_l00017}\mbox{\hyperlink{buddy_8h_a3273cde05aae384fc401209911116e37a5c22bf096c857267a336849ee447640e}{00017}}\ \ \ \ \ \mbox{\hyperlink{buddy_8h_a3273cde05aae384fc401209911116e37a5c22bf096c857267a336849ee447640e}{TTAK\_PRIORITY\_WORST\_FIT}},}
+\DoxyCodeLine{\Hypertarget{buddy_8h_source_l00018}00018\ \ \ \ \ \mbox{\hyperlink{buddy_8h_a3273cde05aae384fc401209911116e37a00db2b92a5459006a7e4fd82e6e4d0c3}{TTAK\_PRIORITY\_FIRST\_FIT}}}
+\DoxyCodeLine{\Hypertarget{buddy_8h_source_l00019}\mbox{\hyperlink{buddy_8h_a3273cde05aae384fc401209911116e37a00db2b92a5459006a7e4fd82e6e4d0c3}{00019}}\ \}\ \mbox{\hyperlink{buddy_8h_ae3b1c4c90dae1308675a4543d9f7c932}{ttak\_priority\_t}};}
+\DoxyCodeLine{\Hypertarget{buddy_8h_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{buddy_8h_source_l00021}\mbox{\hyperlink{structttak__mem__req}{00021}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__mem__req}{ttak\_mem\_req}}\ \{}
+\DoxyCodeLine{\Hypertarget{buddy_8h_source_l00022}\mbox{\hyperlink{structttak__mem__req_a5eaa687a0c3497ad2192718a5f78c252}{00022}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structttak__mem__req_a5eaa687a0c3497ad2192718a5f78c252}{size\_bytes}};}
+\DoxyCodeLine{\Hypertarget{buddy_8h_source_l00023}\mbox{\hyperlink{structttak__mem__req_a54843af6bd1bd7814c2e9a324b48f815}{00023}}\ \ \ \ \ \mbox{\hyperlink{buddy_8h_ae3b1c4c90dae1308675a4543d9f7c932}{ttak\_priority\_t}}\ \mbox{\hyperlink{structttak__mem__req_a54843af6bd1bd7814c2e9a324b48f815}{priority}};}
+\DoxyCodeLine{\Hypertarget{buddy_8h_source_l00024}\mbox{\hyperlink{structttak__mem__req_ab0b15a9770490f5244960a5522b16c9a}{00024}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__mem__req_ab0b15a9770490f5244960a5522b16c9a}{owner\_tag}};}
+\DoxyCodeLine{\Hypertarget{buddy_8h_source_l00025}\mbox{\hyperlink{structttak__mem__req_a5c72331153ac3c96b3d6eabd66f5b08b}{00025}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__mem__req_a5c72331153ac3c96b3d6eabd66f5b08b}{call\_safety}};}
+\DoxyCodeLine{\Hypertarget{buddy_8h_source_l00026}\mbox{\hyperlink{structttak__mem__req_ad30c87b64f4ea79227e7eb0cdc22ed83}{00026}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__mem__req_ad30c87b64f4ea79227e7eb0cdc22ed83}{flags}};}
+\DoxyCodeLine{\Hypertarget{buddy_8h_source_l00027}\mbox{\hyperlink{buddy_8h_ad5a0d5a5827e4cf192c4e9e021cc1aec}{00027}}\ \}\ \mbox{\hyperlink{buddy_8h_ad5a0d5a5827e4cf192c4e9e021cc1aec}{ttak\_mem\_req\_t}};}
+\DoxyCodeLine{\Hypertarget{buddy_8h_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{buddy_8h_source_l00029}\mbox{\hyperlink{buddy_8h_ae83acf1c249899b6fcfc4580dbf0b082}{00029}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{buddy_8h_ae83acf1c249899b6fcfc4580dbf0b082}{ttak\_mem\_buddy\_init}}(\textcolor{keywordtype}{void}\ *pool\_start,\ \textcolor{keywordtype}{size\_t}\ pool\_len,\ \textcolor{keywordtype}{int}\ embedded\_mode);}
+\DoxyCodeLine{\Hypertarget{buddy_8h_source_l00030}\mbox{\hyperlink{buddy_8h_a9cc9a5945e39175f56fbf3ee961ff546}{00030}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{buddy_8h_a9cc9a5945e39175f56fbf3ee961ff546}{ttak\_mem\_buddy\_set\_pool}}(\textcolor{keywordtype}{void}\ *pool\_start,\ \textcolor{keywordtype}{size\_t}\ pool\_len);}
+\DoxyCodeLine{\Hypertarget{buddy_8h_source_l00031}\mbox{\hyperlink{buddy_8h_a8d680ee1076c6ff365cdb72e6627287e}{00031}}\ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{buddy_8h_a8d680ee1076c6ff365cdb72e6627287e}{ttak\_mem\_buddy\_alloc}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__mem__req}{ttak\_mem\_req\_t}}\ *req);}
+\DoxyCodeLine{\Hypertarget{buddy_8h_source_l00032}\mbox{\hyperlink{buddy_8h_a01404719f60c2c150a3b0170d7528be5}{00032}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{buddy_8h_a01404719f60c2c150a3b0170d7528be5}{ttak\_mem\_buddy\_free}}(\textcolor{keywordtype}{void}\ *ptr);}
+\DoxyCodeLine{\Hypertarget{buddy_8h_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{buddy_8h_source_l00034}00034\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{buddy_8h_source_l00035}00035\ \}}
+\DoxyCodeLine{\Hypertarget{buddy_8h_source_l00036}00036\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{buddy_8h_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{buddy_8h_source_l00038}00038\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ TTAK\_PHYS\_MEM\_BUDDY\_H\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

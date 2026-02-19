@@ -1,0 +1,195 @@
+\doxysection{ttak\+\_\+net\+\_\+session Struct Reference}
+\hypertarget{structttak__net__session}{}\label{structttak__net__session}\index{ttak\_net\_session@{ttak\_net\_session}}
+
+
+Logical connection wrapper that ties an endpoint to parent/child relationships.  
+
+
+
+
+{\ttfamily \#include $<$session.\+h$>$}
+
+
+
+Collaboration diagram for ttak\+\_\+net\+\_\+session\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=257pt]{structttak__net__session__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+uint64\+\_\+t \mbox{\hyperlink{structttak__net__session_a83097499d4bdf9f3d36f6075cedcc873}{id}}
+\item 
+uint64\+\_\+t \mbox{\hyperlink{structttak__net__session_a6fe018d43a66a8e0b47cbd89b854e073}{generation}}
+\item 
+ttak\+\_\+shared\+\_\+net\+\_\+endpoint\+\_\+t \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__net__session_a0e515e8adcb0e96ebc85a5c52cb57295}{endpoint}}
+\item 
+struct \mbox{\hyperlink{structttak__net__session}{ttak\+\_\+net\+\_\+session}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__net__session_a0913c931b71c92f4a532f1c63d655518}{parent}}
+\item 
+struct \mbox{\hyperlink{structttak__net__session}{ttak\+\_\+net\+\_\+session}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__net__session_adcfd436d062310276f9207a9467b49c7}{first\+\_\+child}}
+\item 
+struct \mbox{\hyperlink{structttak__net__session}{ttak\+\_\+net\+\_\+session}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__net__session_ad34d9baac9f813c2293b5f362b2c6440}{next\+\_\+sibling}}
+\item 
+\mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__net__session_a863cd166c3f9a81b48cf7c13b38dda76}{owner}}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{structttak__net__session_a72b0a355ba883b3595e5aaff845fc472}{state\+\_\+flags}}
+\item 
+uint64\+\_\+t \mbox{\hyperlink{structttak__net__session_a9e96b483ca0778bc67f1dd215d2d1cf8}{lifetime\+\_\+ns}}
+\item 
+uint64\+\_\+t \mbox{\hyperlink{structttak__net__session_a3638bb2347f4ec93811802939be0a8cc}{next\+\_\+sanity\+\_\+ns}}
+\item 
+struct \mbox{\hyperlink{structttak__net__session}{ttak\+\_\+net\+\_\+session}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__net__session_a235669630f45fe4c9333ef1d67d0c033}{next\+\_\+retire}}
+\item 
+struct \mbox{\hyperlink{structttak__net__session}{ttak\+\_\+net\+\_\+session}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__net__session_a4e223514047b00ad96d9689d537eccc4}{sanity\+\_\+next}}
+\item 
+struct \mbox{\hyperlink{structttak__net__session}{ttak\+\_\+net\+\_\+session}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__net__session_a757051e8a5d8eb36e4e4bb4c1c888381}{fault\+\_\+next}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Logical connection wrapper that ties an endpoint to parent/child relationships. 
+
+Definition at line \mbox{\hyperlink{session_8h_source_l00035}{35}} of file \mbox{\hyperlink{session_8h_source}{session.\+h}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structttak__net__session_a0e515e8adcb0e96ebc85a5c52cb57295}\label{structttak__net__session_a0e515e8adcb0e96ebc85a5c52cb57295} 
+\index{ttak\_net\_session@{ttak\_net\_session}!endpoint@{endpoint}}
+\index{endpoint@{endpoint}!ttak\_net\_session@{ttak\_net\_session}}
+\doxysubsubsection{\texorpdfstring{endpoint}{endpoint}}
+{\footnotesize\ttfamily ttak\+\_\+shared\+\_\+net\+\_\+endpoint\+\_\+t\texorpdfstring{$\ast$}{*} ttak\+\_\+net\+\_\+session\+::endpoint}
+
+
+
+Definition at line \mbox{\hyperlink{session_8h_source_l00038}{38}} of file \mbox{\hyperlink{session_8h_source}{session.\+h}}.
+
+\Hypertarget{structttak__net__session_a757051e8a5d8eb36e4e4bb4c1c888381}\label{structttak__net__session_a757051e8a5d8eb36e4e4bb4c1c888381} 
+\index{ttak\_net\_session@{ttak\_net\_session}!fault\_next@{fault\_next}}
+\index{fault\_next@{fault\_next}!ttak\_net\_session@{ttak\_net\_session}}
+\doxysubsubsection{\texorpdfstring{fault\_next}{fault\_next}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structttak__net__session}{ttak\+\_\+net\+\_\+session}}\texorpdfstring{$\ast$}{*} ttak\+\_\+net\+\_\+session\+::fault\+\_\+next}
+
+
+
+Definition at line \mbox{\hyperlink{session_8h_source_l00048}{48}} of file \mbox{\hyperlink{session_8h_source}{session.\+h}}.
+
+\Hypertarget{structttak__net__session_adcfd436d062310276f9207a9467b49c7}\label{structttak__net__session_adcfd436d062310276f9207a9467b49c7} 
+\index{ttak\_net\_session@{ttak\_net\_session}!first\_child@{first\_child}}
+\index{first\_child@{first\_child}!ttak\_net\_session@{ttak\_net\_session}}
+\doxysubsubsection{\texorpdfstring{first\_child}{first\_child}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structttak__net__session}{ttak\+\_\+net\+\_\+session}}\texorpdfstring{$\ast$}{*} ttak\+\_\+net\+\_\+session\+::first\+\_\+child}
+
+
+
+Definition at line \mbox{\hyperlink{session_8h_source_l00040}{40}} of file \mbox{\hyperlink{session_8h_source}{session.\+h}}.
+
+\Hypertarget{structttak__net__session_a6fe018d43a66a8e0b47cbd89b854e073}\label{structttak__net__session_a6fe018d43a66a8e0b47cbd89b854e073} 
+\index{ttak\_net\_session@{ttak\_net\_session}!generation@{generation}}
+\index{generation@{generation}!ttak\_net\_session@{ttak\_net\_session}}
+\doxysubsubsection{\texorpdfstring{generation}{generation}}
+{\footnotesize\ttfamily uint64\+\_\+t ttak\+\_\+net\+\_\+session\+::generation}
+
+
+
+Definition at line \mbox{\hyperlink{session_8h_source_l00037}{37}} of file \mbox{\hyperlink{session_8h_source}{session.\+h}}.
+
+\Hypertarget{structttak__net__session_a83097499d4bdf9f3d36f6075cedcc873}\label{structttak__net__session_a83097499d4bdf9f3d36f6075cedcc873} 
+\index{ttak\_net\_session@{ttak\_net\_session}!id@{id}}
+\index{id@{id}!ttak\_net\_session@{ttak\_net\_session}}
+\doxysubsubsection{\texorpdfstring{id}{id}}
+{\footnotesize\ttfamily uint64\+\_\+t ttak\+\_\+net\+\_\+session\+::id}
+
+
+
+Definition at line \mbox{\hyperlink{session_8h_source_l00036}{36}} of file \mbox{\hyperlink{session_8h_source}{session.\+h}}.
+
+\Hypertarget{structttak__net__session_a9e96b483ca0778bc67f1dd215d2d1cf8}\label{structttak__net__session_a9e96b483ca0778bc67f1dd215d2d1cf8} 
+\index{ttak\_net\_session@{ttak\_net\_session}!lifetime\_ns@{lifetime\_ns}}
+\index{lifetime\_ns@{lifetime\_ns}!ttak\_net\_session@{ttak\_net\_session}}
+\doxysubsubsection{\texorpdfstring{lifetime\_ns}{lifetime\_ns}}
+{\footnotesize\ttfamily uint64\+\_\+t ttak\+\_\+net\+\_\+session\+::lifetime\+\_\+ns}
+
+
+
+Definition at line \mbox{\hyperlink{session_8h_source_l00044}{44}} of file \mbox{\hyperlink{session_8h_source}{session.\+h}}.
+
+\Hypertarget{structttak__net__session_a235669630f45fe4c9333ef1d67d0c033}\label{structttak__net__session_a235669630f45fe4c9333ef1d67d0c033} 
+\index{ttak\_net\_session@{ttak\_net\_session}!next\_retire@{next\_retire}}
+\index{next\_retire@{next\_retire}!ttak\_net\_session@{ttak\_net\_session}}
+\doxysubsubsection{\texorpdfstring{next\_retire}{next\_retire}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structttak__net__session}{ttak\+\_\+net\+\_\+session}}\texorpdfstring{$\ast$}{*} ttak\+\_\+net\+\_\+session\+::next\+\_\+retire}
+
+
+
+Definition at line \mbox{\hyperlink{session_8h_source_l00046}{46}} of file \mbox{\hyperlink{session_8h_source}{session.\+h}}.
+
+\Hypertarget{structttak__net__session_a3638bb2347f4ec93811802939be0a8cc}\label{structttak__net__session_a3638bb2347f4ec93811802939be0a8cc} 
+\index{ttak\_net\_session@{ttak\_net\_session}!next\_sanity\_ns@{next\_sanity\_ns}}
+\index{next\_sanity\_ns@{next\_sanity\_ns}!ttak\_net\_session@{ttak\_net\_session}}
+\doxysubsubsection{\texorpdfstring{next\_sanity\_ns}{next\_sanity\_ns}}
+{\footnotesize\ttfamily uint64\+\_\+t ttak\+\_\+net\+\_\+session\+::next\+\_\+sanity\+\_\+ns}
+
+
+
+Definition at line \mbox{\hyperlink{session_8h_source_l00045}{45}} of file \mbox{\hyperlink{session_8h_source}{session.\+h}}.
+
+\Hypertarget{structttak__net__session_ad34d9baac9f813c2293b5f362b2c6440}\label{structttak__net__session_ad34d9baac9f813c2293b5f362b2c6440} 
+\index{ttak\_net\_session@{ttak\_net\_session}!next\_sibling@{next\_sibling}}
+\index{next\_sibling@{next\_sibling}!ttak\_net\_session@{ttak\_net\_session}}
+\doxysubsubsection{\texorpdfstring{next\_sibling}{next\_sibling}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structttak__net__session}{ttak\+\_\+net\+\_\+session}}\texorpdfstring{$\ast$}{*} ttak\+\_\+net\+\_\+session\+::next\+\_\+sibling}
+
+
+
+Definition at line \mbox{\hyperlink{session_8h_source_l00041}{41}} of file \mbox{\hyperlink{session_8h_source}{session.\+h}}.
+
+\Hypertarget{structttak__net__session_a863cd166c3f9a81b48cf7c13b38dda76}\label{structttak__net__session_a863cd166c3f9a81b48cf7c13b38dda76} 
+\index{ttak\_net\_session@{ttak\_net\_session}!owner@{owner}}
+\index{owner@{owner}!ttak\_net\_session@{ttak\_net\_session}}
+\doxysubsubsection{\texorpdfstring{owner}{owner}}
+{\footnotesize\ttfamily \mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}}\texorpdfstring{$\ast$}{*} ttak\+\_\+net\+\_\+session\+::owner}
+
+
+
+Definition at line \mbox{\hyperlink{session_8h_source_l00042}{42}} of file \mbox{\hyperlink{session_8h_source}{session.\+h}}.
+
+\Hypertarget{structttak__net__session_a0913c931b71c92f4a532f1c63d655518}\label{structttak__net__session_a0913c931b71c92f4a532f1c63d655518} 
+\index{ttak\_net\_session@{ttak\_net\_session}!parent@{parent}}
+\index{parent@{parent}!ttak\_net\_session@{ttak\_net\_session}}
+\doxysubsubsection{\texorpdfstring{parent}{parent}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structttak__net__session}{ttak\+\_\+net\+\_\+session}}\texorpdfstring{$\ast$}{*} ttak\+\_\+net\+\_\+session\+::parent}
+
+
+
+Definition at line \mbox{\hyperlink{session_8h_source_l00039}{39}} of file \mbox{\hyperlink{session_8h_source}{session.\+h}}.
+
+\Hypertarget{structttak__net__session_a4e223514047b00ad96d9689d537eccc4}\label{structttak__net__session_a4e223514047b00ad96d9689d537eccc4} 
+\index{ttak\_net\_session@{ttak\_net\_session}!sanity\_next@{sanity\_next}}
+\index{sanity\_next@{sanity\_next}!ttak\_net\_session@{ttak\_net\_session}}
+\doxysubsubsection{\texorpdfstring{sanity\_next}{sanity\_next}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structttak__net__session}{ttak\+\_\+net\+\_\+session}}\texorpdfstring{$\ast$}{*} ttak\+\_\+net\+\_\+session\+::sanity\+\_\+next}
+
+
+
+Definition at line \mbox{\hyperlink{session_8h_source_l00047}{47}} of file \mbox{\hyperlink{session_8h_source}{session.\+h}}.
+
+\Hypertarget{structttak__net__session_a72b0a355ba883b3595e5aaff845fc472}\label{structttak__net__session_a72b0a355ba883b3595e5aaff845fc472} 
+\index{ttak\_net\_session@{ttak\_net\_session}!state\_flags@{state\_flags}}
+\index{state\_flags@{state\_flags}!ttak\_net\_session@{ttak\_net\_session}}
+\doxysubsubsection{\texorpdfstring{state\_flags}{state\_flags}}
+{\footnotesize\ttfamily uint32\+\_\+t ttak\+\_\+net\+\_\+session\+::state\+\_\+flags}
+
+
+
+Definition at line \mbox{\hyperlink{session_8h_source_l00043}{43}} of file \mbox{\hyperlink{session_8h_source}{session.\+h}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/ttak/net/\mbox{\hyperlink{session_8h}{session.\+h}}\end{DoxyCompactItemize}

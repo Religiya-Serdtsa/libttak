@@ -1,0 +1,128 @@
+\doxysection{11\+\_\+arena\+\_\+memory.\+puml}
+\hypertarget{11__arena__memory_8puml_source}{}\label{11__arena__memory_8puml_source}\index{blueprints/resource/11\_arena\_memory.puml@{blueprints/resource/11\_arena\_memory.puml}}
+\mbox{\hyperlink{11__arena__memory_8puml}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00001}00001\ @startuml}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00002}00002\ !theme\ plain}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00003}00003\ hide\ empty\ members}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00005}00005\ skinparam\ class\ \{}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00006}00006\ \ \ \ \ BackgroundColor\ white}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00007}00007\ \ \ \ \ BorderColor\ black}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00008}00008\ \}}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00010}00010\ title\ Arena\ Memory\ Lifecycle\ [11]}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00012}00012\ package\ "{}Arena\ Generations\ (Lesson\ 40\ Harness)"{}\ \{}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00013}00013\ \ \ \ \ class\ arena\_env\_t\ \{}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00014}00014\ \ \ \ \ \ \ \ \ +\ ttak\_epoch\_gc\_t\ gc}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00015}00015\ \ \ \ \ \ \ \ \ +\ generation\_bytes\ :\ size\_t}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00016}00016\ \ \ \ \ \ \ \ \ +\ chunk\_bytes\ :\ size\_t}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00017}00017\ \ \ \ \ \ \ \ \ +\ next\_generation()}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00018}00018\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00020}00020\ \ \ \ \ class\ arena\_generation\_t\ \{}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00021}00021\ \ \ \ \ \ \ \ \ +\ base\ :\ void*}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00022}00022\ \ \ \ \ \ \ \ \ +\ capacity\ :\ size\_t}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00023}00023\ \ \ \ \ \ \ \ \ +\ used\ :\ size\_t}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00024}00024\ \ \ \ \ \ \ \ \ +\ epoch\_id\ :\ uint32\_t}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00025}00025\ \ \ \ \ \ \ \ \ +\ claim(chunk)}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00026}00026\ \ \ \ \ \ \ \ \ +\ retire()}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00027}00027\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00029}00029\ \ \ \ \ arena\_env\_t\ o-\/-\/\ arena\_generation\_t\ :\ "{}init/retire\ per\ epoch"{}}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00031}00031\ \ \ \ \ note\ right\ of\ arena\_generation\_t}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00032}00032\ \ \ \ \ \ \ \ \ Each\ generation\ is\ a\ cache-\/aligned\ slab\ carved\ into}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00033}00033\ \ \ \ \ \ \ \ \ deterministic\ chunks.\ Retire()\ releases\ the\ pointer}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00034}00034\ \ \ \ \ \ \ \ \ so\ the\ mem\ tree\ can\ drop\ the\ node\ on\ the\ next\ epoch\ rotation.}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00035}00035\ \ \ \ \ end\ note}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00036}00036\ \}}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00038}00038\ package\ "{}Memory\ Tracking\ Core"{}\ \{}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00039}00039\ \ \ \ \ class\ ttak\_mem\_header\_t\ \{}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00040}00040\ \ \ \ \ \ \ \ \ +\ magic/checksum}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00041}00041\ \ \ \ \ \ \ \ \ +\ created\_tick/expires\_tick}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00042}00042\ \ \ \ \ \ \ \ \ +\ size}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00043}00043\ \ \ \ \ \ \ \ \ +\ strict\_check\ :\ \_Bool}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00044}00044\ \ \ \ \ \ \ \ \ +\ allow\_direct\_access\ :\ \_Bool}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00045}00045\ \ \ \ \ \ \ \ \ +\ lock\ :\ pthread\_mutex\_t}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00046}00046\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00048}00048\ \ \ \ \ class\ ttak\_mem\_tree\_t\ \{}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00049}00049\ \ \ \ \ \ \ \ \ +\ head\ :\ ttak\_mem\_node\_t*}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00050}00050\ \ \ \ \ \ \ \ \ +\ lock\ :\ pthread\_mutex\_t}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00051}00051\ \ \ \ \ \ \ \ \ +\ garbage\_pressure\ :\ atomic\_size\_t}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00052}00052\ \ \ \ \ \ \ \ \ +\ use\_manual\_cleanup\ :\ atomic\_bool}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00053}00053\ \ \ \ \ \ \ \ \ +\ report\_pressure(sz)}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00054}00054\ \ \ \ \ \ \ \ \ +\ perform\_cleanup(now)}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00055}00055\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00057}00057\ \ \ \ \ class\ ttak\_mem\_node\_t\ \{}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00058}00058\ \ \ \ \ \ \ \ \ +\ ptr\ :\ void*}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00059}00059\ \ \ \ \ \ \ \ \ +\ size\ :\ size\_t}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00060}00060\ \ \ \ \ \ \ \ \ +\ expires\_tick\ :\ uint64\_t}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00061}00061\ \ \ \ \ \ \ \ \ +\ ref\_count\ :\ atomic\_uint}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00062}00062\ \ \ \ \ \ \ \ \ +\ is\_root\ :\ \_Bool}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00063}00063\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00065}00065\ \ \ \ \ ttak\_mem\_tree\_t\ o-\/-\/\ ttak\_mem\_node\_t\ :\ "{}tracks\ allocations"{}}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00066}00066\ \ \ \ \ ttak\_mem\_node\_t\ -\/-\/>\ ttak\_mem\_header\_t\ :\ "{}wraps\ header/user\ buffer"{}}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00068}00068\ \ \ \ \ note\ bottom\ of\ ttak\_mem\_tree\_t}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00069}00069\ \ \ \ \ \ \ \ \ \`{}ttak\_mem\_alloc\_with\_flags(...,\ is\_root=true)`\ inserts}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00070}00070\ \ \ \ \ \ \ \ \ the\ allocation\ into\ the\ mem\ tree.\ Freeing\ or\ retiring\ a\ generation}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00071}00071\ \ \ \ \ \ \ \ \ removes\ the\ node\ or\ drops\ its\ reference\ count\ so\ cleanup\ can\ fire.}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00072}00072\ \ \ \ \ end\ note}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00073}00073\ \}}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00074}00074\ }
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00075}00075\ package\ "{}Epoch\ GC\ Wrapper"{}\ \{}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00076}00076\ \ \ \ \ class\ ttak\_epoch\_gc\_t\ \{}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00077}00077\ \ \ \ \ \ \ \ \ +\ tree\ :\ ttak\_mem\_tree\_t}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00078}00078\ \ \ \ \ \ \ \ \ +\ current\_epoch\ :\ uint64\_t}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00079}00079\ \ \ \ \ \ \ \ \ +\ last\_cleanup\_ts\ :\ uint64\_t}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00080}00080\ \ \ \ \ \ \ \ \ +\ register(ptr,\ size)}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00081}00081\ \ \ \ \ \ \ \ \ +\ rotate()}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00082}00082\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00083}00083\ }
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00084}00084\ \ \ \ \ class\ "{}ttak\_epoch\_gc\_register"{}\ as\ register\_fn}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00085}00085\ \ \ \ \ class\ "{}ttak\_epoch\_gc\_rotate"{}\ as\ rotate\_fn}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00086}00086\ }
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00087}00087\ \ \ \ \ register\_fn\ ..>\ ttak\_epoch\_gc\_t\ :\ "{}pins\ node\ into\ current\ epoch"{}}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00088}00088\ \ \ \ \ rotate\_fn\ ..>\ ttak\_epoch\_gc\_t\ :\ "{}advances\ epoch\ +\ cleanup"{}}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00089}00089\ \ \ \ \ ttak\_epoch\_gc\_t\ o-\/-\/\ ttak\_mem\_tree\_t\ :\ "{}manual\ cleanup\ mode"{}}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00090}00090\ \}}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00091}00091\ }
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00092}00092\ package\ "{}Bench\ Reference"{}\ \{}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00093}00093\ \ \ \ \ class\ "{}ttl\_cache\_bench\_lockfree.c"{}\ as\ bench\ \{}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00094}00094\ \ \ \ \ \ \ \ \ +\ g\_arenas[4]\ :\ ttak\_object\_pool\_t*}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00095}00095\ \ \ \ \ \ \ \ \ +\ per\_epoch\_rows\ :\ size\_t}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00096}00096\ \ \ \ \ \ \ \ \ +\ rotate\_epoch\_rows()}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00097}00097\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00098}00098\ }
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00099}00099\ \ \ \ \ bench\ ..>\ ttak\_epoch\_gc\_t\ :\ "{}demonstrates\ reuse\ across\ epochs"{}}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00100}00100\ \ \ \ \ bench\ ..>\ arena\_generation\_t\ :\ "{}mirrors\ slab\ sizing\ logic"{}}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00101}00101\ }
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00102}00102\ \ \ \ \ note\ right\ of\ bench}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00103}00103\ \ \ \ \ \ \ \ \ The\ lock-\/free\ TTL\ cache\ seeds\ four\ arenas\ per\ epoch,}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00104}00104\ \ \ \ \ \ \ \ \ aligning\ slab\ size\ (generation\_bytes)\ with\ hot\ cache\ lines\ to}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00105}00105\ \ \ \ \ \ \ \ \ keep\ RSS\ stable\ as\ generations\ are\ recycled.}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00106}00106\ \ \ \ \ end\ note}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00107}00107\ \}}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00108}00108\ }
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00109}00109\ arena\_env\_t\ ..>\ ttak\_epoch\_gc\_t\ :\ "{}calls\ register/rotate"{}}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00110}00110\ arena\_generation\_t\ ..>\ ttak\_mem\_tree\_t\ :\ "{}retire()\ finds\ node\ +\ release"{}}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00111}00111\ ttak\_mem\_header\_t\ ..>\ arena\_generation\_t\ :\ "{}backing\ buffer\ owned\ by\ generation"{}}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00112}00112\ }
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00113}00113\ legend\ right}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00114}00114\ \ \ **Lifecycle**}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00115}00115\ \ \ 1.\ arena\_env\_t\ allocates\ a\ cache-\/aligned\ generation\ via\ ttak\_mem\_alloc\_with\_flags.}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00116}00116\ \ \ 2.\ Generation\ registered\ with\ ttak\_epoch\_gc\_register\ →\ mem\ tree\ node\ is\ pinned.}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00117}00117\ \ \ 3.\ Chunks\ are\ handed\ out\ deterministically;\ retire()\ drops\ the\ reference.}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00118}00118\ \ \ 4.\ ttak\_epoch\_gc\_rotate()\ triggers\ mem\_tree\ cleanup\ ⇒\ buffer\ freed.}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00119}00119\ \ \ 5.\ Lock-\/free\ bench\ mirrors\ this\ flow\ to\ keep\ multiple\ arenas\ recycling.}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00120}00120\ endlegend}
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00121}00121\ }
+\DoxyCodeLine{\Hypertarget{11__arena__memory_8puml_source_l00122}00122\ @enduml}
+
+\end{DoxyCode}

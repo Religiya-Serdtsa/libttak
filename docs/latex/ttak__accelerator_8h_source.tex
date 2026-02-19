@@ -1,0 +1,92 @@
+\doxysection{ttak\+\_\+accelerator.\+h}
+\hypertarget{ttak__accelerator_8h_source}{}\label{ttak__accelerator_8h_source}\index{include/ttak/ttak\_accelerator.h@{include/ttak/ttak\_accelerator.h}}
+\mbox{\hyperlink{ttak__accelerator_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ TTAK\_ACCELERATOR\_H}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ TTAK\_ACCELERATOR\_H}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <stdatomic.h>}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00008}00008\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00009}00009\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00010}00010\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00011}00011\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00012}00012\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00013}00013\ \textcolor{comment}{\ *\ @brief\ Result\ codes\ returned\ by\ accelerator\ backends.}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00014}00014\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00015}\mbox{\hyperlink{ttak__accelerator_8h_a4c4c114f1628da0d3fc56a9f9b5cb5c9}{00015}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{ttak__accelerator_8h_a4c4c114f1628da0d3fc56a9f9b5cb5c9}{ttak\_result}}\ \{}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00016}\mbox{\hyperlink{ttak__accelerator_8h_a4c4c114f1628da0d3fc56a9f9b5cb5c9a62ecc30dc27f878aa04e762440858730}{00016}}\ \ \ \ \ \mbox{\hyperlink{ttak__accelerator_8h_a4c4c114f1628da0d3fc56a9f9b5cb5c9a62ecc30dc27f878aa04e762440858730}{TTAK\_RESULT\_OK}}\ =\ 0,}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00017}\mbox{\hyperlink{ttak__accelerator_8h_a4c4c114f1628da0d3fc56a9f9b5cb5c9a086bba2ff571862449eaf670fabaccb9}{00017}}\ \ \ \ \ \mbox{\hyperlink{ttak__accelerator_8h_a4c4c114f1628da0d3fc56a9f9b5cb5c9a086bba2ff571862449eaf670fabaccb9}{TTAK\_RESULT\_ERR\_ARGUMENT}}\ =\ -\/1,}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00018}\mbox{\hyperlink{ttak__accelerator_8h_a4c4c114f1628da0d3fc56a9f9b5cb5c9ae45a0f23271c6a7ceeb1a962c039a2b7}{00018}}\ \ \ \ \ \mbox{\hyperlink{ttak__accelerator_8h_a4c4c114f1628da0d3fc56a9f9b5cb5c9ae45a0f23271c6a7ceeb1a962c039a2b7}{TTAK\_RESULT\_ERR\_UNSUPPORTED}}\ =\ -\/2,}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00019}00019\ \ \ \ \ \mbox{\hyperlink{ttak__accelerator_8h_a4c4c114f1628da0d3fc56a9f9b5cb5c9abba2c044c03554184d123ff4eae9152c}{TTAK\_RESULT\_ERR\_EXECUTION}}\ =\ -\/3}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00020}\mbox{\hyperlink{ttak__accelerator_8h_a4c4c114f1628da0d3fc56a9f9b5cb5c9abba2c044c03554184d123ff4eae9152c}{00020}}\ \}\ \mbox{\hyperlink{ttak__accelerator_8h_ad112d6852d4170064b4efdba029ef930}{ttak\_result\_t}};}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00021}00021\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00022}00022\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00023}00023\ \textcolor{comment}{\ *\ @brief\ Physical\ execution\ targets\ supported\ by\ libttak.}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00024}00024\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00025}\mbox{\hyperlink{ttak__accelerator_8h_ac7cac2c972f22538284d97bf3220ea04}{00025}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{ttak__accelerator_8h_ac7cac2c972f22538284d97bf3220ea04}{ttak\_accel\_target}}\ \{}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00026}\mbox{\hyperlink{ttak__accelerator_8h_ac7cac2c972f22538284d97bf3220ea04aed10b3cc1a80327cb1009599ff7fe47e}{00026}}\ \ \ \ \ \mbox{\hyperlink{ttak__accelerator_8h_ac7cac2c972f22538284d97bf3220ea04aed10b3cc1a80327cb1009599ff7fe47e}{TTAK\_ACCEL\_TARGET\_CPU}}\ =\ 0,}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00027}\mbox{\hyperlink{ttak__accelerator_8h_ac7cac2c972f22538284d97bf3220ea04a40dfe463bab8eef2411976e3dbd359f9}{00027}}\ \ \ \ \ \mbox{\hyperlink{ttak__accelerator_8h_ac7cac2c972f22538284d97bf3220ea04a40dfe463bab8eef2411976e3dbd359f9}{TTAK\_ACCEL\_TARGET\_CUDA}},}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00028}\mbox{\hyperlink{ttak__accelerator_8h_ac7cac2c972f22538284d97bf3220ea04a7117c0a39d9134451146bd532601c38a}{00028}}\ \ \ \ \ \mbox{\hyperlink{ttak__accelerator_8h_ac7cac2c972f22538284d97bf3220ea04a7117c0a39d9134451146bd532601c38a}{TTAK\_ACCEL\_TARGET\_OPENCL}},}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00029}00029\ \ \ \ \ \mbox{\hyperlink{ttak__accelerator_8h_ac7cac2c972f22538284d97bf3220ea04ac1eadf9e1fef84d364e7090c3ae492cf}{TTAK\_ACCEL\_TARGET\_ROCM}}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00030}\mbox{\hyperlink{ttak__accelerator_8h_ac7cac2c972f22538284d97bf3220ea04ac1eadf9e1fef84d364e7090c3ae492cf}{00030}}\ \}\ \mbox{\hyperlink{ttak__accelerator_8h_a4f7075b22f21f93f709096e2d48b22a8}{ttak\_accel\_target\_t}};}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00031}00031\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00032}00032\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00033}00033\ \textcolor{comment}{\ *\ @brief\ Batch-\/level\ configuration\ knobs\ shared\ by\ all\ targets.}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00034}00034\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00035}\mbox{\hyperlink{structttak__accel__config}{00035}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__accel__config}{ttak\_accel\_config}}\ \{}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00036}\mbox{\hyperlink{structttak__accel__config_ac31a68d0148f4b0b8d2852149ee15feb}{00036}}\ \ \ \ \ \mbox{\hyperlink{ttak__accelerator_8h_a4f7075b22f21f93f709096e2d48b22a8}{ttak\_accel\_target\_t}}\ \mbox{\hyperlink{structttak__accel__config_ac31a68d0148f4b0b8d2852149ee15feb}{preferred\_target}};}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00037}\mbox{\hyperlink{structttak__accel__config_aa9ecfac5504e63246c81bb5b8f1e7990}{00037}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structttak__accel__config_aa9ecfac5504e63246c81bb5b8f1e7990}{max\_tiles}};}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00038}\mbox{\hyperlink{structttak__accel__config_a1b7e7e96f5d9630617b3dc44a08dfe42}{00038}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__accel__config_a1b7e7e96f5d9630617b3dc44a08dfe42}{integrity\_mask}};}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00039}\mbox{\hyperlink{ttak__accelerator_8h_a5c6a6c6799183f581aa1926cfe76c592}{00039}}\ \}\ \mbox{\hyperlink{ttak__accelerator_8h_a5c6a6c6799183f581aa1926cfe76c592}{ttak\_accel\_config\_t}};}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00040}00040\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00041}00041\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00042}00042\ \textcolor{comment}{\ *\ @brief\ Work\ fragment\ passed\ to\ an\ accelerator\ implementation.}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00043}00043\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00044}00044\ \textcolor{comment}{\ *\ All\ pointers\ must\ remain\ valid\ for\ the\ duration\ of\ the\ call.}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00045}00045\ \textcolor{comment}{\ *\ Every\ buffer\ is\ guarded\ with\ a\ byte\ length\ to\ preserve\ bounds.}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00046}00046\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00047}\mbox{\hyperlink{structttak__accel__batch__item}{00047}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__accel__batch__item}{ttak\_accel\_batch\_item}}\ \{}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00048}\mbox{\hyperlink{structttak__accel__batch__item_ab55dab014cfce96fe3e5c9938bcbb1c3}{00048}}\ \ \ \ \ \textcolor{keyword}{const}\ uint8\_t\ *\mbox{\hyperlink{structttak__accel__batch__item_ab55dab014cfce96fe3e5c9938bcbb1c3}{input}};}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00049}\mbox{\hyperlink{structttak__accel__batch__item_a8c658d933968a97b1bdb0e2113885cea}{00049}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structttak__accel__batch__item_a8c658d933968a97b1bdb0e2113885cea}{input\_len}};}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00050}\mbox{\hyperlink{structttak__accel__batch__item_a827c6f868d56e006a6e77d15b17a2a04}{00050}}\ \ \ \ \ uint8\_t\ *\mbox{\hyperlink{structttak__accel__batch__item_a827c6f868d56e006a6e77d15b17a2a04}{output}};}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00051}\mbox{\hyperlink{structttak__accel__batch__item_acbda298b4da4bfaa53eb1cd70f6866da}{00051}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structttak__accel__batch__item_acbda298b4da4bfaa53eb1cd70f6866da}{output\_len}};}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00052}\mbox{\hyperlink{structttak__accel__batch__item_a57ff5d59619759907a9ec70245a02b68}{00052}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__accel__batch__item_a57ff5d59619759907a9ec70245a02b68}{mask\_seed}};}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00053}\mbox{\hyperlink{structttak__accel__batch__item_ab5cee442fa3e2f7fb118dbfe24b376dd}{00053}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__accel__batch__item_ab5cee442fa3e2f7fb118dbfe24b376dd}{checksum\_salt}};}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00054}\mbox{\hyperlink{structttak__accel__batch__item_a6e030697ef381a474229dc2756a77b5f}{00054}}\ \ \ \ \ uint32\_t\ *\mbox{\hyperlink{structttak__accel__batch__item_a6e030697ef381a474229dc2756a77b5f}{checksum\_out}};}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00055}\mbox{\hyperlink{ttak__accelerator_8h_aa1689adc22b84a59d14d42050fe255c9}{00055}}\ \}\ \mbox{\hyperlink{ttak__accelerator_8h_aa1689adc22b84a59d14d42050fe255c9}{ttak\_accel\_batch\_item\_t}};}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00057}\mbox{\hyperlink{ttak__accelerator_8h_a11800ef93fe7b7bc741b6b7f0ba9e7d4}{00057}}\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{ttak__accelerator_8h_ad112d6852d4170064b4efdba029ef930}{ttak\_result\_t}}\ (*\mbox{\hyperlink{ttak__accelerator_8h_a11800ef93fe7b7bc741b6b7f0ba9e7d4}{ttak\_accel\_backend\_fn}})(}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00058}00058\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__accel__batch__item}{ttak\_accel\_batch\_item\_t}}\ *items,}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00059}00059\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ item\_count,}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00060}00060\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__accel__config}{ttak\_accel\_config\_t}}\ *config);}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00061}00061\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00062}00062\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00063}00063\ \textcolor{comment}{\ *\ @brief\ Executes\ a\ batch\ on\ the\ highest\ priority\ available\ accelerator.}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00064}00064\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00065}00065\ \textcolor{comment}{\ *\ The\ dispatcher\ uses\ lock-\/free\ atomics\ to\ lazily\ bind\ the\ backend\ the\ first\ time}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00066}00066\ \textcolor{comment}{\ *\ this\ function\ is\ invoked\ so\ there\ is\ no\ global\ mutex\ contention\ after\ startup.}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00067}00067\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00068}\mbox{\hyperlink{ttak__accelerator_8h_aa00678feed48025bb178cab32110e078}{00068}}\ \mbox{\hyperlink{ttak__accelerator_8h_ad112d6852d4170064b4efdba029ef930}{ttak\_result\_t}}\ \mbox{\hyperlink{ttak__accelerator_8h_aa00678feed48025bb178cab32110e078}{ttak\_execute\_batch}}(}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00069}00069\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__accel__batch__item}{ttak\_accel\_batch\_item\_t}}\ *items,}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00070}00070\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ item\_count,}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00071}00071\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__accel__config}{ttak\_accel\_config\_t}}\ *config);}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00072}00072\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00073}00073\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00074}00074\ \textcolor{comment}{\ *\ @brief\ Returns\ the\ currently\ selected\ backend\ implementation.}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00075}00075\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00076}00076\ \textcolor{comment}{\ *\ @param\ out\_fn\ Optional\ pointer\ to\ store\ the\ backend\ function\ pointer.}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00077}00077\ \textcolor{comment}{\ *\ @param\ out\_target\ Optional\ pointer\ to\ store\ which\ target\ backs\ the\ pointer.}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00078}00078\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00079}\mbox{\hyperlink{ttak__accelerator_8h_aa8d6cdf8bdb11df2c232aae59db6bbee}{00079}}\ \mbox{\hyperlink{ttak__accelerator_8h_ad112d6852d4170064b4efdba029ef930}{ttak\_result\_t}}\ \mbox{\hyperlink{ttak__accelerator_8h_aa8d6cdf8bdb11df2c232aae59db6bbee}{ttak\_get\_active\_backend}}(\mbox{\hyperlink{ttak__accelerator_8h_a11800ef93fe7b7bc741b6b7f0ba9e7d4}{ttak\_accel\_backend\_fn}}\ *out\_fn,}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{ttak__accelerator_8h_a4f7075b22f21f93f709096e2d48b22a8}{ttak\_accel\_target\_t}}\ *out\_target);}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00082}00082\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00083}00083\ \}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00084}00084\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{ttak__accelerator_8h_source_l00086}00086\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ TTAK\_ACCELERATOR\_H\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

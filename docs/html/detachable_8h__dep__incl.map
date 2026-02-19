@@ -1,0 +1,20 @@
+<map id="include/ttak/mem/detachable.h" name="include/ttak/mem/detachable.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="347,5,572,31"/>
+<area shape="rect" id="Node000002" href="$io_8h.html" title=" " alt="" coords="388,79,531,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="462,44,462,79,457,79,457,44"/>
+<area shape="rect" id="Node000003" href="$async_8h.html" title=" " alt="" coords="5,152,175,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="387,109,150,155,149,149,386,104"/>
+<area shape="rect" id="Node000004" href="$bits_8h.html" title=" " alt="" coords="199,152,354,177"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="418,111,308,154,306,149,416,106"/>
+<area shape="rect" id="Node000005" href="$io_2sync_8h.html" title=" " alt="" coords="379,152,540,177"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="462,118,462,152,457,152,457,118"/>
+<area shape="rect" id="Node000006" href="$zerocopy_8h.html" title=" " alt="" coords="564,152,752,177"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="505,106,626,149,625,154,503,111"/>
+<area shape="rect" id="Node000008" href="$endpoint_8h.html" title=" " alt="" coords="777,152,974,177"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="540,104,809,149,808,155,539,109"/>
+<area shape="rect" id="Node000007" href="$view_8h.html" title=" " alt="" coords="579,225,750,251"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="663,191,666,225,661,225,658,191"/>
+<area shape="poly" id="edge9_Node000008_Node000007" title=" " alt="" coords="830,184,700,228,698,223,828,179"/>
+<area shape="rect" id="Node000009" href="$session_8h.html" title=" " alt="" coords="781,225,970,251"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="878,191,878,225,873,225,873,191"/>
+</map>

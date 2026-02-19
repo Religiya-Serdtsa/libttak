@@ -1,0 +1,54 @@
+\doxysection{port.\+h}
+\hypertarget{port_8h_source}{}\label{port_8h_source}\index{include/ttak/net/core/port.h@{include/ttak/net/core/port.h}}
+\mbox{\hyperlink{port_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ TTAK\_NET\_CORE\_PORT\_H}}
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ TTAK\_NET\_CORE\_PORT\_H}}
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00007}00007\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00008}00008\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{}
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00009}00009\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00011}\mbox{\hyperlink{port_8h_a9c772162be718df750f452ed87452d80}{00011}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{port_8h_a9c772162be718df750f452ed87452d80}{ttak\_net\_os}}\ \{}
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00012}\mbox{\hyperlink{port_8h_a9c772162be718df750f452ed87452d80a1929f4a1ea4f4fb7f81ec10d51632fb5}{00012}}\ \ \ \ \ \mbox{\hyperlink{port_8h_a9c772162be718df750f452ed87452d80a1929f4a1ea4f4fb7f81ec10d51632fb5}{TTAK\_NET\_OS\_POSIX}},}
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00013}\mbox{\hyperlink{port_8h_a9c772162be718df750f452ed87452d80a7116cce06df0cf2629d60b0403cd8100}{00013}}\ \ \ \ \ \mbox{\hyperlink{port_8h_a9c772162be718df750f452ed87452d80a7116cce06df0cf2629d60b0403cd8100}{TTAK\_NET\_OS\_WINDOWS}},}
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00014}00014\ \ \ \ \ \mbox{\hyperlink{port_8h_a9c772162be718df750f452ed87452d80a19b0baaa8e6569bfff4c88757aace0d9}{TTAK\_NET\_OS\_BAREMETAL}}}
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00015}\mbox{\hyperlink{port_8h_a9c772162be718df750f452ed87452d80a19b0baaa8e6569bfff4c88757aace0d9}{00015}}\ \}\ \mbox{\hyperlink{port_8h_a7df883e01b8a3c9f8f75045e83ffa277}{ttak\_net\_os\_t}};}
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00017}\mbox{\hyperlink{structttak__net__driver__ops}{00017}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__net__driver__ops}{ttak\_net\_driver\_ops}}\ \{}
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00018}\mbox{\hyperlink{structttak__net__driver__ops_a1c7e790a13c2129e68c376770d04329d}{00018}}\ \ \ \ \ int\ \ (*\mbox{\hyperlink{structttak__net__driver__ops_a1c7e790a13c2129e68c376770d04329d}{socket\_open}})(\textcolor{keywordtype}{int}\ domain,\ \textcolor{keywordtype}{int}\ type,\ \textcolor{keywordtype}{int}\ protocol);}
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00019}\mbox{\hyperlink{structttak__net__driver__ops_ab53acbdbbbca9ee2ef973ca5d3be1dc8}{00019}}\ \ \ \ \ int\ \ (*\mbox{\hyperlink{structttak__net__driver__ops_ab53acbdbbbca9ee2ef973ca5d3be1dc8}{socket\_close}})(\textcolor{keywordtype}{int}\ fd);}
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00020}\mbox{\hyperlink{structttak__net__driver__ops_ac5ccba835db1805b7ca15db2b66ca8e3}{00020}}\ \ \ \ \ int\ \ (*\mbox{\hyperlink{structttak__net__driver__ops_ac5ccba835db1805b7ca15db2b66ca8e3}{socket\_bind}})(\textcolor{keywordtype}{int}\ fd,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *addr,\ \textcolor{keywordtype}{size\_t}\ len);}
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00021}\mbox{\hyperlink{structttak__net__driver__ops_a4f571cd6ca15fcbef4a71df1beffb612}{00021}}\ \ \ \ \ int\ \ (*\mbox{\hyperlink{structttak__net__driver__ops_a4f571cd6ca15fcbef4a71df1beffb612}{socket\_listen}})(\textcolor{keywordtype}{int}\ fd,\ \textcolor{keywordtype}{int}\ backlog);}
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00022}\mbox{\hyperlink{structttak__net__driver__ops_a572008768f4e5287f11d78fcab837a67}{00022}}\ \ \ \ \ int\ \ (*\mbox{\hyperlink{structttak__net__driver__ops_a572008768f4e5287f11d78fcab837a67}{socket\_connect}})(\textcolor{keywordtype}{int}\ fd,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *addr,\ \textcolor{keywordtype}{size\_t}\ len);}
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00023}\mbox{\hyperlink{structttak__net__driver__ops_a5f1c1d1cc97d80a63db2d9426af2e7ad}{00023}}\ \ \ \ \ int\ \ (*\mbox{\hyperlink{structttak__net__driver__ops_a5f1c1d1cc97d80a63db2d9426af2e7ad}{socket\_send}})(\textcolor{keywordtype}{int}\ fd,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *buf,\ \textcolor{keywordtype}{size\_t}\ len);}
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00024}\mbox{\hyperlink{structttak__net__driver__ops_ab19ba383a2917b7a414abeda442d21e2}{00024}}\ \ \ \ \ int\ \ (*\mbox{\hyperlink{structttak__net__driver__ops_ab19ba383a2917b7a414abeda442d21e2}{socket\_recv}})(\textcolor{keywordtype}{int}\ fd,\ \textcolor{keywordtype}{void}\ *buf,\ \textcolor{keywordtype}{size\_t}\ len);}
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00025}\mbox{\hyperlink{structttak__net__driver__ops_ad16a5686170c0cd9a18666b89fb28f92}{00025}}\ \ \ \ \ int\ \ (*\mbox{\hyperlink{structttak__net__driver__ops_ad16a5686170c0cd9a18666b89fb28f92}{socket\_setopt}})(\textcolor{keywordtype}{int}\ fd,\ \textcolor{keywordtype}{int}\ opt,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *val,\ \textcolor{keywordtype}{size\_t}\ len);}
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00026}\mbox{\hyperlink{structttak__net__driver__ops_a1ba4ffcc0ca4d0af2872f625b7ca0c0f}{00026}}\ \ \ \ \ int\ \ (*\mbox{\hyperlink{structttak__net__driver__ops_a1ba4ffcc0ca4d0af2872f625b7ca0c0f}{poll\_wait}})(\textcolor{keywordtype}{int}\ fd,\ uint32\_t\ events,\ \textcolor{keywordtype}{int}\ timeout\_ms);}
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00027}\mbox{\hyperlink{port_8h_ad59ba36fb944589606779627fecde245}{00027}}\ \}\ \mbox{\hyperlink{port_8h_ad59ba36fb944589606779627fecde245}{ttak\_net\_driver\_ops\_t}};}
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00029}\mbox{\hyperlink{structttak__net__baremetal__spec}{00029}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__net__baremetal__spec}{ttak\_net\_baremetal\_spec}}\ \{}
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00030}\mbox{\hyperlink{structttak__net__baremetal__spec_a0c95e82665e5855963c4a79ce6ed7f44}{00030}}\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__net__driver__ops}{ttak\_net\_driver\_ops\_t}}\ *\mbox{\hyperlink{structttak__net__baremetal__spec_a0c95e82665e5855963c4a79ce6ed7f44}{driver\_ops}};}
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00031}\mbox{\hyperlink{structttak__net__baremetal__spec_a03130c28d9bbba034b9f9881fc565847}{00031}}\ \ \ \ \ \textcolor{keywordtype}{void}\ *(*nic\_map\_io)(uintptr\_t\ base,\ \textcolor{keywordtype}{size\_t}\ len);}
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00032}\mbox{\hyperlink{structttak__net__baremetal__spec_a9cddb49b5f2b38eaab1e85f3d0942545}{00032}}\ \ \ \ \ void\ \ (*\mbox{\hyperlink{structttak__net__baremetal__spec_a9cddb49b5f2b38eaab1e85f3d0942545}{nic\_unmap\_io}})(\textcolor{keywordtype}{void}\ *addr,\ \textcolor{keywordtype}{size\_t}\ len);}
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00033}\mbox{\hyperlink{structttak__net__baremetal__spec_aa64c708cf293e2a8651b67cb009f34e5}{00033}}\ \ \ \ \ \textcolor{keywordtype}{void}\ *(*buddy\_alloc)(\textcolor{keywordtype}{size\_t}\ bytes);}
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00034}\mbox{\hyperlink{structttak__net__baremetal__spec_a6df6075fd981c3db4f03827a00135fd2}{00034}}\ \ \ \ \ void\ \ (*\mbox{\hyperlink{structttak__net__baremetal__spec_a6df6075fd981c3db4f03827a00135fd2}{buddy\_free}})(\textcolor{keywordtype}{void}\ *ptr);}
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00035}\mbox{\hyperlink{port_8h_ad5775e4d402bd3bb3d5a52b3d1da3487}{00035}}\ \}\ \mbox{\hyperlink{port_8h_ad5775e4d402bd3bb3d5a52b3d1da3487}{ttak\_net\_baremetal\_spec\_t}};}
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00037}\mbox{\hyperlink{port_8h_a782d7b255df32e840f51eb6230204d56}{00037}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{port_8h_a782d7b255df32e840f51eb6230204d56}{ttak\_net\_driver\_detect}}(\mbox{\hyperlink{structttak__net__driver__ops}{ttak\_net\_driver\_ops\_t}}\ *ops,}
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{port_8h_a7df883e01b8a3c9f8f75045e83ffa277}{ttak\_net\_os\_t}}\ *os,}
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__net__baremetal__spec}{ttak\_net\_baremetal\_spec\_t}}\ *bm);}
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00041}00041\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00042}00042\ \}}
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00043}00043\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00045}00045\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ TTAK\_NET\_CORE\_PORT\_H\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00046}00046\ \textcolor{preprocessor}{\#if\ !defined(\_\_BAREMETAL\_\_)}}
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00047}00047\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{buddy_8h}{ttak/phys/mem/buddy.h}}>}}
+\DoxyCodeLine{\Hypertarget{port_8h_source_l00048}00048\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

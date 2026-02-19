@@ -1,0 +1,243 @@
+\doxysection{include/ttak/io/io.h File Reference}
+\hypertarget{io_8h}{}\label{io_8h}\index{include/ttak/io/io.h@{include/ttak/io/io.h}}
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$ttak/mem/owner.\+h$>$}\newline
+{\ttfamily \#include $<$ttak/mem/detachable.\+h$>$}\newline
+{\ttfamily \#include $<$ttak/timing/timing.\+h$>$}\newline
+Include dependency graph for io.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{io_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{io_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structttak__io__buffer}{ttak\+\_\+io\+\_\+buffer}}
+\item 
+struct \mbox{\hyperlink{structttak__io__guard}{ttak\+\_\+io\+\_\+guard}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef enum \mbox{\hyperlink{io_8h_a4c5731f8c7bf69338c8fba54e58f3109}{ttak\+\_\+io\+\_\+status}} \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}}
+\item 
+typedef enum \mbox{\hyperlink{io_8h_a4b16199a2071984f634a8da16869da1a}{ttak\+\_\+io\+\_\+buffer\+\_\+mode}} \mbox{\hyperlink{io_8h_a3df6d51462672ec9a7b6d89fedd141c7}{ttak\+\_\+io\+\_\+buffer\+\_\+mode\+\_\+t}}
+\item 
+typedef struct \mbox{\hyperlink{structttak__io__buffer}{ttak\+\_\+io\+\_\+buffer}} \mbox{\hyperlink{io_8h_a13577555a348473d37e420b72805a261}{ttak\+\_\+io\+\_\+buffer\+\_\+t}}
+\item 
+typedef struct \mbox{\hyperlink{structttak__io__guard}{ttak\+\_\+io\+\_\+guard}} \mbox{\hyperlink{io_8h_aca20f4767510d423ee88de501eb72575}{ttak\+\_\+io\+\_\+guard\+\_\+t}}
+\item 
+typedef void(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{io_8h_a83220f33ce23c74a5328306b8996ce1b}{ttak\+\_\+io\+\_\+poll\+\_\+cb}}) (int fd, short revents, void \texorpdfstring{$\ast$}{*}user)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{io_8h_a4c5731f8c7bf69338c8fba54e58f3109}{ttak\+\_\+io\+\_\+status}} \{ \newline
+\mbox{\hyperlink{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a67cc2be6d1693662e59ca19f14c6ff31}{TTAK\+\_\+\+IO\+\_\+\+SUCCESS}} = 0
+, \mbox{\hyperlink{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a54de52442b04580a6239efda00de1e3b}{TTAK\+\_\+\+IO\+\_\+\+ERR\+\_\+\+INVALID\+\_\+\+ARGUMENT}}
+, \mbox{\hyperlink{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a426a6f812b233e797056f485fd985740}{TTAK\+\_\+\+IO\+\_\+\+ERR\+\_\+\+EXPIRED\+\_\+\+GUARD}}
+, \mbox{\hyperlink{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a2c185f6d7153f021168e9ace782f7ebf}{TTAK\+\_\+\+IO\+\_\+\+ERR\+\_\+\+SYS\+\_\+\+FAILURE}}
+, \newline
+\mbox{\hyperlink{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a4daa069a8f600416376c6ced88c18b23}{TTAK\+\_\+\+IO\+\_\+\+ERR\+\_\+\+RANGE}}
+, \mbox{\hyperlink{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a879188f5579cf0ad3c6c6312d32de652}{TTAK\+\_\+\+IO\+\_\+\+ERR\+\_\+\+NEEDS\+\_\+\+RETRY}}
+ \}
+\item 
+enum \mbox{\hyperlink{io_8h_a4b16199a2071984f634a8da16869da1a}{ttak\+\_\+io\+\_\+buffer\+\_\+mode}} \{ \mbox{\hyperlink{io_8h_a4b16199a2071984f634a8da16869da1aadb545676a09a26986c7e34e40727b77c}{TTAK\+\_\+\+IO\+\_\+\+BUFFER\+\_\+\+READ}} = 0
+, \mbox{\hyperlink{io_8h_a4b16199a2071984f634a8da16869da1aafedfb190441a126a1c8ab2087ba77960}{TTAK\+\_\+\+IO\+\_\+\+BUFFER\+\_\+\+WRITE}} = 1
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} \mbox{\hyperlink{io_8h_a8bbfe43096ae070a6c176562f6502854}{ttak\+\_\+io\+\_\+guard\+\_\+init}} (\mbox{\hyperlink{io_8h_aca20f4767510d423ee88de501eb72575}{ttak\+\_\+io\+\_\+guard\+\_\+t}} \texorpdfstring{$\ast$}{*}guard, int fd, \mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}owner, uint64\+\_\+t ttl\+\_\+ns, uint64\+\_\+t now)
+\item 
+\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} \mbox{\hyperlink{io_8h_a60de91808c79ff338a29ae54972f0297}{ttak\+\_\+io\+\_\+guard\+\_\+refresh}} (\mbox{\hyperlink{io_8h_aca20f4767510d423ee88de501eb72575}{ttak\+\_\+io\+\_\+guard\+\_\+t}} \texorpdfstring{$\ast$}{*}guard, uint64\+\_\+t now)
+\item 
+\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} \mbox{\hyperlink{io_8h_a86ac8dcd843708afc3ddf556d6760664}{ttak\+\_\+io\+\_\+guard\+\_\+close}} (\mbox{\hyperlink{io_8h_aca20f4767510d423ee88de501eb72575}{ttak\+\_\+io\+\_\+guard\+\_\+t}} \texorpdfstring{$\ast$}{*}guard, uint64\+\_\+t now)
+\item 
+bool \mbox{\hyperlink{io_8h_a7cd44036a34402d6b84d35539a4c1ed2}{ttak\+\_\+io\+\_\+guard\+\_\+valid}} (const \mbox{\hyperlink{io_8h_aca20f4767510d423ee88de501eb72575}{ttak\+\_\+io\+\_\+guard\+\_\+t}} \texorpdfstring{$\ast$}{*}guard, uint64\+\_\+t now)
+\item 
+\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} \mbox{\hyperlink{io_8h_a37257227b6a468f1d428d3cf15d0b6a5}{ttak\+\_\+io\+\_\+buffer\+\_\+acquire}} (\mbox{\hyperlink{io_8h_a13577555a348473d37e420b72805a261}{ttak\+\_\+io\+\_\+buffer\+\_\+t}} \texorpdfstring{$\ast$}{*}buffer, void \texorpdfstring{$\ast$}{*}user\+\_\+ptr, size\+\_\+t len, \mbox{\hyperlink{io_8h_a3df6d51462672ec9a7b6d89fedd141c7}{ttak\+\_\+io\+\_\+buffer\+\_\+mode\+\_\+t}} mode, uint64\+\_\+t now)
+\item 
+void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{io_8h_a0df4b1af2ebb99d24a6d3f2d63070e11}{ttak\+\_\+io\+\_\+buffer\+\_\+data}} (\mbox{\hyperlink{io_8h_a13577555a348473d37e420b72805a261}{ttak\+\_\+io\+\_\+buffer\+\_\+t}} \texorpdfstring{$\ast$}{*}buffer)
+\item 
+\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} \mbox{\hyperlink{io_8h_a242e3d01cd4a0c1d01c32614c636c318}{ttak\+\_\+io\+\_\+buffer\+\_\+sync\+\_\+in}} (\mbox{\hyperlink{io_8h_a13577555a348473d37e420b72805a261}{ttak\+\_\+io\+\_\+buffer\+\_\+t}} \texorpdfstring{$\ast$}{*}buffer, uint64\+\_\+t now)
+\item 
+\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} \mbox{\hyperlink{io_8h_abfe0c375ab83f1874649aa6410449e2c}{ttak\+\_\+io\+\_\+buffer\+\_\+sync\+\_\+out}} (\mbox{\hyperlink{io_8h_a13577555a348473d37e420b72805a261}{ttak\+\_\+io\+\_\+buffer\+\_\+t}} \texorpdfstring{$\ast$}{*}buffer, size\+\_\+t bytes, uint64\+\_\+t now)
+\item 
+void \mbox{\hyperlink{io_8h_afa990535c35c232630de3a05c52b73a1}{ttak\+\_\+io\+\_\+buffer\+\_\+release}} (\mbox{\hyperlink{io_8h_a13577555a348473d37e420b72805a261}{ttak\+\_\+io\+\_\+buffer\+\_\+t}} \texorpdfstring{$\ast$}{*}buffer)
+\item 
+\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} \mbox{\hyperlink{io_8h_aaa071ccdcf6e81a5257e0c30e7d59d9d}{ttak\+\_\+io\+\_\+poll\+\_\+wait}} (const \mbox{\hyperlink{io_8h_aca20f4767510d423ee88de501eb72575}{ttak\+\_\+io\+\_\+guard\+\_\+t}} \texorpdfstring{$\ast$}{*}guard, short events, int timeout\+\_\+ms, \mbox{\hyperlink{io_8h_a83220f33ce23c74a5328306b8996ce1b}{ttak\+\_\+io\+\_\+poll\+\_\+cb}} callback, void \texorpdfstring{$\ast$}{*}user, short \texorpdfstring{$\ast$}{*}out\+\_\+revents, bool schedule\+\_\+async, uint64\+\_\+t now)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{io_8h_a3df6d51462672ec9a7b6d89fedd141c7}\label{io_8h_a3df6d51462672ec9a7b6d89fedd141c7} 
+\index{io.h@{io.h}!ttak\_io\_buffer\_mode\_t@{ttak\_io\_buffer\_mode\_t}}
+\index{ttak\_io\_buffer\_mode\_t@{ttak\_io\_buffer\_mode\_t}!io.h@{io.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_io\_buffer\_mode\_t}{ttak\_io\_buffer\_mode\_t}}
+{\footnotesize\ttfamily typedef enum \mbox{\hyperlink{io_8h_a4b16199a2071984f634a8da16869da1a}{ttak\+\_\+io\+\_\+buffer\+\_\+mode}} \mbox{\hyperlink{io_8h_a3df6d51462672ec9a7b6d89fedd141c7}{ttak\+\_\+io\+\_\+buffer\+\_\+mode\+\_\+t}}}
+
+\Hypertarget{io_8h_a13577555a348473d37e420b72805a261}\label{io_8h_a13577555a348473d37e420b72805a261} 
+\index{io.h@{io.h}!ttak\_io\_buffer\_t@{ttak\_io\_buffer\_t}}
+\index{ttak\_io\_buffer\_t@{ttak\_io\_buffer\_t}!io.h@{io.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_io\_buffer\_t}{ttak\_io\_buffer\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__io__buffer}{ttak\+\_\+io\+\_\+buffer}} \mbox{\hyperlink{io_8h_a13577555a348473d37e420b72805a261}{ttak\+\_\+io\+\_\+buffer\+\_\+t}}}
+
+\Hypertarget{io_8h_aca20f4767510d423ee88de501eb72575}\label{io_8h_aca20f4767510d423ee88de501eb72575} 
+\index{io.h@{io.h}!ttak\_io\_guard\_t@{ttak\_io\_guard\_t}}
+\index{ttak\_io\_guard\_t@{ttak\_io\_guard\_t}!io.h@{io.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_io\_guard\_t}{ttak\_io\_guard\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__io__guard}{ttak\+\_\+io\+\_\+guard}} \mbox{\hyperlink{io_8h_aca20f4767510d423ee88de501eb72575}{ttak\+\_\+io\+\_\+guard\+\_\+t}}}
+
+\Hypertarget{io_8h_a83220f33ce23c74a5328306b8996ce1b}\label{io_8h_a83220f33ce23c74a5328306b8996ce1b} 
+\index{io.h@{io.h}!ttak\_io\_poll\_cb@{ttak\_io\_poll\_cb}}
+\index{ttak\_io\_poll\_cb@{ttak\_io\_poll\_cb}!io.h@{io.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_io\_poll\_cb}{ttak\_io\_poll\_cb}}
+{\footnotesize\ttfamily typedef void(\texorpdfstring{$\ast$}{*} ttak\+\_\+io\+\_\+poll\+\_\+cb) (int fd, short revents, void \texorpdfstring{$\ast$}{*}user)}
+
+
+
+Definition at line \mbox{\hyperlink{io_8h_source_l00048}{48}} of file \mbox{\hyperlink{io_8h_source}{io.\+h}}.
+
+\Hypertarget{io_8h_aae21536ea73a59f5c3f8864a321297a4}\label{io_8h_aae21536ea73a59f5c3f8864a321297a4} 
+\index{io.h@{io.h}!ttak\_io\_status\_t@{ttak\_io\_status\_t}}
+\index{ttak\_io\_status\_t@{ttak\_io\_status\_t}!io.h@{io.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_io\_status\_t}{ttak\_io\_status\_t}}
+{\footnotesize\ttfamily typedef enum \mbox{\hyperlink{io_8h_a4c5731f8c7bf69338c8fba54e58f3109}{ttak\+\_\+io\+\_\+status}} \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}}}
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{io_8h_a4b16199a2071984f634a8da16869da1a}\label{io_8h_a4b16199a2071984f634a8da16869da1a} 
+\index{io.h@{io.h}!ttak\_io\_buffer\_mode@{ttak\_io\_buffer\_mode}}
+\index{ttak\_io\_buffer\_mode@{ttak\_io\_buffer\_mode}!io.h@{io.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_io\_buffer\_mode}{ttak\_io\_buffer\_mode}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{io_8h_a4b16199a2071984f634a8da16869da1a}{ttak\+\_\+io\+\_\+buffer\+\_\+mode}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_IO\_BUFFER\_READ@{TTAK\_IO\_BUFFER\_READ}!io.h@{io.h}}\index{io.h@{io.h}!TTAK\_IO\_BUFFER\_READ@{TTAK\_IO\_BUFFER\_READ}}}\Hypertarget{io_8h_a4b16199a2071984f634a8da16869da1aadb545676a09a26986c7e34e40727b77c}\label{io_8h_a4b16199a2071984f634a8da16869da1aadb545676a09a26986c7e34e40727b77c} 
+TTAK\+\_\+\+IO\+\_\+\+BUFFER\+\_\+\+READ&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_IO\_BUFFER\_WRITE@{TTAK\_IO\_BUFFER\_WRITE}!io.h@{io.h}}\index{io.h@{io.h}!TTAK\_IO\_BUFFER\_WRITE@{TTAK\_IO\_BUFFER\_WRITE}}}\Hypertarget{io_8h_a4b16199a2071984f634a8da16869da1aafedfb190441a126a1c8ab2087ba77960}\label{io_8h_a4b16199a2071984f634a8da16869da1aafedfb190441a126a1c8ab2087ba77960} 
+TTAK\+\_\+\+IO\+\_\+\+BUFFER\+\_\+\+WRITE&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{io_8h_source_l00025}{25}} of file \mbox{\hyperlink{io_8h_source}{io.\+h}}.
+
+\Hypertarget{io_8h_a4c5731f8c7bf69338c8fba54e58f3109}\label{io_8h_a4c5731f8c7bf69338c8fba54e58f3109} 
+\index{io.h@{io.h}!ttak\_io\_status@{ttak\_io\_status}}
+\index{ttak\_io\_status@{ttak\_io\_status}!io.h@{io.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_io\_status}{ttak\_io\_status}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{io_8h_a4c5731f8c7bf69338c8fba54e58f3109}{ttak\+\_\+io\+\_\+status}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_IO\_SUCCESS@{TTAK\_IO\_SUCCESS}!io.h@{io.h}}\index{io.h@{io.h}!TTAK\_IO\_SUCCESS@{TTAK\_IO\_SUCCESS}}}\Hypertarget{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a67cc2be6d1693662e59ca19f14c6ff31}\label{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a67cc2be6d1693662e59ca19f14c6ff31} 
+TTAK\+\_\+\+IO\+\_\+\+SUCCESS&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_IO\_ERR\_INVALID\_ARGUMENT@{TTAK\_IO\_ERR\_INVALID\_ARGUMENT}!io.h@{io.h}}\index{io.h@{io.h}!TTAK\_IO\_ERR\_INVALID\_ARGUMENT@{TTAK\_IO\_ERR\_INVALID\_ARGUMENT}}}\Hypertarget{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a54de52442b04580a6239efda00de1e3b}\label{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a54de52442b04580a6239efda00de1e3b} 
+TTAK\+\_\+\+IO\+\_\+\+ERR\+\_\+\+INVALID\+\_\+\+ARGUMENT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_IO\_ERR\_EXPIRED\_GUARD@{TTAK\_IO\_ERR\_EXPIRED\_GUARD}!io.h@{io.h}}\index{io.h@{io.h}!TTAK\_IO\_ERR\_EXPIRED\_GUARD@{TTAK\_IO\_ERR\_EXPIRED\_GUARD}}}\Hypertarget{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a426a6f812b233e797056f485fd985740}\label{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a426a6f812b233e797056f485fd985740} 
+TTAK\+\_\+\+IO\+\_\+\+ERR\+\_\+\+EXPIRED\+\_\+\+GUARD&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_IO\_ERR\_SYS\_FAILURE@{TTAK\_IO\_ERR\_SYS\_FAILURE}!io.h@{io.h}}\index{io.h@{io.h}!TTAK\_IO\_ERR\_SYS\_FAILURE@{TTAK\_IO\_ERR\_SYS\_FAILURE}}}\Hypertarget{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a2c185f6d7153f021168e9ace782f7ebf}\label{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a2c185f6d7153f021168e9ace782f7ebf} 
+TTAK\+\_\+\+IO\+\_\+\+ERR\+\_\+\+SYS\+\_\+\+FAILURE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_IO\_ERR\_RANGE@{TTAK\_IO\_ERR\_RANGE}!io.h@{io.h}}\index{io.h@{io.h}!TTAK\_IO\_ERR\_RANGE@{TTAK\_IO\_ERR\_RANGE}}}\Hypertarget{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a4daa069a8f600416376c6ced88c18b23}\label{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a4daa069a8f600416376c6ced88c18b23} 
+TTAK\+\_\+\+IO\+\_\+\+ERR\+\_\+\+RANGE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_IO\_ERR\_NEEDS\_RETRY@{TTAK\_IO\_ERR\_NEEDS\_RETRY}!io.h@{io.h}}\index{io.h@{io.h}!TTAK\_IO\_ERR\_NEEDS\_RETRY@{TTAK\_IO\_ERR\_NEEDS\_RETRY}}}\Hypertarget{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a879188f5579cf0ad3c6c6312d32de652}\label{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a879188f5579cf0ad3c6c6312d32de652} 
+TTAK\+\_\+\+IO\+\_\+\+ERR\+\_\+\+NEEDS\+\_\+\+RETRY&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{io_8h_source_l00016}{16}} of file \mbox{\hyperlink{io_8h_source}{io.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{io_8h_a37257227b6a468f1d428d3cf15d0b6a5}\label{io_8h_a37257227b6a468f1d428d3cf15d0b6a5} 
+\index{io.h@{io.h}!ttak\_io\_buffer\_acquire@{ttak\_io\_buffer\_acquire}}
+\index{ttak\_io\_buffer\_acquire@{ttak\_io\_buffer\_acquire}!io.h@{io.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_io\_buffer\_acquire()}{ttak\_io\_buffer\_acquire()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} ttak\+\_\+io\+\_\+buffer\+\_\+acquire (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{io_8h_a13577555a348473d37e420b72805a261}{ttak\+\_\+io\+\_\+buffer\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{buffer,  }\item[{void \texorpdfstring{$\ast$}{*}}]{user\+\_\+ptr,  }\item[{size\+\_\+t}]{len,  }\item[{\mbox{\hyperlink{io_8h_a3df6d51462672ec9a7b6d89fedd141c7}{ttak\+\_\+io\+\_\+buffer\+\_\+mode\+\_\+t}}}]{mode,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+\Hypertarget{io_8h_a0df4b1af2ebb99d24a6d3f2d63070e11}\label{io_8h_a0df4b1af2ebb99d24a6d3f2d63070e11} 
+\index{io.h@{io.h}!ttak\_io\_buffer\_data@{ttak\_io\_buffer\_data}}
+\index{ttak\_io\_buffer\_data@{ttak\_io\_buffer\_data}!io.h@{io.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_io\_buffer\_data()}{ttak\_io\_buffer\_data()}}
+{\footnotesize\ttfamily void \texorpdfstring{$\ast$}{*} ttak\+\_\+io\+\_\+buffer\+\_\+data (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{io_8h_a13577555a348473d37e420b72805a261}{ttak\+\_\+io\+\_\+buffer\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{buffer }\end{DoxyParamCaption})}
+
+\Hypertarget{io_8h_afa990535c35c232630de3a05c52b73a1}\label{io_8h_afa990535c35c232630de3a05c52b73a1} 
+\index{io.h@{io.h}!ttak\_io\_buffer\_release@{ttak\_io\_buffer\_release}}
+\index{ttak\_io\_buffer\_release@{ttak\_io\_buffer\_release}!io.h@{io.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_io\_buffer\_release()}{ttak\_io\_buffer\_release()}}
+{\footnotesize\ttfamily void ttak\+\_\+io\+\_\+buffer\+\_\+release (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{io_8h_a13577555a348473d37e420b72805a261}{ttak\+\_\+io\+\_\+buffer\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{buffer }\end{DoxyParamCaption})}
+
+\Hypertarget{io_8h_a242e3d01cd4a0c1d01c32614c636c318}\label{io_8h_a242e3d01cd4a0c1d01c32614c636c318} 
+\index{io.h@{io.h}!ttak\_io\_buffer\_sync\_in@{ttak\_io\_buffer\_sync\_in}}
+\index{ttak\_io\_buffer\_sync\_in@{ttak\_io\_buffer\_sync\_in}!io.h@{io.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_io\_buffer\_sync\_in()}{ttak\_io\_buffer\_sync\_in()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} ttak\+\_\+io\+\_\+buffer\+\_\+sync\+\_\+in (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{io_8h_a13577555a348473d37e420b72805a261}{ttak\+\_\+io\+\_\+buffer\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{buffer,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+\Hypertarget{io_8h_abfe0c375ab83f1874649aa6410449e2c}\label{io_8h_abfe0c375ab83f1874649aa6410449e2c} 
+\index{io.h@{io.h}!ttak\_io\_buffer\_sync\_out@{ttak\_io\_buffer\_sync\_out}}
+\index{ttak\_io\_buffer\_sync\_out@{ttak\_io\_buffer\_sync\_out}!io.h@{io.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_io\_buffer\_sync\_out()}{ttak\_io\_buffer\_sync\_out()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} ttak\+\_\+io\+\_\+buffer\+\_\+sync\+\_\+out (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{io_8h_a13577555a348473d37e420b72805a261}{ttak\+\_\+io\+\_\+buffer\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{buffer,  }\item[{size\+\_\+t}]{bytes,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+\Hypertarget{io_8h_a86ac8dcd843708afc3ddf556d6760664}\label{io_8h_a86ac8dcd843708afc3ddf556d6760664} 
+\index{io.h@{io.h}!ttak\_io\_guard\_close@{ttak\_io\_guard\_close}}
+\index{ttak\_io\_guard\_close@{ttak\_io\_guard\_close}!io.h@{io.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_io\_guard\_close()}{ttak\_io\_guard\_close()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} ttak\+\_\+io\+\_\+guard\+\_\+close (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{io_8h_aca20f4767510d423ee88de501eb72575}{ttak\+\_\+io\+\_\+guard\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{guard,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+\Hypertarget{io_8h_a8bbfe43096ae070a6c176562f6502854}\label{io_8h_a8bbfe43096ae070a6c176562f6502854} 
+\index{io.h@{io.h}!ttak\_io\_guard\_init@{ttak\_io\_guard\_init}}
+\index{ttak\_io\_guard\_init@{ttak\_io\_guard\_init}!io.h@{io.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_io\_guard\_init()}{ttak\_io\_guard\_init()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} ttak\+\_\+io\+\_\+guard\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{io_8h_aca20f4767510d423ee88de501eb72575}{ttak\+\_\+io\+\_\+guard\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{guard,  }\item[{int}]{fd,  }\item[{\mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{owner,  }\item[{uint64\+\_\+t}]{ttl\+\_\+ns,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+\Hypertarget{io_8h_a60de91808c79ff338a29ae54972f0297}\label{io_8h_a60de91808c79ff338a29ae54972f0297} 
+\index{io.h@{io.h}!ttak\_io\_guard\_refresh@{ttak\_io\_guard\_refresh}}
+\index{ttak\_io\_guard\_refresh@{ttak\_io\_guard\_refresh}!io.h@{io.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_io\_guard\_refresh()}{ttak\_io\_guard\_refresh()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} ttak\+\_\+io\+\_\+guard\+\_\+refresh (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{io_8h_aca20f4767510d423ee88de501eb72575}{ttak\+\_\+io\+\_\+guard\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{guard,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+\Hypertarget{io_8h_a7cd44036a34402d6b84d35539a4c1ed2}\label{io_8h_a7cd44036a34402d6b84d35539a4c1ed2} 
+\index{io.h@{io.h}!ttak\_io\_guard\_valid@{ttak\_io\_guard\_valid}}
+\index{ttak\_io\_guard\_valid@{ttak\_io\_guard\_valid}!io.h@{io.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_io\_guard\_valid()}{ttak\_io\_guard\_valid()}}
+{\footnotesize\ttfamily bool ttak\+\_\+io\+\_\+guard\+\_\+valid (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{io_8h_aca20f4767510d423ee88de501eb72575}{ttak\+\_\+io\+\_\+guard\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{guard,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+\Hypertarget{io_8h_aaa071ccdcf6e81a5257e0c30e7d59d9d}\label{io_8h_aaa071ccdcf6e81a5257e0c30e7d59d9d} 
+\index{io.h@{io.h}!ttak\_io\_poll\_wait@{ttak\_io\_poll\_wait}}
+\index{ttak\_io\_poll\_wait@{ttak\_io\_poll\_wait}!io.h@{io.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_io\_poll\_wait()}{ttak\_io\_poll\_wait()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} ttak\+\_\+io\+\_\+poll\+\_\+wait (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{io_8h_aca20f4767510d423ee88de501eb72575}{ttak\+\_\+io\+\_\+guard\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{guard,  }\item[{short}]{events,  }\item[{int}]{timeout\+\_\+ms,  }\item[{\mbox{\hyperlink{io_8h_a83220f33ce23c74a5328306b8996ce1b}{ttak\+\_\+io\+\_\+poll\+\_\+cb}}}]{callback,  }\item[{void \texorpdfstring{$\ast$}{*}}]{user,  }\item[{short \texorpdfstring{$\ast$}{*}}]{out\+\_\+revents,  }\item[{bool}]{schedule\+\_\+async,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+

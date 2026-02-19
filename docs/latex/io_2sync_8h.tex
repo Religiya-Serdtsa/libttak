@@ -1,0 +1,35 @@
+\doxysection{include/ttak/io/sync.h File Reference}
+\hypertarget{io_2sync_8h}{}\label{io_2sync_8h}\index{include/ttak/io/sync.h@{include/ttak/io/sync.h}}
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$ttak/io/io.\+h$>$}\newline
+Include dependency graph for sync.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{io_2sync_8h__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} \mbox{\hyperlink{io_2sync_8h_a7be87072f912f521df43c3caa58ccd0b}{ttak\+\_\+io\+\_\+sync\+\_\+read}} (\mbox{\hyperlink{io_8h_aca20f4767510d423ee88de501eb72575}{ttak\+\_\+io\+\_\+guard\+\_\+t}} \texorpdfstring{$\ast$}{*}guard, void \texorpdfstring{$\ast$}{*}dst, size\+\_\+t len, size\+\_\+t \texorpdfstring{$\ast$}{*}bytes\+\_\+read, uint64\+\_\+t now)
+\item 
+\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} \mbox{\hyperlink{io_2sync_8h_a17bc167df80aeda13513c82a73e0e3c8}{ttak\+\_\+io\+\_\+sync\+\_\+write}} (\mbox{\hyperlink{io_8h_aca20f4767510d423ee88de501eb72575}{ttak\+\_\+io\+\_\+guard\+\_\+t}} \texorpdfstring{$\ast$}{*}guard, const void \texorpdfstring{$\ast$}{*}src, size\+\_\+t len, size\+\_\+t \texorpdfstring{$\ast$}{*}bytes\+\_\+written, uint64\+\_\+t now)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{io_2sync_8h_a7be87072f912f521df43c3caa58ccd0b}\label{io_2sync_8h_a7be87072f912f521df43c3caa58ccd0b} 
+\index{sync.h@{sync.h}!ttak\_io\_sync\_read@{ttak\_io\_sync\_read}}
+\index{ttak\_io\_sync\_read@{ttak\_io\_sync\_read}!sync.h@{sync.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_io\_sync\_read()}{ttak\_io\_sync\_read()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} ttak\+\_\+io\+\_\+sync\+\_\+read (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{io_8h_aca20f4767510d423ee88de501eb72575}{ttak\+\_\+io\+\_\+guard\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{guard,  }\item[{void \texorpdfstring{$\ast$}{*}}]{dst,  }\item[{size\+\_\+t}]{len,  }\item[{size\+\_\+t \texorpdfstring{$\ast$}{*}}]{bytes\+\_\+read,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+\Hypertarget{io_2sync_8h_a17bc167df80aeda13513c82a73e0e3c8}\label{io_2sync_8h_a17bc167df80aeda13513c82a73e0e3c8} 
+\index{sync.h@{sync.h}!ttak\_io\_sync\_write@{ttak\_io\_sync\_write}}
+\index{ttak\_io\_sync\_write@{ttak\_io\_sync\_write}!sync.h@{sync.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_io\_sync\_write()}{ttak\_io\_sync\_write()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} ttak\+\_\+io\+\_\+sync\+\_\+write (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{io_8h_aca20f4767510d423ee88de501eb72575}{ttak\+\_\+io\+\_\+guard\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{guard,  }\item[{const void \texorpdfstring{$\ast$}{*}}]{src,  }\item[{size\+\_\+t}]{len,  }\item[{size\+\_\+t \texorpdfstring{$\ast$}{*}}]{bytes\+\_\+written,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+

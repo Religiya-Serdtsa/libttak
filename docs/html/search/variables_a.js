@@ -1,9 +1,5 @@
 var searchData=
 [
-  ['k0_0',['k0',['../structttak__table.html#a7e6479ebfc2d791fcad1e1945692c713',1,'ttak_table']]],
-  ['k1_1',['k1',['../structttak__table.html#a2f8f8082386ff94cde0afccb5e2269f9',1,'ttak_table']]],
-  ['key_2',['key',['../struct__node.html#aad32bd6ffdfed0a3bf4bfdde4ede2218',1,'_node::key'],['../structttak__table__entry.html#aa0d0864665bd2c504d3c012898da6a3f',1,'ttak_table_entry::key']]],
-  ['key_5fcmp_3',['key_cmp',['../structttak__table.html#a59575b01f30c571d6e2e8818d6cc785a',1,'ttak_table']]],
-  ['key_5ffree_4',['key_free',['../structttak__table.html#a656889e2ba4a75d1a15a49808f2349cc',1,'ttak_table::key_free'],['../structttak__bplus__tree.html#a8b968fd906b9f344447f07c7af2de278',1,'ttak_bplus_tree::key_free'],['../structttak__btree.html#a41b2de06225c50610c3449773c3b0eba',1,'ttak_btree::key_free']]],
-  ['keys_5',['keys',['../structttak__bplus__node.html#a0c29781ba999c96855b9a39ef7dc62b7',1,'ttak_bplus_node::keys'],['../structttak__btree__node.html#a462968cbd9ee198c4d6e52faff40b3a7',1,'ttak_btree_node::keys']]]
+  ['jmp_5fmagic_0',['jmp_magic',['../structttak__worker__wrapper.html#a094a40e38f0008ac4782e0ab965f9fdb',1,'ttak_worker_wrapper']]],
+  ['jmp_5ftid_1',['jmp_tid',['../structttak__worker__wrapper.html#ae5a2732d4d71bf7f600269fed871002e',1,'ttak_worker_wrapper']]]
 ];

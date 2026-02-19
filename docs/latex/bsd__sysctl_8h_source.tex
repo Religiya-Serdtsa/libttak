@@ -1,0 +1,67 @@
+\doxysection{bsd\+\_\+sysctl.\+h}
+\hypertarget{bsd__sysctl_8h_source}{}\label{bsd__sysctl_8h_source}\index{internal/compat/bsd\_sysctl.h@{internal/compat/bsd\_sysctl.h}}
+\mbox{\hyperlink{bsd__sysctl_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ TTAK\_COMPAT\_BSD\_SYSCTL\_H}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ TTAK\_COMPAT\_BSD\_SYSCTL\_H}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00004}00004\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00005}00005\ \textcolor{comment}{\ *\ BSD\ source\ compatibility\ shim\ for\ <sys/sysctl.h>.}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00006}00006\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00007}00007\ \textcolor{comment}{\ *\ The\ project-\/wide\ -\/D\_XOPEN\_SOURCE=700\ flag\ hides\ BSD-\/specific\ types}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00008}00008\ \textcolor{comment}{\ *\ that\ <sys/sysctl.h>\ depends\ on:}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00009}00009\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00010}00010\ \textcolor{comment}{\ *\ \ \ NetBSD\ \ –\ devmajor\_t,\ u\_int,\ sysctl()\ prototype\ are\ gated\ on}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00011}00011\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ \ \ \ \ \_NETBSD\_SOURCE,\ which\ \_XOPEN\_SOURCE\ suppresses.}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00012}00012\ \textcolor{comment}{\ *\ \ \ OpenBSD\ –\ u\_long\ and\ other\ BSD\ types\ are\ gated\ on\ \_\_BSD\_VISIBLE,}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00013}00013\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ \ \ \ \ which\ <sys/cdefs.h>\ forces\ to\ 0\ when\ \_XOPEN\_SOURCE\ is\ set.}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00014}00014\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00015}00015\ \textcolor{comment}{\ *\ Fix:\ temporarily\ remove\ \_XOPEN\_SOURCE\ while\ pulling\ in\ the\ sysctl}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00016}00016\ \textcolor{comment}{\ *\ interface,\ then\ restore\ it\ so\ the\ rest\ of\ the\ translation\ unit}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00017}00017\ \textcolor{comment}{\ *\ keeps\ its\ POSIX\ semantics.}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00018}00018\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00019}00019\ \textcolor{comment}{\ *\ If\ <sys/types.h>\ was\ already\ processed\ under\ \_XOPEN\_SOURCE,\ its}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00020}00020\ \textcolor{comment}{\ *\ include\ guard\ prevents\ re-\/processing,\ so\ the\ BSD\ types\ it\ gates}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00021}00021\ \textcolor{comment}{\ *\ remain\ hidden.\ \ We\ therefore\ provide\ explicit\ fallback\ typedefs}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00022}00022\ \textcolor{comment}{\ *\ for\ the\ specific\ types\ that\ <sys/sysctl.h>\ requires.}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00023}00023\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00025}00025\ \textcolor{preprocessor}{\#if\ defined(\_\_NetBSD\_\_)\ ||\ defined(\_\_OpenBSD\_\_)}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00027}00027\ \textcolor{preprocessor}{\#\ \ ifdef\ \_XOPEN\_SOURCE}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00028}00028\ \textcolor{preprocessor}{\#\ \ \ \ define\ \_TTAK\_SAVED\_XOPEN\ \_XOPEN\_SOURCE}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00029}00029\ \textcolor{preprocessor}{\#\ \ \ \ undef\ \ \_XOPEN\_SOURCE}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00030}00030\ \textcolor{preprocessor}{\#\ \ endif}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00032}00032\ \textcolor{preprocessor}{\#\ \ include\ <sys/param.h>}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00034}00034\ \textcolor{comment}{/*\ \ -\/-\/\ NetBSD:\ devmajor\_t\ and\ u\_int\ are\ gated\ on\ \_NETBSD\_SOURCE\ -\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00035}00035\ \textcolor{comment}{\ *\ \ If\ <sys/types.h>\ was\ already\ processed\ while\ \_XOPEN\_SOURCE\ was}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00036}00036\ \textcolor{comment}{\ *\ \ active,\ its\ include\ guard\ prevents\ re-\/processing\ even\ after\ we}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00037}00037\ \textcolor{comment}{\ *\ \ undef\ \_XOPEN\_SOURCE,\ so\ the\ BSD\ types\ remain\ hidden.}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00038}00038\ \textcolor{comment}{\ *\ \ Provide\ them\ explicitly\ so\ <sys/sysctl.h>\ compiles.\ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00039}00039\ \textcolor{preprocessor}{\#\ \ if\ defined(\_\_NetBSD\_\_)\ \&\&\ defined(\_TTAK\_SAVED\_XOPEN)}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00040}00040\ \textcolor{preprocessor}{\#\ \ \ \ include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00041}00041\ \ \ \ \ \ \textcolor{keyword}{typedef}\ int32\_t\ \ \ \ \ \ devmajor\_t;}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00042}00042\ \ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ u\_int;}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00043}00043\ \textcolor{preprocessor}{\#\ \ endif}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00045}00045\ \textcolor{comment}{/*\ \ -\/-\/\ OpenBSD:\ u\_long\ is\ gated\ on\ \_\_BSD\_VISIBLE\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00046}00046\ \textcolor{comment}{\ *\ \ <sys/cdefs.h>\ sets\ \_\_BSD\_VISIBLE\ to\ 0\ when\ \_XOPEN\_SOURCE\ >=\ 500.}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00047}00047\ \textcolor{comment}{\ *\ \ If\ it\ was\ already\ processed,\ u\_long\ is\ still\ hidden.\ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00048}00048\ \textcolor{preprocessor}{\#\ \ if\ defined(\_\_OpenBSD\_\_)\ \&\&\ defined(\_\_BSD\_VISIBLE)\ \&\&\ !\_\_BSD\_VISIBLE}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00049}00049\ \ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ u\_long;}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00050}00050\ \textcolor{preprocessor}{\#\ \ endif}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00052}00052\ \textcolor{preprocessor}{\#\ \ include\ <sys/sysctl.h>}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00054}00054\ \textcolor{preprocessor}{\#\ \ ifdef\ \_TTAK\_SAVED\_XOPEN}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00055}00055\ \textcolor{preprocessor}{\#\ \ \ \ define\ \_XOPEN\_SOURCE\ \_TTAK\_SAVED\_XOPEN}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00056}00056\ \textcolor{preprocessor}{\#\ \ \ \ undef\ \ \_TTAK\_SAVED\_XOPEN}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00057}00057\ \textcolor{preprocessor}{\#\ \ endif}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00059}00059\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ \_\_NetBSD\_\_\ ||\ \_\_OpenBSD\_\_\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{bsd__sysctl_8h_source_l00061}00061\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ TTAK\_COMPAT\_BSD\_SYSCTL\_H\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

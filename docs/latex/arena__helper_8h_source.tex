@@ -1,0 +1,113 @@
+\doxysection{arena\+\_\+helper.\+h}
+\hypertarget{arena__helper_8h_source}{}\label{arena__helper_8h_source}\index{include/ttak/mem/arena\_helper.h@{include/ttak/mem/arena\_helper.h}}
+\mbox{\hyperlink{arena__helper_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ TTAK\_MEM\_ARENA\_HELPER\_H}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ TTAK\_MEM\_ARENA\_HELPER\_H}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{mem_8h}{ttak/mem/mem.h}}>}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{epoch__gc_8h}{ttak/mem/epoch\_gc.h}}>}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00010}00010\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00011}00011\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00012}00012\ \textcolor{comment}{\ *\ @brief\ Configuration\ for\ arena\ helpers.}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00013}00013\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00014}\mbox{\hyperlink{structttak__arena__env__config}{00014}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__arena__env__config}{ttak\_arena\_env\_config}}\ \{}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00015}\mbox{\hyperlink{structttak__arena__env__config_ae6f51b622fa0539e034351e8044446b3}{00015}}\ \ \ \ \ \mbox{\hyperlink{structttak__epoch__gc}{ttak\_epoch\_gc\_t}}\ *\mbox{\hyperlink{structttak__arena__env__config_ae6f51b622fa0539e034351e8044446b3}{gc}};\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Optional\ external\ GC\ context.\ */}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00016}\mbox{\hyperlink{structttak__arena__env__config_a2ca7af4676546bd93d1ce7defc10147e}{00016}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structttak__arena__env__config_a2ca7af4676546bd93d1ce7defc10147e}{generation\_bytes}};\ \ \ \ \ \ \ \textcolor{comment}{/**<\ Capacity\ of\ each\ generation\ buffer.\ */}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00017}\mbox{\hyperlink{structttak__arena__env__config_ad449cec3dd8880161a44ae2206666292}{00017}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structttak__arena__env__config_ad449cec3dd8880161a44ae2206666292}{chunk\_bytes}};\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Default\ chunk\ size\ carved\ from\ a\ generation.\ */}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00018}\mbox{\hyperlink{structttak__arena__env__config_a09d5b498f40c94842de4ed6bfbf9db90}{00018}}\ \ \ \ \ \mbox{\hyperlink{mem_8h_a05020ce7df6068f7d7f515ee4ea9cdad}{ttak\_mem\_flags\_t}}\ \mbox{\hyperlink{structttak__arena__env__config_a09d5b498f40c94842de4ed6bfbf9db90}{alloc\_flags}};\ \ \textcolor{comment}{/**<\ Flags\ passed\ to\ ttak\_mem\_alloc\_with\_flags.\ */}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00019}\mbox{\hyperlink{structttak__arena__env__config_a06ddb8e8008c3ac9dda742f80f225799}{00019}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__arena__env__config_a06ddb8e8008c3ac9dda742f80f225799}{lifetime\_ticks}};\ \ \ \ \ \ \ \textcolor{comment}{/**<\ Lifetime\ hint\ for\ allocations.\ */}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00020}\mbox{\hyperlink{arena__helper_8h_aa58191614cc9e89012716c07a58ff076}{00020}}\ \}\ \mbox{\hyperlink{arena__helper_8h_aa58191614cc9e89012716c07a58ff076}{ttak\_arena\_env\_config\_t}};}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00021}00021\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00022}00022\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00023}00023\ \textcolor{comment}{\ *\ @brief\ Helper\ state\ coordinating\ arena\ generations\ and\ epoch\ rotation.}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00024}00024\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00025}\mbox{\hyperlink{structttak__arena__env}{00025}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__arena__env}{ttak\_arena\_env}}\ \{}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00026}\mbox{\hyperlink{structttak__arena__env_afb88183346c5d42414ec34b8b6164fce}{00026}}\ \ \ \ \ \mbox{\hyperlink{structttak__arena__env__config}{ttak\_arena\_env\_config\_t}}\ \mbox{\hyperlink{structttak__arena__env_afb88183346c5d42414ec34b8b6164fce}{config}};}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00027}\mbox{\hyperlink{structttak__arena__env_a1ab4b3d6e34cc697fd533255241ba768}{00027}}\ \ \ \ \ \mbox{\hyperlink{structttak__epoch__gc}{ttak\_epoch\_gc\_t}}\ *\mbox{\hyperlink{structttak__arena__env_a1ab4b3d6e34cc697fd533255241ba768}{gc}};}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00028}\mbox{\hyperlink{structttak__arena__env_aa6ff74f142be3dab90cb2d145d1ae41e}{00028}}\ \ \ \ \ \mbox{\hyperlink{structttak__epoch__gc}{ttak\_epoch\_gc\_t}}\ \mbox{\hyperlink{structttak__arena__env_aa6ff74f142be3dab90cb2d145d1ae41e}{local\_gc}};}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00029}\mbox{\hyperlink{structttak__arena__env_a59d55b9b151db4ea8f46e7cd32d4fb5f}{00029}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structttak__arena__env_a59d55b9b151db4ea8f46e7cd32d4fb5f}{owns\_gc}};}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00030}\mbox{\hyperlink{arena__helper_8h_ab96290538ecb1f2ca8dfec621c7cff25}{00030}}\ \}\ \mbox{\hyperlink{arena__helper_8h_ab96290538ecb1f2ca8dfec621c7cff25}{ttak\_arena\_env\_t}};}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00031}00031\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00032}00032\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00033}00033\ \textcolor{comment}{\ *\ @brief\ Fixed-\/width\ arena\ generation\ descriptor.}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00034}00034\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00035}\mbox{\hyperlink{structttak__arena__generation}{00035}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__arena__generation}{ttak\_arena\_generation}}\ \{}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00036}\mbox{\hyperlink{structttak__arena__generation_a9e8b2998e365de5bb35e53aae8703662}{00036}}\ \ \ \ \ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{structttak__arena__generation_a9e8b2998e365de5bb35e53aae8703662}{base}};}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00037}\mbox{\hyperlink{structttak__arena__generation_a16044b771d24265b1855e9c7c4df2dbd}{00037}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structttak__arena__generation_a16044b771d24265b1855e9c7c4df2dbd}{capacity}};}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00038}\mbox{\hyperlink{structttak__arena__generation_af1451e5ad21e552d077ebb960bd5c393}{00038}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structttak__arena__generation_af1451e5ad21e552d077ebb960bd5c393}{used}};}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00039}\mbox{\hyperlink{structttak__arena__generation_a1d837933301f3e45f76cfc6608feff21}{00039}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__arena__generation_a1d837933301f3e45f76cfc6608feff21}{epoch\_id}};}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00040}\mbox{\hyperlink{arena__helper_8h_ab23849d4450be18c9d5a665b2d80c63d}{00040}}\ \}\ \mbox{\hyperlink{arena__helper_8h_ab23849d4450be18c9d5a665b2d80c63d}{ttak\_arena\_generation\_t}};}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00041}00041\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00042}00042\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00043}00043\ \textcolor{comment}{\ *\ @brief\ Callback\ invoked\ for\ each\ carved\ chunk\ inside\ a\ generation.}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00044}00044\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00045}00045\ \textcolor{comment}{\ *\ Returning\ false\ stops\ iteration\ early.}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00046}00046\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00047}\mbox{\hyperlink{arena__helper_8h_a26501f82a81b1bdc445cd9069a257709}{00047}}\ \textcolor{keyword}{typedef}\ bool\ (*\mbox{\hyperlink{arena__helper_8h_a26501f82a81b1bdc445cd9069a257709}{ttak\_arena\_chunk\_handler\_t}})(\textcolor{keywordtype}{void}\ *chunk,\ \textcolor{keywordtype}{size\_t}\ chunk\_bytes,\ \textcolor{keywordtype}{size\_t}\ chunk\_index,\ \textcolor{keywordtype}{void}\ *ctx);}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00048}00048\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00049}00049\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00050}00050\ \textcolor{comment}{\ *\ @brief\ Initializes\ the\ config\ structure\ with\ conservative\ defaults.}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00051}00051\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00052}\mbox{\hyperlink{arena__helper_8h_abc81c986d1448ff27ba6a562aa5fba89}{00052}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{arena__helper_8h_abc81c986d1448ff27ba6a562aa5fba89}{ttak\_arena\_env\_config\_init}}(\mbox{\hyperlink{structttak__arena__env__config}{ttak\_arena\_env\_config\_t}}\ *config);}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00053}00053\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00054}00054\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00055}00055\ \textcolor{comment}{\ *\ @brief\ Initializes\ an\ arena\ helper\ context.}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00056}00056\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00057}00057\ \textcolor{comment}{\ *\ Uses\ the\ config's\ GC\ if\ provided,\ otherwise\ provisions\ a\ local\ GC.}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00058}00058\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00059}\mbox{\hyperlink{arena__helper_8h_a453b5bb7946f36004d2fe63178f6f0ad}{00059}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{arena__helper_8h_a453b5bb7946f36004d2fe63178f6f0ad}{ttak\_arena\_env\_init}}(\mbox{\hyperlink{structttak__arena__env}{ttak\_arena\_env\_t}}\ *env,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__arena__env__config}{ttak\_arena\_env\_config\_t}}\ *config);}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00060}00060\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00061}00061\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00062}00062\ \textcolor{comment}{\ *\ @brief\ Destroys\ an\ arena\ helper\ context\ and\ owned\ GC\ state.}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00063}00063\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00064}\mbox{\hyperlink{arena__helper_8h_ad40c0b13b10951fc33827f7ca33c87a0}{00064}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{arena__helper_8h_ad40c0b13b10951fc33827f7ca33c87a0}{ttak\_arena\_env\_destroy}}(\mbox{\hyperlink{structttak__arena__env}{ttak\_arena\_env\_t}}\ *env);}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00065}00065\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00066}00066\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00067}00067\ \textcolor{comment}{\ *\ @brief\ Allocates\ and\ registers\ a\ new\ generation\ buffer.}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00068}00068\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00069}\mbox{\hyperlink{arena__helper_8h_a095df399f96b12cc4c06139b81ac90a4}{00069}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{arena__helper_8h_a095df399f96b12cc4c06139b81ac90a4}{ttak\_arena\_generation\_begin}}(\mbox{\hyperlink{structttak__arena__env}{ttak\_arena\_env\_t}}\ *env,\ \mbox{\hyperlink{structttak__arena__generation}{ttak\_arena\_generation\_t}}\ *generation,\ uint32\_t\ epoch\_id);}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00070}00070\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00071}00071\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00072}00072\ \textcolor{comment}{\ *\ @brief\ Claims\ a\ chunk\ from\ a\ generation,\ using\ the\ config\ chunk\_bytes\ when\ bytes\ is\ zero.}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00073}00073\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00074}\mbox{\hyperlink{arena__helper_8h_a8413879148e33cd64300c653d4e92fc4}{00074}}\ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{arena__helper_8h_a8413879148e33cd64300c653d4e92fc4}{ttak\_arena\_generation\_claim}}(\mbox{\hyperlink{structttak__arena__env}{ttak\_arena\_env\_t}}\ *env,\ \mbox{\hyperlink{structttak__arena__generation}{ttak\_arena\_generation\_t}}\ *generation,\ \textcolor{keywordtype}{size\_t}\ bytes);}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00075}00075\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00076}00076\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00077}00077\ \textcolor{comment}{\ *\ @brief\ Returns\ the\ remaining\ capacity\ inside\ the\ generation.}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00078}00078\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00079}\mbox{\hyperlink{arena__helper_8h_ada6b26961ac63a95133472b4ab6ed81a}{00079}}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{arena__helper_8h_ada6b26961ac63a95133472b4ab6ed81a}{ttak\_arena\_generation\_remaining}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__arena__generation}{ttak\_arena\_generation\_t}}\ *generation);}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00080}00080\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00081}00081\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00082}00082\ \textcolor{comment}{\ *\ @brief\ Retires\ the\ generation,\ dropping\ the\ mem-\/tree\ reference\ and\ resetting\ the\ descriptor.}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00083}00083\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00084}\mbox{\hyperlink{arena__helper_8h_a09d343e3cfe82d3307c88ec1b426eaf7}{00084}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{arena__helper_8h_a09d343e3cfe82d3307c88ec1b426eaf7}{ttak\_arena\_generation\_retire}}(\mbox{\hyperlink{structttak__arena__env}{ttak\_arena\_env\_t}}\ *env,\ \mbox{\hyperlink{structttak__arena__generation}{ttak\_arena\_generation\_t}}\ *generation);}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00085}00085\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00086}00086\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00087}00087\ \textcolor{comment}{\ *\ @brief\ Convenience\ helper\ that\ rotates\ the\ underlying\ epoch\ GC.}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00088}00088\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00089}\mbox{\hyperlink{arena__helper_8h_ab0fed7974aeaa4ddc7021c9c2f1d041c}{00089}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{arena__helper_8h_ab0fed7974aeaa4ddc7021c9c2f1d041c}{ttak\_arena\_env\_rotate}}(\mbox{\hyperlink{structttak__arena__env}{ttak\_arena\_env\_t}}\ *env);}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00090}00090\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00091}00091\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00092}00092\ \textcolor{comment}{\ *\ @brief\ Walks\ every\ chunk\ inside\ the\ generation\ and\ invokes\ the\ handler.}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00093}00093\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00094}00094\ \textcolor{comment}{\ *\ @param\ env\ Arena\ helper\ context.}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00095}00095\ \textcolor{comment}{\ *\ @param\ generation\ Active\ generation\ descriptor.}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00096}00096\ \textcolor{comment}{\ *\ @param\ chunk\_bytes\ Size\ of\ each\ chunk;\ falls\ back\ to\ config.chunk\_bytes\ when\ zero.}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00097}00097\ \textcolor{comment}{\ *\ @param\ handler\ Callback\ invoked\ for\ each\ carved\ chunk.}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00098}00098\ \textcolor{comment}{\ *\ @param\ ctx\ User\ context\ forwarded\ to\ the\ handler.}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00099}00099\ \textcolor{comment}{\ *\ @return\ Number\ of\ chunks\ processed.}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00100}00100\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00101}\mbox{\hyperlink{arena__helper_8h_ae43a5438402e6350c1d320c49009e3b9}{00101}}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{arena__helper_8h_ae43a5438402e6350c1d320c49009e3b9}{ttak\_arena\_generation\_for\_each}}(\mbox{\hyperlink{structttak__arena__env}{ttak\_arena\_env\_t}}\ *env,}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structttak__arena__generation}{ttak\_arena\_generation\_t}}\ *generation,}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ chunk\_bytes,}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{arena__helper_8h_a26501f82a81b1bdc445cd9069a257709}{ttak\_arena\_chunk\_handler\_t}}\ handler,}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ *ctx);}
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00106}00106\ }
+\DoxyCodeLine{\Hypertarget{arena__helper_8h_source_l00107}00107\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ TTAK\_MEM\_ARENA\_HELPER\_H\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

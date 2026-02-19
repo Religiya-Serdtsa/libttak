@@ -1,0 +1,474 @@
+\doxysection{include/ttak/mem/detachable.h File Reference}
+\hypertarget{detachable_8h}{}\label{detachable_8h}\index{include/ttak/mem/detachable.h@{include/ttak/mem/detachable.h}}
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$signal.\+h$>$}\newline
+{\ttfamily \#include $<$pthread.\+h$>$}\newline
+{\ttfamily \#include $<$stdatomic.\+h$>$}\newline
+{\ttfamily \#include $<$ttak/mem/epoch.\+h$>$}\newline
+Include dependency graph for detachable.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{detachable_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{detachable_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structttak__detach__status}{ttak\+\_\+detach\+\_\+status}}
+\begin{DoxyCompactList}\small\item\em Tracks the detach lifecycle of a detachable block. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structttak__detachable__cache}{ttak\+\_\+detachable\+\_\+cache}}
+\begin{DoxyCompactList}\small\item\em Per-\/context cache for tiny detachable chunks (\texorpdfstring{$<$}{<}= 16 bytes). \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structttak__detachable__generation__row}{ttak\+\_\+detachable\+\_\+generation\+\_\+row}}
+\begin{DoxyCompactList}\small\item\em Fixed-\/width arena row descriptor. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structttak__detachable__context}{ttak\+\_\+detachable\+\_\+context}}
+\begin{DoxyCompactList}\small\item\em State holder for detachable memory contexts. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structttak__detachable__allocation}{ttak\+\_\+detachable\+\_\+allocation}}
+\begin{DoxyCompactList}\small\item\em Description of the detachable allocation returned to callers. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{detachable_8h_af9888feb3e0a319858cfbc2ada4ca9f0}{TTAK\+\_\+\+DETACHABLE\+\_\+\+CACHE\+\_\+\+MAX\+\_\+\+BYTES}}~16U
+\begin{DoxyCompactList}\small\item\em Maximum size in bytes for cacheable detachable chunks. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{detachable_8h_a198599d50d443995834ee9169ac2fdb6}{TTAK\+\_\+\+DETACHABLE\+\_\+\+CACHE\+\_\+\+SLOTS}}~8U
+\begin{DoxyCompactList}\small\item\em Default number of cache slots kept per detachable arena. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{detachable_8h_a5d3b70f805eaace99a16d7e08518b77f}{TTAK\+\_\+\+DETACHABLE\+\_\+\+GENERATIONS}}~4U
+\begin{DoxyCompactList}\small\item\em Maximum number of tracked generations per arena row. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{detachable_8h_a9d147c30c600e763cd4b9f52d8b3df82}{TTAK\+\_\+\+DETACHABLE\+\_\+\+MATRIX\+\_\+\+ROWS}}~8U
+\begin{DoxyCompactList}\small\item\em Maximum number of 2D rows in the detachable arena tracker. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef enum \mbox{\hyperlink{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12}{ttak\+\_\+detachable\+\_\+context\+\_\+flags}} \mbox{\hyperlink{detachable_8h_af305388e9b1aace5f96138912a0e1cbf}{ttak\+\_\+detachable\+\_\+context\+\_\+flags\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Bit flags describing arena level traits. \end{DoxyCompactList}\item 
+typedef enum \mbox{\hyperlink{detachable_8h_a1be650514f253f5129ff7e791c2e9a47}{ttak\+\_\+detach\+\_\+state\+\_\+flags}} \mbox{\hyperlink{detachable_8h_afbe41ddd19dc2e52cc3399a79cdda0e8}{ttak\+\_\+detach\+\_\+state\+\_\+flags\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Bit flags stored inside the detachable status byte. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structttak__detach__status}{ttak\+\_\+detach\+\_\+status}} \mbox{\hyperlink{detachable_8h_ac1e56a46d336e364577b670520d14be8}{ttak\+\_\+detach\+\_\+status\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Tracks the detach lifecycle of a detachable block. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structttak__detachable__cache}{ttak\+\_\+detachable\+\_\+cache}} \mbox{\hyperlink{detachable_8h_a52b42f81544c7607c85d586b924c9c17}{ttak\+\_\+detachable\+\_\+cache\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Per-\/context cache for tiny detachable chunks (\texorpdfstring{$<$}{<}= 16 bytes). \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structttak__detachable__generation__row}{ttak\+\_\+detachable\+\_\+generation\+\_\+row}} \mbox{\hyperlink{detachable_8h_ac0b7486d4e195a62b81d84b90ef1fb9e}{ttak\+\_\+detachable\+\_\+generation\+\_\+row\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Fixed-\/width arena row descriptor. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structttak__detachable__context}{ttak\+\_\+detachable\+\_\+context}} \mbox{\hyperlink{detachable_8h_ac2e1577a34551ffaedf5a16d11bdff0b}{ttak\+\_\+detachable\+\_\+context\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em State holder for detachable memory contexts. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structttak__detachable__allocation}{ttak\+\_\+detachable\+\_\+allocation}} \mbox{\hyperlink{detachable_8h_a849243c766d591f9c26aab69b9933f1b}{ttak\+\_\+detachable\+\_\+allocation\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Description of the detachable allocation returned to callers. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12}{ttak\+\_\+detachable\+\_\+context\+\_\+flags}} \{ \newline
+\mbox{\hyperlink{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12aa73d4ccfff5807ef21f37d6426131c81}{TTAK\+\_\+\+ARENA\+\_\+\+HAS\+\_\+\+OWNER}} = (1u \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 0)
+, \mbox{\hyperlink{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12a6c3e61feed2fee7dbd14082c960b0533}{TTAK\+\_\+\+ARENA\+\_\+\+HAS\+\_\+\+EPOCH\+\_\+\+RECLAMATION}} = (1u \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1)
+, \mbox{\hyperlink{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12af9989087e40b7fcd1c23f45445599fae}{TTAK\+\_\+\+ARENA\+\_\+\+HAS\+\_\+\+DEFAULT\+\_\+\+EPOCH\+\_\+\+GC}} = (1u \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 2)
+, \mbox{\hyperlink{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12a1442cba89396d4b38fead12e3ea083cd}{TTAK\+\_\+\+ARENA\+\_\+\+IS\+\_\+\+URGENT\+\_\+\+TASK}} = (1u \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 3)
+, \newline
+\mbox{\hyperlink{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12aaa4015a7270ae35f435dfb3c7f90078a}{TTAK\+\_\+\+ARENA\+\_\+\+USE\+\_\+\+LOCKED\+\_\+\+ACCESS}} = (1u \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 4)
+, \mbox{\hyperlink{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12a68cebec47a397906f5d3f8f6042f902e}{TTAK\+\_\+\+ARENA\+\_\+\+IS\+\_\+\+SINGLE\+\_\+\+THREAD}} = (1u \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 5)
+, \mbox{\hyperlink{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12afd265a0ac613adedadd723d46841ed16}{TTAK\+\_\+\+ARENA\+\_\+\+USE\+\_\+\+ASYNC\+\_\+\+OPT}} = (1u \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 6)
+ \}
+\begin{DoxyCompactList}\small\item\em Bit flags describing arena level traits. \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{detachable_8h_a1be650514f253f5129ff7e791c2e9a47}{ttak\+\_\+detach\+\_\+state\+\_\+flags}} \{ \newline
+\mbox{\hyperlink{detachable_8h_a1be650514f253f5129ff7e791c2e9a47aaba48c9c71dc70acbf1bfaf46a442458}{TTAK\+\_\+\+DETACHABLE\+\_\+\+UNKNOWN}} = 0x00
+, \mbox{\hyperlink{detachable_8h_a1be650514f253f5129ff7e791c2e9a47a181d2c0832150c00d5f61c9c80c94bab}{TTAK\+\_\+\+DETACHABLE\+\_\+\+ATTACH}} = 0x01
+, \mbox{\hyperlink{detachable_8h_a1be650514f253f5129ff7e791c2e9a47a629f8c3fcbb9ffa6cb52a3fe7ba5164f}{TTAK\+\_\+\+DETACHABLE\+\_\+\+DETACH\+\_\+\+NOCHECK}} = 0x02
+, \mbox{\hyperlink{detachable_8h_a1be650514f253f5129ff7e791c2e9a47a4b5f0574b64337442ebfe3dc6ffa41b2}{TTAK\+\_\+\+DETACHABLE\+\_\+\+PARTIAL\+\_\+\+CACHE}} = 0x04
+, \newline
+\mbox{\hyperlink{detachable_8h_a1be650514f253f5129ff7e791c2e9a47ac9ac8dd59403334fcdfa9cd5df09a9e1}{TTAK\+\_\+\+DETACHABLE\+\_\+\+STATUS\+\_\+\+KNOWN}} = 0x80
+ \}
+\begin{DoxyCompactList}\small\item\em Bit flags stored inside the detachable status byte. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{detachable_8h_aef365c93b7f2fccd1c2b93875ed1732e}{ttak\+\_\+detach\+\_\+status\+\_\+reset}} (\mbox{\hyperlink{detachable_8h_ac1e56a46d336e364577b670520d14be8}{ttak\+\_\+detach\+\_\+status\+\_\+t}} \texorpdfstring{$\ast$}{*}status)
+\item 
+static void \mbox{\hyperlink{detachable_8h_ad83ea9dcd517e52eac5c67912c2c17d7}{ttak\+\_\+detach\+\_\+status\+\_\+mark\+\_\+known}} (\mbox{\hyperlink{detachable_8h_ac1e56a46d336e364577b670520d14be8}{ttak\+\_\+detach\+\_\+status\+\_\+t}} \texorpdfstring{$\ast$}{*}status)
+\item 
+static void \mbox{\hyperlink{detachable_8h_a889c139fb7d20873ca7fbe1cfdeda7ce}{ttak\+\_\+detach\+\_\+status\+\_\+converge}} (\mbox{\hyperlink{detachable_8h_ac1e56a46d336e364577b670520d14be8}{ttak\+\_\+detach\+\_\+status\+\_\+t}} \texorpdfstring{$\ast$}{*}status)
+\item 
+void \mbox{\hyperlink{detachable_8h_a63f13e49808b766ad47572c4ced69d3f}{ttak\+\_\+detachable\+\_\+context\+\_\+init}} (\mbox{\hyperlink{detachable_8h_ac2e1577a34551ffaedf5a16d11bdff0b}{ttak\+\_\+detachable\+\_\+context\+\_\+t}} \texorpdfstring{$\ast$}{*}ctx, uint32\+\_\+t flags)
+\begin{DoxyCompactList}\small\item\em Initializes a detachable context with sane defaults. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{detachable_8h_abb1325e4df9bb26b2ec336f7659f1647}{ttak\+\_\+detachable\+\_\+context\+\_\+destroy}} (\mbox{\hyperlink{detachable_8h_ac2e1577a34551ffaedf5a16d11bdff0b}{ttak\+\_\+detachable\+\_\+context\+\_\+t}} \texorpdfstring{$\ast$}{*}ctx)
+\begin{DoxyCompactList}\small\item\em Destroys a detachable context and releases cached entries. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{detachable_8h_ac2e1577a34551ffaedf5a16d11bdff0b}{ttak\+\_\+detachable\+\_\+context\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{detachable_8h_a717f497fd4d9c1be7bd16e67c7ec349f}{ttak\+\_\+detachable\+\_\+context\+\_\+default}} (void)
+\begin{DoxyCompactList}\small\item\em Returns a lazily created global default context suitable for most users. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{detachable_8h_a14d41433944d90fba8f5534cb7d33df9}{ttak\+\_\+detachable\+\_\+cache\+\_\+init}} (\mbox{\hyperlink{detachable_8h_a52b42f81544c7607c85d586b924c9c17}{ttak\+\_\+detachable\+\_\+cache\+\_\+t}} \texorpdfstring{$\ast$}{*}cache, size\+\_\+t chunk\+\_\+size, size\+\_\+t capacity)
+\begin{DoxyCompactList}\small\item\em Initializes the per-\/context cache. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{detachable_8h_a67a7a626b3669ea6aaf278066d586e6c}{ttak\+\_\+detachable\+\_\+cache\+\_\+destroy}} (\mbox{\hyperlink{detachable_8h_ac2e1577a34551ffaedf5a16d11bdff0b}{ttak\+\_\+detachable\+\_\+context\+\_\+t}} \texorpdfstring{$\ast$}{*}ctx, \mbox{\hyperlink{detachable_8h_a52b42f81544c7607c85d586b924c9c17}{ttak\+\_\+detachable\+\_\+cache\+\_\+t}} \texorpdfstring{$\ast$}{*}cache)
+\begin{DoxyCompactList}\small\item\em Releases any pending cache entries and tears down synchronization primitives. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{detachable_8h_a849243c766d591f9c26aab69b9933f1b}{ttak\+\_\+detachable\+\_\+allocation\+\_\+t}} \mbox{\hyperlink{detachable_8h_af35aea4b40c5e4dcaff9c3c97091a5f5}{ttak\+\_\+detachable\+\_\+mem\+\_\+alloc}} (\mbox{\hyperlink{detachable_8h_ac2e1577a34551ffaedf5a16d11bdff0b}{ttak\+\_\+detachable\+\_\+context\+\_\+t}} \texorpdfstring{$\ast$}{*}ctx, size\+\_\+t size, uint64\+\_\+t epoch\+\_\+hint)
+\begin{DoxyCompactList}\small\item\em Allocates detachable memory backed by calloc and epoch protection. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{detachable_8h_ae0cb6732fd104bdf0a36c8f10ec7e7df}{ttak\+\_\+detachable\+\_\+mem\+\_\+free}} (\mbox{\hyperlink{detachable_8h_ac2e1577a34551ffaedf5a16d11bdff0b}{ttak\+\_\+detachable\+\_\+context\+\_\+t}} \texorpdfstring{$\ast$}{*}ctx, \mbox{\hyperlink{detachable_8h_a849243c766d591f9c26aab69b9933f1b}{ttak\+\_\+detachable\+\_\+allocation\+\_\+t}} \texorpdfstring{$\ast$}{*}alloc)
+\begin{DoxyCompactList}\small\item\em Releases a detachable allocation, optionally routing it through the cache. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{detachable_8h_a1ecfc3ddf70928f8f6d61b0e7c97bc11}{ttak\+\_\+hard\+\_\+kill\+\_\+graceful\+\_\+exit}} (sigset\+\_\+t signals, int \texorpdfstring{$\ast$}{*}ret)
+\begin{DoxyCompactList}\small\item\em Registers signal handlers that gracefully flush detachable arenas and exit. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{detachable_8h_ad88699e65105da2cbc3b4afa26c27d57}{ttak\+\_\+hard\+\_\+kill\+\_\+exit}} (sigset\+\_\+t signals, int \texorpdfstring{$\ast$}{*}ret)
+\begin{DoxyCompactList}\small\item\em Registers signal handlers that immediately exit without flushing arenas. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{detachable_8h_af9888feb3e0a319858cfbc2ada4ca9f0}\label{detachable_8h_af9888feb3e0a319858cfbc2ada4ca9f0} 
+\index{detachable.h@{detachable.h}!TTAK\_DETACHABLE\_CACHE\_MAX\_BYTES@{TTAK\_DETACHABLE\_CACHE\_MAX\_BYTES}}
+\index{TTAK\_DETACHABLE\_CACHE\_MAX\_BYTES@{TTAK\_DETACHABLE\_CACHE\_MAX\_BYTES}!detachable.h@{detachable.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_DETACHABLE\_CACHE\_MAX\_BYTES}{TTAK\_DETACHABLE\_CACHE\_MAX\_BYTES}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+DETACHABLE\+\_\+\+CACHE\+\_\+\+MAX\+\_\+\+BYTES~16U}
+
+
+
+Maximum size in bytes for cacheable detachable chunks. 
+
+
+
+Definition at line \mbox{\hyperlink{detachable_8h_source_l00022}{22}} of file \mbox{\hyperlink{detachable_8h_source}{detachable.\+h}}.
+
+\Hypertarget{detachable_8h_a198599d50d443995834ee9169ac2fdb6}\label{detachable_8h_a198599d50d443995834ee9169ac2fdb6} 
+\index{detachable.h@{detachable.h}!TTAK\_DETACHABLE\_CACHE\_SLOTS@{TTAK\_DETACHABLE\_CACHE\_SLOTS}}
+\index{TTAK\_DETACHABLE\_CACHE\_SLOTS@{TTAK\_DETACHABLE\_CACHE\_SLOTS}!detachable.h@{detachable.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_DETACHABLE\_CACHE\_SLOTS}{TTAK\_DETACHABLE\_CACHE\_SLOTS}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+DETACHABLE\+\_\+\+CACHE\+\_\+\+SLOTS~8U}
+
+
+
+Default number of cache slots kept per detachable arena. 
+
+
+
+Definition at line \mbox{\hyperlink{detachable_8h_source_l00027}{27}} of file \mbox{\hyperlink{detachable_8h_source}{detachable.\+h}}.
+
+\Hypertarget{detachable_8h_a5d3b70f805eaace99a16d7e08518b77f}\label{detachable_8h_a5d3b70f805eaace99a16d7e08518b77f} 
+\index{detachable.h@{detachable.h}!TTAK\_DETACHABLE\_GENERATIONS@{TTAK\_DETACHABLE\_GENERATIONS}}
+\index{TTAK\_DETACHABLE\_GENERATIONS@{TTAK\_DETACHABLE\_GENERATIONS}!detachable.h@{detachable.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_DETACHABLE\_GENERATIONS}{TTAK\_DETACHABLE\_GENERATIONS}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+DETACHABLE\+\_\+\+GENERATIONS~4U}
+
+
+
+Maximum number of tracked generations per arena row. 
+
+
+
+Definition at line \mbox{\hyperlink{detachable_8h_source_l00032}{32}} of file \mbox{\hyperlink{detachable_8h_source}{detachable.\+h}}.
+
+\Hypertarget{detachable_8h_a9d147c30c600e763cd4b9f52d8b3df82}\label{detachable_8h_a9d147c30c600e763cd4b9f52d8b3df82} 
+\index{detachable.h@{detachable.h}!TTAK\_DETACHABLE\_MATRIX\_ROWS@{TTAK\_DETACHABLE\_MATRIX\_ROWS}}
+\index{TTAK\_DETACHABLE\_MATRIX\_ROWS@{TTAK\_DETACHABLE\_MATRIX\_ROWS}!detachable.h@{detachable.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_DETACHABLE\_MATRIX\_ROWS}{TTAK\_DETACHABLE\_MATRIX\_ROWS}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+DETACHABLE\+\_\+\+MATRIX\+\_\+\+ROWS~8U}
+
+
+
+Maximum number of 2D rows in the detachable arena tracker. 
+
+The design models a 2D array backed tree where each "{}row"{} models the hierarchy and avoids pathological page-\/aligned fragmentation. 
+
+Definition at line \mbox{\hyperlink{detachable_8h_source_l00040}{40}} of file \mbox{\hyperlink{detachable_8h_source}{detachable.\+h}}.
+
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{detachable_8h_afbe41ddd19dc2e52cc3399a79cdda0e8}\label{detachable_8h_afbe41ddd19dc2e52cc3399a79cdda0e8} 
+\index{detachable.h@{detachable.h}!ttak\_detach\_state\_flags\_t@{ttak\_detach\_state\_flags\_t}}
+\index{ttak\_detach\_state\_flags\_t@{ttak\_detach\_state\_flags\_t}!detachable.h@{detachable.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_detach\_state\_flags\_t}{ttak\_detach\_state\_flags\_t}}
+{\footnotesize\ttfamily typedef enum \mbox{\hyperlink{detachable_8h_a1be650514f253f5129ff7e791c2e9a47}{ttak\+\_\+detach\+\_\+state\+\_\+flags}} \mbox{\hyperlink{detachable_8h_afbe41ddd19dc2e52cc3399a79cdda0e8}{ttak\+\_\+detach\+\_\+state\+\_\+flags\+\_\+t}}}
+
+
+
+Bit flags stored inside the detachable status byte. 
+
+\Hypertarget{detachable_8h_ac1e56a46d336e364577b670520d14be8}\label{detachable_8h_ac1e56a46d336e364577b670520d14be8} 
+\index{detachable.h@{detachable.h}!ttak\_detach\_status\_t@{ttak\_detach\_status\_t}}
+\index{ttak\_detach\_status\_t@{ttak\_detach\_status\_t}!detachable.h@{detachable.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_detach\_status\_t}{ttak\_detach\_status\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__detach__status}{ttak\+\_\+detach\+\_\+status}} \mbox{\hyperlink{detachable_8h_ac1e56a46d336e364577b670520d14be8}{ttak\+\_\+detach\+\_\+status\+\_\+t}}}
+
+
+
+Tracks the detach lifecycle of a detachable block. 
+
+The status is stored as a single byte and converges towards UNKNOWN whenever no explicit KNOWN flag is set. Padding keeps 8-\/byte alignment stable for the struct returned to callers. \Hypertarget{detachable_8h_a849243c766d591f9c26aab69b9933f1b}\label{detachable_8h_a849243c766d591f9c26aab69b9933f1b} 
+\index{detachable.h@{detachable.h}!ttak\_detachable\_allocation\_t@{ttak\_detachable\_allocation\_t}}
+\index{ttak\_detachable\_allocation\_t@{ttak\_detachable\_allocation\_t}!detachable.h@{detachable.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_detachable\_allocation\_t}{ttak\_detachable\_allocation\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__detachable__allocation}{ttak\+\_\+detachable\+\_\+allocation}} \mbox{\hyperlink{detachable_8h_a849243c766d591f9c26aab69b9933f1b}{ttak\+\_\+detachable\+\_\+allocation\+\_\+t}}}
+
+
+
+Description of the detachable allocation returned to callers. 
+
+\Hypertarget{detachable_8h_a52b42f81544c7607c85d586b924c9c17}\label{detachable_8h_a52b42f81544c7607c85d586b924c9c17} 
+\index{detachable.h@{detachable.h}!ttak\_detachable\_cache\_t@{ttak\_detachable\_cache\_t}}
+\index{ttak\_detachable\_cache\_t@{ttak\_detachable\_cache\_t}!detachable.h@{detachable.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_detachable\_cache\_t}{ttak\_detachable\_cache\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__detachable__cache}{ttak\+\_\+detachable\+\_\+cache}} \mbox{\hyperlink{detachable_8h_a52b42f81544c7607c85d586b924c9c17}{ttak\+\_\+detachable\+\_\+cache\+\_\+t}}}
+
+
+
+Per-\/context cache for tiny detachable chunks (\texorpdfstring{$<$}{<}= 16 bytes). 
+
+The cache implements an approximated LRU queue that is biased to favor the active generation. Entries are zeroed before returning to the caller to keep calloc semantics intact. \Hypertarget{detachable_8h_af305388e9b1aace5f96138912a0e1cbf}\label{detachable_8h_af305388e9b1aace5f96138912a0e1cbf} 
+\index{detachable.h@{detachable.h}!ttak\_detachable\_context\_flags\_t@{ttak\_detachable\_context\_flags\_t}}
+\index{ttak\_detachable\_context\_flags\_t@{ttak\_detachable\_context\_flags\_t}!detachable.h@{detachable.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_detachable\_context\_flags\_t}{ttak\_detachable\_context\_flags\_t}}
+{\footnotesize\ttfamily typedef enum \mbox{\hyperlink{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12}{ttak\+\_\+detachable\+\_\+context\+\_\+flags}} \mbox{\hyperlink{detachable_8h_af305388e9b1aace5f96138912a0e1cbf}{ttak\+\_\+detachable\+\_\+context\+\_\+flags\+\_\+t}}}
+
+
+
+Bit flags describing arena level traits. 
+
+\Hypertarget{detachable_8h_ac2e1577a34551ffaedf5a16d11bdff0b}\label{detachable_8h_ac2e1577a34551ffaedf5a16d11bdff0b} 
+\index{detachable.h@{detachable.h}!ttak\_detachable\_context\_t@{ttak\_detachable\_context\_t}}
+\index{ttak\_detachable\_context\_t@{ttak\_detachable\_context\_t}!detachable.h@{detachable.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_detachable\_context\_t}{ttak\_detachable\_context\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__detachable__context}{ttak\+\_\+detachable\+\_\+context}} \mbox{\hyperlink{detachable_8h_ac2e1577a34551ffaedf5a16d11bdff0b}{ttak\+\_\+detachable\+\_\+context\+\_\+t}}}
+
+
+
+State holder for detachable memory contexts. 
+
+\Hypertarget{detachable_8h_ac0b7486d4e195a62b81d84b90ef1fb9e}\label{detachable_8h_ac0b7486d4e195a62b81d84b90ef1fb9e} 
+\index{detachable.h@{detachable.h}!ttak\_detachable\_generation\_row\_t@{ttak\_detachable\_generation\_row\_t}}
+\index{ttak\_detachable\_generation\_row\_t@{ttak\_detachable\_generation\_row\_t}!detachable.h@{detachable.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_detachable\_generation\_row\_t}{ttak\_detachable\_generation\_row\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__detachable__generation__row}{ttak\+\_\+detachable\+\_\+generation\+\_\+row}} \mbox{\hyperlink{detachable_8h_ac0b7486d4e195a62b81d84b90ef1fb9e}{ttak\+\_\+detachable\+\_\+generation\+\_\+row\+\_\+t}}}
+
+
+
+Fixed-\/width arena row descriptor. 
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{detachable_8h_a1be650514f253f5129ff7e791c2e9a47}\label{detachable_8h_a1be650514f253f5129ff7e791c2e9a47} 
+\index{detachable.h@{detachable.h}!ttak\_detach\_state\_flags@{ttak\_detach\_state\_flags}}
+\index{ttak\_detach\_state\_flags@{ttak\_detach\_state\_flags}!detachable.h@{detachable.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_detach\_state\_flags}{ttak\_detach\_state\_flags}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{detachable_8h_a1be650514f253f5129ff7e791c2e9a47}{ttak\+\_\+detach\+\_\+state\+\_\+flags}}}
+
+
+
+Bit flags stored inside the detachable status byte. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_DETACHABLE\_UNKNOWN@{TTAK\_DETACHABLE\_UNKNOWN}!detachable.h@{detachable.h}}\index{detachable.h@{detachable.h}!TTAK\_DETACHABLE\_UNKNOWN@{TTAK\_DETACHABLE\_UNKNOWN}}}\Hypertarget{detachable_8h_a1be650514f253f5129ff7e791c2e9a47aaba48c9c71dc70acbf1bfaf46a442458}\label{detachable_8h_a1be650514f253f5129ff7e791c2e9a47aaba48c9c71dc70acbf1bfaf46a442458} 
+TTAK\+\_\+\+DETACHABLE\+\_\+\+UNKNOWN&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_DETACHABLE\_ATTACH@{TTAK\_DETACHABLE\_ATTACH}!detachable.h@{detachable.h}}\index{detachable.h@{detachable.h}!TTAK\_DETACHABLE\_ATTACH@{TTAK\_DETACHABLE\_ATTACH}}}\Hypertarget{detachable_8h_a1be650514f253f5129ff7e791c2e9a47a181d2c0832150c00d5f61c9c80c94bab}\label{detachable_8h_a1be650514f253f5129ff7e791c2e9a47a181d2c0832150c00d5f61c9c80c94bab} 
+TTAK\+\_\+\+DETACHABLE\+\_\+\+ATTACH&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_DETACHABLE\_DETACH\_NOCHECK@{TTAK\_DETACHABLE\_DETACH\_NOCHECK}!detachable.h@{detachable.h}}\index{detachable.h@{detachable.h}!TTAK\_DETACHABLE\_DETACH\_NOCHECK@{TTAK\_DETACHABLE\_DETACH\_NOCHECK}}}\Hypertarget{detachable_8h_a1be650514f253f5129ff7e791c2e9a47a629f8c3fcbb9ffa6cb52a3fe7ba5164f}\label{detachable_8h_a1be650514f253f5129ff7e791c2e9a47a629f8c3fcbb9ffa6cb52a3fe7ba5164f} 
+TTAK\+\_\+\+DETACHABLE\+\_\+\+DETACH\+\_\+\+NOCHECK&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_DETACHABLE\_PARTIAL\_CACHE@{TTAK\_DETACHABLE\_PARTIAL\_CACHE}!detachable.h@{detachable.h}}\index{detachable.h@{detachable.h}!TTAK\_DETACHABLE\_PARTIAL\_CACHE@{TTAK\_DETACHABLE\_PARTIAL\_CACHE}}}\Hypertarget{detachable_8h_a1be650514f253f5129ff7e791c2e9a47a4b5f0574b64337442ebfe3dc6ffa41b2}\label{detachable_8h_a1be650514f253f5129ff7e791c2e9a47a4b5f0574b64337442ebfe3dc6ffa41b2} 
+TTAK\+\_\+\+DETACHABLE\+\_\+\+PARTIAL\+\_\+\+CACHE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_DETACHABLE\_STATUS\_KNOWN@{TTAK\_DETACHABLE\_STATUS\_KNOWN}!detachable.h@{detachable.h}}\index{detachable.h@{detachable.h}!TTAK\_DETACHABLE\_STATUS\_KNOWN@{TTAK\_DETACHABLE\_STATUS\_KNOWN}}}\Hypertarget{detachable_8h_a1be650514f253f5129ff7e791c2e9a47ac9ac8dd59403334fcdfa9cd5df09a9e1}\label{detachable_8h_a1be650514f253f5129ff7e791c2e9a47ac9ac8dd59403334fcdfa9cd5df09a9e1} 
+TTAK\+\_\+\+DETACHABLE\+\_\+\+STATUS\+\_\+\+KNOWN&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{detachable_8h_source_l00058}{58}} of file \mbox{\hyperlink{detachable_8h_source}{detachable.\+h}}.
+
+\Hypertarget{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12}\label{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12} 
+\index{detachable.h@{detachable.h}!ttak\_detachable\_context\_flags@{ttak\_detachable\_context\_flags}}
+\index{ttak\_detachable\_context\_flags@{ttak\_detachable\_context\_flags}!detachable.h@{detachable.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_detachable\_context\_flags}{ttak\_detachable\_context\_flags}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12}{ttak\+\_\+detachable\+\_\+context\+\_\+flags}}}
+
+
+
+Bit flags describing arena level traits. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_ARENA\_HAS\_OWNER@{TTAK\_ARENA\_HAS\_OWNER}!detachable.h@{detachable.h}}\index{detachable.h@{detachable.h}!TTAK\_ARENA\_HAS\_OWNER@{TTAK\_ARENA\_HAS\_OWNER}}}\Hypertarget{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12aa73d4ccfff5807ef21f37d6426131c81}\label{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12aa73d4ccfff5807ef21f37d6426131c81} 
+TTAK\+\_\+\+ARENA\+\_\+\+HAS\+\_\+\+OWNER&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_ARENA\_HAS\_EPOCH\_RECLAMATION@{TTAK\_ARENA\_HAS\_EPOCH\_RECLAMATION}!detachable.h@{detachable.h}}\index{detachable.h@{detachable.h}!TTAK\_ARENA\_HAS\_EPOCH\_RECLAMATION@{TTAK\_ARENA\_HAS\_EPOCH\_RECLAMATION}}}\Hypertarget{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12a6c3e61feed2fee7dbd14082c960b0533}\label{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12a6c3e61feed2fee7dbd14082c960b0533} 
+TTAK\+\_\+\+ARENA\+\_\+\+HAS\+\_\+\+EPOCH\+\_\+\+RECLAMATION&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_ARENA\_HAS\_DEFAULT\_EPOCH\_GC@{TTAK\_ARENA\_HAS\_DEFAULT\_EPOCH\_GC}!detachable.h@{detachable.h}}\index{detachable.h@{detachable.h}!TTAK\_ARENA\_HAS\_DEFAULT\_EPOCH\_GC@{TTAK\_ARENA\_HAS\_DEFAULT\_EPOCH\_GC}}}\Hypertarget{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12af9989087e40b7fcd1c23f45445599fae}\label{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12af9989087e40b7fcd1c23f45445599fae} 
+TTAK\+\_\+\+ARENA\+\_\+\+HAS\+\_\+\+DEFAULT\+\_\+\+EPOCH\+\_\+\+GC&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_ARENA\_IS\_URGENT\_TASK@{TTAK\_ARENA\_IS\_URGENT\_TASK}!detachable.h@{detachable.h}}\index{detachable.h@{detachable.h}!TTAK\_ARENA\_IS\_URGENT\_TASK@{TTAK\_ARENA\_IS\_URGENT\_TASK}}}\Hypertarget{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12a1442cba89396d4b38fead12e3ea083cd}\label{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12a1442cba89396d4b38fead12e3ea083cd} 
+TTAK\+\_\+\+ARENA\+\_\+\+IS\+\_\+\+URGENT\+\_\+\+TASK&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_ARENA\_USE\_LOCKED\_ACCESS@{TTAK\_ARENA\_USE\_LOCKED\_ACCESS}!detachable.h@{detachable.h}}\index{detachable.h@{detachable.h}!TTAK\_ARENA\_USE\_LOCKED\_ACCESS@{TTAK\_ARENA\_USE\_LOCKED\_ACCESS}}}\Hypertarget{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12aaa4015a7270ae35f435dfb3c7f90078a}\label{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12aaa4015a7270ae35f435dfb3c7f90078a} 
+TTAK\+\_\+\+ARENA\+\_\+\+USE\+\_\+\+LOCKED\+\_\+\+ACCESS&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_ARENA\_IS\_SINGLE\_THREAD@{TTAK\_ARENA\_IS\_SINGLE\_THREAD}!detachable.h@{detachable.h}}\index{detachable.h@{detachable.h}!TTAK\_ARENA\_IS\_SINGLE\_THREAD@{TTAK\_ARENA\_IS\_SINGLE\_THREAD}}}\Hypertarget{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12a68cebec47a397906f5d3f8f6042f902e}\label{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12a68cebec47a397906f5d3f8f6042f902e} 
+TTAK\+\_\+\+ARENA\+\_\+\+IS\+\_\+\+SINGLE\+\_\+\+THREAD&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_ARENA\_USE\_ASYNC\_OPT@{TTAK\_ARENA\_USE\_ASYNC\_OPT}!detachable.h@{detachable.h}}\index{detachable.h@{detachable.h}!TTAK\_ARENA\_USE\_ASYNC\_OPT@{TTAK\_ARENA\_USE\_ASYNC\_OPT}}}\Hypertarget{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12afd265a0ac613adedadd723d46841ed16}\label{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12afd265a0ac613adedadd723d46841ed16} 
+TTAK\+\_\+\+ARENA\+\_\+\+USE\+\_\+\+ASYNC\+\_\+\+OPT&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{detachable_8h_source_l00045}{45}} of file \mbox{\hyperlink{detachable_8h_source}{detachable.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{detachable_8h_a889c139fb7d20873ca7fbe1cfdeda7ce}\label{detachable_8h_a889c139fb7d20873ca7fbe1cfdeda7ce} 
+\index{detachable.h@{detachable.h}!ttak\_detach\_status\_converge@{ttak\_detach\_status\_converge}}
+\index{ttak\_detach\_status\_converge@{ttak\_detach\_status\_converge}!detachable.h@{detachable.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_detach\_status\_converge()}{ttak\_detach\_status\_converge()}}
+{\footnotesize\ttfamily static void ttak\+\_\+detach\+\_\+status\+\_\+converge (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{detachable_8h_ac1e56a46d336e364577b670520d14be8}{ttak\+\_\+detach\+\_\+status\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{status }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{detachable_8h_source_l00091}{91}} of file \mbox{\hyperlink{detachable_8h_source}{detachable.\+h}}.
+
+\Hypertarget{detachable_8h_ad83ea9dcd517e52eac5c67912c2c17d7}\label{detachable_8h_ad83ea9dcd517e52eac5c67912c2c17d7} 
+\index{detachable.h@{detachable.h}!ttak\_detach\_status\_mark\_known@{ttak\_detach\_status\_mark\_known}}
+\index{ttak\_detach\_status\_mark\_known@{ttak\_detach\_status\_mark\_known}!detachable.h@{detachable.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_detach\_status\_mark\_known()}{ttak\_detach\_status\_mark\_known()}}
+{\footnotesize\ttfamily static void ttak\+\_\+detach\+\_\+status\+\_\+mark\+\_\+known (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{detachable_8h_ac1e56a46d336e364577b670520d14be8}{ttak\+\_\+detach\+\_\+status\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{status }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{detachable_8h_source_l00086}{86}} of file \mbox{\hyperlink{detachable_8h_source}{detachable.\+h}}.
+
+\Hypertarget{detachable_8h_aef365c93b7f2fccd1c2b93875ed1732e}\label{detachable_8h_aef365c93b7f2fccd1c2b93875ed1732e} 
+\index{detachable.h@{detachable.h}!ttak\_detach\_status\_reset@{ttak\_detach\_status\_reset}}
+\index{ttak\_detach\_status\_reset@{ttak\_detach\_status\_reset}!detachable.h@{detachable.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_detach\_status\_reset()}{ttak\_detach\_status\_reset()}}
+{\footnotesize\ttfamily static void ttak\+\_\+detach\+\_\+status\+\_\+reset (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{detachable_8h_ac1e56a46d336e364577b670520d14be8}{ttak\+\_\+detach\+\_\+status\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{status }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{detachable_8h_source_l00078}{78}} of file \mbox{\hyperlink{detachable_8h_source}{detachable.\+h}}.
+
+\Hypertarget{detachable_8h_a67a7a626b3669ea6aaf278066d586e6c}\label{detachable_8h_a67a7a626b3669ea6aaf278066d586e6c} 
+\index{detachable.h@{detachable.h}!ttak\_detachable\_cache\_destroy@{ttak\_detachable\_cache\_destroy}}
+\index{ttak\_detachable\_cache\_destroy@{ttak\_detachable\_cache\_destroy}!detachable.h@{detachable.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_detachable\_cache\_destroy()}{ttak\_detachable\_cache\_destroy()}}
+{\footnotesize\ttfamily void ttak\+\_\+detachable\+\_\+cache\+\_\+destroy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{detachable_8h_ac2e1577a34551ffaedf5a16d11bdff0b}{ttak\+\_\+detachable\+\_\+context\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{ctx,  }\item[{\mbox{\hyperlink{detachable_8h_a52b42f81544c7607c85d586b924c9c17}{ttak\+\_\+detachable\+\_\+cache\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{cache }\end{DoxyParamCaption})}
+
+
+
+Releases any pending cache entries and tears down synchronization primitives. 
+
+\Hypertarget{detachable_8h_a14d41433944d90fba8f5534cb7d33df9}\label{detachable_8h_a14d41433944d90fba8f5534cb7d33df9} 
+\index{detachable.h@{detachable.h}!ttak\_detachable\_cache\_init@{ttak\_detachable\_cache\_init}}
+\index{ttak\_detachable\_cache\_init@{ttak\_detachable\_cache\_init}!detachable.h@{detachable.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_detachable\_cache\_init()}{ttak\_detachable\_cache\_init()}}
+{\footnotesize\ttfamily void ttak\+\_\+detachable\+\_\+cache\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{detachable_8h_a52b42f81544c7607c85d586b924c9c17}{ttak\+\_\+detachable\+\_\+cache\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{cache,  }\item[{size\+\_\+t}]{chunk\+\_\+size,  }\item[{size\+\_\+t}]{capacity }\end{DoxyParamCaption})}
+
+
+
+Initializes the per-\/context cache. 
+
+\Hypertarget{detachable_8h_a717f497fd4d9c1be7bd16e67c7ec349f}\label{detachable_8h_a717f497fd4d9c1be7bd16e67c7ec349f} 
+\index{detachable.h@{detachable.h}!ttak\_detachable\_context\_default@{ttak\_detachable\_context\_default}}
+\index{ttak\_detachable\_context\_default@{ttak\_detachable\_context\_default}!detachable.h@{detachable.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_detachable\_context\_default()}{ttak\_detachable\_context\_default()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{detachable_8h_ac2e1577a34551ffaedf5a16d11bdff0b}{ttak\+\_\+detachable\+\_\+context\+\_\+t}} \texorpdfstring{$\ast$}{*} ttak\+\_\+detachable\+\_\+context\+\_\+default (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Returns a lazily created global default context suitable for most users. 
+
+\Hypertarget{detachable_8h_abb1325e4df9bb26b2ec336f7659f1647}\label{detachable_8h_abb1325e4df9bb26b2ec336f7659f1647} 
+\index{detachable.h@{detachable.h}!ttak\_detachable\_context\_destroy@{ttak\_detachable\_context\_destroy}}
+\index{ttak\_detachable\_context\_destroy@{ttak\_detachable\_context\_destroy}!detachable.h@{detachable.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_detachable\_context\_destroy()}{ttak\_detachable\_context\_destroy()}}
+{\footnotesize\ttfamily void ttak\+\_\+detachable\+\_\+context\+\_\+destroy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{detachable_8h_ac2e1577a34551ffaedf5a16d11bdff0b}{ttak\+\_\+detachable\+\_\+context\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{ctx }\end{DoxyParamCaption})}
+
+
+
+Destroys a detachable context and releases cached entries. 
+
+\Hypertarget{detachable_8h_a63f13e49808b766ad47572c4ced69d3f}\label{detachable_8h_a63f13e49808b766ad47572c4ced69d3f} 
+\index{detachable.h@{detachable.h}!ttak\_detachable\_context\_init@{ttak\_detachable\_context\_init}}
+\index{ttak\_detachable\_context\_init@{ttak\_detachable\_context\_init}!detachable.h@{detachable.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_detachable\_context\_init()}{ttak\_detachable\_context\_init()}}
+{\footnotesize\ttfamily void ttak\+\_\+detachable\+\_\+context\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{detachable_8h_ac2e1577a34551ffaedf5a16d11bdff0b}{ttak\+\_\+detachable\+\_\+context\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{ctx,  }\item[{uint32\+\_\+t}]{flags }\end{DoxyParamCaption})}
+
+
+
+Initializes a detachable context with sane defaults. 
+
+\Hypertarget{detachable_8h_af35aea4b40c5e4dcaff9c3c97091a5f5}\label{detachable_8h_af35aea4b40c5e4dcaff9c3c97091a5f5} 
+\index{detachable.h@{detachable.h}!ttak\_detachable\_mem\_alloc@{ttak\_detachable\_mem\_alloc}}
+\index{ttak\_detachable\_mem\_alloc@{ttak\_detachable\_mem\_alloc}!detachable.h@{detachable.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_detachable\_mem\_alloc()}{ttak\_detachable\_mem\_alloc()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{detachable_8h_a849243c766d591f9c26aab69b9933f1b}{ttak\+\_\+detachable\+\_\+allocation\+\_\+t}} ttak\+\_\+detachable\+\_\+mem\+\_\+alloc (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{detachable_8h_ac2e1577a34551ffaedf5a16d11bdff0b}{ttak\+\_\+detachable\+\_\+context\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{ctx,  }\item[{size\+\_\+t}]{size,  }\item[{uint64\+\_\+t}]{epoch\+\_\+hint }\end{DoxyParamCaption})}
+
+
+
+Allocates detachable memory backed by calloc and epoch protection. 
+
+\Hypertarget{detachable_8h_ae0cb6732fd104bdf0a36c8f10ec7e7df}\label{detachable_8h_ae0cb6732fd104bdf0a36c8f10ec7e7df} 
+\index{detachable.h@{detachable.h}!ttak\_detachable\_mem\_free@{ttak\_detachable\_mem\_free}}
+\index{ttak\_detachable\_mem\_free@{ttak\_detachable\_mem\_free}!detachable.h@{detachable.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_detachable\_mem\_free()}{ttak\_detachable\_mem\_free()}}
+{\footnotesize\ttfamily void ttak\+\_\+detachable\+\_\+mem\+\_\+free (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{detachable_8h_ac2e1577a34551ffaedf5a16d11bdff0b}{ttak\+\_\+detachable\+\_\+context\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{ctx,  }\item[{\mbox{\hyperlink{detachable_8h_a849243c766d591f9c26aab69b9933f1b}{ttak\+\_\+detachable\+\_\+allocation\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{alloc }\end{DoxyParamCaption})}
+
+
+
+Releases a detachable allocation, optionally routing it through the cache. 
+
+\Hypertarget{detachable_8h_ad88699e65105da2cbc3b4afa26c27d57}\label{detachable_8h_ad88699e65105da2cbc3b4afa26c27d57} 
+\index{detachable.h@{detachable.h}!ttak\_hard\_kill\_exit@{ttak\_hard\_kill\_exit}}
+\index{ttak\_hard\_kill\_exit@{ttak\_hard\_kill\_exit}!detachable.h@{detachable.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_hard\_kill\_exit()}{ttak\_hard\_kill\_exit()}}
+{\footnotesize\ttfamily int ttak\+\_\+hard\+\_\+kill\+\_\+exit (\begin{DoxyParamCaption}\item[{sigset\+\_\+t}]{signals,  }\item[{int \texorpdfstring{$\ast$}{*}}]{ret }\end{DoxyParamCaption})}
+
+
+
+Registers signal handlers that immediately exit without flushing arenas. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em signals} & Bitmask of signals to intercept. \\
+\hline
+{\em ret} & Optional pointer that stores the exit status to use. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, -\/1 on failure. 
+\end{DoxyReturn}
+\Hypertarget{detachable_8h_a1ecfc3ddf70928f8f6d61b0e7c97bc11}\label{detachable_8h_a1ecfc3ddf70928f8f6d61b0e7c97bc11} 
+\index{detachable.h@{detachable.h}!ttak\_hard\_kill\_graceful\_exit@{ttak\_hard\_kill\_graceful\_exit}}
+\index{ttak\_hard\_kill\_graceful\_exit@{ttak\_hard\_kill\_graceful\_exit}!detachable.h@{detachable.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_hard\_kill\_graceful\_exit()}{ttak\_hard\_kill\_graceful\_exit()}}
+{\footnotesize\ttfamily int ttak\+\_\+hard\+\_\+kill\+\_\+graceful\+\_\+exit (\begin{DoxyParamCaption}\item[{sigset\+\_\+t}]{signals,  }\item[{int \texorpdfstring{$\ast$}{*}}]{ret }\end{DoxyParamCaption})}
+
+
+
+Registers signal handlers that gracefully flush detachable arenas and exit. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em signals} & Bitmask of signals to intercept. \\
+\hline
+{\em ret} & Optional pointer that stores the exit status to use. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, -\/1 on failure. 
+\end{DoxyReturn}

@@ -1,0 +1,11 @@
+<map id="src/accel/accel_rocm.cpp" name="src/accel/accel_rocm.cpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="48,5,232,31"/>
+<area shape="rect" id="Node000002" href="$ttak__accelerator_8h.html" title=" " alt="" coords="55,79,225,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="143,31,143,65,137,65,137,31"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,152,80,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="126,106,71,146,68,141,123,102"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="105,152,175,177"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="143,104,143,138,137,138,137,104"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="200,152,299,177"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="159,102,221,142,218,147,156,106"/>
+</map>

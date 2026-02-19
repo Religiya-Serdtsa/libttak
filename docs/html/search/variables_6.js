@@ -1,14 +1,19 @@
 var searchData=
 [
-  ['first_0',['first',['../structttak__context.html#a1766d56d80a644928c7c9bab82bd61eb',1,'ttak_context']]],
-  ['flag_1',['flag',['../structttak__spin.html#a33d3c246a2db2f9c8bee949d6cdf07b7',1,'ttak_spin']]],
-  ['force_5fshutdown_2',['force_shutdown',['../structttak__thread__pool.html#aae32bd8dbffd90e3da8049b02541dc61',1,'ttak_thread_pool']]],
-  ['free_5fvalue_3',['free_value',['../structttak__ast__tree.html#aa10c77485d216b45e0e614c850e9dfcb',1,'ttak_ast_tree']]],
-  ['freed_4',['freed',['../structttak__mem__header__t.html#a86b5bea8ae5d34192969173c8ea7ef88',1,'ttak_mem_header_t']]],
-  ['full_5',['full',['../structttak__ringbuf.html#a8f02e88791c2aa5cd364535a32a4f395',1,'ttak_ringbuf']]],
-  ['fun_6',['fun',['../structttak__func__wrapper.html#a995ca0be7a03cbeee33e41a691ccda88',1,'ttak_func_wrapper']]],
-  ['func_7',['func',['../structttak__worker__wrapper.html#a13cb944f649c9617f5dbb9bb2b0f3cd7',1,'ttak_worker_wrapper']]],
-  ['func_5fhas_5fexpired_8',['func_has_expired',['../structttak__func__wrapper.html#aa10d8287d469a27cb185d8e0a5f37ba3',1,'ttak_func_wrapper']]],
-  ['functions_9',['functions',['../structttak__owner.html#ad3f0f21fea12c13d2fcbddcbe3472269',1,'ttak_owner']]],
-  ['future_10',['future',['../structttak__promise.html#a928b75ed6117e337fc20745814f5a024',1,'ttak_promise']]]
+  ['fault_5fhead_0',['fault_head',['../structttak__net__session__mgr.html#ac03a795917799f777f0647cab9fb6bdf',1,'ttak_net_session_mgr']]],
+  ['fault_5fnext_1',['fault_next',['../structttak__net__session.html#a757051e8a5d8eb36e4e4bb4c1c888381',1,'ttak_net_session']]],
+  ['fd_2',['fd',['../structttak__io__guard.html#a1a14eb51bb89423b12e8b92da0af2ea5',1,'ttak_io_guard::fd'],['../structttak__net__endpoint.html#ab6f548125c5a1909e4d5682000439630',1,'ttak_net_endpoint::fd'],['../structttak__net__guard__snapshot.html#a20cc1f915eff05a23abee495823b92e0',1,'ttak_net_guard_snapshot::fd']]],
+  ['first_3',['first',['../structttak__context.html#a1766d56d80a644928c7c9bab82bd61eb',1,'ttak_context']]],
+  ['first_5fchild_4',['first_child',['../structttak__net__session.html#adcfd436d062310276f9207a9467b49c7',1,'ttak_net_session']]],
+  ['flag_5',['flag',['../structttak__spin.html#a33d3c246a2db2f9c8bee949d6cdf07b7',1,'ttak_spin']]],
+  ['flags_6',['flags',['../structttak__mem__req.html#ad30c87b64f4ea79227e7eb0cdc22ed83',1,'ttak_mem_req::flags'],['../structttak__detachable__context.html#ab7161e1eaa880b1e1dbbe34f0ff4d3a1',1,'ttak_detachable_context::flags']]],
+  ['force_5fshutdown_7',['force_shutdown',['../structttak__thread__pool.html#aae32bd8dbffd90e3da8049b02541dc61',1,'ttak_thread_pool']]],
+  ['free_5fvalue_8',['free_value',['../structttak__ast__tree.html#aa10c77485d216b45e0e614c850e9dfcb',1,'ttak_ast_tree']]],
+  ['freed_9',['freed',['../structttak__mem__header__t.html#a86b5bea8ae5d34192969173c8ea7ef88',1,'ttak_mem_header_t']]],
+  ['full_10',['full',['../structttak__ringbuf.html#a8f02e88791c2aa5cd364535a32a4f395',1,'ttak_ringbuf']]],
+  ['fun_11',['fun',['../structttak__func__wrapper.html#a995ca0be7a03cbeee33e41a691ccda88',1,'ttak_func_wrapper']]],
+  ['func_12',['func',['../structttak__worker__wrapper.html#a13cb944f649c9617f5dbb9bb2b0f3cd7',1,'ttak_worker_wrapper']]],
+  ['func_5fhas_5fexpired_13',['func_has_expired',['../structttak__func__wrapper.html#aa10d8287d469a27cb185d8e0a5f37ba3',1,'ttak_func_wrapper']]],
+  ['functions_14',['functions',['../structttak__owner.html#ad3f0f21fea12c13d2fcbddcbe3472269',1,'ttak_owner']]],
+  ['future_15',['future',['../structttak__promise.html#a928b75ed6117e337fc20745814f5a024',1,'ttak_promise']]]
 ];

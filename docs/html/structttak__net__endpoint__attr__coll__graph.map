@@ -1,0 +1,14 @@
+<map id="ttak_net_endpoint_attr" name="ttak_net_endpoint_attr">
+<area shape="rect" id="Node000001" title="Role configuration passed to ttak_net_endpoint_set_role()." alt="" coords="5,460,176,485"/>
+<area shape="rect" id="Node000002" href="$structttak__net__endpoint.html" title="Shared socket wrapper guarded by ttak_io_guard_t and owner policies." alt="" coords="21,372,161,397"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="93,411,93,459,88,459,88,411"/>
+<area shape="poly" id="edge6_Node000002_Node000002" title=" " alt="" coords="176,376,187,385,179,392,161,395,160,390,177,387,182,385,173,381"/>
+<area shape="rect" id="Node000003" href="$structttak__io__guard.html" title=" " alt="" coords="35,284,146,309"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="93,323,93,371,88,371,88,323"/>
+<area shape="rect" id="Node000004" href="$structttak__owner.html" title="The Owner structure." alt="" coords="43,196,138,221"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="93,235,93,283,88,283,88,235"/>
+<area shape="rect" id="Node000005" href="$structttak__map__t.html" title=" " alt="" coords="43,93,139,119"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="93,133,93,196,88,196,88,133"/>
+<area shape="rect" id="Node000006" href="$struct__node.html" title="Node structure with max_align_t padding for Raspberry Pi compatibility." alt="" coords="60,5,121,31"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="93,45,93,93,88,93,88,45"/>
+</map>

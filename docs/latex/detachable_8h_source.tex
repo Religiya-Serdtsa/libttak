@@ -1,0 +1,216 @@
+\doxysection{detachable.\+h}
+\hypertarget{detachable_8h_source}{}\label{detachable_8h_source}\index{include/ttak/mem/detachable.h@{include/ttak/mem/detachable.h}}
+\mbox{\hyperlink{detachable_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ TTAK\_MEM\_DETACHABLE\_H}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ TTAK\_MEM\_DETACHABLE\_H}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00007}00007\ \textcolor{preprocessor}{\#ifndef\ \_WIN32}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <signal.h>}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00009}00009\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <pthread.h>}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <stdatomic.h>}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{epoch_8h}{ttak/mem/epoch.h}}>}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00015}00015\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00016}00016\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00017}00017\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00018}00018\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00019}00019\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00020}00020\ \textcolor{comment}{\ *\ @brief\ Maximum\ size\ in\ bytes\ for\ cacheable\ detachable\ chunks.}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00021}00021\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00022}\mbox{\hyperlink{detachable_8h_af9888feb3e0a319858cfbc2ada4ca9f0}{00022}}\ \textcolor{preprocessor}{\#define\ TTAK\_DETACHABLE\_CACHE\_MAX\_BYTES\ 16U}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00023}00023\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00024}00024\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00025}00025\ \textcolor{comment}{\ *\ @brief\ Default\ number\ of\ cache\ slots\ kept\ per\ detachable\ arena.}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00026}00026\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00027}\mbox{\hyperlink{detachable_8h_a198599d50d443995834ee9169ac2fdb6}{00027}}\ \textcolor{preprocessor}{\#define\ TTAK\_DETACHABLE\_CACHE\_SLOTS\ 8U}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00028}00028\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00029}00029\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00030}00030\ \textcolor{comment}{\ *\ @brief\ Maximum\ number\ of\ tracked\ generations\ per\ arena\ row.}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00031}00031\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00032}\mbox{\hyperlink{detachable_8h_a5d3b70f805eaace99a16d7e08518b77f}{00032}}\ \textcolor{preprocessor}{\#define\ TTAK\_DETACHABLE\_GENERATIONS\ 4U}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00033}00033\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00034}00034\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00035}00035\ \textcolor{comment}{\ *\ @brief\ Maximum\ number\ of\ 2D\ rows\ in\ the\ detachable\ arena\ tracker.}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00036}00036\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00037}00037\ \textcolor{comment}{\ *\ The\ design\ models\ a\ 2D\ array\ backed\ tree\ where\ each\ "{}row"{}\ models\ the}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00038}00038\ \textcolor{comment}{\ *\ hierarchy\ and\ avoids\ pathological\ page-\/aligned\ fragmentation.}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00039}00039\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00040}\mbox{\hyperlink{detachable_8h_a9d147c30c600e763cd4b9f52d8b3df82}{00040}}\ \textcolor{preprocessor}{\#define\ TTAK\_DETACHABLE\_MATRIX\_ROWS\ 8U}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00041}00041\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00042}00042\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00043}00043\ \textcolor{comment}{\ *\ @brief\ Bit\ flags\ describing\ arena\ level\ traits.}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00044}00044\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00045}\mbox{\hyperlink{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12}{00045}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12}{ttak\_detachable\_context\_flags}}\ \{}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00046}\mbox{\hyperlink{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12aa73d4ccfff5807ef21f37d6426131c81}{00046}}\ \ \ \ \ \mbox{\hyperlink{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12aa73d4ccfff5807ef21f37d6426131c81}{TTAK\_ARENA\_HAS\_OWNER}}\ \ \ \ \ \ \ \ \ \ \ \ \ =\ (1u\ <<\ 0),}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00047}\mbox{\hyperlink{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12a6c3e61feed2fee7dbd14082c960b0533}{00047}}\ \ \ \ \ \mbox{\hyperlink{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12a6c3e61feed2fee7dbd14082c960b0533}{TTAK\_ARENA\_HAS\_EPOCH\_RECLAMATION}}\ =\ (1u\ <<\ 1),}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00048}\mbox{\hyperlink{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12af9989087e40b7fcd1c23f45445599fae}{00048}}\ \ \ \ \ \mbox{\hyperlink{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12af9989087e40b7fcd1c23f45445599fae}{TTAK\_ARENA\_HAS\_DEFAULT\_EPOCH\_GC}}\ \ =\ (1u\ <<\ 2),}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00049}\mbox{\hyperlink{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12a1442cba89396d4b38fead12e3ea083cd}{00049}}\ \ \ \ \ \mbox{\hyperlink{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12a1442cba89396d4b38fead12e3ea083cd}{TTAK\_ARENA\_IS\_URGENT\_TASK}}\ \ \ \ \ \ \ \ =\ (1u\ <<\ 3),}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00050}\mbox{\hyperlink{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12aaa4015a7270ae35f435dfb3c7f90078a}{00050}}\ \ \ \ \ \mbox{\hyperlink{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12aaa4015a7270ae35f435dfb3c7f90078a}{TTAK\_ARENA\_USE\_LOCKED\_ACCESS}}\ \ \ \ \ =\ (1u\ <<\ 4),}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00051}\mbox{\hyperlink{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12a68cebec47a397906f5d3f8f6042f902e}{00051}}\ \ \ \ \ \mbox{\hyperlink{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12a68cebec47a397906f5d3f8f6042f902e}{TTAK\_ARENA\_IS\_SINGLE\_THREAD}}\ \ \ \ \ \ =\ (1u\ <<\ 5),}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00052}00052\ \ \ \ \ \mbox{\hyperlink{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12afd265a0ac613adedadd723d46841ed16}{TTAK\_ARENA\_USE\_ASYNC\_OPT}}\ \ \ \ \ \ \ \ \ =\ (1u\ <<\ 6)}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00053}\mbox{\hyperlink{detachable_8h_ab5e06a7df563c816fabc268cd4eecc12afd265a0ac613adedadd723d46841ed16}{00053}}\ \}\ \mbox{\hyperlink{detachable_8h_af305388e9b1aace5f96138912a0e1cbf}{ttak\_detachable\_context\_flags\_t}};}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00054}00054\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00055}00055\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00056}00056\ \textcolor{comment}{\ *\ @brief\ Bit\ flags\ stored\ inside\ the\ detachable\ status\ byte.}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00057}00057\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00058}\mbox{\hyperlink{detachable_8h_a1be650514f253f5129ff7e791c2e9a47}{00058}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{detachable_8h_a1be650514f253f5129ff7e791c2e9a47}{ttak\_detach\_state\_flags}}\ \{}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00059}\mbox{\hyperlink{detachable_8h_a1be650514f253f5129ff7e791c2e9a47aaba48c9c71dc70acbf1bfaf46a442458}{00059}}\ \ \ \ \ \mbox{\hyperlink{detachable_8h_a1be650514f253f5129ff7e791c2e9a47aaba48c9c71dc70acbf1bfaf46a442458}{TTAK\_DETACHABLE\_UNKNOWN}}\ \ \ \ \ \ \ \ =\ 0x00,}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00060}\mbox{\hyperlink{detachable_8h_a1be650514f253f5129ff7e791c2e9a47a181d2c0832150c00d5f61c9c80c94bab}{00060}}\ \ \ \ \ \mbox{\hyperlink{detachable_8h_a1be650514f253f5129ff7e791c2e9a47a181d2c0832150c00d5f61c9c80c94bab}{TTAK\_DETACHABLE\_ATTACH}}\ \ \ \ \ \ \ \ \ =\ 0x01,}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00061}\mbox{\hyperlink{detachable_8h_a1be650514f253f5129ff7e791c2e9a47a629f8c3fcbb9ffa6cb52a3fe7ba5164f}{00061}}\ \ \ \ \ \mbox{\hyperlink{detachable_8h_a1be650514f253f5129ff7e791c2e9a47a629f8c3fcbb9ffa6cb52a3fe7ba5164f}{TTAK\_DETACHABLE\_DETACH\_NOCHECK}}\ =\ 0x02,}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00062}\mbox{\hyperlink{detachable_8h_a1be650514f253f5129ff7e791c2e9a47a4b5f0574b64337442ebfe3dc6ffa41b2}{00062}}\ \ \ \ \ \mbox{\hyperlink{detachable_8h_a1be650514f253f5129ff7e791c2e9a47a4b5f0574b64337442ebfe3dc6ffa41b2}{TTAK\_DETACHABLE\_PARTIAL\_CACHE}}\ \ =\ 0x04,}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00063}00063\ \ \ \ \ \mbox{\hyperlink{detachable_8h_a1be650514f253f5129ff7e791c2e9a47ac9ac8dd59403334fcdfa9cd5df09a9e1}{TTAK\_DETACHABLE\_STATUS\_KNOWN}}\ \ \ =\ 0x80}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00064}\mbox{\hyperlink{detachable_8h_afbe41ddd19dc2e52cc3399a79cdda0e8}{00064}}\ \}\ \mbox{\hyperlink{detachable_8h_afbe41ddd19dc2e52cc3399a79cdda0e8}{ttak\_detach\_state\_flags\_t}};}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00065}00065\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00066}00066\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00067}00067\ \textcolor{comment}{\ *\ @brief\ Tracks\ the\ detach\ lifecycle\ of\ a\ detachable\ block.}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00068}00068\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00069}00069\ \textcolor{comment}{\ *\ The\ status\ is\ stored\ as\ a\ single\ byte\ and\ converges\ towards\ UNKNOWN\ whenever}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00070}00070\ \textcolor{comment}{\ *\ no\ explicit\ KNOWN\ flag\ is\ set.\ Padding\ keeps\ 8-\/byte\ alignment\ stable\ for\ the}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00071}00071\ \textcolor{comment}{\ *\ struct\ returned\ to\ callers.}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00072}00072\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00073}\mbox{\hyperlink{structttak__detach__status}{00073}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__detach__status}{ttak\_detach\_status}}\ \{}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00074}\mbox{\hyperlink{structttak__detach__status_a54b750fad4203f83102c2600eb220302}{00074}}\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structttak__detach__status_a54b750fad4203f83102c2600eb220302}{bits}};}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00075}\mbox{\hyperlink{structttak__detach__status_a2dd0ef68e4614072c2717b44bc0be262}{00075}}\ \ \ \ \ \_Bool\ \mbox{\hyperlink{structttak__detach__status_a2dd0ef68e4614072c2717b44bc0be262}{pad}}[4];}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00076}\mbox{\hyperlink{detachable_8h_ac1e56a46d336e364577b670520d14be8}{00076}}\ \}\ \mbox{\hyperlink{detachable_8h_ac1e56a46d336e364577b670520d14be8}{ttak\_detach\_status\_t}};}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00077}00077\ }
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00078}\mbox{\hyperlink{detachable_8h_aef365c93b7f2fccd1c2b93875ed1732e}{00078}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{detachable_8h_aef365c93b7f2fccd1c2b93875ed1732e}{ttak\_detach\_status\_reset}}(\mbox{\hyperlink{structttak__detach__status}{ttak\_detach\_status\_t}}\ *status)\ \{}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00079}00079\ \ \ \ \ \textcolor{keywordflow}{if}\ (!status)\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00080}00080\ \ \ \ \ status-\/>\mbox{\hyperlink{structttak__detach__status_a54b750fad4203f83102c2600eb220302}{bits}}\ =\ \mbox{\hyperlink{detachable_8h_a1be650514f253f5129ff7e791c2e9a47aaba48c9c71dc70acbf1bfaf46a442458}{TTAK\_DETACHABLE\_UNKNOWN}};}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00081}00081\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ \textcolor{keyword}{sizeof}(status-\/>\mbox{\hyperlink{structttak__detach__status_a2dd0ef68e4614072c2717b44bc0be262}{pad}})\ /\ \textcolor{keyword}{sizeof}(status-\/>\mbox{\hyperlink{structttak__detach__status_a2dd0ef68e4614072c2717b44bc0be262}{pad}}[0]);\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00082}00082\ \ \ \ \ \ \ \ \ status-\/>\mbox{\hyperlink{structttak__detach__status_a2dd0ef68e4614072c2717b44bc0be262}{pad}}[i]\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00083}00083\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00084}00084\ \}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00086}\mbox{\hyperlink{detachable_8h_ad83ea9dcd517e52eac5c67912c2c17d7}{00086}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{detachable_8h_ad83ea9dcd517e52eac5c67912c2c17d7}{ttak\_detach\_status\_mark\_known}}(\mbox{\hyperlink{structttak__detach__status}{ttak\_detach\_status\_t}}\ *status)\ \{}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00087}00087\ \ \ \ \ \textcolor{keywordflow}{if}\ (!status)\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00088}00088\ \ \ \ \ status-\/>\mbox{\hyperlink{structttak__detach__status_a54b750fad4203f83102c2600eb220302}{bits}}\ |=\ \mbox{\hyperlink{detachable_8h_a1be650514f253f5129ff7e791c2e9a47ac9ac8dd59403334fcdfa9cd5df09a9e1}{TTAK\_DETACHABLE\_STATUS\_KNOWN}};}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00089}00089\ \}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00091}\mbox{\hyperlink{detachable_8h_a889c139fb7d20873ca7fbe1cfdeda7ce}{00091}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{detachable_8h_a889c139fb7d20873ca7fbe1cfdeda7ce}{ttak\_detach\_status\_converge}}(\mbox{\hyperlink{structttak__detach__status}{ttak\_detach\_status\_t}}\ *status)\ \{}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00092}00092\ \ \ \ \ \textcolor{keywordflow}{if}\ (!status)\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00093}00093\ \ \ \ \ \textcolor{keywordflow}{if}\ (!(status-\/>\mbox{\hyperlink{structttak__detach__status_a54b750fad4203f83102c2600eb220302}{bits}}\ \&\ \mbox{\hyperlink{detachable_8h_a1be650514f253f5129ff7e791c2e9a47ac9ac8dd59403334fcdfa9cd5df09a9e1}{TTAK\_DETACHABLE\_STATUS\_KNOWN}}))\ \{}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00094}00094\ \ \ \ \ \ \ \ \ status-\/>\mbox{\hyperlink{structttak__detach__status_a54b750fad4203f83102c2600eb220302}{bits}}\ =\ \mbox{\hyperlink{detachable_8h_a1be650514f253f5129ff7e791c2e9a47aaba48c9c71dc70acbf1bfaf46a442458}{TTAK\_DETACHABLE\_UNKNOWN}};}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00095}00095\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00096}00096\ \}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00097}00097\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00098}00098\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00099}00099\ \textcolor{comment}{\ *\ @brief\ Per-\/context\ cache\ for\ tiny\ detachable\ chunks\ (<=\ 16\ bytes).}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00100}00100\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00101}00101\ \textcolor{comment}{\ *\ The\ cache\ implements\ an\ approximated\ LRU\ queue\ that\ is\ biased\ to\ favor\ the}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00102}00102\ \textcolor{comment}{\ *\ active\ generation.\ Entries\ are\ zeroed\ before\ returning\ to\ the\ caller\ to\ keep}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00103}00103\ \textcolor{comment}{\ *\ calloc\ semantics\ intact.}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00104}00104\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00105}\mbox{\hyperlink{structttak__detachable__cache}{00105}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__detachable__cache}{ttak\_detachable\_cache}}\ \{}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00106}\mbox{\hyperlink{structttak__detachable__cache_a88cf12aa3260a7a6e0d36d99a73a908a}{00106}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structttak__detachable__cache_a88cf12aa3260a7a6e0d36d99a73a908a}{chunk\_size}};}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00107}\mbox{\hyperlink{structttak__detachable__cache_abbeefbafd46e901a24a0f845a513dcba}{00107}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structttak__detachable__cache_abbeefbafd46e901a24a0f845a513dcba}{capacity}};}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00108}\mbox{\hyperlink{structttak__detachable__cache_a66317554f0b4b923aa820ff19cbdd1be}{00108}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structttak__detachable__cache_a66317554f0b4b923aa820ff19cbdd1be}{count}};}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00109}\mbox{\hyperlink{structttak__detachable__cache_a088bf1ad9d5483433128ec74ba689146}{00109}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structttak__detachable__cache_a088bf1ad9d5483433128ec74ba689146}{head}};}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00110}\mbox{\hyperlink{structttak__detachable__cache_acc6dade0eda25d7ff3352c09192cd77f}{00110}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structttak__detachable__cache_acc6dade0eda25d7ff3352c09192cd77f}{tail}};}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00111}\mbox{\hyperlink{structttak__detachable__cache_a28f046a68e03e9d349c36e6f4994979e}{00111}}\ \ \ \ \ \textcolor{keywordtype}{void}\ **\mbox{\hyperlink{structttak__detachable__cache_a28f046a68e03e9d349c36e6f4994979e}{slots}};}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00112}\mbox{\hyperlink{structttak__detachable__cache_aee7eb751a826cd514855549f9c35fc7b}{00112}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__detachable__cache_aee7eb751a826cd514855549f9c35fc7b}{hits}};}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00113}\mbox{\hyperlink{structttak__detachable__cache_ad2b23550f4d6cce087a22171f988a525}{00113}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__detachable__cache_ad2b23550f4d6cce087a22171f988a525}{misses}};}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00114}\mbox{\hyperlink{structttak__detachable__cache_a8a235e9f7fc2b8060275c1b60d3cf3ff}{00114}}\ \ \ \ \ pthread\_mutex\_t\ \mbox{\hyperlink{structttak__detachable__cache_a8a235e9f7fc2b8060275c1b60d3cf3ff}{lock}};}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00115}\mbox{\hyperlink{detachable_8h_a52b42f81544c7607c85d586b924c9c17}{00115}}\ \}\ \mbox{\hyperlink{detachable_8h_a52b42f81544c7607c85d586b924c9c17}{ttak\_detachable\_cache\_t}};}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00116}00116\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00117}00117\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00118}00118\ \textcolor{comment}{\ *\ @brief\ Fixed-\/width\ arena\ row\ descriptor.}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00119}00119\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00120}\mbox{\hyperlink{structttak__detachable__generation__row}{00120}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__detachable__generation__row}{ttak\_detachable\_generation\_row}}\ \{}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00121}\mbox{\hyperlink{structttak__detachable__generation__row_a57e263b22f8ea35baafcb57b5d9fcc30}{00121}}\ \ \ \ \ \textcolor{keywordtype}{void}\ **\mbox{\hyperlink{structttak__detachable__generation__row_a57e263b22f8ea35baafcb57b5d9fcc30}{columns}};}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00122}\mbox{\hyperlink{structttak__detachable__generation__row_a3f47b11510c79ef491fa3edfbbb7315e}{00122}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structttak__detachable__generation__row_a3f47b11510c79ef491fa3edfbbb7315e}{len}};}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00123}\mbox{\hyperlink{structttak__detachable__generation__row_ac9c8aede8a1f6cedd5d1613f051e8770}{00123}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structttak__detachable__generation__row_ac9c8aede8a1f6cedd5d1613f051e8770}{cap}};}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00124}\mbox{\hyperlink{detachable_8h_ac0b7486d4e195a62b81d84b90ef1fb9e}{00124}}\ \}\ \mbox{\hyperlink{detachable_8h_ac0b7486d4e195a62b81d84b90ef1fb9e}{ttak\_detachable\_generation\_row\_t}};}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00125}00125\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00126}00126\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00127}00127\ \textcolor{comment}{\ *\ @brief\ State\ holder\ for\ detachable\ memory\ contexts.}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00128}00128\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00129}\mbox{\hyperlink{structttak__detachable__context}{00129}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__detachable__context}{ttak\_detachable\_context}}\ \{}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00130}\mbox{\hyperlink{structttak__detachable__context_a177714da5c2ae8ea80ea0880e0805b6a}{00130}}\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structttak__detachable__context_a177714da5c2ae8ea80ea0880e0805b6a}{matrix\_rows}};}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00131}\mbox{\hyperlink{structttak__detachable__context_a0595619890f563b6a6c7165e800c876c}{00131}}\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structttak__detachable__context_a0595619890f563b6a6c7165e800c876c}{active\_row}};}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00132}\mbox{\hyperlink{structttak__detachable__context_ab7b260b8073bbb406ae8b302c0fc6fd4}{00132}}\ \ \ \ \ uint16\_t\ \mbox{\hyperlink{structttak__detachable__context_ab7b260b8073bbb406ae8b302c0fc6fd4}{epoch\_delay}};}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00133}\mbox{\hyperlink{structttak__detachable__context_ab7161e1eaa880b1e1dbbe34f0ff4d3a1}{00133}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__detachable__context_ab7161e1eaa880b1e1dbbe34f0ff4d3a1}{flags}};}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00134}\mbox{\hyperlink{structttak__detachable__context_ae9e1edc36ce0e1b94acf8d67975bda8e}{00134}}\ \ \ \ \ \mbox{\hyperlink{structttak__detach__status}{ttak\_detach\_status\_t}}\ \mbox{\hyperlink{structttak__detachable__context_ae9e1edc36ce0e1b94acf8d67975bda8e}{base\_status}};}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00135}\mbox{\hyperlink{structttak__detachable__context_a5c0496c80517c03da90d1d0942671eea}{00135}}\ \ \ \ \ \mbox{\hyperlink{structttak__detachable__cache}{ttak\_detachable\_cache\_t}}\ \mbox{\hyperlink{structttak__detachable__context_a5c0496c80517c03da90d1d0942671eea}{small\_cache}};}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00136}\mbox{\hyperlink{structttak__detachable__context_adc9910c7034d4652881a9e2151e149f8}{00136}}\ \ \ \ \ \mbox{\hyperlink{structttak__detachable__generation__row}{ttak\_detachable\_generation\_row\_t}}\ \mbox{\hyperlink{structttak__detachable__context_adc9910c7034d4652881a9e2151e149f8}{rows}}[\mbox{\hyperlink{detachable_8h_a9d147c30c600e763cd4b9f52d8b3df82}{TTAK\_DETACHABLE\_MATRIX\_ROWS}}];}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00137}\mbox{\hyperlink{structttak__detachable__context_ab593f6766b76681753cd854d73740bf5}{00137}}\ \ \ \ \ pthread\_rwlock\_t\ \mbox{\hyperlink{structttak__detachable__context_ab593f6766b76681753cd854d73740bf5}{arena\_lock}};}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00138}\mbox{\hyperlink{structttak__detachable__context_af36a908740cb345512519572b3e36a1a}{00138}}\ \ \ \ \ \mbox{\hyperlink{include_2stdatomic_8h_acc9ed8d56c5c645e7d5503aa72d1da49}{atomic\_uint\_fast64\_t}}\ \mbox{\hyperlink{structttak__detachable__context_af36a908740cb345512519572b3e36a1a}{global\_epoch\_hint}};}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00139}\mbox{\hyperlink{detachable_8h_ac2e1577a34551ffaedf5a16d11bdff0b}{00139}}\ \}\ \mbox{\hyperlink{detachable_8h_ac2e1577a34551ffaedf5a16d11bdff0b}{ttak\_detachable\_context\_t}};}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00140}00140\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00141}00141\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00142}00142\ \textcolor{comment}{\ *\ @brief\ Description\ of\ the\ detachable\ allocation\ returned\ to\ callers.}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00143}00143\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00144}\mbox{\hyperlink{structttak__detachable__allocation}{00144}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__detachable__allocation}{ttak\_detachable\_allocation}}\ \{}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00145}\mbox{\hyperlink{structttak__detachable__allocation_ad957e81919324f41d647b3dc2cd5d762}{00145}}\ \ \ \ \ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{structttak__detachable__allocation_ad957e81919324f41d647b3dc2cd5d762}{data}};}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00146}\mbox{\hyperlink{structttak__detachable__allocation_a9df51d3715c7ead422053578bad9237b}{00146}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structttak__detachable__allocation_a9df51d3715c7ead422053578bad9237b}{size}};}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00147}\mbox{\hyperlink{structttak__detachable__allocation_aa2c9c2cc9386862c10fa560ccd5c5ad0}{00147}}\ \ \ \ \ \mbox{\hyperlink{structttak__detach__status}{ttak\_detach\_status\_t}}\ \mbox{\hyperlink{structttak__detachable__allocation_aa2c9c2cc9386862c10fa560ccd5c5ad0}{detach\_status}};}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00148}\mbox{\hyperlink{structttak__detachable__allocation_a447f45d670b4b81a898284f00239c411}{00148}}\ \ \ \ \ \mbox{\hyperlink{structttak__detachable__cache}{ttak\_detachable\_cache\_t}}\ *\mbox{\hyperlink{structttak__detachable__allocation_a447f45d670b4b81a898284f00239c411}{cache}};}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00149}\mbox{\hyperlink{detachable_8h_a849243c766d591f9c26aab69b9933f1b}{00149}}\ \}\ \mbox{\hyperlink{detachable_8h_a849243c766d591f9c26aab69b9933f1b}{ttak\_detachable\_allocation\_t}};}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00150}00150\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00151}00151\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00152}00152\ \textcolor{comment}{\ *\ @brief\ Initializes\ a\ detachable\ context\ with\ sane\ defaults.}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00153}00153\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00154}\mbox{\hyperlink{detachable_8h_a63f13e49808b766ad47572c4ced69d3f}{00154}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{detachable_8h_a63f13e49808b766ad47572c4ced69d3f}{ttak\_detachable\_context\_init}}(\mbox{\hyperlink{structttak__detachable__context}{ttak\_detachable\_context\_t}}\ *ctx,\ uint32\_t\ flags);}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00155}00155\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00156}00156\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00157}00157\ \textcolor{comment}{\ *\ @brief\ Destroys\ a\ detachable\ context\ and\ releases\ cached\ entries.}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00158}00158\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00159}\mbox{\hyperlink{detachable_8h_abb1325e4df9bb26b2ec336f7659f1647}{00159}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{detachable_8h_abb1325e4df9bb26b2ec336f7659f1647}{ttak\_detachable\_context\_destroy}}(\mbox{\hyperlink{structttak__detachable__context}{ttak\_detachable\_context\_t}}\ *ctx);}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00160}00160\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00161}00161\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00162}00162\ \textcolor{comment}{\ *\ @brief\ Returns\ a\ lazily\ created\ global\ default\ context\ suitable\ for\ most\ users.}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00163}00163\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00164}\mbox{\hyperlink{detachable_8h_a717f497fd4d9c1be7bd16e67c7ec349f}{00164}}\ \mbox{\hyperlink{structttak__detachable__context}{ttak\_detachable\_context\_t}}\ *\mbox{\hyperlink{detachable_8h_a717f497fd4d9c1be7bd16e67c7ec349f}{ttak\_detachable\_context\_default}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00165}00165\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00166}00166\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00167}00167\ \textcolor{comment}{\ *\ @brief\ Initializes\ the\ per-\/context\ cache.}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00168}00168\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00169}\mbox{\hyperlink{detachable_8h_a14d41433944d90fba8f5534cb7d33df9}{00169}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{detachable_8h_a14d41433944d90fba8f5534cb7d33df9}{ttak\_detachable\_cache\_init}}(\mbox{\hyperlink{structttak__detachable__cache}{ttak\_detachable\_cache\_t}}\ *cache,\ \textcolor{keywordtype}{size\_t}\ chunk\_size,\ \textcolor{keywordtype}{size\_t}\ capacity);}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00170}00170\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00171}00171\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00172}00172\ \textcolor{comment}{\ *\ @brief\ Releases\ any\ pending\ cache\ entries\ and\ tears\ down\ synchronization\ primitives.}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00173}00173\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00174}\mbox{\hyperlink{detachable_8h_a67a7a626b3669ea6aaf278066d586e6c}{00174}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{detachable_8h_a67a7a626b3669ea6aaf278066d586e6c}{ttak\_detachable\_cache\_destroy}}(\mbox{\hyperlink{structttak__detachable__context}{ttak\_detachable\_context\_t}}\ *ctx,\ \mbox{\hyperlink{structttak__detachable__cache}{ttak\_detachable\_cache\_t}}\ *cache);}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00175}00175\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00176}00176\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00177}00177\ \textcolor{comment}{\ *\ @brief\ Allocates\ detachable\ memory\ backed\ by\ calloc\ and\ epoch\ protection.}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00178}00178\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00179}\mbox{\hyperlink{detachable_8h_af35aea4b40c5e4dcaff9c3c97091a5f5}{00179}}\ \mbox{\hyperlink{structttak__detachable__allocation}{ttak\_detachable\_allocation\_t}}\ \mbox{\hyperlink{detachable_8h_af35aea4b40c5e4dcaff9c3c97091a5f5}{ttak\_detachable\_mem\_alloc}}(\mbox{\hyperlink{structttak__detachable__context}{ttak\_detachable\_context\_t}}\ *ctx,\ \textcolor{keywordtype}{size\_t}\ size,\ uint64\_t\ epoch\_hint);}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00180}00180\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00181}00181\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00182}00182\ \textcolor{comment}{\ *\ @brief\ Releases\ a\ detachable\ allocation,\ optionally\ routing\ it\ through\ the\ cache.}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00183}00183\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00184}\mbox{\hyperlink{detachable_8h_ae0cb6732fd104bdf0a36c8f10ec7e7df}{00184}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{detachable_8h_ae0cb6732fd104bdf0a36c8f10ec7e7df}{ttak\_detachable\_mem\_free}}(\mbox{\hyperlink{structttak__detachable__context}{ttak\_detachable\_context\_t}}\ *ctx,\ \mbox{\hyperlink{structttak__detachable__allocation}{ttak\_detachable\_allocation\_t}}\ *alloc);}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00185}00185\ }
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00186}00186\ \textcolor{preprocessor}{\#ifndef\ \_WIN32}\textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00187}00187\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00188}00188\ \textcolor{comment}{\ *\ @brief\ Registers\ signal\ handlers\ that\ gracefully\ flush\ detachable\ arenas\ and\ exit.}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00189}00189\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00190}00190\ \textcolor{comment}{\ *\ @param\ signals\ Bitmask\ of\ signals\ to\ intercept.}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00191}00191\ \textcolor{comment}{\ *\ @param\ ret\ Optional\ pointer\ that\ stores\ the\ exit\ status\ to\ use.}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00192}00192\ \textcolor{comment}{\ *\ @return\ 0\ on\ success,\ -\/1\ on\ failure.}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00193}00193\ \textcolor{comment}{\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00194}\mbox{\hyperlink{detachable_8h_a1ecfc3ddf70928f8f6d61b0e7c97bc11}{00194}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{detachable_8h_a1ecfc3ddf70928f8f6d61b0e7c97bc11}{ttak\_hard\_kill\_graceful\_exit}}(sigset\_t\ signals,\ \textcolor{keywordtype}{int}\ *ret);}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00195}00195\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00196}00196\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00197}00197\ \textcolor{comment}{\ *\ @brief\ Registers\ signal\ handlers\ that\ immediately\ exit\ without\ flushing\ arenas.}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00198}00198\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00199}00199\ \textcolor{comment}{\ *\ @param\ signals\ Bitmask\ of\ signals\ to\ intercept.}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00200}00200\ \textcolor{comment}{\ *\ @param\ ret\ Optional\ pointer\ that\ stores\ the\ exit\ status\ to\ use.}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00201}00201\ \textcolor{comment}{\ *\ @return\ 0\ on\ success,\ -\/1\ on\ failure.}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00202}00202\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00203}\mbox{\hyperlink{detachable_8h_ad88699e65105da2cbc3b4afa26c27d57}{00203}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{detachable_8h_ad88699e65105da2cbc3b4afa26c27d57}{ttak\_hard\_kill\_exit}}(sigset\_t\ signals,\ \textcolor{keywordtype}{int}\ *ret);}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00204}00204\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00205}00205\ }
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00206}00206\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00207}00207\ \}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00208}00208\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00209}00209\ }
+\DoxyCodeLine{\Hypertarget{detachable_8h_source_l00210}00210\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ TTAK\_MEM\_DETACHABLE\_H\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

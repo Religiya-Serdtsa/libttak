@@ -1,0 +1,121 @@
+\doxysection{10\+\_\+detachable\+\_\+memory.\+puml}
+\hypertarget{10__detachable__memory_8puml_source}{}\label{10__detachable__memory_8puml_source}\index{blueprints/resource/10\_detachable\_memory.puml@{blueprints/resource/10\_detachable\_memory.puml}}
+\mbox{\hyperlink{10__detachable__memory_8puml}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00001}00001\ @startuml}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00002}00002\ !theme\ plain}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00003}00003\ hide\ empty\ members}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00005}00005\ skinparam\ class\ \{}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00006}00006\ \ \ \ \ BackgroundColor\ white}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00007}00007\ \ \ \ \ BorderColor\ black}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00008}00008\ \}}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00010}00010\ title\ Detachable\ Memory\ \&\ Epoch\ Integration\ [10]}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00012}00012\ package\ "{}Detachable\ Core"{}\ \{}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00014}00014\ \ \ \ \ class\ ttak\_detach\_status\_t\ \{}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00015}00015\ \ \ \ \ \ \ \ \ +\ bits\ :\ uint8\_t}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00016}00016\ \ \ \ \ \ \ \ \ +\ pad[4]\ :\ \_Bool}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00017}00017\ \ \ \ \ \ \ \ \ +\ reset()}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00018}00018\ \ \ \ \ \ \ \ \ +\ mark\_known()}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00019}00019\ \ \ \ \ \ \ \ \ +\ converge()}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00020}00020\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00022}00022\ \ \ \ \ note\ right\ of\ ttak\_detach\_status\_t}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00023}00023\ \ \ \ \ \ \ \ \ Status\ byte\ converges\ to\ UNKNOWN\ unless}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00024}00024\ \ \ \ \ \ \ \ \ the\ STATUS\_KNOWN\ bit\ is\ asserted.\ Partial}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00025}00025\ \ \ \ \ \ \ \ \ cache\ detours\ and\ DETACH\_NOCHECK\ are\ tracked.}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00026}00026\ \ \ \ \ end\ note}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00028}00028\ \ \ \ \ class\ ttak\_detachable\_cache\_t\ \{}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00029}00029\ \ \ \ \ \ \ \ \ +\ chunk\_size\ :\ size\_t}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00030}00030\ \ \ \ \ \ \ \ \ +\ capacity\ :\ size\_t}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00031}00031\ \ \ \ \ \ \ \ \ +\ count\ :\ size\_t}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00032}00032\ \ \ \ \ \ \ \ \ +\ head/tail\ :\ size\_t}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00033}00033\ \ \ \ \ \ \ \ \ +\ slots\ :\ void**}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00034}00034\ \ \ \ \ \ \ \ \ +\ hits/misses\ :\ uint64\_t}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00035}00035\ \ \ \ \ \ \ \ \ +\ lock\ :\ pthread\_mutex\_t}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00036}00036\ \ \ \ \ \ \ \ \ +\ take(requested)}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00037}00037\ \ \ \ \ \ \ \ \ +\ store(ptr,\ size)}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00038}00038\ \ \ \ \ \ \ \ \ +\ drain()}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00039}00039\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00041}00041\ \ \ \ \ class\ ttak\_detachable\_generation\_row\_t\ \{}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00042}00042\ \ \ \ \ \ \ \ \ +\ columns\ :\ void**}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00043}00043\ \ \ \ \ \ \ \ \ +\ len\ :\ size\_t}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00044}00044\ \ \ \ \ \ \ \ \ +\ cap\ :\ size\_t}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00045}00045\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00047}00047\ \ \ \ \ class\ ttak\_detachable\_context\_t\ \{}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00048}00048\ \ \ \ \ \ \ \ \ +\ matrix\_rows\ :\ uint8\_t}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00049}00049\ \ \ \ \ \ \ \ \ +\ active\_row\ :\ uint8\_t}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00050}00050\ \ \ \ \ \ \ \ \ +\ epoch\_delay\ :\ uint16\_t}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00051}00051\ \ \ \ \ \ \ \ \ +\ flags\ :\ uint32\_t}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00052}00052\ \ \ \ \ \ \ \ \ +\ base\_status\ :\ ttak\_detach\_status\_t}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00053}00053\ \ \ \ \ \ \ \ \ +\ small\_cache\ :\ ttak\_detachable\_cache\_t}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00054}00054\ \ \ \ \ \ \ \ \ +\ rows[8]\ :\ ttak\_detachable\_generation\_row\_t}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00055}00055\ \ \ \ \ \ \ \ \ +\ arena\_lock\ :\ pthread\_rwlock\_t}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00056}00056\ \ \ \ \ \ \ \ \ +\ global\_epoch\_hint\ :\ atomic\_uint\_fast64\_t}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00057}00057\ \ \ \ \ \ \ \ \ +\ context\_init(flags)}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00058}00058\ \ \ \ \ \ \ \ \ +\ mem\_alloc(sz,\ epoch\_hint)}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00059}00059\ \ \ \ \ \ \ \ \ +\ mem\_free(allocation)}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00060}00060\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00061}00061\ }
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00062}00062\ \ \ \ \ class\ ttak\_detachable\_allocation\_t\ \{}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00063}00063\ \ \ \ \ \ \ \ \ +\ data\ :\ void*}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00064}00064\ \ \ \ \ \ \ \ \ +\ size\ :\ size\_t}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00065}00065\ \ \ \ \ \ \ \ \ +\ detach\_status\ :\ ttak\_detach\_status\_t}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00066}00066\ \ \ \ \ \ \ \ \ +\ cache\ :\ ttak\_detachable\_cache\_t*}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00067}00067\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00069}00069\ \ \ \ \ ttak\_detachable\_context\_t\ o-\/-\/\ ttak\_detachable\_cache\_t\ :\ "{}owns\ small-\/cache"{}}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00070}00070\ \ \ \ \ ttak\_detachable\_context\_t\ o-\/-\/\ ttak\_detachable\_generation\_row\_t\ :\ "{}tracks\ arena\ rows"{}}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00071}00071\ \ \ \ \ ttak\_detachable\_context\_t\ o-\/-\/\ ttak\_detach\_status\_t\ :\ "{}base\ status\ template"{}}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00072}00072\ \ \ \ \ ttak\_detachable\_context\_t\ -\/-\/>\ ttak\_detachable\_allocation\_t\ :\ "{}produces"{}}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00073}00073\ \ \ \ \ ttak\_detachable\_allocation\_t\ o-\/-\/\ ttak\_detach\_status\_t}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00074}00074\ \}}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00076}00076\ package\ "{}Epoch\ \&\ Signals"{}\ \{}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00077}00077\ \ \ \ \ class\ ttak\_epoch\_manager\_t\ \{}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00078}00078\ \ \ \ \ \ \ \ \ +\ global\_epoch\ :\ atomic\_uint}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00079}00079\ \ \ \ \ \ \ \ \ +\ retired\_queues[3]\ :\ \_Atomic\ ttak\_retired\_node\_t*}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00080}00080\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00082}00082\ \ \ \ \ class\ ttak\_signal\_guard\_t\ \{}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00083}00083\ \ \ \ \ \ \ \ \ +\ triggered\ :\ atomic\_bool}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00084}00084\ \ \ \ \ \ \ \ \ +\ graceful\ :\ \_Bool}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00085}00085\ \ \ \ \ \ \ \ \ +\ exit\_code\ :\ int}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00086}00086\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00087}00087\ }
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00088}00088\ \ \ \ \ class\ "{}Signal\ Hooks"{}\ as\ Hooks\ \{}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00089}00089\ \ \ \ \ \ \ \ \ +\ ttak\_hard\_kill\_graceful\_exit(signals,\ ret)}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00090}00090\ \ \ \ \ \ \ \ \ +\ ttak\_hard\_kill\_exit(signals,\ ret)}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00091}00091\ \ \ \ \ \ \ \ \ +\ ttak\_detachable\_global\_shutdown(flush)}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00092}00092\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00094}00094\ \ \ \ \ Hooks\ ..>\ ttak\_signal\_guard\_t}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00095}00095\ \ \ \ \ Hooks\ ..>\ ttak\_detachable\_context\_t\ :\ "{}flush\ caches/rows"{}}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00096}00096\ \ \ \ \ ttak\_detachable\_context\_t\ ..>\ ttak\_epoch\_manager\_t\ :\ "{}retire/free"{}}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00097}00097\ \}}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00098}00098\ }
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00099}00099\ note\ right\ of\ ttak\_detachable\_cache\_t}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00100}00100\ \ \ \ \ 16-\/byte-\/or-\/less\ chunks\ re-\/enter\ through}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00101}00101\ \ \ \ \ an\ approximate\ LRU\ queue.\ Urgent\ arenas}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00102}00102\ \ \ \ \ evict\ aggressively;\ async-\/opt\ arenas}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00103}00103\ \ \ \ \ call\ madvise(MADV\_DONTFORK).}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00104}00104\ end\ note}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00105}00105\ }
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00106}00106\ legend\ right}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00107}00107\ \ \ **Lifecycle**}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00108}00108\ \ \ 1.\ Context\ initialized\ (flags\ define\ epoch/async\ rules).}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00109}00109\ \ \ 2.\ Allocation\ tries\ small-\/cache,\ else\ calloc\ +\ epoch\ enter/exit.}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00110}00110\ \ \ 3.\ Pointer\ tracked\ inside\ 2D\ arena\ rows\ for\ generation\ flush.}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00111}00111\ \ \ 4.\ Free\ path\ caches\ tiny\ chunks\ unless\ DETACH\_NOCHECK\ is\ set.}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00112}00112\ \ \ 5.\ Signal\ hooks\ drain\ caches;\ graceful\ mode\ also\ flushes\ rows.}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00113}00113\ endlegend}
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00114}00114\ }
+\DoxyCodeLine{\Hypertarget{10__detachable__memory_8puml_source_l00115}00115\ @enduml}
+
+\end{DoxyCode}

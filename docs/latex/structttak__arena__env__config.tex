@@ -1,0 +1,99 @@
+\doxysection{ttak\+\_\+arena\+\_\+env\+\_\+config Struct Reference}
+\hypertarget{structttak__arena__env__config}{}\label{structttak__arena__env__config}\index{ttak\_arena\_env\_config@{ttak\_arena\_env\_config}}
+
+
+Configuration for arena helpers.  
+
+
+
+
+{\ttfamily \#include $<$arena\+\_\+helper.\+h$>$}
+
+
+
+Collaboration diagram for ttak\+\_\+arena\+\_\+env\+\_\+config\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=345pt]{structttak__arena__env__config__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4}{ttak\+\_\+epoch\+\_\+gc\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__arena__env__config_ae6f51b622fa0539e034351e8044446b3}{gc}}
+\item 
+size\+\_\+t \mbox{\hyperlink{structttak__arena__env__config_a2ca7af4676546bd93d1ce7defc10147e}{generation\+\_\+bytes}}
+\item 
+size\+\_\+t \mbox{\hyperlink{structttak__arena__env__config_ad449cec3dd8880161a44ae2206666292}{chunk\+\_\+bytes}}
+\item 
+\mbox{\hyperlink{mem_8h_a05020ce7df6068f7d7f515ee4ea9cdad}{ttak\+\_\+mem\+\_\+flags\+\_\+t}} \mbox{\hyperlink{structttak__arena__env__config_a09d5b498f40c94842de4ed6bfbf9db90}{alloc\+\_\+flags}}
+\item 
+uint64\+\_\+t \mbox{\hyperlink{structttak__arena__env__config_a06ddb8e8008c3ac9dda742f80f225799}{lifetime\+\_\+ticks}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Configuration for arena helpers. 
+
+Definition at line \mbox{\hyperlink{arena__helper_8h_source_l00014}{14}} of file \mbox{\hyperlink{arena__helper_8h_source}{arena\+\_\+helper.\+h}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structttak__arena__env__config_a09d5b498f40c94842de4ed6bfbf9db90}\label{structttak__arena__env__config_a09d5b498f40c94842de4ed6bfbf9db90} 
+\index{ttak\_arena\_env\_config@{ttak\_arena\_env\_config}!alloc\_flags@{alloc\_flags}}
+\index{alloc\_flags@{alloc\_flags}!ttak\_arena\_env\_config@{ttak\_arena\_env\_config}}
+\doxysubsubsection{\texorpdfstring{alloc\_flags}{alloc\_flags}}
+{\footnotesize\ttfamily \mbox{\hyperlink{mem_8h_a05020ce7df6068f7d7f515ee4ea9cdad}{ttak\+\_\+mem\+\_\+flags\+\_\+t}} ttak\+\_\+arena\+\_\+env\+\_\+config\+::alloc\+\_\+flags}
+
+Flags passed to ttak\+\_\+mem\+\_\+alloc\+\_\+with\+\_\+flags. 
+
+Definition at line \mbox{\hyperlink{arena__helper_8h_source_l00018}{18}} of file \mbox{\hyperlink{arena__helper_8h_source}{arena\+\_\+helper.\+h}}.
+
+\Hypertarget{structttak__arena__env__config_ad449cec3dd8880161a44ae2206666292}\label{structttak__arena__env__config_ad449cec3dd8880161a44ae2206666292} 
+\index{ttak\_arena\_env\_config@{ttak\_arena\_env\_config}!chunk\_bytes@{chunk\_bytes}}
+\index{chunk\_bytes@{chunk\_bytes}!ttak\_arena\_env\_config@{ttak\_arena\_env\_config}}
+\doxysubsubsection{\texorpdfstring{chunk\_bytes}{chunk\_bytes}}
+{\footnotesize\ttfamily size\+\_\+t ttak\+\_\+arena\+\_\+env\+\_\+config\+::chunk\+\_\+bytes}
+
+Default chunk size carved from a generation. 
+
+Definition at line \mbox{\hyperlink{arena__helper_8h_source_l00017}{17}} of file \mbox{\hyperlink{arena__helper_8h_source}{arena\+\_\+helper.\+h}}.
+
+\Hypertarget{structttak__arena__env__config_ae6f51b622fa0539e034351e8044446b3}\label{structttak__arena__env__config_ae6f51b622fa0539e034351e8044446b3} 
+\index{ttak\_arena\_env\_config@{ttak\_arena\_env\_config}!gc@{gc}}
+\index{gc@{gc}!ttak\_arena\_env\_config@{ttak\_arena\_env\_config}}
+\doxysubsubsection{\texorpdfstring{gc}{gc}}
+{\footnotesize\ttfamily \mbox{\hyperlink{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4}{ttak\+\_\+epoch\+\_\+gc\+\_\+t}}\texorpdfstring{$\ast$}{*} ttak\+\_\+arena\+\_\+env\+\_\+config\+::gc}
+
+Optional external GC context. 
+
+Definition at line \mbox{\hyperlink{arena__helper_8h_source_l00015}{15}} of file \mbox{\hyperlink{arena__helper_8h_source}{arena\+\_\+helper.\+h}}.
+
+\Hypertarget{structttak__arena__env__config_a2ca7af4676546bd93d1ce7defc10147e}\label{structttak__arena__env__config_a2ca7af4676546bd93d1ce7defc10147e} 
+\index{ttak\_arena\_env\_config@{ttak\_arena\_env\_config}!generation\_bytes@{generation\_bytes}}
+\index{generation\_bytes@{generation\_bytes}!ttak\_arena\_env\_config@{ttak\_arena\_env\_config}}
+\doxysubsubsection{\texorpdfstring{generation\_bytes}{generation\_bytes}}
+{\footnotesize\ttfamily size\+\_\+t ttak\+\_\+arena\+\_\+env\+\_\+config\+::generation\+\_\+bytes}
+
+Capacity of each generation buffer. 
+
+Definition at line \mbox{\hyperlink{arena__helper_8h_source_l00016}{16}} of file \mbox{\hyperlink{arena__helper_8h_source}{arena\+\_\+helper.\+h}}.
+
+\Hypertarget{structttak__arena__env__config_a06ddb8e8008c3ac9dda742f80f225799}\label{structttak__arena__env__config_a06ddb8e8008c3ac9dda742f80f225799} 
+\index{ttak\_arena\_env\_config@{ttak\_arena\_env\_config}!lifetime\_ticks@{lifetime\_ticks}}
+\index{lifetime\_ticks@{lifetime\_ticks}!ttak\_arena\_env\_config@{ttak\_arena\_env\_config}}
+\doxysubsubsection{\texorpdfstring{lifetime\_ticks}{lifetime\_ticks}}
+{\footnotesize\ttfamily uint64\+\_\+t ttak\+\_\+arena\+\_\+env\+\_\+config\+::lifetime\+\_\+ticks}
+
+Lifetime hint for allocations. 
+
+Definition at line \mbox{\hyperlink{arena__helper_8h_source_l00019}{19}} of file \mbox{\hyperlink{arena__helper_8h_source}{arena\+\_\+helper.\+h}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/ttak/mem/\mbox{\hyperlink{arena__helper_8h}{arena\+\_\+helper.\+h}}\end{DoxyCompactItemize}

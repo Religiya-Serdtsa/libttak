@@ -1,0 +1,138 @@
+\doxysection{include/ttak/phys/mem/buddy.h File Reference}
+\hypertarget{buddy_8h}{}\label{buddy_8h}\index{include/ttak/phys/mem/buddy.h@{include/ttak/phys/mem/buddy.h}}
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+Include dependency graph for buddy.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=209pt]{buddy_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=222pt]{buddy_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structttak__mem__req}{ttak\+\_\+mem\+\_\+req}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{buddy_8h_ae47a1cb6076cec70cf9ea8efc1d5f3ff}{EMBEDDED}}~0
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef enum \mbox{\hyperlink{buddy_8h_a3273cde05aae384fc401209911116e37}{ttak\+\_\+priority}} \mbox{\hyperlink{buddy_8h_ae3b1c4c90dae1308675a4543d9f7c932}{ttak\+\_\+priority\+\_\+t}}
+\item 
+typedef struct \mbox{\hyperlink{structttak__mem__req}{ttak\+\_\+mem\+\_\+req}} \mbox{\hyperlink{buddy_8h_ad5a0d5a5827e4cf192c4e9e021cc1aec}{ttak\+\_\+mem\+\_\+req\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{buddy_8h_a3273cde05aae384fc401209911116e37}{ttak\+\_\+priority}} \{ \mbox{\hyperlink{buddy_8h_a3273cde05aae384fc401209911116e37aefaf60fe23bce74faa038d73be8d5e0f}{TTAK\+\_\+\+PRIORITY\+\_\+\+BEST\+\_\+\+FIT}}
+, \mbox{\hyperlink{buddy_8h_a3273cde05aae384fc401209911116e37a5c22bf096c857267a336849ee447640e}{TTAK\+\_\+\+PRIORITY\+\_\+\+WORST\+\_\+\+FIT}}
+, \mbox{\hyperlink{buddy_8h_a3273cde05aae384fc401209911116e37a00db2b92a5459006a7e4fd82e6e4d0c3}{TTAK\+\_\+\+PRIORITY\+\_\+\+FIRST\+\_\+\+FIT}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{buddy_8h_ae83acf1c249899b6fcfc4580dbf0b082}{ttak\+\_\+mem\+\_\+buddy\+\_\+init}} (void \texorpdfstring{$\ast$}{*}pool\+\_\+start, size\+\_\+t pool\+\_\+len, int embedded\+\_\+mode)
+\item 
+void \mbox{\hyperlink{buddy_8h_a9cc9a5945e39175f56fbf3ee961ff546}{ttak\+\_\+mem\+\_\+buddy\+\_\+set\+\_\+pool}} (void \texorpdfstring{$\ast$}{*}pool\+\_\+start, size\+\_\+t pool\+\_\+len)
+\item 
+void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{buddy_8h_a8d680ee1076c6ff365cdb72e6627287e}{ttak\+\_\+mem\+\_\+buddy\+\_\+alloc}} (const \mbox{\hyperlink{buddy_8h_ad5a0d5a5827e4cf192c4e9e021cc1aec}{ttak\+\_\+mem\+\_\+req\+\_\+t}} \texorpdfstring{$\ast$}{*}req)
+\item 
+void \mbox{\hyperlink{buddy_8h_a01404719f60c2c150a3b0170d7528be5}{ttak\+\_\+mem\+\_\+buddy\+\_\+free}} (void \texorpdfstring{$\ast$}{*}ptr)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{buddy_8h_ae47a1cb6076cec70cf9ea8efc1d5f3ff}\label{buddy_8h_ae47a1cb6076cec70cf9ea8efc1d5f3ff} 
+\index{buddy.h@{buddy.h}!EMBEDDED@{EMBEDDED}}
+\index{EMBEDDED@{EMBEDDED}!buddy.h@{buddy.h}}
+\doxysubsubsection{\texorpdfstring{EMBEDDED}{EMBEDDED}}
+{\footnotesize\ttfamily \#define EMBEDDED~0}
+
+
+
+Definition at line \mbox{\hyperlink{buddy_8h_source_l00012}{12}} of file \mbox{\hyperlink{buddy_8h_source}{buddy.\+h}}.
+
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{buddy_8h_ad5a0d5a5827e4cf192c4e9e021cc1aec}\label{buddy_8h_ad5a0d5a5827e4cf192c4e9e021cc1aec} 
+\index{buddy.h@{buddy.h}!ttak\_mem\_req\_t@{ttak\_mem\_req\_t}}
+\index{ttak\_mem\_req\_t@{ttak\_mem\_req\_t}!buddy.h@{buddy.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_mem\_req\_t}{ttak\_mem\_req\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__mem__req}{ttak\+\_\+mem\+\_\+req}} \mbox{\hyperlink{buddy_8h_ad5a0d5a5827e4cf192c4e9e021cc1aec}{ttak\+\_\+mem\+\_\+req\+\_\+t}}}
+
+\Hypertarget{buddy_8h_ae3b1c4c90dae1308675a4543d9f7c932}\label{buddy_8h_ae3b1c4c90dae1308675a4543d9f7c932} 
+\index{buddy.h@{buddy.h}!ttak\_priority\_t@{ttak\_priority\_t}}
+\index{ttak\_priority\_t@{ttak\_priority\_t}!buddy.h@{buddy.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_priority\_t}{ttak\_priority\_t}}
+{\footnotesize\ttfamily typedef enum \mbox{\hyperlink{buddy_8h_a3273cde05aae384fc401209911116e37}{ttak\+\_\+priority}} \mbox{\hyperlink{buddy_8h_ae3b1c4c90dae1308675a4543d9f7c932}{ttak\+\_\+priority\+\_\+t}}}
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{buddy_8h_a3273cde05aae384fc401209911116e37}\label{buddy_8h_a3273cde05aae384fc401209911116e37} 
+\index{buddy.h@{buddy.h}!ttak\_priority@{ttak\_priority}}
+\index{ttak\_priority@{ttak\_priority}!buddy.h@{buddy.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_priority}{ttak\_priority}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{buddy_8h_a3273cde05aae384fc401209911116e37}{ttak\+\_\+priority}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_PRIORITY\_BEST\_FIT@{TTAK\_PRIORITY\_BEST\_FIT}!buddy.h@{buddy.h}}\index{buddy.h@{buddy.h}!TTAK\_PRIORITY\_BEST\_FIT@{TTAK\_PRIORITY\_BEST\_FIT}}}\Hypertarget{buddy_8h_a3273cde05aae384fc401209911116e37aefaf60fe23bce74faa038d73be8d5e0f}\label{buddy_8h_a3273cde05aae384fc401209911116e37aefaf60fe23bce74faa038d73be8d5e0f} 
+TTAK\+\_\+\+PRIORITY\+\_\+\+BEST\+\_\+\+FIT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_PRIORITY\_WORST\_FIT@{TTAK\_PRIORITY\_WORST\_FIT}!buddy.h@{buddy.h}}\index{buddy.h@{buddy.h}!TTAK\_PRIORITY\_WORST\_FIT@{TTAK\_PRIORITY\_WORST\_FIT}}}\Hypertarget{buddy_8h_a3273cde05aae384fc401209911116e37a5c22bf096c857267a336849ee447640e}\label{buddy_8h_a3273cde05aae384fc401209911116e37a5c22bf096c857267a336849ee447640e} 
+TTAK\+\_\+\+PRIORITY\+\_\+\+WORST\+\_\+\+FIT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_PRIORITY\_FIRST\_FIT@{TTAK\_PRIORITY\_FIRST\_FIT}!buddy.h@{buddy.h}}\index{buddy.h@{buddy.h}!TTAK\_PRIORITY\_FIRST\_FIT@{TTAK\_PRIORITY\_FIRST\_FIT}}}\Hypertarget{buddy_8h_a3273cde05aae384fc401209911116e37a00db2b92a5459006a7e4fd82e6e4d0c3}\label{buddy_8h_a3273cde05aae384fc401209911116e37a00db2b92a5459006a7e4fd82e6e4d0c3} 
+TTAK\+\_\+\+PRIORITY\+\_\+\+FIRST\+\_\+\+FIT&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{buddy_8h_source_l00015}{15}} of file \mbox{\hyperlink{buddy_8h_source}{buddy.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{buddy_8h_a8d680ee1076c6ff365cdb72e6627287e}\label{buddy_8h_a8d680ee1076c6ff365cdb72e6627287e} 
+\index{buddy.h@{buddy.h}!ttak\_mem\_buddy\_alloc@{ttak\_mem\_buddy\_alloc}}
+\index{ttak\_mem\_buddy\_alloc@{ttak\_mem\_buddy\_alloc}!buddy.h@{buddy.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_mem\_buddy\_alloc()}{ttak\_mem\_buddy\_alloc()}}
+{\footnotesize\ttfamily void \texorpdfstring{$\ast$}{*} ttak\+\_\+mem\+\_\+buddy\+\_\+alloc (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{buddy_8h_ad5a0d5a5827e4cf192c4e9e021cc1aec}{ttak\+\_\+mem\+\_\+req\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{req }\end{DoxyParamCaption})}
+
+\Hypertarget{buddy_8h_a01404719f60c2c150a3b0170d7528be5}\label{buddy_8h_a01404719f60c2c150a3b0170d7528be5} 
+\index{buddy.h@{buddy.h}!ttak\_mem\_buddy\_free@{ttak\_mem\_buddy\_free}}
+\index{ttak\_mem\_buddy\_free@{ttak\_mem\_buddy\_free}!buddy.h@{buddy.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_mem\_buddy\_free()}{ttak\_mem\_buddy\_free()}}
+{\footnotesize\ttfamily void ttak\+\_\+mem\+\_\+buddy\+\_\+free (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{ptr }\end{DoxyParamCaption})}
+
+\Hypertarget{buddy_8h_ae83acf1c249899b6fcfc4580dbf0b082}\label{buddy_8h_ae83acf1c249899b6fcfc4580dbf0b082} 
+\index{buddy.h@{buddy.h}!ttak\_mem\_buddy\_init@{ttak\_mem\_buddy\_init}}
+\index{ttak\_mem\_buddy\_init@{ttak\_mem\_buddy\_init}!buddy.h@{buddy.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_mem\_buddy\_init()}{ttak\_mem\_buddy\_init()}}
+{\footnotesize\ttfamily void ttak\+\_\+mem\+\_\+buddy\+\_\+init (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{pool\+\_\+start,  }\item[{size\+\_\+t}]{pool\+\_\+len,  }\item[{int}]{embedded\+\_\+mode }\end{DoxyParamCaption})}
+
+\Hypertarget{buddy_8h_a9cc9a5945e39175f56fbf3ee961ff546}\label{buddy_8h_a9cc9a5945e39175f56fbf3ee961ff546} 
+\index{buddy.h@{buddy.h}!ttak\_mem\_buddy\_set\_pool@{ttak\_mem\_buddy\_set\_pool}}
+\index{ttak\_mem\_buddy\_set\_pool@{ttak\_mem\_buddy\_set\_pool}!buddy.h@{buddy.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_mem\_buddy\_set\_pool()}{ttak\_mem\_buddy\_set\_pool()}}
+{\footnotesize\ttfamily void ttak\+\_\+mem\+\_\+buddy\+\_\+set\+\_\+pool (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{pool\+\_\+start,  }\item[{size\+\_\+t}]{pool\+\_\+len }\end{DoxyParamCaption})}
+
