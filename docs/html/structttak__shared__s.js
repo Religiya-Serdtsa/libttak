@@ -1,6 +1,7 @@
 var structttak__shared__s =
 [
     [ "access", "structttak__shared__s.html#a42f2e13886e5802246e449e67eef376e", null ],
+    [ "access_ebr", "structttak__shared__s.html#a9645bfee9cee6ff603729da217b4242c", null ],
     [ "add_owner", "structttak__shared__s.html#aa3ed576e6146a3d1f6d1a22d19d5d5cb", null ],
     [ "allocate", "structttak__shared__s.html#a8a74b0b7c836d561d50adb7c2fad0324", null ],
     [ "allocate_typed", "structttak__shared__s.html#a2b93d3794fba03f6a5fe3a77d8a89666", null ],
@@ -10,6 +11,9 @@ var structttak__shared__s =
     [ "level", "structttak__shared__s.html#ac1587dc550d76c0aa66b5634f3952227", null ],
     [ "owners_mask", "structttak__shared__s.html#a90b2c98f4e669cf13405e2dc67d8ba13", null ],
     [ "release", "structttak__shared__s.html#a1c3be42a22a37a517e0ce1fc309b15fe", null ],
+    [ "release_ebr", "structttak__shared__s.html#aa66a52e872be2be1cfa08dfc90d7b034", null ],
+    [ "retire", "structttak__shared__s.html#af27bf59bcb443a26d2913e63d8ed1e27", null ],
+    [ "retired_ptr", "structttak__shared__s.html#ad93816a1c214aad98415fc92fea6a9f1", null ],
     [ "rwlock", "structttak__shared__s.html#a755e6430599aa01a19ce36b3730f5b92", null ],
     [ "set_atomic_read", "structttak__shared__s.html#a4a8ff886d5db811829985c2a1ac78bff", null ],
     [ "set_ro", "structttak__shared__s.html#a69b1a845bf81bf13089f9053935ff755", null ],

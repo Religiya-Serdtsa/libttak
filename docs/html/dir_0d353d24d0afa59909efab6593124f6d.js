@@ -37,5 +37,10 @@ var dir_0d353d24d0afa59909efab6593124f6d =
     [ "35-context-bridge", "dir_4d1d339a836aabe3ea7426854f495062.html", null ],
     [ "36-trace-memory", "dir_edd4352b3ebf48f32414131210e596c2.html", null ],
     [ "37-shared-memory-ownership", "dir_07c02e99f16d379c6b4c012a89726eb2.html", null ],
+    [ "38-ebr-shared", "dir_2e2c87474769ac992cecc0a7f80aa005.html", null ],
+    [ "39-detachable-memory", "dir_8d3812b53f84acb9e148ac2ff198340a.html", null ],
+    [ "40-arena-memory", "dir_c03a32ac37178602651a0810a724fdd6.html", null ],
+    [ "41-io-network-stack", "dir_440562e819a7ecef357014e34fa97ab6.html", null ],
+    [ "42-io-guarded-streams", "dir_74699fa1f55476b507556b4ed04e3463.html", null ],
     [ "DANGEROUS", "dir_a7b74cb14d16019b23286ede1db62264.html", null ]
 ];

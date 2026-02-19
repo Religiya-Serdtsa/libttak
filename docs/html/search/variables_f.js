@@ -1,21 +1,11 @@
 var searchData=
 [
-  ['p_0',['p',['../structttak__prime__factor__big__t.html#a9e417b434396f8acdbf2ae9d494ffd65',1,'ttak_prime_factor_big_t::p'],['../structttak__prime__factor__t.html#a2fed32dabe698ec2175b2147f979937c',1,'ttak_prime_factor_t::p']]],
-  ['padding_1',['padding',['../struct__node.html#a0bc4ccf390e9a7c9395184d1c51e9172',1,'_node::padding'],['../structttak__map__t.html#adc5832eca0702fc73ce1bac9df5556b8',1,'ttak_map_t::padding'],['../structttak__bigcomplex.html#acbf33dbf892c024cdc6c3b0a2153bb96',1,'ttak_bigcomplex::padding'],['../structttak__bigint.html#a8fbea7942dc9eaf6ee2ae942cd1d2b34',1,'ttak_bigint::padding'],['../structttak__bigmul.html#ae0c1ada40c2ad387426dacb94af5744e',1,'ttak_bigmul::padding'],['../structttak__bigreal.html#a03842a3b24f4f4c6989bc89175452478',1,'ttak_bigreal::padding']]],
-  ['parent_2',['parent',['../structttak__ast__node.html#aefdb65fdbe23f369e314e00bada4228d',1,'ttak_ast_node']]],
-  ['pin_5fcount_3',['pin_count',['../structttak__unsafe__region.html#a9d0037c98f07c17f86b7a50380894c00',1,'ttak_unsafe_region::pin_count'],['../structttak__mem__header__t.html#a6f56f8247cfdee283312f6d76b0625a1',1,'ttak_mem_header_t::pin_count']]],
-  ['policy_5fflags_4',['policy_flags',['../structttak__owner.html#a870e95008012760ad3712fe902a39c20',1,'ttak_owner']]],
-  ['pool_5',['pool',['../structttak__worker.html#ad70ba5d3a87f46d97926801a3787085b',1,'ttak_worker']]],
-  ['pool_5flock_6',['pool_lock',['../structttak__thread__pool.html#a7a896c31172e54ba5b8c541955ce3061',1,'ttak_thread_pool']]],
-  ['pop_7',['pop',['../struct____internal__ttak__proc__priority__queue__t.html#a5030da90c871eef34c5c2f6cc371dfe3',1,'__internal_ttak_proc_priority_queue_t']]],
-  ['pop_5fblocking_8',['pop_blocking',['../struct____internal__ttak__proc__priority__queue__t.html#a5746fafea46762105cb4047a777275a7',1,'__internal_ttak_proc_priority_queue_t']]],
-  ['pressure_5fthreshold_9',['pressure_threshold',['../structttak__mem__tree.html#acc33637b86a2992c5d7f46679624d2c9',1,'ttak_mem_tree']]],
-  ['prev_10',['prev',['../structttak__mem__node.html#acb2b54c056a6a3d13af15e476e96888b',1,'ttak_mem_node']]],
-  ['primitive_5froot_11',['primitive_root',['../structttak__ntt__prime.html#a9b8cd05275c746fe6ed2a8a99492d36c',1,'ttak_ntt_prime']]],
-  ['priority_12',['priority',['../struct____internal__ttak__qnode__t.html#ab72f67b87a5ededef5a7b13e719b7a97',1,'__internal_ttak_qnode_t']]],
-  ['product_13',['product',['../structttak__bigmul.html#aca0681bb45e464d0194f7a7dd4b0355c',1,'ttak_bigmul']]],
-  ['promise_14',['promise',['../structttak__worker__wrapper.html#ac9fe79d88ef76f3726f154afac405ad1',1,'ttak_worker_wrapper']]],
-  ['promoted_15',['promoted',['../structttak__stats__ext.html#a4eaa5d3938a17332a42b11e453c5c37c',1,'ttak_stats_ext']]],
-  ['ptr_16',['ptr',['../structttak__mem__node.html#a23a25a9a5600d18e2666c96ad38608e5',1,'ttak_mem_node::ptr'],['../structttak__unsafe__region.html#aadf750e793b69d9a6cbe8e13dfe386ff',1,'ttak_unsafe_region::ptr']]],
-  ['push_17',['push',['../struct____internal__ttak__proc__priority__queue__t.html#a6e905df5cb0dd39ba5e87a656d8213d5',1,'__internal_ttak_proc_priority_queue_t']]]
+  ['order_0',['order',['../structttak__bplus__tree.html#ae2be5027a9c0571321a08ea639e8c92d',1,'ttak_bplus_tree']]],
+  ['output_1',['output',['../structttak__accel__batch__item.html#a827c6f868d56e006a6e77d15b17a2a04',1,'ttak_accel_batch_item']]],
+  ['output_5flen_2',['output_len',['../structttak__accel__batch__item.html#acbda298b4da4bfaa53eb1cd70f6866da',1,'ttak_accel_batch_item']]],
+  ['owner_3',['owner',['../structttak__io__guard.html#adb0557e8d69c41f6263140ab13b2e7a3',1,'ttak_io_guard::owner'],['../structttak__net__guard__snapshot.html#a684e5929a6878481c371014cd8b5c682',1,'ttak_net_guard_snapshot::owner'],['../structttak__net__session.html#a863cd166c3f9a81b48cf7c13b38dda76',1,'ttak_net_session::owner']]],
+  ['owner_5ftag_4',['owner_tag',['../structttak__mem__req.html#ab0b15a9770490f5244960a5522b16c9a',1,'ttak_mem_req']]],
+  ['owners_5fmask_5',['owners_mask',['../structttak__shared__s.html#a90b2c98f4e669cf13405e2dc67d8ba13',1,'ttak_shared_s']]],
+  ['ownership_5fside_6',['ownership_side',['../structttak__context.html#ab59c21eba6f2ec4ff5416e38287bbea0',1,'ttak_context']]],
+  ['owns_5fgc_7',['owns_gc',['../structttak__arena__env.html#a59d55b9b151db4ea8f46e7cd32d4fb5f',1,'ttak_arena_env']]]
 ];

@@ -1,0 +1,153 @@
+\doxysection{include/ttak/io/zerocopy.h File Reference}
+\hypertarget{zerocopy_8h}{}\label{zerocopy_8h}\index{include/ttak/io/zerocopy.h@{include/ttak/io/zerocopy.h}}
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$ttak/io/io.\+h$>$}\newline
+Include dependency graph for zerocopy.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{zerocopy_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=221pt]{zerocopy_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structttak__io__zerocopy__region}{ttak\+\_\+io\+\_\+zerocopy\+\_\+region}}
+\begin{DoxyCompactList}\small\item\em Temporary zero-\/copy receive window allocated in a detachable arena. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{zerocopy_8h_a4d70d50f11b58318b48d0c8f4dcc4c8a}{TTAK\+\_\+\+IO\+\_\+\+ZC\+\_\+\+MAX\+\_\+\+IOV}}~4U
+\item 
+\#define \mbox{\hyperlink{zerocopy_8h_a1c86efcf44cf007d8e465e84a17d26fc}{TTAK\+\_\+\+IO\+\_\+\+ZC\+\_\+\+SEG\+\_\+\+SHIFT}}~12U
+\item 
+\#define \mbox{\hyperlink{zerocopy_8h_ad8cc689de1802af2bd3be73ed44bd180}{TTAK\+\_\+\+IO\+\_\+\+ZC\+\_\+\+SEG\+\_\+\+BYTES}}~(1U $<$$<$ \mbox{\hyperlink{zerocopy_8h_a1c86efcf44cf007d8e465e84a17d26fc}{TTAK\+\_\+\+IO\+\_\+\+ZC\+\_\+\+SEG\+\_\+\+SHIFT}})
+\item 
+\#define \mbox{\hyperlink{zerocopy_8h_aacb73531e59262e89946734c19b9c46c}{TTAK\+\_\+\+IO\+\_\+\+ZC\+\_\+\+SEG\+\_\+\+MASK}}~(\mbox{\hyperlink{zerocopy_8h_ad8cc689de1802af2bd3be73ed44bd180}{TTAK\+\_\+\+IO\+\_\+\+ZC\+\_\+\+SEG\+\_\+\+BYTES}} -\/ 1U)
+\item 
+\#define \mbox{\hyperlink{zerocopy_8h_ad0359daf789a07df8e98dcb86bf5244b}{TTAK\+\_\+\+IO\+\_\+\+ZC\+\_\+\+MAX\+\_\+\+SEGMENTS}}~32U
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \mbox{\hyperlink{structttak__io__zerocopy__region}{ttak\+\_\+io\+\_\+zerocopy\+\_\+region}} \mbox{\hyperlink{zerocopy_8h_a02af7635ee18d5bfac08b8c241523388}{ttak\+\_\+io\+\_\+zerocopy\+\_\+region\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Temporary zero-\/copy receive window allocated in a detachable arena. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{zerocopy_8h_ad9bf6c246671e8221f7d1dfcce554c6b}{ttak\+\_\+io\+\_\+zerocopy\+\_\+region\+\_\+init}} (\mbox{\hyperlink{zerocopy_8h_a02af7635ee18d5bfac08b8c241523388}{ttak\+\_\+io\+\_\+zerocopy\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}region)
+\begin{DoxyCompactList}\small\item\em Initializes a region so it can be reused across recv operations. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} \mbox{\hyperlink{zerocopy_8h_a702d6206c55a57a0f4ede7eb46a624fc}{ttak\+\_\+io\+\_\+zerocopy\+\_\+recv\+\_\+fd}} (int fd, \mbox{\hyperlink{zerocopy_8h_a02af7635ee18d5bfac08b8c241523388}{ttak\+\_\+io\+\_\+zerocopy\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}region, size\+\_\+t max\+\_\+len, int flags, uint64\+\_\+t now)
+\begin{DoxyCompactList}\small\item\em Receives data from {\ttfamily fd} into a detachable buffer without copying back into user memory. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{zerocopy_8h_a5c546b073bf2b2e6c5d73225f46a658a}{ttak\+\_\+io\+\_\+zerocopy\+\_\+release}} (\mbox{\hyperlink{zerocopy_8h_a02af7635ee18d5bfac08b8c241523388}{ttak\+\_\+io\+\_\+zerocopy\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}region)
+\begin{DoxyCompactList}\small\item\em Releases resources captured during recv. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{zerocopy_8h_a4d70d50f11b58318b48d0c8f4dcc4c8a}\label{zerocopy_8h_a4d70d50f11b58318b48d0c8f4dcc4c8a} 
+\index{zerocopy.h@{zerocopy.h}!TTAK\_IO\_ZC\_MAX\_IOV@{TTAK\_IO\_ZC\_MAX\_IOV}}
+\index{TTAK\_IO\_ZC\_MAX\_IOV@{TTAK\_IO\_ZC\_MAX\_IOV}!zerocopy.h@{zerocopy.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_IO\_ZC\_MAX\_IOV}{TTAK\_IO\_ZC\_MAX\_IOV}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+IO\+\_\+\+ZC\+\_\+\+MAX\+\_\+\+IOV~4U}
+
+
+
+Definition at line \mbox{\hyperlink{zerocopy_8h_source_l00014}{14}} of file \mbox{\hyperlink{zerocopy_8h_source}{zerocopy.\+h}}.
+
+\Hypertarget{zerocopy_8h_ad0359daf789a07df8e98dcb86bf5244b}\label{zerocopy_8h_ad0359daf789a07df8e98dcb86bf5244b} 
+\index{zerocopy.h@{zerocopy.h}!TTAK\_IO\_ZC\_MAX\_SEGMENTS@{TTAK\_IO\_ZC\_MAX\_SEGMENTS}}
+\index{TTAK\_IO\_ZC\_MAX\_SEGMENTS@{TTAK\_IO\_ZC\_MAX\_SEGMENTS}!zerocopy.h@{zerocopy.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_IO\_ZC\_MAX\_SEGMENTS}{TTAK\_IO\_ZC\_MAX\_SEGMENTS}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+IO\+\_\+\+ZC\+\_\+\+MAX\+\_\+\+SEGMENTS~32U}
+
+
+
+Definition at line \mbox{\hyperlink{zerocopy_8h_source_l00018}{18}} of file \mbox{\hyperlink{zerocopy_8h_source}{zerocopy.\+h}}.
+
+\Hypertarget{zerocopy_8h_ad8cc689de1802af2bd3be73ed44bd180}\label{zerocopy_8h_ad8cc689de1802af2bd3be73ed44bd180} 
+\index{zerocopy.h@{zerocopy.h}!TTAK\_IO\_ZC\_SEG\_BYTES@{TTAK\_IO\_ZC\_SEG\_BYTES}}
+\index{TTAK\_IO\_ZC\_SEG\_BYTES@{TTAK\_IO\_ZC\_SEG\_BYTES}!zerocopy.h@{zerocopy.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_IO\_ZC\_SEG\_BYTES}{TTAK\_IO\_ZC\_SEG\_BYTES}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+IO\+\_\+\+ZC\+\_\+\+SEG\+\_\+\+BYTES~(1U $<$$<$ \mbox{\hyperlink{zerocopy_8h_a1c86efcf44cf007d8e465e84a17d26fc}{TTAK\+\_\+\+IO\+\_\+\+ZC\+\_\+\+SEG\+\_\+\+SHIFT}})}
+
+
+
+Definition at line \mbox{\hyperlink{zerocopy_8h_source_l00016}{16}} of file \mbox{\hyperlink{zerocopy_8h_source}{zerocopy.\+h}}.
+
+\Hypertarget{zerocopy_8h_aacb73531e59262e89946734c19b9c46c}\label{zerocopy_8h_aacb73531e59262e89946734c19b9c46c} 
+\index{zerocopy.h@{zerocopy.h}!TTAK\_IO\_ZC\_SEG\_MASK@{TTAK\_IO\_ZC\_SEG\_MASK}}
+\index{TTAK\_IO\_ZC\_SEG\_MASK@{TTAK\_IO\_ZC\_SEG\_MASK}!zerocopy.h@{zerocopy.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_IO\_ZC\_SEG\_MASK}{TTAK\_IO\_ZC\_SEG\_MASK}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+IO\+\_\+\+ZC\+\_\+\+SEG\+\_\+\+MASK~(\mbox{\hyperlink{zerocopy_8h_ad8cc689de1802af2bd3be73ed44bd180}{TTAK\+\_\+\+IO\+\_\+\+ZC\+\_\+\+SEG\+\_\+\+BYTES}} -\/ 1U)}
+
+
+
+Definition at line \mbox{\hyperlink{zerocopy_8h_source_l00017}{17}} of file \mbox{\hyperlink{zerocopy_8h_source}{zerocopy.\+h}}.
+
+\Hypertarget{zerocopy_8h_a1c86efcf44cf007d8e465e84a17d26fc}\label{zerocopy_8h_a1c86efcf44cf007d8e465e84a17d26fc} 
+\index{zerocopy.h@{zerocopy.h}!TTAK\_IO\_ZC\_SEG\_SHIFT@{TTAK\_IO\_ZC\_SEG\_SHIFT}}
+\index{TTAK\_IO\_ZC\_SEG\_SHIFT@{TTAK\_IO\_ZC\_SEG\_SHIFT}!zerocopy.h@{zerocopy.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_IO\_ZC\_SEG\_SHIFT}{TTAK\_IO\_ZC\_SEG\_SHIFT}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+IO\+\_\+\+ZC\+\_\+\+SEG\+\_\+\+SHIFT~12U}
+
+
+
+Definition at line \mbox{\hyperlink{zerocopy_8h_source_l00015}{15}} of file \mbox{\hyperlink{zerocopy_8h_source}{zerocopy.\+h}}.
+
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{zerocopy_8h_a02af7635ee18d5bfac08b8c241523388}\label{zerocopy_8h_a02af7635ee18d5bfac08b8c241523388} 
+\index{zerocopy.h@{zerocopy.h}!ttak\_io\_zerocopy\_region\_t@{ttak\_io\_zerocopy\_region\_t}}
+\index{ttak\_io\_zerocopy\_region\_t@{ttak\_io\_zerocopy\_region\_t}!zerocopy.h@{zerocopy.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_io\_zerocopy\_region\_t}{ttak\_io\_zerocopy\_region\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__io__zerocopy__region}{ttak\+\_\+io\+\_\+zerocopy\+\_\+region}} \mbox{\hyperlink{zerocopy_8h_a02af7635ee18d5bfac08b8c241523388}{ttak\+\_\+io\+\_\+zerocopy\+\_\+region\+\_\+t}}}
+
+
+
+Temporary zero-\/copy receive window allocated in a detachable arena. 
+
+Data is allocated as one contiguous buffer but internally tracked as power-\/of-\/two segments. segment\+\_\+mask marks which segments are populated so the recv loop can advance using bit operations. 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{zerocopy_8h_a702d6206c55a57a0f4ede7eb46a624fc}\label{zerocopy_8h_a702d6206c55a57a0f4ede7eb46a624fc} 
+\index{zerocopy.h@{zerocopy.h}!ttak\_io\_zerocopy\_recv\_fd@{ttak\_io\_zerocopy\_recv\_fd}}
+\index{ttak\_io\_zerocopy\_recv\_fd@{ttak\_io\_zerocopy\_recv\_fd}!zerocopy.h@{zerocopy.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_io\_zerocopy\_recv\_fd()}{ttak\_io\_zerocopy\_recv\_fd()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} ttak\+\_\+io\+\_\+zerocopy\+\_\+recv\+\_\+fd (\begin{DoxyParamCaption}\item[{int}]{fd,  }\item[{\mbox{\hyperlink{zerocopy_8h_a02af7635ee18d5bfac08b8c241523388}{ttak\+\_\+io\+\_\+zerocopy\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{region,  }\item[{size\+\_\+t}]{max\+\_\+len,  }\item[{int}]{flags,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+
+
+Receives data from {\ttfamily fd} into a detachable buffer without copying back into user memory. 
+
+The caller owns {\ttfamily fd} lifetime. On success, {\ttfamily region-\/\texorpdfstring{$>$}{>}data} points to a read-\/only buffer that remains valid until \doxylink{zerocopy_8h_a5c546b073bf2b2e6c5d73225f46a658a}{ttak\+\_\+io\+\_\+zerocopy\+\_\+release()}. \Hypertarget{zerocopy_8h_ad9bf6c246671e8221f7d1dfcce554c6b}\label{zerocopy_8h_ad9bf6c246671e8221f7d1dfcce554c6b} 
+\index{zerocopy.h@{zerocopy.h}!ttak\_io\_zerocopy\_region\_init@{ttak\_io\_zerocopy\_region\_init}}
+\index{ttak\_io\_zerocopy\_region\_init@{ttak\_io\_zerocopy\_region\_init}!zerocopy.h@{zerocopy.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_io\_zerocopy\_region\_init()}{ttak\_io\_zerocopy\_region\_init()}}
+{\footnotesize\ttfamily void ttak\+\_\+io\+\_\+zerocopy\+\_\+region\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{zerocopy_8h_a02af7635ee18d5bfac08b8c241523388}{ttak\+\_\+io\+\_\+zerocopy\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{region }\end{DoxyParamCaption})}
+
+
+
+Initializes a region so it can be reused across recv operations. 
+
+\Hypertarget{zerocopy_8h_a5c546b073bf2b2e6c5d73225f46a658a}\label{zerocopy_8h_a5c546b073bf2b2e6c5d73225f46a658a} 
+\index{zerocopy.h@{zerocopy.h}!ttak\_io\_zerocopy\_release@{ttak\_io\_zerocopy\_release}}
+\index{ttak\_io\_zerocopy\_release@{ttak\_io\_zerocopy\_release}!zerocopy.h@{zerocopy.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_io\_zerocopy\_release()}{ttak\_io\_zerocopy\_release()}}
+{\footnotesize\ttfamily void ttak\+\_\+io\+\_\+zerocopy\+\_\+release (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{zerocopy_8h_a02af7635ee18d5bfac08b8c241523388}{ttak\+\_\+io\+\_\+zerocopy\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{region }\end{DoxyParamCaption})}
+
+
+
+Releases resources captured during recv. 
+

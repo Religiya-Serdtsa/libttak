@@ -1,0 +1,102 @@
+\doxysection{transport.\+h}
+\hypertarget{transport_8h_source}{}\label{transport_8h_source}\index{include/ttak/phys/dimless/transport.h@{include/ttak/phys/dimless/transport.h}}
+\mbox{\hyperlink{transport_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ TTAK\_PHYS\_DIMLESS\_TRANSPORT\_H}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ TTAK\_PHYS\_DIMLESS\_TRANSPORT\_H}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00006}00006\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00007}00007\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00008}00008\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00009}00009\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00010}00010\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00011}00011\ \textcolor{comment}{\ *\ @brief\ Status\ codes\ returned\ by\ transport\ dimensionless\ helpers.}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00012}00012\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00013}\mbox{\hyperlink{transport_8h_a4dfed25085de3e1ef832f223f45e8fa4}{00013}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{transport_8h_a4dfed25085de3e1ef832f223f45e8fa4}{ttak\_phys\_status}}\ \{}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00014}\mbox{\hyperlink{transport_8h_a4dfed25085de3e1ef832f223f45e8fa4a0c3d685d5da73c5d027daabf43bf9ef0}{00014}}\ \ \ \ \ \mbox{\hyperlink{transport_8h_a4dfed25085de3e1ef832f223f45e8fa4a0c3d685d5da73c5d027daabf43bf9ef0}{TTAK\_PHYS\_SUCCESS}}\ =\ 0,}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00015}\mbox{\hyperlink{transport_8h_a4dfed25085de3e1ef832f223f45e8fa4a7485ae11df05471a9328ae413ac5812b}{00015}}\ \ \ \ \ \mbox{\hyperlink{transport_8h_a4dfed25085de3e1ef832f223f45e8fa4a7485ae11df05471a9328ae413ac5812b}{TTAK\_PHYS\_ERR\_INVALID\_ARGUMENT}},}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00016}\mbox{\hyperlink{transport_8h_a4dfed25085de3e1ef832f223f45e8fa4adbe6a0e531eb18f7e09d2435947f647a}{00016}}\ \ \ \ \ \mbox{\hyperlink{transport_8h_a4dfed25085de3e1ef832f223f45e8fa4adbe6a0e531eb18f7e09d2435947f647a}{TTAK\_PHYS\_ERR\_DIVIDE\_BY\_ZERO}},}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00017}00017\ \ \ \ \ \mbox{\hyperlink{transport_8h_a4dfed25085de3e1ef832f223f45e8fa4a94968af44a5e332b90b46e34e648e7e4}{TTAK\_PHYS\_ERR\_OUT\_OF\_RANGE}}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00018}\mbox{\hyperlink{transport_8h_a4dfed25085de3e1ef832f223f45e8fa4a94968af44a5e332b90b46e34e648e7e4}{00018}}\ \}\ \mbox{\hyperlink{transport_8h_a5999aeccffbd892e89cf25f59abd089a}{ttak\_phys\_status\_t}};}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00019}00019\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00020}00020\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00021}00021\ \textcolor{comment}{\ *\ @brief\ Reynolds\ number:\ Re\ =\ rho\ *\ |v|\ *\ L\ /\ mu.}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00022}00022\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00023}00023\ \textcolor{comment}{\ *\ @param[out]\ out\_re\ Computed\ Reynolds\ number\ (dimensionless).}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00024}00024\ \textcolor{comment}{\ *\ @param\ rho\ Fluid\ density\ in\ kg/m\string^3.}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00025}00025\ \textcolor{comment}{\ *\ @param\ velocity\ Characteristic\ velocity\ magnitude\ in\ m/s.}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00026}00026\ \textcolor{comment}{\ *\ @param\ length\ Characteristic\ length\ scale\ in\ meters.}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00027}00027\ \textcolor{comment}{\ *\ @param\ dynamic\_viscosity\ Dynamic\ viscosity\ in\ Pa*s\ (kg/(m*s)).}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00028}00028\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00029}\mbox{\hyperlink{transport_8h_a090c5ac13a38eb3bc521aaa3db1a69ed}{00029}}\ \mbox{\hyperlink{transport_8h_a5999aeccffbd892e89cf25f59abd089a}{ttak\_phys\_status\_t}}\ \mbox{\hyperlink{transport_8h_a090c5ac13a38eb3bc521aaa3db1a69ed}{ttak\_phys\_calc\_reynolds}}(}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00030}00030\ \ \ \ \ \textcolor{keywordtype}{double}\ *out\_re,}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00031}00031\ \ \ \ \ \textcolor{keywordtype}{double}\ rho,}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00032}00032\ \ \ \ \ \textcolor{keywordtype}{double}\ velocity,}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00033}00033\ \ \ \ \ \textcolor{keywordtype}{double}\ length,}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00034}00034\ \ \ \ \ \textcolor{keywordtype}{double}\ dynamic\_viscosity);}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00035}00035\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00036}00036\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00037}00037\ \textcolor{comment}{\ *\ @brief\ Schmidt\ number:\ Sc\ =\ mu\ /\ (rho\ *\ D).}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00038}00038\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00039}00039\ \textcolor{comment}{\ *\ @param[out]\ out\_sc\ Computed\ Schmidt\ number\ (dimensionless).}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00040}00040\ \textcolor{comment}{\ *\ @param\ rho\ Fluid\ density\ in\ kg/m\string^3.}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00041}00041\ \textcolor{comment}{\ *\ @param\ dynamic\_viscosity\ Dynamic\ viscosity\ in\ Pa*s.}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00042}00042\ \textcolor{comment}{\ *\ @param\ diffusivity\ Binary\ mass\ diffusivity\ in\ m\string^2/s.}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00043}00043\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00044}\mbox{\hyperlink{transport_8h_ad4cc158d5ace33bbfa9fa934af07d63a}{00044}}\ \mbox{\hyperlink{transport_8h_a5999aeccffbd892e89cf25f59abd089a}{ttak\_phys\_status\_t}}\ \mbox{\hyperlink{transport_8h_ad4cc158d5ace33bbfa9fa934af07d63a}{ttak\_phys\_calc\_schmidt}}(}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00045}00045\ \ \ \ \ \textcolor{keywordtype}{double}\ *out\_sc,}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00046}00046\ \ \ \ \ \textcolor{keywordtype}{double}\ rho,}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00047}00047\ \ \ \ \ \textcolor{keywordtype}{double}\ dynamic\_viscosity,}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00048}00048\ \ \ \ \ \textcolor{keywordtype}{double}\ diffusivity);}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00049}00049\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00050}00050\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00051}00051\ \textcolor{comment}{\ *\ @brief\ Péclet\ number\ for\ mass\ transport:\ Pe\ =\ |v|\ *\ L\ /\ D.}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00052}00052\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00053}00053\ \textcolor{comment}{\ *\ @param[out]\ out\_pe\ Computed\ Péclet\ number\ (dimensionless).}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00054}00054\ \textcolor{comment}{\ *\ @param\ velocity\ Characteristic\ velocity\ magnitude\ in\ m/s.}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00055}00055\ \textcolor{comment}{\ *\ @param\ length\ Characteristic\ length\ in\ meters.}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00056}00056\ \textcolor{comment}{\ *\ @param\ diffusivity\ Binary\ mass\ diffusivity\ in\ m\string^2/s.}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00057}00057\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00058}\mbox{\hyperlink{transport_8h_aca0fcb9c927376487393eecb55df51d8}{00058}}\ \mbox{\hyperlink{transport_8h_a5999aeccffbd892e89cf25f59abd089a}{ttak\_phys\_status\_t}}\ \mbox{\hyperlink{transport_8h_aca0fcb9c927376487393eecb55df51d8}{ttak\_phys\_calc\_mass\_peclet}}(}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00059}00059\ \ \ \ \ \textcolor{keywordtype}{double}\ *out\_pe,}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00060}00060\ \ \ \ \ \textcolor{keywordtype}{double}\ velocity,}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00061}00061\ \ \ \ \ \textcolor{keywordtype}{double}\ length,}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00062}00062\ \ \ \ \ \textcolor{keywordtype}{double}\ diffusivity);}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00063}00063\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00064}00064\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00065}00065\ \textcolor{comment}{\ *\ @brief\ Sherwood\ number:\ Sh\ =\ k\_m\ *\ L\ /\ D.}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00066}00066\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00067}00067\ \textcolor{comment}{\ *\ @param[out]\ out\_sh\ Computed\ Sherwood\ number\ (dimensionless).}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00068}00068\ \textcolor{comment}{\ *\ @param\ mass\_transfer\_coeff\ Film\ mass-\/transfer\ coefficient\ k\_m\ in\ m/s.}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00069}00069\ \textcolor{comment}{\ *\ @param\ length\ Characteristic\ length\ in\ meters.}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00070}00070\ \textcolor{comment}{\ *\ @param\ diffusivity\ Binary\ mass\ diffusivity\ in\ m\string^2/s.}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00071}00071\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00072}\mbox{\hyperlink{transport_8h_a7dbda019006bf5e78b8577f4a2d1dff3}{00072}}\ \mbox{\hyperlink{transport_8h_a5999aeccffbd892e89cf25f59abd089a}{ttak\_phys\_status\_t}}\ \mbox{\hyperlink{transport_8h_a7dbda019006bf5e78b8577f4a2d1dff3}{ttak\_phys\_calc\_sherwood}}(}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00073}00073\ \ \ \ \ \textcolor{keywordtype}{double}\ *out\_sh,}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00074}00074\ \ \ \ \ \textcolor{keywordtype}{double}\ mass\_transfer\_coeff,}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00075}00075\ \ \ \ \ \textcolor{keywordtype}{double}\ length,}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00076}00076\ \ \ \ \ \textcolor{keywordtype}{double}\ diffusivity);}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00077}00077\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00078}00078\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00079}00079\ \textcolor{comment}{\ *\ @brief\ Computes\ k\_m\ from\ a\ Sherwood\ number:\ k\_m\ =\ Sh\ *\ D\ /\ L.}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00080}00080\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00081}00081\ \textcolor{comment}{\ *\ @param[out]\ out\_km\ Derived\ film\ mass-\/transfer\ coefficient\ in\ m/s.}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00082}00082\ \textcolor{comment}{\ *\ @param\ sherwood\ Sherwood\ number\ (dimensionless).}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00083}00083\ \textcolor{comment}{\ *\ @param\ length\ Characteristic\ length\ in\ meters.}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00084}00084\ \textcolor{comment}{\ *\ @param\ diffusivity\ Binary\ mass\ diffusivity\ in\ m\string^2/s.}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00085}00085\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00086}\mbox{\hyperlink{transport_8h_ace20d426f6ee161c2109ca57377804ca}{00086}}\ \mbox{\hyperlink{transport_8h_a5999aeccffbd892e89cf25f59abd089a}{ttak\_phys\_status\_t}}\ \mbox{\hyperlink{transport_8h_ace20d426f6ee161c2109ca57377804ca}{ttak\_phys\_calc\_km}}(}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00087}00087\ \ \ \ \ \textcolor{keywordtype}{double}\ *out\_km,}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00088}00088\ \ \ \ \ \textcolor{keywordtype}{double}\ sherwood,}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00089}00089\ \ \ \ \ \textcolor{keywordtype}{double}\ length,}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00090}00090\ \ \ \ \ \textcolor{keywordtype}{double}\ diffusivity);}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00091}00091\ }
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00092}00092\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00093}00093\ \}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00094}00094\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{transport_8h_source_l00096}00096\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ TTAK\_PHYS\_DIMLESS\_TRANSPORT\_H\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

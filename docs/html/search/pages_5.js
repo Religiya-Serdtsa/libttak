@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['libttak_0',['TTL Cache Benchmark (libttak)',['../index.html',1,'']]]
+  ['math_20tuning_0',['TCC-Oriented Build and Math Tuning',['../md_docs_2TCC__OPTIMIZATION.html',1,'']]]
 ];

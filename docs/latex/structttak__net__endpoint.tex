@@ -1,0 +1,205 @@
+\doxysection{ttak\+\_\+net\+\_\+endpoint Struct Reference}
+\hypertarget{structttak__net__endpoint}{}\label{structttak__net__endpoint}\index{ttak\_net\_endpoint@{ttak\_net\_endpoint}}
+
+
+Shared socket wrapper guarded by ttak\+\_\+io\+\_\+guard\+\_\+t and owner policies.  
+
+
+
+
+{\ttfamily \#include $<$endpoint.\+h$>$}
+
+
+
+Collaboration diagram for ttak\+\_\+net\+\_\+endpoint\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=239pt]{structttak__net__endpoint__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{structttak__net__endpoint_ab6f548125c5a1909e4d5682000439630}{fd}}
+\item 
+int \mbox{\hyperlink{structttak__net__endpoint_a2dffb6d3eb2b0912b1657b50f0cd1f30}{domain}}
+\item 
+int \mbox{\hyperlink{structttak__net__endpoint_a6a426c98610484683f04bab752cbd316}{socktype}}
+\item 
+int \mbox{\hyperlink{structttak__net__endpoint_a159708c6dcd570ddf8e99da66b102f24}{protocol}}
+\item 
+\mbox{\hyperlink{endpoint_8h_ab973004a32270bbe3ae4566c99f2d22a}{ttak\+\_\+net\+\_\+endpoint\+\_\+type\+\_\+t}} \mbox{\hyperlink{structttak__net__endpoint_a17a1da6c55ec88b117a87352d6803fd9}{type}}
+\item 
+uint64\+\_\+t \mbox{\hyperlink{structttak__net__endpoint_a63c685b8516294372b8e278cfc761877}{generation\+\_\+id}}
+\item 
+\mbox{\hyperlink{io_8h_aca20f4767510d423ee88de501eb72575}{ttak\+\_\+io\+\_\+guard\+\_\+t}} \mbox{\hyperlink{structttak__net__endpoint_af3c9143a555226b9b428649b003e5f80}{guard}}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{structttak__net__endpoint_a96667effbe7d4467e6b783cc9525c31f}{role\+\_\+flags}}
+\item 
+\mbox{\hyperlink{endpoint_8h_aec10d4f037ec1a4bc3cc70cbccc34f67}{ttak\+\_\+net\+\_\+restart\+\_\+op}} \mbox{\hyperlink{structttak__net__endpoint_a26953e03d7094441cff1e135c7375e0e}{restart}}
+\item 
+int \mbox{\hyperlink{structttak__net__endpoint_ac96df73b1520cec532696b22075d0924}{listen\+\_\+backlog}}
+\item 
+void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__net__endpoint_a8b93c9a965fdd649feaf50158c43c68c}{restart\+\_\+ctx}}
+\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+struct \{\\
+\>uint8\_t \mbox{\hyperlink{structttak__net__endpoint_a0598a717e7f0f5f2afee9a194bab77bb}{storage}} \mbox{[}128\mbox{]}\\
+\>uint8\_t \mbox{\hyperlink{structttak__net__endpoint_aaf9a97f2e5ee716037989f55c1b064c6}{len}}\\
+\} \mbox{\hyperlink{structttak__net__endpoint_a3ab7e7442e2e13b2492e24eee9119655}{addr}}\\
+
+\end{tabbing}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Shared socket wrapper guarded by ttak\+\_\+io\+\_\+guard\+\_\+t and owner policies. 
+
+Definition at line \mbox{\hyperlink{endpoint_8h_source_l00035}{35}} of file \mbox{\hyperlink{endpoint_8h_source}{endpoint.\+h}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structttak__net__endpoint_a3ab7e7442e2e13b2492e24eee9119655}\label{structttak__net__endpoint_a3ab7e7442e2e13b2492e24eee9119655} 
+\index{ttak\_net\_endpoint@{ttak\_net\_endpoint}!addr@{addr}}
+\index{addr@{addr}!ttak\_net\_endpoint@{ttak\_net\_endpoint}}
+\doxysubsubsection{\texorpdfstring{[struct]}{[struct]}}
+{\footnotesize\ttfamily struct  \{ ... \}  ttak\+\_\+net\+\_\+endpoint\+::addr}
+
+\Hypertarget{structttak__net__endpoint_a2dffb6d3eb2b0912b1657b50f0cd1f30}\label{structttak__net__endpoint_a2dffb6d3eb2b0912b1657b50f0cd1f30} 
+\index{ttak\_net\_endpoint@{ttak\_net\_endpoint}!domain@{domain}}
+\index{domain@{domain}!ttak\_net\_endpoint@{ttak\_net\_endpoint}}
+\doxysubsubsection{\texorpdfstring{domain}{domain}}
+{\footnotesize\ttfamily int ttak\+\_\+net\+\_\+endpoint\+::domain}
+
+
+
+Definition at line \mbox{\hyperlink{endpoint_8h_source_l00037}{37}} of file \mbox{\hyperlink{endpoint_8h_source}{endpoint.\+h}}.
+
+\Hypertarget{structttak__net__endpoint_ab6f548125c5a1909e4d5682000439630}\label{structttak__net__endpoint_ab6f548125c5a1909e4d5682000439630} 
+\index{ttak\_net\_endpoint@{ttak\_net\_endpoint}!fd@{fd}}
+\index{fd@{fd}!ttak\_net\_endpoint@{ttak\_net\_endpoint}}
+\doxysubsubsection{\texorpdfstring{fd}{fd}}
+{\footnotesize\ttfamily int ttak\+\_\+net\+\_\+endpoint\+::fd}
+
+
+
+Definition at line \mbox{\hyperlink{endpoint_8h_source_l00036}{36}} of file \mbox{\hyperlink{endpoint_8h_source}{endpoint.\+h}}.
+
+\Hypertarget{structttak__net__endpoint_a63c685b8516294372b8e278cfc761877}\label{structttak__net__endpoint_a63c685b8516294372b8e278cfc761877} 
+\index{ttak\_net\_endpoint@{ttak\_net\_endpoint}!generation\_id@{generation\_id}}
+\index{generation\_id@{generation\_id}!ttak\_net\_endpoint@{ttak\_net\_endpoint}}
+\doxysubsubsection{\texorpdfstring{generation\_id}{generation\_id}}
+{\footnotesize\ttfamily uint64\+\_\+t ttak\+\_\+net\+\_\+endpoint\+::generation\+\_\+id}
+
+
+
+Definition at line \mbox{\hyperlink{endpoint_8h_source_l00041}{41}} of file \mbox{\hyperlink{endpoint_8h_source}{endpoint.\+h}}.
+
+\Hypertarget{structttak__net__endpoint_af3c9143a555226b9b428649b003e5f80}\label{structttak__net__endpoint_af3c9143a555226b9b428649b003e5f80} 
+\index{ttak\_net\_endpoint@{ttak\_net\_endpoint}!guard@{guard}}
+\index{guard@{guard}!ttak\_net\_endpoint@{ttak\_net\_endpoint}}
+\doxysubsubsection{\texorpdfstring{guard}{guard}}
+{\footnotesize\ttfamily \mbox{\hyperlink{io_8h_aca20f4767510d423ee88de501eb72575}{ttak\+\_\+io\+\_\+guard\+\_\+t}} ttak\+\_\+net\+\_\+endpoint\+::guard}
+
+
+
+Definition at line \mbox{\hyperlink{endpoint_8h_source_l00042}{42}} of file \mbox{\hyperlink{endpoint_8h_source}{endpoint.\+h}}.
+
+\Hypertarget{structttak__net__endpoint_aaf9a97f2e5ee716037989f55c1b064c6}\label{structttak__net__endpoint_aaf9a97f2e5ee716037989f55c1b064c6} 
+\index{ttak\_net\_endpoint@{ttak\_net\_endpoint}!len@{len}}
+\index{len@{len}!ttak\_net\_endpoint@{ttak\_net\_endpoint}}
+\doxysubsubsection{\texorpdfstring{len}{len}}
+{\footnotesize\ttfamily uint8\+\_\+t ttak\+\_\+net\+\_\+endpoint\+::len}
+
+
+
+Definition at line \mbox{\hyperlink{endpoint_8h_source_l00049}{49}} of file \mbox{\hyperlink{endpoint_8h_source}{endpoint.\+h}}.
+
+\Hypertarget{structttak__net__endpoint_ac96df73b1520cec532696b22075d0924}\label{structttak__net__endpoint_ac96df73b1520cec532696b22075d0924} 
+\index{ttak\_net\_endpoint@{ttak\_net\_endpoint}!listen\_backlog@{listen\_backlog}}
+\index{listen\_backlog@{listen\_backlog}!ttak\_net\_endpoint@{ttak\_net\_endpoint}}
+\doxysubsubsection{\texorpdfstring{listen\_backlog}{listen\_backlog}}
+{\footnotesize\ttfamily int ttak\+\_\+net\+\_\+endpoint\+::listen\+\_\+backlog}
+
+
+
+Definition at line \mbox{\hyperlink{endpoint_8h_source_l00045}{45}} of file \mbox{\hyperlink{endpoint_8h_source}{endpoint.\+h}}.
+
+\Hypertarget{structttak__net__endpoint_a159708c6dcd570ddf8e99da66b102f24}\label{structttak__net__endpoint_a159708c6dcd570ddf8e99da66b102f24} 
+\index{ttak\_net\_endpoint@{ttak\_net\_endpoint}!protocol@{protocol}}
+\index{protocol@{protocol}!ttak\_net\_endpoint@{ttak\_net\_endpoint}}
+\doxysubsubsection{\texorpdfstring{protocol}{protocol}}
+{\footnotesize\ttfamily int ttak\+\_\+net\+\_\+endpoint\+::protocol}
+
+
+
+Definition at line \mbox{\hyperlink{endpoint_8h_source_l00039}{39}} of file \mbox{\hyperlink{endpoint_8h_source}{endpoint.\+h}}.
+
+\Hypertarget{structttak__net__endpoint_a26953e03d7094441cff1e135c7375e0e}\label{structttak__net__endpoint_a26953e03d7094441cff1e135c7375e0e} 
+\index{ttak\_net\_endpoint@{ttak\_net\_endpoint}!restart@{restart}}
+\index{restart@{restart}!ttak\_net\_endpoint@{ttak\_net\_endpoint}}
+\doxysubsubsection{\texorpdfstring{restart}{restart}}
+{\footnotesize\ttfamily \mbox{\hyperlink{endpoint_8h_aec10d4f037ec1a4bc3cc70cbccc34f67}{ttak\+\_\+net\+\_\+restart\+\_\+op}} ttak\+\_\+net\+\_\+endpoint\+::restart}
+
+
+
+Definition at line \mbox{\hyperlink{endpoint_8h_source_l00044}{44}} of file \mbox{\hyperlink{endpoint_8h_source}{endpoint.\+h}}.
+
+\Hypertarget{structttak__net__endpoint_a8b93c9a965fdd649feaf50158c43c68c}\label{structttak__net__endpoint_a8b93c9a965fdd649feaf50158c43c68c} 
+\index{ttak\_net\_endpoint@{ttak\_net\_endpoint}!restart\_ctx@{restart\_ctx}}
+\index{restart\_ctx@{restart\_ctx}!ttak\_net\_endpoint@{ttak\_net\_endpoint}}
+\doxysubsubsection{\texorpdfstring{restart\_ctx}{restart\_ctx}}
+{\footnotesize\ttfamily void\texorpdfstring{$\ast$}{*} ttak\+\_\+net\+\_\+endpoint\+::restart\+\_\+ctx}
+
+
+
+Definition at line \mbox{\hyperlink{endpoint_8h_source_l00046}{46}} of file \mbox{\hyperlink{endpoint_8h_source}{endpoint.\+h}}.
+
+\Hypertarget{structttak__net__endpoint_a96667effbe7d4467e6b783cc9525c31f}\label{structttak__net__endpoint_a96667effbe7d4467e6b783cc9525c31f} 
+\index{ttak\_net\_endpoint@{ttak\_net\_endpoint}!role\_flags@{role\_flags}}
+\index{role\_flags@{role\_flags}!ttak\_net\_endpoint@{ttak\_net\_endpoint}}
+\doxysubsubsection{\texorpdfstring{role\_flags}{role\_flags}}
+{\footnotesize\ttfamily uint32\+\_\+t ttak\+\_\+net\+\_\+endpoint\+::role\+\_\+flags}
+
+
+
+Definition at line \mbox{\hyperlink{endpoint_8h_source_l00043}{43}} of file \mbox{\hyperlink{endpoint_8h_source}{endpoint.\+h}}.
+
+\Hypertarget{structttak__net__endpoint_a6a426c98610484683f04bab752cbd316}\label{structttak__net__endpoint_a6a426c98610484683f04bab752cbd316} 
+\index{ttak\_net\_endpoint@{ttak\_net\_endpoint}!socktype@{socktype}}
+\index{socktype@{socktype}!ttak\_net\_endpoint@{ttak\_net\_endpoint}}
+\doxysubsubsection{\texorpdfstring{socktype}{socktype}}
+{\footnotesize\ttfamily int ttak\+\_\+net\+\_\+endpoint\+::socktype}
+
+
+
+Definition at line \mbox{\hyperlink{endpoint_8h_source_l00038}{38}} of file \mbox{\hyperlink{endpoint_8h_source}{endpoint.\+h}}.
+
+\Hypertarget{structttak__net__endpoint_a0598a717e7f0f5f2afee9a194bab77bb}\label{structttak__net__endpoint_a0598a717e7f0f5f2afee9a194bab77bb} 
+\index{ttak\_net\_endpoint@{ttak\_net\_endpoint}!storage@{storage}}
+\index{storage@{storage}!ttak\_net\_endpoint@{ttak\_net\_endpoint}}
+\doxysubsubsection{\texorpdfstring{storage}{storage}}
+{\footnotesize\ttfamily uint8\+\_\+t ttak\+\_\+net\+\_\+endpoint\+::storage\mbox{[}128\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{endpoint_8h_source_l00048}{48}} of file \mbox{\hyperlink{endpoint_8h_source}{endpoint.\+h}}.
+
+\Hypertarget{structttak__net__endpoint_a17a1da6c55ec88b117a87352d6803fd9}\label{structttak__net__endpoint_a17a1da6c55ec88b117a87352d6803fd9} 
+\index{ttak\_net\_endpoint@{ttak\_net\_endpoint}!type@{type}}
+\index{type@{type}!ttak\_net\_endpoint@{ttak\_net\_endpoint}}
+\doxysubsubsection{\texorpdfstring{type}{type}}
+{\footnotesize\ttfamily \mbox{\hyperlink{endpoint_8h_ab973004a32270bbe3ae4566c99f2d22a}{ttak\+\_\+net\+\_\+endpoint\+\_\+type\+\_\+t}} ttak\+\_\+net\+\_\+endpoint\+::type}
+
+
+
+Definition at line \mbox{\hyperlink{endpoint_8h_source_l00040}{40}} of file \mbox{\hyperlink{endpoint_8h_source}{endpoint.\+h}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/ttak/net/\mbox{\hyperlink{endpoint_8h}{endpoint.\+h}}\end{DoxyCompactItemize}

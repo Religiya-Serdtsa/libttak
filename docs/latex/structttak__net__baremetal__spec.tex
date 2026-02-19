@@ -1,0 +1,94 @@
+\doxysection{ttak\+\_\+net\+\_\+baremetal\+\_\+spec Struct Reference}
+\hypertarget{structttak__net__baremetal__spec}{}\label{structttak__net__baremetal__spec}\index{ttak\_net\_baremetal\_spec@{ttak\_net\_baremetal\_spec}}
+
+
+{\ttfamily \#include $<$port.\+h$>$}
+
+
+
+Collaboration diagram for ttak\+\_\+net\+\_\+baremetal\+\_\+spec\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=220pt]{structttak__net__baremetal__spec__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const \mbox{\hyperlink{port_8h_ad59ba36fb944589606779627fecde245}{ttak\+\_\+net\+\_\+driver\+\_\+ops\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__net__baremetal__spec_a0c95e82665e5855963c4a79ce6ed7f44}{driver\+\_\+ops}}
+\item 
+void \texorpdfstring{$\ast$}{*}(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__net__baremetal__spec_a03130c28d9bbba034b9f9881fc565847}{nic\+\_\+map\+\_\+io}} )(uintptr\+\_\+t base, size\+\_\+t len)
+\item 
+void(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__net__baremetal__spec_a9cddb49b5f2b38eaab1e85f3d0942545}{nic\+\_\+unmap\+\_\+io}} )(void \texorpdfstring{$\ast$}{*}addr, size\+\_\+t len)
+\item 
+void \texorpdfstring{$\ast$}{*}(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__net__baremetal__spec_aa64c708cf293e2a8651b67cb009f34e5}{buddy\+\_\+alloc}} )(size\+\_\+t bytes)
+\item 
+void(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__net__baremetal__spec_a6df6075fd981c3db4f03827a00135fd2}{buddy\+\_\+free}} )(void \texorpdfstring{$\ast$}{*}ptr)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{port_8h_source_l00029}{29}} of file \mbox{\hyperlink{port_8h_source}{port.\+h}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structttak__net__baremetal__spec_aa64c708cf293e2a8651b67cb009f34e5}\label{structttak__net__baremetal__spec_aa64c708cf293e2a8651b67cb009f34e5} 
+\index{ttak\_net\_baremetal\_spec@{ttak\_net\_baremetal\_spec}!buddy\_alloc@{buddy\_alloc}}
+\index{buddy\_alloc@{buddy\_alloc}!ttak\_net\_baremetal\_spec@{ttak\_net\_baremetal\_spec}}
+\doxysubsubsection{\texorpdfstring{buddy\_alloc}{buddy\_alloc}}
+{\footnotesize\ttfamily void \texorpdfstring{$\ast$}{*}(\texorpdfstring{$\ast$}{*} ttak\+\_\+net\+\_\+baremetal\+\_\+spec\+::buddy\+\_\+alloc) (size\+\_\+t bytes)}
+
+
+
+Definition at line \mbox{\hyperlink{port_8h_source_l00033}{33}} of file \mbox{\hyperlink{port_8h_source}{port.\+h}}.
+
+\Hypertarget{structttak__net__baremetal__spec_a6df6075fd981c3db4f03827a00135fd2}\label{structttak__net__baremetal__spec_a6df6075fd981c3db4f03827a00135fd2} 
+\index{ttak\_net\_baremetal\_spec@{ttak\_net\_baremetal\_spec}!buddy\_free@{buddy\_free}}
+\index{buddy\_free@{buddy\_free}!ttak\_net\_baremetal\_spec@{ttak\_net\_baremetal\_spec}}
+\doxysubsubsection{\texorpdfstring{buddy\_free}{buddy\_free}}
+{\footnotesize\ttfamily void(\texorpdfstring{$\ast$}{*} ttak\+\_\+net\+\_\+baremetal\+\_\+spec\+::buddy\+\_\+free) (void \texorpdfstring{$\ast$}{*}ptr)}
+
+
+
+Definition at line \mbox{\hyperlink{port_8h_source_l00034}{34}} of file \mbox{\hyperlink{port_8h_source}{port.\+h}}.
+
+\Hypertarget{structttak__net__baremetal__spec_a0c95e82665e5855963c4a79ce6ed7f44}\label{structttak__net__baremetal__spec_a0c95e82665e5855963c4a79ce6ed7f44} 
+\index{ttak\_net\_baremetal\_spec@{ttak\_net\_baremetal\_spec}!driver\_ops@{driver\_ops}}
+\index{driver\_ops@{driver\_ops}!ttak\_net\_baremetal\_spec@{ttak\_net\_baremetal\_spec}}
+\doxysubsubsection{\texorpdfstring{driver\_ops}{driver\_ops}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{port_8h_ad59ba36fb944589606779627fecde245}{ttak\+\_\+net\+\_\+driver\+\_\+ops\+\_\+t}}\texorpdfstring{$\ast$}{*} ttak\+\_\+net\+\_\+baremetal\+\_\+spec\+::driver\+\_\+ops}
+
+
+
+Definition at line \mbox{\hyperlink{port_8h_source_l00030}{30}} of file \mbox{\hyperlink{port_8h_source}{port.\+h}}.
+
+\Hypertarget{structttak__net__baremetal__spec_a03130c28d9bbba034b9f9881fc565847}\label{structttak__net__baremetal__spec_a03130c28d9bbba034b9f9881fc565847} 
+\index{ttak\_net\_baremetal\_spec@{ttak\_net\_baremetal\_spec}!nic\_map\_io@{nic\_map\_io}}
+\index{nic\_map\_io@{nic\_map\_io}!ttak\_net\_baremetal\_spec@{ttak\_net\_baremetal\_spec}}
+\doxysubsubsection{\texorpdfstring{nic\_map\_io}{nic\_map\_io}}
+{\footnotesize\ttfamily void \texorpdfstring{$\ast$}{*}(\texorpdfstring{$\ast$}{*} ttak\+\_\+net\+\_\+baremetal\+\_\+spec\+::nic\+\_\+map\+\_\+io) (uintptr\+\_\+t base, size\+\_\+t len)}
+
+
+
+Definition at line \mbox{\hyperlink{port_8h_source_l00031}{31}} of file \mbox{\hyperlink{port_8h_source}{port.\+h}}.
+
+\Hypertarget{structttak__net__baremetal__spec_a9cddb49b5f2b38eaab1e85f3d0942545}\label{structttak__net__baremetal__spec_a9cddb49b5f2b38eaab1e85f3d0942545} 
+\index{ttak\_net\_baremetal\_spec@{ttak\_net\_baremetal\_spec}!nic\_unmap\_io@{nic\_unmap\_io}}
+\index{nic\_unmap\_io@{nic\_unmap\_io}!ttak\_net\_baremetal\_spec@{ttak\_net\_baremetal\_spec}}
+\doxysubsubsection{\texorpdfstring{nic\_unmap\_io}{nic\_unmap\_io}}
+{\footnotesize\ttfamily void(\texorpdfstring{$\ast$}{*} ttak\+\_\+net\+\_\+baremetal\+\_\+spec\+::nic\+\_\+unmap\+\_\+io) (void \texorpdfstring{$\ast$}{*}addr, size\+\_\+t len)}
+
+
+
+Definition at line \mbox{\hyperlink{port_8h_source_l00032}{32}} of file \mbox{\hyperlink{port_8h_source}{port.\+h}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/ttak/net/core/\mbox{\hyperlink{port_8h}{port.\+h}}\end{DoxyCompactItemize}

@@ -164,6 +164,10 @@ Macros</h2></td></tr>
 <tr class="separator:af4371ce6237310eedf5a1036178ada1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5911a234da3c1fce86bbebea7650e562" id="r_a5911a234da3c1fce86bbebea7650e562"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a5911a234da3c1fce86bbebea7650e562">atomic_fetch_sub</a>(obj,  operand)&#160;&#160;&#160;    <a class="el" href="include_2stdatomic_8h.html#af4371ce6237310eedf5a1036178ada1f">atomic_fetch_sub_explicit</a>((obj), (operand), <a class="el" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752">memory_order_seq_cst</a>)</td></tr>
 <tr class="separator:a5911a234da3c1fce86bbebea7650e562"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a182d869f2a69147266c1cfbf8ef62d71" id="r_a182d869f2a69147266c1cfbf8ef62d71"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a182d869f2a69147266c1cfbf8ef62d71">atomic_exchange_explicit</a>(obj,  desired,  order)&#160;&#160;&#160;    ({ <a class="el" href="include_2stdatomic_8h.html#a7b82615cb418a296137e2abcff7db14e">__TT_ATOMIC_LOCK</a>(); __typeof__(*(obj)) __old = *(obj); *(obj) = (desired); (void)(order); <a class="el" href="include_2stdatomic_8h.html#a078ff22b16930edd2268d1cb679445a5">__TT_ATOMIC_UNLOCK</a>(); __old; })</td></tr>
+<tr class="separator:a182d869f2a69147266c1cfbf8ef62d71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c1dada141423cb165cf2d4f3a38f89f" id="r_a5c1dada141423cb165cf2d4f3a38f89f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a5c1dada141423cb165cf2d4f3a38f89f">atomic_exchange</a>(obj,  desired)&#160;&#160;&#160;    <a class="el" href="include_2stdatomic_8h.html#a182d869f2a69147266c1cfbf8ef62d71">atomic_exchange_explicit</a>((obj), (desired), <a class="el" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752">memory_order_seq_cst</a>)</td></tr>
+<tr class="separator:a5c1dada141423cb165cf2d4f3a38f89f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a97a5f3e6f5f733e94b1ddeff904d3bc0" id="r_a97a5f3e6f5f733e94b1ddeff904d3bc0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a97a5f3e6f5f733e94b1ddeff904d3bc0">atomic_compare_exchange_weak_explicit</a>(obj,  expected,  desired,  success,  failure)</td></tr>
 <tr class="separator:a97a5f3e6f5f733e94b1ddeff904d3bc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a55257ac5977e775b87563bb8cc955863" id="r_a55257ac5977e775b87563bb8cc955863"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a55257ac5977e775b87563bb8cc955863">atomic_compare_exchange_weak</a>(obj,  expected,  desired)&#160;&#160;&#160;    <a class="el" href="include_2stdatomic_8h.html#a97a5f3e6f5f733e94b1ddeff904d3bc0">atomic_compare_exchange_weak_explicit</a>((obj), (expected), (desired), <a class="el" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752">memory_order_seq_cst</a>, <a class="el" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752">memory_order_seq_cst</a>)</td></tr>
@@ -311,7 +315,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00087">87</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00093">93</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
 
 </div>
 </div>
@@ -364,6 +368,72 @@ Variables</h2></td></tr>
 <div class="line">       __TT_ATOMIC_UNLOCK(); __ok; })</div>
 <div class="ttc" id="ainclude_2stdatomic_8h_html_a7b82615cb418a296137e2abcff7db14e"><div class="ttname"><a href="include_2stdatomic_8h.html#a7b82615cb418a296137e2abcff7db14e">__TT_ATOMIC_LOCK</a></div><div class="ttdeci">#define __TT_ATOMIC_LOCK()</div><div class="ttdef"><b>Definition</b> <a href="include_2stdatomic_8h_source.html#l00049">stdatomic.h:49</a></div></div>
 </div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00087">87</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="a5c1dada141423cb165cf2d4f3a38f89f" name="a5c1dada141423cb165cf2d4f3a38f89f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c1dada141423cb165cf2d4f3a38f89f">&#9670;&#160;</a></span>atomic_exchange</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define atomic_exchange</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">obj, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">desired&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;    <a class="el" href="include_2stdatomic_8h.html#a182d869f2a69147266c1cfbf8ef62d71">atomic_exchange_explicit</a>((obj), (desired), <a class="el" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752">memory_order_seq_cst</a>)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00084">84</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="a182d869f2a69147266c1cfbf8ef62d71" name="a182d869f2a69147266c1cfbf8ef62d71"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a182d869f2a69147266c1cfbf8ef62d71">&#9670;&#160;</a></span>atomic_exchange_explicit</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define atomic_exchange_explicit</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">obj, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">desired, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">order&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;    ({ <a class="el" href="include_2stdatomic_8h.html#a7b82615cb418a296137e2abcff7db14e">__TT_ATOMIC_LOCK</a>(); __typeof__(*(obj)) __old = *(obj); *(obj) = (desired); (void)(order); <a class="el" href="include_2stdatomic_8h.html#a078ff22b16930edd2268d1cb679445a5">__TT_ATOMIC_UNLOCK</a>(); __old; })</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
 <p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00081">81</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
 
 </div>
@@ -516,7 +586,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00109">109</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00115">115</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
 
 </div>
 </div>
@@ -552,7 +622,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00106">106</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00112">112</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
 
 </div>
 </div>
@@ -847,7 +917,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00099">99</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00105">105</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
 <div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-1-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
 <div id="dynsection-1-summary" class="dynsummary" style="display:block;">
@@ -897,7 +967,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00090">90</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00096">96</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
 <div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-2-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
 <div id="dynsection-2-summary" class="dynsummary" style="display:block;">

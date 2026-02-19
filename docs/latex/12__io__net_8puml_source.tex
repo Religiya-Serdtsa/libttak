@@ -1,0 +1,109 @@
+\doxysection{12\+\_\+io\+\_\+net.\+puml}
+\hypertarget{12__io__net_8puml_source}{}\label{12__io__net_8puml_source}\index{blueprints/io\_net/12\_io\_net.puml@{blueprints/io\_net/12\_io\_net.puml}}
+\mbox{\hyperlink{12__io__net_8puml}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00001}00001\ @startuml}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00002}00002\ !theme\ plain}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00003}00003\ hide\ empty\ members}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00005}00005\ skinparam\ packageStyle\ rectangle}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00006}00006\ skinparam\ componentStyle\ uml2}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00008}00008\ package\ "{}IO\ Core\ (io/)"{}\ \#E6F4EA\ \{}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00009}00009\ \ \ \ \ class\ "{}ttak\_io\_guard\_t"{}\ as\ IoGuard\ \{}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00010}00010\ \ \ \ \ \ \ \ \ +fd\ :\ int}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00011}00011\ \ \ \ \ \ \ \ \ +ttl\_ns\ :\ uint64\_t}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00012}00012\ \ \ \ \ \ \ \ \ +resource\_tag[32]}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00013}00013\ \ \ \ \ \ \ \ \ \_\_}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00014}00014\ \ \ \ \ \ \ \ \ +init(owner,\ ttl)}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00015}00015\ \ \ \ \ \ \ \ \ +refresh()}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00016}00016\ \ \ \ \ \ \ \ \ +close()}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00017}00017\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00019}00019\ \ \ \ \ class\ "{}ttak\_io\_buffer\_t"{}\ as\ IoBuffer\ \{}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00020}00020\ \ \ \ \ \ \ \ \ +staging\ :\ detachable\_allocation}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00021}00021\ \ \ \ \ \ \ \ \ +mode\ :\ BUFFER\_READ/WRITE}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00022}00022\ \ \ \ \ \ \ \ \ \_\_}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00023}00023\ \ \ \ \ \ \ \ \ +acquire(ptr,\ len,\ mode)}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00024}00024\ \ \ \ \ \ \ \ \ +sync\_in()}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00025}00025\ \ \ \ \ \ \ \ \ +sync\_out()}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00026}00026\ \ \ \ \ \ \ \ \ +release()}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00027}00027\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00029}00029\ \ \ \ \ class\ "{}ttak\_io\_zerocopy\_region\_t"{}\ as\ ZeroCopy\ \{}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00030}00030\ \ \ \ \ \ \ \ \ +data\ :\ uint8\_t*}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00031}00031\ \ \ \ \ \ \ \ \ +len\ :\ size\_t}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00032}00032\ \ \ \ \ \ \ \ \ +arena\ :\ detachable\_ctx}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00033}00033\ \ \ \ \ \ \ \ \ \_\_}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00034}00034\ \ \ \ \ \ \ \ \ +recv(guard,\ max\_len,\ flags)}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00035}00035\ \ \ \ \ \ \ \ \ +release()}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00036}00036\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00038}00038\ \ \ \ \ class\ "{}ttak\_io\_poll\_wait"{}\ as\ IoPoll\ \{}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00039}00039\ \ \ \ \ \ \ \ \ +schedule\_async\ :\ bool}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00040}00040\ \ \ \ \ \ \ \ \ +callback(fd,\ revents,\ user)}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00041}00041\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00043}00043\ \ \ \ \ IoBuffer\ -\/-\/>\ IoGuard\ :\ validates\ before\ syscalls}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00044}00044\ \ \ \ \ ZeroCopy\ -\/-\/>\ IoGuard\ :\ reuses\ TTL\ window}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00045}00045\ \ \ \ \ IoPoll\ ..>\ "{}ttak\_async\_schedule"{}\ :\ "{}non-\/blocking\ path"{}}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00046}00046\ \}}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00048}00048\ package\ "{}Networking\ (net/)"{}\ \#E3F2FD\ \{}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00049}00049\ \ \ \ \ class\ "{}ttak\_net\_endpoint\_t"{}\ as\ Endpoint\ \{}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00050}00050\ \ \ \ \ \ \ \ \ +fd\ :\ int}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00051}00051\ \ \ \ \ \ \ \ \ +type\ :\ ipv4/ipv6/unix}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00052}00052\ \ \ \ \ \ \ \ \ +guard\ :\ ttak\_io\_guard\_t}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00053}00053\ \ \ \ \ \ \ \ \ +addr\_bytes[128]}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00054}00054\ \ \ \ \ \ \ \ \ \_\_}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00055}00055\ \ \ \ \ \ \ \ \ +bind\_fd(fd,\ addr,\ ttl\_ns)}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00056}00056\ \ \ \ \ \ \ \ \ +close()}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00057}00057\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00059}00059\ \ \ \ \ class\ "{}ttak\_net\_view\_t"{}\ as\ NetView\ \{}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00060}00060\ \ \ \ \ \ \ \ \ +region\ :\ ttak\_io\_zerocopy\_region\_t}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00061}00061\ \ \ \ \ \ \ \ \ +birth\_ns\ :\ uint64\_t}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00062}00062\ \ \ \ \ \ \ \ \ \_\_}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00063}00063\ \ \ \ \ \ \ \ \ +from\_endpoint(endpoint,\ max\_len,\ flags)}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00064}00064\ \ \ \ \ \ \ \ \ +release()}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00065}00065\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00067}00067\ \ \ \ \ class\ "{}ttak\_net\_session\_mgr\_t"{}\ as\ SessionMgr\ \{}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00068}00068\ \ \ \ \ \ \ \ \ +head\ :\ session*}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00069}00069\ \ \ \ \ \ \ \ \ +gc\ :\ ttak\_epoch\_gc\_t}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00070}00070\ \ \ \ \ \ \ \ \ +lock\ :\ rwlock}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00071}00071\ \ \ \ \ \ \ \ \ \_\_}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00072}00072\ \ \ \ \ \ \ \ \ +create(endpoint,\ parent)}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00073}00073\ \ \ \ \ \ \ \ \ +close(session)}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00074}00074\ \ \ \ \ \ \ \ \ +rotate()}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00075}00075\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00076}00076\ }
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00077}00077\ \ \ \ \ Endpoint\ o-\/-\/\ IoGuard}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00078}00078\ \ \ \ \ NetView\ -\/-\/>\ ZeroCopy\ :\ "{}zero-\/copy\ recv()"{}}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00079}00079\ \ \ \ \ SessionMgr\ ..>\ Endpoint\ :\ "{}manages\ hierarchies"{}}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00080}00080\ \ \ \ \ SessionMgr\ ..>\ "{}ttak\_epoch\_gc\ /\ EBR"{}\ :\ "{}retire\ +\ rotate"{}}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00081}00081\ \}}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00082}00082\ }
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00083}00083\ package\ "{}Consumers"{}\ \#FFF8E1\ \{}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00084}00084\ \ \ \ \ component\ AsyncTasks\ [}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00085}00085\ \ \ \ \ \ \ \ \ Async\ Tasks\ /\ Promises}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00086}00086\ \ \ \ \ ]}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00087}00087\ \ \ \ \ component\ Owners\ [}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00088}00088\ \ \ \ \ \ \ \ \ ttak\_owner\_t}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00089}00089\ \ \ \ \ ]}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00090}00090\ \}}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00091}00091\ }
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00092}00092\ AsyncTasks\ ..>\ IoPoll\ :\ "{}callbacks"{}}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00093}00093\ Owners\ ..>\ IoGuard\ :\ "{}resource\ registry"{}}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00094}00094\ Owners\ ..>\ Endpoint\ :\ "{}shared\ wrapper"{}}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00096}00096\ note\ bottom}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00097}00097\ IO\ buffers\ enforce\ arena-\/backed\ staging\ before\ kernel\ calls.}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00098}00098\ Net\ view\ hands\ readonly\ regions\ derived\ from\ ttak\_io\_zerocopy\_region\_t.}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00099}00099\ Session\ manager\ chains\ endpoints\ and\ retires\ entire\ descendant\ trees}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00100}00100\ when\ an\ ancestor\ socket\ becomes\ unreachable.}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00101}00101\ end\ note}
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00102}00102\ }
+\DoxyCodeLine{\Hypertarget{12__io__net_8puml_source_l00103}00103\ @enduml}
+
+\end{DoxyCode}

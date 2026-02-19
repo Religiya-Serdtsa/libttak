@@ -1,0 +1,55 @@
+\doxysection{ttak\+\_\+detach\+\_\+status Struct Reference}
+\hypertarget{structttak__detach__status}{}\label{structttak__detach__status}\index{ttak\_detach\_status@{ttak\_detach\_status}}
+
+
+Tracks the detach lifecycle of a detachable block.  
+
+
+
+
+{\ttfamily \#include $<$detachable.\+h$>$}
+
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{structttak__detach__status_a54b750fad4203f83102c2600eb220302}{bits}}
+\item 
+\+\_\+\+Bool \mbox{\hyperlink{structttak__detach__status_a2dd0ef68e4614072c2717b44bc0be262}{pad}} \mbox{[}4\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Tracks the detach lifecycle of a detachable block. 
+
+The status is stored as a single byte and converges towards UNKNOWN whenever no explicit KNOWN flag is set. Padding keeps 8-\/byte alignment stable for the struct returned to callers. 
+
+Definition at line \mbox{\hyperlink{detachable_8h_source_l00073}{73}} of file \mbox{\hyperlink{detachable_8h_source}{detachable.\+h}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structttak__detach__status_a54b750fad4203f83102c2600eb220302}\label{structttak__detach__status_a54b750fad4203f83102c2600eb220302} 
+\index{ttak\_detach\_status@{ttak\_detach\_status}!bits@{bits}}
+\index{bits@{bits}!ttak\_detach\_status@{ttak\_detach\_status}}
+\doxysubsubsection{\texorpdfstring{bits}{bits}}
+{\footnotesize\ttfamily uint8\+\_\+t ttak\+\_\+detach\+\_\+status\+::bits}
+
+
+
+Definition at line \mbox{\hyperlink{detachable_8h_source_l00074}{74}} of file \mbox{\hyperlink{detachable_8h_source}{detachable.\+h}}.
+
+\Hypertarget{structttak__detach__status_a2dd0ef68e4614072c2717b44bc0be262}\label{structttak__detach__status_a2dd0ef68e4614072c2717b44bc0be262} 
+\index{ttak\_detach\_status@{ttak\_detach\_status}!pad@{pad}}
+\index{pad@{pad}!ttak\_detach\_status@{ttak\_detach\_status}}
+\doxysubsubsection{\texorpdfstring{pad}{pad}}
+{\footnotesize\ttfamily \+\_\+\+Bool ttak\+\_\+detach\+\_\+status\+::pad\mbox{[}4\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{detachable_8h_source_l00075}{75}} of file \mbox{\hyperlink{detachable_8h_source}{detachable.\+h}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/ttak/mem/\mbox{\hyperlink{detachable_8h}{detachable.\+h}}\end{DoxyCompactItemize}

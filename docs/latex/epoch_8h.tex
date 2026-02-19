@@ -1,0 +1,172 @@
+\doxysection{include/ttak/mem/epoch.h File Reference}
+\hypertarget{epoch_8h}{}\label{epoch_8h}\index{include/ttak/mem/epoch.h@{include/ttak/mem/epoch.h}}
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdatomic.\+h$>$}\newline
+Include dependency graph for epoch.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=306pt]{epoch_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{epoch_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structttak__retired__node}{ttak\+\_\+retired\+\_\+node}}
+\item 
+struct \mbox{\hyperlink{structttak__epoch__manager__t}{ttak\+\_\+epoch\+\_\+manager\+\_\+t}}
+\item 
+struct \mbox{\hyperlink{structttak__thread__state__t}{ttak\+\_\+thread\+\_\+state\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{epoch_8h_a1f0bc5e67927ea3e33e0e7c5d86b3588}{TTAK\+\_\+\+EPOCH\+\_\+\+SESSIONS}}~3
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \mbox{\hyperlink{structttak__retired__node}{ttak\+\_\+retired\+\_\+node}} \mbox{\hyperlink{epoch_8h_ab7801ef33599e02cd1bdd04ab1ea4e4c}{ttak\+\_\+retired\+\_\+node\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{epoch_8h_ae1b722f4861fbbb0cfa8de22e3fa76b0}{ttak\+\_\+epoch\+\_\+register\+\_\+thread}} (void)
+\begin{DoxyCompactList}\small\item\em Registers the current thread with the epoch manager. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{epoch_8h_a6da4eee69992f96efead4de621c26b71}{ttak\+\_\+epoch\+\_\+deregister\+\_\+thread}} (void)
+\begin{DoxyCompactList}\small\item\em Deregisters the current thread. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{epoch_8h_acc975f53f787fd4d2b91a3c25c56cf11}{ttak\+\_\+epoch\+\_\+enter}} (void)
+\begin{DoxyCompactList}\small\item\em Enters a critical section protected by EBR. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{epoch_8h_a542bce7d6579bcdb816aa4111263662a}{ttak\+\_\+epoch\+\_\+exit}} (void)
+\begin{DoxyCompactList}\small\item\em Exits the EBR critical section. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{epoch_8h_aba162a5defc4e35caa4857dacc526a7d}{ttak\+\_\+epoch\+\_\+retire}} (void \texorpdfstring{$\ast$}{*}ptr, void(\texorpdfstring{$\ast$}{*}cleanup)(void \texorpdfstring{$\ast$}{*}))
+\begin{DoxyCompactList}\small\item\em Retires a pointer for deferred reclamation. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{epoch_8h_aa6be6071c276481154cceb40f5720f32}{ttak\+\_\+epoch\+\_\+reclaim}} (void)
+\begin{DoxyCompactList}\small\item\em Attempts to reclaim memory from safe epochs. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structttak__epoch__manager__t}{ttak\+\_\+epoch\+\_\+manager\+\_\+t}} \mbox{\hyperlink{epoch_8h_a2192db0d487496ef34e4fa90b8b49329}{g\+\_\+epoch\+\_\+mgr}}
+\item 
+\+\_\+\+Thread\+\_\+local \mbox{\hyperlink{structttak__thread__state__t}{ttak\+\_\+thread\+\_\+state\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{epoch_8h_a862025158e19b2f5766ecc4f483613a4}{t\+\_\+local\+\_\+state}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{epoch_8h_a1f0bc5e67927ea3e33e0e7c5d86b3588}\label{epoch_8h_a1f0bc5e67927ea3e33e0e7c5d86b3588} 
+\index{epoch.h@{epoch.h}!TTAK\_EPOCH\_SESSIONS@{TTAK\_EPOCH\_SESSIONS}}
+\index{TTAK\_EPOCH\_SESSIONS@{TTAK\_EPOCH\_SESSIONS}!epoch.h@{epoch.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_EPOCH\_SESSIONS}{TTAK\_EPOCH\_SESSIONS}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+EPOCH\+\_\+\+SESSIONS~3}
+
+Handle tcc\textquotesingle{}s lack of C11 support for \+\_\+\+Atomic and \+\_\+\+Thread\+\_\+local. 
+
+Definition at line \mbox{\hyperlink{epoch_8h_source_l00020}{20}} of file \mbox{\hyperlink{epoch_8h_source}{epoch.\+h}}.
+
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{epoch_8h_ab7801ef33599e02cd1bdd04ab1ea4e4c}\label{epoch_8h_ab7801ef33599e02cd1bdd04ab1ea4e4c} 
+\index{epoch.h@{epoch.h}!ttak\_retired\_node\_t@{ttak\_retired\_node\_t}}
+\index{ttak\_retired\_node\_t@{ttak\_retired\_node\_t}!epoch.h@{epoch.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_retired\_node\_t}{ttak\_retired\_node\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__retired__node}{ttak\+\_\+retired\+\_\+node}} \mbox{\hyperlink{epoch_8h_ab7801ef33599e02cd1bdd04ab1ea4e4c}{ttak\+\_\+retired\+\_\+node\+\_\+t}}}
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{epoch_8h_a6da4eee69992f96efead4de621c26b71}\label{epoch_8h_a6da4eee69992f96efead4de621c26b71} 
+\index{epoch.h@{epoch.h}!ttak\_epoch\_deregister\_thread@{ttak\_epoch\_deregister\_thread}}
+\index{ttak\_epoch\_deregister\_thread@{ttak\_epoch\_deregister\_thread}!epoch.h@{epoch.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_epoch\_deregister\_thread()}{ttak\_epoch\_deregister\_thread()}}
+{\footnotesize\ttfamily void ttak\+\_\+epoch\+\_\+deregister\+\_\+thread (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Deregisters the current thread. 
+
+\Hypertarget{epoch_8h_acc975f53f787fd4d2b91a3c25c56cf11}\label{epoch_8h_acc975f53f787fd4d2b91a3c25c56cf11} 
+\index{epoch.h@{epoch.h}!ttak\_epoch\_enter@{ttak\_epoch\_enter}}
+\index{ttak\_epoch\_enter@{ttak\_epoch\_enter}!epoch.h@{epoch.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_epoch\_enter()}{ttak\_epoch\_enter()}}
+{\footnotesize\ttfamily void ttak\+\_\+epoch\+\_\+enter (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Enters a critical section protected by EBR. 
+
+\Hypertarget{epoch_8h_a542bce7d6579bcdb816aa4111263662a}\label{epoch_8h_a542bce7d6579bcdb816aa4111263662a} 
+\index{epoch.h@{epoch.h}!ttak\_epoch\_exit@{ttak\_epoch\_exit}}
+\index{ttak\_epoch\_exit@{ttak\_epoch\_exit}!epoch.h@{epoch.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_epoch\_exit()}{ttak\_epoch\_exit()}}
+{\footnotesize\ttfamily void ttak\+\_\+epoch\+\_\+exit (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Exits the EBR critical section. 
+
+\Hypertarget{epoch_8h_aa6be6071c276481154cceb40f5720f32}\label{epoch_8h_aa6be6071c276481154cceb40f5720f32} 
+\index{epoch.h@{epoch.h}!ttak\_epoch\_reclaim@{ttak\_epoch\_reclaim}}
+\index{ttak\_epoch\_reclaim@{ttak\_epoch\_reclaim}!epoch.h@{epoch.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_epoch\_reclaim()}{ttak\_epoch\_reclaim()}}
+{\footnotesize\ttfamily void ttak\+\_\+epoch\+\_\+reclaim (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Attempts to reclaim memory from safe epochs. 
+
+\Hypertarget{epoch_8h_ae1b722f4861fbbb0cfa8de22e3fa76b0}\label{epoch_8h_ae1b722f4861fbbb0cfa8de22e3fa76b0} 
+\index{epoch.h@{epoch.h}!ttak\_epoch\_register\_thread@{ttak\_epoch\_register\_thread}}
+\index{ttak\_epoch\_register\_thread@{ttak\_epoch\_register\_thread}!epoch.h@{epoch.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_epoch\_register\_thread()}{ttak\_epoch\_register\_thread()}}
+{\footnotesize\ttfamily void ttak\+\_\+epoch\+\_\+register\+\_\+thread (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Registers the current thread with the epoch manager. 
+
+\Hypertarget{epoch_8h_aba162a5defc4e35caa4857dacc526a7d}\label{epoch_8h_aba162a5defc4e35caa4857dacc526a7d} 
+\index{epoch.h@{epoch.h}!ttak\_epoch\_retire@{ttak\_epoch\_retire}}
+\index{ttak\_epoch\_retire@{ttak\_epoch\_retire}!epoch.h@{epoch.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_epoch\_retire()}{ttak\_epoch\_retire()}}
+{\footnotesize\ttfamily void ttak\+\_\+epoch\+\_\+retire (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{ptr,  }\item[{void(\texorpdfstring{$\ast$}{*})(void \texorpdfstring{$\ast$}{*})}]{cleanup }\end{DoxyParamCaption})}
+
+
+
+Retires a pointer for deferred reclamation. 
+
+
+\begin{DoxyItemize}
+\item 
+\begin{DoxyParams}{Parameters}
+{\em ptr} & The pointer to retire. \\
+\hline
+{\em cleanup} & Optional cleanup function (e.\+g., free). \\
+\hline
+\end{DoxyParams}
+
+\end{DoxyItemize}
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{epoch_8h_a2192db0d487496ef34e4fa90b8b49329}\label{epoch_8h_a2192db0d487496ef34e4fa90b8b49329} 
+\index{epoch.h@{epoch.h}!g\_epoch\_mgr@{g\_epoch\_mgr}}
+\index{g\_epoch\_mgr@{g\_epoch\_mgr}!epoch.h@{epoch.h}}
+\doxysubsubsection{\texorpdfstring{g\_epoch\_mgr}{g\_epoch\_mgr}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structttak__epoch__manager__t}{ttak\+\_\+epoch\+\_\+manager\+\_\+t}} g\+\_\+epoch\+\_\+mgr\hspace{0.3cm}{\ttfamily [extern]}}
+
+\Hypertarget{epoch_8h_a862025158e19b2f5766ecc4f483613a4}\label{epoch_8h_a862025158e19b2f5766ecc4f483613a4} 
+\index{epoch.h@{epoch.h}!t\_local\_state@{t\_local\_state}}
+\index{t\_local\_state@{t\_local\_state}!epoch.h@{epoch.h}}
+\doxysubsubsection{\texorpdfstring{t\_local\_state}{t\_local\_state}}
+{\footnotesize\ttfamily \+\_\+\+Thread\+\_\+local \mbox{\hyperlink{structttak__thread__state__t}{ttak\+\_\+thread\+\_\+state\+\_\+t}}\texorpdfstring{$\ast$}{*} t\+\_\+local\+\_\+state\hspace{0.3cm}{\ttfamily [extern]}}
+

@@ -1,0 +1,213 @@
+\doxysection{include/ttak/ttak\+\_\+accelerator.h File Reference}
+\hypertarget{ttak__accelerator_8h}{}\label{ttak__accelerator_8h}\index{include/ttak/ttak\_accelerator.h@{include/ttak/ttak\_accelerator.h}}
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdatomic.\+h$>$}\newline
+Include dependency graph for ttak\+\_\+accelerator.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=300pt]{ttak__accelerator_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=245pt]{ttak__accelerator_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structttak__accel__config}{ttak\+\_\+accel\+\_\+config}}
+\begin{DoxyCompactList}\small\item\em Batch-\/level configuration knobs shared by all targets. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structttak__accel__batch__item}{ttak\+\_\+accel\+\_\+batch\+\_\+item}}
+\begin{DoxyCompactList}\small\item\em Work fragment passed to an accelerator implementation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef enum \mbox{\hyperlink{ttak__accelerator_8h_a4c4c114f1628da0d3fc56a9f9b5cb5c9}{ttak\+\_\+result}} \mbox{\hyperlink{ttak__accelerator_8h_ad112d6852d4170064b4efdba029ef930}{ttak\+\_\+result\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Result codes returned by accelerator backends. \end{DoxyCompactList}\item 
+typedef enum \mbox{\hyperlink{ttak__accelerator_8h_ac7cac2c972f22538284d97bf3220ea04}{ttak\+\_\+accel\+\_\+target}} \mbox{\hyperlink{ttak__accelerator_8h_a4f7075b22f21f93f709096e2d48b22a8}{ttak\+\_\+accel\+\_\+target\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Physical execution targets supported by libttak. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structttak__accel__config}{ttak\+\_\+accel\+\_\+config}} \mbox{\hyperlink{ttak__accelerator_8h_a5c6a6c6799183f581aa1926cfe76c592}{ttak\+\_\+accel\+\_\+config\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Batch-\/level configuration knobs shared by all targets. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structttak__accel__batch__item}{ttak\+\_\+accel\+\_\+batch\+\_\+item}} \mbox{\hyperlink{ttak__accelerator_8h_aa1689adc22b84a59d14d42050fe255c9}{ttak\+\_\+accel\+\_\+batch\+\_\+item\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Work fragment passed to an accelerator implementation. \end{DoxyCompactList}\item 
+typedef \mbox{\hyperlink{ttak__accelerator_8h_ad112d6852d4170064b4efdba029ef930}{ttak\+\_\+result\+\_\+t}}(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{ttak__accelerator_8h_a11800ef93fe7b7bc741b6b7f0ba9e7d4}{ttak\+\_\+accel\+\_\+backend\+\_\+fn}}) (const \mbox{\hyperlink{ttak__accelerator_8h_aa1689adc22b84a59d14d42050fe255c9}{ttak\+\_\+accel\+\_\+batch\+\_\+item\+\_\+t}} \texorpdfstring{$\ast$}{*}items, size\+\_\+t item\+\_\+count, const \mbox{\hyperlink{ttak__accelerator_8h_a5c6a6c6799183f581aa1926cfe76c592}{ttak\+\_\+accel\+\_\+config\+\_\+t}} \texorpdfstring{$\ast$}{*}config)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{ttak__accelerator_8h_a4c4c114f1628da0d3fc56a9f9b5cb5c9}{ttak\+\_\+result}} \{ \mbox{\hyperlink{ttak__accelerator_8h_a4c4c114f1628da0d3fc56a9f9b5cb5c9a62ecc30dc27f878aa04e762440858730}{TTAK\+\_\+\+RESULT\+\_\+\+OK}} = 0
+, \mbox{\hyperlink{ttak__accelerator_8h_a4c4c114f1628da0d3fc56a9f9b5cb5c9a086bba2ff571862449eaf670fabaccb9}{TTAK\+\_\+\+RESULT\+\_\+\+ERR\+\_\+\+ARGUMENT}} = -\/1
+, \mbox{\hyperlink{ttak__accelerator_8h_a4c4c114f1628da0d3fc56a9f9b5cb5c9ae45a0f23271c6a7ceeb1a962c039a2b7}{TTAK\+\_\+\+RESULT\+\_\+\+ERR\+\_\+\+UNSUPPORTED}} = -\/2
+, \mbox{\hyperlink{ttak__accelerator_8h_a4c4c114f1628da0d3fc56a9f9b5cb5c9abba2c044c03554184d123ff4eae9152c}{TTAK\+\_\+\+RESULT\+\_\+\+ERR\+\_\+\+EXECUTION}} = -\/3
+ \}
+\begin{DoxyCompactList}\small\item\em Result codes returned by accelerator backends. \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{ttak__accelerator_8h_ac7cac2c972f22538284d97bf3220ea04}{ttak\+\_\+accel\+\_\+target}} \{ \mbox{\hyperlink{ttak__accelerator_8h_ac7cac2c972f22538284d97bf3220ea04aed10b3cc1a80327cb1009599ff7fe47e}{TTAK\+\_\+\+ACCEL\+\_\+\+TARGET\+\_\+\+CPU}} = 0
+, \mbox{\hyperlink{ttak__accelerator_8h_ac7cac2c972f22538284d97bf3220ea04a40dfe463bab8eef2411976e3dbd359f9}{TTAK\+\_\+\+ACCEL\+\_\+\+TARGET\+\_\+\+CUDA}}
+, \mbox{\hyperlink{ttak__accelerator_8h_ac7cac2c972f22538284d97bf3220ea04a7117c0a39d9134451146bd532601c38a}{TTAK\+\_\+\+ACCEL\+\_\+\+TARGET\+\_\+\+OPENCL}}
+, \mbox{\hyperlink{ttak__accelerator_8h_ac7cac2c972f22538284d97bf3220ea04ac1eadf9e1fef84d364e7090c3ae492cf}{TTAK\+\_\+\+ACCEL\+\_\+\+TARGET\+\_\+\+ROCM}}
+ \}
+\begin{DoxyCompactList}\small\item\em Physical execution targets supported by libttak. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{ttak__accelerator_8h_ad112d6852d4170064b4efdba029ef930}{ttak\+\_\+result\+\_\+t}} \mbox{\hyperlink{ttak__accelerator_8h_aa00678feed48025bb178cab32110e078}{ttak\+\_\+execute\+\_\+batch}} (const \mbox{\hyperlink{ttak__accelerator_8h_aa1689adc22b84a59d14d42050fe255c9}{ttak\+\_\+accel\+\_\+batch\+\_\+item\+\_\+t}} \texorpdfstring{$\ast$}{*}items, size\+\_\+t item\+\_\+count, const \mbox{\hyperlink{ttak__accelerator_8h_a5c6a6c6799183f581aa1926cfe76c592}{ttak\+\_\+accel\+\_\+config\+\_\+t}} \texorpdfstring{$\ast$}{*}config)
+\begin{DoxyCompactList}\small\item\em Executes a batch on the highest priority available accelerator. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{ttak__accelerator_8h_ad112d6852d4170064b4efdba029ef930}{ttak\+\_\+result\+\_\+t}} \mbox{\hyperlink{ttak__accelerator_8h_aa8d6cdf8bdb11df2c232aae59db6bbee}{ttak\+\_\+get\+\_\+active\+\_\+backend}} (\mbox{\hyperlink{ttak__accelerator_8h_a11800ef93fe7b7bc741b6b7f0ba9e7d4}{ttak\+\_\+accel\+\_\+backend\+\_\+fn}} \texorpdfstring{$\ast$}{*}out\+\_\+fn, \mbox{\hyperlink{ttak__accelerator_8h_a4f7075b22f21f93f709096e2d48b22a8}{ttak\+\_\+accel\+\_\+target\+\_\+t}} \texorpdfstring{$\ast$}{*}out\+\_\+target)
+\begin{DoxyCompactList}\small\item\em Returns the currently selected backend implementation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{ttak__accelerator_8h_a11800ef93fe7b7bc741b6b7f0ba9e7d4}\label{ttak__accelerator_8h_a11800ef93fe7b7bc741b6b7f0ba9e7d4} 
+\index{ttak\_accelerator.h@{ttak\_accelerator.h}!ttak\_accel\_backend\_fn@{ttak\_accel\_backend\_fn}}
+\index{ttak\_accel\_backend\_fn@{ttak\_accel\_backend\_fn}!ttak\_accelerator.h@{ttak\_accelerator.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_accel\_backend\_fn}{ttak\_accel\_backend\_fn}}
+{\footnotesize\ttfamily typedef \mbox{\hyperlink{ttak__accelerator_8h_ad112d6852d4170064b4efdba029ef930}{ttak\+\_\+result\+\_\+t}}(\texorpdfstring{$\ast$}{*} ttak\+\_\+accel\+\_\+backend\+\_\+fn) (const \mbox{\hyperlink{ttak__accelerator_8h_aa1689adc22b84a59d14d42050fe255c9}{ttak\+\_\+accel\+\_\+batch\+\_\+item\+\_\+t}} \texorpdfstring{$\ast$}{*}items, size\+\_\+t item\+\_\+count, const \mbox{\hyperlink{ttak__accelerator_8h_a5c6a6c6799183f581aa1926cfe76c592}{ttak\+\_\+accel\+\_\+config\+\_\+t}} \texorpdfstring{$\ast$}{*}config)}
+
+
+
+Definition at line \mbox{\hyperlink{ttak__accelerator_8h_source_l00057}{57}} of file \mbox{\hyperlink{ttak__accelerator_8h_source}{ttak\+\_\+accelerator.\+h}}.
+
+\Hypertarget{ttak__accelerator_8h_aa1689adc22b84a59d14d42050fe255c9}\label{ttak__accelerator_8h_aa1689adc22b84a59d14d42050fe255c9} 
+\index{ttak\_accelerator.h@{ttak\_accelerator.h}!ttak\_accel\_batch\_item\_t@{ttak\_accel\_batch\_item\_t}}
+\index{ttak\_accel\_batch\_item\_t@{ttak\_accel\_batch\_item\_t}!ttak\_accelerator.h@{ttak\_accelerator.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_accel\_batch\_item\_t}{ttak\_accel\_batch\_item\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__accel__batch__item}{ttak\+\_\+accel\+\_\+batch\+\_\+item}} \mbox{\hyperlink{ttak__accelerator_8h_aa1689adc22b84a59d14d42050fe255c9}{ttak\+\_\+accel\+\_\+batch\+\_\+item\+\_\+t}}}
+
+
+
+Work fragment passed to an accelerator implementation. 
+
+All pointers must remain valid for the duration of the call. Every buffer is guarded with a byte length to preserve bounds. \Hypertarget{ttak__accelerator_8h_a5c6a6c6799183f581aa1926cfe76c592}\label{ttak__accelerator_8h_a5c6a6c6799183f581aa1926cfe76c592} 
+\index{ttak\_accelerator.h@{ttak\_accelerator.h}!ttak\_accel\_config\_t@{ttak\_accel\_config\_t}}
+\index{ttak\_accel\_config\_t@{ttak\_accel\_config\_t}!ttak\_accelerator.h@{ttak\_accelerator.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_accel\_config\_t}{ttak\_accel\_config\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__accel__config}{ttak\+\_\+accel\+\_\+config}} \mbox{\hyperlink{ttak__accelerator_8h_a5c6a6c6799183f581aa1926cfe76c592}{ttak\+\_\+accel\+\_\+config\+\_\+t}}}
+
+
+
+Batch-\/level configuration knobs shared by all targets. 
+
+\Hypertarget{ttak__accelerator_8h_a4f7075b22f21f93f709096e2d48b22a8}\label{ttak__accelerator_8h_a4f7075b22f21f93f709096e2d48b22a8} 
+\index{ttak\_accelerator.h@{ttak\_accelerator.h}!ttak\_accel\_target\_t@{ttak\_accel\_target\_t}}
+\index{ttak\_accel\_target\_t@{ttak\_accel\_target\_t}!ttak\_accelerator.h@{ttak\_accelerator.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_accel\_target\_t}{ttak\_accel\_target\_t}}
+{\footnotesize\ttfamily typedef enum \mbox{\hyperlink{ttak__accelerator_8h_ac7cac2c972f22538284d97bf3220ea04}{ttak\+\_\+accel\+\_\+target}} \mbox{\hyperlink{ttak__accelerator_8h_a4f7075b22f21f93f709096e2d48b22a8}{ttak\+\_\+accel\+\_\+target\+\_\+t}}}
+
+
+
+Physical execution targets supported by libttak. 
+
+\Hypertarget{ttak__accelerator_8h_ad112d6852d4170064b4efdba029ef930}\label{ttak__accelerator_8h_ad112d6852d4170064b4efdba029ef930} 
+\index{ttak\_accelerator.h@{ttak\_accelerator.h}!ttak\_result\_t@{ttak\_result\_t}}
+\index{ttak\_result\_t@{ttak\_result\_t}!ttak\_accelerator.h@{ttak\_accelerator.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_result\_t}{ttak\_result\_t}}
+{\footnotesize\ttfamily typedef enum \mbox{\hyperlink{ttak__accelerator_8h_a4c4c114f1628da0d3fc56a9f9b5cb5c9}{ttak\+\_\+result}} \mbox{\hyperlink{ttak__accelerator_8h_ad112d6852d4170064b4efdba029ef930}{ttak\+\_\+result\+\_\+t}}}
+
+
+
+Result codes returned by accelerator backends. 
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{ttak__accelerator_8h_ac7cac2c972f22538284d97bf3220ea04}\label{ttak__accelerator_8h_ac7cac2c972f22538284d97bf3220ea04} 
+\index{ttak\_accelerator.h@{ttak\_accelerator.h}!ttak\_accel\_target@{ttak\_accel\_target}}
+\index{ttak\_accel\_target@{ttak\_accel\_target}!ttak\_accelerator.h@{ttak\_accelerator.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_accel\_target}{ttak\_accel\_target}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{ttak__accelerator_8h_ac7cac2c972f22538284d97bf3220ea04}{ttak\+\_\+accel\+\_\+target}}}
+
+
+
+Physical execution targets supported by libttak. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_ACCEL\_TARGET\_CPU@{TTAK\_ACCEL\_TARGET\_CPU}!ttak\_accelerator.h@{ttak\_accelerator.h}}\index{ttak\_accelerator.h@{ttak\_accelerator.h}!TTAK\_ACCEL\_TARGET\_CPU@{TTAK\_ACCEL\_TARGET\_CPU}}}\Hypertarget{ttak__accelerator_8h_ac7cac2c972f22538284d97bf3220ea04aed10b3cc1a80327cb1009599ff7fe47e}\label{ttak__accelerator_8h_ac7cac2c972f22538284d97bf3220ea04aed10b3cc1a80327cb1009599ff7fe47e} 
+TTAK\+\_\+\+ACCEL\+\_\+\+TARGET\+\_\+\+CPU&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_ACCEL\_TARGET\_CUDA@{TTAK\_ACCEL\_TARGET\_CUDA}!ttak\_accelerator.h@{ttak\_accelerator.h}}\index{ttak\_accelerator.h@{ttak\_accelerator.h}!TTAK\_ACCEL\_TARGET\_CUDA@{TTAK\_ACCEL\_TARGET\_CUDA}}}\Hypertarget{ttak__accelerator_8h_ac7cac2c972f22538284d97bf3220ea04a40dfe463bab8eef2411976e3dbd359f9}\label{ttak__accelerator_8h_ac7cac2c972f22538284d97bf3220ea04a40dfe463bab8eef2411976e3dbd359f9} 
+TTAK\+\_\+\+ACCEL\+\_\+\+TARGET\+\_\+\+CUDA&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_ACCEL\_TARGET\_OPENCL@{TTAK\_ACCEL\_TARGET\_OPENCL}!ttak\_accelerator.h@{ttak\_accelerator.h}}\index{ttak\_accelerator.h@{ttak\_accelerator.h}!TTAK\_ACCEL\_TARGET\_OPENCL@{TTAK\_ACCEL\_TARGET\_OPENCL}}}\Hypertarget{ttak__accelerator_8h_ac7cac2c972f22538284d97bf3220ea04a7117c0a39d9134451146bd532601c38a}\label{ttak__accelerator_8h_ac7cac2c972f22538284d97bf3220ea04a7117c0a39d9134451146bd532601c38a} 
+TTAK\+\_\+\+ACCEL\+\_\+\+TARGET\+\_\+\+OPENCL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_ACCEL\_TARGET\_ROCM@{TTAK\_ACCEL\_TARGET\_ROCM}!ttak\_accelerator.h@{ttak\_accelerator.h}}\index{ttak\_accelerator.h@{ttak\_accelerator.h}!TTAK\_ACCEL\_TARGET\_ROCM@{TTAK\_ACCEL\_TARGET\_ROCM}}}\Hypertarget{ttak__accelerator_8h_ac7cac2c972f22538284d97bf3220ea04ac1eadf9e1fef84d364e7090c3ae492cf}\label{ttak__accelerator_8h_ac7cac2c972f22538284d97bf3220ea04ac1eadf9e1fef84d364e7090c3ae492cf} 
+TTAK\+\_\+\+ACCEL\+\_\+\+TARGET\+\_\+\+ROCM&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{ttak__accelerator_8h_source_l00025}{25}} of file \mbox{\hyperlink{ttak__accelerator_8h_source}{ttak\+\_\+accelerator.\+h}}.
+
+\Hypertarget{ttak__accelerator_8h_a4c4c114f1628da0d3fc56a9f9b5cb5c9}\label{ttak__accelerator_8h_a4c4c114f1628da0d3fc56a9f9b5cb5c9} 
+\index{ttak\_accelerator.h@{ttak\_accelerator.h}!ttak\_result@{ttak\_result}}
+\index{ttak\_result@{ttak\_result}!ttak\_accelerator.h@{ttak\_accelerator.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_result}{ttak\_result}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{ttak__accelerator_8h_a4c4c114f1628da0d3fc56a9f9b5cb5c9}{ttak\+\_\+result}}}
+
+
+
+Result codes returned by accelerator backends. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_RESULT\_OK@{TTAK\_RESULT\_OK}!ttak\_accelerator.h@{ttak\_accelerator.h}}\index{ttak\_accelerator.h@{ttak\_accelerator.h}!TTAK\_RESULT\_OK@{TTAK\_RESULT\_OK}}}\Hypertarget{ttak__accelerator_8h_a4c4c114f1628da0d3fc56a9f9b5cb5c9a62ecc30dc27f878aa04e762440858730}\label{ttak__accelerator_8h_a4c4c114f1628da0d3fc56a9f9b5cb5c9a62ecc30dc27f878aa04e762440858730} 
+TTAK\+\_\+\+RESULT\+\_\+\+OK&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_RESULT\_ERR\_ARGUMENT@{TTAK\_RESULT\_ERR\_ARGUMENT}!ttak\_accelerator.h@{ttak\_accelerator.h}}\index{ttak\_accelerator.h@{ttak\_accelerator.h}!TTAK\_RESULT\_ERR\_ARGUMENT@{TTAK\_RESULT\_ERR\_ARGUMENT}}}\Hypertarget{ttak__accelerator_8h_a4c4c114f1628da0d3fc56a9f9b5cb5c9a086bba2ff571862449eaf670fabaccb9}\label{ttak__accelerator_8h_a4c4c114f1628da0d3fc56a9f9b5cb5c9a086bba2ff571862449eaf670fabaccb9} 
+TTAK\+\_\+\+RESULT\+\_\+\+ERR\+\_\+\+ARGUMENT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_RESULT\_ERR\_UNSUPPORTED@{TTAK\_RESULT\_ERR\_UNSUPPORTED}!ttak\_accelerator.h@{ttak\_accelerator.h}}\index{ttak\_accelerator.h@{ttak\_accelerator.h}!TTAK\_RESULT\_ERR\_UNSUPPORTED@{TTAK\_RESULT\_ERR\_UNSUPPORTED}}}\Hypertarget{ttak__accelerator_8h_a4c4c114f1628da0d3fc56a9f9b5cb5c9ae45a0f23271c6a7ceeb1a962c039a2b7}\label{ttak__accelerator_8h_a4c4c114f1628da0d3fc56a9f9b5cb5c9ae45a0f23271c6a7ceeb1a962c039a2b7} 
+TTAK\+\_\+\+RESULT\+\_\+\+ERR\+\_\+\+UNSUPPORTED&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_RESULT\_ERR\_EXECUTION@{TTAK\_RESULT\_ERR\_EXECUTION}!ttak\_accelerator.h@{ttak\_accelerator.h}}\index{ttak\_accelerator.h@{ttak\_accelerator.h}!TTAK\_RESULT\_ERR\_EXECUTION@{TTAK\_RESULT\_ERR\_EXECUTION}}}\Hypertarget{ttak__accelerator_8h_a4c4c114f1628da0d3fc56a9f9b5cb5c9abba2c044c03554184d123ff4eae9152c}\label{ttak__accelerator_8h_a4c4c114f1628da0d3fc56a9f9b5cb5c9abba2c044c03554184d123ff4eae9152c} 
+TTAK\+\_\+\+RESULT\+\_\+\+ERR\+\_\+\+EXECUTION&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{ttak__accelerator_8h_source_l00015}{15}} of file \mbox{\hyperlink{ttak__accelerator_8h_source}{ttak\+\_\+accelerator.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{ttak__accelerator_8h_aa00678feed48025bb178cab32110e078}\label{ttak__accelerator_8h_aa00678feed48025bb178cab32110e078} 
+\index{ttak\_accelerator.h@{ttak\_accelerator.h}!ttak\_execute\_batch@{ttak\_execute\_batch}}
+\index{ttak\_execute\_batch@{ttak\_execute\_batch}!ttak\_accelerator.h@{ttak\_accelerator.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_execute\_batch()}{ttak\_execute\_batch()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{ttak__accelerator_8h_ad112d6852d4170064b4efdba029ef930}{ttak\+\_\+result\+\_\+t}} ttak\+\_\+execute\+\_\+batch (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{ttak__accelerator_8h_aa1689adc22b84a59d14d42050fe255c9}{ttak\+\_\+accel\+\_\+batch\+\_\+item\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{items,  }\item[{size\+\_\+t}]{item\+\_\+count,  }\item[{const \mbox{\hyperlink{ttak__accelerator_8h_a5c6a6c6799183f581aa1926cfe76c592}{ttak\+\_\+accel\+\_\+config\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{config }\end{DoxyParamCaption})}
+
+
+
+Executes a batch on the highest priority available accelerator. 
+
+The dispatcher uses lock-\/free atomics to lazily bind the backend the first time this function is invoked so there is no global mutex contention after startup. \Hypertarget{ttak__accelerator_8h_aa8d6cdf8bdb11df2c232aae59db6bbee}\label{ttak__accelerator_8h_aa8d6cdf8bdb11df2c232aae59db6bbee} 
+\index{ttak\_accelerator.h@{ttak\_accelerator.h}!ttak\_get\_active\_backend@{ttak\_get\_active\_backend}}
+\index{ttak\_get\_active\_backend@{ttak\_get\_active\_backend}!ttak\_accelerator.h@{ttak\_accelerator.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_get\_active\_backend()}{ttak\_get\_active\_backend()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{ttak__accelerator_8h_ad112d6852d4170064b4efdba029ef930}{ttak\+\_\+result\+\_\+t}} ttak\+\_\+get\+\_\+active\+\_\+backend (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{ttak__accelerator_8h_a11800ef93fe7b7bc741b6b7f0ba9e7d4}{ttak\+\_\+accel\+\_\+backend\+\_\+fn}} \texorpdfstring{$\ast$}{*}}]{out\+\_\+fn,  }\item[{\mbox{\hyperlink{ttak__accelerator_8h_a4f7075b22f21f93f709096e2d48b22a8}{ttak\+\_\+accel\+\_\+target\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{out\+\_\+target }\end{DoxyParamCaption})}
+
+
+
+Returns the currently selected backend implementation. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em out\+\_\+fn} & Optional pointer to store the backend function pointer. \\
+\hline
+{\em out\+\_\+target} & Optional pointer to store which target backs the pointer. \\
+\hline
+\end{DoxyParams}

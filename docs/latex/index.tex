@@ -1,46 +1,52 @@
-\chapter{TTL Cache Benchmark (libttak)}
-\hypertarget{index}{}\label{index}\index{TTL Cache Benchmark (libttak)@{TTL Cache Benchmark (libttak)}}
-\label{index_md_bench_2ttl-cache-multithread-bench_2README}%
-\Hypertarget{index_md_bench_2ttl-cache-multithread-bench_2README}%
- A high-\/performance benchmark for {\ttfamily libttak} simulating a TTL-\/based cache with generational memory management.\hypertarget{index_autotoc_md2}{}\doxysection{\texorpdfstring{Overview}{Overview}}\label{index_autotoc_md2}
-This benchmark simulates a concurrent cache workload with\+:
-\begin{DoxyItemize}
-\item {\bfseries{Generational Memory\+:}} Values are allocated in time-\/based epochs.
-\item {\bfseries{Bulk Cleanup\+:}} When an epoch expires, all its memory is freed at once using {\ttfamily mem\+\_\+tree}.
-\item {\bfseries{Sharded Locking\+:}} Hash map is partitioned into shards for concurrency.
-\item {\bfseries{Async Maintenance\+:}} Background task rotates epochs and cleans up old data.
-\end{DoxyItemize}\hypertarget{index_autotoc_md3}{}\doxysection{\texorpdfstring{Build}{Build}}\label{index_autotoc_md3}
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{make}
-
-\end{DoxyCode}
-\hypertarget{index_autotoc_md4}{}\doxysection{\texorpdfstring{Run}{Run}}\label{index_autotoc_md4}
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{./ttl\_cache\_bench\ [options]}
-
-\end{DoxyCode}
-\hypertarget{index_autotoc_md5}{}\doxysubsection{\texorpdfstring{Options}{Options}}\label{index_autotoc_md5}
+\chapter{Blueprints}
+\hypertarget{index}{}\label{index}\index{Blueprints@{Blueprints}}
+\label{index_md_blueprints_2README}%
+\Hypertarget{index_md_blueprints_2README}%
+ This directory houses the Plant\+UML ({\ttfamily .puml}) blueprints for {\ttfamily libttak}. Each file now lives in a role-\/oriented folder so it is easier to navigate the architecture layers.\hypertarget{index_autotoc_md1}{}\doxysection{\texorpdfstring{Directory Structure}{Directory Structure}}\label{index_autotoc_md1}
 
 \begin{DoxyItemize}
-\item {\ttfamily -\/-\/threads, -\/t}\+: Number of worker threads (default\+: 4)
-\item {\ttfamily -\/-\/duration, -\/d}\+: Benchmark duration in seconds (default\+: 10)
-\item {\ttfamily -\/-\/value-\/size, -\/v}\+: Size of value blob in bytes (default\+: 256)
-\item {\ttfamily -\/-\/keyspace, -\/k}\+: Number of unique keys (default\+: 100000)
-\item {\ttfamily -\/-\/ttl-\/ms, -\/l}\+: TTL of items in milliseconds (default\+: 500)
-\item {\ttfamily -\/-\/epoch-\/ms, -\/e}\+: Duration of one epoch in milliseconds (default\+: 250)
-\item {\ttfamily -\/-\/shards, -\/s}\+: Number of map shards (default\+: 16)
-\end{DoxyItemize}\hypertarget{index_autotoc_md6}{}\doxysubsection{\texorpdfstring{Example}{Example}}\label{index_autotoc_md6}
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{./ttl\_cache\_bench\ -\/-\/threads\ 8\ -\/-\/duration\ 20\ -\/-\/value-\/size\ 1024\ -\/-\/shards\ 32}
-
-\end{DoxyCode}
-\hypertarget{index_autotoc_md7}{}\doxysection{\texorpdfstring{Metrics}{Metrics}}\label{index_autotoc_md7}
+\item {\ttfamily application/}\+: Product-\/entry diagrams such as {\ttfamily \doxylink{00__overview_8puml}{00\+\_\+overview.\+puml}}.
+\item {\ttfamily logic/}\+: Specialized logic (math kernels, tree structures).
+\item {\ttfamily execution/}\+: Runtime and scheduling blueprints.
+\item {\ttfamily resource/}\+: Ownership, epoch GC, and detachable/arena allocators.
+\item {\ttfamily foundation/}\+: Threading, synchronization, and utility services.
+\item {\ttfamily io\+\_\+net/}\+: Guarded I/O, buffers, and network topology.
+\item {\ttfamily embedded/}\+: Bare-\/metal specific allocators and drivers.
+\item {\ttfamily integration/}\+: Cross-\/cutting diagrams like {\ttfamily \doxylink{all_8puml}{all.\+puml}}.
+\item {\ttfamily png/}\+: Rendered PNG files that mirror the same folder hierarchy.
+\item {\ttfamily scripts/}\+: Rendering helpers (currently {\ttfamily render\+\_\+blueprints.\+py}).
+\end{DoxyItemize}\hypertarget{index_autotoc_md2}{}\doxysubsection{\texorpdfstring{Notable Blueprints}{Notable Blueprints}}\label{index_autotoc_md2}
 
 \begin{DoxyItemize}
-\item {\bfseries{Ops/s}}\+: Total throughput (Get + Set + Del)
-\item {\bfseries{Hit\+Rate}}\+: Percentage of GETs that found a valid item.
-\item {\bfseries{Avg\+Clean}}\+: Average time (microseconds) to destroy an expired epoch (bulk free). 
-\end{DoxyItemize}
+\item {\ttfamily \doxylink{09__epoch__reclamation_8puml}{resource/09\+\_\+epoch\+\_\+reclamation.\+puml}}\+: Shows how epoch registration, retirement queues, and shared-\/pointer integration cooperate (Scope \mbox{[}09\mbox{]}).
+\item {\ttfamily \doxylink{10__detachable__memory_8puml}{resource/10\+\_\+detachable\+\_\+memory.\+puml}}\+: Describes the detachable memory allocator, cache, signal hooks, and graceful termination path (Scope \mbox{[}10\mbox{]}).
+\item {\ttfamily \doxylink{11__arena__memory_8puml}{resource/11\+\_\+arena\+\_\+memory.\+puml}}\+: Captures the cache-\/aligned arena row lifecycle, mem-\/tree bookkeeping, and epoch GC flow referenced by Lesson 40 + the TTL cache bench (Scope \mbox{[}11\mbox{]}).
+\item {\ttfamily \doxylink{12__io__net_8puml}{io\+\_\+net/12\+\_\+io\+\_\+net.\+puml}}\+: Documents the guarded I/O layer (guards, zero-\/copy buffers, polling) and its integration with shared endpoints plus the session manager built on EBR + Epoch GC (Scope \mbox{[}12\mbox{]}).
+\item {\ttfamily \doxylink{13__embedded__baremetal_8puml}{embedded/13\+\_\+embedded\+\_\+baremetal.\+puml}}\+: Shows how the buddy allocator underpins embedded builds and how the net driver abstraction bridges POSIX/\+Windows/\+Baremetal targets (Scope \mbox{[}13\mbox{]}).
+\item {\ttfamily \doxylink{all_8puml}{integration/all.\+puml}}\+: Integrated architecture map that stitches the role folders into one overview.
+\end{DoxyItemize}\hypertarget{index_autotoc_md3}{}\doxysection{\texorpdfstring{Rendering Blueprints}{Rendering Blueprints}}\label{index_autotoc_md3}
+To update the PNG files from the {\ttfamily .puml} sources, run the following command from the project root\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{make\ blueprints}
+
+\end{DoxyCode}
+
+
+Or run the script directly\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{python3\ blueprints/scripts/render\_blueprints.py}
+
+\end{DoxyCode}
+
+
+The script will automatically check for changes and only re-\/render files that have been modified. It attempts to use a local {\ttfamily plantuml} installation first, and falls back to the Plant\+UML online server if necessary.\hypertarget{index_autotoc_md4}{}\doxysection{\texorpdfstring{Adding New Blueprints}{Adding New Blueprints}}\label{index_autotoc_md4}
+
+\begin{DoxyEnumerate}
+\item Create a new {\ttfamily .puml} file in the folder that matches the role (or create a new folder if a new role emerges).
+\item Run {\ttfamily make blueprints}.
+\item The resulting PNG will be stored in the mirrored path under {\ttfamily blueprints/png/}. 
+\end{DoxyEnumerate}

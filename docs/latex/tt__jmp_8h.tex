@@ -1,0 +1,90 @@
+\doxysection{internal/tt\+\_\+jmp.h File Reference}
+\hypertarget{tt__jmp_8h}{}\label{tt__jmp_8h}\index{internal/tt\_jmp.h@{internal/tt\_jmp.h}}
+{\ttfamily \#include $<$setjmp.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$pthread.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+Include dependency graph for tt\+\_\+jmp.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{tt__jmp_8h__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{tt__jmp_8h_abc70801342ad401db3f0cd78dd13d029}{TT\+\_\+\+JMP\+\_\+\+MAGIC}}~0x54544\+A4\+D50\+ULL /\texorpdfstring{$\ast$}{*} "{}TTJMP"{} \texorpdfstring{$\ast$}{*}/
+\begin{DoxyCompactList}\small\item\em Magic sentinel written by tt\+\_\+setjmp and checked before tt\+\_\+longjmp to confirm that the jump buffer is valid. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{tt__jmp_8h_a0dba6071ffcecacf551c8777aa9502bb}{tt\+\_\+setjmp}}(env,  magic\+\_\+ptr,  tid\+\_\+ptr)
+\begin{DoxyCompactList}\small\item\em Portable setjmp/longjmp wrappers. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{tt__jmp_8h_ae7e5bb8b543b0445a463172d16198fd8}{tt\+\_\+longjmp}}(env,  magic\+\_\+ptr,  tid\+\_\+ptr,  val)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{tt__jmp_8h_abc70801342ad401db3f0cd78dd13d029}\label{tt__jmp_8h_abc70801342ad401db3f0cd78dd13d029} 
+\index{tt\_jmp.h@{tt\_jmp.h}!TT\_JMP\_MAGIC@{TT\_JMP\_MAGIC}}
+\index{TT\_JMP\_MAGIC@{TT\_JMP\_MAGIC}!tt\_jmp.h@{tt\_jmp.h}}
+\doxysubsubsection{\texorpdfstring{TT\_JMP\_MAGIC}{TT\_JMP\_MAGIC}}
+{\footnotesize\ttfamily \#define TT\+\_\+\+JMP\+\_\+\+MAGIC~0x54544\+A4\+D50\+ULL /\texorpdfstring{$\ast$}{*} "{}TTJMP"{} \texorpdfstring{$\ast$}{*}/}
+
+
+
+Magic sentinel written by tt\+\_\+setjmp and checked before tt\+\_\+longjmp to confirm that the jump buffer is valid. 
+
+
+
+Definition at line \mbox{\hyperlink{tt__jmp_8h_source_l00014}{14}} of file \mbox{\hyperlink{tt__jmp_8h_source}{tt\+\_\+jmp.\+h}}.
+
+\Hypertarget{tt__jmp_8h_ae7e5bb8b543b0445a463172d16198fd8}\label{tt__jmp_8h_ae7e5bb8b543b0445a463172d16198fd8} 
+\index{tt\_jmp.h@{tt\_jmp.h}!tt\_longjmp@{tt\_longjmp}}
+\index{tt\_longjmp@{tt\_longjmp}!tt\_jmp.h@{tt\_jmp.h}}
+\doxysubsubsection{\texorpdfstring{tt\_longjmp}{tt\_longjmp}}
+{\footnotesize\ttfamily \#define tt\+\_\+longjmp(\begin{DoxyParamCaption}\item[{}]{env,  }\item[{}]{magic\+\_\+ptr,  }\item[{}]{tid\+\_\+ptr,  }\item[{}]{val }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do}\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ if\ (*(magic\_ptr)\ !=\ \mbox{\hyperlink{tt__jmp_8h_abc70801342ad401db3f0cd78dd13d029}{TT\_JMP\_MAGIC}})\ \{\ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ fprintf(stderr,\ \textcolor{stringliteral}{"{}[FATAL]\ tt\_longjmp:\ Invalid\ Magic\(\backslash\)n"{}});\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ abort();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ if\ (*(tid\_ptr)\ !=\ (uint64\_t)pthread\_self())\ \{\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ fprintf(stderr,\ \textcolor{stringliteral}{"{}[FATAL]\ tt\_longjmp:\ Cross-\/thread\ Jump\(\backslash\)n"{}});\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ abort();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ *(magic\_ptr)\ =\ 0;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ siglongjmp(env,\ val);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\}\ \textcolor{keywordflow}{while}\ (0)}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{tt__jmp_8h_source_l00056}{56}} of file \mbox{\hyperlink{tt__jmp_8h_source}{tt\+\_\+jmp.\+h}}.
+
+\Hypertarget{tt__jmp_8h_a0dba6071ffcecacf551c8777aa9502bb}\label{tt__jmp_8h_a0dba6071ffcecacf551c8777aa9502bb} 
+\index{tt\_jmp.h@{tt\_jmp.h}!tt\_setjmp@{tt\_setjmp}}
+\index{tt\_setjmp@{tt\_setjmp}!tt\_jmp.h@{tt\_jmp.h}}
+\doxysubsubsection{\texorpdfstring{tt\_setjmp}{tt\_setjmp}}
+{\footnotesize\ttfamily \#define tt\+\_\+setjmp(\begin{DoxyParamCaption}\item[{}]{env,  }\item[{}]{magic\+\_\+ptr,  }\item[{}]{tid\+\_\+ptr }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(\ *(magic\_ptr)\ =\ \mbox{\hyperlink{tt__jmp_8h_abc70801342ad401db3f0cd78dd13d029}{TT\_JMP\_MAGIC}},\ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{*(tid\_ptr)\ =\ (uint64\_t)pthread\_self(),\ \(\backslash\)}
+\DoxyCodeLine{sigsetjmp(env,\ 0)\ )}
+
+\end{DoxyCode}
+
+
+Portable setjmp/longjmp wrappers. 
+
+POSIX platforms use sigsetjmp/siglongjmp so that the signal mask is saved and restored across non-\/local jumps. Windows (Min\+GW) lacks the sig\texorpdfstring{$\ast$}{*} variants, so we fall back to plain setjmp/longjmp.
+
+Both wrappers additionally record a magic value and the current pthread ID so that callers can verify the buffer is live and belongs to the executing thread. 
+
+Definition at line \mbox{\hyperlink{tt__jmp_8h_source_l00051}{51}} of file \mbox{\hyperlink{tt__jmp_8h_source}{tt\+\_\+jmp.\+h}}.
+

@@ -5,23 +5,18 @@
 {\ttfamily \#include $<$stddef.\+h$>$}\newline
 {\ttfamily \#include $<$stdalign.\+h$>$}\newline
 {\ttfamily \#include $<$pthread.\+h$>$}\newline
-Include dependency graph for app\+\_\+types.\+h\+:\nopagebreak
+{\ttfamily \#include $<$ttak/mem/mem.\+h$>$}\newline
+Include dependency graph for app\+\_\+types.\+h\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=350pt]{app__types_8h__incl}
 \end{center}
 \end{figure}
-\doxysubsubsection*{Classes}
-\begin{DoxyCompactItemize}
-\item 
-struct \mbox{\hyperlink{structttak__mem__header__t}{ttak\+\_\+mem\+\_\+header\+\_\+t}}
-\begin{DoxyCompactList}\small\item\em Recommended pattern for resource-\/managing structures\+: All structures that manage dynamic resources (e.\+g., memory, threads, file handles) should follow an \+\_\+init and \+\_\+destroy pattern. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Macros}
 \begin{DoxyCompactItemize}
 \item 
-\#define \mbox{\hyperlink{app__types_8h_a02d61fafa21eadc8010ca9803d77bafb}{TTAK\+\_\+\+MAGIC\+\_\+\+NUMBER}}~0x5454414B
-\begin{DoxyCompactList}\small\item\em "{}\+Fortress"{} Magic Number for header validation. \end{DoxyCompactList}\item 
 \#define \mbox{\hyperlink{app__types_8h_afb038556e0b1b0989b6a6ddf3fa399f2}{TTAK\+\_\+\+MAX\+\_\+\+LIMB\+\_\+\+LIMIT}}~0x1000000
 \begin{DoxyCompactList}\small\item\em Safety limit for mathematical operations to prevent OOM/\+Overflow. 16 million limbs (approx. 64MB per bigint). \end{DoxyCompactList}\item 
 \#define \mbox{\hyperlink{app__types_8h_a57726742a27442de442d3f964b17136e}{TTAK\+\_\+\+MEM\+\_\+\+HIGH\+\_\+\+WATERMARK}}~(512ULL \texorpdfstring{$\ast$}{*} 1024ULL \texorpdfstring{$\ast$}{*} 1024ULL)
@@ -50,11 +45,6 @@ struct \mbox{\hyperlink{structttak__mem__header__t}{ttak\+\_\+mem\+\_\+header\+\
 \item 
 \#define \mbox{\hyperlink{app__types_8h_ac5b096c74969e7dbd5e24d44a446c015}{SAFE\+\_\+\+NULL}}~NULL
 \begin{DoxyCompactList}\small\item\em Sentinel for invalidated references. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\doxysubsubsection*{Functions}
-\begin{DoxyCompactItemize}
-\item 
-static uint32\+\_\+t \mbox{\hyperlink{app__types_8h_ad663cf355d411491ef16fbaba940be07}{ttak\+\_\+calc\+\_\+header\+\_\+checksum}} (const \mbox{\hyperlink{structttak__mem__header__t}{ttak\+\_\+mem\+\_\+header\+\_\+t}} \texorpdfstring{$\ast$}{*}h)
-\begin{DoxyCompactList}\small\item\em Calculates a 32-\/bit checksum for the memory header. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Macro Definition Documentation}
@@ -66,7 +56,7 @@ static uint32\+\_\+t \mbox{\hyperlink{app__types_8h_ad663cf355d411491ef16fbaba94
 
 
 
-Definition at line \mbox{\hyperlink{app__types_8h_source_l00030}{30}} of file \mbox{\hyperlink{app__types_8h_source}{app\+\_\+types.\+h}}.
+Definition at line \mbox{\hyperlink{app__types_8h_source_l00026}{26}} of file \mbox{\hyperlink{app__types_8h_source}{app\+\_\+types.\+h}}.
 
 \Hypertarget{app__types_8h_a147a8eb4940f2cc5a8e3b1b8dae3ddae}\label{app__types_8h_a147a8eb4940f2cc5a8e3b1b8dae3ddae} 
 \index{app\_types.h@{app\_types.h}!ERR\_TTAK\_MATH\_ERR@{ERR\_TTAK\_MATH\_ERR}}
@@ -80,7 +70,7 @@ Internal error codes mapping.
 
 
 
-Definition at line \mbox{\hyperlink{app__types_8h_source_l00029}{29}} of file \mbox{\hyperlink{app__types_8h_source}{app\+\_\+types.\+h}}.
+Definition at line \mbox{\hyperlink{app__types_8h_source_l00025}{25}} of file \mbox{\hyperlink{app__types_8h_source}{app\+\_\+types.\+h}}.
 
 \Hypertarget{app__types_8h_ac5b096c74969e7dbd5e24d44a446c015}\label{app__types_8h_ac5b096c74969e7dbd5e24d44a446c015} 
 \index{app\_types.h@{app\_types.h}!SAFE\_NULL@{SAFE\_NULL}}
@@ -94,7 +84,7 @@ Sentinel for invalidated references.
 
 
 
-Definition at line \mbox{\hyperlink{app__types_8h_source_l00061}{61}} of file \mbox{\hyperlink{app__types_8h_source}{app\+\_\+types.\+h}}.
+Definition at line \mbox{\hyperlink{app__types_8h_source_l00057}{57}} of file \mbox{\hyperlink{app__types_8h_source}{app\+\_\+types.\+h}}.
 
 \Hypertarget{app__types_8h_a19035333be330bdd7cb30b014a4075fe}\label{app__types_8h_a19035333be330bdd7cb30b014a4075fe} 
 \index{app\_types.h@{app\_types.h}!TT\_HOUR@{TT\_HOUR}}
@@ -104,7 +94,7 @@ Definition at line \mbox{\hyperlink{app__types_8h_source_l00061}{61}} of file \m
 
 
 
-Definition at line \mbox{\hyperlink{app__types_8h_source_l00056}{56}} of file \mbox{\hyperlink{app__types_8h_source}{app\+\_\+types.\+h}}.
+Definition at line \mbox{\hyperlink{app__types_8h_source_l00052}{52}} of file \mbox{\hyperlink{app__types_8h_source}{app\+\_\+types.\+h}}.
 
 \Hypertarget{app__types_8h_ac02e371a9ce7c79927fcd1250ad5f082}\label{app__types_8h_ac02e371a9ce7c79927fcd1250ad5f082} 
 \index{app\_types.h@{app\_types.h}!TT\_MICRO\_SECOND@{TT\_MICRO\_SECOND}}
@@ -114,7 +104,7 @@ Definition at line \mbox{\hyperlink{app__types_8h_source_l00056}{56}} of file \m
 
 
 
-Definition at line \mbox{\hyperlink{app__types_8h_source_l00052}{52}} of file \mbox{\hyperlink{app__types_8h_source}{app\+\_\+types.\+h}}.
+Definition at line \mbox{\hyperlink{app__types_8h_source_l00048}{48}} of file \mbox{\hyperlink{app__types_8h_source}{app\+\_\+types.\+h}}.
 
 \Hypertarget{app__types_8h_a706d706dd7fd86c64eca603344ecd44d}\label{app__types_8h_a706d706dd7fd86c64eca603344ecd44d} 
 \index{app\_types.h@{app\_types.h}!TT\_MILLI\_SECOND@{TT\_MILLI\_SECOND}}
@@ -124,7 +114,7 @@ Definition at line \mbox{\hyperlink{app__types_8h_source_l00052}{52}} of file \m
 
 
 
-Definition at line \mbox{\hyperlink{app__types_8h_source_l00053}{53}} of file \mbox{\hyperlink{app__types_8h_source}{app\+\_\+types.\+h}}.
+Definition at line \mbox{\hyperlink{app__types_8h_source_l00049}{49}} of file \mbox{\hyperlink{app__types_8h_source}{app\+\_\+types.\+h}}.
 
 \Hypertarget{app__types_8h_a3209654bf799b3cadd064970c008a32a}\label{app__types_8h_a3209654bf799b3cadd064970c008a32a} 
 \index{app\_types.h@{app\_types.h}!TT\_MINUTE@{TT\_MINUTE}}
@@ -134,7 +124,7 @@ Definition at line \mbox{\hyperlink{app__types_8h_source_l00053}{53}} of file \m
 
 
 
-Definition at line \mbox{\hyperlink{app__types_8h_source_l00055}{55}} of file \mbox{\hyperlink{app__types_8h_source}{app\+\_\+types.\+h}}.
+Definition at line \mbox{\hyperlink{app__types_8h_source_l00051}{51}} of file \mbox{\hyperlink{app__types_8h_source}{app\+\_\+types.\+h}}.
 
 \Hypertarget{app__types_8h_a8f73ed891f186c57f1a72da390592879}\label{app__types_8h_a8f73ed891f186c57f1a72da390592879} 
 \index{app\_types.h@{app\_types.h}!TT\_NANO\_SECOND@{TT\_NANO\_SECOND}}
@@ -148,7 +138,7 @@ Time unit macros for converting to nanoseconds.
 
 
 
-Definition at line \mbox{\hyperlink{app__types_8h_source_l00051}{51}} of file \mbox{\hyperlink{app__types_8h_source}{app\+\_\+types.\+h}}.
+Definition at line \mbox{\hyperlink{app__types_8h_source_l00047}{47}} of file \mbox{\hyperlink{app__types_8h_source}{app\+\_\+types.\+h}}.
 
 \Hypertarget{app__types_8h_a751dbf1f1d796405a9b2fe2f7ffa945e}\label{app__types_8h_a751dbf1f1d796405a9b2fe2f7ffa945e} 
 \index{app\_types.h@{app\_types.h}!TT\_SECOND@{TT\_SECOND}}
@@ -158,7 +148,7 @@ Definition at line \mbox{\hyperlink{app__types_8h_source_l00051}{51}} of file \m
 
 
 
-Definition at line \mbox{\hyperlink{app__types_8h_source_l00054}{54}} of file \mbox{\hyperlink{app__types_8h_source}{app\+\_\+types.\+h}}.
+Definition at line \mbox{\hyperlink{app__types_8h_source_l00050}{50}} of file \mbox{\hyperlink{app__types_8h_source}{app\+\_\+types.\+h}}.
 
 \Hypertarget{app__types_8h_a5ba4b50baa645717996dbe107641cf43}\label{app__types_8h_a5ba4b50baa645717996dbe107641cf43} 
 \index{app\_types.h@{app\_types.h}!TTAK\_COLD\_PATH@{TTAK\_COLD\_PATH}}
@@ -168,7 +158,7 @@ Definition at line \mbox{\hyperlink{app__types_8h_source_l00054}{54}} of file \m
 
 
 
-Definition at line \mbox{\hyperlink{app__types_8h_source_l00037}{37}} of file \mbox{\hyperlink{app__types_8h_source}{app\+\_\+types.\+h}}.
+Definition at line \mbox{\hyperlink{app__types_8h_source_l00033}{33}} of file \mbox{\hyperlink{app__types_8h_source}{app\+\_\+types.\+h}}.
 
 \Hypertarget{app__types_8h_a9f804bdef8f3eaa64b7090504f3790d1}\label{app__types_8h_a9f804bdef8f3eaa64b7090504f3790d1} 
 \index{app\_types.h@{app\_types.h}!TTAK\_HOT\_PATH@{TTAK\_HOT\_PATH}}
@@ -178,21 +168,7 @@ Definition at line \mbox{\hyperlink{app__types_8h_source_l00037}{37}} of file \m
 
 
 
-Definition at line \mbox{\hyperlink{app__types_8h_source_l00036}{36}} of file \mbox{\hyperlink{app__types_8h_source}{app\+\_\+types.\+h}}.
-
-\Hypertarget{app__types_8h_a02d61fafa21eadc8010ca9803d77bafb}\label{app__types_8h_a02d61fafa21eadc8010ca9803d77bafb} 
-\index{app\_types.h@{app\_types.h}!TTAK\_MAGIC\_NUMBER@{TTAK\_MAGIC\_NUMBER}}
-\index{TTAK\_MAGIC\_NUMBER@{TTAK\_MAGIC\_NUMBER}!app\_types.h@{app\_types.h}}
-\doxysubsubsection{\texorpdfstring{TTAK\_MAGIC\_NUMBER}{TTAK\_MAGIC\_NUMBER}}
-{\footnotesize\ttfamily \#define TTAK\+\_\+\+MAGIC\+\_\+\+NUMBER~0x5454414B}
-
-
-
-"{}\+Fortress"{} Magic Number for header validation. 
-
-
-
-Definition at line \mbox{\hyperlink{app__types_8h_source_l00013}{13}} of file \mbox{\hyperlink{app__types_8h_source}{app\+\_\+types.\+h}}.
+Definition at line \mbox{\hyperlink{app__types_8h_source_l00032}{32}} of file \mbox{\hyperlink{app__types_8h_source}{app\+\_\+types.\+h}}.
 
 \Hypertarget{app__types_8h_afb038556e0b1b0989b6a6ddf3fa399f2}\label{app__types_8h_afb038556e0b1b0989b6a6ddf3fa399f2} 
 \index{app\_types.h@{app\_types.h}!TTAK\_MAX\_LIMB\_LIMIT@{TTAK\_MAX\_LIMB\_LIMIT}}
@@ -206,7 +182,7 @@ Safety limit for mathematical operations to prevent OOM/\+Overflow. 16 million l
 
 
 
-Definition at line \mbox{\hyperlink{app__types_8h_source_l00019}{19}} of file \mbox{\hyperlink{app__types_8h_source}{app\+\_\+types.\+h}}.
+Definition at line \mbox{\hyperlink{app__types_8h_source_l00015}{15}} of file \mbox{\hyperlink{app__types_8h_source}{app\+\_\+types.\+h}}.
 
 \Hypertarget{app__types_8h_a57726742a27442de442d3f964b17136e}\label{app__types_8h_a57726742a27442de442d3f964b17136e} 
 \index{app\_types.h@{app\_types.h}!TTAK\_MEM\_HIGH\_WATERMARK@{TTAK\_MEM\_HIGH\_WATERMARK}}
@@ -220,7 +196,7 @@ High Watermark for memory pressure backpressure (512MB).
 
 
 
-Definition at line \mbox{\hyperlink{app__types_8h_source_l00024}{24}} of file \mbox{\hyperlink{app__types_8h_source}{app\+\_\+types.\+h}}.
+Definition at line \mbox{\hyperlink{app__types_8h_source_l00020}{20}} of file \mbox{\hyperlink{app__types_8h_source}{app\+\_\+types.\+h}}.
 
 \Hypertarget{app__types_8h_a75cdd26ec56c06d5e1abe50b17a8f837}\label{app__types_8h_a75cdd26ec56c06d5e1abe50b17a8f837} 
 \index{app\_types.h@{app\_types.h}!TTAK\_THREAD\_LOCAL@{TTAK\_THREAD\_LOCAL}}
@@ -230,34 +206,5 @@ Definition at line \mbox{\hyperlink{app__types_8h_source_l00024}{24}} of file \m
 
 
 
-Definition at line \mbox{\hyperlink{app__types_8h_source_l00044}{44}} of file \mbox{\hyperlink{app__types_8h_source}{app\+\_\+types.\+h}}.
-
-
-
-\doxysubsection{Function Documentation}
-\Hypertarget{app__types_8h_ad663cf355d411491ef16fbaba940be07}\label{app__types_8h_ad663cf355d411491ef16fbaba940be07} 
-\index{app\_types.h@{app\_types.h}!ttak\_calc\_header\_checksum@{ttak\_calc\_header\_checksum}}
-\index{ttak\_calc\_header\_checksum@{ttak\_calc\_header\_checksum}!app\_types.h@{app\_types.h}}
-\doxysubsubsection{\texorpdfstring{ttak\_calc\_header\_checksum()}{ttak\_calc\_header\_checksum()}}
-{\footnotesize\ttfamily static uint32\+\_\+t ttak\+\_\+calc\+\_\+header\+\_\+checksum (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structttak__mem__header__t}{ttak\+\_\+mem\+\_\+header\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{h }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
-
-
-
-Calculates a 32-\/bit checksum for the memory header. 
-
-
-\begin{DoxyItemize}
-\item This implementation breaks the serial XOR chain into two independent accumulators (sum1, sum2) to encourage Instruction Level Parallelism (ILP). By breaking the data dependency, even a simple compiler like TCC can produce assembly that utilizes multiple execution units simultaneously, making the optimization compiler-\/agnostic.
-\item 
-\begin{DoxyParams}{Parameters}
-{\em h} & Pointer to the memory header to be checksummed. \\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-uint32\+\_\+t The resulting 32-\/bit checksum. 
-\end{DoxyReturn}
-
-\end{DoxyItemize}
-
-Definition at line \mbox{\hyperlink{app__types_8h_source_l00111}{111}} of file \mbox{\hyperlink{app__types_8h_source}{app\+\_\+types.\+h}}.
+Definition at line \mbox{\hyperlink{app__types_8h_source_l00040}{40}} of file \mbox{\hyperlink{app__types_8h_source}{app\+\_\+types.\+h}}.
 

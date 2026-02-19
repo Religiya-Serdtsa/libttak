@@ -1,0 +1,78 @@
+\doxysection{tt\+\_\+jmp.\+h}
+\hypertarget{tt__jmp_8h_source}{}\label{tt__jmp_8h_source}\index{internal/tt\_jmp.h@{internal/tt\_jmp.h}}
+\mbox{\hyperlink{tt__jmp_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ TTAK\_INTERNAL\_TT\_JMP\_H}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ TTAK\_INTERNAL\_TT\_JMP\_H}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <setjmp.h>}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <pthread.h>}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00009}00009\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00010}00010\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00011}00011\ \textcolor{comment}{\ *\ @brief\ Magic\ sentinel\ written\ by\ tt\_setjmp\ and\ checked\ before\ tt\_longjmp}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00012}00012\ \textcolor{comment}{\ *\ to\ confirm\ that\ the\ jump\ buffer\ is\ valid.}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00013}00013\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00014}\mbox{\hyperlink{tt__jmp_8h_abc70801342ad401db3f0cd78dd13d029}{00014}}\ \textcolor{preprocessor}{\#define\ TT\_JMP\_MAGIC\ 0x54544A4D50ULL\ }\textcolor{comment}{/*\ "{}TTJMP"{}\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00015}00015\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00016}00016\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00017}00017\ \textcolor{comment}{\ *\ @brief\ Portable\ setjmp/longjmp\ wrappers.}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00018}00018\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00019}00019\ \textcolor{comment}{\ *\ POSIX\ platforms\ use\ sigsetjmp/siglongjmp\ so\ that\ the\ signal\ mask\ is}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00020}00020\ \textcolor{comment}{\ *\ saved\ and\ restored\ across\ non-\/local\ jumps.\ Windows\ (MinGW)\ lacks}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00021}00021\ \textcolor{comment}{\ *\ the\ sig*\ variants,\ so\ we\ fall\ back\ to\ plain\ setjmp/longjmp.}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00022}00022\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00023}00023\ \textcolor{comment}{\ *\ Both\ wrappers\ additionally\ record\ a\ magic\ value\ and\ the\ current}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00024}00024\ \textcolor{comment}{\ *\ pthread\ ID\ so\ that\ callers\ can\ verify\ the\ buffer\ is\ live\ and\ belongs}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00025}00025\ \textcolor{comment}{\ *\ to\ the\ executing\ thread.}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00026}00026\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00028}00028\ \textcolor{preprocessor}{\#ifdef\ \_WIN32}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00030}00030\ \textcolor{preprocessor}{\#define\ tt\_setjmp(env,\ magic\_ptr,\ tid\_ptr)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00031}00031\ \textcolor{preprocessor}{(\ *(magic\_ptr)\ =\ TT\_JMP\_MAGIC,\ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00032}00032\ \textcolor{preprocessor}{*(tid\_ptr)\ =\ (uint64\_t)pthread\_self(),\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00033}00033\ \textcolor{preprocessor}{setjmp(env)\ )}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00035}00035\ \textcolor{preprocessor}{\#define\ tt\_longjmp(env,\ magic\_ptr,\ tid\_ptr,\ val)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00036}00036\ \textcolor{preprocessor}{do\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00037}00037\ \textcolor{preprocessor}{\ \ \ \ if\ (*(magic\_ptr)\ !=\ TT\_JMP\_MAGIC)\ \{\ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00038}00038\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ fprintf(stderr,\ "{}[FATAL]\ tt\_longjmp:\ Invalid\ Magic\(\backslash\)n"{});\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00039}00039\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ abort();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00040}00040\ \textcolor{preprocessor}{\ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00041}00041\ \textcolor{preprocessor}{\ \ \ \ if\ (*(tid\_ptr)\ !=\ (uint64\_t)pthread\_self())\ \{\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00042}00042\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ fprintf(stderr,\ "{}[FATAL]\ tt\_longjmp:\ Cross-\/thread\ Jump\(\backslash\)n"{});\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00043}00043\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ abort();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00044}00044\ \textcolor{preprocessor}{\ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00045}00045\ \textcolor{preprocessor}{\ \ \ \ *(magic\_ptr)\ =\ 0;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00046}00046\ \textcolor{preprocessor}{\ \ \ \ longjmp(env,\ val);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00047}00047\ \textcolor{preprocessor}{\}\ while\ (0)}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00049}00049\ \textcolor{preprocessor}{\#else\ }\textcolor{comment}{/*\ POSIX\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00051}\mbox{\hyperlink{tt__jmp_8h_a0dba6071ffcecacf551c8777aa9502bb}{00051}}\ \textcolor{preprocessor}{\#define\ tt\_setjmp(env,\ magic\_ptr,\ tid\_ptr)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00052}00052\ \textcolor{preprocessor}{(\ *(magic\_ptr)\ =\ TT\_JMP\_MAGIC,\ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00053}00053\ \textcolor{preprocessor}{*(tid\_ptr)\ =\ (uint64\_t)pthread\_self(),\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00054}00054\ \textcolor{preprocessor}{sigsetjmp(env,\ 0)\ )}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00056}\mbox{\hyperlink{tt__jmp_8h_ae7e5bb8b543b0445a463172d16198fd8}{00056}}\ \textcolor{preprocessor}{\#define\ tt\_longjmp(env,\ magic\_ptr,\ tid\_ptr,\ val)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00057}00057\ \textcolor{preprocessor}{do\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00058}00058\ \textcolor{preprocessor}{\ \ \ \ if\ (*(magic\_ptr)\ !=\ TT\_JMP\_MAGIC)\ \{\ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00059}00059\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ fprintf(stderr,\ "{}[FATAL]\ tt\_longjmp:\ Invalid\ Magic\(\backslash\)n"{});\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00060}00060\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ abort();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00061}00061\ \textcolor{preprocessor}{\ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00062}00062\ \textcolor{preprocessor}{\ \ \ \ if\ (*(tid\_ptr)\ !=\ (uint64\_t)pthread\_self())\ \{\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00063}00063\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ fprintf(stderr,\ "{}[FATAL]\ tt\_longjmp:\ Cross-\/thread\ Jump\(\backslash\)n"{});\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00064}00064\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ abort();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00065}00065\ \textcolor{preprocessor}{\ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00066}00066\ \textcolor{preprocessor}{\ \ \ \ *(magic\_ptr)\ =\ 0;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00067}00067\ \textcolor{preprocessor}{\ \ \ \ siglongjmp(env,\ val);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00068}00068\ \textcolor{preprocessor}{\}\ while\ (0)}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00070}00070\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ \_WIN32\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{tt__jmp_8h_source_l00072}00072\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ TTAK\_INTERNAL\_TT\_JMP\_H\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

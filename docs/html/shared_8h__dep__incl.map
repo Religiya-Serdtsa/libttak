@@ -1,7 +1,13 @@
 <map id="include/ttak/shared/shared.h" name="include/ttak/shared/shared.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="30,5,177,45"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="139,5,286,45"/>
 <area shape="rect" id="Node000002" href="$vector_8h.html" title=" " alt="" coords="7,93,200,119"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="106,59,106,93,101,93,101,59"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="176,56,121,95,118,91,173,51"/>
+<area shape="rect" id="Node000004" href="$endpoint_8h.html" title=" " alt="" coords="225,93,422,119"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="252,51,308,91,305,95,249,56"/>
 <area shape="rect" id="Node000003" href="$matrix_8h.html" title=" " alt="" coords="5,167,201,192"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="106,132,106,167,101,167,101,132"/>
+<area shape="rect" id="Node000005" href="$session_8h.html" title=" " alt="" coords="227,167,417,192"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="326,133,325,167,320,166,320,132"/>
+<area shape="rect" id="Node000006" href="$view_8h.html" title=" " alt="" coords="441,167,611,192"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="369,121,494,164,492,169,368,126"/>
 </map>

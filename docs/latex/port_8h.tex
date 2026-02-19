@@ -1,0 +1,107 @@
+\doxysection{include/ttak/net/core/port.h File Reference}
+\hypertarget{port_8h}{}\label{port_8h}\index{include/ttak/net/core/port.h@{include/ttak/net/core/port.h}}
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$ttak/phys/mem/buddy.\+h$>$}\newline
+Include dependency graph for port.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=236pt]{port_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=222pt]{port_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structttak__net__driver__ops}{ttak\+\_\+net\+\_\+driver\+\_\+ops}}
+\item 
+struct \mbox{\hyperlink{structttak__net__baremetal__spec}{ttak\+\_\+net\+\_\+baremetal\+\_\+spec}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef enum \mbox{\hyperlink{port_8h_a9c772162be718df750f452ed87452d80}{ttak\+\_\+net\+\_\+os}} \mbox{\hyperlink{port_8h_a7df883e01b8a3c9f8f75045e83ffa277}{ttak\+\_\+net\+\_\+os\+\_\+t}}
+\item 
+typedef struct \mbox{\hyperlink{structttak__net__driver__ops}{ttak\+\_\+net\+\_\+driver\+\_\+ops}} \mbox{\hyperlink{port_8h_ad59ba36fb944589606779627fecde245}{ttak\+\_\+net\+\_\+driver\+\_\+ops\+\_\+t}}
+\item 
+typedef struct \mbox{\hyperlink{structttak__net__baremetal__spec}{ttak\+\_\+net\+\_\+baremetal\+\_\+spec}} \mbox{\hyperlink{port_8h_ad5775e4d402bd3bb3d5a52b3d1da3487}{ttak\+\_\+net\+\_\+baremetal\+\_\+spec\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{port_8h_a9c772162be718df750f452ed87452d80}{ttak\+\_\+net\+\_\+os}} \{ \mbox{\hyperlink{port_8h_a9c772162be718df750f452ed87452d80a1929f4a1ea4f4fb7f81ec10d51632fb5}{TTAK\+\_\+\+NET\+\_\+\+OS\+\_\+\+POSIX}}
+, \mbox{\hyperlink{port_8h_a9c772162be718df750f452ed87452d80a7116cce06df0cf2629d60b0403cd8100}{TTAK\+\_\+\+NET\+\_\+\+OS\+\_\+\+WINDOWS}}
+, \mbox{\hyperlink{port_8h_a9c772162be718df750f452ed87452d80a19b0baaa8e6569bfff4c88757aace0d9}{TTAK\+\_\+\+NET\+\_\+\+OS\+\_\+\+BAREMETAL}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{port_8h_a782d7b255df32e840f51eb6230204d56}{ttak\+\_\+net\+\_\+driver\+\_\+detect}} (\mbox{\hyperlink{port_8h_ad59ba36fb944589606779627fecde245}{ttak\+\_\+net\+\_\+driver\+\_\+ops\+\_\+t}} \texorpdfstring{$\ast$}{*}ops, \mbox{\hyperlink{port_8h_a7df883e01b8a3c9f8f75045e83ffa277}{ttak\+\_\+net\+\_\+os\+\_\+t}} \texorpdfstring{$\ast$}{*}os, const \mbox{\hyperlink{port_8h_ad5775e4d402bd3bb3d5a52b3d1da3487}{ttak\+\_\+net\+\_\+baremetal\+\_\+spec\+\_\+t}} \texorpdfstring{$\ast$}{*}bm)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{port_8h_ad5775e4d402bd3bb3d5a52b3d1da3487}\label{port_8h_ad5775e4d402bd3bb3d5a52b3d1da3487} 
+\index{port.h@{port.h}!ttak\_net\_baremetal\_spec\_t@{ttak\_net\_baremetal\_spec\_t}}
+\index{ttak\_net\_baremetal\_spec\_t@{ttak\_net\_baremetal\_spec\_t}!port.h@{port.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_net\_baremetal\_spec\_t}{ttak\_net\_baremetal\_spec\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__net__baremetal__spec}{ttak\+\_\+net\+\_\+baremetal\+\_\+spec}} \mbox{\hyperlink{port_8h_ad5775e4d402bd3bb3d5a52b3d1da3487}{ttak\+\_\+net\+\_\+baremetal\+\_\+spec\+\_\+t}}}
+
+\Hypertarget{port_8h_ad59ba36fb944589606779627fecde245}\label{port_8h_ad59ba36fb944589606779627fecde245} 
+\index{port.h@{port.h}!ttak\_net\_driver\_ops\_t@{ttak\_net\_driver\_ops\_t}}
+\index{ttak\_net\_driver\_ops\_t@{ttak\_net\_driver\_ops\_t}!port.h@{port.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_net\_driver\_ops\_t}{ttak\_net\_driver\_ops\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__net__driver__ops}{ttak\+\_\+net\+\_\+driver\+\_\+ops}} \mbox{\hyperlink{port_8h_ad59ba36fb944589606779627fecde245}{ttak\+\_\+net\+\_\+driver\+\_\+ops\+\_\+t}}}
+
+\Hypertarget{port_8h_a7df883e01b8a3c9f8f75045e83ffa277}\label{port_8h_a7df883e01b8a3c9f8f75045e83ffa277} 
+\index{port.h@{port.h}!ttak\_net\_os\_t@{ttak\_net\_os\_t}}
+\index{ttak\_net\_os\_t@{ttak\_net\_os\_t}!port.h@{port.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_net\_os\_t}{ttak\_net\_os\_t}}
+{\footnotesize\ttfamily typedef enum \mbox{\hyperlink{port_8h_a9c772162be718df750f452ed87452d80}{ttak\+\_\+net\+\_\+os}} \mbox{\hyperlink{port_8h_a7df883e01b8a3c9f8f75045e83ffa277}{ttak\+\_\+net\+\_\+os\+\_\+t}}}
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{port_8h_a9c772162be718df750f452ed87452d80}\label{port_8h_a9c772162be718df750f452ed87452d80} 
+\index{port.h@{port.h}!ttak\_net\_os@{ttak\_net\_os}}
+\index{ttak\_net\_os@{ttak\_net\_os}!port.h@{port.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_net\_os}{ttak\_net\_os}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{port_8h_a9c772162be718df750f452ed87452d80}{ttak\+\_\+net\+\_\+os}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_NET\_OS\_POSIX@{TTAK\_NET\_OS\_POSIX}!port.h@{port.h}}\index{port.h@{port.h}!TTAK\_NET\_OS\_POSIX@{TTAK\_NET\_OS\_POSIX}}}\Hypertarget{port_8h_a9c772162be718df750f452ed87452d80a1929f4a1ea4f4fb7f81ec10d51632fb5}\label{port_8h_a9c772162be718df750f452ed87452d80a1929f4a1ea4f4fb7f81ec10d51632fb5} 
+TTAK\+\_\+\+NET\+\_\+\+OS\+\_\+\+POSIX&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_NET\_OS\_WINDOWS@{TTAK\_NET\_OS\_WINDOWS}!port.h@{port.h}}\index{port.h@{port.h}!TTAK\_NET\_OS\_WINDOWS@{TTAK\_NET\_OS\_WINDOWS}}}\Hypertarget{port_8h_a9c772162be718df750f452ed87452d80a7116cce06df0cf2629d60b0403cd8100}\label{port_8h_a9c772162be718df750f452ed87452d80a7116cce06df0cf2629d60b0403cd8100} 
+TTAK\+\_\+\+NET\+\_\+\+OS\+\_\+\+WINDOWS&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_NET\_OS\_BAREMETAL@{TTAK\_NET\_OS\_BAREMETAL}!port.h@{port.h}}\index{port.h@{port.h}!TTAK\_NET\_OS\_BAREMETAL@{TTAK\_NET\_OS\_BAREMETAL}}}\Hypertarget{port_8h_a9c772162be718df750f452ed87452d80a19b0baaa8e6569bfff4c88757aace0d9}\label{port_8h_a9c772162be718df750f452ed87452d80a19b0baaa8e6569bfff4c88757aace0d9} 
+TTAK\+\_\+\+NET\+\_\+\+OS\+\_\+\+BAREMETAL&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{port_8h_source_l00011}{11}} of file \mbox{\hyperlink{port_8h_source}{port.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{port_8h_a782d7b255df32e840f51eb6230204d56}\label{port_8h_a782d7b255df32e840f51eb6230204d56} 
+\index{port.h@{port.h}!ttak\_net\_driver\_detect@{ttak\_net\_driver\_detect}}
+\index{ttak\_net\_driver\_detect@{ttak\_net\_driver\_detect}!port.h@{port.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_net\_driver\_detect()}{ttak\_net\_driver\_detect()}}
+{\footnotesize\ttfamily void ttak\+\_\+net\+\_\+driver\+\_\+detect (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{port_8h_ad59ba36fb944589606779627fecde245}{ttak\+\_\+net\+\_\+driver\+\_\+ops\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{ops,  }\item[{\mbox{\hyperlink{port_8h_a7df883e01b8a3c9f8f75045e83ffa277}{ttak\+\_\+net\+\_\+os\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{os,  }\item[{const \mbox{\hyperlink{port_8h_ad5775e4d402bd3bb3d5a52b3d1da3487}{ttak\+\_\+net\+\_\+baremetal\+\_\+spec\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{bm }\end{DoxyParamCaption})}
+

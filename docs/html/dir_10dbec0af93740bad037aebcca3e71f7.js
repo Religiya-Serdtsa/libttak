@@ -1,13 +1,11 @@
 var dir_10dbec0af93740bad037aebcca3e71f7 =
 [
-    [ "00_overview.puml", "00__overview_8puml.html", null ],
-    [ "01_async_layer.puml", "01__async__layer_8puml.html", null ],
-    [ "02_data_structures.puml", "02__data__structures_8puml.html", null ],
-    [ "03_memory_and_threads.puml", "03__memory__and__threads_8puml.html", null ],
-    [ "04_math_library.puml", "04__math__library_8puml.html", null ],
-    [ "05_priority_scheduling.puml", "05__priority__scheduling_8puml.html", null ],
-    [ "06_utilities.puml", "06__utilities_8puml.html", null ],
-    [ "07_safety_and_ownership.puml", "07__safety__and__ownership_8puml.html", null ],
-    [ "08_tree_structures.puml", "08__tree__structures_8puml.html", null ],
-    [ "all.puml", "all_8puml.html", null ]
+    [ "application", "dir_03c266dc1305a56aef526bc505765a8f.html", "dir_03c266dc1305a56aef526bc505765a8f" ],
+    [ "embedded", "dir_0f3b7a65779a3fe92ee32591865cbf8c.html", "dir_0f3b7a65779a3fe92ee32591865cbf8c" ],
+    [ "execution", "dir_e4175ec07a2cdfb1d51b21c048599e76.html", "dir_e4175ec07a2cdfb1d51b21c048599e76" ],
+    [ "foundation", "dir_421d8fd3f44449f73a968e2810482038.html", "dir_421d8fd3f44449f73a968e2810482038" ],
+    [ "integration", "dir_c7a9d591c6c984ea0b5afb3fdad35f61.html", "dir_c7a9d591c6c984ea0b5afb3fdad35f61" ],
+    [ "io_net", "dir_c8e232e8313f860d75792426a1d1554d.html", "dir_c8e232e8313f860d75792426a1d1554d" ],
+    [ "logic", "dir_98466792bbb25d87fc78e00ec697a8a1.html", "dir_98466792bbb25d87fc78e00ec697a8a1" ],
+    [ "resource", "dir_06f812a3ad02a54f5676cf633579cb1b.html", "dir_06f812a3ad02a54f5676cf633579cb1b" ]
 ];

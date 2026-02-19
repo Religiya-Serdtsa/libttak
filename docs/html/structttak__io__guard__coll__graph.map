@@ -1,0 +1,9 @@
+<map id="ttak_io_guard" name="ttak_io_guard">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,284,116,309"/>
+<area shape="rect" id="Node000002" href="$structttak__owner.html" title="The Owner structure." alt="" coords="13,196,108,221"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="63,235,63,283,58,283,58,235"/>
+<area shape="rect" id="Node000003" href="$structttak__map__t.html" title=" " alt="" coords="13,93,109,119"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="63,133,63,196,58,196,58,133"/>
+<area shape="rect" id="Node000004" href="$struct__node.html" title="Node structure with max_align_t padding for Raspberry Pi compatibility." alt="" coords="30,5,91,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="63,45,63,93,58,93,58,45"/>
+</map>

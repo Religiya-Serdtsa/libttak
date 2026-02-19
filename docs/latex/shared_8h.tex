@@ -3,21 +3,24 @@
 {\ttfamily \#include $<$ttak/mem/owner.\+h$>$}\newline
 {\ttfamily \#include $<$ttak/sync/sync.\+h$>$}\newline
 {\ttfamily \#include $<$ttak/mask/dynamic\+\_\+mask.\+h$>$}\newline
+{\ttfamily \#include $<$ttak/mem/epoch.\+h$>$}\newline
 {\ttfamily \#include $<$stddef.\+h$>$}\newline
 {\ttfamily \#include $<$stdint.\+h$>$}\newline
 {\ttfamily \#include $<$stdbool.\+h$>$}\newline
-Include dependency graph for shared.\+h\+:\nopagebreak
+Include dependency graph for shared.\+h\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=350pt]{shared_8h__incl}
 \end{center}
 \end{figure}
-This graph shows which files directly or indirectly include this file\+:\nopagebreak
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=227pt]{shared_8h__dep__incl}
+\includegraphics[width=350pt]{shared_8h__dep__incl}
 \end{center}
 \end{figure}
 \doxysubsubsection*{Classes}
@@ -37,6 +40,10 @@ struct \mbox{\hyperlink{structttak__shared__s}{ttak\+\_\+shared\+\_\+s}}
 \#define \mbox{\hyperlink{shared_8h_aa3472a7306725939b2dac4980272c86c}{TTAK\+\_\+\+SHARED\+\_\+\+ZOMBIE}}~(1 $<$$<$ 2)
 \item 
 \#define \mbox{\hyperlink{shared_8h_a93e6e9c880f7131184558a4d765fe4ff}{TTAK\+\_\+\+SHARED\+\_\+\+READONLY}}~(1 $<$$<$ 3)
+\item 
+\#define \mbox{\hyperlink{shared_8h_aa61738cdd0322bee3972eb1e4b9134b9}{TTAK\+\_\+\+SHARED\+\_\+\+USE\+\_\+\+EBR}}~(1 $<$$<$ 4)
+\item 
+\#define \mbox{\hyperlink{shared_8h_a83fdbd999141693a789e68979fa8128d}{TTAK\+\_\+\+SHARED\+\_\+\+SWAPPING}}~(1 $<$$<$ 5)
 \item 
 \#define \mbox{\hyperlink{shared_8h_accf5253af94e3cae56352947e0437382}{TTAK\+\_\+\+OWNER\+\_\+\+VALID}}~(0)
 \item 
@@ -73,6 +80,12 @@ enum \mbox{\hyperlink{shared_8h_ae6eb27b055588903d427f15cc0cec6f5}{ttak\+\_\+sha
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
+\mbox{\hyperlink{shared_8h_a9e87115c8ab89cdc85a268b523179cef}{ttak\+\_\+shared\+\_\+result\+\_\+t}} \mbox{\hyperlink{shared_8h_ae456e71494aff31c784dd6276f5eb3a0}{ttak\+\_\+shared\+\_\+swap\+\_\+ebr}} (\mbox{\hyperlink{structttak__shared__t}{ttak\+\_\+shared\+\_\+t}} \texorpdfstring{$\ast$}{*}self, void \texorpdfstring{$\ast$}{*}new\+\_\+shared, size\+\_\+t new\+\_\+size)
+\begin{DoxyCompactList}\small\item\em Swaps the internal data pointer using EBR for safety. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{shared_8h_a25628c81a22122384d6e859437eb5e88}{ttak\+\_\+shared\+\_\+get\+\_\+payload\+\_\+size}} (const void \texorpdfstring{$\ast$}{*}ptr)
+\begin{DoxyCompactList}\small\item\em Retrieves the size of the payload from the implicit header. \end{DoxyCompactList}\item 
+uint64\+\_\+t \mbox{\hyperlink{shared_8h_a067c4b7fd84a08a5acbd8459baa368ea}{ttak\+\_\+shared\+\_\+get\+\_\+payload\+\_\+ts}} (const void \texorpdfstring{$\ast$}{*}ptr)
+\begin{DoxyCompactList}\small\item\em Retrieves the timestamp of the payload from the implicit header. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{shared_8h_a32180ab208d8a2290565861adba3f4a7}{ttak\+\_\+shared\+\_\+init}} (\mbox{\hyperlink{structttak__shared__t}{ttak\+\_\+shared\+\_\+t}} \texorpdfstring{$\ast$}{*}self)
 \begin{DoxyCompactList}\small\item\em Constructor for \doxylink{structttak__shared__t}{ttak\+\_\+shared\+\_\+t}. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{shared_8h_a789f3fa21456d890914293c4faf04ad0}{ttak\+\_\+shared\+\_\+destroy}} (\mbox{\hyperlink{structttak__shared__t}{ttak\+\_\+shared\+\_\+t}} \texorpdfstring{$\ast$}{*}self)
@@ -103,7 +116,7 @@ Helper macro for typed access to shared data.
 \end{DoxyParams}
 
 
-Definition at line \mbox{\hyperlink{shared_8h_source_l00151}{151}} of file \mbox{\hyperlink{shared_8h_source}{shared.\+h}}.
+Definition at line \mbox{\hyperlink{shared_8h_source_l00201}{201}} of file \mbox{\hyperlink{shared_8h_source}{shared.\+h}}.
 
 \Hypertarget{shared_8h_a2d32c5e6e1fe6b47c116509da86d9db1}\label{shared_8h_a2d32c5e6e1fe6b47c116509da86d9db1} 
 \index{shared.h@{shared.h}!TTAK\_OWNER\_CORRUPTED@{TTAK\_OWNER\_CORRUPTED}}
@@ -113,7 +126,7 @@ Definition at line \mbox{\hyperlink{shared_8h_source_l00151}{151}} of file \mbox
 
 Level 2\+: Timestamp mismatch detected 
 
-Definition at line \mbox{\hyperlink{shared_8h_source_l00033}{33}} of file \mbox{\hyperlink{shared_8h_source}{shared.\+h}}.
+Definition at line \mbox{\hyperlink{shared_8h_source_l00036}{36}} of file \mbox{\hyperlink{shared_8h_source}{shared.\+h}}.
 
 \Hypertarget{shared_8h_a11a718e774b3a65a5221ee162b8b0c48}\label{shared_8h_a11a718e774b3a65a5221ee162b8b0c48} 
 \index{shared.h@{shared.h}!TTAK\_OWNER\_INVALID@{TTAK\_OWNER\_INVALID}}
@@ -123,7 +136,7 @@ Definition at line \mbox{\hyperlink{shared_8h_source_l00033}{33}} of file \mbox{
 
 Level 1\+: Owner information mismatch 
 
-Definition at line \mbox{\hyperlink{shared_8h_source_l00034}{34}} of file \mbox{\hyperlink{shared_8h_source}{shared.\+h}}.
+Definition at line \mbox{\hyperlink{shared_8h_source_l00037}{37}} of file \mbox{\hyperlink{shared_8h_source}{shared.\+h}}.
 
 \Hypertarget{shared_8h_a175f4cbf2e24c7ea490888c4908fa84f}\label{shared_8h_a175f4cbf2e24c7ea490888c4908fa84f} 
 \index{shared.h@{shared.h}!TTAK\_OWNER\_SHARE\_DENIED@{TTAK\_OWNER\_SHARE\_DENIED}}
@@ -133,7 +146,7 @@ Definition at line \mbox{\hyperlink{shared_8h_source_l00034}{34}} of file \mbox{
 
 Error\+: Failed to register new owner 
 
-Definition at line \mbox{\hyperlink{shared_8h_source_l00035}{35}} of file \mbox{\hyperlink{shared_8h_source}{shared.\+h}}.
+Definition at line \mbox{\hyperlink{shared_8h_source_l00038}{38}} of file \mbox{\hyperlink{shared_8h_source}{shared.\+h}}.
 
 \Hypertarget{shared_8h_af42b1ce7ca73a7e2257f5007239646b8}\label{shared_8h_af42b1ce7ca73a7e2257f5007239646b8} 
 \index{shared.h@{shared.h}!TTAK\_OWNER\_SUCCESS@{TTAK\_OWNER\_SUCCESS}}
@@ -143,7 +156,7 @@ Definition at line \mbox{\hyperlink{shared_8h_source_l00035}{35}} of file \mbox{
 
 Operation completed successfully 
 
-Definition at line \mbox{\hyperlink{shared_8h_source_l00036}{36}} of file \mbox{\hyperlink{shared_8h_source}{shared.\+h}}.
+Definition at line \mbox{\hyperlink{shared_8h_source_l00039}{39}} of file \mbox{\hyperlink{shared_8h_source}{shared.\+h}}.
 
 \Hypertarget{shared_8h_accf5253af94e3cae56352947e0437382}\label{shared_8h_accf5253af94e3cae56352947e0437382} 
 \index{shared.h@{shared.h}!TTAK\_OWNER\_VALID@{TTAK\_OWNER\_VALID}}
@@ -153,7 +166,7 @@ Definition at line \mbox{\hyperlink{shared_8h_source_l00036}{36}} of file \mbox{
 
 Level 3\+: Pure safety guaranteed 
 
-Definition at line \mbox{\hyperlink{shared_8h_source_l00032}{32}} of file \mbox{\hyperlink{shared_8h_source}{shared.\+h}}.
+Definition at line \mbox{\hyperlink{shared_8h_source_l00035}{35}} of file \mbox{\hyperlink{shared_8h_source}{shared.\+h}}.
 
 \Hypertarget{shared_8h_a23651acba69b58a505231b47b0802839}\label{shared_8h_a23651acba69b58a505231b47b0802839} 
 \index{shared.h@{shared.h}!TTAK\_SHARED\_DEFINE\_WRAPPER@{TTAK\_SHARED\_DEFINE\_WRAPPER}}
@@ -195,7 +208,7 @@ This creates a new struct type and helper functions for a specific payload type,
 \end{DoxyParams}
 
 
-Definition at line \mbox{\hyperlink{shared_8h_source_l00163}{163}} of file \mbox{\hyperlink{shared_8h_source}{shared.\+h}}.
+Definition at line \mbox{\hyperlink{shared_8h_source_l00213}{213}} of file \mbox{\hyperlink{shared_8h_source}{shared.\+h}}.
 
 \Hypertarget{shared_8h_a0eed16dad2e7bfc141ab672405661d46}\label{shared_8h_a0eed16dad2e7bfc141ab672405661d46} 
 \index{shared.h@{shared.h}!TTAK\_SHARED\_DIRTY@{TTAK\_SHARED\_DIRTY}}
@@ -205,7 +218,7 @@ Definition at line \mbox{\hyperlink{shared_8h_source_l00163}{163}} of file \mbox
 
 Data has been modified but not synchronized 
 
-Definition at line \mbox{\hyperlink{shared_8h_source_l00023}{23}} of file \mbox{\hyperlink{shared_8h_source}{shared.\+h}}.
+Definition at line \mbox{\hyperlink{shared_8h_source_l00024}{24}} of file \mbox{\hyperlink{shared_8h_source}{shared.\+h}}.
 
 \Hypertarget{shared_8h_a0ce11efa90d8c4cc7edabef8401df0a1}\label{shared_8h_a0ce11efa90d8c4cc7edabef8401df0a1} 
 \index{shared.h@{shared.h}!TTAK\_SHARED\_EXPIRED@{TTAK\_SHARED\_EXPIRED}}
@@ -215,7 +228,7 @@ Definition at line \mbox{\hyperlink{shared_8h_source_l00023}{23}} of file \mbox{
 
 Resource timestamp is outdated 
 
-Definition at line \mbox{\hyperlink{shared_8h_source_l00024}{24}} of file \mbox{\hyperlink{shared_8h_source}{shared.\+h}}.
+Definition at line \mbox{\hyperlink{shared_8h_source_l00025}{25}} of file \mbox{\hyperlink{shared_8h_source}{shared.\+h}}.
 
 \Hypertarget{shared_8h_a93e6e9c880f7131184558a4d765fe4ff}\label{shared_8h_a93e6e9c880f7131184558a4d765fe4ff} 
 \index{shared.h@{shared.h}!TTAK\_SHARED\_READONLY@{TTAK\_SHARED\_READONLY}}
@@ -225,7 +238,7 @@ Definition at line \mbox{\hyperlink{shared_8h_source_l00024}{24}} of file \mbox{
 
 Resource is in read-\/only mode 
 
-Definition at line \mbox{\hyperlink{shared_8h_source_l00026}{26}} of file \mbox{\hyperlink{shared_8h_source}{shared.\+h}}.
+Definition at line \mbox{\hyperlink{shared_8h_source_l00027}{27}} of file \mbox{\hyperlink{shared_8h_source}{shared.\+h}}.
 
 \Hypertarget{shared_8h_a4429ac81de20a6b3aef42d08be582341}\label{shared_8h_a4429ac81de20a6b3aef42d08be582341} 
 \index{shared.h@{shared.h}!TTAK\_SHARED\_READY@{TTAK\_SHARED\_READY}}
@@ -235,7 +248,27 @@ Definition at line \mbox{\hyperlink{shared_8h_source_l00026}{26}} of file \mbox{
 
 Resource is stable and ready for use 
 
-Definition at line \mbox{\hyperlink{shared_8h_source_l00022}{22}} of file \mbox{\hyperlink{shared_8h_source}{shared.\+h}}.
+Definition at line \mbox{\hyperlink{shared_8h_source_l00023}{23}} of file \mbox{\hyperlink{shared_8h_source}{shared.\+h}}.
+
+\Hypertarget{shared_8h_a83fdbd999141693a789e68979fa8128d}\label{shared_8h_a83fdbd999141693a789e68979fa8128d} 
+\index{shared.h@{shared.h}!TTAK\_SHARED\_SWAPPING@{TTAK\_SHARED\_SWAPPING}}
+\index{TTAK\_SHARED\_SWAPPING@{TTAK\_SHARED\_SWAPPING}!shared.h@{shared.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_SHARED\_SWAPPING}{TTAK\_SHARED\_SWAPPING}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+SHARED\+\_\+\+SWAPPING~(1 $<$$<$ 5)}
+
+Data is currently being swapped 
+
+Definition at line \mbox{\hyperlink{shared_8h_source_l00029}{29}} of file \mbox{\hyperlink{shared_8h_source}{shared.\+h}}.
+
+\Hypertarget{shared_8h_aa61738cdd0322bee3972eb1e4b9134b9}\label{shared_8h_aa61738cdd0322bee3972eb1e4b9134b9} 
+\index{shared.h@{shared.h}!TTAK\_SHARED\_USE\_EBR@{TTAK\_SHARED\_USE\_EBR}}
+\index{TTAK\_SHARED\_USE\_EBR@{TTAK\_SHARED\_USE\_EBR}!shared.h@{shared.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_SHARED\_USE\_EBR}{TTAK\_SHARED\_USE\_EBR}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+SHARED\+\_\+\+USE\+\_\+\+EBR~(1 $<$$<$ 4)}
+
+EBR protection enabled 
+
+Definition at line \mbox{\hyperlink{shared_8h_source_l00028}{28}} of file \mbox{\hyperlink{shared_8h_source}{shared.\+h}}.
 
 \Hypertarget{shared_8h_aa3472a7306725939b2dac4980272c86c}\label{shared_8h_aa3472a7306725939b2dac4980272c86c} 
 \index{shared.h@{shared.h}!TTAK\_SHARED\_ZOMBIE@{TTAK\_SHARED\_ZOMBIE}}
@@ -245,7 +278,7 @@ Definition at line \mbox{\hyperlink{shared_8h_source_l00022}{22}} of file \mbox{
 
 No active owners; pending deallocation 
 
-Definition at line \mbox{\hyperlink{shared_8h_source_l00025}{25}} of file \mbox{\hyperlink{shared_8h_source}{shared.\+h}}.
+Definition at line \mbox{\hyperlink{shared_8h_source_l00026}{26}} of file \mbox{\hyperlink{shared_8h_source}{shared.\+h}}.
 
 
 
@@ -262,7 +295,7 @@ Operational result codes for shared memory actions.
 
 
 
-Definition at line \mbox{\hyperlink{shared_8h_source_l00031}{31}} of file \mbox{\hyperlink{shared_8h_source}{shared.\+h}}.
+Definition at line \mbox{\hyperlink{shared_8h_source_l00034}{34}} of file \mbox{\hyperlink{shared_8h_source}{shared.\+h}}.
 
 \Hypertarget{shared_8h_afc1d0f23f5c77517287701c56cd25f6d}\label{shared_8h_afc1d0f23f5c77517287701c56cd25f6d} 
 \index{shared.h@{shared.h}!ttak\_shared\_status\_t@{ttak\_shared\_status\_t}}
@@ -276,7 +309,7 @@ Bitmask flags representing the current status of the shared resource.
 
 
 
-Definition at line \mbox{\hyperlink{shared_8h_source_l00021}{21}} of file \mbox{\hyperlink{shared_8h_source}{shared.\+h}}.
+Definition at line \mbox{\hyperlink{shared_8h_source_l00022}{22}} of file \mbox{\hyperlink{shared_8h_source}{shared.\+h}}.
 
 \Hypertarget{shared_8h_a1ade2a1add56282521d3408196b3a4cb}\label{shared_8h_a1ade2a1add56282521d3408196b3a4cb} 
 \index{shared.h@{shared.h}!ttak\_shared\_t@{ttak\_shared\_t}}
@@ -317,7 +350,7 @@ TTAK\+\_\+\+SHARED\+\_\+\+NO\+\_\+\+LEVEL&None\+: No ownership check; maximum pe
 \end{DoxyEnumFields}
 
 
-Definition at line \mbox{\hyperlink{shared_8h_source_l00041}{41}} of file \mbox{\hyperlink{shared_8h_source}{shared.\+h}}.
+Definition at line \mbox{\hyperlink{shared_8h_source_l00044}{44}} of file \mbox{\hyperlink{shared_8h_source}{shared.\+h}}.
 
 
 
@@ -337,6 +370,42 @@ Destructor for \doxylink{structttak__shared__t}{ttak\+\_\+shared\+\_\+t}.
 {\em self} & Pointer to the \doxylink{structttak__shared__t}{ttak\+\_\+shared\+\_\+t} instance. \\
 \hline
 \end{DoxyParams}
+\Hypertarget{shared_8h_a25628c81a22122384d6e859437eb5e88}\label{shared_8h_a25628c81a22122384d6e859437eb5e88} 
+\index{shared.h@{shared.h}!ttak\_shared\_get\_payload\_size@{ttak\_shared\_get\_payload\_size}}
+\index{ttak\_shared\_get\_payload\_size@{ttak\_shared\_get\_payload\_size}!shared.h@{shared.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_shared\_get\_payload\_size()}{ttak\_shared\_get\_payload\_size()}}
+{\footnotesize\ttfamily size\+\_\+t ttak\+\_\+shared\+\_\+get\+\_\+payload\+\_\+size (\begin{DoxyParamCaption}\item[{const void \texorpdfstring{$\ast$}{*}}]{ptr }\end{DoxyParamCaption})}
+
+
+
+Retrieves the size of the payload from the implicit header. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ptr} & Pointer returned by access() or access\+\_\+ebr(). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Size of the payload in bytes. 
+\end{DoxyReturn}
+\Hypertarget{shared_8h_a067c4b7fd84a08a5acbd8459baa368ea}\label{shared_8h_a067c4b7fd84a08a5acbd8459baa368ea} 
+\index{shared.h@{shared.h}!ttak\_shared\_get\_payload\_ts@{ttak\_shared\_get\_payload\_ts}}
+\index{ttak\_shared\_get\_payload\_ts@{ttak\_shared\_get\_payload\_ts}!shared.h@{shared.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_shared\_get\_payload\_ts()}{ttak\_shared\_get\_payload\_ts()}}
+{\footnotesize\ttfamily uint64\+\_\+t ttak\+\_\+shared\+\_\+get\+\_\+payload\+\_\+ts (\begin{DoxyParamCaption}\item[{const void \texorpdfstring{$\ast$}{*}}]{ptr }\end{DoxyParamCaption})}
+
+
+
+Retrieves the timestamp of the payload from the implicit header. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ptr} & Pointer returned by access() or access\+\_\+ebr(). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Timestamp of the payload. 
+\end{DoxyReturn}
 \Hypertarget{shared_8h_a32180ab208d8a2290565861adba3f4a7}\label{shared_8h_a32180ab208d8a2290565861adba3f4a7} 
 \index{shared.h@{shared.h}!ttak\_shared\_init@{ttak\_shared\_init}}
 \index{ttak\_shared\_init@{ttak\_shared\_init}!shared.h@{shared.h}}
@@ -352,3 +421,25 @@ Constructor for \doxylink{structttak__shared__t}{ttak\+\_\+shared\+\_\+t}.
 {\em self} & Pointer to the \doxylink{structttak__shared__t}{ttak\+\_\+shared\+\_\+t} instance. \\
 \hline
 \end{DoxyParams}
+\Hypertarget{shared_8h_ae456e71494aff31c784dd6276f5eb3a0}\label{shared_8h_ae456e71494aff31c784dd6276f5eb3a0} 
+\index{shared.h@{shared.h}!ttak\_shared\_swap\_ebr@{ttak\_shared\_swap\_ebr}}
+\index{ttak\_shared\_swap\_ebr@{ttak\_shared\_swap\_ebr}!shared.h@{shared.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_shared\_swap\_ebr()}{ttak\_shared\_swap\_ebr()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{shared_8h_a9e87115c8ab89cdc85a268b523179cef}{ttak\+\_\+shared\+\_\+result\+\_\+t}} ttak\+\_\+shared\+\_\+swap\+\_\+ebr (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structttak__shared__t}{ttak\+\_\+shared\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{self,  }\item[{void \texorpdfstring{$\ast$}{*}}]{new\+\_\+shared,  }\item[{size\+\_\+t}]{new\+\_\+size }\end{DoxyParamCaption})}
+
+
+
+Swaps the internal data pointer using EBR for safety. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & Pointer to the \doxylink{structttak__shared__t}{ttak\+\_\+shared\+\_\+t} instance. \\
+\hline
+{\em new\+\_\+shared} & Pointer to the new data. \\
+\hline
+{\em new\+\_\+size} & Size of the new data. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Result code of the operation. 
+\end{DoxyReturn}

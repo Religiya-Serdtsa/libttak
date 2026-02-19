@@ -1,0 +1,196 @@
+\doxysection{include/ttak/phys/dimless/transport.h File Reference}
+\hypertarget{transport_8h}{}\label{transport_8h}\index{include/ttak/phys/dimless/transport.h@{include/ttak/phys/dimless/transport.h}}
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+Include dependency graph for transport.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=222pt]{transport_8h__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef enum \mbox{\hyperlink{transport_8h_a4dfed25085de3e1ef832f223f45e8fa4}{ttak\+\_\+phys\+\_\+status}} \mbox{\hyperlink{transport_8h_a5999aeccffbd892e89cf25f59abd089a}{ttak\+\_\+phys\+\_\+status\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Status codes returned by transport dimensionless helpers. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{transport_8h_a4dfed25085de3e1ef832f223f45e8fa4}{ttak\+\_\+phys\+\_\+status}} \{ \mbox{\hyperlink{transport_8h_a4dfed25085de3e1ef832f223f45e8fa4a0c3d685d5da73c5d027daabf43bf9ef0}{TTAK\+\_\+\+PHYS\+\_\+\+SUCCESS}} = 0
+, \mbox{\hyperlink{transport_8h_a4dfed25085de3e1ef832f223f45e8fa4a7485ae11df05471a9328ae413ac5812b}{TTAK\+\_\+\+PHYS\+\_\+\+ERR\+\_\+\+INVALID\+\_\+\+ARGUMENT}}
+, \mbox{\hyperlink{transport_8h_a4dfed25085de3e1ef832f223f45e8fa4adbe6a0e531eb18f7e09d2435947f647a}{TTAK\+\_\+\+PHYS\+\_\+\+ERR\+\_\+\+DIVIDE\+\_\+\+BY\+\_\+\+ZERO}}
+, \mbox{\hyperlink{transport_8h_a4dfed25085de3e1ef832f223f45e8fa4a94968af44a5e332b90b46e34e648e7e4}{TTAK\+\_\+\+PHYS\+\_\+\+ERR\+\_\+\+OUT\+\_\+\+OF\+\_\+\+RANGE}}
+ \}
+\begin{DoxyCompactList}\small\item\em Status codes returned by transport dimensionless helpers. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{transport_8h_a5999aeccffbd892e89cf25f59abd089a}{ttak\+\_\+phys\+\_\+status\+\_\+t}} \mbox{\hyperlink{transport_8h_a090c5ac13a38eb3bc521aaa3db1a69ed}{ttak\+\_\+phys\+\_\+calc\+\_\+reynolds}} (double \texorpdfstring{$\ast$}{*}out\+\_\+re, double rho, double velocity, double length, double dynamic\+\_\+viscosity)
+\begin{DoxyCompactList}\small\item\em Reynolds number\+: Re = rho \texorpdfstring{$\ast$}{*} \texorpdfstring{$\vert$}{|}v\texorpdfstring{$\vert$}{|} \texorpdfstring{$\ast$}{*} L / mu. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{transport_8h_a5999aeccffbd892e89cf25f59abd089a}{ttak\+\_\+phys\+\_\+status\+\_\+t}} \mbox{\hyperlink{transport_8h_ad4cc158d5ace33bbfa9fa934af07d63a}{ttak\+\_\+phys\+\_\+calc\+\_\+schmidt}} (double \texorpdfstring{$\ast$}{*}out\+\_\+sc, double rho, double dynamic\+\_\+viscosity, double diffusivity)
+\begin{DoxyCompactList}\small\item\em Schmidt number\+: Sc = mu / (rho \texorpdfstring{$\ast$}{*} D). \end{DoxyCompactList}\item 
+\mbox{\hyperlink{transport_8h_a5999aeccffbd892e89cf25f59abd089a}{ttak\+\_\+phys\+\_\+status\+\_\+t}} \mbox{\hyperlink{transport_8h_aca0fcb9c927376487393eecb55df51d8}{ttak\+\_\+phys\+\_\+calc\+\_\+mass\+\_\+peclet}} (double \texorpdfstring{$\ast$}{*}out\+\_\+pe, double velocity, double length, double diffusivity)
+\begin{DoxyCompactList}\small\item\em Péclet number for mass transport\+: Pe = \texorpdfstring{$\vert$}{|}v\texorpdfstring{$\vert$}{|} \texorpdfstring{$\ast$}{*} L / D. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{transport_8h_a5999aeccffbd892e89cf25f59abd089a}{ttak\+\_\+phys\+\_\+status\+\_\+t}} \mbox{\hyperlink{transport_8h_a7dbda019006bf5e78b8577f4a2d1dff3}{ttak\+\_\+phys\+\_\+calc\+\_\+sherwood}} (double \texorpdfstring{$\ast$}{*}out\+\_\+sh, double mass\+\_\+transfer\+\_\+coeff, double length, double diffusivity)
+\begin{DoxyCompactList}\small\item\em Sherwood number\+: Sh = k\+\_\+m \texorpdfstring{$\ast$}{*} L / D. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{transport_8h_a5999aeccffbd892e89cf25f59abd089a}{ttak\+\_\+phys\+\_\+status\+\_\+t}} \mbox{\hyperlink{transport_8h_ace20d426f6ee161c2109ca57377804ca}{ttak\+\_\+phys\+\_\+calc\+\_\+km}} (double \texorpdfstring{$\ast$}{*}out\+\_\+km, double sherwood, double length, double diffusivity)
+\begin{DoxyCompactList}\small\item\em Computes k\+\_\+m from a Sherwood number\+: k\+\_\+m = Sh \texorpdfstring{$\ast$}{*} D / L. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{transport_8h_a5999aeccffbd892e89cf25f59abd089a}\label{transport_8h_a5999aeccffbd892e89cf25f59abd089a} 
+\index{transport.h@{transport.h}!ttak\_phys\_status\_t@{ttak\_phys\_status\_t}}
+\index{ttak\_phys\_status\_t@{ttak\_phys\_status\_t}!transport.h@{transport.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_phys\_status\_t}{ttak\_phys\_status\_t}}
+{\footnotesize\ttfamily typedef enum \mbox{\hyperlink{transport_8h_a4dfed25085de3e1ef832f223f45e8fa4}{ttak\+\_\+phys\+\_\+status}} \mbox{\hyperlink{transport_8h_a5999aeccffbd892e89cf25f59abd089a}{ttak\+\_\+phys\+\_\+status\+\_\+t}}}
+
+
+
+Status codes returned by transport dimensionless helpers. 
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{transport_8h_a4dfed25085de3e1ef832f223f45e8fa4}\label{transport_8h_a4dfed25085de3e1ef832f223f45e8fa4} 
+\index{transport.h@{transport.h}!ttak\_phys\_status@{ttak\_phys\_status}}
+\index{ttak\_phys\_status@{ttak\_phys\_status}!transport.h@{transport.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_phys\_status}{ttak\_phys\_status}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{transport_8h_a4dfed25085de3e1ef832f223f45e8fa4}{ttak\+\_\+phys\+\_\+status}}}
+
+
+
+Status codes returned by transport dimensionless helpers. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_PHYS\_SUCCESS@{TTAK\_PHYS\_SUCCESS}!transport.h@{transport.h}}\index{transport.h@{transport.h}!TTAK\_PHYS\_SUCCESS@{TTAK\_PHYS\_SUCCESS}}}\Hypertarget{transport_8h_a4dfed25085de3e1ef832f223f45e8fa4a0c3d685d5da73c5d027daabf43bf9ef0}\label{transport_8h_a4dfed25085de3e1ef832f223f45e8fa4a0c3d685d5da73c5d027daabf43bf9ef0} 
+TTAK\+\_\+\+PHYS\+\_\+\+SUCCESS&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_PHYS\_ERR\_INVALID\_ARGUMENT@{TTAK\_PHYS\_ERR\_INVALID\_ARGUMENT}!transport.h@{transport.h}}\index{transport.h@{transport.h}!TTAK\_PHYS\_ERR\_INVALID\_ARGUMENT@{TTAK\_PHYS\_ERR\_INVALID\_ARGUMENT}}}\Hypertarget{transport_8h_a4dfed25085de3e1ef832f223f45e8fa4a7485ae11df05471a9328ae413ac5812b}\label{transport_8h_a4dfed25085de3e1ef832f223f45e8fa4a7485ae11df05471a9328ae413ac5812b} 
+TTAK\+\_\+\+PHYS\+\_\+\+ERR\+\_\+\+INVALID\+\_\+\+ARGUMENT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_PHYS\_ERR\_DIVIDE\_BY\_ZERO@{TTAK\_PHYS\_ERR\_DIVIDE\_BY\_ZERO}!transport.h@{transport.h}}\index{transport.h@{transport.h}!TTAK\_PHYS\_ERR\_DIVIDE\_BY\_ZERO@{TTAK\_PHYS\_ERR\_DIVIDE\_BY\_ZERO}}}\Hypertarget{transport_8h_a4dfed25085de3e1ef832f223f45e8fa4adbe6a0e531eb18f7e09d2435947f647a}\label{transport_8h_a4dfed25085de3e1ef832f223f45e8fa4adbe6a0e531eb18f7e09d2435947f647a} 
+TTAK\+\_\+\+PHYS\+\_\+\+ERR\+\_\+\+DIVIDE\+\_\+\+BY\+\_\+\+ZERO&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_PHYS\_ERR\_OUT\_OF\_RANGE@{TTAK\_PHYS\_ERR\_OUT\_OF\_RANGE}!transport.h@{transport.h}}\index{transport.h@{transport.h}!TTAK\_PHYS\_ERR\_OUT\_OF\_RANGE@{TTAK\_PHYS\_ERR\_OUT\_OF\_RANGE}}}\Hypertarget{transport_8h_a4dfed25085de3e1ef832f223f45e8fa4a94968af44a5e332b90b46e34e648e7e4}\label{transport_8h_a4dfed25085de3e1ef832f223f45e8fa4a94968af44a5e332b90b46e34e648e7e4} 
+TTAK\+\_\+\+PHYS\+\_\+\+ERR\+\_\+\+OUT\+\_\+\+OF\+\_\+\+RANGE&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{transport_8h_source_l00013}{13}} of file \mbox{\hyperlink{transport_8h_source}{transport.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{transport_8h_ace20d426f6ee161c2109ca57377804ca}\label{transport_8h_ace20d426f6ee161c2109ca57377804ca} 
+\index{transport.h@{transport.h}!ttak\_phys\_calc\_km@{ttak\_phys\_calc\_km}}
+\index{ttak\_phys\_calc\_km@{ttak\_phys\_calc\_km}!transport.h@{transport.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_phys\_calc\_km()}{ttak\_phys\_calc\_km()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{transport_8h_a5999aeccffbd892e89cf25f59abd089a}{ttak\+\_\+phys\+\_\+status\+\_\+t}} ttak\+\_\+phys\+\_\+calc\+\_\+km (\begin{DoxyParamCaption}\item[{double \texorpdfstring{$\ast$}{*}}]{out\+\_\+km,  }\item[{double}]{sherwood,  }\item[{double}]{length,  }\item[{double}]{diffusivity }\end{DoxyParamCaption})}
+
+
+
+Computes k\+\_\+m from a Sherwood number\+: k\+\_\+m = Sh \texorpdfstring{$\ast$}{*} D / L. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em out\+\_\+km} & Derived film mass-\/transfer coefficient in m/s. \\
+\hline
+ & {\em sherwood} & Sherwood number (dimensionless). \\
+\hline
+ & {\em length} & Characteristic length in meters. \\
+\hline
+ & {\em diffusivity} & Binary mass diffusivity in m\texorpdfstring{$^\wedge$}{\string^}2/s. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{transport_8h_aca0fcb9c927376487393eecb55df51d8}\label{transport_8h_aca0fcb9c927376487393eecb55df51d8} 
+\index{transport.h@{transport.h}!ttak\_phys\_calc\_mass\_peclet@{ttak\_phys\_calc\_mass\_peclet}}
+\index{ttak\_phys\_calc\_mass\_peclet@{ttak\_phys\_calc\_mass\_peclet}!transport.h@{transport.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_phys\_calc\_mass\_peclet()}{ttak\_phys\_calc\_mass\_peclet()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{transport_8h_a5999aeccffbd892e89cf25f59abd089a}{ttak\+\_\+phys\+\_\+status\+\_\+t}} ttak\+\_\+phys\+\_\+calc\+\_\+mass\+\_\+peclet (\begin{DoxyParamCaption}\item[{double \texorpdfstring{$\ast$}{*}}]{out\+\_\+pe,  }\item[{double}]{velocity,  }\item[{double}]{length,  }\item[{double}]{diffusivity }\end{DoxyParamCaption})}
+
+
+
+Péclet number for mass transport\+: Pe = \texorpdfstring{$\vert$}{|}v\texorpdfstring{$\vert$}{|} \texorpdfstring{$\ast$}{*} L / D. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em out\+\_\+pe} & Computed Péclet number (dimensionless). \\
+\hline
+ & {\em velocity} & Characteristic velocity magnitude in m/s. \\
+\hline
+ & {\em length} & Characteristic length in meters. \\
+\hline
+ & {\em diffusivity} & Binary mass diffusivity in m\texorpdfstring{$^\wedge$}{\string^}2/s. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{transport_8h_a090c5ac13a38eb3bc521aaa3db1a69ed}\label{transport_8h_a090c5ac13a38eb3bc521aaa3db1a69ed} 
+\index{transport.h@{transport.h}!ttak\_phys\_calc\_reynolds@{ttak\_phys\_calc\_reynolds}}
+\index{ttak\_phys\_calc\_reynolds@{ttak\_phys\_calc\_reynolds}!transport.h@{transport.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_phys\_calc\_reynolds()}{ttak\_phys\_calc\_reynolds()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{transport_8h_a5999aeccffbd892e89cf25f59abd089a}{ttak\+\_\+phys\+\_\+status\+\_\+t}} ttak\+\_\+phys\+\_\+calc\+\_\+reynolds (\begin{DoxyParamCaption}\item[{double \texorpdfstring{$\ast$}{*}}]{out\+\_\+re,  }\item[{double}]{rho,  }\item[{double}]{velocity,  }\item[{double}]{length,  }\item[{double}]{dynamic\+\_\+viscosity }\end{DoxyParamCaption})}
+
+
+
+Reynolds number\+: Re = rho \texorpdfstring{$\ast$}{*} \texorpdfstring{$\vert$}{|}v\texorpdfstring{$\vert$}{|} \texorpdfstring{$\ast$}{*} L / mu. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em out\+\_\+re} & Computed Reynolds number (dimensionless). \\
+\hline
+ & {\em rho} & Fluid density in kg/m\texorpdfstring{$^\wedge$}{\string^}3. \\
+\hline
+ & {\em velocity} & Characteristic velocity magnitude in m/s. \\
+\hline
+ & {\em length} & Characteristic length scale in meters. \\
+\hline
+ & {\em dynamic\+\_\+viscosity} & Dynamic viscosity in Pa\texorpdfstring{$\ast$}{*}s (kg/(m\texorpdfstring{$\ast$}{*}s)). \\
+\hline
+\end{DoxyParams}
+\Hypertarget{transport_8h_ad4cc158d5ace33bbfa9fa934af07d63a}\label{transport_8h_ad4cc158d5ace33bbfa9fa934af07d63a} 
+\index{transport.h@{transport.h}!ttak\_phys\_calc\_schmidt@{ttak\_phys\_calc\_schmidt}}
+\index{ttak\_phys\_calc\_schmidt@{ttak\_phys\_calc\_schmidt}!transport.h@{transport.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_phys\_calc\_schmidt()}{ttak\_phys\_calc\_schmidt()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{transport_8h_a5999aeccffbd892e89cf25f59abd089a}{ttak\+\_\+phys\+\_\+status\+\_\+t}} ttak\+\_\+phys\+\_\+calc\+\_\+schmidt (\begin{DoxyParamCaption}\item[{double \texorpdfstring{$\ast$}{*}}]{out\+\_\+sc,  }\item[{double}]{rho,  }\item[{double}]{dynamic\+\_\+viscosity,  }\item[{double}]{diffusivity }\end{DoxyParamCaption})}
+
+
+
+Schmidt number\+: Sc = mu / (rho \texorpdfstring{$\ast$}{*} D). 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em out\+\_\+sc} & Computed Schmidt number (dimensionless). \\
+\hline
+ & {\em rho} & Fluid density in kg/m\texorpdfstring{$^\wedge$}{\string^}3. \\
+\hline
+ & {\em dynamic\+\_\+viscosity} & Dynamic viscosity in Pa\texorpdfstring{$\ast$}{*}s. \\
+\hline
+ & {\em diffusivity} & Binary mass diffusivity in m\texorpdfstring{$^\wedge$}{\string^}2/s. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{transport_8h_a7dbda019006bf5e78b8577f4a2d1dff3}\label{transport_8h_a7dbda019006bf5e78b8577f4a2d1dff3} 
+\index{transport.h@{transport.h}!ttak\_phys\_calc\_sherwood@{ttak\_phys\_calc\_sherwood}}
+\index{ttak\_phys\_calc\_sherwood@{ttak\_phys\_calc\_sherwood}!transport.h@{transport.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_phys\_calc\_sherwood()}{ttak\_phys\_calc\_sherwood()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{transport_8h_a5999aeccffbd892e89cf25f59abd089a}{ttak\+\_\+phys\+\_\+status\+\_\+t}} ttak\+\_\+phys\+\_\+calc\+\_\+sherwood (\begin{DoxyParamCaption}\item[{double \texorpdfstring{$\ast$}{*}}]{out\+\_\+sh,  }\item[{double}]{mass\+\_\+transfer\+\_\+coeff,  }\item[{double}]{length,  }\item[{double}]{diffusivity }\end{DoxyParamCaption})}
+
+
+
+Sherwood number\+: Sh = k\+\_\+m \texorpdfstring{$\ast$}{*} L / D. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em out\+\_\+sh} & Computed Sherwood number (dimensionless). \\
+\hline
+ & {\em mass\+\_\+transfer\+\_\+coeff} & Film mass-\/transfer coefficient k\+\_\+m in m/s. \\
+\hline
+ & {\em length} & Characteristic length in meters. \\
+\hline
+ & {\em diffusivity} & Binary mass diffusivity in m\texorpdfstring{$^\wedge$}{\string^}2/s. \\
+\hline
+\end{DoxyParams}

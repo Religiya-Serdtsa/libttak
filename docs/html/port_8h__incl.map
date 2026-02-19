@@ -1,0 +1,11 @@
+<map id="include/ttak/net/core/port.h" name="include/ttak/net/core/port.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="31,5,187,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="16,167,91,192"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="64,48,34,67,12,95,8,110,12,126,32,155,28,158,7,128,3,110,7,92,31,63,61,43"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="129,167,199,192"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="158,43,188,63,212,92,216,110,211,128,190,158,186,155,207,126,211,110,207,95,184,67,155,48"/>
+<area shape="rect" id="Node000004" href="$buddy_8h.html" title=" " alt="" coords="22,93,197,119"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="112,46,112,79,107,79,107,46"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="102,121,73,157,69,154,98,117"/>
+<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="120,117,149,154,145,157,116,121"/>
+</map>

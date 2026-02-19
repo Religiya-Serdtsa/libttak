@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>libttak: TTL Cache Benchmark (libttak)</title>
+<title>libttak: Blueprints</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -90,45 +90,48 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">TTL Cache Benchmark (libttak) </div></div>
+  <div class="headertitle"><div class="title">Blueprints </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="md_bench_2ttl-cache-multithread-bench_2README"></a> A high-performance benchmark for <code>libttak</code> simulating a TTL-based cache with generational memory management.</p>
-<h1><a class="anchor" id="autotoc_md2"></a>
-Overview</h1>
-<p>This benchmark simulates a concurrent cache workload with:</p><ul>
-<li><b>Generational Memory:</b> Values are allocated in time-based epochs.</li>
-<li><b>Bulk Cleanup:</b> When an epoch expires, all its memory is freed at once using <code>mem_tree</code>.</li>
-<li><b>Sharded Locking:</b> Hash map is partitioned into shards for concurrency.</li>
-<li><b>Async Maintenance:</b> Background task rotates epochs and cleans up old data.</li>
+<div class="textblock"><p><a class="anchor" id="md_blueprints_2README"></a> This directory houses the PlantUML (<code>.puml</code>) blueprints for <code>libttak</code>. Each file now lives in a role-oriented folder so it is easier to navigate the architecture layers.</p>
+<h1><a class="anchor" id="autotoc_md1"></a>
+Directory Structure</h1>
+<ul>
+<li><code>application/</code>: Product-entry diagrams such as <code><a class="el" href="00__overview_8puml.html">00_overview.puml</a></code>.</li>
+<li><code>logic/</code>: Specialized logic (math kernels, tree structures).</li>
+<li><code>execution/</code>: Runtime and scheduling blueprints.</li>
+<li><code>resource/</code>: Ownership, epoch GC, and detachable/arena allocators.</li>
+<li><code>foundation/</code>: Threading, synchronization, and utility services.</li>
+<li><code>io_net/</code>: Guarded I/O, buffers, and network topology.</li>
+<li><code>embedded/</code>: Bare-metal specific allocators and drivers.</li>
+<li><code>integration/</code>: Cross-cutting diagrams like <code><a class="el" href="all_8puml.html">all.puml</a></code>.</li>
+<li><code>png/</code>: Rendered PNG files that mirror the same folder hierarchy.</li>
+<li><code>scripts/</code>: Rendering helpers (currently <code>render_blueprints.py</code>).</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md2"></a>
+Notable Blueprints</h2>
+<ul>
+<li><code><a class="el" href="09__epoch__reclamation_8puml.html">resource/09_epoch_reclamation.puml</a></code>: Shows how epoch registration, retirement queues, and shared-pointer integration cooperate (Scope [09]).</li>
+<li><code><a class="el" href="10__detachable__memory_8puml.html">resource/10_detachable_memory.puml</a></code>: Describes the detachable memory allocator, cache, signal hooks, and graceful termination path (Scope [10]).</li>
+<li><code><a class="el" href="11__arena__memory_8puml.html">resource/11_arena_memory.puml</a></code>: Captures the cache-aligned arena row lifecycle, mem-tree bookkeeping, and epoch GC flow referenced by Lesson 40 + the TTL cache bench (Scope [11]).</li>
+<li><code><a class="el" href="12__io__net_8puml.html">io_net/12_io_net.puml</a></code>: Documents the guarded I/O layer (guards, zero-copy buffers, polling) and its integration with shared endpoints plus the session manager built on EBR + Epoch GC (Scope [12]).</li>
+<li><code><a class="el" href="13__embedded__baremetal_8puml.html">embedded/13_embedded_baremetal.puml</a></code>: Shows how the buddy allocator underpins embedded builds and how the net driver abstraction bridges POSIX/Windows/Baremetal targets (Scope [13]).</li>
+<li><code><a class="el" href="all_8puml.html">integration/all.puml</a></code>: Integrated architecture map that stitches the role folders into one overview.</li>
 </ul>
 <h1><a class="anchor" id="autotoc_md3"></a>
-Build</h1>
-<div class="fragment"><div class="line">make</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md4"></a>
-Run</h1>
-<div class="fragment"><div class="line">./ttl_cache_bench [options]</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md5"></a>
-Options</h2>
-<ul>
-<li><code>--threads, -t</code>: Number of worker threads (default: 4)</li>
-<li><code>--duration, -d</code>: Benchmark duration in seconds (default: 10)</li>
-<li><code>--value-size, -v</code>: Size of value blob in bytes (default: 256)</li>
-<li><code>--keyspace, -k</code>: Number of unique keys (default: 100000)</li>
-<li><code>--ttl-ms, -l</code>: TTL of items in milliseconds (default: 500)</li>
-<li><code>--epoch-ms, -e</code>: Duration of one epoch in milliseconds (default: 250)</li>
-<li><code>--shards, -s</code>: Number of map shards (default: 16)</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md6"></a>
-Example</h2>
-<div class="fragment"><div class="line">./ttl_cache_bench --threads 8 --duration 20 --value-size 1024 --shards 32</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md7"></a>
-Metrics</h1>
-<ul>
-<li><b>Ops/s</b>: Total throughput (Get + Set + Del)</li>
-<li><b>HitRate</b>: Percentage of GETs that found a valid item.</li>
-<li><b>AvgClean</b>: Average time (microseconds) to destroy an expired epoch (bulk free). </li>
-</ul>
+Rendering Blueprints</h1>
+<p>To update the PNG files from the <code>.puml</code> sources, run the following command from the project root:</p>
+<div class="fragment"><div class="line">make blueprints</div>
+</div><!-- fragment --><p>Or run the script directly:</p>
+<div class="fragment"><div class="line">python3 blueprints/scripts/render_blueprints.py</div>
+</div><!-- fragment --><p>The script will automatically check for changes and only re-render files that have been modified. It attempts to use a local <code>plantuml</code> installation first, and falls back to the PlantUML online server if necessary.</p>
+<h1><a class="anchor" id="autotoc_md4"></a>
+Adding New Blueprints</h1>
+<ol type="1">
+<li>Create a new <code>.puml</code> file in the folder that matches the role (or create a new folder if a new role emerges).</li>
+<li>Run <code>make blueprints</code>.</li>
+<li>The resulting PNG will be stored in the mirrored path under <code>blueprints/png/</code>. </li>
+</ol>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->

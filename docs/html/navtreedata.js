@@ -25,18 +25,17 @@
 var NAVTREE =
 [
   [ "libttak", "index.html", [
-    [ "TTL Cache Benchmark (libttak)", "index.html", "index" ],
-    [ "BENCHMARK", "md_bench_2ttl-cache-multithread-bench_2BENCHMARK.html", null ],
+    [ "Blueprints", "index.html", "index" ],
     [ "TCC-Oriented Build and Math Tuning", "md_docs_2TCC__OPTIMIZATION.html", [
-      [ "Build Expectations", "md_docs_2TCC__OPTIMIZATION.html#autotoc_md13", null ],
-      [ "Hardcore C Tricks", "md_docs_2TCC__OPTIMIZATION.html#autotoc_md14", null ],
-      [ "Portable Assembly Strategy", "md_docs_2TCC__OPTIMIZATION.html#autotoc_md15", null ],
-      [ "Applying the Tricks Elsewhere", "md_docs_2TCC__OPTIMIZATION.html#autotoc_md16", null ]
+      [ "Build Expectations", "md_docs_2TCC__OPTIMIZATION.html#autotoc_md6", null ],
+      [ "Hardcore C Tricks", "md_docs_2TCC__OPTIMIZATION.html#autotoc_md7", null ],
+      [ "Portable Assembly Strategy", "md_docs_2TCC__OPTIMIZATION.html#autotoc_md8", null ],
+      [ "Applying the Tricks Elsewhere", "md_docs_2TCC__OPTIMIZATION.html#autotoc_md9", null ]
     ] ],
     [ "Development History", "md_HISTORY.html", [
-      [ "2026-01-30", "md_HISTORY.html#autotoc_md18", [
-        [ "Initial Skeleton Creation & Build Stabilization", "md_HISTORY.html#autotoc_md19", null ],
-        [ "Key Diffs Overview", "md_HISTORY.html#autotoc_md20", null ]
+      [ "2026-01-30", "md_HISTORY.html#autotoc_md11", [
+        [ "Initial Skeleton Creation & Build Stabilization", "md_HISTORY.html#autotoc_md12", null ],
+        [ "Key Diffs Overview", "md_HISTORY.html#autotoc_md13", null ]
       ] ]
     ] ],
     [ "Clone Coding Path", "md_tutorials_2CLONE__PATH.html", null ],
@@ -66,10 +65,12 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "00__overview_8puml.html",
-"dir_ee9ff8099f2c78944fea07534c1a5ddb.html",
-"logger_8h.html#adfcac077aeb029c04c4fb47dc33116a0",
-"stats__ext_8h.html#ae7f36dde69e3aa9be8349b4f57a20355",
-"structttak__shared__s.html#a11f44c1998580cb32afddc93dbc0316f"
+"detachable_8h.html#ab5e06a7df563c816fabc268cd4eecc12",
+"functions_vars_s.html",
+"mem__tree_8h.html#aa9f7129a1849cc78030b371254a60a77",
+"structttak__accel__batch__item.html",
+"structttak__mem__tree.html#abe8cab7317692c62f28a634e0b17b20d",
+"structttak__worker__wrapper.html#abc393ca82fa50e83f842a56446f5f4fb"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -12,6 +12,8 @@ var shared_8h =
     [ "TTAK_SHARED_EXPIRED", "shared_8h.html#a0ce11efa90d8c4cc7edabef8401df0a1", null ],
     [ "TTAK_SHARED_READONLY", "shared_8h.html#a93e6e9c880f7131184558a4d765fe4ff", null ],
     [ "TTAK_SHARED_READY", "shared_8h.html#a4429ac81de20a6b3aef42d08be582341", null ],
+    [ "TTAK_SHARED_SWAPPING", "shared_8h.html#a83fdbd999141693a789e68979fa8128d", null ],
+    [ "TTAK_SHARED_USE_EBR", "shared_8h.html#aa61738cdd0322bee3972eb1e4b9134b9", null ],
     [ "TTAK_SHARED_ZOMBIE", "shared_8h.html#aa3472a7306725939b2dac4980272c86c", null ],
     [ "ttak_shared_result_t", "shared_8h.html#a9e87115c8ab89cdc85a268b523179cef", null ],
     [ "ttak_shared_status_t", "shared_8h.html#afc1d0f23f5c77517287701c56cd25f6d", null ],
@@ -23,5 +25,8 @@ var shared_8h =
       [ "TTAK_SHARED_NO_LEVEL", "shared_8h.html#ae6eb27b055588903d427f15cc0cec6f5a4526896883edb6c2d7241925d422e81e", null ]
     ] ],
     [ "ttak_shared_destroy", "shared_8h.html#a789f3fa21456d890914293c4faf04ad0", null ],
-    [ "ttak_shared_init", "shared_8h.html#a32180ab208d8a2290565861adba3f4a7", null ]
+    [ "ttak_shared_get_payload_size", "shared_8h.html#a25628c81a22122384d6e859437eb5e88", null ],
+    [ "ttak_shared_get_payload_ts", "shared_8h.html#a067c4b7fd84a08a5acbd8459baa368ea", null ],
+    [ "ttak_shared_init", "shared_8h.html#a32180ab208d8a2290565861adba3f4a7", null ],
+    [ "ttak_shared_swap_ebr", "shared_8h.html#ae456e71494aff31c784dd6276f5eb3a0", null ]
 ];
