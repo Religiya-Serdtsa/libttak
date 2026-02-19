@@ -45,9 +45,8 @@ static stats_t stats;
 static atomic_bool g_running = true;
 
 typedef struct { char data[256]; } cache_payload_t;
-TTAK_SHARED_DEFINE_WRAPPER(bench, cache_payload_t)
 
-static ttak_shared_bench_t *g_cache;
+static ttak_shared_t *g_cache;
 static ttak_epoch_gc_t g_gc;
 static ttak_object_pool_t **g_arenas;
 
@@ -63,14 +62,14 @@ static void *worker_func(void *arg) {
         ttak_shared_result_t res;
         
         /* READ: EBR-protected pointer access (Zero-lock path) */
-        const cache_payload_t *val = (const cache_payload_t *)g_cache->base.access_ebr(
-            &g_cache->base, owner, true, &res
+        const cache_payload_t *val = (const cache_payload_t *)g_cache->access_ebr(
+            g_cache, owner, true, &res
         );
 
         if (val) {
             volatile char c = val->data[0]; (void)c;
             atomic_fetch_add_explicit(&stats.hits, 1, memory_order_relaxed);
-            g_cache->base.release_ebr(&g_cache->base);
+            g_cache->release_ebr(g_cache);
         }
 
         /* UPDATE: Generational pointer bumping from pre-allocated pools */
@@ -79,7 +78,7 @@ static void *worker_func(void *arg) {
             cache_payload_t *node = (cache_payload_t *)ttak_object_pool_alloc(g_arenas[eid % 4]);
             
             if (node) {
-                ttak_shared_swap_ebr(&g_cache->base, node, sizeof(cache_payload_t));
+                ttak_shared_swap_ebr(g_cache, node, sizeof(cache_payload_t));
                 atomic_fetch_add_explicit(&stats.swaps, 1, memory_order_relaxed);
             }
         }
@@ -111,15 +110,15 @@ int main(void) {
     g_arenas = malloc(sizeof(ttak_object_pool_t*) * 4);
     for(int i=0; i<4; i++) g_arenas[i] = ttak_object_pool_create(cfg.arena_size / 256, 256);
 
-    g_cache = ttak_mem_alloc(sizeof(ttak_shared_bench_t), 0, ttak_get_tick_count());
-    ttak_shared_bench_init(g_cache);
-    ttak_shared_bench_allocate(g_cache, TTAK_SHARED_LEVEL_1);
+    g_cache = ttak_mem_alloc(sizeof(ttak_shared_t), 0, ttak_get_tick_count());
+    ttak_shared_init(g_cache);
+    g_cache->allocate_typed(g_cache, sizeof(cache_payload_t), "cache_payload_t", TTAK_SHARED_LEVEL_1);
 
     ttak_thread_pool_t *pool = ttak_thread_pool_create(cfg.num_threads + 1, 0, 0);
     
     for (int i = 0; i < cfg.num_threads; i++) {
         ttak_owner_t *owner = ttak_owner_create(TTAK_OWNER_SAFE_DEFAULT);
-        g_cache->base.add_owner(&g_cache->base, owner);
+        g_cache->add_owner(g_cache, owner);
         ttak_thread_pool_submit_task(pool, worker_func, owner, 0, 0);
     }
     ttak_thread_pool_submit_task(pool, maintenance_task, NULL, 0, 0);
