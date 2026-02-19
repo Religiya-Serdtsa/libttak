@@ -8,10 +8,15 @@
 #include <pthread.h>
 
 #include <inttypes.h>
-#include <poll.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#ifdef _WIN32
+#include <winsock2.h>
+#else
+#include <poll.h>
+#endif
 
 #define TTAK_NET_SANITY_INTERVAL_NS TT_SECOND(5)
 
@@ -159,7 +164,11 @@ static bool ttak_net_session_guard_healthy(ttak_net_session_t *session, uint64_t
         .fd = snap.fd,
         .events = POLLIN | POLLOUT | POLLERR | POLLHUP
     };
+#ifdef _WIN32
+    int rc = WSAPoll(&pfd, 1, 0);
+#else
     int rc = poll(&pfd, 1, 0);
+#endif
     ttak_net_endpoint_guard_commit(&snap, now);
     if (rc < 0) return false;
     if (pfd.revents & (POLLERR | POLLHUP | POLLNVAL)) return false;
