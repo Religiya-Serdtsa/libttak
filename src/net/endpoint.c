@@ -4,9 +4,14 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <string.h>
+#include <pthread.h>
+
+#ifdef _WIN32
+#include <winsock2.h>
+#else
 #include <unistd.h>
 #include <sys/socket.h>
-#include <pthread.h>
+#endif
 #include <ttak/net/core/port.h>
 #include <ttak/net/core/port.h>
 

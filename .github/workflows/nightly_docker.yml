@@ -33,6 +33,53 @@ jobs:
           name: standard-binaries
           path: dist/*.tar.gz
 
+  # 1b. Standard Targets with GPU Acceleration (Linux x86_64)
+  standard-build-gpu:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - backend: cuda
+            image: nvidia/cuda:12.8.1-devel-ubuntu24.04
+            make_flags: "USE_CUDA=1"
+          - backend: rocm
+            image: rocm/dev-ubuntu-24.04:6.3.3
+            make_flags: "USE_ROCM=1"
+          - backend: opencl
+            image: debian:trixie-slim
+            make_flags: "USE_OPENCL=1"
+    name: Build linux-amd64-${{ matrix.backend }}
+    container:
+      image: ${{ matrix.image }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Build Tools
+        run: |
+          apt-get update && apt-get install -y build-essential make tar
+          if [ "${{ matrix.backend }}" = "opencl" ]; then
+            apt-get install -y ocl-icd-opencl-dev
+          fi
+      - name: Build
+        run: |
+          make clean
+          PERF_STACK_FLAGS="-O3 -march=x86-64 -pipe -flto -ffat-lto-objects \
+            -fomit-frame-pointer -funroll-loops -fstrict-aliasing \
+            -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG" \
+          EXTRA_CFLAGS="-fPIC" \
+          ${{ matrix.make_flags }} make -j$(nproc)
+
+          TAG="libttak-linux-amd64-${{ matrix.backend }}"
+          mkdir -p "dist/${TAG}/include" "dist/${TAG}/lib"
+          cp -r include/* "dist/${TAG}/include/"
+          cp lib/libttak.a "dist/${TAG}/lib/"
+          cd dist && tar -czf "${TAG}.tar.gz" "${TAG}"
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-amd64-${{ matrix.backend }}-binary
+          path: dist/*.tar.gz
+
   # 2. Windows ARM64 (Manual Build)
   build-win-arm64:
     runs-on: ubuntu-latest
@@ -146,7 +193,7 @@ jobs:
 
   # 5. Nightly Release Assembly
   release:
-    needs: [standard-build, build-win-arm64, build-macos, build-bsd]
+    needs: [standard-build, standard-build-gpu, build-win-arm64, build-macos, build-bsd]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v4
