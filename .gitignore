@@ -5,3 +5,7 @@ tests/test_*
 !tests/test_*.c
 !tests/test_*.h
 _codeql_detected_source_root
+*.o
+bench/ttak_bench
+bench/ttl-cache-multithread-bench/ttl_cache_bench
+bench/ttl-cache-multithread-bench/ttl_cache_bench_lockfree

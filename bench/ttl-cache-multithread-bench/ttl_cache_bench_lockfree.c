@@ -5,7 +5,36 @@
 #include <stdbool.h>
 #include <stdatomic.h>
 #include <stdalign.h>
-#include <unistd.h>
+#include <stdint.h>
+#include <inttypes.h>
+
+#ifdef _WIN32
+#  include <windows.h>
+#  include <psapi.h>
+#  define bench_sleep_s(s)    Sleep((DWORD)((s) * 1000u))
+#  define bench_usleep_us(us) Sleep((DWORD)(((us) + 999) / 1000))
+static long get_rss_kb(void) {
+    PROCESS_MEMORY_COUNTERS pmc;
+    if (GetProcessMemoryInfo(GetCurrentProcess(), &pmc, sizeof(pmc)))
+        return (long)(pmc.WorkingSetSize / 1024);
+    return 0;
+}
+#else
+#  include <unistd.h>
+#  define bench_sleep_s(s)    sleep((unsigned)(s))
+#  define bench_usleep_us(us) usleep((useconds_t)(us))
+static long get_rss_kb(void) {
+    long rss = 0;
+    FILE *fp = fopen("/proc/self/statm", "r");
+    if (fp) {
+        long resident;
+        if (fscanf(fp, "%*s %ld", &resident) == 1)
+            rss = resident * (sysconf(_SC_PAGESIZE) / 1024);
+        fclose(fp);
+    }
+    return rss;
+}
+#endif
 
 #include <ttak/mem/mem.h>
 #include <ttak/mem/epoch.h>
@@ -45,9 +74,8 @@ static stats_t stats;
 static atomic_bool g_running = true;
 
 typedef struct { char data[256]; } cache_payload_t;
-TTAK_SHARED_DEFINE_WRAPPER(bench, cache_payload_t)
 
-static ttak_shared_bench_t *g_cache;
+static ttak_shared_t *g_cache;
 static ttak_epoch_gc_t g_gc;
 static ttak_object_pool_t **g_arenas;
 
@@ -63,14 +91,14 @@ static void *worker_func(void *arg) {
         ttak_shared_result_t res;
         
         /* READ: EBR-protected pointer access (Zero-lock path) */
-        const cache_payload_t *val = (const cache_payload_t *)g_cache->base.access_ebr(
-            &g_cache->base, owner, true, &res
+        const cache_payload_t *val = (const cache_payload_t *)g_cache->access_ebr(
+            g_cache, owner, true, &res
         );
 
         if (val) {
             volatile char c = val->data[0]; (void)c;
             atomic_fetch_add_explicit(&stats.hits, 1, memory_order_relaxed);
-            g_cache->base.release_ebr(&g_cache->base);
+            g_cache->release_ebr(g_cache);
         }
 
         /* UPDATE: Generational pointer bumping from pre-allocated pools */
@@ -79,7 +107,7 @@ static void *worker_func(void *arg) {
             cache_payload_t *node = (cache_payload_t *)ttak_object_pool_alloc(g_arenas[eid % 4]);
             
             if (node) {
-                ttak_shared_swap_ebr(&g_cache->base, node, sizeof(cache_payload_t));
+                ttak_shared_swap_ebr(g_cache, node, sizeof(cache_payload_t));
                 atomic_fetch_add_explicit(&stats.swaps, 1, memory_order_relaxed);
             }
         }
@@ -99,7 +127,7 @@ static void *worker_func(void *arg) {
 static void *maintenance_task(void *arg) {
     (void)arg;
     while (atomic_load(&g_running)) {
-        usleep(100000); 
+        bench_usleep_us(100000); 
         ttak_epoch_reclaim();
         ttak_epoch_gc_rotate(&g_gc);
     }
@@ -111,15 +139,15 @@ int main(void) {
     g_arenas = malloc(sizeof(ttak_object_pool_t*) * 4);
     for(int i=0; i<4; i++) g_arenas[i] = ttak_object_pool_create(cfg.arena_size / 256, 256);
 
-    g_cache = ttak_mem_alloc(sizeof(ttak_shared_bench_t), 0, ttak_get_tick_count());
-    ttak_shared_bench_init(g_cache);
-    ttak_shared_bench_allocate(g_cache, TTAK_SHARED_LEVEL_1);
+    g_cache = ttak_mem_alloc(sizeof(ttak_shared_t), 0, ttak_get_tick_count());
+    ttak_shared_init(g_cache);
+    g_cache->allocate_typed(g_cache, sizeof(cache_payload_t), "cache_payload_t", TTAK_SHARED_LEVEL_1);
 
     ttak_thread_pool_t *pool = ttak_thread_pool_create(cfg.num_threads + 1, 0, 0);
     
     for (int i = 0; i < cfg.num_threads; i++) {
         ttak_owner_t *owner = ttak_owner_create(TTAK_OWNER_SAFE_DEFAULT);
-        g_cache->base.add_owner(&g_cache->base, owner);
+        g_cache->add_owner(g_cache, owner);
         ttak_thread_pool_submit_task(pool, worker_func, owner, 0, 0);
     }
     ttak_thread_pool_submit_task(pool, maintenance_task, NULL, 0, 0);
@@ -128,17 +156,16 @@ int main(void) {
     printf("----------------------------------------------------------\n");
 
     for (int i = 1; i <= cfg.duration_sec; i++) {
-        sleep(1);
+        bench_sleep_s(1);
         uint64_t ops = atomic_exchange(&stats.ops, 0);
         uint64_t ns = atomic_exchange(&stats.total_ns, 0);
         uint64_t swaps = atomic_exchange(&stats.swaps, 0);
         uint64_t lat = (ops > 0) ? (ns / ops) : 0;
         
-        long rss = 0;
-        FILE* fp = fopen("/proc/self/statm", "r");
-        if (fp) { fscanf(fp, "%*s %ld", &rss); fclose(fp); rss *= (sysconf(_SC_PAGESIZE)/1024); }
+        long rss = get_rss_kb();
 
-        printf("%2ds | %8lu | %11lu | %7lu | %5lu | %ld\n", i, ops, lat, swaps, g_gc.current_epoch, rss);
+        printf("%2ds | %8" PRIu64 " | %11" PRIu64 " | %7" PRIu64 " | %5" PRIu64 " | %ld\n",
+               i, ops, lat, swaps, (uint64_t)g_gc.current_epoch, rss);
     }
 
     atomic_store(&g_running, false);
