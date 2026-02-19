@@ -5,7 +5,6 @@
 #include <ttak/mem/mem.h>
 
 #include <errno.h>
-#include <poll.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -14,6 +13,7 @@
 #include <winsock2.h>
 #define ttak_io_close_handle _close
 #else
+#include <poll.h>
 #include <unistd.h>
 #define ttak_io_close_handle close
 #endif

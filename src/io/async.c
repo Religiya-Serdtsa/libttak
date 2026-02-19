@@ -5,7 +5,11 @@
 #include <ttak/mem/mem.h>
 #include <ttak/timing/timing.h>
 
+#ifdef _WIN32
+#include <winsock2.h>
+#else
 #include <poll.h>
+#endif
 
 typedef struct ttak_io_async_ctx {
     ttak_io_guard_t *guard;
