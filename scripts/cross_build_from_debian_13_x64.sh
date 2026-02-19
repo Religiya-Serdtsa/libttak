@@ -102,10 +102,27 @@ build_target() {
     fi
 }
 
+# Parse arguments
+FILTER_OS=""
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --os-only)
+            FILTER_OS="$2"
+            shift 2
+            ;;
+        *)
+            shift
+            ;;
+    esac
+done
+
 echo "Starting Multi-platform Cross-Build Process..."
 
 for target in "${TARGETS[@]}"; do
     IFS=':' read -r os arch cc ar a_flags <<< "$target"
+    if [[ -n "$FILTER_OS" && "$os" != "$FILTER_OS" ]]; then
+        continue
+    fi
     build_target "$os" "$arch" "$cc" "$ar" "$a_flags"
 done
 
