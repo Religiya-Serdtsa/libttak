@@ -12,7 +12,7 @@
 #  include <windows.h>
 #  include <psapi.h>
 #  define bench_sleep_s(s)    Sleep((DWORD)((s) * 1000u))
-#  define bench_usleep_us(us) Sleep((DWORD)((us) / 1000 > 0 ? (us) / 1000 : 1))
+#  define bench_usleep_us(us) Sleep((DWORD)(((us) + 999) / 1000))
 static long get_rss_kb(void) {
     PROCESS_MEMORY_COUNTERS pmc;
     if (GetProcessMemoryInfo(GetCurrentProcess(), &pmc, sizeof(pmc)))

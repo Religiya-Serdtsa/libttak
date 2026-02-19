@@ -43,7 +43,7 @@
 #  include <windows.h>
 #  include <psapi.h>
 #  define bench_sleep_ms(ms)  Sleep((DWORD)(ms))
-#  define bench_usleep_us(us) Sleep((DWORD)((us) / 1000 > 0 ? (us) / 1000 : 1))
+#  define bench_usleep_us(us) Sleep((DWORD)(((us) + 999) / 1000))
 #else
 #  include <unistd.h>
 #  define bench_sleep_ms(ms)  usleep((useconds_t)((ms) * 1000u))
