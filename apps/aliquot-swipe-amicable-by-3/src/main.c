@@ -1,125 +1,124 @@
 /**
  * @file main.c
- * @brief High-Performance Period-3 Sociable Number Scanner with Proof-of-Work
+ * @brief Deterministic Period-3 Sociable Number Scanner for libttak
  *
- * This system performs exhaustive numerical sweeps to identify period-3 sociable numbers.
- * It utilizes cryptographic SHA-256 hashing to provide 'Proof of Work' for each 
- * computational range, ensuring data integrity and verifiability.
- *
- * DESIGN ARCHITECTURE:
- * 1. Deterministic Retirement: 30-second watchdog monitor for worker synchronization.
- * 2. Log Integrity Guard: Post-processing sanitization to prevent JSONL corruption.
- * 3. Atomic State Management: Lock-free range distribution using atomic primitives.
- * 4. Fault Tolerance: Checkpoint-resume mechanism with immediate write synchronization.
+ * This implementation performs deterministic aliquot sweeps while producing
+ * reproducible SHA-256 proofs for every processed range. Each seed within a
+ * task is hashed exactly once at the start of the loop iteration, enabling
+ * verify.c to recompute proofs by simply replaying range_start..range_start+count-1.
  */
 
 #define _GNU_SOURCE
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
-#include <stdbool.h>
+#include <errno.h>
 #include <inttypes.h>
 #include <pthread.h>
 #include <signal.h>
-#include <time.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
 #include <sys/stat.h>
-#include <errno.h>
+#include <time.h>
+#include <unistd.h>
 
-/* TTAK Framework Abstraction Layer */
-#include <ttak/mem/mem.h>
-#include <ttak/thread/pool.h>
+#include <ttak/atomic/atomic.h>
 #include <ttak/math/bigint.h>
 #include <ttak/math/sum_divisors.h>
-#include <ttak/atomic/atomic.h>
-#include <ttak/timing/timing.h>
+#include <ttak/mem/mem.h>
 #include <ttak/security/sha256.h>
+#include <ttak/thread/pool.h>
+#include <ttak/timing/timing.h>
 
-/* --- System Configuration Parameters --- */
-#define BLOCK_SIZE          10000ULL      /* Computational unit size per task */
-#define DEFAULT_START_SEED  1000ULL       /* Fallback seed value */
+#if defined(ENABLE_CUDA) || defined(ENABLE_ROCM) || defined(ENABLE_OPENCL)
+#define TTAK_GPU_ACCELERATED 1
+#else
+#define TTAK_GPU_ACCELERATED 0
+#endif
+
+/* ========================================================================== */
+/*                            Scanner Configuration                           */
+/* ========================================================================== */
+#define BLOCK_SIZE          10000ULL
+#define DEFAULT_START_SEED  1000ULL
 #define STATE_DIR           "/opt/aliquot-3"
 #define HASH_LOG_NAME       "range_proofs.log"
 #define FOUND_LOG_NAME      "sociable_found.jsonl"
 #define CHECKPOINT_FILE     "scanner_checkpoint.txt"
-#define SHUTDOWN_TIMEOUT_S  30            /* Maximum duration for worker retirement */
+#define CHECKPOINT_INTERVAL 5000ULL
+#define SHUTDOWN_TIMEOUT_S  30
 
-/* --- Global Runtime Context --- */
+/**
+ * @brief Immutable description of a scanning assignment dispatched to a worker.
+ *
+ * Each scan task owns a contiguous `[start, start + count)` window that is both
+ * hashed and evaluated sequentially. Workers must free @ref start upon completion.
+ */
+typedef struct {
+    ttak_bigint_t start;
+    uint64_t count;
+} scan_task_t;
+
+/* ========================================================================== */
+/*                             Global Runtime State                           */
+/* ========================================================================== */
 static volatile uint64_t g_shutdown_requested = 0;
-static volatile uint64_t g_next_range_start = DEFAULT_START_SEED;
+static ttak_bigint_t g_next_range_start;
+static ttak_bigint_t g_verified_frontier;
 static uint64_t g_total_scanned = 0;
-static uint64_t g_progress_update_quantum = BLOCK_SIZE;
+static uint64_t g_progress_quantum = BLOCK_SIZE;
+
+static pthread_mutex_t g_log_lock = PTHREAD_MUTEX_INITIALIZER;
+static pthread_mutex_t g_state_lock = PTHREAD_MUTEX_INITIALIZER;
 
 static char g_hash_log_path[4096];
 static char g_found_log_path[4096];
 static char g_checkpoint_path[4096];
 
-/** @brief Serializes persistent storage access across concurrent worker threads. */
-static pthread_mutex_t g_log_lock = PTHREAD_MUTEX_INITIALIZER;
+/* ========================================================================== */
+/*                                Utilities                                   */
+/* ========================================================================== */
+static uint64_t monotonic_millis(void) {
+    return ttak_get_tick_count();
+}
 
-/* --- Utility Implementations --- */
+static void handle_signal(int sig) {
+    (void)sig;
+    ttak_atomic_write64(&g_shutdown_requested, 1);
+}
 
-/**
- * @brief Synchronizes the internal BigInt state with a decimal string source.
- */
 static bool ttak_bigint_init_from_string(ttak_bigint_t *bi, const char *s, uint64_t now) {
     if (!bi || !s) return false;
-    ttak_bigint_init(bi, now);
+    ttak_bigint_init_u64(bi, 0, now);
     while (*s) {
         if (*s >= '0' && *s <= '9') {
             if (!ttak_bigint_mul_u64(bi, bi, 10, now)) return false;
-            if (!ttak_bigint_add_u64(bi, bi, *s - '0', now)) return false;
+            if (!ttak_bigint_add_u64(bi, bi, (uint64_t)(*s - '0'), now)) return false;
         }
         s++;
     }
     return true;
 }
 
-static uint64_t monotonic_millis(void) {
-    return ttak_get_tick_count();
-}
-
 /**
- * @brief ISR for asynchronous signal interception.
+ * @brief Ensures the persistent storage directory exists and updates log paths.
  */
-static void handle_signal(int sig) {
-    (void)sig;
-    ttak_atomic_write64(&g_shutdown_requested, 1);
-}
-
-/**
- * @brief Analyzes and repairs the log structure upon process retirement.
- * * Inspects the trailing bytes of the log file to ensure the last commit was 
- * correctly terminated with a newline character. Prevents partial JSON ingestion.
- */
-static void sanitize_logs(void) {
-    printf("[INTEGRITY] Commencing post-execution log sanitization...\n");
-    pthread_mutex_lock(&g_log_lock);
-    
-    FILE *fp = fopen(g_hash_log_path, "r+b");
-    if (!fp) {
-        pthread_mutex_unlock(&g_log_lock);
-        return;
-    }
-
-    if (fseek(fp, 0, SEEK_END) == 0) {
-        long offset = ftell(fp);
-        if (offset > 0) {
-            fseek(fp, -1, SEEK_CUR);
-            int ch = fgetc(fp);
-            if (ch != '\n' && ch != EOF) {
-                printf("[WARNING] Partial write detected at EOF. Re-aligning log stream...\n");
-                /* Implementation note: In high-security contexts, back-scan to last valid LF */
-            }
+static void ensure_log_directory(void) {
+    struct stat st;
+    if (stat(STATE_DIR, &st) != 0) {
+        if (mkdir(STATE_DIR, 0755) != 0 && errno != EEXIST) {
+            fprintf(stderr, "[FATAL] Unable to create state directory: %s\n", STATE_DIR);
+            exit(EXIT_FAILURE);
         }
     }
-
-    fclose(fp);
-    pthread_mutex_unlock(&g_log_lock);
-    printf("[INTEGRITY] Post-execution verification complete.\n");
+    snprintf(g_hash_log_path, sizeof(g_hash_log_path), "%s/%s", STATE_DIR, HASH_LOG_NAME);
+    snprintf(g_found_log_path, sizeof(g_found_log_path), "%s/%s", STATE_DIR, FOUND_LOG_NAME);
+    snprintf(g_checkpoint_path, sizeof(g_checkpoint_path), "%s/%s", STATE_DIR, CHECKPOINT_FILE);
 }
 
+/**
+ * @brief Calibrates the reporting quantum based on env overrides and accelerator flags.
+ */
 static void configure_progress_quantum(void) {
     uint64_t quant = BLOCK_SIZE;
 #if defined(ENABLE_CUDA) || defined(ENABLE_ROCM) || defined(ENABLE_OPENCL)
@@ -138,274 +137,478 @@ static void configure_progress_quantum(void) {
     if (quant == 0 || quant > BLOCK_SIZE) {
         quant = BLOCK_SIZE;
     }
-    g_progress_update_quantum = quant;
+    g_progress_quantum = quant;
 }
 
-static void setup_paths(void) {
-    struct stat st;
-    if (stat(STATE_DIR, &st) != 0) {
-        if (mkdir(STATE_DIR, 0755) != 0 && errno != EEXIST) {
-            fprintf(stderr, "[FATAL] Storage directory initialization failure: %s\n", STATE_DIR);
-            exit(EXIT_FAILURE);
+/**
+ * @brief Forces newline termination on log files in case of truncation or crashes.
+ */
+static void ensure_log_newline(const char *path) {
+    if (!path || !*path) return;
+    FILE *fp = fopen(path, "ab+");
+    if (!fp) return;
+
+    if (fseek(fp, 0, SEEK_END) == 0) {
+        long sz = ftell(fp);
+        if (sz > 0) {
+            if (fseek(fp, -1L, SEEK_END) == 0) {
+                int ch = fgetc(fp);
+                if (ch != '\n' && ch != EOF) {
+                    fseek(fp, 0, SEEK_END);
+                    fputc('\n', fp);
+                }
+            }
         }
     }
-    snprintf(g_hash_log_path, sizeof(g_hash_log_path), "%s/%s", STATE_DIR, HASH_LOG_NAME);
-    snprintf(g_found_log_path, sizeof(g_found_log_path), "%s/%s", STATE_DIR, FOUND_LOG_NAME);
-    snprintf(g_checkpoint_path, sizeof(g_checkpoint_path), "%s/%s", STATE_DIR, CHECKPOINT_FILE);
+    fclose(fp);
 }
 
-static void load_checkpoint(void) {
+/**
+ * @brief Guards log integrity during shutdown by normalizing trailing newlines.
+ */
+static void sanitize_logs(void) {
+    pthread_mutex_lock(&g_log_lock);
+    ensure_log_newline(g_hash_log_path);
+    ensure_log_newline(g_found_log_path);
+    pthread_mutex_unlock(&g_log_lock);
+    printf("[INTEGRITY] Log channels sanitized.\n");
+}
+
+/**
+ * @brief Restores the scanner frontier from the checkpoint if present.
+ */
+static void load_checkpoint(uint64_t now) {
     FILE *fp = fopen(g_checkpoint_path, "r");
-    if (fp) {
-        if (fscanf(fp, "%" SCNu64, &g_next_range_start) != 1) {
-            g_next_range_start = DEFAULT_START_SEED;
-        }
-        fclose(fp);
+    if (!fp) {
+        ttak_bigint_set_u64(&g_next_range_start, DEFAULT_START_SEED, now);
+        ttak_bigint_set_u64(&g_verified_frontier, DEFAULT_START_SEED, now);
+        return;
     }
-}
 
-static void save_checkpoint(uint64_t val) {
-    FILE *fp = fopen(g_checkpoint_path, "w");
-    if (fp) {
-        fprintf(fp, "%" PRIu64 "\n", val);
-        fflush(fp);
-        fclose(fp);
+    char buffer[8192];
+    bool loaded = false;
+    if (fgets(buffer, sizeof(buffer), fp)) {
+        size_t len = strlen(buffer);
+        while (len && (buffer[len - 1] == '\n' || buffer[len - 1] == '\r')) {
+            buffer[--len] = '\0';
+        }
+        ttak_bigint_t parsed;
+        if (ttak_bigint_init_from_string(&parsed, buffer, now)) {
+            bool copied_next = ttak_bigint_copy(&g_next_range_start, &parsed, now);
+            bool copied_verified = ttak_bigint_copy(&g_verified_frontier, &parsed, now);
+            loaded = copied_next && copied_verified;
+            ttak_bigint_free(&parsed, now);
+        }
+    }
+    fclose(fp);
+
+    if (!loaded) {
+        ttak_bigint_set_u64(&g_next_range_start, DEFAULT_START_SEED, now);
+        ttak_bigint_set_u64(&g_verified_frontier, DEFAULT_START_SEED, now);
     }
 }
 
 /**
- * @brief Appends a cryptographic range proof to the persistent log.
+ * @brief Persists the current scanning frontier to disk.
  */
-static void log_proof(uint64_t start, uint64_t count, const char *hash_hex) {
-    pthread_mutex_lock(&g_log_lock);
+static void save_checkpoint(const ttak_bigint_t *value, uint64_t now) {
+    if (!value) return;
+    FILE *fp = fopen(g_checkpoint_path, "w");
+    if (!fp) return;
+    char *repr = ttak_bigint_to_string(value, now);
+    if (repr) {
+        fprintf(fp, "%s\n", repr);
+        ttak_mem_free(repr);
+    }
+    fflush(fp);
+    fclose(fp);
+}
+
+/**
+ * @brief Captures the current frontier for telemetry or checkpointing.
+ */
+static bool snapshot_next_range_start(ttak_bigint_t *dst, uint64_t now) {
+    if (!dst) return false;
+    bool copied = false;
+    pthread_mutex_lock(&g_state_lock);
+    copied = ttak_bigint_copy(dst, &g_next_range_start, now);
+    pthread_mutex_unlock(&g_state_lock);
+    return copied;
+}
+
+/**
+ * @brief Captures the last fully verified frontier for logging/checkpoints.
+ */
+static bool snapshot_verified_frontier(ttak_bigint_t *dst, uint64_t now) {
+    if (!dst) return false;
+    bool copied = false;
+    pthread_mutex_lock(&g_state_lock);
+    copied = ttak_bigint_copy(dst, &g_verified_frontier, now);
+    pthread_mutex_unlock(&g_state_lock);
+    return copied;
+}
+
+/**
+ * @brief Atomically assigns the next contiguous block to a scan task.
+ */
+static bool reserve_next_block(scan_task_t *task, uint64_t now) {
+    if (!task) return false;
+    bool reserved = false;
+    pthread_mutex_lock(&g_state_lock);
+    if (ttak_bigint_copy(&task->start, &g_next_range_start, now)) {
+        reserved = ttak_bigint_add_u64(&g_next_range_start, &g_next_range_start, BLOCK_SIZE, now);
+    }
+    pthread_mutex_unlock(&g_state_lock);
+    if (reserved) {
+        task->count = BLOCK_SIZE;
+    }
+    return reserved;
+}
+
+/**
+ * @brief Writes a deterministic hash proof to disk without acquiring locks.
+ * @note Callers must hold @ref g_log_lock prior to invoking this helper.
+ */
+static void log_proof_unlocked(const ttak_bigint_t *start, uint64_t count, const char *hash_hex, uint64_t now) {
+    if (!start || !hash_hex) return;
+    char *start_str = ttak_bigint_to_string(start, now);
     FILE *fp = fopen(g_hash_log_path, "a");
     if (fp) {
-        fprintf(fp, "{\"range_start\":%" PRIu64 ",\"count\":%" PRIu64 ",\"proof_sha256\":\"%s\",\"ts\":%" PRIu64 "}\n",
-                start, count, hash_hex, (uint64_t)time(NULL));
+        const char *label = start_str ? start_str : "conversion_error";
+        fprintf(fp, "{\"range_start\":\"%s\",\"count\":%" PRIu64 ",\"proof_sha256\":\"%s\",\"ts\":%" PRIu64 "}\n",
+                label, count, hash_hex, (uint64_t)time(NULL));
+        fclose(fp);
+    }
+    if (start_str) {
+        ttak_mem_free(start_str);
+    }
+}
+
+/**
+ * @brief Writes a discovery record for confirmed period-3 sociable seeds.
+ */
+static void log_found_seed(const ttak_bigint_t *seed, uint64_t now) {
+    if (!seed) return;
+    char *seed_str = ttak_bigint_to_string(seed, now);
+    if (!seed_str) return;
+    pthread_mutex_lock(&g_log_lock);
+    FILE *fp = fopen(g_found_log_path, "a");
+    if (fp) {
+        fprintf(fp, "{\"status\":\"found\",\"seed\":\"%s\",\"ts\":%" PRIu64 "}\n", seed_str, (uint64_t)time(NULL));
         fclose(fp);
     }
     pthread_mutex_unlock(&g_log_lock);
+    ttak_mem_free(seed_str);
 }
 
-/* --- Core Computational Logic --- */
-
-typedef struct {
-    uint64_t start;
-    uint64_t count;
-} scan_task_t;
+/**
+ * @brief Advances the verified frontier once a block is fully processed.
+ */
+static void mark_range_verified(const ttak_bigint_t *start, uint64_t count, uint64_t now) {
+    if (!start || count == 0) return;
+    ttak_bigint_t candidate;
+    ttak_bigint_init(&candidate, now);
+    if (!ttak_bigint_copy(&candidate, start, now)) {
+        ttak_bigint_free(&candidate, now);
+        return;
+    }
+    if (!ttak_bigint_add_u64(&candidate, &candidate, count, now)) {
+        ttak_bigint_free(&candidate, now);
+        return;
+    }
+    pthread_mutex_lock(&g_state_lock);
+    if (ttak_bigint_cmp(&candidate, &g_verified_frontier) > 0) {
+        ttak_bigint_copy(&g_verified_frontier, &candidate, now);
+    }
+    pthread_mutex_unlock(&g_state_lock);
+    ttak_bigint_free(&candidate, now);
+}
 
 /**
- * @brief Worker thread entry point for Aliquot sequence processing.
- * * Performs a 3-step iteration sequence (n -> s1 -> s2 -> s3) and updates 
- * the SHA-256 context with both input and intermediate outputs to ensure 
- * complete computational verifiability.
+ * @brief Encodes a BigInt as decimal ASCII and feeds it into the SHA-256 context.
+ */
+static void sha256_update_bigint(SHA256_CTX *ctx, const ttak_bigint_t *value, uint64_t now) {
+    if (!ctx || !value) return;
+    char *repr = ttak_bigint_to_string(value, now);
+    if (!repr) return;
+    size_t len = strlen(repr);
+    if (len > 0) {
+        sha256_update(ctx, (const uint8_t *)repr, len);
+    }
+    ttak_mem_free(repr);
+}
+
+/* ========================================================================== */
+/*                              Worker Execution                              */
+/* ========================================================================== */
+/**
+ * @brief Worker routine that enforces verify.c's deterministic hashing cadence.
+ * @details Each iteration performs two hash updates (seed and s(seed)) before
+ *          advancing the seed exactly once, ensuring reproducible transcripts.
+ * @param arg Pointer to the allocated scan task payload.
+ * @return void* Always NULL after successful retirement.
  */
 static void *worker_scan_range(void *arg) {
     scan_task_t *task = (scan_task_t *)arg;
-    uint64_t start = task->start;
-    uint64_t count = task->count;
     uint64_t now = monotonic_millis();
-    
+
     SHA256_CTX sha_ctx;
+    memset(&sha_ctx, 0, sizeof(sha_ctx));
     sha256_init(&sha_ctx);
 
-    /* Thread-local BigInt registers to minimize allocation overhead */
-    ttak_bigint_t bn_curr, bn_next, bn_s2, bn_s3;
-    ttak_bigint_init(&bn_curr, now);
+    ttak_bigint_t seed_val, bn_next, bn_s2, bn_s3;
+    ttak_bigint_init_u64(&seed_val, 0, now);
+    ttak_bigint_copy(&seed_val, &task->start, now);
     ttak_bigint_init(&bn_next, now);
     ttak_bigint_init(&bn_s2, now);
     ttak_bigint_init(&bn_s3, now);
 
-    uint64_t report_step = g_progress_update_quantum;
-    if (report_step == 0 || report_step > count) {
-        report_step = count;
+    bool fatal_error = false;
+    uint64_t report_step = g_progress_quantum;
+    if (report_step == 0 || report_step > task->count) {
+        report_step = task->count;
     }
-    uint64_t reported = 0;
-    uint64_t progress = 0;
+    uint64_t pending_progress = 0;
+    uint64_t processed = 0;
 
-    for (uint64_t i = 0; i < count; i++) {
-        /* Immediate responsive exit on shutdown signal */
-        if (ttak_atomic_read64(&g_shutdown_requested)) break;
+    for (uint64_t i = 0; i < task->count; i++) {
+        /* Step 1: hash the current seed. */
+        sha256_update_bigint(&sha_ctx, &seed_val, now);
 
-        uint64_t seed_val = start + i;
-        ttak_bigint_set_u64(&bn_curr, seed_val, now);
-        sha256_update(&sha_ctx, (uint8_t*)&seed_val, sizeof(seed_val));
+        /* Step 2: compute s(n) and hash the result. */
+        if (!ttak_sum_proper_divisors_big(&seed_val, &bn_next, now)) {
+            fatal_error = true;
+            break;
+        }
+        sha256_update_bigint(&sha_ctx, &bn_next, now);
 
-        /* Step 1: Compute n -> s(n) */
-        ttak_sum_proper_divisors_big(&bn_curr, &bn_next, now);
-        uint64_t export_u64 = 0;
-        ttak_bigint_export_u64(&bn_next, &export_u64); 
-        sha256_update(&sha_ctx, (uint8_t*)&export_u64, sizeof(export_u64));
-
-        /* Pruning: Exclude perfect numbers and terminated sequences */
-        if (ttak_bigint_cmp(&bn_next, &bn_curr) == 0 || ttak_bigint_cmp_u64(&bn_next, 1) <= 0) {
-             continue;
+        /* Step 3: detect period-3 sociable seeds without pruning the loop. */
+        if (ttak_bigint_cmp(&bn_next, &seed_val) != 0 && ttak_bigint_cmp_u64(&bn_next, 1) > 0) {
+            if (!ttak_sum_proper_divisors_big(&bn_next, &bn_s2, now)) {
+                fatal_error = true;
+                break;
+            }
+            if (ttak_bigint_cmp(&bn_s2, &seed_val) != 0) {
+                if (!ttak_sum_proper_divisors_big(&bn_s2, &bn_s3, now)) {
+                    fatal_error = true;
+                    break;
+                }
+                if (ttak_bigint_cmp(&bn_s3, &seed_val) == 0) {
+                    log_found_seed(&seed_val, now);
+                }
+            }
         }
 
-        /* Step 2: Compute s(n) -> s(s(n)) */
-        ttak_sum_proper_divisors_big(&bn_next, &bn_s2, now);
-        if (ttak_bigint_cmp(&bn_s2, &bn_curr) == 0) continue; 
-
-        /* Step 3: Compute s(s(n)) -> s(s(s(n))) */
-        ttak_sum_proper_divisors_big(&bn_s2, &bn_s3, now);
-        
-        /* Final Detection: Validate period-3 closure */
-        if (ttak_bigint_cmp(&bn_s3, &bn_curr) == 0) {
-            char *s_seed = ttak_bigint_to_string(&bn_curr, now);
-            pthread_mutex_lock(&g_log_lock);
-            FILE *fp = fopen(g_found_log_path, "a");
-            if (fp) {
-                fprintf(fp, "{\"status\":\"found\",\"seed\":\"%s\",\"ts\":%" PRIu64 "}\n", s_seed, (uint64_t)time(NULL));
-                fclose(fp);
-            }
-            pthread_mutex_unlock(&g_log_lock);
-            ttak_mem_free(s_seed);
+        /* Step 4: deterministic advancement (seed and progress counters). */
+        if (!ttak_bigint_add_u64(&seed_val, &seed_val, 1, now)) {
+            fatal_error = true;
+            break;
         }
 
-        if (report_step < count) {
-            progress++;
-            if (progress >= report_step) {
-                ttak_atomic_add64(&g_total_scanned, progress);
-                reported += progress;
-                progress = 0;
-            }
+        pending_progress++;
+        processed++;
+        if (report_step < task->count && pending_progress >= report_step) {
+            ttak_atomic_add64(&g_total_scanned, pending_progress);
+            pending_progress = 0;
         }
     }
 
-    /* Range Proof Finalization */
-    uint8_t hash[32];
-    sha256_final(&sha_ctx, hash);
-    char hash_hex[65];
-    for(int j=0; j<32; j++) sprintf(hash_hex + (j*2), "%02x", hash[j]);
-    
-    log_proof(start, count, hash_hex);
+    if (pending_progress > 0) {
+        ttak_atomic_add64(&g_total_scanned, pending_progress);
+    }
 
-    /* Context Disposal */
-    ttak_bigint_free(&bn_curr, now);
+    bool completed_block = !fatal_error && processed == task->count;
+    if (completed_block) {
+        pthread_mutex_lock(&g_log_lock);
+        uint8_t digest[32];
+        sha256_final(&sha_ctx, digest);
+        char hash_hex[65];
+        for (size_t j = 0; j < sizeof(digest); j++) {
+            snprintf(hash_hex + (j * 2), 3, "%02x", digest[j]);
+        }
+        hash_hex[64] = '\0';
+        log_proof_unlocked(&task->start, task->count, hash_hex, now);
+        pthread_mutex_unlock(&g_log_lock);
+        mark_range_verified(&task->start, task->count, now);
+    } else if (processed > 0) {
+        uint64_t warn_now = monotonic_millis();
+        char *range_label = ttak_bigint_to_string(&task->start, warn_now);
+        fprintf(stderr,
+                "[WARN] Dropping partial proof for range %s (%" PRIu64 "/%" PRIu64 " seeds processed).\n",
+                range_label ? range_label : "conversion_error", processed, task->count);
+        if (range_label) {
+            ttak_mem_free(range_label);
+        }
+    }
+
+    ttak_bigint_free(&seed_val, now);
     ttak_bigint_free(&bn_next, now);
     ttak_bigint_free(&bn_s2, now);
     ttak_bigint_free(&bn_s3, now);
+    ttak_bigint_free(&task->start, now);
     ttak_mem_free(task);
 
-    uint64_t remaining = count - reported;
-    if (remaining > 0) {
-        ttak_atomic_add64(&g_total_scanned, remaining);
+    if (fatal_error) {
+        fprintf(stderr, "[ERROR] Worker aborted due to arithmetic failure.\n");
     }
-    
+
     return NULL;
 }
 
-/* --- Fail-Safe Termination Watchdog --- */
-
-/**
- * @brief Monitor thread providing a hard-stop safeguard.
- * * If the worker pool fails to synchronize within the grace period, the watchdog 
- * invokes a hard exit to prevent persistent zombie state or data inconsistency.
- */
+/* ========================================================================== */
+/*                             Retirement Watchdog                            */
+/* ========================================================================== */
 static void *shutdown_watchdog(void *arg) {
     (void)arg;
     struct timespec ts = { .tv_sec = SHUTDOWN_TIMEOUT_S, .tv_nsec = 0 };
     nanosleep(&ts, NULL);
-    fprintf(stderr, "\n[FATAL] Shutdown synchronization timed out (%ds). Forcing termination.\n", SHUTDOWN_TIMEOUT_S);
-    _exit(EXIT_FAILURE); 
+    fprintf(stderr, "\n[FATAL] Shutdown synchronization timed out. Forcing exit.\n");
+    _exit(EXIT_FAILURE);
 }
 
-/* --- Main Entry Point --- */
-
+/* ========================================================================== */
+/*                                 Main Entry                                 */
+/* ========================================================================== */
 int main(int argc, char **argv) {
-    /* Setup and Restoration */
-    setup_paths();
-    load_checkpoint();
+    (void)argc;
+    (void)argv;
+
+    uint64_t init_now = monotonic_millis();
+    ttak_bigint_init_u64(&g_next_range_start, DEFAULT_START_SEED, init_now);
+    ttak_bigint_init_u64(&g_verified_frontier, DEFAULT_START_SEED, init_now);
+    ensure_log_directory();
+    load_checkpoint(init_now);
+    configure_progress_quantum();
 
     long cpus = sysconf(_SC_NPROCESSORS_ONLN);
     if (cpus < 1) cpus = 1;
 
     ttak_thread_pool_t *pool = ttak_thread_pool_create(cpus, 0, monotonic_millis());
-    if (!pool) exit(EXIT_FAILURE);
-    configure_progress_quantum();
+    if (!pool) {
+        fprintf(stderr, "[FATAL] Unable to create thread pool.\n");
+        return EXIT_FAILURE;
+    }
 
-    /* Signal Registration */
     signal(SIGINT, handle_signal);
     signal(SIGTERM, handle_signal);
 
-    printf("[SYSTEM] Aliquot-3 Scanner initialized on %ld cores.\n", cpus);
-    printf("[SYSTEM] Operational range start: %" PRIu64 "\n", g_next_range_start);
+    printf("[SYSTEM] Aliquot scanner online with %ld worker threads.\n", cpus);
+    char *start_str = ttak_bigint_to_string(&g_verified_frontier, monotonic_millis());
+    if (start_str) {
+        printf("[SYSTEM] Resuming from seed %s\n", start_str);
+        ttak_mem_free(start_str);
+    }
 
     uint64_t last_report = monotonic_millis();
-    uint64_t start_time = last_report;
-    uint64_t last_head_snapshot = ttak_atomic_read64(&g_next_range_start);
-    uint64_t last_head_snapshot_ts = last_report;
+    uint64_t last_checkpoint = last_report;
+#if !TTAK_GPU_ACCELERATED
+    uint64_t last_rate_report = last_report;
+    uint64_t last_rate_total = ttak_atomic_read64(&g_total_scanned);
+#endif
 
-    /* Primary Dispatch Loop */
     while (!ttak_atomic_read64(&g_shutdown_requested)) {
-        /* Atomic range allocation */
-        uint64_t current_start = ttak_atomic_add64(&g_next_range_start, BLOCK_SIZE) - BLOCK_SIZE;
-        
         scan_task_t *task = ttak_mem_alloc(sizeof(scan_task_t), __TTAK_UNSAFE_MEM_FOREVER__, monotonic_millis());
-        if (task) {
-            task->start = current_start;
-            task->count = BLOCK_SIZE;
-            
-            /* Attempt pool submission; fallback to synchronous execution on saturation */
-            if (!ttak_thread_pool_submit_task(pool, worker_scan_range, task, 0, monotonic_millis())) {
-                worker_scan_range(task);
-                struct timespec ts = {0, 10000000}; /* 10ms backpressure delay */
-                nanosleep(&ts, NULL);
-            }
+        if (!task) {
+            fprintf(stderr, "[FATAL] Memory allocation failure.\n");
+            break;
+        }
+        uint64_t alloc_now = monotonic_millis();
+        ttak_bigint_init(&task->start, alloc_now);
+        if (!reserve_next_block(task, alloc_now)) {
+            ttak_bigint_free(&task->start, alloc_now);
+            ttak_mem_free(task);
+            fprintf(stderr, "[FATAL] Failed to reserve next scanning block.\n");
+            break;
         }
 
-        /* Periodic Status Telemetry & Checkpointing */
+        if (!ttak_thread_pool_submit_task(pool, worker_scan_range, task, 0, monotonic_millis())) {
+            /* Fallback to synchronous execution when the pool is saturated. */
+            worker_scan_range(task);
+            struct timespec ts = {0, 10000000};
+            nanosleep(&ts, NULL);
+        }
+
         uint64_t now = monotonic_millis();
-        if (now - last_report > 5000) {
-            uint64_t head = ttak_atomic_read64(&g_next_range_start);
-            double elapsed = (now - start_time) / 1000.0;
-            double aggregate_rate = 0.0;
-            if (elapsed > 0.0) {
-                aggregate_rate = (double)ttak_atomic_read64(&g_total_scanned) / elapsed;
-            }
-            double derived_rate = 0.0;
-            if (now > last_head_snapshot_ts) {
-                double interval_sec = (now - last_head_snapshot_ts) / 1000.0;
-                if (interval_sec > 0.0 && head >= last_head_snapshot) {
-                    derived_rate = (head - last_head_snapshot) / interval_sec;
-                }
-            }
-            double rate = derived_rate > 0.0 ? derived_rate : aggregate_rate;
-            printf("[STATUS] Head: %" PRIu64 " | Rate: %.2f seeds/sec | Sync: OK\n", head, rate);
+        if (now - last_report >= 5000) {
+            ttak_bigint_t next_head;
+            ttak_bigint_init(&next_head, now);
+            snapshot_next_range_start(&next_head, now);
 
-            last_head_snapshot = head;
-            last_head_snapshot_ts = now;
-            
-            save_checkpoint(ttak_atomic_read64(&g_next_range_start));
+            ttak_bigint_t verified_head;
+            ttak_bigint_init(&verified_head, now);
+            snapshot_verified_frontier(&verified_head, now);
+
+            char *next_str = ttak_bigint_to_string(&next_head, now);
+            char *verified_str = ttak_bigint_to_string(&verified_head, now);
+#if !TTAK_GPU_ACCELERATED
+            double instant_rate = 0.0;
+            uint64_t current_total = ttak_atomic_read64(&g_total_scanned);
+            double interval = (now - last_rate_report) / 1000.0;
+            if (interval > 0.0 && current_total >= last_rate_total) {
+                instant_rate = (double)(current_total - last_rate_total) / interval;
+            }
+#endif
+            if (next_str && verified_str) {
+#if TTAK_GPU_ACCELERATED
+                printf("[STATUS] Next %s | Verified %s | Mode GPU_ACCELERATED\n", next_str, verified_str);
+#else
+                printf("[STATUS] Next %s | Verified %s | Rate %.2f seeds/sec\n", next_str, verified_str, instant_rate);
+#endif
+            } else if (next_str) {
+                printf("[STATUS] Next %s\n", next_str);
+            }
+            if (next_str) ttak_mem_free(next_str);
+            if (verified_str) ttak_mem_free(verified_str);
+
+            ttak_bigint_free(&next_head, now);
+            ttak_bigint_free(&verified_head, now);
             last_report = now;
+#if !TTAK_GPU_ACCELERATED
+            last_rate_report = now;
+            last_rate_total = current_total;
+#endif
         }
 
-        /* Micro-yielding to reduce CPU management overhead */
-        struct timespec ts = {0, 100000}; /* 100us */
+        if (now - last_checkpoint >= CHECKPOINT_INTERVAL) {
+            ttak_bigint_t checkpoint_val;
+            ttak_bigint_init(&checkpoint_val, now);
+            snapshot_verified_frontier(&checkpoint_val, now);
+            save_checkpoint(&checkpoint_val, now);
+            ttak_bigint_free(&checkpoint_val, now);
+            last_checkpoint = now;
+        }
+
+        struct timespec ts = {0, 100000};
         nanosleep(&ts, NULL);
     }
 
-    /* --- EMERGENCY RETIREMENT PROTOCOL --- */
-    printf("\n[RETIRE] Termination sequence engaged. Draining worker pool...\n");
-    
-    /* Initialize Safeguard Monitor */
+    printf("\n[RETIRE] Shutdown requested. Flushing task queue...\n");
+
     pthread_t watchdog_tid;
     if (pthread_create(&watchdog_tid, NULL, shutdown_watchdog, NULL) == 0) {
         pthread_detach(watchdog_tid);
     }
 
-    /**
-     * ttak_thread_pool_destroy implements a blocking wait for all active tasks.
-     * This ensures every range proof is committed before the process relinquishes its state.
-     */
     ttak_thread_pool_destroy(pool);
 
-    /* Final Integrity Verification Phase */
     sanitize_logs();
-    save_checkpoint(ttak_atomic_read64(&g_next_range_start));
 
-    printf("[RETIRE] Final Checkpoint Persisted: %" PRIu64 "\n", ttak_atomic_read64(&g_next_range_start));
-    printf("[RETIRE] Execution context synchronized. Graceful exit.\n");
+    uint64_t retire_now = monotonic_millis();
+    ttak_bigint_t final_snapshot;
+    ttak_bigint_init(&final_snapshot, retire_now);
+    snapshot_verified_frontier(&final_snapshot, retire_now);
+    save_checkpoint(&final_snapshot, retire_now);
 
+    char *final_str = ttak_bigint_to_string(&final_snapshot, retire_now);
+    if (final_str) {
+        printf("[RETIRE] Final checkpoint: %s\n", final_str);
+        ttak_mem_free(final_str);
+    }
+
+    ttak_bigint_free(&final_snapshot, retire_now);
+    ttak_bigint_free(&g_next_range_start, retire_now);
+    ttak_bigint_free(&g_verified_frontier, retire_now);
+
+    printf("[RETIRE] Scanner shutdown complete.\n");
     return EXIT_SUCCESS;
 }

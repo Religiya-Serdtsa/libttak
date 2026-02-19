@@ -1,4 +1,5 @@
 #include <ttak/math/bigint.h>
+#include <ttak/math/bigint_accel.h>
 #include <ttak/mem/mem.h>
 #include "../../internal/app_types.h"
 #include <string.h>
@@ -324,10 +325,20 @@ _Bool ttak_bigint_add(ttak_bigint_t *dst, const ttak_bigint_t *lhs, const ttak_b
 
     size_t max_used = lhs->used > rhs->used ? lhs->used : rhs->used;
     if (!ensure_capacity(dst, max_used + 1, now)) return false;
-
-    limb_t *d = get_limbs(dst);
     const limb_t *l = get_const_limbs(lhs);
     const limb_t *r = get_const_limbs(rhs);
+    limb_t *d = get_limbs(dst);
+
+    if (ttak_bigint_accel_available() && max_used >= ttak_bigint_accel_min_limbs()) {
+        size_t out_used = 0;
+        if (ttak_bigint_accel_add_raw(d, dst->capacity, &out_used,
+                                      l, lhs->used, r, rhs->used)) {
+            dst->used = out_used;
+            dst->is_negative = lhs->is_negative;
+            trim_unused(dst);
+            return true;
+        }
+    }
 
     uint64_t carry = 0;
     size_t i = 0;
@@ -421,12 +432,34 @@ _Bool ttak_bigint_mul(ttak_bigint_t *dst, const ttak_bigint_t *lhs, const ttak_b
     size_t needed = lhs->used + rhs->used;
     ttak_bigint_t tmp;
     ttak_bigint_init(&tmp, now);
-    if (!ensure_capacity(&tmp, needed, now)) return false;
+    if (!ensure_capacity(&tmp, needed, now)) {
+        ttak_bigint_free(&tmp, now);
+        return false;
+    }
 
     limb_t *t = get_limbs(&tmp);
     const limb_t *l = get_const_limbs(lhs);
     const limb_t *r = get_const_limbs(rhs);
 
+    bool attempted_accel = false;
+    if (ttak_bigint_accel_available()) {
+        size_t threshold = ttak_bigint_accel_min_limbs();
+        if (lhs->used >= threshold || rhs->used >= threshold || needed >= threshold) {
+            size_t out_used = 0;
+            if (ttak_bigint_accel_mul_raw(t, tmp.capacity, &out_used, l, lhs->used, r, rhs->used)) {
+                tmp.used = out_used;
+                tmp.is_negative = lhs->is_negative != rhs->is_negative;
+                trim_unused(&tmp);
+                _Bool ok = ttak_bigint_copy(dst, &tmp, now);
+                ttak_bigint_free(&tmp, now);
+                return ok;
+            }
+            attempted_accel = true;
+        }
+    }
+
+    (void)attempted_accel;
+    memset(t, 0, needed * sizeof(limb_t));
     for (size_t i = 0; i < lhs->used; ++i) {
         uint64_t carry = 0;
         for (size_t j = 0; j < rhs->used; ++j) {
