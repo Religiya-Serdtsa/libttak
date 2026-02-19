@@ -67,4 +67,10 @@ Follow these stages sequentially. Each block references the original sources you
 - **Clone:** `src/mem/detachable.c`, `include/ttak/mem/detachable.h`, `internal/tt_jmp.h`, `src/mem/{mem.c,epoch_gc.c}`, `src/mem_tree/mem_tree.c`, and the arena portions of `bench/ttl-cache-multithread-bench/ttl_cache_bench_lockfree.c`.
 - **Checklist:** configure a detachable context with epoch protection, watch cache reuse vs. arena flush, wire a tracked arena row that releases its mem-tree node, and verify that `ttak_epoch_gc_rotate` frees the retired buffer in the sample.
 
+### Stage 11 – IO & Network Stack
+- **Lessons:** [41](41-io-network-stack/README.md)–[42](42-io-guarded-streams/README.md)
+- **Goal:** build the guarded IO layer, zero-copy views, shared endpoints, and async poll flows that sit on top of detachable arenas + owners.
+- **Clone:** `src/io/{io.c,sync.c,async.c,zerocopy.c}`, `include/ttak/io/*`, `src/net/{endpoint.c,session.c,view.c,core/port.c}`, and the matching headers in `include/ttak/net/*`.
+- **Checklist:** enforce TTL + ownership via `ttak_io_guard_t`, expose zero-copy receive windows, register sockets with `ttak_net_session_mgr_t`, and validate that `ttak_io_async_read` callbacks fire once poll workers deliver payloads in Lesson 42.
+
 After each stage, summarize what you rebuilt and link to the commit/diff. By the end you will have cloned every module in the project (the flow is also captured visually in `blueprints/09_tutorial_curriculum.puml`).

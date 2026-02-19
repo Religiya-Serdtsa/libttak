@@ -168,7 +168,7 @@ def main() -> None:
     png_dir = base_dir / "png"
     png_dir.mkdir(parents=True, exist_ok=True)
 
-    puml_files = list(puml_dir.glob("*.puml"))
+    puml_files = sorted(puml_dir.rglob("*.puml"))
     if not puml_files:
         print("No .puml files found in blueprints directory.")
         return
@@ -177,13 +177,14 @@ def main() -> None:
 
     updated_count = 0
     for puml_path in puml_files:
-        png_path = png_dir / (puml_path.stem + ".png")
+        relative_path = puml_path.relative_to(puml_dir)
+        png_path = png_dir / relative_path.with_suffix(".png")
 
         # Re-render only when source is newer than output.
         if png_path.exists() and png_path.stat().st_mtime > puml_path.stat().st_mtime:
             continue
 
-        print(f"Processing {puml_path.name}...")
+        print(f"Processing {relative_path}...")
 
         puml_text = puml_path.read_text(encoding="utf-8")
         # Inject orthogonal routing and related params to reduce curvy edges.

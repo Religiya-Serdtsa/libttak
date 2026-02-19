@@ -23,6 +23,8 @@ Key ideas:
 - **Dangerous (Lessons 34–35).** Unsafe reading plus the context bridge once you opt in.
 - **Detachable Memory (Lesson 39).** Optional final pass that layers detachable arenas and signal guards on top of epochs.
 - **Arena Memory (Lesson 40).** Demonstrates how tracked arena rows plug into the mem tree + epoch GC combo that powers the lock-free cache bench.
+- **IO & Network Guards (Lesson 41).** Builds the new `ttak_io_guard_t` + zero-copy layer, shared net endpoints, and the session manager so you can reason about descriptor lifetimes that ride on owners and epoch reclamation.
+- **Guarded IO Streams (Lesson 42).** Separates the IO side from networking so you can practice `ttak_io_guard_t`, synchronous read/write helpers, manual TTL refresh, `ttak_io_async_read`, and direct `ttak_io_poll_wait` flows before layering net endpoints on top.
 
 ## Coverage Guarantees
 

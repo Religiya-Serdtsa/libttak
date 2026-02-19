@@ -1,5 +1,6 @@
 CC ?= gcc
 AR ?= ar
+EMBEDDED ?= 0
 
 COMMON_WARNINGS = -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700
 DEPFLAGS = -MD -MF $(@:.o=.d)
@@ -41,7 +42,7 @@ CFLAGS = $(COMMON_WARNINGS) $(PERF_WARNINGS) $(PERF_STACK_FLAGS)
 LDFLAGS = $(LDFLAGS_BASE) -flto -Wl,--gc-sections
 endif
 
-CFLAGS += $(EXTRA_CFLAGS)
+CFLAGS += $(EXTRA_CFLAGS) -DEMBEDDED=$(EMBEDDED)
 LDFLAGS += $(EXTRA_LDFLAGS)
 
 PREFIX ?= /usr/local
@@ -51,7 +52,8 @@ INCDIR = $(PREFIX)/include
 SRC_DIRS = src/ht src/thread src/timing src/mem src/async src/priority \
            src/atomic src/sync src/math src/tree src/container \
            src/security src/mem_tree src/limit src/stats src/log \
-           src/unsafe src/shared src/mask
+           src/unsafe src/shared src/mask src/phys/dimless src/io \
+           src/net src/phys/mem
 
 SRCS = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
 OBJS = $(patsubst src/%.c,obj/%.o,$(SRCS))
