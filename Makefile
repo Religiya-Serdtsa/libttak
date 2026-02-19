@@ -1,6 +1,12 @@
 CC ?= gcc
+CXX ?= g++
 AR ?= ar
+NVCC ?= nvcc
+HIPCC ?= hipcc
 EMBEDDED ?= 0
+USE_CUDA ?= 1
+USE_OPENCL ?= 0
+USE_ROCM ?= 0
 
 COMMON_WARNINGS = -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700
 DEPFLAGS = -MD -MF $(@:.o=.d)
@@ -56,8 +62,40 @@ SRC_DIRS = src/ht src/thread src/timing src/mem src/async src/priority \
            src/net src/phys/mem
 
 SRCS = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
+C_BASE_ACCEL_SRCS = src/accel/accel_cpu.c src/accel/ttak_accel_dispatch.c
+SRCS += $(C_BASE_ACCEL_SRCS)
+C_OPTIONAL_SRCS =
+CUDA_SRCS =
+ROCM_SRCS =
+
+ifeq ($(USE_CUDA),1)
+CUDA_SRCS += src/accel/accel_cuda.cu
+CFLAGS += -DENABLE_CUDA
+NVCCFLAGS ?= -std=c++14 -Iinclude -DENABLE_CUDA
+endif
+
+ifeq ($(USE_OPENCL),1)
+C_OPTIONAL_SRCS += src/accel/accel_opencl.c
+CFLAGS += -DENABLE_OPENCL
+OPENCL_LIBS ?= -lOpenCL
+LDFLAGS += $(OPENCL_LIBS)
+endif
+
+ifeq ($(USE_ROCM),1)
+ROCM_SRCS += src/accel/accel_rocm.cpp
+CFLAGS += -DENABLE_ROCM
+HIPCCFLAGS ?= -std=c++17 -Iinclude -DENABLE_ROCM
+endif
+
+C_SRCS_ALL = $(SRCS) $(C_OPTIONAL_SRCS)
 OBJS = $(patsubst src/%.c,obj/%.o,$(SRCS))
-ASMS = $(patsubst src/%.c,obj/%.s,$(SRCS))
+OBJS += $(patsubst src/%.c,obj/%.o,$(C_OPTIONAL_SRCS))
+ASMS = $(patsubst src/%.c,obj/%.s,$(C_SRCS_ALL))
+
+CUDA_OBJS = $(patsubst src/%.cu,obj/%.o,$(CUDA_SRCS))
+ROCM_OBJS = $(patsubst src/%.cpp,obj/%.o,$(ROCM_SRCS))
+OBJS += $(CUDA_OBJS) $(ROCM_OBJS)
+
 DEPS = $(OBJS:.o=.d)
 
 LIB = lib/libttak.a
@@ -77,6 +115,14 @@ asm: directories $(ASMS)
 obj/%.o: src/%.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(DEPFLAGS) -c $< -o $@
+
+obj/%.o: src/%.cu
+	@mkdir -p $(dir $@)
+	$(NVCC) $(NVCCFLAGS) -c $< -o $@
+
+obj/%.o: src/%.cpp
+	@mkdir -p $(dir $@)
+	$(HIPCC) $(HIPCCFLAGS) -c $< -o $@
 
 obj/%.s: obj/%.o
 	@mkdir -p $(dir $@)
@@ -100,7 +146,7 @@ tests/test_%: tests/test_%.c $(LIB)
 	$(CC) $(CFLAGS) $< -o $@ $(LIB) $(LDFLAGS)
 
 directories:
-	@mkdir -p $(foreach dir,$(SRC_DIRS),obj/$(patsubst src/%,%,$(dir))) lib
+	@mkdir -p $(foreach dir,$(SRC_DIRS),obj/$(patsubst src/%,%,$(dir))) obj/accel lib
 
 clean:
 	rm -rf obj lib tests/*.d

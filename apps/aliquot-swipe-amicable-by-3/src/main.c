@@ -49,6 +49,7 @@
 static volatile uint64_t g_shutdown_requested = 0;
 static volatile uint64_t g_next_range_start = DEFAULT_START_SEED;
 static uint64_t g_total_scanned = 0;
+static uint64_t g_progress_update_quantum = BLOCK_SIZE;
 
 static char g_hash_log_path[4096];
 static char g_found_log_path[4096];
@@ -117,6 +118,27 @@ static void sanitize_logs(void) {
     fclose(fp);
     pthread_mutex_unlock(&g_log_lock);
     printf("[INTEGRITY] Post-execution verification complete.\n");
+}
+
+static void configure_progress_quantum(void) {
+    uint64_t quant = BLOCK_SIZE;
+#if defined(ENABLE_CUDA) || defined(ENABLE_ROCM) || defined(ENABLE_OPENCL)
+    quant = BLOCK_SIZE / 32ULL;
+    if (quant == 0) quant = 1;
+#endif
+    const char *override = getenv("ALIQUOT_RATE_QUANTUM");
+    if (override && *override) {
+        char *endp = NULL;
+        unsigned long long parsed = strtoull(override, &endp, 10);
+        if (endp && *endp == '\0' && parsed > 0) {
+            if (parsed > BLOCK_SIZE) parsed = BLOCK_SIZE;
+            quant = (uint64_t)parsed;
+        }
+    }
+    if (quant == 0 || quant > BLOCK_SIZE) {
+        quant = BLOCK_SIZE;
+    }
+    g_progress_update_quantum = quant;
 }
 
 static void setup_paths(void) {
@@ -194,6 +216,13 @@ static void *worker_scan_range(void *arg) {
     ttak_bigint_init(&bn_s2, now);
     ttak_bigint_init(&bn_s3, now);
 
+    uint64_t report_step = g_progress_update_quantum;
+    if (report_step == 0 || report_step > count) {
+        report_step = count;
+    }
+    uint64_t reported = 0;
+    uint64_t progress = 0;
+
     for (uint64_t i = 0; i < count; i++) {
         /* Immediate responsive exit on shutdown signal */
         if (ttak_atomic_read64(&g_shutdown_requested)) break;
@@ -232,6 +261,15 @@ static void *worker_scan_range(void *arg) {
             pthread_mutex_unlock(&g_log_lock);
             ttak_mem_free(s_seed);
         }
+
+        if (report_step < count) {
+            progress++;
+            if (progress >= report_step) {
+                ttak_atomic_add64(&g_total_scanned, progress);
+                reported += progress;
+                progress = 0;
+            }
+        }
     }
 
     /* Range Proof Finalization */
@@ -248,7 +286,11 @@ static void *worker_scan_range(void *arg) {
     ttak_bigint_free(&bn_s2, now);
     ttak_bigint_free(&bn_s3, now);
     ttak_mem_free(task);
-    ttak_atomic_add64(&g_total_scanned, count);
+
+    uint64_t remaining = count - reported;
+    if (remaining > 0) {
+        ttak_atomic_add64(&g_total_scanned, remaining);
+    }
     
     return NULL;
 }
@@ -280,6 +322,7 @@ int main(int argc, char **argv) {
 
     ttak_thread_pool_t *pool = ttak_thread_pool_create(cpus, 0, monotonic_millis());
     if (!pool) exit(EXIT_FAILURE);
+    configure_progress_quantum();
 
     /* Signal Registration */
     signal(SIGINT, handle_signal);
@@ -290,6 +333,8 @@ int main(int argc, char **argv) {
 
     uint64_t last_report = monotonic_millis();
     uint64_t start_time = last_report;
+    uint64_t last_head_snapshot = ttak_atomic_read64(&g_next_range_start);
+    uint64_t last_head_snapshot_ts = last_report;
 
     /* Primary Dispatch Loop */
     while (!ttak_atomic_read64(&g_shutdown_requested)) {
@@ -312,10 +357,24 @@ int main(int argc, char **argv) {
         /* Periodic Status Telemetry & Checkpointing */
         uint64_t now = monotonic_millis();
         if (now - last_report > 5000) {
+            uint64_t head = ttak_atomic_read64(&g_next_range_start);
             double elapsed = (now - start_time) / 1000.0;
-            double rate = (double)ttak_atomic_read64(&g_total_scanned) / elapsed;
-            printf("[STATUS] Head: %" PRIu64 " | Rate: %.2f seeds/sec | Sync: OK\n",
-                   ttak_atomic_read64(&g_next_range_start), rate);
+            double aggregate_rate = 0.0;
+            if (elapsed > 0.0) {
+                aggregate_rate = (double)ttak_atomic_read64(&g_total_scanned) / elapsed;
+            }
+            double derived_rate = 0.0;
+            if (now > last_head_snapshot_ts) {
+                double interval_sec = (now - last_head_snapshot_ts) / 1000.0;
+                if (interval_sec > 0.0 && head >= last_head_snapshot) {
+                    derived_rate = (head - last_head_snapshot) / interval_sec;
+                }
+            }
+            double rate = derived_rate > 0.0 ? derived_rate : aggregate_rate;
+            printf("[STATUS] Head: %" PRIu64 " | Rate: %.2f seeds/sec | Sync: OK\n", head, rate);
+
+            last_head_snapshot = head;
+            last_head_snapshot_ts = now;
             
             save_checkpoint(ttak_atomic_read64(&g_next_range_start));
             last_report = now;

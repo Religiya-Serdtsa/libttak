@@ -245,6 +245,12 @@ static ttak_mutex_t g_disk_lock = PTHREAD_MUTEX_INITIALIZER;
 static uint64_t g_last_persist_ms;
 static uint64_t g_total_sequences;
 static uint64_t g_total_probes;
+static uint64_t g_probe_update_quantum = 1;
+#if defined(ENABLE_CUDA) || defined(ENABLE_ROCM) || defined(ENABLE_OPENCL)
+static uint64_t g_gpu_rate_last_sync_ms;
+static uint64_t g_gpu_rate_last_sequences;
+static uint64_t g_gpu_rate_bits;
+#endif
 
 static ttak_thread_pool_t *g_thread_pool;
 
@@ -395,6 +401,41 @@ static uint64_t random_seed_between(uint64_t lo, uint64_t hi) {
     if (hi <= lo) return lo;
     uint64_t span = hi - lo + 1ULL;
     return lo + (next_random64() % span);
+}
+
+static void configure_probe_quantum(void) {
+    uint64_t quant = 1;
+#if defined(ENABLE_CUDA) || defined(ENABLE_ROCM) || defined(ENABLE_OPENCL)
+    quant = 1;
+#endif
+    const char *override = getenv("ALIQUOT_RATE_QUANTUM");
+    if (override && *override) {
+        char *endp = NULL;
+        unsigned long long parsed = strtoull(override, &endp, 10);
+        if (endp && *endp == '\0' && parsed > 0) {
+            quant = (uint64_t)parsed;
+        }
+    }
+    if (quant == 0) {
+        quant = 1;
+    }
+    g_probe_update_quantum = quant;
+}
+
+static inline void tracker_probe_note(uint64_t *pending, uint64_t delta) {
+    if (!pending) return;
+    uint64_t quantum = g_probe_update_quantum ? g_probe_update_quantum : 1;
+    *pending += delta;
+    if (*pending >= quantum) {
+        ttak_atomic_add64(&g_total_probes, *pending);
+        *pending = 0;
+    }
+}
+
+static inline void tracker_probe_flush(uint64_t *pending) {
+    if (!pending || *pending == 0) return;
+    ttak_atomic_add64(&g_total_probes, *pending);
+    *pending = 0;
 }
 
 static void ensure_state_dir(void) {
@@ -613,6 +654,7 @@ static bool frontier_accept_seed(const ttak_bigint_t *seed, scan_result_t *resul
     
     uint32_t steps = 0;
     bool accepted = true;
+    uint64_t probe_progress = 0;
 
     while (steps < SCAN_STEP_CAP) {
         if (ttak_atomic_read64(&shutdown_requested)) break;
@@ -623,7 +665,7 @@ static bool frontier_accept_seed(const ttak_bigint_t *seed, scan_result_t *resul
         ttak_bigint_t next;
         ttak_bigint_init(&next, monotonic_millis());
         bool ok = ttak_sum_proper_divisors_big(&current, &next, monotonic_millis());
-        ttak_atomic_inc64(&g_total_probes);
+        tracker_probe_note(&probe_progress, 1);
         steps++;
 
         if (!ok) {
@@ -665,6 +707,7 @@ static bool frontier_accept_seed(const ttak_bigint_t *seed, scan_result_t *resul
 cleanup:
     ttak_bigint_free(&current, monotonic_millis());
     ttak_bigint_free(&max_value, monotonic_millis());
+    tracker_probe_flush(&probe_progress);
     return accepted;
 }
 
@@ -688,6 +731,7 @@ static void run_aliquot_sequence(const ttak_bigint_t *seed, uint32_t max_steps, 
     ttak_bigint_t current;
     ttak_bigint_init_copy(&current, seed, now);
     uint32_t steps = 0;
+    uint64_t probe_progress = 0;
 
     while (true) {
         if (steps == 0 && is_catalog_value(&current)) {
@@ -712,7 +756,7 @@ static void run_aliquot_sequence(const ttak_bigint_t *seed, uint32_t max_steps, 
         ttak_bigint_t next;
         ttak_bigint_init(&next, monotonic_millis());
         bool ok = ttak_sum_proper_divisors_big(&current, &next, monotonic_millis());
-        ttak_atomic_inc64(&g_total_probes);
+        tracker_probe_note(&probe_progress, 1);
         steps++;
 
         if (!ok) {
@@ -776,6 +820,7 @@ static void run_aliquot_sequence(const ttak_bigint_t *seed, uint32_t max_steps, 
     aliquot_outcome_set_decimal_from_bigint(out, &out->max_value, monotonic_millis());
 
     ttak_bigint_free(&current, monotonic_millis());
+    tracker_probe_flush(&probe_progress);
     history_big_destroy(&hist);
 }
 
@@ -1332,6 +1377,37 @@ static void rehydrate_track_record(const track_record_t *rec) {
     ledger_store_track_record(rec);
 }
 
+#if defined(ENABLE_CUDA) || defined(ENABLE_ROCM) || defined(ENABLE_OPENCL)
+static void tracker_gpu_seed_rate_record(uint64_t now_ms) {
+    uint64_t prev_ms = g_gpu_rate_last_sync_ms;
+    uint64_t prev_sequences = g_gpu_rate_last_sequences;
+    uint64_t current_sequences = ttak_atomic_read64(&g_total_sequences);
+    g_gpu_rate_last_sync_ms = now_ms;
+    g_gpu_rate_last_sequences = current_sequences;
+    if (prev_ms == 0 || now_ms <= prev_ms || current_sequences < prev_sequences) {
+        return;
+    }
+    double secs = (double)(now_ms - prev_ms) / 1000.0;
+    if (secs <= 0.0) {
+        return;
+    }
+    double rate = (double)(current_sequences - prev_sequences) / secs;
+    if (rate < 0.0) {
+        rate = 0.0;
+    }
+    uint64_t bits;
+    memcpy(&bits, &rate, sizeof(bits));
+    ttak_atomic_write64(&g_gpu_rate_bits, bits);
+}
+
+static double tracker_gpu_seed_rate_read(void) {
+    uint64_t bits = ttak_atomic_read64(&g_gpu_rate_bits);
+    double rate;
+    memcpy(&rate, &bits, sizeof(rate));
+    return rate;
+}
+#endif
+
 static void persist_found_records(void) {
     if (g_ledger_owner) ttak_owner_execute(g_ledger_owner, "persist_found", LEDGER_RESOURCE_NAME, NULL);
 }
@@ -1367,7 +1443,11 @@ static void persist_queue_state(void) {
 static void flush_ledgers(void) {
     ttak_mutex_lock(&g_disk_lock);
     persist_found_records(); persist_jump_records(); persist_track_records(); persist_queue_state();
-    ttak_atomic_write64(&g_last_persist_ms, monotonic_millis());
+    uint64_t now = monotonic_millis();
+    ttak_atomic_write64(&g_last_persist_ms, now);
+#if defined(ENABLE_CUDA) || defined(ENABLE_ROCM) || defined(ENABLE_OPENCL)
+    tracker_gpu_seed_rate_record(now);
+#endif
     ttak_mutex_unlock(&g_disk_lock);
 }
 
@@ -1694,7 +1774,9 @@ static void *scout_main(void *arg) {
 
 int main(void) {
     printf("[ALIQUOT] Booting aliquot tracker...\n");
-    seed_rng(); configure_state_paths(); ensure_state_dir(); init_catalog_filters();
+    seed_rng();
+    configure_probe_quantum();
+    configure_state_paths(); ensure_state_dir(); init_catalog_filters();
     printf("[ALIQUOT] Checkpoints at %s\n", g_state_dir);
     if (!ledger_init_owner()) return 1;
     struct sigaction sa = {0}; sa.sa_handler = handle_signal; sigaction(SIGINT, &sa, NULL); sigaction(SIGTERM, &sa, NULL);
@@ -1745,6 +1827,10 @@ int main(void) {
         }
     }
 
+    uint64_t status_last_ms = monotonic_millis();
+    uint64_t status_last_probes = ttak_atomic_read64(&g_total_probes);
+    double status_rate = 0.0;
+
     while (!ttak_atomic_read64(&shutdown_requested)) {
         size_t qd = pending_queue_depth();
 
@@ -1779,9 +1865,26 @@ int main(void) {
         responsive_sleep(SCOUT_SLEEP_MS / 4); // Reduce sleep to be more responsive
         maybe_flush_ledgers();
 
+        uint64_t now_ms = monotonic_millis();
         uint64_t completed = ttak_atomic_read64(&g_total_sequences);
-        printf("[ALIQUOT] queue=%zu completed=%" PRIu64 " probes=%" PRIu64 "\n",
-               qd, completed, ttak_atomic_read64(&g_total_probes));
+        uint64_t probes_now = ttak_atomic_read64(&g_total_probes);
+        uint64_t elapsed_ms = now_ms - status_last_ms;
+        if (elapsed_ms >= 1000) {
+            double secs = (double)elapsed_ms / 1000.0;
+            if (secs > 0.0) {
+                status_rate = (double)(probes_now - status_last_probes) / secs;
+            }
+            status_last_ms = now_ms;
+            status_last_probes = probes_now;
+        }
+        printf(
+#if defined(ENABLE_CUDA) || defined(ENABLE_ROCM) || defined(ENABLE_OPENCL)
+               "[ALIQUOT] queue=%zu completed=%" PRIu64 " probes=%" PRIu64 " rate=%.2f probes/sec seed_rate=%.2f seeds/sec\n",
+               qd, completed, probes_now, status_rate, tracker_gpu_seed_rate_read());
+#else
+               "[ALIQUOT] queue=%zu completed=%" PRIu64 " probes=%" PRIu64 " rate=%.2f probes/sec\n",
+               qd, completed, probes_now, status_rate);
+#endif
     }
 
     printf("[ALIQUOT] Shutdown requested. Waiting for threads to exit...\n");
