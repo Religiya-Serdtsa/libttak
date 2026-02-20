@@ -12,7 +12,7 @@
 #endif
 
 #define TTAK_BUDDY_MIN_ORDER   5U   /* 32 bytes */
-#define TTAK_BUDDY_MAX_ORDER   23U  /* 8 MB */
+#define TTAK_BUDDY_MAX_ORDER   32U  /* 2^32 bytes */
 
 typedef struct ttak_buddy_block {
     struct ttak_buddy_block *next;
