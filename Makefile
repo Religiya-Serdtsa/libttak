@@ -8,8 +8,8 @@ USE_CUDA ?= 0
 USE_OPENCL ?= 0
 USE_ROCM ?= 0
 
-COMMON_WARNINGS = -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700
-DEPFLAGS = -MD -MF $(@:.o=.d)
+COMMON_WARNINGS ?= -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700
+DEPFLAGS ?= -MD -MF $(@:.o=.d)
 LDFLAGS_BASE = -pthread -lm
 
 # Detect which compiler family we are using.
