@@ -111,7 +111,7 @@ jobs:
           echo "/c/ProgramData/chocolatey/lib/make/tools/install/bin" >> "$GITHUB_PATH"
       - name: Install CUDA Toolkit
         if: ${{ matrix.backend == 'cuda' }}
-        uses: Jimver/cuda-toolkit@v0.2.15
+        uses: Jimver/cuda-toolkit@v0.2.18
         with:
           cuda: '12.6.0'
           method: 'network'
@@ -183,7 +183,7 @@ jobs:
               kernel(__VA_ARGS__)
           HIPSTUB
           echo "HIPCC=g++" >> "$GITHUB_ENV"
-          echo "HIPCCFLAGS=-std=c++17 -I$(pwd)/include -DENABLE_ROCM -I$(pwd)/hip-stub" >> "$GITHUB_ENV"
+          echo "HIPCCFLAGS=-std=c++17 -Iinclude -DENABLE_ROCM -Ihip-stub" >> "$GITHUB_ENV"
           echo "ROCM_PATH=$(pwd)/hip-stub" >> "$GITHUB_ENV"
       - name: Fetch OpenCL Headers
         if: ${{ matrix.backend == 'opencl' }}
@@ -282,7 +282,7 @@ jobs:
       matrix:
         include:
           - backend: opencl
-            pkg: ocl-icd
+            pkg: opencl-headers
             make_flags: "USE_OPENCL=1"
     name: Build freebsd-amd64-${{ matrix.backend }}
     steps:

@@ -82,6 +82,7 @@ static int global_trace_enabled = 0;
 static volatile tt_map_t *global_ptr_map = NULL;
 static pthread_mutex_t global_init_lock = PTHREAD_MUTEX_INITIALIZER;
 #if EMBEDDED
+#include <ttak/phys/mem/buddy.h>
 static TTAK_THREAD_LOCAL uint8_t buddy_pool[1 << 20];
 static pthread_once_t buddy_once = PTHREAD_ONCE_INIT;
 static void buddy_bootstrap(void) {
@@ -163,6 +164,8 @@ static void ensure_global_map(uint64_t now) {
  * @return Pointer to zeroed user memory or NULL on failure.
  */
 void TTAK_HOT_PATH *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, uint64_t now, _Bool is_const, _Bool is_volatile, _Bool allow_direct, _Bool is_root, ttak_mem_flags_t flags) {
+    size_t header_size = sizeof(ttak_mem_header_t);
+    bool is_huge = false;
 #if EMBEDDED
     pthread_once(&buddy_once, buddy_bootstrap);
     ttak_mem_req_t req = {
@@ -174,13 +177,13 @@ void TTAK_HOT_PATH *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, ui
     };
     ttak_mem_header_t *header = ttak_mem_buddy_alloc(&req);
     if (!header) return NULL;
+    bool strict_check_enabled = false;
+    size_t total_alloc_size = header_size + size;
 #else
-    size_t header_size = sizeof(ttak_mem_header_t);
     bool strict_check_enabled = (flags & TTAK_MEM_STRICT_CHECK);
     size_t canary_padding = strict_check_enabled ? sizeof(uint64_t) : 0;
     size_t total_alloc_size = header_size + canary_padding + size;
     ttak_mem_header_t *header = NULL;
-    bool is_huge = false;
 
     if (flags & TTAK_MEM_HUGE_PAGES) {
 #ifdef _WIN32
@@ -570,13 +573,6 @@ void save_current_progress(const char *filename, const void *data, size_t size) 
 #endif
 }
 #if EMBEDDED
-#include <ttak/phys/mem/buddy.h>
-static TTAK_THREAD_LOCAL uint8_t buddy_pool[1 << 20];
-static pthread_once_t buddy_once = PTHREAD_ONCE_INIT;
-static void buddy_bootstrap(void) {
-    ttak_mem_buddy_init(buddy_pool, sizeof(buddy_pool), 1);
-}
-
 void ttak_mem_set_embedded_pool(void *pool_start, size_t pool_len) {
     if (!pool_start || pool_len == 0) return;
     pthread_once(&buddy_once, buddy_bootstrap);
