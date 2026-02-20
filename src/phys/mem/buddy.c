@@ -6,15 +6,16 @@
 #include <stdatomic.h>
 #include <stdbool.h>
 #include <string.h>
+#include <stdio.h>
 
 #ifndef EMBEDDED
 #define EMBEDDED 0
 #endif
 
-#define TTAK_BUDDY_MIN_ORDER   5U   /* 32 bytes */
-#define TTAK_BUDDY_MAX_ORDER   32U  /* 2^32 bytes */
+#define TTAK_BUDDY_MIN_ORDER   6U   /* 64 bytes */
+#define TTAK_BUDDY_MAX_ORDER   60U  /* 2^60 bytes (~1 EB) */
 
-typedef struct ttak_buddy_block {
+typedef struct alignas(64) ttak_buddy_block {
     struct ttak_buddy_block *next;
     uint32_t owner_tag;
     uint32_t call_safety;
@@ -35,16 +36,18 @@ static ttak_buddy_zone_t g_zone;
 static atomic_flag g_zone_lock = ATOMIC_FLAG_INIT;
 
 static inline size_t order_size(uint8_t order) {
-    return (size_t)1u << order;
+    if (order > TTAK_BUDDY_MAX_ORDER) return 0;
+    return (size_t)1 << order;
 }
 
 static inline uint8_t order_for_size(size_t bytes) {
+    if (bytes == 0) return TTAK_BUDDY_MIN_ORDER;
     size_t need = bytes;
     if (need < order_size(TTAK_BUDDY_MIN_ORDER)) {
         need = order_size(TTAK_BUDDY_MIN_ORDER);
     }
     uint8_t order = TTAK_BUDDY_MIN_ORDER;
-    while (order < g_zone.max_order && order_size(order) < need) {
+    while (order < TTAK_BUDDY_MAX_ORDER && order_size(order) < need) {
         order++;
     }
     return order;
@@ -67,7 +70,7 @@ static inline ttak_buddy_block_t *buddy_pair(ttak_buddy_block_t *block, uint8_t 
     size_t offset = block_offset(block);
     size_t pair_offset = offset ^ order_size(order);
     if (pair_offset >= g_zone.pool_len) {
-        return NULL;
+        return nullptr;
     }
     return (ttak_buddy_block_t *)((unsigned char *)g_zone.pool_start + pair_offset);
 }
@@ -83,7 +86,7 @@ static ttak_buddy_block_t *list_pop_head(uint8_t order) {
     ttak_buddy_block_t *block = g_zone.free_lists[order];
     if (block) {
         g_zone.free_lists[order] = block->next;
-        block->next = NULL;
+        block->next = nullptr;
     }
     return block;
 }
@@ -93,7 +96,7 @@ static void list_remove(uint8_t order, ttak_buddy_block_t *target) {
     while (*cur) {
         if (*cur == target) {
             *cur = target->next;
-            target->next = NULL;
+            target->next = nullptr;
             return;
         }
         cur = &((*cur)->next);
@@ -123,22 +126,35 @@ void ttak_mem_buddy_init(void *pool_start, size_t pool_len, int embedded_mode) {
     memset(&g_zone, 0, sizeof(g_zone));
     g_zone.pool_start = pool_start;
     g_zone.pool_len = pool_len;
-    g_zone.embedded_mode = embedded_mode ? 1 : 0;
-    g_zone.anti_fragmentation = embedded_mode ? 1 : 0;
+    g_zone.embedded_mode = (uint8_t)(embedded_mode ? 1 : 0);
+    g_zone.anti_fragmentation = (uint8_t)(embedded_mode ? 1 : 0);
+    g_zone.max_order = TTAK_BUDDY_MAX_ORDER;
 
-    size_t total_order = TTAK_BUDDY_MIN_ORDER;
-    while (total_order < TTAK_BUDDY_MAX_ORDER && order_size(total_order) < pool_len) {
-        total_order++;
+    /* Multi-Block Initializer: Divide non-power-of-two pool into largest possible blocks */
+    unsigned char *ptr = (unsigned char *)pool_start;
+    size_t remaining = pool_len;
+
+    while (remaining >= order_size(TTAK_BUDDY_MIN_ORDER)) {
+        uint8_t order = TTAK_BUDDY_MAX_ORDER;
+        while (order > TTAK_BUDDY_MIN_ORDER) {
+            size_t size = order_size(order);
+            /* Alignment and size check */
+            if (size <= remaining && ((size_t)(ptr - (unsigned char *)pool_start) % size == 0)) {
+                break;
+            }
+            order--;
+        }
+
+        ttak_buddy_block_t *block = (ttak_buddy_block_t *)ptr;
+        memset(block, 0, sizeof(ttak_buddy_block_t));
+        block->order = order;
+        block->in_use = 0;
+        list_push(order, block);
+
+        size_t used = order_size(order);
+        ptr += used;
+        remaining -= used;
     }
-    g_zone.max_order = (uint8_t)(total_order > TTAK_BUDDY_MAX_ORDER ? TTAK_BUDDY_MAX_ORDER : total_order);
-
-    ttak_buddy_block_t *initial = (ttak_buddy_block_t *)pool_start;
-    initial->next = NULL;
-    initial->owner_tag = 0;
-    initial->call_safety = 0;
-    initial->order = g_zone.max_order;
-    initial->in_use = 0;
-    g_zone.free_lists[g_zone.max_order] = initial;
 }
 
 void ttak_mem_buddy_set_pool(void *pool_start, size_t pool_len) {
@@ -154,7 +170,7 @@ static ttak_buddy_block_t *select_block(uint8_t desired, ttak_priority_t priorit
                 return list_pop_head((uint8_t)order);
             }
         }
-        return NULL;
+        return nullptr;
     }
 
     for (uint8_t order = desired; order <= g_zone.max_order; ++order) {
@@ -169,7 +185,7 @@ static ttak_buddy_block_t *select_block(uint8_t desired, ttak_priority_t priorit
             return list_pop_head(order);
         }
     }
-    return NULL;
+    return nullptr;
 }
 
 static void split_block(uint8_t target_order, ttak_buddy_block_t *block) {
@@ -180,7 +196,7 @@ static void split_block(uint8_t target_order, ttak_buddy_block_t *block) {
             (ttak_buddy_block_t *)((unsigned char *)block + size);
         buddy->in_use = 0;
         buddy->order = new_order;
-        buddy->next = NULL;
+        buddy->next = nullptr;
         list_push(new_order, buddy);
         block->order = new_order;
     }
@@ -189,13 +205,21 @@ static void split_block(uint8_t target_order, ttak_buddy_block_t *block) {
 
 void *ttak_mem_buddy_alloc(const ttak_mem_req_t *req) {
     if (!req || !g_zone.pool_start) {
-        return NULL;
+        return nullptr;
+    }
+
+    /* Overflow check */
+    if (req->size_bytes > (size_t)-1 - sizeof(ttak_buddy_block_t)) {
+        fprintf(stderr, "[Buddy] ENOMEM(12): Requested size %zu overflows size_t.\n", req->size_bytes);
+        return nullptr;
     }
 
     size_t needed = req->size_bytes + sizeof(ttak_buddy_block_t);
     uint8_t order = order_for_size(needed);
     if (order > g_zone.max_order) {
-        return NULL;
+        fprintf(stderr, "[Buddy] ENOMEM(12): Requested size %zu + header exceeds max_order %u. g_zone: pool_len=%zu\n",
+                req->size_bytes, g_zone.max_order, g_zone.pool_len);
+        return nullptr;
     }
 
     buddy_lock();
@@ -205,8 +229,10 @@ void *ttak_mem_buddy_alloc(const ttak_mem_req_t *req) {
         block = select_block(order, req->priority);
     }
     if (!block) {
+        fprintf(stderr, "[Buddy] ENOMEM(12): Allocation failed for needed size %zu (order %u). Current pool state: pool_len=%zu, max_order=%u\n",
+                needed, order, g_zone.pool_len, g_zone.max_order);
         buddy_unlock();
-        return NULL;
+        return nullptr;
     }
     split_block(order, block);
     block->owner_tag = req->owner_tag;
