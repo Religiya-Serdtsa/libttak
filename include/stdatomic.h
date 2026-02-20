@@ -22,6 +22,15 @@
 #  include <stddef.h>
 #  include <stdint.h>
 
+/* _Atomic as a type qualifier: MSVC older than 17.5 does not support _Atomic
+ * as a keyword.  Define it as volatile so that struct field declarations and
+ * variable definitions in the rest of the library parse correctly.  The actual
+ * atomicity of all read-modify-write operations is provided by the Interlocked
+ * intrinsic macros defined below. */
+#ifndef _Atomic
+#  define _Atomic volatile
+#endif
+
 typedef enum {
     memory_order_relaxed,
     memory_order_consume,

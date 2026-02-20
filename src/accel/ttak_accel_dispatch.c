@@ -4,8 +4,8 @@
 #include <stdint.h>
 #include <stdatomic.h>
 
-static _Atomic(uintptr_t) g_backend_ptr = ATOMIC_VAR_INIT((uintptr_t)0);
-static _Atomic(ttak_accel_target_t) g_backend_target =
+static _Atomic uintptr_t g_backend_ptr = ATOMIC_VAR_INIT((uintptr_t)0);
+static _Atomic ttak_accel_target_t g_backend_target =
     ATOMIC_VAR_INIT(TTAK_ACCEL_TARGET_CPU);
 
 /* Forward declarations for each backend. */
