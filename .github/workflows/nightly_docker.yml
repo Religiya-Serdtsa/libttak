@@ -114,7 +114,7 @@ jobs:
         uses: Jimver/cuda-toolkit@v0.2.18
         with:
           cuda: '12.6.0'
-          method: 'network'
+          method: 'local'
       - name: Configure CUDA Paths
         if: ${{ matrix.backend == 'cuda' }}
         shell: pwsh
