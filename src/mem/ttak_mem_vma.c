@@ -13,6 +13,7 @@
     }
     static inline void _ttak_munmap_region(void *addr, size_t size) {
         VirtualFree(addr, size, MEM_DECOMMIT);
+        VirtualFree(addr, 0, MEM_RELEASE);
     }
 #else
     #include <sys/mman.h>
