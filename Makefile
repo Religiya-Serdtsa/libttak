@@ -8,6 +8,10 @@ USE_CUDA ?= 0
 USE_OPENCL ?= 0
 USE_ROCM ?= 0
 
+# Toolchain selection: pass TOOLCHAIN=msvc on the command line to use cl/lib/link.
+# GNU (GCC/Clang) is the default on all platforms.
+TOOLCHAIN ?= gnu
+
 COMMON_WARNINGS ?= -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700
 DEPFLAGS ?= -MD -MF $(@:.o=.d)
 LDFLAGS_BASE = -pthread -lm
@@ -51,6 +55,27 @@ endif
 CFLAGS += $(EXTRA_CFLAGS) -DEMBEDDED=$(EMBEDDED)
 LDFLAGS += $(EXTRA_LDFLAGS)
 
+# ---- MSVC toolchain overrides (Windows / cl.exe) -----------------------
+# Replaces GCC-only flags with cl-compatible equivalents.
+ifeq ($(TOOLCHAIN),msvc)
+CC         = cl
+AR         = lib
+LD         = link
+DEPFLAGS   =
+OBJEXT     = obj
+LIBEXT     = lib
+AR_EXTRA   =
+AR_OUTFLAG = /OUT:
+CFLAGS     = /O2 /W4 /GL /DNDEBUG /Iinclude $(EXTRA_CFLAGS) /DEMBEDDED=$(EMBEDDED)
+LDFLAGS    = /LTCG $(EXTRA_LDFLAGS)
+else
+OBJEXT     = o
+LIBEXT     = a
+AR_EXTRA   = rcs
+AR_OUTFLAG =
+endif
+# ------------------------------------------------------------------------
+
 PREFIX ?= /usr/local
 LIBDIR = $(PREFIX)/lib
 INCDIR = $(PREFIX)/include
@@ -71,7 +96,11 @@ ROCM_SRCS =
 ifeq ($(USE_CUDA),1)
 CUDA_SRCS += src/accel/accel_cuda.cu src/accel/bigint_cuda.cu
 CFLAGS += -DENABLE_CUDA
+ifeq ($(TOOLCHAIN),msvc)
+NVCCFLAGS = -std=c++14 -Iinclude -DENABLE_CUDA -ccbin cl
+else
 NVCCFLAGS ?= -std=c++14 -Iinclude -DENABLE_CUDA
+endif
 endif
 
 ifeq ($(USE_OPENCL),1)
@@ -88,17 +117,17 @@ HIPCCFLAGS ?= -std=c++17 -Iinclude -DENABLE_ROCM
 endif
 
 C_SRCS_ALL = $(SRCS) $(C_OPTIONAL_SRCS)
-OBJS = $(patsubst src/%.c,obj/%.o,$(SRCS))
-OBJS += $(patsubst src/%.c,obj/%.o,$(C_OPTIONAL_SRCS))
+OBJS = $(patsubst src/%.c,obj/%.$(OBJEXT),$(SRCS))
+OBJS += $(patsubst src/%.c,obj/%.$(OBJEXT),$(C_OPTIONAL_SRCS))
 ASMS = $(patsubst src/%.c,obj/%.s,$(C_SRCS_ALL))
 
-CUDA_OBJS = $(patsubst src/%.cu,obj/%.o,$(CUDA_SRCS))
-ROCM_OBJS = $(patsubst src/%.cpp,obj/%.o,$(ROCM_SRCS))
+CUDA_OBJS = $(patsubst src/%.cu,obj/%.$(OBJEXT),$(CUDA_SRCS))
+ROCM_OBJS = $(patsubst src/%.cpp,obj/%.$(OBJEXT),$(ROCM_SRCS))
 OBJS += $(CUDA_OBJS) $(ROCM_OBJS)
 
-DEPS = $(OBJS:.o=.d)
+DEPS = $(patsubst %.$(OBJEXT),%.d,$(OBJS))
 
-LIB = lib/libttak.a
+LIB = lib/libttak.$(LIBEXT)
 
 TEST_SRCS = $(wildcard tests/test_*.c)
 TEST_BINS = $(TEST_SRCS:.c=)
@@ -107,7 +136,7 @@ all: directories $(LIB)
 
 $(LIB): $(OBJS)
 	@mkdir -p lib
-	$(AR) rcs $@ $(OBJS)
+	$(AR) $(AR_EXTRA) $(AR_OUTFLAG)$@ $(OBJS)
 
 asm: directories $(ASMS)
 
@@ -116,7 +145,15 @@ obj/%.o: src/%.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(DEPFLAGS) -c $< -o $@
 
+obj/%.obj: src/%.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) /c $< /Fo$@
+
 obj/%.o: src/%.cu
+	@mkdir -p $(dir $@)
+	$(NVCC) $(NVCCFLAGS) -c $< -o $@
+
+obj/%.obj: src/%.cu
 	@mkdir -p $(dir $@)
 	$(NVCC) $(NVCCFLAGS) -c $< -o $@
 
@@ -164,7 +201,7 @@ install: $(LIB)
 
 uninstall:
 	rm -rf $(INCDIR)/ttak
-	rm -f $(LIBDIR)/libttak.a
+	rm -f $(LIBDIR)/libttak.$(LIBEXT)
 
 blueprints:
 	@python3 blueprints/scripts/render_blueprints.py
