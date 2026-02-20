@@ -1,0 +1,63 @@
+\doxysection{bigint\+\_\+accel.\+h}
+\hypertarget{bigint__accel_8h_source}{}\label{bigint__accel_8h_source}\index{include/ttak/math/bigint\_accel.h@{include/ttak/math/bigint\_accel.h}}
+\mbox{\hyperlink{bigint__accel_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ TTAK\_MATH\_BIGINT\_ACCEL\_H}}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ TTAK\_MATH\_BIGINT\_ACCEL\_H}}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{bigint_8h}{ttak/math/bigint.h}}>}}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00008}00008\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00009}00009\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00010}00010\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00011}00011\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00012}00012\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00013}00013\ \textcolor{comment}{\ *\ @brief\ Returns\ true\ when\ a\ GPU\ backend\ capable\ of\ BigInt\ operations\ is\ available.}}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00014}00014\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00015}\mbox{\hyperlink{bigint__accel_8h_a529ad02ab067fddfc0d4a1be220ba9b0}{00015}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{bigint__accel_8h_a529ad02ab067fddfc0d4a1be220ba9b0}{ttak\_bigint\_accel\_available}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00016}00016\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00017}00017\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00018}00018\ \textcolor{comment}{\ *\ @brief\ Returns\ the\ minimum\ operand\ limb\ count\ required\ before\ acceleration\ is\ attempted.}}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00019}00019\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00020}\mbox{\hyperlink{bigint__accel_8h_aa753a6509a08d1fe33a07eefb8468fd3}{00020}}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{bigint__accel_8h_aa753a6509a08d1fe33a07eefb8468fd3}{ttak\_bigint\_accel\_min\_limbs}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00021}00021\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00022}00022\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00023}00023\ \textcolor{comment}{\ *\ @brief\ Performs\ limb-\/wise\ addition\ via\ an\ accelerator\ backend.}}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00024}00024\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00025}00025\ \textcolor{comment}{\ *\ @param\ dst\ \ \ \ \ \ \ \ \ \ Destination\ limb\ buffer\ (device\ result\ copied\ to\ host).}}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00026}00026\ \textcolor{comment}{\ *\ @param\ dst\_capacity\ Number\ of\ limbs\ available\ in\ @p\ dst.}}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00027}00027\ \textcolor{comment}{\ *\ @param\ out\_used\ \ \ \ \ Optional\ pointer\ to\ receive\ the\ number\ of\ limbs\ used.}}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00028}00028\ \textcolor{comment}{\ *\ @param\ lhs\ \ \ \ \ \ \ \ \ \ Left\ operand\ limbs.}}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00029}00029\ \textcolor{comment}{\ *\ @param\ lhs\_used\ \ \ \ \ Number\ of\ limbs\ in\ @p\ lhs.}}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00030}00030\ \textcolor{comment}{\ *\ @param\ rhs\ \ \ \ \ \ \ \ \ \ Right\ operand\ limbs.}}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00031}00031\ \textcolor{comment}{\ *\ @param\ rhs\_used\ \ \ \ \ Number\ of\ limbs\ in\ @p\ rhs.}}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00032}00032\ \textcolor{comment}{\ *\ @return\ true\ when\ the\ backend\ executed\ successfully,\ false\ when\ unsupported/failing.}}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00033}00033\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00034}\mbox{\hyperlink{bigint__accel_8h_ae724c16dfd4d7eb55c0db1ec6d539b89}{00034}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{bigint__accel_8h_ae724c16dfd4d7eb55c0db1ec6d539b89}{ttak\_bigint\_accel\_add\_raw}}(\mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\_t}}\ *dst,}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ dst\_capacity,}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ *out\_used,}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\_t}}\ *lhs,}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ lhs\_used,}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\_t}}\ *rhs,}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ rhs\_used);}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00041}00041\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00042}00042\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00043}00043\ \textcolor{comment}{\ *\ @brief\ Performs\ limb-\/wise\ multiplication\ via\ an\ accelerator\ backend.}}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00044}00044\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00045}\mbox{\hyperlink{bigint__accel_8h_a94ecb041c4d6519dc3cf9b0c5118b78e}{00045}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{bigint__accel_8h_a94ecb041c4d6519dc3cf9b0c5118b78e}{ttak\_bigint\_accel\_mul\_raw}}(\mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\_t}}\ *dst,}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ dst\_capacity,}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ *out\_used,}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\_t}}\ *lhs,}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ lhs\_used,}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\_t}}\ *rhs,}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ rhs\_used);}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00053}00053\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00054}00054\ \}}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00055}00055\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{bigint__accel_8h_source_l00057}00057\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ TTAK\_MATH\_BIGINT\_ACCEL\_H\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

@@ -154,6 +154,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a30cf8358f6f87f7be75b55c0f5decee6" id="r_a30cf8358f6f87f7be75b55c0f5decee6"><td class="memItemLeft" align="right" valign="top">_Bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="calculus_8h.html#a30cf8358f6f87f7be75b55c0f5decee6">ttak_calculus_integrate</a> (<a class="el" href="bigreal_8h.html#ab9368b32d51ca2bce882ba0dbf872b4a">ttak_bigreal_t</a> *res, <a class="el" href="calculus_8h.html#af5ab65970ac1f025b3795157144fb68f">ttak_math_func_t</a> f, const <a class="el" href="bigreal_8h.html#ab9368b32d51ca2bce882ba0dbf872b4a">ttak_bigreal_t</a> *a, const <a class="el" href="bigreal_8h.html#ab9368b32d51ca2bce882ba0dbf872b4a">ttak_bigreal_t</a> *b, void *ctx, uint64_t now)</td></tr>
 <tr class="memdesc:a30cf8358f6f87f7be75b55c0f5decee6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Numerical definite integration over [a, b]. Uses adaptive methods and can be parallelized.  <br /></td></tr>
 <tr class="separator:a30cf8358f6f87f7be75b55c0f5decee6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acda4cb3a1a24ae48f1e988b6b458c80f" id="r_acda4cb3a1a24ae48f1e988b6b458c80f"><td class="memItemLeft" align="right" valign="top">_Bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="calculus_8h.html#acda4cb3a1a24ae48f1e988b6b458c80f">ttak_calculus_rk4_step</a> (<a class="el" href="bigreal_8h.html#ab9368b32d51ca2bce882ba0dbf872b4a">ttak_bigreal_t</a> *y_next, <a class="el" href="calculus_8h.html#af5ab65970ac1f025b3795157144fb68f">ttak_math_func_t</a> f, const <a class="el" href="bigreal_8h.html#ab9368b32d51ca2bce882ba0dbf872b4a">ttak_bigreal_t</a> *t, const <a class="el" href="bigreal_8h.html#ab9368b32d51ca2bce882ba0dbf872b4a">ttak_bigreal_t</a> *y, const <a class="el" href="bigreal_8h.html#ab9368b32d51ca2bce882ba0dbf872b4a">ttak_bigreal_t</a> *h, void *ctx, uint64_t now)</td></tr>
+<tr class="memdesc:acda4cb3a1a24ae48f1e988b6b458c80f"><td class="mdescLeft">&#160;</td><td class="mdescRight">RK4 (Runge-Kutta 4th Order) ODE solver step. Solves dy/dt = f(t, y)  <br /></td></tr>
+<tr class="separator:acda4cb3a1a24ae48f1e988b6b458c80f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a id="af5ab65970ac1f025b3795157144fb68f" name="af5ab65970ac1f025b3795157144fb68f"></a>
@@ -338,6 +341,79 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Partial differentiation at point x for a specific dimension. </p>
+
+</div>
+</div>
+<a id="acda4cb3a1a24ae48f1e988b6b458c80f" name="acda4cb3a1a24ae48f1e988b6b458c80f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acda4cb3a1a24ae48f1e988b6b458c80f">&#9670;&#160;</a></span>ttak_calculus_rk4_step()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Bool ttak_calculus_rk4_step </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="bigreal_8h.html#ab9368b32d51ca2bce882ba0dbf872b4a">ttak_bigreal_t</a> *&#160;</td>
+          <td class="paramname"><em>y_next</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="calculus_8h.html#af5ab65970ac1f025b3795157144fb68f">ttak_math_func_t</a>&#160;</td>
+          <td class="paramname"><em>f</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="bigreal_8h.html#ab9368b32d51ca2bce882ba0dbf872b4a">ttak_bigreal_t</a> *&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="bigreal_8h.html#ab9368b32d51ca2bce882ba0dbf872b4a">ttak_bigreal_t</a> *&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="bigreal_8h.html#ab9368b32d51ca2bce882ba0dbf872b4a">ttak_bigreal_t</a> *&#160;</td>
+          <td class="paramname"><em>h</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>ctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>now</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>RK4 (Runge-Kutta 4th Order) ODE solver step. Solves dy/dt = f(t, y) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">y_next</td><td>Next state. </td></tr>
+    <tr><td class="paramname">f</td><td>Derivative function. </td></tr>
+    <tr><td class="paramname">t</td><td>Current time. </td></tr>
+    <tr><td class="paramname">y</td><td>Current state. </td></tr>
+    <tr><td class="paramname">h</td><td>Time step. </td></tr>
+    <tr><td class="paramname">ctx</td><td>User context. </td></tr>
+    <tr><td class="paramname">now</td><td>Timestamp. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true on success. </dd></dl>
 
 </div>
 </div>

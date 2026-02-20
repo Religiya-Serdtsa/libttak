@@ -90,10 +90,12 @@ var menudata={children:[
 {text:"l",url:"globals_l.html#index_l"},
 {text:"m",url:"globals_m.html#index_m"},
 {text:"o",url:"globals_o.html#index_o"},
+{text:"p",url:"globals_p.html#index_p"},
 {text:"s",url:"globals_s.html#index_s"},
 {text:"t",url:"globals_t.html#index_t"}]},
 {text:"Functions",url:"globals_func.html",children:[
-{text:"a",url:"globals_func.html#index_a"},
+{text:"_",url:"globals_func.html#index__5F"},
+{text:"a",url:"globals_func_a.html#index_a"},
 {text:"f",url:"globals_func_f.html#index_f"},
 {text:"g",url:"globals_func_g.html#index_g"},
 {text:"s",url:"globals_func_s.html#index_s"},
@@ -114,5 +116,6 @@ var menudata={children:[
 {text:"d",url:"globals_defs.html#index_d"},
 {text:"e",url:"globals_defs.html#index_e"},
 {text:"o",url:"globals_defs.html#index_o"},
+{text:"p",url:"globals_defs.html#index_p"},
 {text:"s",url:"globals_defs.html#index_s"},
 {text:"t",url:"globals_defs.html#index_t"}]}]}]}]}

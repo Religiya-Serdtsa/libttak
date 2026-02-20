@@ -176,7 +176,7 @@ Stage 9 – DANGEROUS (Unsafe)</h2>
 <h2><a class="anchor" id="autotoc_md157"></a>
 Stage 10 – Arena Families &amp; Signal Guards</h2>
 <ul>
-<li><b>Lessons:</b> <a class="el" href="/home/yjlee/mobrew/libttak/tutorials/39-detachable-memory/README.md#md_tutorials_239-detachable-memory_2README">39</a>–<a class="el" href="/home/yjlee/mobrew/libttak/tutorials/40-arena-memory/README.md#md_tutorials_240-arena-memory_2README">40</a></li>
+<li><b>Lessons:</b> <a class="el" href="/home/yjlee/libttak/tutorials/39-detachable-memory/README.md#md_tutorials_239-detachable-memory_2README">39</a>–<a class="el" href="/home/yjlee/libttak/tutorials/40-arena-memory/README.md#md_tutorials_240-arena-memory_2README">40</a></li>
 <li><b>Goal:</b> practice the detachable allocator + cache heuristics, then replay the arena row lifecycle with the mem tree + epoch GC plumbing.</li>
 <li><b>Clone:</b> <code>src/mem/detachable.c</code>, <code><a class="el" href="detachable_8h.html">include/ttak/mem/detachable.h</a></code>, <code><a class="el" href="tt__jmp_8h.html">internal/tt_jmp.h</a></code>, <code>src/mem/{mem.c,epoch_gc.c}</code>, <code>src/mem_tree/mem_tree.c</code>, and the arena portions of <code>bench/ttl-cache-multithread-bench/ttl_cache_bench_lockfree.c</code>.</li>
 <li><b>Checklist:</b> configure a detachable context with epoch protection, watch cache reuse vs. arena flush, wire a tracked arena row that releases its mem-tree node, and verify that <code>ttak_epoch_gc_rotate</code> frees the retired buffer in the sample.</li>
@@ -184,7 +184,7 @@ Stage 10 – Arena Families &amp; Signal Guards</h2>
 <h2><a class="anchor" id="autotoc_md158"></a>
 Stage 11 – IO &amp; Network Stack</h2>
 <ul>
-<li><b>Lessons:</b> <a class="el" href="/home/yjlee/mobrew/libttak/tutorials/41-io-network-stack/README.md#md_tutorials_241-io-network-stack_2README">41</a>–<a class="el" href="/home/yjlee/mobrew/libttak/tutorials/42-io-guarded-streams/README.md#md_tutorials_242-io-guarded-streams_2README">42</a></li>
+<li><b>Lessons:</b> <a class="el" href="/home/yjlee/libttak/tutorials/41-io-network-stack/README.md#md_tutorials_241-io-network-stack_2README">41</a>–<a class="el" href="/home/yjlee/libttak/tutorials/42-io-guarded-streams/README.md#md_tutorials_242-io-guarded-streams_2README">42</a></li>
 <li><b>Goal:</b> build the guarded IO layer, zero-copy views, shared endpoints, and async poll flows that sit on top of detachable arenas + owners.</li>
 <li><b>Clone:</b> <code>src/io/{io.c,sync.c,async.c,zerocopy.c}</code>, <code>include/ttak/io/*</code>, <code>src/net/{endpoint.c,session.c,view.c,core/port.c}</code>, and the matching headers in <code>include/ttak/net/*</code>.</li>
 <li><b>Checklist:</b> enforce TTL + ownership via <code>ttak_io_guard_t</code>, expose zero-copy receive windows, register sockets with <code>ttak_net_session_mgr_t</code>, and validate that <code>ttak_io_async_read</code> callbacks fire once poll workers deliver payloads in Lesson 42.</li>

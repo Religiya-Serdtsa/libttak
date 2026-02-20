@@ -1,0 +1,101 @@
+\doxysection{ttak\+\_\+slab\+\_\+t Struct Reference}
+\hypertarget{structttak__slab__t}{}\label{structttak__slab__t}\index{ttak\_slab\_t@{ttak\_slab\_t}}
+
+
+Metadata for Slab vanguard (64KB -\/ 512KB Dynamic Path).  
+
+
+
+
+{\ttfamily \#include $<$mem\+\_\+internal.\+h$>$}
+
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{structttak__slab__t_a5b0a15f2fff516a93c15ba9d69625eaa}{magic}}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{structttak__slab__t_a35b93f7693dcc569da512c5bd827f44d}{block\+\_\+size}}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{structttak__slab__t_a5664e352c2dc42f625db26ce51ce1b60}{total\+\_\+blocks}}
+\item 
+\mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\+\_\+\+Atomic}} uint32\+\_\+t \mbox{\hyperlink{structttak__slab__t_a7bbf6e9431f3bf03d7d3303e955e0376}{active\+\_\+count}}
+\item 
+void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__slab__t_a4641ee5903bf440c378152ab928b357a}{free\+\_\+stack}}
+\item 
+void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__slab__t_a4a83f4fd1366a1a9153d787e218409d9}{page\+\_\+start}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Metadata for Slab vanguard (64KB -\/ 512KB Dynamic Path). 
+
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00107}{107}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structttak__slab__t_a7bbf6e9431f3bf03d7d3303e955e0376}\label{structttak__slab__t_a7bbf6e9431f3bf03d7d3303e955e0376} 
+\index{ttak\_slab\_t@{ttak\_slab\_t}!active\_count@{active\_count}}
+\index{active\_count@{active\_count}!ttak\_slab\_t@{ttak\_slab\_t}}
+\doxysubsubsection{\texorpdfstring{active\_count}{active\_count}}
+{\footnotesize\ttfamily \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\+\_\+\+Atomic}} uint32\+\_\+t ttak\+\_\+slab\+\_\+t\+::active\+\_\+count}
+
+
+
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00111}{111}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+
+\Hypertarget{structttak__slab__t_a35b93f7693dcc569da512c5bd827f44d}\label{structttak__slab__t_a35b93f7693dcc569da512c5bd827f44d} 
+\index{ttak\_slab\_t@{ttak\_slab\_t}!block\_size@{block\_size}}
+\index{block\_size@{block\_size}!ttak\_slab\_t@{ttak\_slab\_t}}
+\doxysubsubsection{\texorpdfstring{block\_size}{block\_size}}
+{\footnotesize\ttfamily uint32\+\_\+t ttak\+\_\+slab\+\_\+t\+::block\+\_\+size}
+
+Size of objects in this slab 
+
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00109}{109}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+
+\Hypertarget{structttak__slab__t_a4641ee5903bf440c378152ab928b357a}\label{structttak__slab__t_a4641ee5903bf440c378152ab928b357a} 
+\index{ttak\_slab\_t@{ttak\_slab\_t}!free\_stack@{free\_stack}}
+\index{free\_stack@{free\_stack}!ttak\_slab\_t@{ttak\_slab\_t}}
+\doxysubsubsection{\texorpdfstring{free\_stack}{free\_stack}}
+{\footnotesize\ttfamily void\texorpdfstring{$\ast$}{*} ttak\+\_\+slab\+\_\+t\+::free\+\_\+stack}
+
+
+
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00112}{112}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+
+\Hypertarget{structttak__slab__t_a5b0a15f2fff516a93c15ba9d69625eaa}\label{structttak__slab__t_a5b0a15f2fff516a93c15ba9d69625eaa} 
+\index{ttak\_slab\_t@{ttak\_slab\_t}!magic@{magic}}
+\index{magic@{magic}!ttak\_slab\_t@{ttak\_slab\_t}}
+\doxysubsubsection{\texorpdfstring{magic}{magic}}
+{\footnotesize\ttfamily uint32\+\_\+t ttak\+\_\+slab\+\_\+t\+::magic}
+
+SLAB\+\_\+\+MAGIC 
+
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00108}{108}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+
+\Hypertarget{structttak__slab__t_a4a83f4fd1366a1a9153d787e218409d9}\label{structttak__slab__t_a4a83f4fd1366a1a9153d787e218409d9} 
+\index{ttak\_slab\_t@{ttak\_slab\_t}!page\_start@{page\_start}}
+\index{page\_start@{page\_start}!ttak\_slab\_t@{ttak\_slab\_t}}
+\doxysubsubsection{\texorpdfstring{page\_start}{page\_start}}
+{\footnotesize\ttfamily void\texorpdfstring{$\ast$}{*} ttak\+\_\+slab\+\_\+t\+::page\+\_\+start}
+
+
+
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00113}{113}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+
+\Hypertarget{structttak__slab__t_a5664e352c2dc42f625db26ce51ce1b60}\label{structttak__slab__t_a5664e352c2dc42f625db26ce51ce1b60} 
+\index{ttak\_slab\_t@{ttak\_slab\_t}!total\_blocks@{total\_blocks}}
+\index{total\_blocks@{total\_blocks}!ttak\_slab\_t@{ttak\_slab\_t}}
+\doxysubsubsection{\texorpdfstring{total\_blocks}{total\_blocks}}
+{\footnotesize\ttfamily uint32\+\_\+t ttak\+\_\+slab\+\_\+t\+::total\+\_\+blocks}
+
+
+
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00110}{110}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+internal/ttak/\mbox{\hyperlink{mem__internal_8h}{mem\+\_\+internal.\+h}}\end{DoxyCompactItemize}

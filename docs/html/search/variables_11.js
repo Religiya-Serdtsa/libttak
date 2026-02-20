@@ -8,7 +8,7 @@ var searchData=
   ['region_5',['region',['../structttak__net__view.html#aac3a5b6b9fb8d4a64a05fd3ff66e16c1',1,'ttak_net_view']]],
   ['release_6',['release',['../structttak__shared__s.html#a1c3be42a22a37a517e0ce1fc309b15fe',1,'ttak_shared_s']]],
   ['release_5febr_7',['release_ebr',['../structttak__shared__s.html#aa66a52e872be2be1cfa08dfc90d7b034',1,'ttak_shared_s']]],
-  ['reserved_8',['reserved',['../structttak__mem__header__t.html#acc4f1b34d6e7f6d2e71755779a88ffa3',1,'ttak_mem_header_t']]],
+  ['reserved_8',['reserved',['../structttak__mem__header__t.html#a366f1a3f775d16ec4e407da306f3ed76',1,'ttak_mem_header_t']]],
   ['residue_9',['residue',['../structttak__crt__term.html#a9df836d7d457731f3fd60cb4503350bc',1,'ttak_crt_term']]],
   ['resource_5ftag_10',['resource_tag',['../structttak__io__guard.html#af7e7e4e719c6d522a6055c52c1182381',1,'ttak_io_guard']]],
   ['resources_11',['resources',['../structttak__owner.html#af8f1a51f68b2d8255dff9d232d2c7435',1,'ttak_owner']]],

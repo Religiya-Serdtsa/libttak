@@ -1,6 +1,7 @@
 var structttak__mem__header__t =
 [
     [ "access_count", "structttak__mem__header__t.html#a0318bb3cfda8bb54cf6ec0c43e6b2584", null ],
+    [ "allocation_tier", "structttak__mem__header__t.html#a2b86012c32fef10ffba3dba2f24ac679", null ],
     [ "allow_direct_access", "structttak__mem__header__t.html#afebc4673ac816dd1ca85e2368dee4694", null ],
     [ "canary_end", "structttak__mem__header__t.html#a9bc5cff0708537fe474f41e356e69284", null ],
     [ "canary_start", "structttak__mem__header__t.html#aeb69c52bed0292761ce4ff581eae37df", null ],
@@ -15,7 +16,7 @@ var structttak__mem__header__t =
     [ "lock", "structttak__mem__header__t.html#a5c63e95556a7b6528834155059dae312", null ],
     [ "magic", "structttak__mem__header__t.html#a63c543d0e2277438790686ca125adadf", null ],
     [ "pin_count", "structttak__mem__header__t.html#a6f56f8247cfdee283312f6d76b0625a1", null ],
-    [ "reserved", "structttak__mem__header__t.html#acc4f1b34d6e7f6d2e71755779a88ffa3", null ],
+    [ "reserved", "structttak__mem__header__t.html#a366f1a3f775d16ec4e407da306f3ed76", null ],
     [ "should_join", "structttak__mem__header__t.html#a8430c7b034f0da69e2fe16ae2a999e2d", null ],
     [ "size", "structttak__mem__header__t.html#a576f96336f81e4af314e70b911232dda", null ],
     [ "strict_check", "structttak__mem__header__t.html#a4de6b9462e84fa2602c694e3e9633b9e", null ],
