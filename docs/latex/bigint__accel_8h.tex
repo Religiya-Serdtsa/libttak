@@ -1,0 +1,87 @@
+\doxysection{include/ttak/math/bigint\+\_\+accel.h File Reference}
+\hypertarget{bigint__accel_8h}{}\label{bigint__accel_8h}\index{include/ttak/math/bigint\_accel.h@{include/ttak/math/bigint\_accel.h}}
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$ttak/math/bigint.\+h$>$}\newline
+Include dependency graph for bigint\+\_\+accel.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{bigint__accel_8h__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{bigint__accel_8h_a529ad02ab067fddfc0d4a1be220ba9b0}{ttak\+\_\+bigint\+\_\+accel\+\_\+available}} (void)
+\begin{DoxyCompactList}\small\item\em Returns true when a GPU backend capable of Big\+Int operations is available. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{bigint__accel_8h_aa753a6509a08d1fe33a07eefb8468fd3}{ttak\+\_\+bigint\+\_\+accel\+\_\+min\+\_\+limbs}} (void)
+\begin{DoxyCompactList}\small\item\em Returns the minimum operand limb count required before acceleration is attempted. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{bigint__accel_8h_ae724c16dfd4d7eb55c0db1ec6d539b89}{ttak\+\_\+bigint\+\_\+accel\+\_\+add\+\_\+raw}} (\mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}dst, size\+\_\+t dst\+\_\+capacity, size\+\_\+t \texorpdfstring{$\ast$}{*}out\+\_\+used, const \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}lhs, size\+\_\+t lhs\+\_\+used, const \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}rhs, size\+\_\+t rhs\+\_\+used)
+\begin{DoxyCompactList}\small\item\em Performs limb-\/wise addition via an accelerator backend. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{bigint__accel_8h_a94ecb041c4d6519dc3cf9b0c5118b78e}{ttak\+\_\+bigint\+\_\+accel\+\_\+mul\+\_\+raw}} (\mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}dst, size\+\_\+t dst\+\_\+capacity, size\+\_\+t \texorpdfstring{$\ast$}{*}out\+\_\+used, const \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}lhs, size\+\_\+t lhs\+\_\+used, const \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}rhs, size\+\_\+t rhs\+\_\+used)
+\begin{DoxyCompactList}\small\item\em Performs limb-\/wise multiplication via an accelerator backend. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{bigint__accel_8h_ae724c16dfd4d7eb55c0db1ec6d539b89}\label{bigint__accel_8h_ae724c16dfd4d7eb55c0db1ec6d539b89} 
+\index{bigint\_accel.h@{bigint\_accel.h}!ttak\_bigint\_accel\_add\_raw@{ttak\_bigint\_accel\_add\_raw}}
+\index{ttak\_bigint\_accel\_add\_raw@{ttak\_bigint\_accel\_add\_raw}!bigint\_accel.h@{bigint\_accel.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_bigint\_accel\_add\_raw()}{ttak\_bigint\_accel\_add\_raw()}}
+{\footnotesize\ttfamily bool ttak\+\_\+bigint\+\_\+accel\+\_\+add\+\_\+raw (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{dst,  }\item[{size\+\_\+t}]{dst\+\_\+capacity,  }\item[{size\+\_\+t \texorpdfstring{$\ast$}{*}}]{out\+\_\+used,  }\item[{const \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{lhs,  }\item[{size\+\_\+t}]{lhs\+\_\+used,  }\item[{const \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{rhs,  }\item[{size\+\_\+t}]{rhs\+\_\+used }\end{DoxyParamCaption})}
+
+
+
+Performs limb-\/wise addition via an accelerator backend. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dst} & Destination limb buffer (device result copied to host). \\
+\hline
+{\em dst\+\_\+capacity} & Number of limbs available in {\ttfamily dst}. \\
+\hline
+{\em out\+\_\+used} & Optional pointer to receive the number of limbs used. \\
+\hline
+{\em lhs} & Left operand limbs. \\
+\hline
+{\em lhs\+\_\+used} & Number of limbs in {\ttfamily lhs}. \\
+\hline
+{\em rhs} & Right operand limbs. \\
+\hline
+{\em rhs\+\_\+used} & Number of limbs in {\ttfamily rhs}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true when the backend executed successfully, false when unsupported/failing. 
+\end{DoxyReturn}
+\Hypertarget{bigint__accel_8h_a529ad02ab067fddfc0d4a1be220ba9b0}\label{bigint__accel_8h_a529ad02ab067fddfc0d4a1be220ba9b0} 
+\index{bigint\_accel.h@{bigint\_accel.h}!ttak\_bigint\_accel\_available@{ttak\_bigint\_accel\_available}}
+\index{ttak\_bigint\_accel\_available@{ttak\_bigint\_accel\_available}!bigint\_accel.h@{bigint\_accel.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_bigint\_accel\_available()}{ttak\_bigint\_accel\_available()}}
+{\footnotesize\ttfamily bool ttak\+\_\+bigint\+\_\+accel\+\_\+available (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Returns true when a GPU backend capable of Big\+Int operations is available. 
+
+\Hypertarget{bigint__accel_8h_aa753a6509a08d1fe33a07eefb8468fd3}\label{bigint__accel_8h_aa753a6509a08d1fe33a07eefb8468fd3} 
+\index{bigint\_accel.h@{bigint\_accel.h}!ttak\_bigint\_accel\_min\_limbs@{ttak\_bigint\_accel\_min\_limbs}}
+\index{ttak\_bigint\_accel\_min\_limbs@{ttak\_bigint\_accel\_min\_limbs}!bigint\_accel.h@{bigint\_accel.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_bigint\_accel\_min\_limbs()}{ttak\_bigint\_accel\_min\_limbs()}}
+{\footnotesize\ttfamily size\+\_\+t ttak\+\_\+bigint\+\_\+accel\+\_\+min\+\_\+limbs (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Returns the minimum operand limb count required before acceleration is attempted. 
+
+\Hypertarget{bigint__accel_8h_a94ecb041c4d6519dc3cf9b0c5118b78e}\label{bigint__accel_8h_a94ecb041c4d6519dc3cf9b0c5118b78e} 
+\index{bigint\_accel.h@{bigint\_accel.h}!ttak\_bigint\_accel\_mul\_raw@{ttak\_bigint\_accel\_mul\_raw}}
+\index{ttak\_bigint\_accel\_mul\_raw@{ttak\_bigint\_accel\_mul\_raw}!bigint\_accel.h@{bigint\_accel.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_bigint\_accel\_mul\_raw()}{ttak\_bigint\_accel\_mul\_raw()}}
+{\footnotesize\ttfamily bool ttak\+\_\+bigint\+\_\+accel\+\_\+mul\+\_\+raw (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{dst,  }\item[{size\+\_\+t}]{dst\+\_\+capacity,  }\item[{size\+\_\+t \texorpdfstring{$\ast$}{*}}]{out\+\_\+used,  }\item[{const \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{lhs,  }\item[{size\+\_\+t}]{lhs\+\_\+used,  }\item[{const \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{rhs,  }\item[{size\+\_\+t}]{rhs\+\_\+used }\end{DoxyParamCaption})}
+
+
+
+Performs limb-\/wise multiplication via an accelerator backend. 
+

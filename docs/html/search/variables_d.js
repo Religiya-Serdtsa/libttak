@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['magic_0',['magic',['../structttak__mem__header__t.html#a63c543d0e2277438790686ca125adadf',1,'ttak_mem_header_t']]],
+  ['magic_0',['magic',['../structttak__slab__t.html#a5b0a15f2fff516a93c15ba9d69625eaa',1,'ttak_slab_t::magic'],['../structttak__mem__header__t.html#a63c543d0e2277438790686ca125adadf',1,'ttak_mem_header_t::magic']]],
   ['mantissa_1',['mantissa',['../structttak__bigreal.html#a2d0316af334c85eafe39462d356f1c33',1,'ttak_bigreal']]],
   ['mask_5fseed_2',['mask_seed',['../structttak__accel__batch__item.html#a57ff5d59619759907a9ec70245a02b68',1,'ttak_accel_batch_item']]],
   ['matrix_5frows_3',['matrix_rows',['../structttak__detachable__context.html#a177714da5c2ae8ea80ea0880e0805b6a',1,'ttak_detachable_context']]],

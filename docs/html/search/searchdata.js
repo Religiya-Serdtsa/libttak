@@ -3,12 +3,12 @@ var indexSectionsWithContent =
   0: "$0123456789_abcdefghijklmnopqrstuvwyz–",
   1: "_ast",
   2: "01abcdefhilmnopqrstvwz",
-  3: "afgst",
+  3: "_afgst",
   4: "_abcdefghijklmnoprstuvw",
   5: "_alt",
   6: "mt",
   7: "mt",
-  8: "_adeost",
+  8: "_adeopst",
   9: "abcdhmopt"
 };
 

@@ -1,0 +1,53 @@
+\doxysection{ttak\+\_\+mem\+\_\+vma\+\_\+region Struct Reference}
+\hypertarget{structttak__mem__vma__region}{}\label{structttak__mem__vma__region}\index{ttak\_mem\_vma\_region@{ttak\_mem\_vma\_region}}
+
+
+Linear virtual mapping area for lock-\/free bump allocation.  
+
+
+
+
+{\ttfamily \#include $<$mem\+\_\+internal.\+h$>$}
+
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__mem__vma__region_a9db33ae608a76d6dea384f885a264bef}{start\+\_\+addr}}
+\item 
+\mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\+\_\+\+Atomic}} uintptr\+\_\+t \mbox{\hyperlink{structttak__mem__vma__region_a62dbe7a27a2143912a726d1942b0d062}{current\+\_\+cursor}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Linear virtual mapping area for lock-\/free bump allocation. 
+
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00092}{92}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structttak__mem__vma__region_a62dbe7a27a2143912a726d1942b0d062}\label{structttak__mem__vma__region_a62dbe7a27a2143912a726d1942b0d062} 
+\index{ttak\_mem\_vma\_region@{ttak\_mem\_vma\_region}!current\_cursor@{current\_cursor}}
+\index{current\_cursor@{current\_cursor}!ttak\_mem\_vma\_region@{ttak\_mem\_vma\_region}}
+\doxysubsubsection{\texorpdfstring{current\_cursor}{current\_cursor}}
+{\footnotesize\ttfamily \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\+\_\+\+Atomic}} uintptr\+\_\+t ttak\+\_\+mem\+\_\+vma\+\_\+region\+::current\+\_\+cursor}
+
+Atomic cursor for linear allocation 
+
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00094}{94}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+
+\Hypertarget{structttak__mem__vma__region_a9db33ae608a76d6dea384f885a264bef}\label{structttak__mem__vma__region_a9db33ae608a76d6dea384f885a264bef} 
+\index{ttak\_mem\_vma\_region@{ttak\_mem\_vma\_region}!start\_addr@{start\_addr}}
+\index{start\_addr@{start\_addr}!ttak\_mem\_vma\_region@{ttak\_mem\_vma\_region}}
+\doxysubsubsection{\texorpdfstring{start\_addr}{start\_addr}}
+{\footnotesize\ttfamily void\texorpdfstring{$\ast$}{*} ttak\+\_\+mem\+\_\+vma\+\_\+region\+::start\+\_\+addr}
+
+Base address of the mmap\textquotesingle{}d region 
+
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00093}{93}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+internal/ttak/\mbox{\hyperlink{mem__internal_8h}{mem\+\_\+internal.\+h}}\end{DoxyCompactItemize}

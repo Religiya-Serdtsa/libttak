@@ -14,6 +14,9 @@ var searchData=
   ['get_5fsize_11',['get_size',['../struct____internal__ttak__proc__priority__queue__t.html#abfe3e7817ed79ec79fb5d7cc1d5255db',1,'__internal_ttak_proc_priority_queue_t']]],
   ['global_5fepoch_12',['global_epoch',['../structttak__epoch__manager__t.html#a5e79f21c60f892598501e3015781812b',1,'ttak_epoch_manager_t']]],
   ['global_5fepoch_5fhint_13',['global_epoch_hint',['../structttak__detachable__context.html#af36a908740cb345512519572b3e36a1a',1,'ttak_detachable_context']]],
-  ['guard_14',['guard',['../structttak__net__endpoint.html#af3c9143a555226b9b428649b003e5f80',1,'ttak_net_endpoint']]],
-  ['guard_5fgeneration_15',['guard_generation',['../structttak__net__guard__snapshot.html#a87415245ba07fc22201aa2206c46453d',1,'ttak_net_guard_snapshot']]]
+  ['global_5ffriction_14',['global_friction',['../structttak__mem__friction__matrix__t.html#a00aa5aa478a1fcd54691026789da2c7c',1,'ttak_mem_friction_matrix_t']]],
+  ['global_5ffriction_5fmatrix_15',['global_friction_matrix',['../mem__internal_8h.html#a01418a27cc1879ab847f8bb8a395dc47',1,'mem_internal.h']]],
+  ['global_5fvma_5fregion_16',['global_vma_region',['../mem__internal_8h.html#a786e428521881ef54ae52854d0b18b5e',1,'mem_internal.h']]],
+  ['guard_17',['guard',['../structttak__net__endpoint.html#af3c9143a555226b9b428649b003e5f80',1,'ttak_net_endpoint']]],
+  ['guard_5fgeneration_18',['guard_generation',['../structttak__net__guard__snapshot.html#a87415245ba07fc22201aa2206c46453d',1,'ttak_net_guard_snapshot']]]
 ];

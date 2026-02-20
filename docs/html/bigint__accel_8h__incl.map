@@ -1,0 +1,19 @@
+<map id="include/ttak/math/bigint_accel.h" name="include/ttak/math/bigint_accel.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,184,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="57,167,132,192"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="97,46,97,153,92,153,92,46"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="240,240,323,265"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="81,47,61,77,42,115,37,135,35,155,38,173,47,190,58,200,75,209,121,224,226,243,225,248,120,229,73,214,55,204,43,194,33,175,30,155,31,134,37,113,56,75,77,44"/>
+<area shape="rect" id="Node000004" href="$bigint_8h.html" title=" " alt="" coords="172,93,311,119"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="131,43,209,84,206,89,129,48"/>
+<area shape="poly" id="edge5_Node000004_Node000002" title=" " alt="" coords="219,121,132,163,130,158,217,116"/>
+<area shape="poly" id="edge6_Node000004_Node000003" title=" " alt="" coords="247,118,277,226,272,227,242,120"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="403,240,474,265"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="312,114,405,133,444,147,469,165,475,181,474,199,459,230,454,228,469,197,470,182,465,168,441,152,403,138,311,119"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="157,167,243,192"/>
+<area shape="poly" id="edge7_Node000004_Node000006" title=" " alt="" coords="237,120,216,156,211,153,232,118"/>
+<area shape="rect" id="Node000007" href="$fixed_8h.html" title=" " alt="" coords="319,167,454,192"/>
+<area shape="poly" id="edge8_Node000004_Node000007" title=" " alt="" coords="266,116,352,158,350,163,264,121"/>
+<area shape="poly" id="edge10_Node000007_Node000003" title=" " alt="" coords="371,194,311,235,308,230,368,190"/>
+<area shape="poly" id="edge9_Node000007_Node000005" title=" " alt="" coords="397,191,424,227,420,230,393,194"/>
+</map>

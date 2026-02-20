@@ -1,8 +1,7 @@
 \doxysection{include/ttak/phys/dimless/transport.h File Reference}
 \hypertarget{transport_8h}{}\label{transport_8h}\index{include/ttak/phys/dimless/transport.h@{include/ttak/phys/dimless/transport.h}}
 {\ttfamily \#include $<$stddef.\+h$>$}\newline
-Include dependency graph for transport.\+h\+:
-\nopagebreak
+Include dependency graph for transport.\+h\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -34,6 +33,14 @@ enum \mbox{\hyperlink{transport_8h_a4dfed25085de3e1ef832f223f45e8fa4}{ttak\+\_\+
 \begin{DoxyCompactList}\small\item\em Péclet number for mass transport\+: Pe = \texorpdfstring{$\vert$}{|}v\texorpdfstring{$\vert$}{|} \texorpdfstring{$\ast$}{*} L / D. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{transport_8h_a5999aeccffbd892e89cf25f59abd089a}{ttak\+\_\+phys\+\_\+status\+\_\+t}} \mbox{\hyperlink{transport_8h_a7dbda019006bf5e78b8577f4a2d1dff3}{ttak\+\_\+phys\+\_\+calc\+\_\+sherwood}} (double \texorpdfstring{$\ast$}{*}out\+\_\+sh, double mass\+\_\+transfer\+\_\+coeff, double length, double diffusivity)
 \begin{DoxyCompactList}\small\item\em Sherwood number\+: Sh = k\+\_\+m \texorpdfstring{$\ast$}{*} L / D. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{transport_8h_a5999aeccffbd892e89cf25f59abd089a}{ttak\+\_\+phys\+\_\+status\+\_\+t}} \mbox{\hyperlink{transport_8h_a9df01d857771380e89c065a4b5746b46}{ttak\+\_\+phys\+\_\+calc\+\_\+prandtl}} (double \texorpdfstring{$\ast$}{*}out\+\_\+pr, double dynamic\+\_\+viscosity, double specific\+\_\+heat, double thermal\+\_\+conductivity)
+\begin{DoxyCompactList}\small\item\em Prandtl number\+: Pr = nu / alpha = cp \texorpdfstring{$\ast$}{*} mu / k. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{transport_8h_a5999aeccffbd892e89cf25f59abd089a}{ttak\+\_\+phys\+\_\+status\+\_\+t}} \mbox{\hyperlink{transport_8h_a2d9b99dca70c86a6055906901e32c483}{ttak\+\_\+phys\+\_\+calc\+\_\+grashof}} (double \texorpdfstring{$\ast$}{*}out\+\_\+gr, double gravity, double expansion\+\_\+coeff, double delta\+\_\+temp, double length, double rho, double dynamic\+\_\+viscosity)
+\begin{DoxyCompactList}\small\item\em Grashof number (Thermal)\+: Gr = g \texorpdfstring{$\ast$}{*} beta \texorpdfstring{$\ast$}{*} (Ts -\/ Tinf) \texorpdfstring{$\ast$}{*} L\texorpdfstring{$^\wedge$}{\string^}3 / nu\texorpdfstring{$^\wedge$}{\string^}2. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{transport_8h_a5999aeccffbd892e89cf25f59abd089a}{ttak\+\_\+phys\+\_\+status\+\_\+t}} \mbox{\hyperlink{transport_8h_aa7b4094a455dc394fa8e9a91884f8e37}{ttak\+\_\+phys\+\_\+calc\+\_\+grashof\+\_\+mass}} (double \texorpdfstring{$\ast$}{*}out\+\_\+grm, double gravity, double expansion\+\_\+coeff\+\_\+mass, double delta\+\_\+conc, double length, double rho, double dynamic\+\_\+viscosity)
+\begin{DoxyCompactList}\small\item\em Grashof number (Mass)\+: Gr\+\_\+m = g \texorpdfstring{$\ast$}{*} beta\+\_\+m \texorpdfstring{$\ast$}{*} (Cs -\/ Cinf) \texorpdfstring{$\ast$}{*} L\texorpdfstring{$^\wedge$}{\string^}3 / nu\texorpdfstring{$^\wedge$}{\string^}2. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{transport_8h_a5999aeccffbd892e89cf25f59abd089a}{ttak\+\_\+phys\+\_\+status\+\_\+t}} \mbox{\hyperlink{transport_8h_a284ef60e8627a92431444c4f7e65ab1b}{ttak\+\_\+phys\+\_\+calc\+\_\+rayleigh}} (double \texorpdfstring{$\ast$}{*}out\+\_\+ra, double grashof, double pr\+\_\+or\+\_\+sc)
+\begin{DoxyCompactList}\small\item\em Rayleigh number\+: Ra = Gr \texorpdfstring{$\ast$}{*} Pr (Thermal) or Gr\+\_\+m \texorpdfstring{$\ast$}{*} Sc (Mass). \end{DoxyCompactList}\item 
 \mbox{\hyperlink{transport_8h_a5999aeccffbd892e89cf25f59abd089a}{ttak\+\_\+phys\+\_\+status\+\_\+t}} \mbox{\hyperlink{transport_8h_ace20d426f6ee161c2109ca57377804ca}{ttak\+\_\+phys\+\_\+calc\+\_\+km}} (double \texorpdfstring{$\ast$}{*}out\+\_\+km, double sherwood, double length, double diffusivity)
 \begin{DoxyCompactList}\small\item\em Computes k\+\_\+m from a Sherwood number\+: k\+\_\+m = Sh \texorpdfstring{$\ast$}{*} D / L. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
@@ -87,6 +94,43 @@ Definition at line \mbox{\hyperlink{transport_8h_source_l00013}{13}} of file \mb
 
 
 \doxysubsection{Function Documentation}
+\Hypertarget{transport_8h_a2d9b99dca70c86a6055906901e32c483}\label{transport_8h_a2d9b99dca70c86a6055906901e32c483} 
+\index{transport.h@{transport.h}!ttak\_phys\_calc\_grashof@{ttak\_phys\_calc\_grashof}}
+\index{ttak\_phys\_calc\_grashof@{ttak\_phys\_calc\_grashof}!transport.h@{transport.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_phys\_calc\_grashof()}{ttak\_phys\_calc\_grashof()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{transport_8h_a5999aeccffbd892e89cf25f59abd089a}{ttak\+\_\+phys\+\_\+status\+\_\+t}} ttak\+\_\+phys\+\_\+calc\+\_\+grashof (\begin{DoxyParamCaption}\item[{double \texorpdfstring{$\ast$}{*}}]{out\+\_\+gr,  }\item[{double}]{gravity,  }\item[{double}]{expansion\+\_\+coeff,  }\item[{double}]{delta\+\_\+temp,  }\item[{double}]{length,  }\item[{double}]{rho,  }\item[{double}]{dynamic\+\_\+viscosity }\end{DoxyParamCaption})}
+
+
+
+Grashof number (Thermal)\+: Gr = g \texorpdfstring{$\ast$}{*} beta \texorpdfstring{$\ast$}{*} (Ts -\/ Tinf) \texorpdfstring{$\ast$}{*} L\texorpdfstring{$^\wedge$}{\string^}3 / nu\texorpdfstring{$^\wedge$}{\string^}2. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em out\+\_\+gr} & Computed Grashof number. \\
+\hline
+ & {\em gravity} & g in m/s\texorpdfstring{$^\wedge$}{\string^}2. \\
+\hline
+ & {\em expansion\+\_\+coeff} & beta in 1/K. \\
+\hline
+ & {\em delta\+\_\+temp} & (Ts -\/ Tinf) in K. \\
+\hline
+ & {\em length} & L in meters. \\
+\hline
+ & {\em rho} & Fluid density in kg/m\texorpdfstring{$^\wedge$}{\string^}3. \\
+\hline
+ & {\em dynamic\+\_\+viscosity} & mu in Pa\texorpdfstring{$\ast$}{*}s. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{transport_8h_aa7b4094a455dc394fa8e9a91884f8e37}\label{transport_8h_aa7b4094a455dc394fa8e9a91884f8e37} 
+\index{transport.h@{transport.h}!ttak\_phys\_calc\_grashof\_mass@{ttak\_phys\_calc\_grashof\_mass}}
+\index{ttak\_phys\_calc\_grashof\_mass@{ttak\_phys\_calc\_grashof\_mass}!transport.h@{transport.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_phys\_calc\_grashof\_mass()}{ttak\_phys\_calc\_grashof\_mass()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{transport_8h_a5999aeccffbd892e89cf25f59abd089a}{ttak\+\_\+phys\+\_\+status\+\_\+t}} ttak\+\_\+phys\+\_\+calc\+\_\+grashof\+\_\+mass (\begin{DoxyParamCaption}\item[{double \texorpdfstring{$\ast$}{*}}]{out\+\_\+grm,  }\item[{double}]{gravity,  }\item[{double}]{expansion\+\_\+coeff\+\_\+mass,  }\item[{double}]{delta\+\_\+conc,  }\item[{double}]{length,  }\item[{double}]{rho,  }\item[{double}]{dynamic\+\_\+viscosity }\end{DoxyParamCaption})}
+
+
+
+Grashof number (Mass)\+: Gr\+\_\+m = g \texorpdfstring{$\ast$}{*} beta\+\_\+m \texorpdfstring{$\ast$}{*} (Cs -\/ Cinf) \texorpdfstring{$\ast$}{*} L\texorpdfstring{$^\wedge$}{\string^}3 / nu\texorpdfstring{$^\wedge$}{\string^}2. 
+
 \Hypertarget{transport_8h_ace20d426f6ee161c2109ca57377804ca}\label{transport_8h_ace20d426f6ee161c2109ca57377804ca} 
 \index{transport.h@{transport.h}!ttak\_phys\_calc\_km@{ttak\_phys\_calc\_km}}
 \index{ttak\_phys\_calc\_km@{ttak\_phys\_calc\_km}!transport.h@{transport.h}}
@@ -129,6 +173,37 @@ Péclet number for mass transport\+: Pe = \texorpdfstring{$\vert$}{|}v\texorpdfs
  & {\em diffusivity} & Binary mass diffusivity in m\texorpdfstring{$^\wedge$}{\string^}2/s. \\
 \hline
 \end{DoxyParams}
+\Hypertarget{transport_8h_a9df01d857771380e89c065a4b5746b46}\label{transport_8h_a9df01d857771380e89c065a4b5746b46} 
+\index{transport.h@{transport.h}!ttak\_phys\_calc\_prandtl@{ttak\_phys\_calc\_prandtl}}
+\index{ttak\_phys\_calc\_prandtl@{ttak\_phys\_calc\_prandtl}!transport.h@{transport.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_phys\_calc\_prandtl()}{ttak\_phys\_calc\_prandtl()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{transport_8h_a5999aeccffbd892e89cf25f59abd089a}{ttak\+\_\+phys\+\_\+status\+\_\+t}} ttak\+\_\+phys\+\_\+calc\+\_\+prandtl (\begin{DoxyParamCaption}\item[{double \texorpdfstring{$\ast$}{*}}]{out\+\_\+pr,  }\item[{double}]{dynamic\+\_\+viscosity,  }\item[{double}]{specific\+\_\+heat,  }\item[{double}]{thermal\+\_\+conductivity }\end{DoxyParamCaption})}
+
+
+
+Prandtl number\+: Pr = nu / alpha = cp \texorpdfstring{$\ast$}{*} mu / k. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em out\+\_\+pr} & Computed Prandtl number. \\
+\hline
+ & {\em dynamic\+\_\+viscosity} & mu in Pa\texorpdfstring{$\ast$}{*}s. \\
+\hline
+ & {\em specific\+\_\+heat} & cp in J/(kg\texorpdfstring{$\ast$}{*}K). \\
+\hline
+ & {\em thermal\+\_\+conductivity} & k in W/(m\texorpdfstring{$\ast$}{*}K). \\
+\hline
+\end{DoxyParams}
+\Hypertarget{transport_8h_a284ef60e8627a92431444c4f7e65ab1b}\label{transport_8h_a284ef60e8627a92431444c4f7e65ab1b} 
+\index{transport.h@{transport.h}!ttak\_phys\_calc\_rayleigh@{ttak\_phys\_calc\_rayleigh}}
+\index{ttak\_phys\_calc\_rayleigh@{ttak\_phys\_calc\_rayleigh}!transport.h@{transport.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_phys\_calc\_rayleigh()}{ttak\_phys\_calc\_rayleigh()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{transport_8h_a5999aeccffbd892e89cf25f59abd089a}{ttak\+\_\+phys\+\_\+status\+\_\+t}} ttak\+\_\+phys\+\_\+calc\+\_\+rayleigh (\begin{DoxyParamCaption}\item[{double \texorpdfstring{$\ast$}{*}}]{out\+\_\+ra,  }\item[{double}]{grashof,  }\item[{double}]{pr\+\_\+or\+\_\+sc }\end{DoxyParamCaption})}
+
+
+
+Rayleigh number\+: Ra = Gr \texorpdfstring{$\ast$}{*} Pr (Thermal) or Gr\+\_\+m \texorpdfstring{$\ast$}{*} Sc (Mass). 
+
 \Hypertarget{transport_8h_a090c5ac13a38eb3bc521aaa3db1a69ed}\label{transport_8h_a090c5ac13a38eb3bc521aaa3db1a69ed} 
 \index{transport.h@{transport.h}!ttak\_phys\_calc\_reynolds@{ttak\_phys\_calc\_reynolds}}
 \index{ttak\_phys\_calc\_reynolds@{ttak\_phys\_calc\_reynolds}!transport.h@{transport.h}}
