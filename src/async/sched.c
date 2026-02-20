@@ -1,7 +1,9 @@
 #include <ttak/async/sched.h>
 #include <ttak/thread/pool.h>
 #include <ttak/timing/timing.h>
+#ifndef _WIN32
 #include <sched.h>
+#endif
 #include <stddef.h>
 // Windows headers stuff
 #ifdef _WIN32

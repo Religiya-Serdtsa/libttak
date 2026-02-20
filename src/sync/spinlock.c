@@ -1,9 +1,14 @@
 #include <ttak/sync/spinlock.h>
 #include <time.h>
 #include <stdlib.h>
+#ifdef _WIN32
+#  include <windows.h>
+#endif
 
 static inline void ttak_spin_relax(void) {
-#if defined(__x86_64__) || defined(__i386__)
+#ifdef _WIN32
+    YieldProcessor();
+#elif defined(__x86_64__) || defined(__i386__)
 #if defined(__TINYC__)
     __asm__ __volatile__("pause");
 #else
@@ -28,8 +33,12 @@ void ttak_backoff_pause(ttak_backoff_t *b) {
     if (local_count < local_limit) {
         b->count = local_count + 1;
     } else {
-        struct timespec ts = {0, 100}; // 100ns yield
+#ifdef _WIN32
+        Sleep(0);
+#else
+        struct timespec ts = {0, 100}; /* 100ns yield */
         nanosleep(&ts, NULL);
+#endif
     }
 }
 

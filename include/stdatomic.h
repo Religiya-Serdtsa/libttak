@@ -8,6 +8,158 @@
 #ifndef TTAK_PORTABLE_STDATOMIC_H
 #define TTAK_PORTABLE_STDATOMIC_H
 
+/* -----------------------------------------------------------------------
+ * MSVC / Windows: provide atomic operations via interlocked intrinsics.
+ * MSVC does not support #include_next so we cannot reach the system
+ * <stdatomic.h> from here.  With /std:c17 the compiler handles _Atomic
+ * as a keyword; we only need to supply the standard library types and
+ * function-like macros that the compiler itself does not define.
+ * --------------------------------------------------------------------- */
+#if !defined(__TTAK_STDATOMIC_SYSTEM_INCLUDED) && defined(_MSC_VER)
+#  define __TTAK_STDATOMIC_SYSTEM_INCLUDED
+#  include <intrin.h>
+#  include <stdbool.h>
+#  include <stddef.h>
+#  include <stdint.h>
+
+typedef enum {
+    memory_order_relaxed,
+    memory_order_consume,
+    memory_order_acquire,
+    memory_order_release,
+    memory_order_acq_rel,
+    memory_order_seq_cst
+} memory_order;
+
+typedef volatile bool               atomic_bool;
+typedef volatile int                atomic_int;
+typedef volatile unsigned int       atomic_uint;
+typedef volatile long               atomic_long;
+typedef volatile unsigned long      atomic_ulong;
+typedef volatile long long          atomic_llong;
+typedef volatile unsigned long long atomic_ullong;
+typedef volatile size_t             atomic_size_t;
+typedef volatile unsigned long long atomic_uint_fast64_t;
+typedef volatile uintptr_t          atomic_uintptr_t;
+
+typedef struct { volatile unsigned char _value; } atomic_flag;
+
+#define ATOMIC_FLAG_INIT   {0}
+#define ATOMIC_VAR_INIT(v) (v)
+
+#define atomic_thread_fence(order)  ((void)(order), _ReadWriteBarrier())
+#define atomic_init(obj, value)     ((void)(*(obj) = (value)))
+
+/* load / store: on x86-64 aligned loads/stores of native-width types are
+ * inherently atomic and carry acquire/release semantics.              */
+#define atomic_load_explicit(obj, order)           ((void)(order), *(obj))
+#define atomic_load(obj)                           (*(obj))
+#define atomic_store_explicit(obj, desired, order) ((void)(order), (void)(*(obj) = (desired)))
+#define atomic_store(obj, desired)                 ((void)(*(obj) = (desired)))
+
+/* --- fetch_add helpers ------------------------------------------------- */
+static __inline char __ttak_fa8(volatile char *p, char v)
+    { return _InterlockedExchangeAdd8(p, v); }
+static __inline long __ttak_fa32(volatile long *p, long v)
+    { return _InterlockedExchangeAdd(p, v); }
+static __inline __int64 __ttak_fa64(volatile __int64 *p, __int64 v)
+    { return _InterlockedExchangeAdd64(p, v); }
+
+#define atomic_fetch_add_explicit(obj, val, order) ((void)(order), \
+    _Generic(*(obj), \
+        signed char:        (signed char)__ttak_fa8((volatile char*)(obj), (char)(val)), \
+        unsigned char:      (unsigned char)__ttak_fa8((volatile char*)(obj), (char)(val)), \
+        _Bool:              (unsigned char)__ttak_fa8((volatile char*)(obj), (char)(val)), \
+        short:              (short)_InterlockedExchangeAdd16((volatile short*)(obj), (short)(val)), \
+        unsigned short:     (unsigned short)_InterlockedExchangeAdd16((volatile short*)(obj), (short)(val)), \
+        int:                (int)__ttak_fa32((volatile long*)(obj), (long)(val)), \
+        unsigned int:       (unsigned int)__ttak_fa32((volatile long*)(obj), (long)(val)), \
+        long:               __ttak_fa32((volatile long*)(obj), (long)(val)), \
+        unsigned long:      (unsigned long)__ttak_fa32((volatile long*)(obj), (long)(val)), \
+        long long:          (long long)__ttak_fa64((volatile __int64*)(obj), (__int64)(val)), \
+        unsigned long long: (unsigned long long)__ttak_fa64((volatile __int64*)(obj), (__int64)(val)), \
+        default:            (unsigned long long)__ttak_fa64((volatile __int64*)(obj), (__int64)(val)) \
+    ))
+#define atomic_fetch_add(obj, val) \
+    atomic_fetch_add_explicit((obj), (val), memory_order_seq_cst)
+
+#define atomic_fetch_sub_explicit(obj, val, order) \
+    atomic_fetch_add_explicit((obj), -(val), (order))
+#define atomic_fetch_sub(obj, val) \
+    atomic_fetch_sub_explicit((obj), (val), memory_order_seq_cst)
+
+/* --- exchange helpers -------------------------------------------------- */
+static __inline long __ttak_xch32(volatile long *p, long v)
+    { return _InterlockedExchange(p, v); }
+static __inline __int64 __ttak_xch64(volatile __int64 *p, __int64 v)
+    { return _InterlockedExchange64(p, v); }
+
+#define atomic_exchange_explicit(obj, desired, order) ((void)(order), \
+    _Generic(*(obj), \
+        int:                (int)__ttak_xch32((volatile long*)(obj), (long)(desired)), \
+        unsigned int:       (unsigned int)__ttak_xch32((volatile long*)(obj), (long)(desired)), \
+        long:               __ttak_xch32((volatile long*)(obj), (long)(desired)), \
+        unsigned long:      (unsigned long)__ttak_xch32((volatile long*)(obj), (long)(desired)), \
+        long long:          (long long)__ttak_xch64((volatile __int64*)(obj), (__int64)(desired)), \
+        unsigned long long: (unsigned long long)__ttak_xch64((volatile __int64*)(obj), (__int64)(desired)), \
+        default:            (unsigned long long)__ttak_xch64((volatile __int64*)(obj), (__int64)(desired)) \
+    ))
+#define atomic_exchange(obj, desired) \
+    atomic_exchange_explicit((obj), (desired), memory_order_seq_cst)
+
+/* --- compare-exchange helpers ------------------------------------------ */
+static __inline _Bool __ttak_cx32(volatile long *obj, long *exp, long des) {
+    long old = _InterlockedCompareExchange(obj, des, *exp);
+    if (old == *exp) return 1;
+    *exp = old; return 0;
+}
+static __inline _Bool __ttak_cx64(volatile __int64 *obj, __int64 *exp, __int64 des) {
+    __int64 old = _InterlockedCompareExchange64(obj, des, *exp);
+    if (old == *exp) return 1;
+    *exp = old; return 0;
+}
+
+#define atomic_compare_exchange_weak_explicit(obj, expected, desired, succ, fail) \
+    ((void)(succ), (void)(fail), \
+    _Generic(*(obj), \
+        int:          __ttak_cx32((volatile long*)(obj), (long*)(expected), (long)(desired)), \
+        unsigned int: __ttak_cx32((volatile long*)(obj), (long*)(expected), (long)(desired)), \
+        long:         __ttak_cx32((volatile long*)(obj), (long*)(expected), (long)(desired)), \
+        unsigned long: __ttak_cx32((volatile long*)(obj), (long*)(expected), (long)(desired)), \
+        long long:    __ttak_cx64((volatile __int64*)(obj), (__int64*)(expected), (__int64)(desired)), \
+        unsigned long long: __ttak_cx64((volatile __int64*)(obj), (__int64*)(expected), (__int64)(desired)), \
+        default:      __ttak_cx64((volatile __int64*)(obj), (__int64*)(expected), (__int64)(desired)) \
+    ))
+#define atomic_compare_exchange_weak(obj, expected, desired) \
+    atomic_compare_exchange_weak_explicit((obj), (expected), (desired), \
+        memory_order_seq_cst, memory_order_seq_cst)
+#define atomic_compare_exchange_strong_explicit(obj, expected, desired, succ, fail) \
+    atomic_compare_exchange_weak_explicit((obj), (expected), (desired), (succ), (fail))
+#define atomic_compare_exchange_strong(obj, expected, desired) \
+    atomic_compare_exchange_weak((obj), (expected), (desired))
+
+/* --- atomic_flag ------------------------------------------------------- */
+static __inline _Bool __msvc_flag_tas(volatile atomic_flag *f) {
+    return _InterlockedExchange8((volatile char*)&f->_value, 1) != 0;
+}
+static __inline void __msvc_flag_clr(volatile atomic_flag *f) {
+    _InterlockedExchange8((volatile char*)&f->_value, 0);
+}
+static inline _Bool atomic_flag_test_and_set_explicit(
+        volatile atomic_flag *obj, memory_order order) {
+    (void)order; return __msvc_flag_tas(obj);
+}
+static inline void atomic_flag_clear_explicit(
+        volatile atomic_flag *obj, memory_order order) {
+    (void)order; __msvc_flag_clr(obj);
+}
+#define atomic_flag_test_and_set(obj) \
+    atomic_flag_test_and_set_explicit((obj), memory_order_seq_cst)
+#define atomic_flag_clear(obj) \
+    atomic_flag_clear_explicit((obj), memory_order_seq_cst)
+
+#endif /* !__TTAK_STDATOMIC_SYSTEM_INCLUDED && _MSC_VER */
+
 #if defined(__TINYC__) || !defined(__TTAK_STDATOMIC_SYSTEM_INCLUDED)
 #define __TTAK_NEEDS_PORTABLE_STDATOMIC__ 1
 #else
