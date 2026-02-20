@@ -1,3 +1,14 @@
+/**
+ * @file mem.h
+ * @brief TTAK Unified Memory Subsystem with Lifecycle Management and Hardware Optimization.
+ *
+ * This header defines the "Fortress" memory allocation system, which provides:
+ * - Tiered allocation (Thread-Local Pockets, Bare-Metal VMA, System Allocator)
+ * - Automatic lifecycle management with tick-based expiration
+ * - Security features (Magic numbers, Checksums, Canaries)
+ * - Hardware optimizations (Cache-line alignment, Huge pages)
+ */
+
 #ifndef TTAK_MEM_H
 #define TTAK_MEM_H
 
@@ -6,7 +17,20 @@
 #include <stdbool.h>
 #include <stdalign.h>
 #include <pthread.h>
-#include <ttak/atomic/atomic.h>
+#include <stdatomic.h>
+
+/**
+ * @enum ttak_allocation_tier_t
+ * @brief Defines the memory tier used for an allocation.
+ */
+typedef enum {
+    TTAK_ALLOC_TIER_UNKNOWN = 0,    /**< Tier unknown or corrupted */
+    TTAK_ALLOC_TIER_POCKET,         /**< Allocated from a Thread-Local Pocket (Small objects) */
+    TTAK_ALLOC_TIER_VMA,            /**< Allocated from Bare-Metal VMA (Medium objects) */
+    TTAK_ALLOC_TIER_SLAB,           /**< Allocated from a Slab allocator (Reserved) */
+    TTAK_ALLOC_TIER_BUDDY,          /**< Allocated from the Buddy System (Embedded Mode) */
+    TTAK_ALLOC_TIER_GENERAL,        /**< Allocated via general system allocator (Large objects) */
+} ttak_allocation_tier_t;
 
 /**
  * @brief Alignment for cache-line optimization (64-byte).
@@ -29,119 +53,157 @@
 #define SAFE_NULL NULL
 
 /**
- * @brief "Fortress" Memory Header.
+ * @struct ttak_mem_header_t
+ * @brief "Fortress" Memory Header stored before user data.
+ *
  * 64-byte aligned to prevent False Sharing and ensure user pointer alignment.
- * Total size is 128 bytes to maintain 64-byte alignment for user data.
+ * The structure is padded to maintain alignment for the following user data.
  */
-typedef struct {
+typedef struct ttak_mem_header_t {
     alignas(64) uint32_t magic;         /**< 0x5454414B */
-    uint32_t checksum;      /**< Metadata checksum */
-    uint64_t created_tick;  /**< Creation timestamp */
-    uint64_t expires_tick;  /**< Expiration timestamp */
-    uint64_t access_count;  /**< Atomic access audit counter */
-    uint64_t pin_count;     /**< Atomic reference count for pinning */
-    size_t   size;          /**< User-requested size */
-    pthread_mutex_t lock;   /**< Per-header synchronization */
-    _Bool    freed;         /**< Allocation status */
-    _Bool    is_const;      /**< Immutability hint */
-    _Bool    is_volatile;   /**< Volatility hint */
-    _Bool    allow_direct_access; /**< Safety bypass flag */
-    _Bool    is_huge;       /**< Mapped via hugepages */
-    _Bool    should_join;   /**< Indicates if associated resource needs joining */
-    _Bool    strict_check; _Bool    is_root;  /**< Enable strict memory boundary checks */
-    uint64_t canary_start;  /**< Magic number for start of user data */
-    uint64_t canary_end;    /**< Magic number for end of user data */
-    char     *tracking_log;  /**< Memory operation tracking log (dynamic) */
-    char     reserved[11];  /**< Explicit padding for header alignment */
+    uint32_t checksum;                  /**< Metadata checksum to detect header corruption */
+    uint64_t created_tick;              /**< Creation timestamp in ticks */
+    uint64_t expires_tick;              /**< Expiration timestamp in ticks */
+    uint64_t access_count;              /**< Atomic access audit counter */
+    uint64_t pin_count;                 /**< Atomic reference count for pinning */
+    size_t   size;                      /**< User-requested size in bytes */
+    pthread_mutex_t lock;               /**< Per-header synchronization lock */
+    _Bool    freed;                     /**< True if the block has been deallocated */
+    _Bool    is_const;                  /**< Immutability hint */
+    _Bool    is_volatile;               /**< Volatility hint */
+    _Bool    allow_direct_access;       /**< Safety bypass flag for direct pointer access */
+    _Bool    is_huge;                   /**< True if mapped via hugepages */
+    _Bool    should_join;               /**< Indicates if associated resource needs joining */
+    _Bool    strict_check;              /**< Enable strict memory boundary (canary) checks */
+    _Bool    is_root;                   /**< Marks the allocation as a root node for the mem_tree */
+    uint64_t canary_start;              /**< Magic number for start of user data (in strict mode) */
+    uint64_t canary_end;                /**< Magic number for end of user data (in strict mode) */
+    char     *tracking_log;             /**< Dynamic memory operation tracking log (JSON) */
+    ttak_allocation_tier_t allocation_tier; /**< Tier that performed the allocation */
+    char     reserved[10];              /**< Explicit padding for header alignment */
 } ttak_mem_header_t;
 
 /**
- * @brief Memory allocation flags.
+ * @enum ttak_mem_flags_t
+ * @brief Memory allocation behavior flags.
  */
 typedef enum {
-    TTAK_MEM_DEFAULT = 0,
-    TTAK_MEM_HUGE_PAGES = (1 << 0), /** Try to use 2MB/1GB pages */
-    TTAK_MEM_CACHE_ALIGNED = (1 << 1), /** Force 64-byte alignment */
-    TTAK_MEM_STRICT_CHECK = (1 << 2) /** Enable strict memory boundary checks */
+    TTAK_MEM_DEFAULT = 0,               /**< Default allocation behavior */
+    TTAK_MEM_HUGE_PAGES = (1 << 0),     /**< Try to use 2MB/1GB pages */
+    TTAK_MEM_CACHE_ALIGNED = (1 << 1),  /**< Force 64-byte cache alignment */
+    TTAK_MEM_STRICT_CHECK = (1 << 2),   /**< Enable strict boundary/canary checks */
+    TTAK_MEM_LOW_PRIORITY = (1 << 3)    /**< Reject if under memory pressure/high friction */
 } ttak_mem_flags_t;
 
 /**
- * @brief Unified memory allocation with lifecycle management and hardware optimization.
+ * @brief Unified memory allocation with lifecycle management.
+ * @param size Number of bytes requested.
+ * @param lifetime_ticks Lifetime hint in ticks (__TTAK_UNSAFE_MEM_FOREVER__ for infinite).
+ * @param now Current timestamp in ticks.
+ * @param is_const Marks the buffer as immutable.
+ * @param is_volatile Indicates volatile access patterns.
+ * @param allow_direct If false, direct access via ttak_mem_access is restricted.
+ * @param is_root Marks the allocation as a root for garbage collection.
+ * @param flags Allocation behavior flags.
+ * @return Pointer to zeroed user memory, or NULL on failure.
  */
 void *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, uint64_t now, _Bool is_const, _Bool is_volatile, _Bool allow_direct, _Bool is_root, ttak_mem_flags_t flags);
 
 /**
  * @brief Reallocates memory with lifecycle management.
+ * @param ptr Existing allocation pointer.
+ * @param new_size Requested new size.
+ * @param lifetime_ticks Updated lifetime hint.
+ * @param now Current timestamp in ticks.
+ * @param is_root Whether the new allocation is a root node.
+ * @param flags Allocation behavior flags.
+ * @return Reallocated pointer, or NULL on failure.
  */
 void *ttak_mem_realloc_safe(void *ptr, size_t new_size, uint64_t lifetime_ticks, uint64_t now, _Bool is_root, ttak_mem_flags_t flags);
 
 /**
  * @brief Duplicates a memory block with lifecycle management.
- * Provides a highly optimized internal path for cloning structures and buffers.
+ * @param src Source memory block.
+ * @param size Number of bytes to copy.
+ * @param lifetime_ticks Updated lifetime hint.
+ * @param now Current timestamp in ticks.
+ * @param is_root Whether the new allocation is a root node.
+ * @param flags Allocation behavior flags.
+ * @return Duplicated pointer, or NULL on failure.
  */
 void *ttak_mem_dup_safe(const void *src, size_t size, uint64_t lifetime_ticks, uint64_t now, _Bool is_root, ttak_mem_flags_t flags);
 
 /**
- * @brief Frees the memory block and removes it from the global shadow map.
+ * @brief Frees a memory block and updates usage statistics.
+ * @param ptr Pointer to user memory.
  */
 void ttak_mem_free(void *ptr);
 
 /**
- * @brief Accesses the memory block, verifying its lifecycle and security.
- * Inlined for maximum performance ("grotesque tweak").
+ * @brief Accesses a memory block, verifying its lifecycle and security.
+ * @param ptr Pointer to user memory.
+ * @param now Current timestamp in ticks.
+ * @return Validated pointer, or NULL if security check fails or block is expired.
  */
 static inline void *ttak_mem_access(void *ptr, uint64_t now) {
     if (!ptr) return NULL;
     ttak_mem_header_t *header = (ttak_mem_header_t *)ptr - 1;
 
-    // Fast path: Optimistic lock-free check
-    if (header->magic != TTAK_MAGIC_NUMBER) return NULL; // Basic sanity
+    if (header->magic != TTAK_MAGIC_NUMBER) return NULL;
     if (header->freed) return NULL;
     if (header->expires_tick != __TTAK_UNSAFE_MEM_FOREVER__ && now > header->expires_tick) return NULL;
     if (!header->allow_direct_access) return NULL;
 
-    // Atomic increment without lock
-    // Using GCC/Clang builtin for speed if available, else ttak wrapper
-    // ttak_atomic_inc64 is likely a wrapper.
-    // Let's use the library's function. 
-    // Since it's inline, we need to ensure ttak_atomic_inc64 is visible. It is (included above).
-    ttak_atomic_inc64(&header->access_count);
-
+    atomic_fetch_add(&header->access_count, 1ULL);
     return ptr;
 }
 
 /**
- * @brief Inspects and returns pointers that are expired or have abnormal access counts.
+ * @brief Inspects for "dirty" pointers (expired or over-accessed).
+ * @param now Current timestamp.
+ * @param count_out Pointer to store the number of dirty pointers found.
+ * @return Array of pointers (caller must free), or NULL.
  */
 void **tt_inspect_dirty_pointers(uint64_t now, size_t *count_out);
 
 /**
- * @brief Automatically cleans up expired memory blocks with adaptive scheduling.
+ * @brief Automatically cleans up expired memory blocks.
+ * @param now Current timestamp.
  */
 void tt_autoclean_dirty_pointers(uint64_t now);
 
 /**
- * @brief Configures the global background GC (mem_tree) parameters.
+ * @brief Configures background GC parameters.
+ * @param min_interval_ns Minimum sweep interval.
+ * @param max_interval_ns Maximum sweep interval.
+ * @param pressure_threshold Memory pressure threshold to trigger damping.
  */
 void ttak_mem_configure_gc(uint64_t min_interval_ns, uint64_t max_interval_ns, size_t pressure_threshold);
 
 /**
- * @brief Cleans up and returns abnormal pointers.
+ * @brief Sweeps and returns dirty pointers in a single pass.
+ * @param now Current timestamp.
+ * @param count_out Pointer to store found count.
+ * @return Array of dirty pointers.
  */
 void **tt_autoclean_and_inspect(uint64_t now, size_t *count_out);
 
 /**
  * @brief Sets the global memory tracing flag.
+ * @param enable Non-zero to enable JSON tracing to stderr.
  */
 void ttak_mem_set_trace(int enable);
 
 /**
- * @brief Returns whether memory tracing is currently enabled.
+ * @brief Checks if memory tracing is enabled.
+ * @return Non-zero if enabled.
  */
 int ttak_mem_is_trace_enabled(void);
 
 /**
  * @brief Calculates a 32-bit checksum for the memory header.
+ * @param h Pointer to the header.
+ * @return Calculated checksum.
  */
 static inline uint32_t ttak_calc_header_checksum(const ttak_mem_header_t *h) {
     uint32_t sum1 = h->magic;
@@ -160,6 +222,7 @@ static inline uint32_t ttak_calc_header_checksum(const ttak_mem_header_t *h) {
     sum2 ^= (uint32_t)(h->canary_start >> 32);
     sum1 ^= (uint32_t)h->canary_end;
     sum2 ^= (uint32_t)(h->canary_end >> 32);
+    sum1 ^= (uint32_t)h->allocation_tier;
     return sum1 ^ sum2;
 }
 
