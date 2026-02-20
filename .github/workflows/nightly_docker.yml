@@ -80,6 +80,89 @@ jobs:
           name: linux-amd64-${{ matrix.backend }}-binary
           path: dist/*.tar.gz
 
+  # 1c. Windows x86_64 Targets with GPU Acceleration
+  build-win-amd64-gpu:
+    runs-on: windows-2022
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - backend: cuda
+            make_flags: "USE_CUDA=1"
+            artifact_name: windows-amd64-cuda-binary
+          - backend: rocm
+            make_flags: "USE_ROCM=1"
+            artifact_name: windows-amd64-rocm-binary
+          - backend: opencl
+            make_flags: "USE_OPENCL=1"
+            artifact_name: windows-amd64-opencl-binary
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install MinGW Toolchain
+        shell: pwsh
+        run: |
+          choco install -y mingw make
+      - name: Configure Toolchain Path
+        run: |
+          echo "/c/ProgramData/chocolatey/lib/mingw/tools/install/mingw64/bin" >> "$GITHUB_PATH"
+          echo "/c/ProgramData/chocolatey/lib/make/tools/install/bin" >> "$GITHUB_PATH"
+      - name: Install CUDA Toolkit
+        if: ${{ matrix.backend == 'cuda' }}
+        shell: pwsh
+        run: |
+          choco install -y cuda --version=12.6.0
+          $cudaRoot = "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6"
+          $cudaBin = Join-Path $cudaRoot "bin"
+          $cudaLib = Join-Path $cudaRoot "lib\x64"
+          $cudaInclude = Join-Path $cudaRoot "include"
+          $cudaBin | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          $cudaLib | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          "CUDA_PATH=$cudaRoot" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          "CUDA_INCLUDE=$cudaInclude" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+      - name: Install ROCm Toolchain
+        if: ${{ matrix.backend == 'rocm' }}
+        shell: pwsh
+        run: |
+          winget install -e --id AdvancedMicroDevicesInc.ROCm --accept-package-agreements --accept-source-agreements
+          $rocmRoot = (Get-ChildItem "C:\Program Files\AMD\ROCm" | Sort-Object -Property Name -Descending | Select-Object -First 1).FullName
+          $rocmBin = Join-Path $rocmRoot "bin"
+          $rocmLib = Join-Path $rocmRoot "lib"
+          $rocmBin | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          $rocmLib | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          "ROCM_PATH=$rocmRoot" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+      - name: Fetch OpenCL Headers
+        if: ${{ matrix.backend == 'opencl' }}
+        run: |
+          git clone --depth=1 https://github.com/KhronosGroup/OpenCL-Headers.git /c/opencl-headers
+          echo "OPENCL_INCLUDE=/c/opencl-headers" >> "$GITHUB_ENV"
+      - name: Build
+        run: |
+          set -e
+          make clean
+          EXTRA_FLAGS="-fPIC -D_WIN32_WINNT=0x0600 -D_GNU_SOURCE"
+          if [ -n "${OPENCL_INCLUDE:-}" ]; then
+            EXTRA_FLAGS="$EXTRA_FLAGS -I${OPENCL_INCLUDE}"
+          fi
+          PERF_STACK_FLAGS="-O3 -march=x86-64 -pipe -flto -ffat-lto-objects \
+            -fomit-frame-pointer -funroll-loops -fstrict-aliasing \
+            -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG" \
+          EXTRA_CFLAGS="$EXTRA_FLAGS" \
+          ${{ matrix.make_flags }} make -j$(nproc)
+
+          TAG="libttak-windows-amd64-${{ matrix.backend }}"
+          mkdir -p "dist/${TAG}/include" "dist/${TAG}/lib"
+          cp -r include/* "dist/${TAG}/include/"
+          cp lib/libttak.a "dist/${TAG}/lib/"
+          cd dist && tar -czf "${TAG}.tar.gz" "${TAG}"
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact_name }}
+          path: dist/*.tar.gz
+
   # 2. Windows ARM64 (Manual Build)
   build-win-arm64:
     runs-on: ubuntu-latest
@@ -193,7 +276,7 @@ jobs:
 
   # 5. Nightly Release Assembly
   release:
-    needs: [standard-build, standard-build-gpu, build-win-arm64, build-macos, build-bsd]
+    needs: [standard-build, standard-build-gpu, build-win-amd64-gpu, build-win-arm64, build-macos, build-bsd]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v4
