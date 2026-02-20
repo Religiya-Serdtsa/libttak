@@ -15,11 +15,13 @@
 #include "../../internal/ttak/mem_internal.h"
 #include <stdlib.h>
 #include <string.h>
+#include <inttypes.h>
 #include <pthread.h>
 #include <limits.h>
 #include <errno.h>
 
 #ifdef _WIN32
+    #define _CRT_NONSTDC_NO_DEPRECATE 1
     #include <windows.h>
     #include <io.h>
     #define fsync(fd) _commit(fd)
@@ -30,7 +32,7 @@
     #  define open  _open
     #endif
     #ifndef write
-    #  define write _write
+    #  define write(fd, buf, n) _write((fd), (buf), (unsigned int)(n))
     #endif
     #ifndef close
     #  define close _close
@@ -281,7 +283,7 @@ void TTAK_HOT_PATH *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, ui
     if (global_trace_enabled) {
         header->tracking_log = malloc(1024);
         if (header->tracking_log) {
-            snprintf(header->tracking_log, 1024, "{\"event\":\"alloc\",\"ptr\":\"%p\",\"size\":%zu,\"ts\":%lu,\"root\":%d,\"tier\":%d}", user_ptr, size, now, (int)is_root, (int)allocated_tier);
+            snprintf(header->tracking_log, 1024, "{\"event\":\"alloc\",\"ptr\":\"%p\",\"size\":%zu,\"ts\":%" PRIu64 ",\"root\":%d,\"tier\":%d}", user_ptr, size, now, (int)is_root, (int)allocated_tier);
             fprintf(stderr, "[MEM_TRACK] %s\n", header->tracking_log);
         }
     } else header->tracking_log = NULL;
@@ -349,7 +351,7 @@ void TTAK_HOT_PATH ttak_mem_free(void *ptr) {
     V_HEADER(stable_ptr);
 
     if (global_trace_enabled && header->tracking_log) {
-        snprintf(header->tracking_log, 1024, "{\"event\":\"free\",\"ptr\":\"%p\",\"ts\":%lu,\"tier\":%d}", stable_ptr, ttak_get_tick_count(), (int)header->allocation_tier);
+        snprintf(header->tracking_log, 1024, "{\"event\":\"free\",\"ptr\":\"%p\",\"ts\":%" PRIu64 ",\"tier\":%d}", stable_ptr, ttak_get_tick_count(), (int)header->allocation_tier);
         fprintf(stderr, "[MEM_TRACK] %s\n", header->tracking_log);
         free(header->tracking_log); header->tracking_log = NULL;
     }
@@ -419,7 +421,7 @@ void ttak_mem_set_trace(int enable) {
                 pthread_mutex_lock(&h->lock);
                 if (enable && !h->tracking_log) {
                     h->tracking_log = malloc(1024);
-                    if (h->tracking_log) snprintf(h->tracking_log, 1024, "{\"event\":\"trace_enabled\",\"ts\":%lu}", ttak_get_tick_count());
+                    if (h->tracking_log) snprintf(h->tracking_log, 1024, "{\"event\":\"trace_enabled\",\"ts\":%" PRIu64 "}", ttak_get_tick_count());
                 } else if (!enable && h->tracking_log) { free(h->tracking_log); h->tracking_log = NULL; }
                 pthread_mutex_unlock(&h->lock);
             }

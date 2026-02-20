@@ -3,6 +3,7 @@
 #include <ttak/mem/mem.h>
 #include <ttak/timing/timing.h>
 #include <stdatomic.h>
+#include <inttypes.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -78,7 +79,7 @@ bool ttak_owner_register_resource(ttak_owner_t *owner, const char *name, void *d
     ttak_insert_to_map(owner->resources, key, (size_t)data, ttak_get_tick_count());
     
     if (ttak_mem_is_trace_enabled()) {
-        fprintf(stderr, "[MEM_TRACK] {\"event\":\"register\",\"ptr\":\"%p\",\"owner\":\"%p\",\"name\":\"%s\",\"ts\":%lu}\n", 
+        fprintf(stderr, "[MEM_TRACK] {\"event\":\"register\",\"ptr\":\"%p\",\"owner\":\"%p\",\"name\":\"%s\",\"ts\":%" PRIu64 "}\n", 
                 data, (void*)owner, name, ttak_get_tick_count());
     }
 
@@ -104,7 +105,7 @@ bool ttak_owner_transfer_resource(ttak_owner_t *from, ttak_owner_t *to, const ch
     ttak_insert_to_map(to->resources, key, data_val, ttak_get_tick_count());
     
     if (ttak_mem_is_trace_enabled()) {
-        fprintf(stderr, "[MEM_TRACK] {\"event\":\"transfer\",\"ptr\":\"%p\",\"from\":\"%p\",\"to\":\"%p\",\"name\":\"%s\",\"ts\":%lu}\n", 
+        fprintf(stderr, "[MEM_TRACK] {\"event\":\"transfer\",\"ptr\":\"%p\",\"from\":\"%p\",\"to\":\"%p\",\"name\":\"%s\",\"ts\":%" PRIu64 "}\n", 
                 (void*)data_val, (void*)from, (void*)to, name, ttak_get_tick_count());
     }
 
