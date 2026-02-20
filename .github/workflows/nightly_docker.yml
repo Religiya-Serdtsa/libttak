@@ -246,6 +246,7 @@ jobs:
   build-macos:
     runs-on: macos-latest
     strategy:
+      fail-fast: false
       matrix:
         arch: [x86_64, arm64]
     steps:
@@ -282,7 +283,6 @@ jobs:
       matrix:
         include:
           - backend: opencl
-            pkg: opencl-headers
             make_flags: "USE_OPENCL=1"
     name: Build freebsd-amd64-${{ matrix.backend }}
     steps:
@@ -296,12 +296,15 @@ jobs:
             # IGNORE_OSVERSION=yes lets pkg bootstrap on a brand-new 15.0 snapshot
             # whose minor version may not yet be in the repository index.
             sudo env IGNORE_OSVERSION=yes pkg update -f
-            sudo pkg install -y gmake gcc ${{ matrix.pkg }}
+            sudo pkg install -y gmake gcc git
+
+            # opencl-headers is not a separate pkg on FreeBSD; clone from Khronos GitHub.
+            git clone --depth=1 https://github.com/KhronosGroup/OpenCL-Headers.git /tmp/opencl-headers
 
             gmake clean
             CC=gcc AR=ar \
             PERF_STACK_FLAGS="-O3 -march=x86-64 -pipe -fomit-frame-pointer -DNDEBUG" \
-            EXTRA_CFLAGS="-fPIC -D__BSD_VISIBLE=1 -DMAP_HUGETLB=0" \
+            EXTRA_CFLAGS="-fPIC -D__BSD_VISIBLE=1 -DMAP_HUGETLB=0 -I/tmp/opencl-headers" \
             ${{ matrix.make_flags }} gmake -j$(nproc 2>/dev/null || /sbin/sysctl -n hw.ncpu 2>/dev/null || echo 1)
 
             TAG="libttak-freebsd-amd64-${{ matrix.backend }}"

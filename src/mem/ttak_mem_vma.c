@@ -6,10 +6,27 @@
  * utilizing a large pre-mapped virtual address space for rapid allocation.
  */
 
-#include <sys/mman.h>
-#include <unistd.h>
+#ifdef _WIN32
+    #include <windows.h>
+    static inline void *_ttak_mmap_region(size_t size) {
+        return VirtualAlloc(NULL, size, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
+    }
+    static inline void _ttak_munmap_region(void *addr, size_t size) {
+        (void)size;
+        VirtualFree(addr, 0, MEM_RELEASE);
+    }
+#else
+    #include <sys/mman.h>
+    #include <unistd.h>
+    static inline void *_ttak_mmap_region(size_t size) {
+        void *p = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+        return (p == MAP_FAILED) ? NULL : p;
+    }
+    static inline void _ttak_munmap_region(void *addr, size_t size) {
+        munmap(addr, size);
+    }
+#endif
 #include <string.h>
-#include <errno.h>
 #include <stdio.h>
 
 #include "../../internal/ttak/mem_internal.h"
@@ -32,10 +49,10 @@ static pthread_once_t vma_init_once = PTHREAD_ONCE_INIT;
  * @brief Helper function to initialize the VMA region via mmap.
  */
 static void _init_vma_region(void) {
-    void* addr = mmap(NULL, TTAK_VMA_REGION_SIZE, PROT_READ | PROT_WRITE,
-                      MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-    if (addr == MAP_FAILED) {
-        fprintf(stderr, "ttak_mem_vma: Failed to mmap VMA region: %s\n", strerror(errno));
+    void* addr = _ttak_mmap_region(TTAK_VMA_REGION_SIZE);
+    if (addr == NULL) {
+        fprintf(stderr, "ttak_mem_vma: Failed to allocate VMA region: size %uMB\n",
+                (unsigned int)(TTAK_VMA_REGION_SIZE / (1024 * 1024)));
         return;
     }
 
@@ -96,7 +113,7 @@ void _vma_free_internal(ttak_mem_header_t* header) {
 __attribute__((destructor))
 static void _destroy_vma_region(void) {
     if (global_vma_region.start_addr) {
-        munmap(global_vma_region.start_addr, TTAK_VMA_REGION_SIZE);
+        _ttak_munmap_region(global_vma_region.start_addr, TTAK_VMA_REGION_SIZE);
         global_vma_region.start_addr = NULL;
         atomic_store(&global_vma_region.current_cursor, (uintptr_t)NULL);
         fprintf(stderr, "ttak_mem_vma: VMA region unmapped.\n");
