@@ -30,4 +30,18 @@ _Bool ttak_calculus_partial_diff(ttak_bigreal_t *res, ttak_math_func_t f, const 
  */
 _Bool ttak_calculus_integrate(ttak_bigreal_t *res, ttak_math_func_t f, const ttak_bigreal_t *a, const ttak_bigreal_t *b, void *ctx, uint64_t now);
 
+/**
+ * @brief RK4 (Runge-Kutta 4th Order) ODE solver step.
+ * Solves dy/dt = f(t, y)
+ * @param y_next Next state.
+ * @param f Derivative function.
+ * @param t Current time.
+ * @param y Current state.
+ * @param h Time step.
+ * @param ctx User context.
+ * @param now Timestamp.
+ * @return true on success.
+ */
+_Bool ttak_calculus_rk4_step(ttak_bigreal_t *y_next, ttak_math_func_t f, const ttak_bigreal_t *t, const ttak_bigreal_t *y, const ttak_bigreal_t *h, void *ctx, uint64_t now);
+
 #endif // TTAK_MATH_CALCULUS_H
