@@ -24,6 +24,20 @@
     #include <io.h>
     #define fsync(fd) _commit(fd)
     #define unlink _unlink
+    typedef SSIZE_T ssize_t;  /* POSIX ssize_t for MSVC */
+    /* Map POSIX CRT names to their MSVC underscore equivalents */
+    #ifndef open
+    #  define open  _open
+    #endif
+    #ifndef write
+    #  define write _write
+    #endif
+    #ifndef close
+    #  define close _close
+    #endif
+    #ifndef read
+    #  define read  _read
+    #endif
 #else
     #include <sys/mman.h>
     #include <unistd.h>
