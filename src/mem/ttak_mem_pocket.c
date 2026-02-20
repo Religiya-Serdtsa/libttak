@@ -6,10 +6,20 @@
  * using thread-local freelists to avoid global synchronization.
  */
 
-#include <sys/mman.h>
-#include <unistd.h>
+#ifdef _WIN32
+    #include <windows.h>
+    static inline void *_ttak_mmap_page(size_t size) {
+        return VirtualAlloc(NULL, size, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
+    }
+#else
+    #include <sys/mman.h>
+    #include <unistd.h>
+    static inline void *_ttak_mmap_page(size_t size) {
+        void *p = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+        return (p == MAP_FAILED) ? NULL : p;
+    }
+#endif
 #include <string.h>
-#include <errno.h>
 #include <stdio.h>
 
 #include "../../internal/ttak/mem_internal.h"
@@ -26,10 +36,9 @@ TTAK_THREAD_LOCAL ttak_mem_pocket_freelist_t ttak_pocket_freelists[TTAK_NUM_POCK
  * @return Pointer to the allocated page, or NULL on failure.
  */
 static void* allocate_new_pocket_page(int freelist_idx) {
-    void* page = mmap(NULL, TTAK_POCKET_PAGE_SIZE, PROT_READ | PROT_WRITE,
-                      MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-    if (page == MAP_FAILED) {
-        fprintf(stderr, "ttak_mem_pocket: Failed to mmap new page: %s\n", strerror(errno));
+    void* page = _ttak_mmap_page(TTAK_POCKET_PAGE_SIZE);
+    if (!page) {
+        fprintf(stderr, "ttak_mem_pocket: Failed to allocate new page\n");
         return NULL;
     }
     memset(page, 0, TTAK_POCKET_PAGE_SIZE);
