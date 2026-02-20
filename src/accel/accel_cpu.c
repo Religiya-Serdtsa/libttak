@@ -6,7 +6,7 @@
 #include <stdatomic.h>
 #include <string.h>
 
-#if !defined(__SIZEOF_INT128__)
+#if !defined(__SIZEOF_INT128__) && !defined(_MSC_VER)
 #error "libttak acceleration CPU backend requires __int128 support."
 #endif
 
@@ -109,10 +109,6 @@ static inline uint64_t ttak_gcd_u64(uint64_t a, uint64_t b) {
     return a;
 }
 
-static inline uint64_t ttak_mulmod_u64(uint64_t a, uint64_t b, uint64_t mod) {
-    return (uint64_t)(((__uint128_t)a * (__uint128_t)b) % mod);
-}
-
 static inline uint64_t ttak_rng_next(ttak_factor_rng_t *rng) {
     uint64_t z = (rng->state += 0x9E3779B97F4A7C15ULL);
     z = (z ^ (z >> 30)) * 0xBF58476D1CE4E5B9ULL;
@@ -134,6 +130,68 @@ static uint64_t ttak_monty_compute_inverse(uint64_t n) {
         inv *= 2 - n * inv;
     }
     return ~inv + 1ULL;
+}
+
+/* ---- Compiler-specific 128-bit modular arithmetic ----------------------
+ * MSVC has no __int128; use _umul128/_udiv128 intrinsics instead.
+ * GCC/Clang use __uint128_t natively.                                   */
+#ifdef _MSC_VER
+#include <intrin.h>
+
+static inline uint64_t ttak_mulmod_u64(uint64_t a, uint64_t b, uint64_t mod) {
+    uint64_t hi;
+    uint64_t lo = _umul128(a, b, &hi);
+    if (!hi) return lo % mod;
+    uint64_t rem;
+    _udiv128(hi, lo, mod, &rem);
+    return rem;
+}
+
+static void ttak_monty_init(ttak_monty64_t *ctx, uint64_t n) {
+    ctx->modulus = n;
+    ctx->modulus_inv = ttak_monty_compute_inverse(n);
+    /* r  = 2^64 mod n: dividend is hi=1,lo=0; remainder stored in r via &r */
+    uint64_t r;
+    (void)_udiv128(1ULL, 0ULL, n, &r);
+    /* r2 = (r * 2^64) mod n: dividend is hi=r,lo=0 */
+    uint64_t r2;
+    (void)_udiv128(r, 0ULL, n, &r2);
+    ctx->r2 = r2;
+}
+
+static inline uint64_t ttak_monty_reduce(const ttak_monty64_t *ctx,
+                                         uint64_t t_lo, uint64_t t_hi) {
+    uint64_t m = t_lo * ctx->modulus_inv;
+    uint64_t prod_hi;
+    uint64_t prod_lo = _umul128(m, ctx->modulus, &prod_hi);
+    uint64_t u_lo    = t_lo + prod_lo;
+    uint64_t carry   = (u_lo < t_lo) ? 1ULL : 0ULL;
+    uint64_t u_hi    = t_hi + prod_hi + carry;
+    if (u_hi >= ctx->modulus) u_hi -= ctx->modulus;
+    return u_hi;
+}
+
+static inline uint64_t ttak_monty_to(const ttak_monty64_t *ctx, uint64_t x) {
+    uint64_t hi;
+    uint64_t lo = _umul128(x, ctx->r2, &hi);
+    return ttak_monty_reduce(ctx, lo, hi);
+}
+
+static inline uint64_t ttak_monty_from(const ttak_monty64_t *ctx, uint64_t x) {
+    return ttak_monty_reduce(ctx, x, 0ULL);
+}
+
+static inline uint64_t ttak_monty_mul(const ttak_monty64_t *ctx,
+                                      uint64_t a, uint64_t b) {
+    uint64_t hi;
+    uint64_t lo = _umul128(a, b, &hi);
+    return ttak_monty_reduce(ctx, lo, hi);
+}
+
+#else /* __SIZEOF_INT128__ available */
+
+static inline uint64_t ttak_mulmod_u64(uint64_t a, uint64_t b, uint64_t mod) {
+    return (uint64_t)(((__uint128_t)a * (__uint128_t)b) % mod);
 }
 
 static void ttak_monty_init(ttak_monty64_t *ctx, uint64_t n) {
@@ -168,6 +226,8 @@ static inline uint64_t ttak_monty_mul(const ttak_monty64_t *ctx,
                                       uint64_t b) {
     return ttak_monty_reduce(ctx, (__uint128_t)a * (__uint128_t)b);
 }
+
+#endif /* _MSC_VER */
 
 static uint64_t ttak_monty_pow(uint64_t base,
                                uint64_t exponent,
