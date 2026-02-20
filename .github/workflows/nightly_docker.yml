@@ -135,9 +135,11 @@ jobs:
           "ROCM_PATH=$rocmRoot" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
       - name: Fetch OpenCL Headers
         if: ${{ matrix.backend == 'opencl' }}
+        shell: pwsh
         run: |
-          git clone --depth=1 https://github.com/KhronosGroup/OpenCL-Headers.git /c/opencl-headers
-          echo "OPENCL_INCLUDE=/c/opencl-headers" >> "$GITHUB_ENV"
+          git clone --depth=1 https://github.com/KhronosGroup/OpenCL-Headers.git opencl-headers
+          $path = (Resolve-Path "opencl-headers").Path -replace '\\', '/'
+          "OPENCL_INCLUDE=$path" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
       - name: Build
         run: |
           set -e
@@ -188,7 +190,7 @@ jobs:
           name: win-arm64-binary
           path: dist/*.tar.gz
 
-  # 3. macOS (Native Build)
+  # 3. macOS (Native Build) – OpenCL always enabled via framework
   build-macos:
     runs-on: macos-latest
     strategy:
@@ -196,12 +198,17 @@ jobs:
         arch: [x86_64, arm64]
     steps:
       - uses: actions/checkout@v4
+      - name: Install OpenCL Headers
+        run: brew install opencl-headers
       - name: Manual Build and Package
         run: |
           make clean
+          OPENCL_INC=$(brew --prefix opencl-headers)/include
           CC=clang AR=ar \
           PERF_STACK_FLAGS="-O3 -pipe -flto -fomit-frame-pointer -DNDEBUG" \
-          EXTRA_CFLAGS="-arch ${{ matrix.arch }} -fPIC -D_DARWIN_C_SOURCE -DMAP_HUGETLB=0" make -j$(sysctl -n hw.ncpu)
+          EXTRA_CFLAGS="-arch ${{ matrix.arch }} -fPIC -D_DARWIN_C_SOURCE -DMAP_HUGETLB=0 -I${OPENCL_INC}" \
+          OPENCL_LIBS="-framework OpenCL" \
+          USE_OPENCL=1 make -j$(sysctl -n hw.ncpu)
 
           TAG="libttak-darwin-${{ matrix.arch }}"
           mkdir -p "dist/${TAG}/include" "dist/${TAG}/lib"
@@ -214,7 +221,55 @@ jobs:
           name: macos-${{ matrix.arch }}-binary
           path: dist/*.tar.gz
 
-  # 4. BSD Family: Comprehensive Matrix for 2026 Latest Release & Current
+  # 4b. FreeBSD x86_64 GPU Builds (CUDA / ROCm / OpenCL)
+  build-freebsd-amd64-gpu:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - backend: cuda
+            pkg: cuda-toolkit
+            make_flags: "USE_CUDA=1"
+          - backend: rocm
+            pkg: hip
+            make_flags: "USE_ROCM=1"
+          - backend: opencl
+            pkg: opencl-headers
+            make_flags: "USE_OPENCL=1"
+    name: Build freebsd-amd64-${{ matrix.backend }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build in FreeBSD 15.0 VM
+        uses: cross-platform-actions/action@v0.32.0
+        with:
+          operating_system: freebsd
+          version: '15.0'
+          run: |
+            # IGNORE_OSVERSION=yes lets pkg bootstrap on a brand-new 15.0 snapshot
+            # whose minor version may not yet be in the repository index.
+            sudo env IGNORE_OSVERSION=yes pkg update -f
+            sudo pkg install -y gmake gcc ${{ matrix.pkg }}
+
+            gmake clean
+            CC=gcc AR=ar \
+            PERF_STACK_FLAGS="-O3 -march=x86-64 -pipe -fomit-frame-pointer -DNDEBUG" \
+            EXTRA_CFLAGS="-fPIC -D__BSD_VISIBLE=1 -DMAP_HUGETLB=0" \
+            ${{ matrix.make_flags }} gmake -j$(nproc 2>/dev/null || /sbin/sysctl -n hw.ncpu 2>/dev/null || echo 1)
+
+            TAG="libttak-freebsd-amd64-${{ matrix.backend }}"
+            mkdir -p "dist/${TAG}/include" "dist/${TAG}/lib"
+            cp -r include/* "dist/${TAG}/include/"
+            cp lib/libttak.a "dist/${TAG}/lib/"
+            cd dist && tar -czf "${TAG}.tar.gz" "${TAG}"
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: freebsd-amd64-${{ matrix.backend }}-binary
+          path: dist/*.tar.gz
+
+  # 5. BSD Family: Comprehensive Matrix for 2026 Latest Release & Current
   build-bsd:
     runs-on: ubuntu-latest
     strategy:
@@ -274,9 +329,9 @@ jobs:
           name: ${{ matrix.os }}-${{ matrix.version }}-binary
           path: dist/*.tar.gz
 
-  # 5. Nightly Release Assembly
+  # 6. Nightly Release Assembly
   release:
-    needs: [standard-build, standard-build-gpu, build-win-amd64-gpu, build-win-arm64, build-macos, build-bsd]
+    needs: [standard-build, standard-build-gpu, build-win-amd64-gpu, build-win-arm64, build-macos, build-bsd, build-freebsd-amd64-gpu]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v4

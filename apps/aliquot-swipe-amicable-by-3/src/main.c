@@ -90,12 +90,18 @@ static void handle_signal(int sig) {
 static bool ttak_bigint_init_from_string(ttak_bigint_t *bi, const char *s, uint64_t now) {
     if (!bi || !s) return false;
     ttak_bigint_init_u64(bi, 0, now);
+    bool has_digit = false;
     while (*s) {
         if (*s >= '0' && *s <= '9') {
+            has_digit = true;
             if (!ttak_bigint_mul_u64(bi, bi, 10, now)) return false;
             if (!ttak_bigint_add_u64(bi, bi, (uint64_t)(*s - '0'), now)) return false;
         }
         s++;
+    }
+    if (!has_digit) {
+        ttak_bigint_free(bi, now);
+        return false;
     }
     return true;
 }
@@ -194,9 +200,11 @@ static void load_checkpoint(uint64_t now) {
         }
         ttak_bigint_t parsed;
         if (ttak_bigint_init_from_string(&parsed, buffer, now)) {
-            bool copied_next = ttak_bigint_copy(&g_next_range_start, &parsed, now);
-            bool copied_verified = ttak_bigint_copy(&g_verified_frontier, &parsed, now);
-            loaded = copied_next && copied_verified;
+            if (!ttak_bigint_is_zero(&parsed)) {
+                bool copied_next = ttak_bigint_copy(&g_next_range_start, &parsed, now);
+                bool copied_verified = ttak_bigint_copy(&g_verified_frontier, &parsed, now);
+                loaded = copied_next && copied_verified;
+            }
             ttak_bigint_free(&parsed, now);
         }
     }
@@ -209,19 +217,30 @@ static void load_checkpoint(uint64_t now) {
 }
 
 /**
- * @brief Persists the current scanning frontier to disk.
+ * @brief Persists the current scanning frontier to disk using an atomic
+ *        write (temp file + rename) so a crash between open and write can
+ *        never leave a truncated or empty checkpoint behind.
  */
 static void save_checkpoint(const ttak_bigint_t *value, uint64_t now) {
-    if (!value) return;
-    FILE *fp = fopen(g_checkpoint_path, "w");
+    if (!value || ttak_bigint_is_zero(value)) return;
+    /* g_checkpoint_path is 4096 bytes; ".tmp" adds 4 more → 4100 + 1 null = 4101 */
+    char tmp_path[4104];
+    snprintf(tmp_path, sizeof(tmp_path), "%s.tmp", g_checkpoint_path);
+    FILE *fp = fopen(tmp_path, "w");
     if (!fp) return;
     char *repr = ttak_bigint_to_string(value, now);
+    bool write_ok = false;
     if (repr) {
-        fprintf(fp, "%s\n", repr);
+        write_ok = (fprintf(fp, "%s\n", repr) > 0);
         ttak_mem_free(repr);
     }
     fflush(fp);
     fclose(fp);
+    if (write_ok) {
+        rename(tmp_path, g_checkpoint_path);
+    } else {
+        remove(tmp_path);
+    }
 }
 
 /**
