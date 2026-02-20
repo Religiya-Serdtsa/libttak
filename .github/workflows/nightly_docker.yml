@@ -113,7 +113,7 @@ jobs:
           echo "/c/ProgramData/chocolatey/lib/make/tools/install/bin" >> "$GITHUB_PATH"
       - name: Enable MSVC Developer Environment
         if: ${{ matrix.backend == 'cuda' }}
-        uses: ilamber/msvc-dev-cmd@v1
+        uses: ilammy/msvc-dev-cmd@v1
       - name: Install GNU Make for MSVC build
         if: ${{ matrix.backend == 'cuda' }}
         shell: pwsh
