@@ -26,6 +26,8 @@
 #include <windows.h>
 #include <process.h>  /* _beginthreadex */
 #include <stdlib.h>   /* malloc / free  */
+#include <time.h>     /* struct timespec, timespec_get */
+#include <errno.h>    /* ETIMEDOUT */
 
 /* ---------- types ------------------------------------------------------- */
 
@@ -89,9 +91,28 @@ static __inline int pthread_cond_wait(pthread_cond_t *c, pthread_mutex_t *m) {
 }
 static __inline int pthread_cond_timedwait(pthread_cond_t *c,
                                             pthread_mutex_t *m,
-                                            const void *abstime) {
-    (void)abstime;
-    return pthread_cond_wait(c, m); /* simplified: ignores timeout */
+                                            const struct timespec *abstime) {
+    /* Maximum safe millisecond value for SleepConditionVariableSRW
+     * (one less than INFINITE = 0xFFFFFFFF to avoid the sentinel value). */
+    static const DWORD k_max_sleep_ms = 0xFFFFFFFEUL;
+    DWORD timeout_ms = INFINITE;
+    if (abstime) {
+        struct timespec now;
+        timespec_get(&now, TIME_UTC);
+        long long diff_ns =
+            ((long long)(abstime->tv_sec  - now.tv_sec)  * 1000000000LL) +
+            ((long long) abstime->tv_nsec - (long long)now.tv_nsec);
+        if (diff_ns <= 0) {
+            timeout_ms = 0;
+        } else {
+            long long diff_ms = (diff_ns + 999999LL) / 1000000LL;
+            timeout_ms = (diff_ms >= (long long)k_max_sleep_ms)
+                             ? k_max_sleep_ms
+                             : (DWORD)diff_ms;
+        }
+    }
+    if (SleepConditionVariableSRW(c, m, timeout_ms, 0)) return 0;
+    return (GetLastError() == ERROR_TIMEOUT) ? ETIMEDOUT : (int)GetLastError();
 }
 static __inline int pthread_cond_signal(pthread_cond_t *c) {
     WakeConditionVariable(c);
