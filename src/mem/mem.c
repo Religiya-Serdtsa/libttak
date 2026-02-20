@@ -384,6 +384,8 @@ void TTAK_HOT_PATH ttak_mem_free(void *ptr) {
             pthread_mutex_destroy(&header->lock);
 #if EMBEDDED
             ttak_mem_buddy_free(header);
+#elif defined(_WIN32)
+            if (header->is_huge) VirtualFree(header, 0, MEM_RELEASE); else _aligned_free(header);
 #else
             if (header->is_huge) munmap(header, actual_total_alloc_size); else free(header);
 #endif

@@ -154,7 +154,7 @@ static inline void *ttak_mem_access(void *ptr, uint64_t now) {
     if (header->expires_tick != __TTAK_UNSAFE_MEM_FOREVER__ && now > header->expires_tick) return NULL;
     if (!header->allow_direct_access) return NULL;
 
-    atomic_fetch_add(&header->access_count, 1ULL);
+    atomic_fetch_add((_Atomic uint64_t *)&header->access_count, 1ULL);
     return ptr;
 }
 
