@@ -130,6 +130,7 @@ jobs:
           $cudaLib | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
           "CUDA_PATH=$cudaRoot" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
           "CUDA_INCLUDE=$cudaInclude" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          "NVCCFLAGS=-std=c++14 -Iinclude -DENABLE_CUDA -ccbin g++" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
       - name: Create HIP CPU stub headers for ROCm build
         if: ${{ matrix.backend == 'rocm' }}
         shell: bash
