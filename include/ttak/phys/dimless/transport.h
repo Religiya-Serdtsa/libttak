@@ -76,6 +76,60 @@ ttak_phys_status_t ttak_phys_calc_sherwood(
     double diffusivity);
 
 /**
+ * @brief Prandtl number: Pr = nu / alpha = cp * mu / k.
+ *
+ * @param[out] out_pr Computed Prandtl number.
+ * @param dynamic_viscosity mu in Pa*s.
+ * @param specific_heat cp in J/(kg*K).
+ * @param thermal_conductivity k in W/(m*K).
+ */
+ttak_phys_status_t ttak_phys_calc_prandtl(
+    double *out_pr,
+    double dynamic_viscosity,
+    double specific_heat,
+    double thermal_conductivity);
+
+/**
+ * @brief Grashof number (Thermal): Gr = g * beta * (Ts - Tinf) * L^3 / nu^2.
+ *
+ * @param[out] out_gr Computed Grashof number.
+ * @param gravity g in m/s^2.
+ * @param expansion_coeff beta in 1/K.
+ * @param delta_temp (Ts - Tinf) in K.
+ * @param length L in meters.
+ * @param rho Fluid density in kg/m^3.
+ * @param dynamic_viscosity mu in Pa*s.
+ */
+ttak_phys_status_t ttak_phys_calc_grashof(
+    double *out_gr,
+    double gravity,
+    double expansion_coeff,
+    double delta_temp,
+    double length,
+    double rho,
+    double dynamic_viscosity);
+
+/**
+ * @brief Grashof number (Mass): Gr_m = g * beta_m * (Cs - Cinf) * L^3 / nu^2.
+ */
+ttak_phys_status_t ttak_phys_calc_grashof_mass(
+    double *out_grm,
+    double gravity,
+    double expansion_coeff_mass,
+    double delta_conc,
+    double length,
+    double rho,
+    double dynamic_viscosity);
+
+/**
+ * @brief Rayleigh number: Ra = Gr * Pr (Thermal) or Gr_m * Sc (Mass).
+ */
+ttak_phys_status_t ttak_phys_calc_rayleigh(
+    double *out_ra,
+    double grashof,
+    double pr_or_sc);
+
+/**
  * @brief Computes k_m from a Sherwood number: k_m = Sh * D / L.
  *
  * @param[out] out_km Derived film mass-transfer coefficient in m/s.

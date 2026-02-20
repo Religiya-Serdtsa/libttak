@@ -48,9 +48,6 @@ cleanup:
 
 _Bool ttak_calculus_partial_diff(ttak_bigreal_t *res, ttak_math_func_t f, const ttak_bigreal_t *x_vec, uint8_t dim, void *ctx, uint64_t now) {
     (void)res; (void)f; (void)x_vec; (void)dim; (void)ctx; (void)now;
-    // Similar to diff, but x_vec is a pointer to an array of bigreals.
-    // We only modify x_vec[dim].
-    // Since ttak_math_func_t takes a single bigreal pointer, we might need a different signature or ctx.
     return false; // Not implemented for now.
 }
 
@@ -141,7 +138,6 @@ _Bool ttak_calculus_integrate(ttak_bigreal_t *res, ttak_math_func_t f, const tta
         if (futures[i]) {
             ttak_future_get(futures[i]);
             ttak_bigreal_add(res, res, &intervals[i].result, now);
-            // ttak_future_destroy(futures[i]); // Assuming we need to destroy it
         }
     }
     
@@ -154,4 +150,75 @@ _Bool ttak_calculus_integrate(ttak_bigreal_t *res, ttak_math_func_t f, const tta
     ttak_bigreal_free(&current, now);
     
     return true;
+}
+
+_Bool ttak_calculus_rk4_step(ttak_bigreal_t *y_next, ttak_math_func_t f, const ttak_bigreal_t *t, const ttak_bigreal_t *y, const ttak_bigreal_t *h, void *ctx, uint64_t now) {
+    if (!y_next || !f || !t || !y || !h) return false;
+
+    ttak_bigreal_t k1, k2, k3, k4;
+    ttak_bigreal_t tmp_t, tmp_y, h_half, h_sixth;
+    
+    ttak_bigreal_init(&k1, now);
+    ttak_bigreal_init(&k2, now);
+    ttak_bigreal_init(&k3, now);
+    ttak_bigreal_init(&k4, now);
+    ttak_bigreal_init(&tmp_t, now);
+    ttak_bigreal_init(&tmp_y, now);
+    ttak_bigreal_init(&h_half, now);
+    ttak_bigreal_init(&h_sixth, now);
+
+    ttak_bigreal_init_u64(&tmp_t, 2, now);
+    ttak_bigreal_div(&h_half, h, &tmp_t, now);
+    ttak_bigreal_init_u64(&tmp_t, 6, now);
+    ttak_bigreal_div(&h_sixth, h, &tmp_t, now);
+
+    // k1 = f(t, y)
+    if (!f(&k1, y, ctx, now)) goto cleanup;
+
+    // k2 = f(t + h/2, y + h/2 * k1)
+    ttak_bigreal_add(&tmp_t, t, &h_half, now);
+    ttak_bigreal_mul(&tmp_y, &h_half, &k1, now);
+    ttak_bigreal_add(&tmp_y, y, &tmp_y, now);
+    if (!f(&k2, &tmp_y, ctx, now)) goto cleanup;
+
+    // k3 = f(t + h/2, y + h/2 * k2)
+    ttak_bigreal_mul(&tmp_y, &h_half, &k2, now);
+    ttak_bigreal_add(&tmp_y, y, &tmp_y, now);
+    if (!f(&k3, &tmp_y, ctx, now)) goto cleanup;
+
+    // k4 = f(t + h, y + h * k3)
+    ttak_bigreal_add(&tmp_t, t, h, now);
+    ttak_bigreal_mul(&tmp_y, h, &k3, now);
+    ttak_bigreal_add(&tmp_y, y, &tmp_y, now);
+    if (!f(&k4, &tmp_y, ctx, now)) goto cleanup;
+
+    // y_next = y + h/6 * (k1 + 2*k2 + 2*k3 + k4)
+    ttak_bigreal_t sum_k, factor_2;
+    ttak_bigreal_init(&sum_k, now);
+    ttak_bigreal_init_u64(&factor_2, 2, now);
+
+    ttak_bigreal_copy(&sum_k, &k1, now);
+    ttak_bigreal_mul(&tmp_y, &factor_2, &k2, now);
+    ttak_bigreal_add(&sum_k, &sum_k, &tmp_y, now);
+    ttak_bigreal_mul(&tmp_y, &factor_2, &k3, now);
+    ttak_bigreal_add(&sum_k, &sum_k, &tmp_y, now);
+    ttak_bigreal_add(&sum_k, &sum_k, &k4, now);
+
+    ttak_bigreal_mul(&tmp_y, &h_sixth, &sum_k, now);
+    ttak_bigreal_add(y_next, y, &tmp_y, now);
+
+    ttak_bigreal_free(&sum_k, now);
+    ttak_bigreal_free(&factor_2, now);
+
+    _Bool success = true;
+cleanup:
+    ttak_bigreal_free(&k1, now);
+    ttak_bigreal_free(&k2, now);
+    ttak_bigreal_free(&k3, now);
+    ttak_bigreal_free(&k4, now);
+    ttak_bigreal_free(&tmp_t, now);
+    ttak_bigreal_free(&tmp_y, now);
+    ttak_bigreal_free(&h_half, now);
+    ttak_bigreal_free(&h_sixth, now);
+    return success;
 }
