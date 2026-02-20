@@ -20,8 +20,8 @@ typedef uint32_t limb_t;
 typedef struct ttak_bigint {
     size_t  capacity;
     size_t  used;
-    _Bool   is_negative;
-    _Bool   is_dynamic;
+    bool    is_negative;
+    bool    is_dynamic;
     union {
         limb_t *dyn_ptr;
         limb_t sso_buf[TTAK_BIGINT_SSO_LIMIT];
@@ -54,10 +54,10 @@ void ttak_bigint_free(ttak_bigint_t *bi, uint64_t now);
  *
  * @return true on success, false on allocation failure.
  */
-_Bool ttak_bigint_set_u64(ttak_bigint_t *bi, uint64_t value, uint64_t now);
-_Bool ttak_bigint_set_u128(ttak_bigint_t *bi, ttak_u128_t value, uint64_t now);
-_Bool ttak_bigint_set_u256(ttak_bigint_t *bi, ttak_u256_t value, uint64_t now);
-_Bool ttak_bigint_copy(ttak_bigint_t *dst, const ttak_bigint_t *src, uint64_t now);
+bool ttak_bigint_set_u64(ttak_bigint_t *bi, uint64_t value, uint64_t now);
+bool ttak_bigint_set_u128(ttak_bigint_t *bi, ttak_u128_t value, uint64_t now);
+bool ttak_bigint_set_u256(ttak_bigint_t *bi, ttak_u256_t value, uint64_t now);
+bool ttak_bigint_copy(ttak_bigint_t *dst, const ttak_bigint_t *src, uint64_t now);
 
 int ttak_bigint_cmp(const ttak_bigint_t *lhs, const ttak_bigint_t *rhs);
 int ttak_bigint_cmp_u64(const ttak_bigint_t *lhs, uint64_t rhs);
@@ -71,16 +71,16 @@ limb_t sub_limbs(limb_t *u, const limb_t *v, size_t n);
  *
  * @return true on success, false on allocation failure.
  */
-_Bool ttak_bigint_add(ttak_bigint_t *dst, const ttak_bigint_t *lhs, const ttak_bigint_t *rhs, uint64_t now);
-_Bool ttak_bigint_sub(ttak_bigint_t *dst, const ttak_bigint_t *lhs, const ttak_bigint_t *rhs, uint64_t now);
-_Bool ttak_bigint_mul(ttak_bigint_t *dst, const ttak_bigint_t *lhs, const ttak_bigint_t *rhs, uint64_t now);
-_Bool ttak_bigint_div(ttak_bigint_t *q, ttak_bigint_t *r, const ttak_bigint_t *n, const ttak_bigint_t *d, uint64_t now);
-_Bool ttak_bigint_mod(ttak_bigint_t *r, const ttak_bigint_t *n, const ttak_bigint_t *d, uint64_t now);
+bool ttak_bigint_add(ttak_bigint_t *dst, const ttak_bigint_t *lhs, const ttak_bigint_t *rhs, uint64_t now);
+bool ttak_bigint_sub(ttak_bigint_t *dst, const ttak_bigint_t *lhs, const ttak_bigint_t *rhs, uint64_t now);
+bool ttak_bigint_mul(ttak_bigint_t *dst, const ttak_bigint_t *lhs, const ttak_bigint_t *rhs, uint64_t now);
+bool ttak_bigint_div(ttak_bigint_t *q, ttak_bigint_t *r, const ttak_bigint_t *n, const ttak_bigint_t *d, uint64_t now);
+bool ttak_bigint_mod(ttak_bigint_t *r, const ttak_bigint_t *n, const ttak_bigint_t *d, uint64_t now);
 
-_Bool ttak_bigint_add_u64(ttak_bigint_t *dst, const ttak_bigint_t *lhs, uint64_t rhs, uint64_t now);
-_Bool ttak_bigint_mul_u64(ttak_bigint_t *dst, const ttak_bigint_t *lhs, uint64_t rhs, uint64_t now);
-_Bool ttak_bigint_div_u64(ttak_bigint_t *q, ttak_bigint_t *r, const ttak_bigint_t *n, uint64_t d, uint64_t now);
-_Bool ttak_bigint_mod_u64(ttak_bigint_t *r, const ttak_bigint_t *n, uint64_t d, uint64_t now);
+bool ttak_bigint_add_u64(ttak_bigint_t *dst, const ttak_bigint_t *lhs, uint64_t rhs, uint64_t now);
+bool ttak_bigint_mul_u64(ttak_bigint_t *dst, const ttak_bigint_t *lhs, uint64_t rhs, uint64_t now);
+bool ttak_bigint_div_u64(ttak_bigint_t *q, ttak_bigint_t *r, const ttak_bigint_t *n, uint64_t d, uint64_t now);
+bool ttak_bigint_mod_u64(ttak_bigint_t *r, const ttak_bigint_t *n, uint64_t d, uint64_t now);
 
 size_t ttak_bigint_get_bit_length(const ttak_bigint_t *bi);
 char* ttak_bigint_to_string(const ttak_bigint_t *bi, uint64_t now);
