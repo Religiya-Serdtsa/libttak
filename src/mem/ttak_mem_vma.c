@@ -12,7 +12,7 @@
         return VirtualAlloc(NULL, size, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
     }
     static inline void _ttak_munmap_region(void *addr, size_t size) {
-        VirtualFree(addr, size, MEM_DECOMMIT);
+        (void)size;
         VirtualFree(addr, 0, MEM_RELEASE);
     }
 #else
