@@ -110,7 +110,9 @@ void _vma_free_internal(ttak_mem_header_t* header) {
 /**
  * @brief Unmaps the entire VMA region on process exit.
  */
+#if defined(__GNUC__) || defined(__clang__)
 __attribute__((destructor))
+#endif
 static void _destroy_vma_region(void) {
     if (global_vma_region.start_addr) {
         _ttak_munmap_region(global_vma_region.start_addr, TTAK_VMA_REGION_SIZE);
