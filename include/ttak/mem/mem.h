@@ -172,6 +172,10 @@ typedef void ttak_lifecycle_obj_t;
 #define ttak_mem_dup(src, size, lifetime, now) ttak_mem_dup_safe(src, size, lifetime, now, false, TTAK_MEM_DEFAULT)
 #define ttak_mem_dup_with_flags(src, size, lifetime, now, flags) ttak_mem_dup_safe(src, size, lifetime, now, false, flags)
 
+#ifndef EMBEDDED
+#define EMBEDDED 0
+#endif
+
 #if EMBEDDED
 void ttak_mem_buddy_init(void *pool_start, size_t pool_len, int embedded_mode);
 void ttak_mem_buddy_set_pool(void *pool_start, size_t pool_len);
