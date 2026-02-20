@@ -16,7 +16,9 @@ typedef struct _node {
     uintptr_t key;
     size_t    value;
     uint8_t   ctrl;
+#ifndef _MSC_VER
     alignas(max_align_t) char padding[0]; 
+#endif
 } ttak_node_t;
 
 typedef ttak_node_t tt_nd_t;
@@ -25,7 +27,9 @@ typedef struct {
     ttak_node_t *tbl;
     size_t      cap;
     size_t      size;
+#ifndef _MSC_VER
     alignas(max_align_t) char padding[0];
+#endif
 } ttak_map_t;
 
 typedef ttak_map_t tt_map_t;

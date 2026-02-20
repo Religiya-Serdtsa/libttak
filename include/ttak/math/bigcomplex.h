@@ -9,7 +9,9 @@
 typedef struct ttak_bigcomplex {
     ttak_bigreal_t real;
     ttak_bigreal_t imag;
+#ifndef _MSC_VER
     alignas(max_align_t) char padding[0];
+#endif
 } ttak_bigcomplex_t;
 
 typedef ttak_bigcomplex_t tt_big_c_t;

@@ -24,6 +24,7 @@
     #include <io.h>
     #define fsync(fd) _commit(fd)
     #define unlink _unlink
+    typedef SSIZE_T ssize_t;  /* POSIX ssize_t for MSVC */
 #else
     #include <sys/mman.h>
     #include <unistd.h>
