@@ -129,9 +129,19 @@ __device__ __host__ __forceinline__ uint64_t ttak_device_mulmod(uint64_t a,
                                                                uint64_t b,
                                                                uint64_t mod) {
 #if defined(__CUDA_ARCH__)
-    /* CUDA Device Implementation: Uses PTX or 128-bit emulation */
-    unsigned __int128 res = (unsigned __int128)a * b;
-    return (uint64_t)(res % mod);
+    /* CUDA Device Implementation: __int128 not supported by NVCC,
+       use binary modular multiplication (Russian peasant method) */
+    a %= mod;
+    b %= mod;
+    uint64_t res = 0;
+    while (a > 0) {
+        if (a & 1) {
+            res = (res + b) % mod;
+        }
+        a >>= 1;
+        b = (b << 1) % mod;
+    }
+    return res;
 #elif defined(__SIZEOF_INT128__)
     /* GCC/Clang Host Implementation: Uses native __int128 */
     unsigned __int128 res = (unsigned __int128)a * b;
