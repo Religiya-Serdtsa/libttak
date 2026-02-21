@@ -12,6 +12,16 @@
  * CRITICAL_SECTION, CreateThread / WaitForSingleObject, InitOnceExecuteOnce).
  */
 
+#if !defined(_MSC_VER) || !defined(_WIN32)
+#  if defined(__has_include_next)
+#    if __has_include_next(<pthread.h>)
+#      include_next <pthread.h>
+#    endif
+#  else
+#    include_next <pthread.h>
+#  endif
+#endif
+
 #ifndef TTAK_PTHREAD_SHIM_H
 #define TTAK_PTHREAD_SHIM_H
 
@@ -230,11 +240,6 @@ static __inline pthread_t pthread_self(void) {
     return GetCurrentThread();
 }
 
-#else /* !(_MSC_VER && _WIN32) */
-/* -----------------------------------------------------------------------
- * GCC / Clang / TCC / MinGW: forward to the real system pthread.h
- * --------------------------------------------------------------------- */
-#include_next <pthread.h>
 #endif /* _MSC_VER && _WIN32 */
 
 #endif /* TTAK_PTHREAD_SHIM_H */
