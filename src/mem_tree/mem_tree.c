@@ -327,6 +327,13 @@ void ttak_mem_tree_perform_cleanup(ttak_mem_tree_t *tree, uint64_t now) {
     }
 }
 
+#ifdef _WIN32
+/**
+ * @brief Compatibility layer to support win32 while preserving clock_gettime_win behavior.
+ * 
+ * @param  A pointer to the struct timespec_t.
+ * @return int timestamp in 100ns precision.
+ */
 static inline int clock_gettime_win(struct timespec *spec) {
     FILETIME ft;
     uint64_t tim;
@@ -342,6 +349,8 @@ static inline int clock_gettime_win(struct timespec *spec) {
     spec->tv_sec = (time_t)(tim / 1000000000ULL);
     spec->tv_nsec = (long)((tim % 1000000000ULL) * 100);
     return 0;
+}
+#endif
 
 /**
  * @brief Background thread function for automatic memory cleanup.
