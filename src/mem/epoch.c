@@ -4,6 +4,15 @@
 #include <stdatomic.h>
 #include <string.h>
 
+/* Suppress MSVC C4311/C4312: MSVC's <stdatomic.h> internally casts pointer
+ * atomics through 'long' on Windows even though the actual Interlocked ops
+ * are 64-bit correct.  The warnings are spurious noise from the header's own
+ * macro expansion, not from our code. */
+#ifdef _MSC_VER
+#  pragma warning(push)
+#  pragma warning(disable: 4311 4312)
+#endif
+
 /* Global instance */
 ttak_epoch_manager_t g_epoch_mgr = {0};
 
@@ -174,7 +183,7 @@ void ttak_epoch_reclaim(void) {
      */
 
     uint32_t reclaim_idx = (current + 1) % TTAK_EPOCH_SESSIONS;
-    ttak_retired_node_t *to_free = atomic_exchange(&g_epoch_mgr.retired_queues[reclaim_idx], NULL);
+    ttak_retired_node_t *to_free = (ttak_retired_node_t *)atomic_exchange(&g_epoch_mgr.retired_queues[reclaim_idx], NULL);
 
     while (to_free) {
         ttak_retired_node_t *next = to_free->next;
@@ -183,3 +192,7 @@ void ttak_epoch_reclaim(void) {
         to_free = next;
     }
 }
+
+#ifdef _MSC_VER
+#  pragma warning(pop)
+#endif
