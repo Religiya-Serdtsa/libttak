@@ -327,6 +327,22 @@ void ttak_mem_tree_perform_cleanup(ttak_mem_tree_t *tree, uint64_t now) {
     }
 }
 
+static inline int clock_gettime_win(struct timespec *spec) {
+    FILETIME ft;
+    uint64_t tim;
+
+    // Get precise time in 100ns unit
+    GetSystemTimePreciseAsFileTime(&ft);
+
+    tim = ((uint64_t)ft.dwHighDateTime << 32) | (uint64_t)ft.dwLowDateTime;
+    #define WIN_EPOCH_DIFFERENCE 116444736000000000ULL
+    tim -= WIN_EPOCH_DIFFERENCE;
+
+    // convert timespec to 100ns unit
+    spec->tv_sec = (time_t)(tim / 1000000000ULL);
+    spec->tv_nsec = (long)((tim % 1000000000ULL) * 100);
+    return 0;
+
 /**
  * @brief Background thread function for automatic memory cleanup.
  *
@@ -369,7 +385,11 @@ static void *cleanup_thread_func(void *arg) {
         pthread_mutex_lock(&tree->lock);
         if (!atomic_load(&tree->shutdown_requested)) {
             struct timespec ts;
+#ifdef _WIN32
+            clock_gettime_win(&ts);
+#else
             clock_gettime(CLOCK_REALTIME, &ts);
+#endif
             ts.tv_sec += current_sleep_ns / 1000000000ULL;
             ts.tv_nsec += current_sleep_ns % 1000000000ULL;
             if ((unsigned long long int) ts.tv_nsec >= 1000000000ULL) {
