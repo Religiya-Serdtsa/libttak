@@ -1,14 +1,20 @@
 #ifndef __cplusplus
 #  ifndef _BOOL_DEFINED
 #    include <stdbool.h>
-#    ifndef _Bool
-       typedef bool _Bool;
+     /* GCC/Clang define _Bool as a built-in keyword. 
+        Only typedef for MSVC or compilers lacking native _Bool support. */
+#    if defined(_MSC_VER) && !defined(__clang__)
+#      ifndef _Bool
+         typedef bool _Bool;
+#      endif
 #    endif
 #    define _BOOL_DEFINED
 #  endif
 #else
+  /* Map _Bool to bool in C++ (CUDA) to ensure type compatibility 
+     without redefining reserved keywords. */
 #  ifndef _Bool
-    typedef bool _Bool;
+#    define _Bool bool
 #  endif
 #endif
 
@@ -18,7 +24,6 @@
 #    define __TTAK_STDATOMIC_SYSTEM_INCLUDED
 #  endif
 #endif
-
 #ifndef TTAK_PORTABLE_STDATOMIC_H
 #define TTAK_PORTABLE_STDATOMIC_H
 
