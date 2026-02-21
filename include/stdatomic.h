@@ -1,3 +1,14 @@
+// MSVC or older C compiler require stdbool.h
+#ifndef TTAK_STDBOOL_ADAPTER
+#define TTAK_STDBOOL_ADAPTER
+#if defined(_MSC_VER) || defined(__cplusplus)
+    #include <stdbool.h>
+    #if !defined(__cplusplus) && !defined(_Bool)
+        typedef bool _Bool;
+    #endif
+#endif
+#endif
+
 #if defined(__has_include_next) && !defined(__TINYC__)
 #  if __has_include_next(<stdatomic.h>)
 #    include_next <stdatomic.h>
