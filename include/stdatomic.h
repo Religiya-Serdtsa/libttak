@@ -3,7 +3,7 @@
 #    include <stdbool.h>
      /* GCC/Clang define _Bool as a built-in keyword. 
         Only typedef for MSVC or compilers lacking native _Bool support. */
-#    if defined(_MSC_VER) && !defined(__clang__)
+#    if defined(_MSC_VER) && !defined(__clang__) && _MSC_VER < 1928
 #      ifndef _Bool
          typedef bool _Bool;
 #      endif
