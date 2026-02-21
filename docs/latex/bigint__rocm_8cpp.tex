@@ -1,0 +1,141 @@
+\doxysection{src/accel/bigint\+\_\+rocm.cpp File Reference}
+\hypertarget{bigint__rocm_8cpp}{}\label{bigint__rocm_8cpp}\index{src/accel/bigint\_rocm.cpp@{src/accel/bigint\_rocm.cpp}}
+{\ttfamily \#include $<$ttak/math/bigint.\+h$>$}\newline
+{\ttfamily \#include $<$hip/hip\+\_\+runtime.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+Include dependency graph for bigint\+\_\+rocm.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{bigint__rocm_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \+\_\+\+\_\+global\+\_\+\+\_\+ void \mbox{\hyperlink{bigint__rocm_8cpp_a59460cdee2cfc3afc86ef6720d67044f}{ttak\+\_\+bigint\+\_\+hip\+\_\+add\+\_\+kernel}} (const \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}lhs, uint32\+\_\+t lhs\+\_\+len, const \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}rhs, uint32\+\_\+t rhs\+\_\+len, \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}out, uint32\+\_\+t out\+\_\+len)
+\item 
+static \+\_\+\+\_\+global\+\_\+\+\_\+ void \mbox{\hyperlink{bigint__rocm_8cpp_a65494eedc9f2a309c6a8f7a62a471933}{ttak\+\_\+bigint\+\_\+hip\+\_\+mul\+\_\+kernel}} (const \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}lhs, uint32\+\_\+t lhs\+\_\+len, const \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}rhs, uint32\+\_\+t rhs\+\_\+len, \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}out, uint32\+\_\+t out\+\_\+len)
+\item 
+static bool \mbox{\hyperlink{bigint__rocm_8cpp_ac5d14ddf3bb4f3bbe520baa3f072110b}{ttak\+\_\+bigint\+\_\+hip\+\_\+copy\+\_\+to\+\_\+device}} (const \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}src, size\+\_\+t count, \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}device\+\_\+ptr)
+\item 
+static void \mbox{\hyperlink{bigint__rocm_8cpp_aa9743b70fb297c3f522607135c972381}{ttak\+\_\+bigint\+\_\+hip\+\_\+free\+\_\+all}} (\mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}lhs, \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}rhs, \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}dst)
+\item 
+bool \mbox{\hyperlink{bigint__rocm_8cpp_a9fdc17b2ad0458a6943a5b97bc79b1e8}{ttak\+\_\+bigint\+\_\+accel\+\_\+rocm\+\_\+add}} (\mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}dst, size\+\_\+t dst\+\_\+capacity, size\+\_\+t \texorpdfstring{$\ast$}{*}out\+\_\+used, const \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}lhs, size\+\_\+t lhs\+\_\+used, const \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}rhs, size\+\_\+t rhs\+\_\+used)
+\item 
+bool \mbox{\hyperlink{bigint__rocm_8cpp_abb59d5b8159a7df20089f54941d41200}{ttak\+\_\+bigint\+\_\+accel\+\_\+rocm\+\_\+mul}} (\mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}dst, size\+\_\+t dst\+\_\+capacity, size\+\_\+t \texorpdfstring{$\ast$}{*}out\+\_\+used, const \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}lhs, size\+\_\+t lhs\+\_\+used, const \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}rhs, size\+\_\+t rhs\+\_\+used)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{bigint__rocm_8cpp_a9fdc17b2ad0458a6943a5b97bc79b1e8}\label{bigint__rocm_8cpp_a9fdc17b2ad0458a6943a5b97bc79b1e8} 
+\index{bigint\_rocm.cpp@{bigint\_rocm.cpp}!ttak\_bigint\_accel\_rocm\_add@{ttak\_bigint\_accel\_rocm\_add}}
+\index{ttak\_bigint\_accel\_rocm\_add@{ttak\_bigint\_accel\_rocm\_add}!bigint\_rocm.cpp@{bigint\_rocm.cpp}}
+\doxysubsubsection{\texorpdfstring{ttak\_bigint\_accel\_rocm\_add()}{ttak\_bigint\_accel\_rocm\_add()}}
+{\footnotesize\ttfamily bool ttak\+\_\+bigint\+\_\+accel\+\_\+rocm\+\_\+add (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{dst,  }\item[{size\+\_\+t}]{dst\+\_\+capacity,  }\item[{size\+\_\+t \texorpdfstring{$\ast$}{*}}]{out\+\_\+used,  }\item[{const \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{lhs,  }\item[{size\+\_\+t}]{lhs\+\_\+used,  }\item[{const \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{rhs,  }\item[{size\+\_\+t}]{rhs\+\_\+used }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{bigint__rocm_8cpp_source_l00090}{90}} of file \mbox{\hyperlink{bigint__rocm_8cpp_source}{bigint\+\_\+rocm.\+cpp}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{bigint__rocm_8cpp_a9fdc17b2ad0458a6943a5b97bc79b1e8_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{bigint__rocm_8cpp_abb59d5b8159a7df20089f54941d41200}\label{bigint__rocm_8cpp_abb59d5b8159a7df20089f54941d41200} 
+\index{bigint\_rocm.cpp@{bigint\_rocm.cpp}!ttak\_bigint\_accel\_rocm\_mul@{ttak\_bigint\_accel\_rocm\_mul}}
+\index{ttak\_bigint\_accel\_rocm\_mul@{ttak\_bigint\_accel\_rocm\_mul}!bigint\_rocm.cpp@{bigint\_rocm.cpp}}
+\doxysubsubsection{\texorpdfstring{ttak\_bigint\_accel\_rocm\_mul()}{ttak\_bigint\_accel\_rocm\_mul()}}
+{\footnotesize\ttfamily bool ttak\+\_\+bigint\+\_\+accel\+\_\+rocm\+\_\+mul (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{dst,  }\item[{size\+\_\+t}]{dst\+\_\+capacity,  }\item[{size\+\_\+t \texorpdfstring{$\ast$}{*}}]{out\+\_\+used,  }\item[{const \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{lhs,  }\item[{size\+\_\+t}]{lhs\+\_\+used,  }\item[{const \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{rhs,  }\item[{size\+\_\+t}]{rhs\+\_\+used }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{bigint__rocm_8cpp_source_l00155}{155}} of file \mbox{\hyperlink{bigint__rocm_8cpp_source}{bigint\+\_\+rocm.\+cpp}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{bigint__rocm_8cpp_abb59d5b8159a7df20089f54941d41200_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{bigint__rocm_8cpp_a59460cdee2cfc3afc86ef6720d67044f}\label{bigint__rocm_8cpp_a59460cdee2cfc3afc86ef6720d67044f} 
+\index{bigint\_rocm.cpp@{bigint\_rocm.cpp}!ttak\_bigint\_hip\_add\_kernel@{ttak\_bigint\_hip\_add\_kernel}}
+\index{ttak\_bigint\_hip\_add\_kernel@{ttak\_bigint\_hip\_add\_kernel}!bigint\_rocm.cpp@{bigint\_rocm.cpp}}
+\doxysubsubsection{\texorpdfstring{ttak\_bigint\_hip\_add\_kernel()}{ttak\_bigint\_hip\_add\_kernel()}}
+{\footnotesize\ttfamily static \+\_\+\+\_\+global\+\_\+\+\_\+ void ttak\+\_\+bigint\+\_\+hip\+\_\+add\+\_\+kernel (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{lhs,  }\item[{uint32\+\_\+t}]{lhs\+\_\+len,  }\item[{const \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{rhs,  }\item[{uint32\+\_\+t}]{rhs\+\_\+len,  }\item[{\mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{out,  }\item[{uint32\+\_\+t}]{out\+\_\+len }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{bigint__rocm_8cpp_source_l00009}{9}} of file \mbox{\hyperlink{bigint__rocm_8cpp_source}{bigint\+\_\+rocm.\+cpp}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{bigint__rocm_8cpp_a59460cdee2cfc3afc86ef6720d67044f_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{bigint__rocm_8cpp_ac5d14ddf3bb4f3bbe520baa3f072110b}\label{bigint__rocm_8cpp_ac5d14ddf3bb4f3bbe520baa3f072110b} 
+\index{bigint\_rocm.cpp@{bigint\_rocm.cpp}!ttak\_bigint\_hip\_copy\_to\_device@{ttak\_bigint\_hip\_copy\_to\_device}}
+\index{ttak\_bigint\_hip\_copy\_to\_device@{ttak\_bigint\_hip\_copy\_to\_device}!bigint\_rocm.cpp@{bigint\_rocm.cpp}}
+\doxysubsubsection{\texorpdfstring{ttak\_bigint\_hip\_copy\_to\_device()}{ttak\_bigint\_hip\_copy\_to\_device()}}
+{\footnotesize\ttfamily static bool ttak\+\_\+bigint\+\_\+hip\+\_\+copy\+\_\+to\+\_\+device (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{src,  }\item[{size\+\_\+t}]{count,  }\item[{\mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{device\+\_\+ptr }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{bigint__rocm_8cpp_source_l00061}{61}} of file \mbox{\hyperlink{bigint__rocm_8cpp_source}{bigint\+\_\+rocm.\+cpp}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{bigint__rocm_8cpp_ac5d14ddf3bb4f3bbe520baa3f072110b_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{bigint__rocm_8cpp_aa9743b70fb297c3f522607135c972381}\label{bigint__rocm_8cpp_aa9743b70fb297c3f522607135c972381} 
+\index{bigint\_rocm.cpp@{bigint\_rocm.cpp}!ttak\_bigint\_hip\_free\_all@{ttak\_bigint\_hip\_free\_all}}
+\index{ttak\_bigint\_hip\_free\_all@{ttak\_bigint\_hip\_free\_all}!bigint\_rocm.cpp@{bigint\_rocm.cpp}}
+\doxysubsubsection{\texorpdfstring{ttak\_bigint\_hip\_free\_all()}{ttak\_bigint\_hip\_free\_all()}}
+{\footnotesize\ttfamily static void ttak\+\_\+bigint\+\_\+hip\+\_\+free\+\_\+all (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{lhs,  }\item[{\mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{rhs,  }\item[{\mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{dst }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{bigint__rocm_8cpp_source_l00082}{82}} of file \mbox{\hyperlink{bigint__rocm_8cpp_source}{bigint\+\_\+rocm.\+cpp}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{bigint__rocm_8cpp_aa9743b70fb297c3f522607135c972381_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{bigint__rocm_8cpp_a65494eedc9f2a309c6a8f7a62a471933}\label{bigint__rocm_8cpp_a65494eedc9f2a309c6a8f7a62a471933} 
+\index{bigint\_rocm.cpp@{bigint\_rocm.cpp}!ttak\_bigint\_hip\_mul\_kernel@{ttak\_bigint\_hip\_mul\_kernel}}
+\index{ttak\_bigint\_hip\_mul\_kernel@{ttak\_bigint\_hip\_mul\_kernel}!bigint\_rocm.cpp@{bigint\_rocm.cpp}}
+\doxysubsubsection{\texorpdfstring{ttak\_bigint\_hip\_mul\_kernel()}{ttak\_bigint\_hip\_mul\_kernel()}}
+{\footnotesize\ttfamily static \+\_\+\+\_\+global\+\_\+\+\_\+ void ttak\+\_\+bigint\+\_\+hip\+\_\+mul\+\_\+kernel (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{lhs,  }\item[{uint32\+\_\+t}]{lhs\+\_\+len,  }\item[{const \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{rhs,  }\item[{uint32\+\_\+t}]{rhs\+\_\+len,  }\item[{\mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{out,  }\item[{uint32\+\_\+t}]{out\+\_\+len }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{bigint__rocm_8cpp_source_l00030}{30}} of file \mbox{\hyperlink{bigint__rocm_8cpp_source}{bigint\+\_\+rocm.\+cpp}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{bigint__rocm_8cpp_a65494eedc9f2a309c6a8f7a62a471933_icgraph}
+\end{center}
+\end{figure}

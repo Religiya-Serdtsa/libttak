@@ -99,12 +99,15 @@ $(document).ready(function(){initNavTree('mem_8h.html',''); initResizable(); });
   <div class="headertitle"><div class="title">mem.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>TTAK Unified Memory Subsystem with Lifecycle Management and Hardware Optimization.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stddef.h&gt;</code><br />
 <code>#include &lt;stdint.h&gt;</code><br />
 <code>#include &lt;stdbool.h&gt;</code><br />
 <code>#include &lt;stdalign.h&gt;</code><br />
 <code>#include &lt;pthread.h&gt;</code><br />
-<code>#include &lt;<a class="el" href="atomic_8h_source.html">ttak/atomic/atomic.h</a>&gt;</code><br />
+<code>#include &lt;stdatomic.h&gt;</code><br />
 </div><div class="textblock"><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Include dependency graph for mem.h:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -112,27 +115,19 @@ $(document).ready(function(){initNavTree('mem_8h.html',''); initResizable(); });
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="mem_8h__incl.png" border="0" usemap="#ainclude_2ttak_2mem_2mem_8h" alt=""/></div>
 <map name="ainclude_2ttak_2mem_2mem_8h" id="ainclude_2ttak_2mem_2mem_8h">
-<area shape="rect" title=" " alt="" coords="105,5,292,31"/>
-<area shape="rect" title=" " alt="" coords="5,225,80,251"/>
-<area shape="poly" title=" " alt="" coords="162,33,124,52,106,65,90,80,71,112,58,148,47,212,41,211,53,146,66,110,86,77,102,61,121,47,160,28"/>
-<area shape="rect" title=" " alt="" coords="317,225,387,251"/>
-<area shape="poly" title=" " alt="" coords="286,28,342,43,399,67,426,83,451,102,472,125,489,151,493,166,491,180,483,192,470,202,438,219,401,230,400,225,436,214,467,198,479,188,486,178,488,166,484,153,468,128,447,106,423,87,397,71,340,48,284,33"/>
-<area shape="rect" title=" " alt="" coords="96,152,179,177"/>
-<area shape="poly" title=" " alt="" coords="194,32,170,80,148,140,143,138,166,78,190,30"/>
-<area shape="rect" title=" " alt="" coords="173,225,259,251"/>
-<area shape="poly" title=" " alt="" coords="180,33,143,59,104,94,89,114,80,135,78,155,86,176,101,193,119,206,160,224,158,229,116,211,97,197,82,179,73,156,75,134,85,112,100,91,139,55,177,29"/>
-<area shape="rect" title=" " alt="" coords="390,152,474,177"/>
-<area shape="poly" title=" " alt="" coords="243,28,297,47,352,76,389,108,417,140,414,143,385,111,349,81,295,52,241,33"/>
-<area shape="rect" href="atomic_8h.html" title=" " alt="" coords="179,79,338,104"/>
-<area shape="poly" title=" " alt="" coords="211,29,242,66,238,70,207,33"/>
-<area shape="poly" title=" " alt="" coords="278,102,305,123,329,151,343,181,351,211,346,212,338,183,324,153,301,127,275,106"/>
-<area shape="poly" title=" " alt="" coords="241,106,170,147,167,143,238,102"/>
-<area shape="poly" title=" " alt="" coords="288,102,392,144,390,149,286,106"/>
-<area shape="rect" href="hash_8h.html" title=" " alt="" coords="203,152,315,177"/>
-<area shape="poly" title=" " alt="" coords="261,104,261,138,256,138,256,104"/>
-<area shape="poly" title=" " alt="" coords="225,180,91,223,90,218,223,175"/>
-<area shape="poly" title=" " alt="" coords="275,175,328,215,324,219,272,179"/>
-<area shape="poly" title=" " alt="" coords="254,179,232,215,228,212,249,176"/>
+<area shape="rect" title="TTAK Unified Memory Subsystem with Lifecycle Management and Hardware Optimization." alt="" coords="203,5,389,31"/>
+<area shape="rect" title=" " alt="" coords="5,79,80,104"/>
+<area shape="poly" title=" " alt="" coords="256,33,94,78,93,73,255,28"/>
+<area shape="rect" title=" " alt="" coords="105,79,175,104"/>
+<area shape="poly" title=" " alt="" coords="272,33,179,75,177,70,270,28"/>
+<area shape="rect" title=" " alt="" coords="200,79,283,104"/>
+<area shape="poly" title=" " alt="" coords="289,33,261,69,256,66,285,29"/>
+<area shape="rect" title=" " alt="" coords="307,79,394,104"/>
+<area shape="poly" title=" " alt="" coords="307,29,336,66,331,69,303,33"/>
+<area shape="rect" title=" " alt="" coords="418,79,502,104"/>
+<area shape="poly" title=" " alt="" coords="323,28,422,71,420,76,321,33"/>
+<area shape="rect" title=" " alt="" coords="527,79,625,104"/>
+<area shape="poly" title=" " alt="" coords="342,28,518,73,517,78,340,33"/>
 </map>
 </div>
 </div><div class="textblock"><div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
@@ -142,11 +137,14 @@ $(document).ready(function(){initNavTree('mem_8h.html',''); initResizable(); });
 <div id="dynsection-1-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="mem_8h__dep__incl.png" border="0" usemap="#ainclude_2ttak_2mem_2mem_8hdep" alt=""/></div>
 <map name="ainclude_2ttak_2mem_2mem_8hdep" id="ainclude_2ttak_2mem_2mem_8hdep">
-<area shape="rect" title=" " alt="" coords="96,5,283,31"/>
+<area shape="rect" title="TTAK Unified Memory Subsystem with Lifecycle Management and Hardware Optimization." alt="" coords="192,5,379,31"/>
 <area shape="rect" href="arena__helper_8h.html" title=" " alt="" coords="5,79,184,119"/>
-<area shape="poly" title=" " alt="" coords="167,41,119,81,116,76,163,37"/>
+<area shape="poly" title=" " alt="" coords="246,38,142,81,139,76,244,33"/>
 <area shape="rect" href="app__types_8h.html" title=" " alt="" coords="208,86,363,111"/>
-<area shape="poly" title=" " alt="" coords="216,37,273,84,269,88,212,41"/>
+<area shape="poly" title=" " alt="" coords="288,44,288,86,283,86,283,44"/>
+<area shape="rect" href="mem__internal_8h.html" title="Internal memory subsystem definitions and tiered allocator interfaces." alt="" coords="238,167,447,192"/>
+<area shape="poly" title=" " alt="" coords="330,34,356,52,377,77,383,102,377,127,366,150,354,168,350,165,362,148,372,126,377,102,372,80,353,56,327,39"/>
+<area shape="poly" title=" " alt="" coords="304,121,336,165,332,168,300,124"/>
 </map>
 </div>
 </div>
@@ -155,7 +153,7 @@ $(document).ready(function(){initNavTree('mem_8h.html',''); initResizable(); });
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__mem__header__t.html">ttak_mem_header_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">"Fortress" Memory Header. 64-byte aligned to prevent False Sharing and ensure user pointer alignment. Total size is 128 bytes to maintain 64-byte alignment for user data.  <a href="structttak__mem__header__t.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">"Fortress" Memory Header stored before user data.  <a href="structttak__mem__header__t.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
@@ -184,62 +182,92 @@ Macros</h2></td></tr>
 <tr class="separator:aafdc8a651b46ebef1e1055f9ec21c03b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abc7e126aa61344f6b46c2508a9901ebf" id="r_abc7e126aa61344f6b46c2508a9901ebf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem_8h.html#abc7e126aa61344f6b46c2508a9901ebf">ttak_mem_dup_with_flags</a>(src,  size,  lifetime,  now,  flags)&#160;&#160;&#160;<a class="el" href="mem_8h.html#af356aeb5f83df49f650bc4283de8d931">ttak_mem_dup_safe</a>(src, size, lifetime, now, false, flags)</td></tr>
 <tr class="separator:abc7e126aa61344f6b46c2508a9901ebf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae47a1cb6076cec70cf9ea8efc1d5f3ff" id="r_ae47a1cb6076cec70cf9ea8efc1d5f3ff"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem_8h.html#ae47a1cb6076cec70cf9ea8efc1d5f3ff">EMBEDDED</a>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:ae47a1cb6076cec70cf9ea8efc1d5f3ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
+<tr class="memitem:a574c320689c9aed0ca6559697013d05a" id="r_a574c320689c9aed0ca6559697013d05a"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structttak__mem__header__t.html">ttak_mem_header_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem_8h.html#a574c320689c9aed0ca6559697013d05a">ttak_mem_header_t</a></td></tr>
+<tr class="separator:a574c320689c9aed0ca6559697013d05a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab724d37f1a1c16f006309b8b2036b232" id="r_ab724d37f1a1c16f006309b8b2036b232"><td class="memItemLeft" align="right" valign="top">typedef void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem_8h.html#ab724d37f1a1c16f006309b8b2036b232">ttak_lifecycle_obj_t</a></td></tr>
 <tr class="separator:ab724d37f1a1c16f006309b8b2036b232"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:a05020ce7df6068f7d7f515ee4ea9cdad" id="r_a05020ce7df6068f7d7f515ee4ea9cdad"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdad">ttak_mem_flags_t</a> { <a class="el" href="mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a">TTAK_MEM_DEFAULT</a> = 0
+<tr class="memitem:a05a24acbd6ba6bb3693aecdc12d0ee09" id="r_a05a24acbd6ba6bb3693aecdc12d0ee09"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem_8h.html#a05a24acbd6ba6bb3693aecdc12d0ee09">ttak_allocation_tier_t</a> { <br />
+&#160;&#160;<a class="el" href="mem_8h.html#a05a24acbd6ba6bb3693aecdc12d0ee09a595f90519320f518b18b300dda32e20b">TTAK_ALLOC_TIER_UNKNOWN</a> = 0
+, <a class="el" href="mem_8h.html#a05a24acbd6ba6bb3693aecdc12d0ee09a9e6976dc0ef1480c3e57e96db5f4bfb6">TTAK_ALLOC_TIER_POCKET</a>
+, <a class="el" href="mem_8h.html#a05a24acbd6ba6bb3693aecdc12d0ee09ab8f812a5db1c25d085adaba58ad0dd4d">TTAK_ALLOC_TIER_VMA</a>
+, <a class="el" href="mem_8h.html#a05a24acbd6ba6bb3693aecdc12d0ee09ae827ba58e36f62d2f94beae49c70193a">TTAK_ALLOC_TIER_SLAB</a>
+, <br />
+&#160;&#160;<a class="el" href="mem_8h.html#a05a24acbd6ba6bb3693aecdc12d0ee09ab444dde7e67357aeb91dba10444d09dc">TTAK_ALLOC_TIER_BUDDY</a>
+, <a class="el" href="mem_8h.html#a05a24acbd6ba6bb3693aecdc12d0ee09a0b65b9c39102ad56c962985bad3d96a0">TTAK_ALLOC_TIER_GENERAL</a>
+<br />
+ }</td></tr>
+<tr class="memdesc:a05a24acbd6ba6bb3693aecdc12d0ee09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the memory tier used for an allocation.  <a href="mem_8h.html#a05a24acbd6ba6bb3693aecdc12d0ee09">More...</a><br /></td></tr>
+<tr class="separator:a05a24acbd6ba6bb3693aecdc12d0ee09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05020ce7df6068f7d7f515ee4ea9cdad" id="r_a05020ce7df6068f7d7f515ee4ea9cdad"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdad">ttak_mem_flags_t</a> { <br />
+&#160;&#160;<a class="el" href="mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a">TTAK_MEM_DEFAULT</a> = 0
 , <a class="el" href="mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdadaa4cff10407296a029dba423e1ac75551">TTAK_MEM_HUGE_PAGES</a> = (1 &lt;&lt; 0)
 , <a class="el" href="mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdada85fc84c07c8164ea4cd8048365cc3e2d">TTAK_MEM_CACHE_ALIGNED</a> = (1 &lt;&lt; 1)
 , <a class="el" href="mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdada0b16ffc2f709ae7e7a5439e0ca8d7d86">TTAK_MEM_STRICT_CHECK</a> = (1 &lt;&lt; 2)
+, <br />
+&#160;&#160;<a class="el" href="mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdadad33e10539c3604becb675d3d3ec7bf72">TTAK_MEM_LOW_PRIORITY</a> = (1 &lt;&lt; 3)
+<br />
  }</td></tr>
-<tr class="memdesc:a05020ce7df6068f7d7f515ee4ea9cdad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Memory allocation flags.  <a href="mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdad">More...</a><br /></td></tr>
+<tr class="memdesc:a05020ce7df6068f7d7f515ee4ea9cdad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Memory allocation behavior flags.  <a href="mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdad">More...</a><br /></td></tr>
 <tr class="separator:a05020ce7df6068f7d7f515ee4ea9cdad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:aff3d4e6c920caf8bdeee3b2561a2ae46" id="r_aff3d4e6c920caf8bdeee3b2561a2ae46"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem_8h.html#aff3d4e6c920caf8bdeee3b2561a2ae46">ttak_mem_alloc_safe</a> (size_t size, uint64_t lifetime_ticks, uint64_t now, _Bool is_const, _Bool is_volatile, _Bool allow_direct, _Bool is_root, <a class="el" href="mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdad">ttak_mem_flags_t</a> flags)</td></tr>
-<tr class="memdesc:aff3d4e6c920caf8bdeee3b2561a2ae46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unified memory allocation with lifecycle management and hardware optimization.  <br /></td></tr>
+<tr class="memdesc:aff3d4e6c920caf8bdeee3b2561a2ae46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unified memory allocation with lifecycle management.  <br /></td></tr>
 <tr class="separator:aff3d4e6c920caf8bdeee3b2561a2ae46"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7eec3d633592a863f39155500dd0227a" id="r_a7eec3d633592a863f39155500dd0227a"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem_8h.html#a7eec3d633592a863f39155500dd0227a">ttak_mem_realloc_safe</a> (void *ptr, size_t new_size, uint64_t lifetime_ticks, uint64_t now, _Bool is_root, <a class="el" href="mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdad">ttak_mem_flags_t</a> flags)</td></tr>
 <tr class="memdesc:a7eec3d633592a863f39155500dd0227a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reallocates memory with lifecycle management.  <br /></td></tr>
 <tr class="separator:a7eec3d633592a863f39155500dd0227a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af356aeb5f83df49f650bc4283de8d931" id="r_af356aeb5f83df49f650bc4283de8d931"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem_8h.html#af356aeb5f83df49f650bc4283de8d931">ttak_mem_dup_safe</a> (const void *src, size_t size, uint64_t lifetime_ticks, uint64_t now, _Bool is_root, <a class="el" href="mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdad">ttak_mem_flags_t</a> flags)</td></tr>
-<tr class="memdesc:af356aeb5f83df49f650bc4283de8d931"><td class="mdescLeft">&#160;</td><td class="mdescRight">Duplicates a memory block with lifecycle management. Provides a highly optimized internal path for cloning structures and buffers.  <br /></td></tr>
+<tr class="memdesc:af356aeb5f83df49f650bc4283de8d931"><td class="mdescLeft">&#160;</td><td class="mdescRight">Duplicates a memory block with lifecycle management.  <br /></td></tr>
 <tr class="separator:af356aeb5f83df49f650bc4283de8d931"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afdcd75479e1ca4dde197214d0430de65" id="r_afdcd75479e1ca4dde197214d0430de65"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem_8h.html#afdcd75479e1ca4dde197214d0430de65">ttak_mem_free</a> (void *ptr)</td></tr>
-<tr class="memdesc:afdcd75479e1ca4dde197214d0430de65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frees the memory block and removes it from the global shadow map.  <br /></td></tr>
+<tr class="memdesc:afdcd75479e1ca4dde197214d0430de65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frees a memory block and updates usage statistics.  <br /></td></tr>
 <tr class="separator:afdcd75479e1ca4dde197214d0430de65"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab6f5b08c17dc0db9a4b09eeb8bab4dc6" id="r_ab6f5b08c17dc0db9a4b09eeb8bab4dc6"><td class="memItemLeft" align="right" valign="top">static void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem_8h.html#ab6f5b08c17dc0db9a4b09eeb8bab4dc6">ttak_mem_access</a> (void *ptr, uint64_t now)</td></tr>
-<tr class="memdesc:ab6f5b08c17dc0db9a4b09eeb8bab4dc6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accesses the memory block, verifying its lifecycle and security. Inlined for maximum performance ("grotesque tweak").  <br /></td></tr>
+<tr class="memdesc:ab6f5b08c17dc0db9a4b09eeb8bab4dc6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accesses a memory block, verifying its lifecycle and security.  <br /></td></tr>
 <tr class="separator:ab6f5b08c17dc0db9a4b09eeb8bab4dc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ada3d51eee9ddc6a5859312387539df65" id="r_ada3d51eee9ddc6a5859312387539df65"><td class="memItemLeft" align="right" valign="top">void **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem_8h.html#ada3d51eee9ddc6a5859312387539df65">tt_inspect_dirty_pointers</a> (uint64_t now, size_t *count_out)</td></tr>
-<tr class="memdesc:ada3d51eee9ddc6a5859312387539df65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inspects and returns pointers that are expired or have abnormal access counts.  <br /></td></tr>
+<tr class="memdesc:ada3d51eee9ddc6a5859312387539df65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inspects for "dirty" pointers (expired or over-accessed).  <br /></td></tr>
 <tr class="separator:ada3d51eee9ddc6a5859312387539df65"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af73ea5e149eaa8dc0df429ad1f27cd45" id="r_af73ea5e149eaa8dc0df429ad1f27cd45"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem_8h.html#af73ea5e149eaa8dc0df429ad1f27cd45">tt_autoclean_dirty_pointers</a> (uint64_t now)</td></tr>
-<tr class="memdesc:af73ea5e149eaa8dc0df429ad1f27cd45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Automatically cleans up expired memory blocks with adaptive scheduling.  <br /></td></tr>
+<tr class="memdesc:af73ea5e149eaa8dc0df429ad1f27cd45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Automatically cleans up expired memory blocks.  <br /></td></tr>
 <tr class="separator:af73ea5e149eaa8dc0df429ad1f27cd45"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae8973d60d53321ee8b36d15b1d7698ea" id="r_ae8973d60d53321ee8b36d15b1d7698ea"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem_8h.html#ae8973d60d53321ee8b36d15b1d7698ea">ttak_mem_configure_gc</a> (uint64_t min_interval_ns, uint64_t max_interval_ns, size_t pressure_threshold)</td></tr>
-<tr class="memdesc:ae8973d60d53321ee8b36d15b1d7698ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the global background GC (mem_tree) parameters.  <br /></td></tr>
+<tr class="memdesc:ae8973d60d53321ee8b36d15b1d7698ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures background GC parameters.  <br /></td></tr>
 <tr class="separator:ae8973d60d53321ee8b36d15b1d7698ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a23a79fc56d219a37227ec07299e4571b" id="r_a23a79fc56d219a37227ec07299e4571b"><td class="memItemLeft" align="right" valign="top">void **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem_8h.html#a23a79fc56d219a37227ec07299e4571b">tt_autoclean_and_inspect</a> (uint64_t now, size_t *count_out)</td></tr>
-<tr class="memdesc:a23a79fc56d219a37227ec07299e4571b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cleans up and returns abnormal pointers.  <br /></td></tr>
+<tr class="memdesc:a23a79fc56d219a37227ec07299e4571b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sweeps and returns dirty pointers in a single pass.  <br /></td></tr>
 <tr class="separator:a23a79fc56d219a37227ec07299e4571b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adfcac077aeb029c04c4fb47dc33116a0" id="r_adfcac077aeb029c04c4fb47dc33116a0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem_8h.html#adfcac077aeb029c04c4fb47dc33116a0">ttak_mem_set_trace</a> (int enable)</td></tr>
 <tr class="memdesc:adfcac077aeb029c04c4fb47dc33116a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the global memory tracing flag.  <br /></td></tr>
 <tr class="separator:adfcac077aeb029c04c4fb47dc33116a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a901d371e2cc570055bc60bcea5653df5" id="r_a901d371e2cc570055bc60bcea5653df5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem_8h.html#a901d371e2cc570055bc60bcea5653df5">ttak_mem_is_trace_enabled</a> (void)</td></tr>
-<tr class="memdesc:a901d371e2cc570055bc60bcea5653df5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether memory tracing is currently enabled.  <br /></td></tr>
+<tr class="memdesc:a901d371e2cc570055bc60bcea5653df5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if memory tracing is enabled.  <br /></td></tr>
 <tr class="separator:a901d371e2cc570055bc60bcea5653df5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad663cf355d411491ef16fbaba940be07" id="r_ad663cf355d411491ef16fbaba940be07"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem_8h.html#ad663cf355d411491ef16fbaba940be07">ttak_calc_header_checksum</a> (const <a class="el" href="structttak__mem__header__t.html">ttak_mem_header_t</a> *h)</td></tr>
 <tr class="memdesc:ad663cf355d411491ef16fbaba940be07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates a 32-bit checksum for the memory header.  <br /></td></tr>
 <tr class="separator:ad663cf355d411491ef16fbaba940be07"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>TTAK Unified Memory Subsystem with Lifecycle Management and Hardware Optimization. </p>
+<p>This header defines the "Fortress" memory allocation system, which provides:</p><ul>
+<li>Tiered allocation (Thread-Local Pockets, Bare-Metal VMA, System Allocator)</li>
+<li>Automatic lifecycle management with tick-based expiration</li>
+<li>Security features (Magic numbers, Checksums, Canaries)</li>
+<li>Hardware optimizations (Cache-line alignment, Huge pages) </li>
+</ul>
+
+<p class="definition">Definition in file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="a798ceb4ce7e1d84af3001d7ec38d3da2" name="a798ceb4ce7e1d84af3001d7ec38d3da2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a798ceb4ce7e1d84af3001d7ec38d3da2">&#9670;&#160;</a></span>__TTAK_UNSAFE_MEM_FOREVER__</h2>
 
@@ -254,7 +282,23 @@ Functions</h2></td></tr>
 
 <p>Macro to indicate that the allocated memory should persist forever. </p>
 
-<p class="definition">Definition at line <a class="el" href="mem_8h_source.html#l00019">19</a> of file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mem_8h_source.html#l00043">43</a> of file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
+
+</div>
+</div>
+<a id="ae47a1cb6076cec70cf9ea8efc1d5f3ff" name="ae47a1cb6076cec70cf9ea8efc1d5f3ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae47a1cb6076cec70cf9ea8efc1d5f3ff">&#9670;&#160;</a></span>EMBEDDED</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define EMBEDDED&#160;&#160;&#160;0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="mem_8h_source.html#l00239">239</a> of file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
 
 </div>
 </div>
@@ -272,7 +316,7 @@ Functions</h2></td></tr>
 
 <p>Sentinel for invalidated references. </p>
 
-<p class="definition">Definition at line <a class="el" href="mem_8h_source.html#l00029">29</a> of file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mem_8h_source.html#l00053">53</a> of file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
 
 </div>
 </div>
@@ -290,7 +334,7 @@ Functions</h2></td></tr>
 
 <p>Alignment for cache-line optimization (64-byte). </p>
 
-<p class="definition">Definition at line <a class="el" href="mem_8h_source.html#l00014">14</a> of file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mem_8h_source.html#l00038">38</a> of file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
 
 </div>
 </div>
@@ -308,7 +352,7 @@ Functions</h2></td></tr>
 
 <p>"Fortress" Magic Number for header validation. </p>
 
-<p class="definition">Definition at line <a class="el" href="mem_8h_source.html#l00024">24</a> of file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mem_8h_source.html#l00048">48</a> of file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
 
 </div>
 </div>
@@ -344,7 +388,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mem_8h_source.html#l00168">168</a> of file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mem_8h_source.html#l00231">231</a> of file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
 
 </div>
 </div>
@@ -386,7 +430,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mem_8h_source.html#l00169">169</a> of file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mem_8h_source.html#l00232">232</a> of file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
 
 </div>
 </div>
@@ -428,7 +472,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mem_8h_source.html#l00172">172</a> of file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mem_8h_source.html#l00235">235</a> of file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
 
 </div>
 </div>
@@ -476,7 +520,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mem_8h_source.html#l00173">173</a> of file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mem_8h_source.html#l00236">236</a> of file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
 
 </div>
 </div>
@@ -518,7 +562,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mem_8h_source.html#l00170">170</a> of file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mem_8h_source.html#l00233">233</a> of file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
 
 </div>
 </div>
@@ -566,7 +610,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mem_8h_source.html#l00171">171</a> of file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mem_8h_source.html#l00234">234</a> of file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
 
 </div>
 </div>
@@ -583,11 +627,57 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mem_8h_source.html#l00167">167</a> of file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mem_8h_source.html#l00230">230</a> of file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
+
+</div>
+</div>
+<a id="a574c320689c9aed0ca6559697013d05a" name="a574c320689c9aed0ca6559697013d05a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a574c320689c9aed0ca6559697013d05a">&#9670;&#160;</a></span>ttak_mem_header_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="structttak__mem__header__t.html">ttak_mem_header_t</a> <a class="el" href="structttak__mem__header__t.html">ttak_mem_header_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="a05a24acbd6ba6bb3693aecdc12d0ee09" name="a05a24acbd6ba6bb3693aecdc12d0ee09"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05a24acbd6ba6bb3693aecdc12d0ee09">&#9670;&#160;</a></span>ttak_allocation_tier_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="mem_8h.html#a05a24acbd6ba6bb3693aecdc12d0ee09">ttak_allocation_tier_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Defines the memory tier used for an allocation. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a05a24acbd6ba6bb3693aecdc12d0ee09a595f90519320f518b18b300dda32e20b" name="a05a24acbd6ba6bb3693aecdc12d0ee09a595f90519320f518b18b300dda32e20b"></a>TTAK_ALLOC_TIER_UNKNOWN&#160;</td><td class="fielddoc"><p>Tier unknown or corrupted </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a05a24acbd6ba6bb3693aecdc12d0ee09a9e6976dc0ef1480c3e57e96db5f4bfb6" name="a05a24acbd6ba6bb3693aecdc12d0ee09a9e6976dc0ef1480c3e57e96db5f4bfb6"></a>TTAK_ALLOC_TIER_POCKET&#160;</td><td class="fielddoc"><p>Allocated from a Thread-Local Pocket (Small objects) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a05a24acbd6ba6bb3693aecdc12d0ee09ab8f812a5db1c25d085adaba58ad0dd4d" name="a05a24acbd6ba6bb3693aecdc12d0ee09ab8f812a5db1c25d085adaba58ad0dd4d"></a>TTAK_ALLOC_TIER_VMA&#160;</td><td class="fielddoc"><p>Allocated from Bare-Metal VMA (Medium objects) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a05a24acbd6ba6bb3693aecdc12d0ee09ae827ba58e36f62d2f94beae49c70193a" name="a05a24acbd6ba6bb3693aecdc12d0ee09ae827ba58e36f62d2f94beae49c70193a"></a>TTAK_ALLOC_TIER_SLAB&#160;</td><td class="fielddoc"><p>Allocated from a Slab allocator (Reserved) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a05a24acbd6ba6bb3693aecdc12d0ee09ab444dde7e67357aeb91dba10444d09dc" name="a05a24acbd6ba6bb3693aecdc12d0ee09ab444dde7e67357aeb91dba10444d09dc"></a>TTAK_ALLOC_TIER_BUDDY&#160;</td><td class="fielddoc"><p>Allocated from the Buddy System (Embedded Mode) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a05a24acbd6ba6bb3693aecdc12d0ee09a0b65b9c39102ad56c962985bad3d96a0" name="a05a24acbd6ba6bb3693aecdc12d0ee09a0b65b9c39102ad56c962985bad3d96a0"></a>TTAK_ALLOC_TIER_GENERAL&#160;</td><td class="fielddoc"><p>Allocated via general system allocator (Large objects) </p>
+</td></tr>
+</table>
+
+<p class="definition">Definition at line <a class="el" href="mem_8h_source.html#l00026">26</a> of file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
+
+</div>
+</div>
 <a id="a05020ce7df6068f7d7f515ee4ea9cdad" name="a05020ce7df6068f7d7f515ee4ea9cdad"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a05020ce7df6068f7d7f515ee4ea9cdad">&#9670;&#160;</a></span>ttak_mem_flags_t</h2>
 
@@ -600,17 +690,21 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Memory allocation flags. </p>
+<p>Memory allocation behavior flags. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a" name="a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a"></a>TTAK_MEM_DEFAULT&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a05020ce7df6068f7d7f515ee4ea9cdadaa4cff10407296a029dba423e1ac75551" name="a05020ce7df6068f7d7f515ee4ea9cdadaa4cff10407296a029dba423e1ac75551"></a>TTAK_MEM_HUGE_PAGES&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a05020ce7df6068f7d7f515ee4ea9cdada85fc84c07c8164ea4cd8048365cc3e2d" name="a05020ce7df6068f7d7f515ee4ea9cdada85fc84c07c8164ea4cd8048365cc3e2d"></a>TTAK_MEM_CACHE_ALIGNED&#160;</td><td class="fielddoc"><p>Try to use 2MB/1GB pages </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a" name="a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a"></a>TTAK_MEM_DEFAULT&#160;</td><td class="fielddoc"><p>Default allocation behavior </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a05020ce7df6068f7d7f515ee4ea9cdada0b16ffc2f709ae7e7a5439e0ca8d7d86" name="a05020ce7df6068f7d7f515ee4ea9cdada0b16ffc2f709ae7e7a5439e0ca8d7d86"></a>TTAK_MEM_STRICT_CHECK&#160;</td><td class="fielddoc"><p>Force 64-byte alignment </p>
+<tr><td class="fieldname"><a id="a05020ce7df6068f7d7f515ee4ea9cdadaa4cff10407296a029dba423e1ac75551" name="a05020ce7df6068f7d7f515ee4ea9cdadaa4cff10407296a029dba423e1ac75551"></a>TTAK_MEM_HUGE_PAGES&#160;</td><td class="fielddoc"><p>Try to use 2MB/1GB pages </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a05020ce7df6068f7d7f515ee4ea9cdada85fc84c07c8164ea4cd8048365cc3e2d" name="a05020ce7df6068f7d7f515ee4ea9cdada85fc84c07c8164ea4cd8048365cc3e2d"></a>TTAK_MEM_CACHE_ALIGNED&#160;</td><td class="fielddoc"><p>Force 64-byte cache alignment </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a05020ce7df6068f7d7f515ee4ea9cdada0b16ffc2f709ae7e7a5439e0ca8d7d86" name="a05020ce7df6068f7d7f515ee4ea9cdada0b16ffc2f709ae7e7a5439e0ca8d7d86"></a>TTAK_MEM_STRICT_CHECK&#160;</td><td class="fielddoc"><p>Enable strict boundary/canary checks </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a05020ce7df6068f7d7f515ee4ea9cdadad33e10539c3604becb675d3d3ec7bf72" name="a05020ce7df6068f7d7f515ee4ea9cdadad33e10539c3604becb675d3d3ec7bf72"></a>TTAK_MEM_LOW_PRIORITY&#160;</td><td class="fielddoc"><p>Reject if under memory pressure/high friction </p>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="mem_8h_source.html#l00061">61</a> of file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mem_8h_source.html#l00090">90</a> of file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
 
 </div>
 </div>
@@ -641,7 +735,15 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Cleans up and returns abnormal pointers. </p>
+<p>Sweeps and returns dirty pointers in a single pass. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">now</td><td>Current timestamp. </td></tr>
+    <tr><td class="paramname">count_out</td><td>Pointer to store found count. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Array of dirty pointers. </dd></dl>
 
 </div>
 </div>
@@ -661,7 +763,13 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Automatically cleans up expired memory blocks with adaptive scheduling. </p>
+<p>Automatically cleans up expired memory blocks. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">now</td><td>Current timestamp. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -691,7 +799,15 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Inspects and returns pointers that are expired or have abnormal access counts. </p>
+<p>Inspects for "dirty" pointers (expired or over-accessed). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">now</td><td>Current timestamp. </td></tr>
+    <tr><td class="paramname">count_out</td><td>Pointer to store the number of dirty pointers found. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Array of pointers (caller must free), or NULL. </dd></dl>
 
 </div>
 </div>
@@ -720,8 +836,15 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Calculates a 32-bit checksum for the memory header. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">h</td><td>Pointer to the header. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Calculated checksum. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mem_8h_source.html#l00146">146</a> of file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mem_8h_source.html#l00208">208</a> of file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
 
 </div>
 </div>
@@ -759,21 +882,17 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Accesses the memory block, verifying its lifecycle and security. Inlined for maximum performance ("grotesque tweak"). </p>
+<p>Accesses a memory block, verifying its lifecycle and security. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ptr</td><td>Pointer to user memory. </td></tr>
+    <tr><td class="paramname">now</td><td>Current timestamp in ticks. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Validated pointer, or NULL if security check fails or block is expired. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mem_8h_source.html#l00093">93</a> of file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
-<div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-2-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-2-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="mem_8h_ab6f5b08c17dc0db9a4b09eeb8bab4dc6_cgraph.png" border="0" usemap="#amem_8h_ab6f5b08c17dc0db9a4b09eeb8bab4dc6_cgraph" alt=""/></div>
-<map name="amem_8h_ab6f5b08c17dc0db9a4b09eeb8bab4dc6_cgraph" id="amem_8h_ab6f5b08c17dc0db9a4b09eeb8bab4dc6_cgraph">
-<area shape="rect" title="Accesses the memory block, verifying its lifecycle and security. Inlined for maximum performance (&quot;gr..." alt="" coords="5,5,145,31"/>
-<area shape="rect" href="atomic_8h.html#a1c3cfff1b58f14df90cc576695d291cb" title=" " alt="" coords="193,5,336,31"/>
-<area shape="poly" title=" " alt="" coords="146,15,179,15,179,21,146,21"/>
-</map>
-</div>
+<p class="definition">Definition at line <a class="el" href="mem_8h_source.html#l00148">148</a> of file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
 
 </div>
 </div>
@@ -839,7 +958,21 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Unified memory allocation with lifecycle management and hardware optimization. </p>
+<p>Unified memory allocation with lifecycle management. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">size</td><td>Number of bytes requested. </td></tr>
+    <tr><td class="paramname">lifetime_ticks</td><td>Lifetime hint in ticks (<b>TTAK_UNSAFE_MEM_FOREVER</b> for infinite). </td></tr>
+    <tr><td class="paramname">now</td><td>Current timestamp in ticks. </td></tr>
+    <tr><td class="paramname">is_const</td><td>Marks the buffer as immutable. </td></tr>
+    <tr><td class="paramname">is_volatile</td><td>Indicates volatile access patterns. </td></tr>
+    <tr><td class="paramname">allow_direct</td><td>If false, direct access via ttak_mem_access is restricted. </td></tr>
+    <tr><td class="paramname">is_root</td><td>Marks the allocation as a root for garbage collection. </td></tr>
+    <tr><td class="paramname">flags</td><td>Allocation behavior flags. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to zeroed user memory, or NULL on failure. </dd></dl>
 
 </div>
 </div>
@@ -875,7 +1008,15 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Configures the global background GC (mem_tree) parameters. </p>
+<p>Configures background GC parameters. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">min_interval_ns</td><td>Minimum sweep interval. </td></tr>
+    <tr><td class="paramname">max_interval_ns</td><td>Maximum sweep interval. </td></tr>
+    <tr><td class="paramname">pressure_threshold</td><td>Memory pressure threshold to trigger damping. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -929,7 +1070,19 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Duplicates a memory block with lifecycle management. Provides a highly optimized internal path for cloning structures and buffers. </p>
+<p>Duplicates a memory block with lifecycle management. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">src</td><td>Source memory block. </td></tr>
+    <tr><td class="paramname">size</td><td>Number of bytes to copy. </td></tr>
+    <tr><td class="paramname">lifetime_ticks</td><td>Updated lifetime hint. </td></tr>
+    <tr><td class="paramname">now</td><td>Current timestamp in ticks. </td></tr>
+    <tr><td class="paramname">is_root</td><td>Whether the new allocation is a root node. </td></tr>
+    <tr><td class="paramname">flags</td><td>Allocation behavior flags. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Duplicated pointer, or NULL on failure. </dd></dl>
 
 </div>
 </div>
@@ -949,7 +1102,13 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Frees the memory block and removes it from the global shadow map. </p>
+<p>Frees a memory block and updates usage statistics. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ptr</td><td>Pointer to user memory. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -969,7 +1128,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Returns whether memory tracing is currently enabled. </p>
+<p>Checks if memory tracing is enabled. </p>
+<dl class="section return"><dt>Returns</dt><dd>Non-zero if enabled. </dd></dl>
 
 </div>
 </div>
@@ -1024,6 +1184,18 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Reallocates memory with lifecycle management. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ptr</td><td>Existing allocation pointer. </td></tr>
+    <tr><td class="paramname">new_size</td><td>Requested new size. </td></tr>
+    <tr><td class="paramname">lifetime_ticks</td><td>Updated lifetime hint. </td></tr>
+    <tr><td class="paramname">now</td><td>Current timestamp in ticks. </td></tr>
+    <tr><td class="paramname">is_root</td><td>Whether the new allocation is a root node. </td></tr>
+    <tr><td class="paramname">flags</td><td>Allocation behavior flags. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Reallocated pointer, or NULL on failure. </dd></dl>
 
 </div>
 </div>
@@ -1044,6 +1216,12 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Sets the global memory tracing flag. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">enable</td><td>Non-zero to enable JSON tracing to stderr. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

@@ -6,6 +6,14 @@
 #include <string.h>
 #include <stdio.h> // For debugging
 
+#ifdef _WIN32
+#  ifndef _WIN32_WINNT
+#    define _WIN32_WINNT 0x0602
+#  endif
+#  include <windows.h>
+#  include <stdint.h>
+#endif
+
 // Forward declaration for the cleanup thread function
 static void *cleanup_thread_func(void *arg);
 
@@ -327,6 +335,31 @@ void ttak_mem_tree_perform_cleanup(ttak_mem_tree_t *tree, uint64_t now) {
     }
 }
 
+#ifdef _WIN32
+/**
+ * @brief Compatibility layer to support win32 while preserving clock_gettime_win behavior.
+ * 
+ * @param  A pointer to the struct timespec_t.
+ * @return int timestamp in 100ns precision.
+ */
+static inline int clock_gettime_win(struct timespec *spec) {
+    FILETIME ft;
+    uint64_t tim;
+
+    // Get precise time in 100ns unit
+    GetSystemTimePreciseAsFileTime(&ft);
+
+    tim = ((uint64_t)ft.dwHighDateTime << 32) | (uint64_t)ft.dwLowDateTime;
+    #define WIN_EPOCH_DIFFERENCE 116444736000000000ULL
+    tim -= WIN_EPOCH_DIFFERENCE;
+
+    // convert timespec to 100ns unit
+    spec->tv_sec = (time_t)(tim / 1000000000ULL);
+    spec->tv_nsec = (long)((tim % 1000000000ULL) * 100);
+    return 0;
+}
+#endif
+
 /**
  * @brief Background thread function for automatic memory cleanup.
  *
@@ -369,7 +402,11 @@ static void *cleanup_thread_func(void *arg) {
         pthread_mutex_lock(&tree->lock);
         if (!atomic_load(&tree->shutdown_requested)) {
             struct timespec ts;
+#ifdef _WIN32
+            clock_gettime_win(&ts);
+#else
             clock_gettime(CLOCK_REALTIME, &ts);
+#endif
             ts.tv_sec += current_sleep_ns / 1000000000ULL;
             ts.tv_nsec += current_sleep_ns % 1000000000ULL;
             if ((unsigned long long int) ts.tv_nsec >= 1000000000ULL) {

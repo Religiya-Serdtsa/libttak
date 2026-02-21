@@ -68,15 +68,31 @@ posix_memalign_k(void **memptr, size_t alignment, size_t size) {
 #else // ! _KERNEL
 #include <stdlib.h>
 #include <string.h>
+#include <inttypes.h>
 #include <pthread.h>
 #include <limits.h>
 #include <errno.h>
 
 #ifdef _WIN32
+    #define _CRT_NONSTDC_NO_DEPRECATE 1
     #include <windows.h>
     #include <io.h>
     #define fsync(fd) _commit(fd)
     #define unlink _unlink
+    typedef SSIZE_T ssize_t;  /* POSIX ssize_t for MSVC */
+    /* Map POSIX CRT names to their MSVC underscore equivalents */
+    #ifndef open
+    #  define open  _open
+    #endif
+    #ifndef write
+    #  define write(fd, buf, n) _write((fd), (buf), (unsigned int)(n))
+    #endif
+    #ifndef close
+    #  define close _close
+    #endif
+    #ifndef read
+    #  define read  _read
+    #endif
 #else
     #include <sys/mman.h>
     #include <unistd.h>
@@ -98,6 +114,21 @@ static int posix_memalign(void **memptr, size_t alignment, size_t size) {
 #else
 #define posix_memfree(ptr) free(ptr)
 #endif
+
+// User-space mappings for kernel-style primitives
+typedef pthread_mutex_t mtx_t;
+#define MTX_DEF 0
+#define mtx_init(m, name, type, opts) pthread_mutex_init(m, NULL)
+#define mtx_lock(m) pthread_mutex_lock(m)
+#define mtx_unlock(m) pthread_mutex_unlock(m)
+#define mtx_destroy(m) pthread_mutex_destroy(m)
+
+#define kmem_alloc(size, flags) malloc(size)
+#define kmem_zalloc(size, flags) calloc(1, size)
+#define kmem_free(ptr, flags) free(ptr)
+#define M_NOWAIT 0
+#define M_TEMP 0
+#define panic(...) do { fprintf(stderr, __VA_ARGS__); fprintf(stderr, "\n"); abort(); } while(0)
 
 #include <stdalign.h>
 #include <stdbool.h>
@@ -204,7 +235,7 @@ static ttak_fixed_16_16_t ttak_mem_calculate_global_friction(void) {
 /**
  * @brief Updates a friction value using Exponential Weighted Moving Average (EWMA).
  */
-static void ttak_mem_update_friction_value(int size_class_idx, bool waste_detected) {
+static void __attribute__((unused)) ttak_mem_update_friction_value(int size_class_idx, bool waste_detected) {
     if (size_class_idx < 0 || size_class_idx >= 4) return;
     ttak_fixed_16_16_t alpha = TTAK_FP_FROM_INT(1) / 4; 
     ttak_fixed_16_16_t one_minus_alpha = TTAK_FP_FROM_INT(1) - alpha;
@@ -421,6 +452,8 @@ void TTAK_HOT_PATH ttak_mem_free(void *ptr) {
         case TTAK_ALLOC_TIER_VMA: actual_total_alloc_size = (header_size + header->size + TTAK_VMA_ALIGNMENT - 1) & ~((size_t)TTAK_VMA_ALIGNMENT - 1); break; // Needs kernel implementation
         case TTAK_ALLOC_TIER_BUDDY: actual_total_alloc_size = header_size + header->size; break;
         case TTAK_ALLOC_TIER_GENERAL: actual_total_alloc_size = header_size + header->size + (strict_check_enabled ? sizeof(uint64_t) : 0); break;
+        case TTAK_ALLOC_TIER_UNKNOWN:
+        case TTAK_ALLOC_TIER_SLAB:
         default: actual_total_alloc_size = header_size + header->size + (strict_check_enabled ? sizeof(uint64_t) : 0); break;
     }
 
@@ -450,10 +483,14 @@ void TTAK_HOT_PATH ttak_mem_free(void *ptr) {
             // if (header->is_huge) VirtualFree(header, 0, MEM_RELEASE); else _aligned_free(header);
             kmem_free(header, M_TEMP); // Use kernel free
             break;
+        case TTAK_ALLOC_TIER_UNKNOWN:
+        case TTAK_ALLOC_TIER_SLAB:
         default:
             mtx_destroy(&header->lock); // Use kernel mutex
 #if EMBEDDED
             ttak_mem_buddy_free(header);
+#elif defined(_WIN32)
+            if (header->is_huge) VirtualFree(header, 0, MEM_RELEASE); else _aligned_free(header);
 #else
             // if (header->is_huge) munmap(header, actual_total_alloc_size); else free(header);
             kmem_free(header, M_TEMP); // Use kernel free

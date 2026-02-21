@@ -2,6 +2,7 @@ var mem_8h =
 [
     [ "ttak_mem_header_t", "structttak__mem__header__t.html", "structttak__mem__header__t" ],
     [ "__TTAK_UNSAFE_MEM_FOREVER__", "mem_8h.html#a798ceb4ce7e1d84af3001d7ec38d3da2", null ],
+    [ "EMBEDDED", "mem_8h.html#ae47a1cb6076cec70cf9ea8efc1d5f3ff", null ],
     [ "SAFE_NULL", "mem_8h.html#ac5b096c74969e7dbd5e24d44a446c015", null ],
     [ "TTAK_CACHE_LINE_SIZE", "mem_8h.html#a56bacec5f02dbd8cad7b15e6682fbf20", null ],
     [ "TTAK_MAGIC_NUMBER", "mem_8h.html#a02d61fafa21eadc8010ca9803d77bafb", null ],
@@ -12,11 +13,21 @@ var mem_8h =
     [ "ttak_mem_realloc", "mem_8h.html#aecbcfc6a4045b6bd854f785a49706a77", null ],
     [ "ttak_mem_realloc_with_flags", "mem_8h.html#ac436c1f90ce06b2759063c0d124cbd90", null ],
     [ "ttak_lifecycle_obj_t", "mem_8h.html#ab724d37f1a1c16f006309b8b2036b232", null ],
+    [ "ttak_mem_header_t", "mem_8h.html#a574c320689c9aed0ca6559697013d05a", null ],
+    [ "ttak_allocation_tier_t", "mem_8h.html#a05a24acbd6ba6bb3693aecdc12d0ee09", [
+      [ "TTAK_ALLOC_TIER_UNKNOWN", "mem_8h.html#a05a24acbd6ba6bb3693aecdc12d0ee09a595f90519320f518b18b300dda32e20b", null ],
+      [ "TTAK_ALLOC_TIER_POCKET", "mem_8h.html#a05a24acbd6ba6bb3693aecdc12d0ee09a9e6976dc0ef1480c3e57e96db5f4bfb6", null ],
+      [ "TTAK_ALLOC_TIER_VMA", "mem_8h.html#a05a24acbd6ba6bb3693aecdc12d0ee09ab8f812a5db1c25d085adaba58ad0dd4d", null ],
+      [ "TTAK_ALLOC_TIER_SLAB", "mem_8h.html#a05a24acbd6ba6bb3693aecdc12d0ee09ae827ba58e36f62d2f94beae49c70193a", null ],
+      [ "TTAK_ALLOC_TIER_BUDDY", "mem_8h.html#a05a24acbd6ba6bb3693aecdc12d0ee09ab444dde7e67357aeb91dba10444d09dc", null ],
+      [ "TTAK_ALLOC_TIER_GENERAL", "mem_8h.html#a05a24acbd6ba6bb3693aecdc12d0ee09a0b65b9c39102ad56c962985bad3d96a0", null ]
+    ] ],
     [ "ttak_mem_flags_t", "mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdad", [
       [ "TTAK_MEM_DEFAULT", "mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a", null ],
       [ "TTAK_MEM_HUGE_PAGES", "mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdadaa4cff10407296a029dba423e1ac75551", null ],
       [ "TTAK_MEM_CACHE_ALIGNED", "mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdada85fc84c07c8164ea4cd8048365cc3e2d", null ],
-      [ "TTAK_MEM_STRICT_CHECK", "mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdada0b16ffc2f709ae7e7a5439e0ca8d7d86", null ]
+      [ "TTAK_MEM_STRICT_CHECK", "mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdada0b16ffc2f709ae7e7a5439e0ca8d7d86", null ],
+      [ "TTAK_MEM_LOW_PRIORITY", "mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdadad33e10539c3604becb675d3d3ec7bf72", null ]
     ] ],
     [ "tt_autoclean_and_inspect", "mem_8h.html#a23a79fc56d219a37227ec07299e4571b", null ],
     [ "tt_autoclean_dirty_pointers", "mem_8h.html#af73ea5e149eaa8dc0df429ad1f27cd45", null ],

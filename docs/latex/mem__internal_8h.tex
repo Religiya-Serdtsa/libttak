@@ -1,0 +1,464 @@
+\doxysection{internal/ttak/mem\+\_\+internal.h File Reference}
+\hypertarget{mem__internal_8h}{}\label{mem__internal_8h}\index{internal/ttak/mem\_internal.h@{internal/ttak/mem\_internal.h}}
+
+
+Internal memory subsystem definitions and tiered allocator interfaces.  
+
+
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$stdatomic.\+h$>$}\newline
+{\ttfamily \#include $<$pthread.\+h$>$}\newline
+{\ttfamily \#include "{}../../internal/app\+\_\+types.\+h"{}}\newline
+{\ttfamily \#include $<$ttak/mem/mem.\+h$>$}\newline
+Include dependency graph for mem\+\_\+internal.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{mem__internal_8h__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structttak__mem__friction__matrix__t}{ttak\+\_\+mem\+\_\+friction\+\_\+matrix\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Matrix for tracking memory pressure and "{}\+Mechanical Damping"{}. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structttak__mem__pocket__freelist}{ttak\+\_\+mem\+\_\+pocket\+\_\+freelist}}
+\begin{DoxyCompactList}\small\item\em Simple LIFO freelist for thread-\/local blocks. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structttak__mem__vma__region}{ttak\+\_\+mem\+\_\+vma\+\_\+region}}
+\begin{DoxyCompactList}\small\item\em Linear virtual mapping area for lock-\/free bump allocation. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structttak__slab__t}{ttak\+\_\+slab\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Metadata for Slab vanguard (64KB -\/ 512KB Dynamic Path). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{mem__internal_8h_a79e6ab9372fcc255fb4075c4ed8857dd}{TTAK\+\_\+\+UNLIKELY}}(x)~\+\_\+\+\_\+builtin\+\_\+expect(!!(x), 0)
+\item 
+\#define \mbox{\hyperlink{mem__internal_8h_a2398e4bc6e13be162959e6418b48ad9b}{POCKET\+\_\+\+MAGIC}}~0x80\+C4\+E700
+\item 
+\#define \mbox{\hyperlink{mem__internal_8h_a48534a142d77bccefdcd20ae71d4777e}{SLAB\+\_\+\+MAGIC}}~0x51\+ABCA5E
+\item 
+\#define \mbox{\hyperlink{mem__internal_8h_ad923ad1117b87a296109d5ed8b2b0ecf}{TTAK\+\_\+\+FP\+\_\+\+ONE}}~(1 $<$$<$ 16)
+\item 
+\#define \mbox{\hyperlink{mem__internal_8h_a001ec8a1869c8ce91a283e742ff056a2}{TTAK\+\_\+\+FP\+\_\+\+FROM\+\_\+\+INT}}(val)~((\mbox{\hyperlink{mem__internal_8h_aa52f0af3a2626d67b61777a1504a4415}{ttak\+\_\+fixed\+\_\+16\+\_\+16\+\_\+t}})(val) $<$$<$ 16)
+\item 
+\#define \mbox{\hyperlink{mem__internal_8h_a69e122ba63345025fa7bd742fc502e22}{TTAK\+\_\+\+FP\+\_\+\+TO\+\_\+\+INT}}(val)~((val) $>$$>$ 16)
+\item 
+\#define \mbox{\hyperlink{mem__internal_8h_a8458ee8fa183292861fb996885599add}{TTAK\+\_\+\+FP\+\_\+\+MUL}}(a,  b)~(((int64\+\_\+t)(a) \texorpdfstring{$\ast$}{*} (b)) $>$$>$ 16)
+\item 
+\#define \mbox{\hyperlink{mem__internal_8h_a8a9e97ecd3599442ae8c393732eec240}{TTAK\+\_\+\+FP\+\_\+\+DIV}}(a,  b)~(((int64\+\_\+t)(a) $<$$<$ 16) / (b))
+\item 
+\#define \mbox{\hyperlink{mem__internal_8h_a1d7f42e54833cbd413fa059f040e9455}{TTAK\+\_\+\+POCKET\+\_\+\+PAGE\+\_\+\+SIZE}}~4096
+\item 
+\#define \mbox{\hyperlink{mem__internal_8h_a453bdb33e06b4275bdc24e123cc01c0f}{TTAK\+\_\+\+POCKET\+\_\+\+ALIGNMENT}}~4096
+\item 
+\#define \mbox{\hyperlink{mem__internal_8h_a10254fab4ae3ccc752ddcf5ca91a9803}{TTAK\+\_\+\+NUM\+\_\+\+POCKET\+\_\+\+FREELISTS}}~2
+\item 
+\#define \mbox{\hyperlink{mem__internal_8h_a8ac651bb471a64ef8d6448811eb129ac}{TTAK\+\_\+\+VMA\+\_\+\+REGION\+\_\+\+SIZE}}~(16 \texorpdfstring{$\ast$}{*} 1024 \texorpdfstring{$\ast$}{*} 1024)
+\item 
+\#define \mbox{\hyperlink{mem__internal_8h_a2bb3ddaa78d345560fe8626105cf6084}{TTAK\+\_\+\+VMA\+\_\+\+ALIGNMENT}}~64
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef int32\+\_\+t \mbox{\hyperlink{mem__internal_8h_aa52f0af3a2626d67b61777a1504a4415}{ttak\+\_\+fixed\+\_\+16\+\_\+16\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em 16.\+16 Fixed-\/point type for friction calculation. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structttak__mem__header__t}{ttak\+\_\+mem\+\_\+header\+\_\+t}} \mbox{\hyperlink{mem__internal_8h_a574c320689c9aed0ca6559697013d05a}{ttak\+\_\+mem\+\_\+header\+\_\+t}}
+\item 
+typedef struct \mbox{\hyperlink{structttak__mem__pocket__freelist}{ttak\+\_\+mem\+\_\+pocket\+\_\+freelist}} \mbox{\hyperlink{mem__internal_8h_af43b32a954757220aaa62ba3c6ecca77}{ttak\+\_\+mem\+\_\+pocket\+\_\+freelist\+\_\+t}}
+\item 
+typedef struct \mbox{\hyperlink{structttak__mem__vma__region}{ttak\+\_\+mem\+\_\+vma\+\_\+region}} \mbox{\hyperlink{mem__internal_8h_a6c76dcfc177f693f5fbfed57f4ce0bb2}{ttak\+\_\+mem\+\_\+vma\+\_\+region\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structttak__mem__header__t}{ttak\+\_\+mem\+\_\+header\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{mem__internal_8h_a9967ba62776d96bb9a96f0a376d704fe}{ttak\+\_\+mem\+\_\+pocket\+\_\+alloc\+\_\+internal}} (size\+\_\+t user\+\_\+requested\+\_\+size)
+\begin{DoxyCompactList}\small\item\em Allocates from the thread-\/local pocket tier. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{mem__internal_8h_a937a888cc086072386c71a0b33730cfa}{\+\_\+pocket\+\_\+free\+\_\+internal}} (\mbox{\hyperlink{structttak__mem__header__t}{ttak\+\_\+mem\+\_\+header\+\_\+t}} \texorpdfstring{$\ast$}{*}header)
+\begin{DoxyCompactList}\small\item\em Frees a header back to the thread-\/local pocket. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structttak__mem__header__t}{ttak\+\_\+mem\+\_\+header\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{mem__internal_8h_a95874d8ac4b29ed22519a033552df2f6}{ttak\+\_\+mem\+\_\+vma\+\_\+alloc\+\_\+internal}} (size\+\_\+t user\+\_\+requested\+\_\+size)
+\begin{DoxyCompactList}\small\item\em Allocates from the lock-\/free VMA tier. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{mem__internal_8h_a03b066948cc18c92697707a2d014eb0d}{\+\_\+vma\+\_\+free\+\_\+internal}} (\mbox{\hyperlink{structttak__mem__header__t}{ttak\+\_\+mem\+\_\+header\+\_\+t}} \texorpdfstring{$\ast$}{*}header)
+\begin{DoxyCompactList}\small\item\em Release VMA allocation (currently no-\/op for linear allocator). \end{DoxyCompactList}\item 
+void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{mem__internal_8h_a8abad2af668cdec241ddf164f6f2f152}{\+\_\+vma\+\_\+alloc\+\_\+linear}} (size\+\_\+t size)
+\begin{DoxyCompactList}\small\item\em Raw linear VMA allocator (internal use). \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structttak__mem__header__t}{ttak\+\_\+mem\+\_\+header\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{mem__internal_8h_a777accb0ca5bba4e0291b1902778a095}{\+\_\+slab\+\_\+alloc\+\_\+rectified}} (size\+\_\+t user\+\_\+requested\+\_\+size)
+\begin{DoxyCompactList}\small\item\em Slab rectified allocator (Dynamic path). \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{mem__internal_8h_aaf2ff6638f6d6b4351ec093ca2d6de4c}{\+\_\+slab\+\_\+free\+\_\+internal}} (\mbox{\hyperlink{structttak__mem__header__t}{ttak\+\_\+mem\+\_\+header\+\_\+t}} \texorpdfstring{$\ast$}{*}header, uintptr\+\_\+t slab\+\_\+page\+\_\+start\+\_\+addr)
+\begin{DoxyCompactList}\small\item\em Returns slab block to pool. \end{DoxyCompactList}\item 
+static int \mbox{\hyperlink{mem__internal_8h_a412d07726f648de60cf44fc039dadb29}{get\+\_\+pocket\+\_\+size\+\_\+class\+\_\+idx}} (size\+\_\+t total\+\_\+block\+\_\+size)
+\begin{DoxyCompactList}\small\item\em Maps a total block size to a pocket freelist index. \end{DoxyCompactList}\item 
+static size\+\_\+t \mbox{\hyperlink{mem__internal_8h_ae342f8cc558efdfaa89d03a462132edd}{get\+\_\+total\+\_\+block\+\_\+size\+\_\+for\+\_\+freelist}} (int idx)
+\begin{DoxyCompactList}\small\item\em Returns the total block size for a given pocket index. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{app__types_8h_a75cdd26ec56c06d5e1abe50b17a8f837}{TTAK\+\_\+\+THREAD\+\_\+\+LOCAL}} bool \mbox{\hyperlink{mem__internal_8h_a65ce8794ebbfc56397e402f7da0eb8ad}{t\+\_\+reentrancy\+\_\+guard}}
+\begin{DoxyCompactList}\small\item\em Reentrancy guard to prevent recursive calls during boot/allocation. Defined in mem.\+c. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structttak__mem__friction__matrix__t}{ttak\+\_\+mem\+\_\+friction\+\_\+matrix\+\_\+t}} \mbox{\hyperlink{mem__internal_8h_a01418a27cc1879ab847f8bb8a395dc47}{global\+\_\+friction\+\_\+matrix}}
+\begin{DoxyCompactList}\small\item\em Global friction matrix instance. Defined in mem.\+c. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{app__types_8h_a75cdd26ec56c06d5e1abe50b17a8f837}{TTAK\+\_\+\+THREAD\+\_\+\+LOCAL}} \mbox{\hyperlink{mem__internal_8h_af43b32a954757220aaa62ba3c6ecca77}{ttak\+\_\+mem\+\_\+pocket\+\_\+freelist\+\_\+t}} \mbox{\hyperlink{mem__internal_8h_aba9f426693a9a72a5154cfe22137dfbc}{ttak\+\_\+pocket\+\_\+freelists}} \mbox{[}\mbox{\hyperlink{mem__internal_8h_a10254fab4ae3ccc752ddcf5ca91a9803}{TTAK\+\_\+\+NUM\+\_\+\+POCKET\+\_\+\+FREELISTS}}\mbox{]}
+\begin{DoxyCompactList}\small\item\em Thread-\/local pocket freelists. Defined in ttak\+\_\+mem\+\_\+pocket.\+c. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{mem__internal_8h_a6c76dcfc177f693f5fbfed57f4ce0bb2}{ttak\+\_\+mem\+\_\+vma\+\_\+region\+\_\+t}} \mbox{\hyperlink{mem__internal_8h_a786e428521881ef54ae52854d0b18b5e}{global\+\_\+vma\+\_\+region}}
+\begin{DoxyCompactList}\small\item\em Global VMA region instance. Defined in ttak\+\_\+mem\+\_\+vma.\+c. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Internal memory subsystem definitions and tiered allocator interfaces. 
+
+This file contains declarations for internal allocator modules (Pocket, VMA, Slab) and shared reentrancy/friction guards used across the TTAK memory implementation. 
+
+Definition in file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{mem__internal_8h_a2398e4bc6e13be162959e6418b48ad9b}\label{mem__internal_8h_a2398e4bc6e13be162959e6418b48ad9b} 
+\index{mem\_internal.h@{mem\_internal.h}!POCKET\_MAGIC@{POCKET\_MAGIC}}
+\index{POCKET\_MAGIC@{POCKET\_MAGIC}!mem\_internal.h@{mem\_internal.h}}
+\doxysubsubsection{\texorpdfstring{POCKET\_MAGIC}{POCKET\_MAGIC}}
+{\footnotesize\ttfamily \#define POCKET\+\_\+\+MAGIC~0x80\+C4\+E700}
+
+Base magic for 4KB pocket pages (Lower bits\+: freelist\+\_\+idx) 
+
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00025}{25}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+
+\Hypertarget{mem__internal_8h_a48534a142d77bccefdcd20ae71d4777e}\label{mem__internal_8h_a48534a142d77bccefdcd20ae71d4777e} 
+\index{mem\_internal.h@{mem\_internal.h}!SLAB\_MAGIC@{SLAB\_MAGIC}}
+\index{SLAB\_MAGIC@{SLAB\_MAGIC}!mem\_internal.h@{mem\_internal.h}}
+\doxysubsubsection{\texorpdfstring{SLAB\_MAGIC}{SLAB\_MAGIC}}
+{\footnotesize\ttfamily \#define SLAB\+\_\+\+MAGIC~0x51\+ABCA5E}
+
+Magic for Slab pages 
+
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00026}{26}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+
+\Hypertarget{mem__internal_8h_a8a9e97ecd3599442ae8c393732eec240}\label{mem__internal_8h_a8a9e97ecd3599442ae8c393732eec240} 
+\index{mem\_internal.h@{mem\_internal.h}!TTAK\_FP\_DIV@{TTAK\_FP\_DIV}}
+\index{TTAK\_FP\_DIV@{TTAK\_FP\_DIV}!mem\_internal.h@{mem\_internal.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_FP\_DIV}{TTAK\_FP\_DIV}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+FP\+\_\+\+DIV(\begin{DoxyParamCaption}\item[{}]{a,  }\item[{}]{b }\end{DoxyParamCaption})~(((int64\+\_\+t)(a) $<$$<$ 16) / (b))}
+
+
+
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00044}{44}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+
+\Hypertarget{mem__internal_8h_a001ec8a1869c8ce91a283e742ff056a2}\label{mem__internal_8h_a001ec8a1869c8ce91a283e742ff056a2} 
+\index{mem\_internal.h@{mem\_internal.h}!TTAK\_FP\_FROM\_INT@{TTAK\_FP\_FROM\_INT}}
+\index{TTAK\_FP\_FROM\_INT@{TTAK\_FP\_FROM\_INT}!mem\_internal.h@{mem\_internal.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_FP\_FROM\_INT}{TTAK\_FP\_FROM\_INT}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+FP\+\_\+\+FROM\+\_\+\+INT(\begin{DoxyParamCaption}\item[{}]{val }\end{DoxyParamCaption})~((\mbox{\hyperlink{mem__internal_8h_aa52f0af3a2626d67b61777a1504a4415}{ttak\+\_\+fixed\+\_\+16\+\_\+16\+\_\+t}})(val) $<$$<$ 16)}
+
+
+
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00041}{41}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+
+\Hypertarget{mem__internal_8h_a8458ee8fa183292861fb996885599add}\label{mem__internal_8h_a8458ee8fa183292861fb996885599add} 
+\index{mem\_internal.h@{mem\_internal.h}!TTAK\_FP\_MUL@{TTAK\_FP\_MUL}}
+\index{TTAK\_FP\_MUL@{TTAK\_FP\_MUL}!mem\_internal.h@{mem\_internal.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_FP\_MUL}{TTAK\_FP\_MUL}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+FP\+\_\+\+MUL(\begin{DoxyParamCaption}\item[{}]{a,  }\item[{}]{b }\end{DoxyParamCaption})~(((int64\+\_\+t)(a) \texorpdfstring{$\ast$}{*} (b)) $>$$>$ 16)}
+
+
+
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00043}{43}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+
+\Hypertarget{mem__internal_8h_ad923ad1117b87a296109d5ed8b2b0ecf}\label{mem__internal_8h_ad923ad1117b87a296109d5ed8b2b0ecf} 
+\index{mem\_internal.h@{mem\_internal.h}!TTAK\_FP\_ONE@{TTAK\_FP\_ONE}}
+\index{TTAK\_FP\_ONE@{TTAK\_FP\_ONE}!mem\_internal.h@{mem\_internal.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_FP\_ONE}{TTAK\_FP\_ONE}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+FP\+\_\+\+ONE~(1 $<$$<$ 16)}
+
+
+
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00040}{40}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+
+\Hypertarget{mem__internal_8h_a69e122ba63345025fa7bd742fc502e22}\label{mem__internal_8h_a69e122ba63345025fa7bd742fc502e22} 
+\index{mem\_internal.h@{mem\_internal.h}!TTAK\_FP\_TO\_INT@{TTAK\_FP\_TO\_INT}}
+\index{TTAK\_FP\_TO\_INT@{TTAK\_FP\_TO\_INT}!mem\_internal.h@{mem\_internal.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_FP\_TO\_INT}{TTAK\_FP\_TO\_INT}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+FP\+\_\+\+TO\+\_\+\+INT(\begin{DoxyParamCaption}\item[{}]{val }\end{DoxyParamCaption})~((val) $>$$>$ 16)}
+
+
+
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00042}{42}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+
+\Hypertarget{mem__internal_8h_a10254fab4ae3ccc752ddcf5ca91a9803}\label{mem__internal_8h_a10254fab4ae3ccc752ddcf5ca91a9803} 
+\index{mem\_internal.h@{mem\_internal.h}!TTAK\_NUM\_POCKET\_FREELISTS@{TTAK\_NUM\_POCKET\_FREELISTS}}
+\index{TTAK\_NUM\_POCKET\_FREELISTS@{TTAK\_NUM\_POCKET\_FREELISTS}!mem\_internal.h@{mem\_internal.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_NUM\_POCKET\_FREELISTS}{TTAK\_NUM\_POCKET\_FREELISTS}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+NUM\+\_\+\+POCKET\+\_\+\+FREELISTS~2}
+
+
+
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00068}{68}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+
+\Hypertarget{mem__internal_8h_a453bdb33e06b4275bdc24e123cc01c0f}\label{mem__internal_8h_a453bdb33e06b4275bdc24e123cc01c0f} 
+\index{mem\_internal.h@{mem\_internal.h}!TTAK\_POCKET\_ALIGNMENT@{TTAK\_POCKET\_ALIGNMENT}}
+\index{TTAK\_POCKET\_ALIGNMENT@{TTAK\_POCKET\_ALIGNMENT}!mem\_internal.h@{mem\_internal.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_POCKET\_ALIGNMENT}{TTAK\_POCKET\_ALIGNMENT}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+POCKET\+\_\+\+ALIGNMENT~4096}
+
+
+
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00067}{67}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+
+\Hypertarget{mem__internal_8h_a1d7f42e54833cbd413fa059f040e9455}\label{mem__internal_8h_a1d7f42e54833cbd413fa059f040e9455} 
+\index{mem\_internal.h@{mem\_internal.h}!TTAK\_POCKET\_PAGE\_SIZE@{TTAK\_POCKET\_PAGE\_SIZE}}
+\index{TTAK\_POCKET\_PAGE\_SIZE@{TTAK\_POCKET\_PAGE\_SIZE}!mem\_internal.h@{mem\_internal.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_POCKET\_PAGE\_SIZE}{TTAK\_POCKET\_PAGE\_SIZE}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+POCKET\+\_\+\+PAGE\+\_\+\+SIZE~4096}
+
+
+
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00066}{66}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+
+\Hypertarget{mem__internal_8h_a79e6ab9372fcc255fb4075c4ed8857dd}\label{mem__internal_8h_a79e6ab9372fcc255fb4075c4ed8857dd} 
+\index{mem\_internal.h@{mem\_internal.h}!TTAK\_UNLIKELY@{TTAK\_UNLIKELY}}
+\index{TTAK\_UNLIKELY@{TTAK\_UNLIKELY}!mem\_internal.h@{mem\_internal.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_UNLIKELY}{TTAK\_UNLIKELY}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+UNLIKELY(\begin{DoxyParamCaption}\item[{}]{x }\end{DoxyParamCaption})~\+\_\+\+\_\+builtin\+\_\+expect(!!(x), 0)}
+
+
+
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00021}{21}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+
+\Hypertarget{mem__internal_8h_a2bb3ddaa78d345560fe8626105cf6084}\label{mem__internal_8h_a2bb3ddaa78d345560fe8626105cf6084} 
+\index{mem\_internal.h@{mem\_internal.h}!TTAK\_VMA\_ALIGNMENT@{TTAK\_VMA\_ALIGNMENT}}
+\index{TTAK\_VMA\_ALIGNMENT@{TTAK\_VMA\_ALIGNMENT}!mem\_internal.h@{mem\_internal.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_VMA\_ALIGNMENT}{TTAK\_VMA\_ALIGNMENT}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+VMA\+\_\+\+ALIGNMENT~64}
+
+
+
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00086}{86}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+
+\Hypertarget{mem__internal_8h_a8ac651bb471a64ef8d6448811eb129ac}\label{mem__internal_8h_a8ac651bb471a64ef8d6448811eb129ac} 
+\index{mem\_internal.h@{mem\_internal.h}!TTAK\_VMA\_REGION\_SIZE@{TTAK\_VMA\_REGION\_SIZE}}
+\index{TTAK\_VMA\_REGION\_SIZE@{TTAK\_VMA\_REGION\_SIZE}!mem\_internal.h@{mem\_internal.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_VMA\_REGION\_SIZE}{TTAK\_VMA\_REGION\_SIZE}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+VMA\+\_\+\+REGION\+\_\+\+SIZE~(16 \texorpdfstring{$\ast$}{*} 1024 \texorpdfstring{$\ast$}{*} 1024)}
+
+
+
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00085}{85}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{mem__internal_8h_aa52f0af3a2626d67b61777a1504a4415}\label{mem__internal_8h_aa52f0af3a2626d67b61777a1504a4415} 
+\index{mem\_internal.h@{mem\_internal.h}!ttak\_fixed\_16\_16\_t@{ttak\_fixed\_16\_16\_t}}
+\index{ttak\_fixed\_16\_16\_t@{ttak\_fixed\_16\_16\_t}!mem\_internal.h@{mem\_internal.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_fixed\_16\_16\_t}{ttak\_fixed\_16\_16\_t}}
+{\footnotesize\ttfamily \mbox{\hyperlink{mem__internal_8h_aa52f0af3a2626d67b61777a1504a4415}{ttak\+\_\+fixed\+\_\+16\+\_\+16\+\_\+t}}}
+
+
+
+16.\+16 Fixed-\/point type for friction calculation. 
+
+
+
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00038}{38}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+
+\Hypertarget{mem__internal_8h_a574c320689c9aed0ca6559697013d05a}\label{mem__internal_8h_a574c320689c9aed0ca6559697013d05a} 
+\index{mem\_internal.h@{mem\_internal.h}!ttak\_mem\_header\_t@{ttak\_mem\_header\_t}}
+\index{ttak\_mem\_header\_t@{ttak\_mem\_header\_t}!mem\_internal.h@{mem\_internal.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_mem\_header\_t}{ttak\_mem\_header\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__mem__header__t}{ttak\+\_\+mem\+\_\+header\+\_\+t}} \mbox{\hyperlink{structttak__mem__header__t}{ttak\+\_\+mem\+\_\+header\+\_\+t}}}
+
+
+
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00063}{63}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+
+\Hypertarget{mem__internal_8h_af43b32a954757220aaa62ba3c6ecca77}\label{mem__internal_8h_af43b32a954757220aaa62ba3c6ecca77} 
+\index{mem\_internal.h@{mem\_internal.h}!ttak\_mem\_pocket\_freelist\_t@{ttak\_mem\_pocket\_freelist\_t}}
+\index{ttak\_mem\_pocket\_freelist\_t@{ttak\_mem\_pocket\_freelist\_t}!mem\_internal.h@{mem\_internal.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_mem\_pocket\_freelist\_t}{ttak\_mem\_pocket\_freelist\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__mem__pocket__freelist}{ttak\+\_\+mem\+\_\+pocket\+\_\+freelist}} \mbox{\hyperlink{mem__internal_8h_af43b32a954757220aaa62ba3c6ecca77}{ttak\+\_\+mem\+\_\+pocket\+\_\+freelist\+\_\+t}}}
+
+\Hypertarget{mem__internal_8h_a6c76dcfc177f693f5fbfed57f4ce0bb2}\label{mem__internal_8h_a6c76dcfc177f693f5fbfed57f4ce0bb2} 
+\index{mem\_internal.h@{mem\_internal.h}!ttak\_mem\_vma\_region\_t@{ttak\_mem\_vma\_region\_t}}
+\index{ttak\_mem\_vma\_region\_t@{ttak\_mem\_vma\_region\_t}!mem\_internal.h@{mem\_internal.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_mem\_vma\_region\_t}{ttak\_mem\_vma\_region\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__mem__vma__region}{ttak\+\_\+mem\+\_\+vma\+\_\+region}} \mbox{\hyperlink{mem__internal_8h_a6c76dcfc177f693f5fbfed57f4ce0bb2}{ttak\+\_\+mem\+\_\+vma\+\_\+region\+\_\+t}}}
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{mem__internal_8h_a937a888cc086072386c71a0b33730cfa}\label{mem__internal_8h_a937a888cc086072386c71a0b33730cfa} 
+\index{mem\_internal.h@{mem\_internal.h}!\_pocket\_free\_internal@{\_pocket\_free\_internal}}
+\index{\_pocket\_free\_internal@{\_pocket\_free\_internal}!mem\_internal.h@{mem\_internal.h}}
+\doxysubsubsection{\texorpdfstring{\_pocket\_free\_internal()}{\_pocket\_free\_internal()}}
+{\footnotesize\ttfamily void \+\_\+pocket\+\_\+free\+\_\+internal (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structttak__mem__header__t}{ttak\+\_\+mem\+\_\+header\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{header }\end{DoxyParamCaption})}
+
+
+
+Frees a header back to the thread-\/local pocket. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em header} & Header to return. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{mem__internal_8h_a777accb0ca5bba4e0291b1902778a095}\label{mem__internal_8h_a777accb0ca5bba4e0291b1902778a095} 
+\index{mem\_internal.h@{mem\_internal.h}!\_slab\_alloc\_rectified@{\_slab\_alloc\_rectified}}
+\index{\_slab\_alloc\_rectified@{\_slab\_alloc\_rectified}!mem\_internal.h@{mem\_internal.h}}
+\doxysubsubsection{\texorpdfstring{\_slab\_alloc\_rectified()}{\_slab\_alloc\_rectified()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structttak__mem__header__t}{ttak\+\_\+mem\+\_\+header\+\_\+t}} \texorpdfstring{$\ast$}{*} \+\_\+slab\+\_\+alloc\+\_\+rectified (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{user\+\_\+requested\+\_\+size }\end{DoxyParamCaption})}
+
+
+
+Slab rectified allocator (Dynamic path). 
+
+\Hypertarget{mem__internal_8h_aaf2ff6638f6d6b4351ec093ca2d6de4c}\label{mem__internal_8h_aaf2ff6638f6d6b4351ec093ca2d6de4c} 
+\index{mem\_internal.h@{mem\_internal.h}!\_slab\_free\_internal@{\_slab\_free\_internal}}
+\index{\_slab\_free\_internal@{\_slab\_free\_internal}!mem\_internal.h@{mem\_internal.h}}
+\doxysubsubsection{\texorpdfstring{\_slab\_free\_internal()}{\_slab\_free\_internal()}}
+{\footnotesize\ttfamily void \+\_\+slab\+\_\+free\+\_\+internal (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structttak__mem__header__t}{ttak\+\_\+mem\+\_\+header\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{header,  }\item[{uintptr\+\_\+t}]{slab\+\_\+page\+\_\+start\+\_\+addr }\end{DoxyParamCaption})}
+
+
+
+Returns slab block to pool. 
+
+\Hypertarget{mem__internal_8h_a8abad2af668cdec241ddf164f6f2f152}\label{mem__internal_8h_a8abad2af668cdec241ddf164f6f2f152} 
+\index{mem\_internal.h@{mem\_internal.h}!\_vma\_alloc\_linear@{\_vma\_alloc\_linear}}
+\index{\_vma\_alloc\_linear@{\_vma\_alloc\_linear}!mem\_internal.h@{mem\_internal.h}}
+\doxysubsubsection{\texorpdfstring{\_vma\_alloc\_linear()}{\_vma\_alloc\_linear()}}
+{\footnotesize\ttfamily void \texorpdfstring{$\ast$}{*} \+\_\+vma\+\_\+alloc\+\_\+linear (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{size }\end{DoxyParamCaption})}
+
+
+
+Raw linear VMA allocator (internal use). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em size} & Total bytes to allocate. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Start pointer. 
+\end{DoxyReturn}
+\Hypertarget{mem__internal_8h_a03b066948cc18c92697707a2d014eb0d}\label{mem__internal_8h_a03b066948cc18c92697707a2d014eb0d} 
+\index{mem\_internal.h@{mem\_internal.h}!\_vma\_free\_internal@{\_vma\_free\_internal}}
+\index{\_vma\_free\_internal@{\_vma\_free\_internal}!mem\_internal.h@{mem\_internal.h}}
+\doxysubsubsection{\texorpdfstring{\_vma\_free\_internal()}{\_vma\_free\_internal()}}
+{\footnotesize\ttfamily void \+\_\+vma\+\_\+free\+\_\+internal (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structttak__mem__header__t}{ttak\+\_\+mem\+\_\+header\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{header }\end{DoxyParamCaption})}
+
+
+
+Release VMA allocation (currently no-\/op for linear allocator). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em header} & Header to release. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{mem__internal_8h_a412d07726f648de60cf44fc039dadb29}\label{mem__internal_8h_a412d07726f648de60cf44fc039dadb29} 
+\index{mem\_internal.h@{mem\_internal.h}!get\_pocket\_size\_class\_idx@{get\_pocket\_size\_class\_idx}}
+\index{get\_pocket\_size\_class\_idx@{get\_pocket\_size\_class\_idx}!mem\_internal.h@{mem\_internal.h}}
+\doxysubsubsection{\texorpdfstring{get\_pocket\_size\_class\_idx()}{get\_pocket\_size\_class\_idx()}}
+{\footnotesize\ttfamily static int get\+\_\+pocket\+\_\+size\+\_\+class\+\_\+idx (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{total\+\_\+block\+\_\+size }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Maps a total block size to a pocket freelist index. 
+
+
+
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00164}{164}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+
+\Hypertarget{mem__internal_8h_ae342f8cc558efdfaa89d03a462132edd}\label{mem__internal_8h_ae342f8cc558efdfaa89d03a462132edd} 
+\index{mem\_internal.h@{mem\_internal.h}!get\_total\_block\_size\_for\_freelist@{get\_total\_block\_size\_for\_freelist}}
+\index{get\_total\_block\_size\_for\_freelist@{get\_total\_block\_size\_for\_freelist}!mem\_internal.h@{mem\_internal.h}}
+\doxysubsubsection{\texorpdfstring{get\_total\_block\_size\_for\_freelist()}{get\_total\_block\_size\_for\_freelist()}}
+{\footnotesize\ttfamily static size\+\_\+t get\+\_\+total\+\_\+block\+\_\+size\+\_\+for\+\_\+freelist (\begin{DoxyParamCaption}\item[{int}]{idx }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Returns the total block size for a given pocket index. 
+
+
+
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00173}{173}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+
+\Hypertarget{mem__internal_8h_a9967ba62776d96bb9a96f0a376d704fe}\label{mem__internal_8h_a9967ba62776d96bb9a96f0a376d704fe} 
+\index{mem\_internal.h@{mem\_internal.h}!ttak\_mem\_pocket\_alloc\_internal@{ttak\_mem\_pocket\_alloc\_internal}}
+\index{ttak\_mem\_pocket\_alloc\_internal@{ttak\_mem\_pocket\_alloc\_internal}!mem\_internal.h@{mem\_internal.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_mem\_pocket\_alloc\_internal()}{ttak\_mem\_pocket\_alloc\_internal()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structttak__mem__header__t}{ttak\+\_\+mem\+\_\+header\+\_\+t}} \texorpdfstring{$\ast$}{*} ttak\+\_\+mem\+\_\+pocket\+\_\+alloc\+\_\+internal (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{user\+\_\+requested\+\_\+size }\end{DoxyParamCaption})}
+
+
+
+Allocates from the thread-\/local pocket tier. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em user\+\_\+requested\+\_\+size} & Size requested by user. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Allocated header, or NULL. 
+\end{DoxyReturn}
+\Hypertarget{mem__internal_8h_a95874d8ac4b29ed22519a033552df2f6}\label{mem__internal_8h_a95874d8ac4b29ed22519a033552df2f6} 
+\index{mem\_internal.h@{mem\_internal.h}!ttak\_mem\_vma\_alloc\_internal@{ttak\_mem\_vma\_alloc\_internal}}
+\index{ttak\_mem\_vma\_alloc\_internal@{ttak\_mem\_vma\_alloc\_internal}!mem\_internal.h@{mem\_internal.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_mem\_vma\_alloc\_internal()}{ttak\_mem\_vma\_alloc\_internal()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structttak__mem__header__t}{ttak\+\_\+mem\+\_\+header\+\_\+t}} \texorpdfstring{$\ast$}{*} ttak\+\_\+mem\+\_\+vma\+\_\+alloc\+\_\+internal (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{user\+\_\+requested\+\_\+size }\end{DoxyParamCaption})}
+
+
+
+Allocates from the lock-\/free VMA tier. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em user\+\_\+requested\+\_\+size} & Size requested by user. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Allocated header, or NULL. 
+\end{DoxyReturn}
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{mem__internal_8h_a01418a27cc1879ab847f8bb8a395dc47}\label{mem__internal_8h_a01418a27cc1879ab847f8bb8a395dc47} 
+\index{mem\_internal.h@{mem\_internal.h}!global\_friction\_matrix@{global\_friction\_matrix}}
+\index{global\_friction\_matrix@{global\_friction\_matrix}!mem\_internal.h@{mem\_internal.h}}
+\doxysubsubsection{\texorpdfstring{global\_friction\_matrix}{global\_friction\_matrix}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structttak__mem__friction__matrix__t}{ttak\+\_\+mem\+\_\+friction\+\_\+matrix\+\_\+t}} global\+\_\+friction\+\_\+matrix\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Global friction matrix instance. Defined in mem.\+c. 
+
+\Hypertarget{mem__internal_8h_a786e428521881ef54ae52854d0b18b5e}\label{mem__internal_8h_a786e428521881ef54ae52854d0b18b5e} 
+\index{mem\_internal.h@{mem\_internal.h}!global\_vma\_region@{global\_vma\_region}}
+\index{global\_vma\_region@{global\_vma\_region}!mem\_internal.h@{mem\_internal.h}}
+\doxysubsubsection{\texorpdfstring{global\_vma\_region}{global\_vma\_region}}
+{\footnotesize\ttfamily \mbox{\hyperlink{mem__internal_8h_a6c76dcfc177f693f5fbfed57f4ce0bb2}{ttak\+\_\+mem\+\_\+vma\+\_\+region\+\_\+t}} global\+\_\+vma\+\_\+region\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Global VMA region instance. Defined in ttak\+\_\+mem\+\_\+vma.\+c. 
+
+\Hypertarget{mem__internal_8h_a65ce8794ebbfc56397e402f7da0eb8ad}\label{mem__internal_8h_a65ce8794ebbfc56397e402f7da0eb8ad} 
+\index{mem\_internal.h@{mem\_internal.h}!t\_reentrancy\_guard@{t\_reentrancy\_guard}}
+\index{t\_reentrancy\_guard@{t\_reentrancy\_guard}!mem\_internal.h@{mem\_internal.h}}
+\doxysubsubsection{\texorpdfstring{t\_reentrancy\_guard}{t\_reentrancy\_guard}}
+{\footnotesize\ttfamily \mbox{\hyperlink{app__types_8h_a75cdd26ec56c06d5e1abe50b17a8f837}{TTAK\+\_\+\+THREAD\+\_\+\+LOCAL}} bool t\+\_\+reentrancy\+\_\+guard\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Reentrancy guard to prevent recursive calls during boot/allocation. Defined in mem.\+c. 
+
+\Hypertarget{mem__internal_8h_aba9f426693a9a72a5154cfe22137dfbc}\label{mem__internal_8h_aba9f426693a9a72a5154cfe22137dfbc} 
+\index{mem\_internal.h@{mem\_internal.h}!ttak\_pocket\_freelists@{ttak\_pocket\_freelists}}
+\index{ttak\_pocket\_freelists@{ttak\_pocket\_freelists}!mem\_internal.h@{mem\_internal.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_pocket\_freelists}{ttak\_pocket\_freelists}}
+{\footnotesize\ttfamily \mbox{\hyperlink{app__types_8h_a75cdd26ec56c06d5e1abe50b17a8f837}{TTAK\+\_\+\+THREAD\+\_\+\+LOCAL}} \mbox{\hyperlink{mem__internal_8h_af43b32a954757220aaa62ba3c6ecca77}{ttak\+\_\+mem\+\_\+pocket\+\_\+freelist\+\_\+t}} ttak\+\_\+pocket\+\_\+freelists\mbox{[}\mbox{\hyperlink{mem__internal_8h_a10254fab4ae3ccc752ddcf5ca91a9803}{TTAK\+\_\+\+NUM\+\_\+\+POCKET\+\_\+\+FREELISTS}}\mbox{]}\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Thread-\/local pocket freelists. Defined in ttak\+\_\+mem\+\_\+pocket.\+c. 
+

@@ -1,0 +1,9 @@
+<map id="ttak_bigint_accel_rocm_mul" name="ttak_bigint_accel_rocm_mul">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,70,211,95"/>
+<area shape="rect" id="Node000002" href="$bigint__rocm_8cpp.html#ac5d14ddf3bb4f3bbe520baa3f072110b" title=" " alt="" coords="267,5,425,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="161,67,253,45,255,50,162,73"/>
+<area shape="rect" id="Node000003" href="$bigint__rocm_8cpp.html#aa9743b70fb297c3f522607135c972381" title=" " alt="" coords="259,70,433,95"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="211,80,245,80,245,85,211,85"/>
+<area shape="rect" id="Node000004" href="$bigint__rocm_8cpp.html#a65494eedc9f2a309c6a8f7a62a471933" title=" " alt="" coords="271,120,421,160"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="162,93,258,116,257,121,161,98"/>
+</map>

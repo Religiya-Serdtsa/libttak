@@ -102,19 +102,32 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install MinGW Toolchain
+        if: ${{ matrix.backend != 'cuda' }}
         shell: pwsh
         run: |
           choco install -y mingw make
       - name: Configure Toolchain Path
+        if: ${{ matrix.backend != 'cuda' }}
         run: |
           echo "/c/ProgramData/chocolatey/lib/mingw/tools/install/mingw64/bin" >> "$GITHUB_PATH"
+          echo "/c/ProgramData/chocolatey/lib/make/tools/install/bin" >> "$GITHUB_PATH"
+      - name: Enable MSVC Developer Environment
+        if: ${{ matrix.backend == 'cuda' }}
+        uses: ilammy/msvc-dev-cmd@v1
+      - name: Install GNU Make for MSVC build
+        if: ${{ matrix.backend == 'cuda' }}
+        shell: pwsh
+        run: choco install -y make
+      - name: Add Make to PATH (MSVC build)
+        if: ${{ matrix.backend == 'cuda' }}
+        run: |
           echo "/c/ProgramData/chocolatey/lib/make/tools/install/bin" >> "$GITHUB_PATH"
       - name: Install CUDA Toolkit
         if: ${{ matrix.backend == 'cuda' }}
         uses: Jimver/cuda-toolkit@v0.2.18
         with:
           cuda: '12.6.0'
-          method: 'network'
+          method: 'local'
       - name: Configure CUDA Paths
         if: ${{ matrix.backend == 'cuda' }}
         shell: pwsh
@@ -196,20 +209,27 @@ jobs:
         run: |
           set -e
           make clean
-          EXTRA_FLAGS="-fPIC -D_WIN32_WINNT=0x0600 -D_GNU_SOURCE"
-          if [ -n "${OPENCL_INCLUDE:-}" ]; then
-            EXTRA_FLAGS="$EXTRA_FLAGS -I${OPENCL_INCLUDE}"
+
+          if [ "${{ matrix.backend }}" = "cuda" ]; then
+            make TOOLCHAIN=msvc USE_CUDA=1 -j$(nproc)
+            LIB_FILE="lib/libttak.lib"
+          else
+            EXTRA_FLAGS="-fPIC -D_WIN32_WINNT=0x0600 -D_GNU_SOURCE"
+            if [ -n "${OPENCL_INCLUDE:-}" ]; then
+              EXTRA_FLAGS="$EXTRA_FLAGS -I${OPENCL_INCLUDE}"
+            fi
+            PERF_STACK_FLAGS="-O3 -march=x86-64 -pipe -flto -ffat-lto-objects \
+              -fomit-frame-pointer -funroll-loops -fstrict-aliasing \
+              -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG" \
+            EXTRA_CFLAGS="$EXTRA_FLAGS" \
+            ${{ matrix.make_flags }} make -j$(nproc)
+            LIB_FILE="lib/libttak.a"
           fi
-          PERF_STACK_FLAGS="-O3 -march=x86-64 -pipe -flto -ffat-lto-objects \
-            -fomit-frame-pointer -funroll-loops -fstrict-aliasing \
-            -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG" \
-          EXTRA_CFLAGS="$EXTRA_FLAGS" \
-          ${{ matrix.make_flags }} make -j$(nproc)
 
           TAG="libttak-windows-amd64-${{ matrix.backend }}"
           mkdir -p "dist/${TAG}/include" "dist/${TAG}/lib"
           cp -r include/* "dist/${TAG}/include/"
-          cp lib/libttak.a "dist/${TAG}/lib/"
+          cp "${LIB_FILE}" "dist/${TAG}/lib/"
           cd dist && tar -czf "${TAG}.tar.gz" "${TAG}"
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
@@ -246,6 +266,7 @@ jobs:
   build-macos:
     runs-on: macos-latest
     strategy:
+      fail-fast: false
       matrix:
         arch: [x86_64, arm64]
     steps:
@@ -282,7 +303,6 @@ jobs:
       matrix:
         include:
           - backend: opencl
-            pkg: opencl-headers
             make_flags: "USE_OPENCL=1"
     name: Build freebsd-amd64-${{ matrix.backend }}
     steps:
@@ -296,12 +316,15 @@ jobs:
             # IGNORE_OSVERSION=yes lets pkg bootstrap on a brand-new 15.0 snapshot
             # whose minor version may not yet be in the repository index.
             sudo env IGNORE_OSVERSION=yes pkg update -f
-            sudo pkg install -y gmake gcc ${{ matrix.pkg }}
+            sudo pkg install -y gmake gcc git
+
+            # opencl-headers is not a separate pkg on FreeBSD; clone from Khronos GitHub.
+            git clone --depth=1 https://github.com/KhronosGroup/OpenCL-Headers.git /tmp/opencl-headers
 
             gmake clean
             CC=gcc AR=ar \
             PERF_STACK_FLAGS="-O3 -march=x86-64 -pipe -fomit-frame-pointer -DNDEBUG" \
-            EXTRA_CFLAGS="-fPIC -D__BSD_VISIBLE=1 -DMAP_HUGETLB=0" \
+            EXTRA_CFLAGS="-fPIC -D__BSD_VISIBLE=1 -DMAP_HUGETLB=0 -I/tmp/opencl-headers" \
             ${{ matrix.make_flags }} gmake -j$(nproc 2>/dev/null || /sbin/sysctl -n hw.ncpu 2>/dev/null || echo 1)
 
             TAG="libttak-freebsd-amd64-${{ matrix.backend }}"

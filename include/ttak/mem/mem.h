@@ -17,7 +17,13 @@
 #include <stdbool.h>
 #include <stdalign.h>
 #include <pthread.h>
+#ifndef _MSC_VER
 #include <stdatomic.h>
+#define TTAK_ATOMIC_FETCH_ADD_U64(ptr, val) atomic_fetch_add((_Atomic uint64_t *)(ptr), (val))
+#else
+#include <windows.h>
+#define TTAK_ATOMIC_FETCH_ADD_U64(ptr, val) InterlockedExchangeAdd64((volatile LONG64 *)(ptr), (LONG64)(val))
+#endif
 
 /**
  * @enum ttak_allocation_tier_t
@@ -154,7 +160,7 @@ static inline void *ttak_mem_access(void *ptr, uint64_t now) {
     if (header->expires_tick != __TTAK_UNSAFE_MEM_FOREVER__ && now > header->expires_tick) return NULL;
     if (!header->allow_direct_access) return NULL;
 
-    atomic_fetch_add(&header->access_count, 1ULL);
+    TTAK_ATOMIC_FETCH_ADD_U64(&header->access_count, 1ULL);
     return ptr;
 }
 

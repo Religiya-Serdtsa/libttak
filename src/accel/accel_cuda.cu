@@ -6,6 +6,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#if defined(_MSC_VER) && !defined(__cplusplus)
+typedef unsigned char _Bool;
+#endif
+
 #define TTAK_ACCEL_FACTOR_MAX 64
 #define TTAK_CUDA_SMALL_PRIME_COUNT 168
 #define TTAK_CUDA_POLLARD_STACK_MAX 64
@@ -108,11 +112,57 @@ __device__ __forceinline__ uint64_t ttak_device_gcd(uint64_t a, uint64_t b) {
     return a;
 }
 
-__device__ __forceinline__ uint64_t ttak_device_mulmod(uint64_t a,
-                                                       uint64_t b,
-                                                       uint64_t mod) {
-    unsigned __int128 res = (unsigned __int128)a * (unsigned __int128)b;
+/**
+ * @brief Performs modular multiplication (a * b) % mod for 64-bit integers.
+ * * This function handles 128-bit intermediate products to prevent overflow
+ * before the modulo operation. It provides cross-platform compatibility
+ * between MSVC and GCC/Clang, utilizing hardware-accelerated intrinsics
+ * where available.
+ *
+ * @param a   The first operand (multiplicand).
+ * @param b   The second operand (multiplier).
+ * @param mod The modulus.
+ * @return    The result of (a * b) % mod.
+ * @note      Designed for both host (CPU) and CUDA device (GPU) execution.
+ */
+__device__ __host__ __forceinline__ uint64_t ttak_device_mulmod(uint64_t a,
+                                                               uint64_t b,
+                                                               uint64_t mod) {
+#if defined(__CUDA_ARCH__)
+    /* CUDA Device Implementation: __int128 not supported by NVCC,
+       use binary modular multiplication (Russian peasant method) */
+    a %= mod;
+    b %= mod;
+    uint64_t res = 0;
+    while (a > 0) {
+        if (a & 1) {
+            res = (res + b) % mod;
+        }
+        a >>= 1;
+        b = (b << 1) % mod;
+    }
+    return res;
+#elif defined(__SIZEOF_INT128__)
+    /* GCC/Clang Host Implementation: Uses native __int128 */
+    unsigned __int128 res = (unsigned __int128)a * b;
     return (uint64_t)(res % mod);
+#elif defined(_MSC_VER)
+    /* MSVC Host Implementation: 128-bit not supported, use manual modular arithmetic */
+    a %= mod;
+    b %= mod;
+    uint64_t res = 0;
+    while (a > 0) {
+        if (a & 1) {
+            res = (res + b) % mod;
+        }
+        a >>= 1;
+        b = (b << 1) % mod;
+    }
+    return res;
+#else
+    /* Fallback for other compilers */
+    return (uint64_t)(((unsigned __int128)a * b) % mod);
+#endif
 }
 
 __device__ __forceinline__ uint64_t ttak_device_powmod(uint64_t base,
@@ -340,10 +390,10 @@ static ttak_result_t ttak_finalize_output(const ttak_accel_batch_item_t *item,
     uint32_t payload_checksum = ttak_fnv1a32(payload, payload_size, checksum_seed);
 
     ttak_accel_record_prefix_t prefix = {
-        .guard = guard,
-        .record_count = (uint32_t)record_count,
-        .payload_checksum = payload_checksum,
-        .reserved = sizeof(ttak_accel_factor_record_t)
+        prefix.guard = guard,
+        prefix.record_count = (uint32_t)record_count,
+        prefix.payload_checksum = payload_checksum,
+        prefix.reserved = sizeof(ttak_accel_factor_record_t)
     };
     memcpy(item->output, &prefix, sizeof(prefix));
     ttak_mask_payload(payload, payload_size, guard);
@@ -362,7 +412,7 @@ __global__ void ttak_cuda_factor_kernel(const uint64_t *values,
     uint64_t n = values[idx];
     ttak_accel_factor_record_t record;
     ttak_cuda_rng_t rng = {
-        .state = (uint64_t)(0xA5A5A5A5A5A5A5A5ULL ^ n ^ (uint64_t)idx)
+        rng.state = (uint64_t)(0xA5A5A5A5A5A5A5A5ULL ^ n ^ (uint64_t)idx)
     };
     ttak_device_factor_number(n, &rng, &record);
     records[idx] = record;

@@ -10,7 +10,9 @@
 typedef struct ttak_bigreal {
     ttak_bigint_t mantissa;
     int64_t       exponent;
+#ifndef _MSC_VER
     alignas(max_align_t) char padding[0];
+#endif
 } ttak_bigreal_t;
 
 typedef ttak_bigreal_t tt_big_r_t;

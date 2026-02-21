@@ -2,6 +2,7 @@ var dir_bff521a98735d3583c062f55314faf7c =
 [
     [ "bigcomplex.h", "bigcomplex_8h.html", "bigcomplex_8h" ],
     [ "bigint.h", "bigint_8h.html", "bigint_8h" ],
+    [ "bigint_accel.h", "bigint__accel_8h.html", "bigint__accel_8h" ],
     [ "bigmul.h", "bigmul_8h.html", "bigmul_8h" ],
     [ "bigreal.h", "bigreal_8h.html", "bigreal_8h" ],
     [ "calculus.h", "calculus_8h.html", "calculus_8h" ],

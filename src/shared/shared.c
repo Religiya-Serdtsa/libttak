@@ -17,7 +17,13 @@
 typedef struct {
     size_t size;
     uint64_t ts;
+#if defined(__GNUC__) || defined(__clang__)
     uint8_t data[] __attribute__((aligned(TTAK_CACHE_LINE_SIZE)));
+#elif defined(_MSC_VER)
+    __declspec(align(64)) uint8_t data[];
+#else
+    uint8_t data[];
+#endif
 } ttak_payload_header_t;
 
 #define TTAK_GET_HEADER(ptr) ((ttak_payload_header_t *)((uint8_t *)(ptr) - offsetof(ttak_payload_header_t, data)))

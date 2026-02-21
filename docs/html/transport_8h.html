@@ -143,6 +143,18 @@ Functions</h2></td></tr>
 <tr class="memitem:a7dbda019006bf5e78b8577f4a2d1dff3" id="r_a7dbda019006bf5e78b8577f4a2d1dff3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="transport_8h.html#a5999aeccffbd892e89cf25f59abd089a">ttak_phys_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="transport_8h.html#a7dbda019006bf5e78b8577f4a2d1dff3">ttak_phys_calc_sherwood</a> (double *out_sh, double mass_transfer_coeff, double length, double diffusivity)</td></tr>
 <tr class="memdesc:a7dbda019006bf5e78b8577f4a2d1dff3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sherwood number: Sh = k_m * L / D.  <br /></td></tr>
 <tr class="separator:a7dbda019006bf5e78b8577f4a2d1dff3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9df01d857771380e89c065a4b5746b46" id="r_a9df01d857771380e89c065a4b5746b46"><td class="memItemLeft" align="right" valign="top"><a class="el" href="transport_8h.html#a5999aeccffbd892e89cf25f59abd089a">ttak_phys_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="transport_8h.html#a9df01d857771380e89c065a4b5746b46">ttak_phys_calc_prandtl</a> (double *out_pr, double dynamic_viscosity, double specific_heat, double thermal_conductivity)</td></tr>
+<tr class="memdesc:a9df01d857771380e89c065a4b5746b46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prandtl number: Pr = nu / alpha = cp * mu / k.  <br /></td></tr>
+<tr class="separator:a9df01d857771380e89c065a4b5746b46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d9b99dca70c86a6055906901e32c483" id="r_a2d9b99dca70c86a6055906901e32c483"><td class="memItemLeft" align="right" valign="top"><a class="el" href="transport_8h.html#a5999aeccffbd892e89cf25f59abd089a">ttak_phys_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="transport_8h.html#a2d9b99dca70c86a6055906901e32c483">ttak_phys_calc_grashof</a> (double *out_gr, double gravity, double expansion_coeff, double delta_temp, double length, double rho, double dynamic_viscosity)</td></tr>
+<tr class="memdesc:a2d9b99dca70c86a6055906901e32c483"><td class="mdescLeft">&#160;</td><td class="mdescRight">Grashof number (Thermal): Gr = g * beta * (Ts - Tinf) * L^3 / nu^2.  <br /></td></tr>
+<tr class="separator:a2d9b99dca70c86a6055906901e32c483"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7b4094a455dc394fa8e9a91884f8e37" id="r_aa7b4094a455dc394fa8e9a91884f8e37"><td class="memItemLeft" align="right" valign="top"><a class="el" href="transport_8h.html#a5999aeccffbd892e89cf25f59abd089a">ttak_phys_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="transport_8h.html#aa7b4094a455dc394fa8e9a91884f8e37">ttak_phys_calc_grashof_mass</a> (double *out_grm, double gravity, double expansion_coeff_mass, double delta_conc, double length, double rho, double dynamic_viscosity)</td></tr>
+<tr class="memdesc:aa7b4094a455dc394fa8e9a91884f8e37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Grashof number (Mass): Gr_m = g * beta_m * (Cs - Cinf) * L^3 / nu^2.  <br /></td></tr>
+<tr class="separator:aa7b4094a455dc394fa8e9a91884f8e37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a284ef60e8627a92431444c4f7e65ab1b" id="r_a284ef60e8627a92431444c4f7e65ab1b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="transport_8h.html#a5999aeccffbd892e89cf25f59abd089a">ttak_phys_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="transport_8h.html#a284ef60e8627a92431444c4f7e65ab1b">ttak_phys_calc_rayleigh</a> (double *out_ra, double grashof, double pr_or_sc)</td></tr>
+<tr class="memdesc:a284ef60e8627a92431444c4f7e65ab1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rayleigh number: Ra = Gr * Pr (Thermal) or Gr_m * Sc (Mass).  <br /></td></tr>
+<tr class="separator:a284ef60e8627a92431444c4f7e65ab1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ace20d426f6ee161c2109ca57377804ca" id="r_ace20d426f6ee161c2109ca57377804ca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="transport_8h.html#a5999aeccffbd892e89cf25f59abd089a">ttak_phys_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="transport_8h.html#ace20d426f6ee161c2109ca57377804ca">ttak_phys_calc_km</a> (double *out_km, double sherwood, double length, double diffusivity)</td></tr>
 <tr class="memdesc:ace20d426f6ee161c2109ca57377804ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes k_m from a Sherwood number: k_m = Sh * D / L.  <br /></td></tr>
 <tr class="separator:ace20d426f6ee161c2109ca57377804ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -190,6 +202,138 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a2d9b99dca70c86a6055906901e32c483" name="a2d9b99dca70c86a6055906901e32c483"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d9b99dca70c86a6055906901e32c483">&#9670;&#160;</a></span>ttak_phys_calc_grashof()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="transport_8h.html#a5999aeccffbd892e89cf25f59abd089a">ttak_phys_status_t</a> ttak_phys_calc_grashof </td>
+          <td>(</td>
+          <td class="paramtype">double *&#160;</td>
+          <td class="paramname"><em>out_gr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>gravity</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>expansion_coeff</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>delta_temp</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>length</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>rho</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>dynamic_viscosity</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Grashof number (Thermal): Gr = g * beta * (Ts - Tinf) * L^3 / nu^2. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">out_gr</td><td>Computed Grashof number. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">gravity</td><td>g in m/s^2. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">expansion_coeff</td><td>beta in 1/K. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">delta_temp</td><td>(Ts - Tinf) in K. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">length</td><td>L in meters. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">rho</td><td>Fluid density in kg/m^3. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">dynamic_viscosity</td><td>mu in Pa*s. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aa7b4094a455dc394fa8e9a91884f8e37" name="aa7b4094a455dc394fa8e9a91884f8e37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7b4094a455dc394fa8e9a91884f8e37">&#9670;&#160;</a></span>ttak_phys_calc_grashof_mass()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="transport_8h.html#a5999aeccffbd892e89cf25f59abd089a">ttak_phys_status_t</a> ttak_phys_calc_grashof_mass </td>
+          <td>(</td>
+          <td class="paramtype">double *&#160;</td>
+          <td class="paramname"><em>out_grm</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>gravity</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>expansion_coeff_mass</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>delta_conc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>length</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>rho</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>dynamic_viscosity</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Grashof number (Mass): Gr_m = g * beta_m * (Cs - Cinf) * L^3 / nu^2. </p>
+
+</div>
+</div>
 <a id="ace20d426f6ee161c2109ca57377804ca" name="ace20d426f6ee161c2109ca57377804ca"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ace20d426f6ee161c2109ca57377804ca">&#9670;&#160;</a></span>ttak_phys_calc_km()</h2>
 
@@ -289,6 +433,93 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a9df01d857771380e89c065a4b5746b46" name="a9df01d857771380e89c065a4b5746b46"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9df01d857771380e89c065a4b5746b46">&#9670;&#160;</a></span>ttak_phys_calc_prandtl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="transport_8h.html#a5999aeccffbd892e89cf25f59abd089a">ttak_phys_status_t</a> ttak_phys_calc_prandtl </td>
+          <td>(</td>
+          <td class="paramtype">double *&#160;</td>
+          <td class="paramname"><em>out_pr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>dynamic_viscosity</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>specific_heat</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>thermal_conductivity</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Prandtl number: Pr = nu / alpha = cp * mu / k. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">out_pr</td><td>Computed Prandtl number. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">dynamic_viscosity</td><td>mu in Pa*s. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">specific_heat</td><td>cp in J/(kg*K). </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">thermal_conductivity</td><td>k in W/(m*K). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a284ef60e8627a92431444c4f7e65ab1b" name="a284ef60e8627a92431444c4f7e65ab1b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a284ef60e8627a92431444c4f7e65ab1b">&#9670;&#160;</a></span>ttak_phys_calc_rayleigh()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="transport_8h.html#a5999aeccffbd892e89cf25f59abd089a">ttak_phys_status_t</a> ttak_phys_calc_rayleigh </td>
+          <td>(</td>
+          <td class="paramtype">double *&#160;</td>
+          <td class="paramname"><em>out_ra</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>grashof</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>pr_or_sc</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Rayleigh number: Ra = Gr * Pr (Thermal) or Gr_m * Sc (Mass). </p>
 
 </div>
 </div>

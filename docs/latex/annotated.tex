@@ -43,10 +43,13 @@ Here are the classes, structs, unions and interfaces with brief descriptions\+:\
 \item\contentsline{section}{\mbox{\hyperlink{structttak__logger}{ttak\+\_\+logger}} \\*Logger structure }{\pageref{structttak__logger}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__map__t}{ttak\+\_\+map\+\_\+t}} }{\pageref{structttak__map__t}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__matrix}{ttak\+\_\+matrix}} \\*Matrix structure for up to 4x4 }{\pageref{structttak__matrix}}{}
-\item\contentsline{section}{\mbox{\hyperlink{structttak__mem__header__t}{ttak\+\_\+mem\+\_\+header\+\_\+t}} \\*"{}\+Fortress"{} Memory Header. 64-\/byte aligned to prevent False Sharing and ensure user pointer alignment. Total size is 128 bytes to maintain 64-\/byte alignment for user data }{\pageref{structttak__mem__header__t}}{}
+\item\contentsline{section}{\mbox{\hyperlink{structttak__mem__friction__matrix__t}{ttak\+\_\+mem\+\_\+friction\+\_\+matrix\+\_\+t}} \\*Matrix for tracking memory pressure and "{}\+Mechanical Damping"{} }{\pageref{structttak__mem__friction__matrix__t}}{}
+\item\contentsline{section}{\mbox{\hyperlink{structttak__mem__header__t}{ttak\+\_\+mem\+\_\+header\+\_\+t}} \\*"{}\+Fortress"{} Memory Header stored before user data }{\pageref{structttak__mem__header__t}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__mem__node}{ttak\+\_\+mem\+\_\+node}} \\*Represents a node in the generic heap tree, tracking a dynamically allocated memory block }{\pageref{structttak__mem__node}}{}
+\item\contentsline{section}{\mbox{\hyperlink{structttak__mem__pocket__freelist}{ttak\+\_\+mem\+\_\+pocket\+\_\+freelist}} \\*Simple LIFO freelist for thread-\/local blocks }{\pageref{structttak__mem__pocket__freelist}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__mem__req}{ttak\+\_\+mem\+\_\+req}} }{\pageref{structttak__mem__req}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__mem__tree}{ttak\+\_\+mem\+\_\+tree}} \\*Manages the collection of dynamically allocated memory blocks as a mem tree }{\pageref{structttak__mem__tree}}{}
+\item\contentsline{section}{\mbox{\hyperlink{structttak__mem__vma__region}{ttak\+\_\+mem\+\_\+vma\+\_\+region}} \\*Linear virtual mapping area for lock-\/free bump allocation }{\pageref{structttak__mem__vma__region}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__net__baremetal__spec}{ttak\+\_\+net\+\_\+baremetal\+\_\+spec}} }{\pageref{structttak__net__baremetal__spec}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__net__driver__ops}{ttak\+\_\+net\+\_\+driver\+\_\+ops}} }{\pageref{structttak__net__driver__ops}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__net__endpoint}{ttak\+\_\+net\+\_\+endpoint}} \\*Shared socket wrapper guarded by ttak\+\_\+io\+\_\+guard\+\_\+t and owner policies }{\pageref{structttak__net__endpoint}}{}
@@ -73,6 +76,7 @@ Here are the classes, structs, unions and interfaces with brief descriptions\+:\
 \item\contentsline{section}{\mbox{\hyperlink{structttak__simple__node}{ttak\+\_\+simple\+\_\+node}} \\*Generic singly linked list node used by simple stacks and queues }{\pageref{structttak__simple__node}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__simple__queue__t}{ttak\+\_\+simple\+\_\+queue\+\_\+t}} \\*Generic FIFO queue implemented with linked nodes }{\pageref{structttak__simple__queue__t}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__simple__stack__t}{ttak\+\_\+simple\+\_\+stack\+\_\+t}} \\*Generic LIFO stack implemented with linked nodes }{\pageref{structttak__simple__stack__t}}{}
+\item\contentsline{section}{\mbox{\hyperlink{structttak__slab__t}{ttak\+\_\+slab\+\_\+t}} \\*Metadata for Slab vanguard (64KB -\/ 512KB Dynamic Path) }{\pageref{structttak__slab__t}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__spin}{ttak\+\_\+spin}} \\*Spinlock structure }{\pageref{structttak__spin}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__stats}{ttak\+\_\+stats}} \\*Thread-\/safe Statistics structure }{\pageref{structttak__stats}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__stats__ext}{ttak\+\_\+stats\+\_\+ext}} \\*Extended statistics structure with automatic promotion and high precision }{\pageref{structttak__stats__ext}}{}
