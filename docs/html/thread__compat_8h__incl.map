@@ -1,6 +1,6 @@
 <map id="examples/mersenne&#45;prime/thread_compat.h" name="examples/mersenne&#45;prime/thread_compat.h">
 <area shape="rect" id="Node000001" title=" " alt="" coords="52,5,251,45"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,93,89,119"/>
+<area shape="rect" id="Node000002" href="$pthread_8h.html" title="POSIX thread compatibility shim." alt="" coords="5,93,89,119"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="128,48,75,87,72,83,125,43"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="114,93,189,119"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="154,46,154,79,149,79,149,46"/>

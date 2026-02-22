@@ -101,7 +101,7 @@ $(document).ready(function(){initNavTree('future_8h_source.html',''); initResiza
 <a href="future_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef TTAK_ASYNC_FUTURE_H</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define TTAK_ASYNC_FUTURE_H</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;pthread.h&gt;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;<a class="code" href="pthread_8h.html">pthread.h</a>&gt;</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
 <div class="foldopen" id="foldopen00007" data-start="{" data-end="};">
@@ -118,6 +118,7 @@ $(document).ready(function(){initNavTree('future_8h_source.html',''); initResiza
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#endif </span><span class="comment">// TTAK_ASYNC_FUTURE_H</span></div>
 <div class="ttc" id="afuture_8h_html_a56ca146ef4be9bd1d67a1250de2ce2c2"><div class="ttname"><a href="future_8h.html#a56ca146ef4be9bd1d67a1250de2ce2c2">ttak_future_t</a></div><div class="ttdeci">struct ttak_future ttak_future_t</div></div>
 <div class="ttc" id="afuture_8h_html_a5c44aae0f472071a500c1c6a265ba7d0"><div class="ttname"><a href="future_8h.html#a5c44aae0f472071a500c1c6a265ba7d0">ttak_future_get</a></div><div class="ttdeci">void * ttak_future_get(ttak_future_t *future)</div></div>
+<div class="ttc" id="apthread_8h_html"><div class="ttname"><a href="pthread_8h.html">pthread.h</a></div><div class="ttdoc">POSIX thread compatibility shim.</div></div>
 <div class="ttc" id="astructttak__future_html"><div class="ttname"><a href="structttak__future.html">ttak_future</a></div><div class="ttdef"><b>Definition</b> <a href="future_8h_source.html#l00007">future.h:7</a></div></div>
 <div class="ttc" id="astructttak__future_html_a0c6c4437d3e6f0c8d89745dc178c626f"><div class="ttname"><a href="structttak__future.html#a0c6c4437d3e6f0c8d89745dc178c626f">ttak_future::mutex</a></div><div class="ttdeci">pthread_mutex_t mutex</div><div class="ttdef"><b>Definition</b> <a href="future_8h_source.html#l00010">future.h:10</a></div></div>
 <div class="ttc" id="astructttak__future_html_a16a9ed5137851ca5cc7387fed679269a"><div class="ttname"><a href="structttak__future.html#a16a9ed5137851ca5cc7387fed679269a">ttak_future::ready</a></div><div class="ttdeci">_Bool ready</div><div class="ttdef"><b>Definition</b> <a href="future_8h_source.html#l00009">future.h:9</a></div></div>

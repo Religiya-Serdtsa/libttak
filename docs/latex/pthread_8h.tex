@@ -1,0 +1,44 @@
+\doxysection{include/pthread.h File Reference}
+\hypertarget{pthread_8h}{}\label{pthread_8h}\index{include/pthread.h@{include/pthread.h}}
+
+
+POSIX thread compatibility shim.  
+
+
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{pthread_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{pthread_8h_a5129dbc9c07e5f4d86c8c09ae7ac90e1}{TTAK\+\_\+\+PTHREAD\+\_\+\+SHIM\+\_\+H}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+POSIX thread compatibility shim. 
+
+On non-\/\+MSVC compilers (GCC, Clang, TCC) this header forwards to the system-\/provided \texorpdfstring{$<$}{<}\doxylink{pthread_8h}{pthread.\+h}\texorpdfstring{$>$}{>} via \#include\+\_\+next so that no existing code needs modification.
+
+On MSVC/\+Windows, the system does not ship a pthread implementation. This file supplies a minimal but correct compatibility layer built on top of the Windows synchronisation API (SRWLOCK, CONDITION\+\_\+\+VARIABLE, CRITICAL\+\_\+\+SECTION, Create\+Thread / Wait\+For\+Single\+Object, Init\+Once\+Execute\+Once). 
+
+Definition in file \mbox{\hyperlink{pthread_8h_source}{pthread.\+h}}.
+
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{pthread_8h_a5129dbc9c07e5f4d86c8c09ae7ac90e1}\label{pthread_8h_a5129dbc9c07e5f4d86c8c09ae7ac90e1} 
+\index{pthread.h@{pthread.h}!TTAK\_PTHREAD\_SHIM\_H@{TTAK\_PTHREAD\_SHIM\_H}}
+\index{TTAK\_PTHREAD\_SHIM\_H@{TTAK\_PTHREAD\_SHIM\_H}!pthread.h@{pthread.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_PTHREAD\_SHIM\_H}{TTAK\_PTHREAD\_SHIM\_H}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+PTHREAD\+\_\+\+SHIM\+\_\+H}
+
+
+
+Definition at line \mbox{\hyperlink{pthread_8h_source_l00026}{26}} of file \mbox{\hyperlink{pthread_8h_source}{pthread.\+h}}.
+

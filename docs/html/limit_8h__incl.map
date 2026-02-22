@@ -9,7 +9,7 @@
 <area shape="rect" id="Node000006" href="$spinlock_8h.html" title=" " alt="" coords="259,93,411,119"/>
 <area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="231,43,303,84,301,89,228,48"/>
 <area shape="poly" id="edge5_Node000004_Node000002" title=" " alt="" coords="85,117,131,155,127,160,81,121"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="10,167,94,192"/>
+<area shape="rect" id="Node000005" href="$pthread_8h.html" title="POSIX thread compatibility shim." alt="" coords="10,167,94,192"/>
 <area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="69,120,61,154,55,153,64,118"/>
 <area shape="poly" id="edge9_Node000006_Node000002" title=" " alt="" coords="307,121,197,164,195,159,305,116"/>
 <area shape="poly" id="edge8_Node000006_Node000003" title=" " alt="" coords="324,121,280,160,276,156,320,117"/>

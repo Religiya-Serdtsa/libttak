@@ -104,7 +104,7 @@ $(document).ready(function(){initNavTree('atomic_8h_source.html',''); initResiza
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;<a class="code" href="hash_8h.html">ttak/ht/hash.h</a>&gt;</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;pthread.h&gt;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;<a class="code" href="pthread_8h.html">pthread.h</a>&gt;</span></div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment"></span> </div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment">/**</span></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment"> * @brief Generic function pointer type.</span></div>
@@ -177,6 +177,7 @@ $(document).ready(function(){initNavTree('atomic_8h_source.html',''); initResiza
 <div class="ttc" id="aatomic_8h_html_aa8c8e784da856951cb1f07f0e009e34f"><div class="ttname"><a href="atomic_8h.html#aa8c8e784da856951cb1f07f0e009e34f">func_wrapper_init</a></div><div class="ttdeci">void func_wrapper_init(ttak_func_wrapper_t *wr, uint64_t now)</div><div class="ttdoc">initialize tt_func_wrapper.</div></div>
 <div class="ttc" id="aatomic_8h_html_ad6fa58ebc4a659aa99f982c6c9d59956"><div class="ttname"><a href="atomic_8h.html#ad6fa58ebc4a659aa99f982c6c9d59956">ttak_atomic_read64</a></div><div class="ttdeci">uint64_t ttak_atomic_read64(volatile uint64_t *ptr)</div><div class="ttdoc">Atomic operations for uint64_t.</div></div>
 <div class="ttc" id="ahash_8h_html"><div class="ttname"><a href="hash_8h.html">hash.h</a></div></div>
+<div class="ttc" id="apthread_8h_html"><div class="ttname"><a href="pthread_8h.html">pthread.h</a></div><div class="ttdoc">POSIX thread compatibility shim.</div></div>
 <div class="ttc" id="astructttak__func__wrapper_html"><div class="ttname"><a href="structttak__func__wrapper.html">ttak_func_wrapper</a></div><div class="ttdef"><b>Definition</b> <a href="atomic_8h_source.html#l00030">atomic.h:30</a></div></div>
 <div class="ttc" id="astructttak__func__wrapper_html_a0c002b599deea32162fb5162ea9196fb"><div class="ttname"><a href="structttak__func__wrapper.html#a0c002b599deea32162fb5162ea9196fb">ttak_func_wrapper::ts</a></div><div class="ttdeci">uint64_t ts</div><div class="ttdef"><b>Definition</b> <a href="atomic_8h_source.html#l00033">atomic.h:33</a></div></div>
 <div class="ttc" id="astructttak__func__wrapper_html_a1824b96148678c8c7b980edc41429cf5"><div class="ttname"><a href="structttak__func__wrapper.html#a1824b96148678c8c7b980edc41429cf5">ttak_func_wrapper::expired</a></div><div class="ttdeci">_Bool expired</div><div class="ttdef"><b>Definition</b> <a href="atomic_8h_source.html#l00035">atomic.h:35</a></div></div>
@@ -187,7 +188,7 @@ $(document).ready(function(){initNavTree('atomic_8h_source.html',''); initResiza
 <div class="ttc" id="astructttak__func__wrapper_html_ab6af31f577a8ffff8f2c0e75f4693129"><div class="ttname"><a href="structttak__func__wrapper.html#ab6af31f577a8ffff8f2c0e75f4693129">ttak_func_wrapper::tbl</a></div><div class="ttdeci">tt_map_t tbl</div><div class="ttdef"><b>Definition</b> <a href="atomic_8h_source.html#l00037">atomic.h:37</a></div></div>
 <div class="ttc" id="astructttak__func__wrapper_html_ac367c431a12ab652127e98d77e28cda9"><div class="ttname"><a href="structttak__func__wrapper.html#ac367c431a12ab652127e98d77e28cda9">ttak_func_wrapper::type</a></div><div class="ttdeci">int type</div><div class="ttdef"><b>Definition</b> <a href="atomic_8h_source.html#l00031">atomic.h:31</a></div></div>
 <div class="ttc" id="astructttak__func__wrapper_html_af0597208068d1204048cfca6f64ece75"><div class="ttname"><a href="structttak__func__wrapper.html#af0597208068d1204048cfca6f64ece75">ttak_func_wrapper::args</a></div><div class="ttdeci">void * args</div><div class="ttdef"><b>Definition</b> <a href="atomic_8h_source.html#l00036">atomic.h:36</a></div></div>
-<div class="ttc" id="astructttak__map__t_html"><div class="ttname"><a href="structttak__map__t.html">ttak_map_t</a></div><div class="ttdef"><b>Definition</b> <a href="hash_8h_source.html#l00024">hash.h:24</a></div></div>
+<div class="ttc" id="astructttak__map__t_html"><div class="ttname"><a href="structttak__map__t.html">ttak_map_t</a></div><div class="ttdef"><b>Definition</b> <a href="hash_8h_source.html#l00026">hash.h:26</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

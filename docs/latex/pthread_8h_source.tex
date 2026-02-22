@@ -1,0 +1,251 @@
+\doxysection{pthread.\+h}
+\hypertarget{pthread_8h_source}{}\label{pthread_8h_source}\index{include/pthread.h@{include/pthread.h}}
+\mbox{\hyperlink{pthread_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00001}00001\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00002}00002\ \textcolor{comment}{\ *\ @file\ pthread.h}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00003}00003\ \textcolor{comment}{\ *\ @brief\ POSIX\ thread\ compatibility\ shim.}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00004}00004\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00005}00005\ \textcolor{comment}{\ *\ On\ non-\/MSVC\ compilers\ (GCC,\ Clang,\ TCC)\ this\ header\ forwards\ to\ the}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00006}00006\ \textcolor{comment}{\ *\ system-\/provided\ <pthread.h>\ via\ \#include\_next\ so\ that\ no\ existing\ code}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00007}00007\ \textcolor{comment}{\ *\ needs\ modification.}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00008}00008\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00009}00009\ \textcolor{comment}{\ *\ On\ MSVC/Windows,\ the\ system\ does\ not\ ship\ a\ pthread\ implementation.}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00010}00010\ \textcolor{comment}{\ *\ This\ file\ supplies\ a\ minimal\ but\ correct\ compatibility\ layer\ built\ on}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00011}00011\ \textcolor{comment}{\ *\ top\ of\ the\ Windows\ synchronisation\ API\ (SRWLOCK,\ CONDITION\_VARIABLE,}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00012}00012\ \textcolor{comment}{\ *\ CRITICAL\_SECTION,\ CreateThread\ /\ WaitForSingleObject,\ InitOnceExecuteOnce).}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00013}00013\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00015}00015\ \textcolor{preprocessor}{\#if\ !defined(\_MSC\_VER)\ ||\ !defined(\_WIN32)}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00016}00016\ \textcolor{preprocessor}{\#\ \ if\ defined(\_\_has\_include\_next)}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00017}00017\ \textcolor{preprocessor}{\#\ \ \ \ if\ \_\_has\_include\_next(<pthread.h>)}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00018}00018\ \textcolor{preprocessor}{\#\ \ \ \ \ \ include\_next\ <pthread.h>}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00019}00019\ \textcolor{preprocessor}{\#\ \ \ \ endif}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00020}00020\ \textcolor{preprocessor}{\#\ \ else}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00021}00021\ \textcolor{preprocessor}{\#\ \ \ \ include\_next\ <pthread.h>}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00022}00022\ \textcolor{preprocessor}{\#\ \ endif}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00023}00023\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00025}00025\ \textcolor{preprocessor}{\#ifndef\ TTAK\_PTHREAD\_SHIM\_H}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00026}\mbox{\hyperlink{pthread_8h_a5129dbc9c07e5f4d86c8c09ae7ac90e1}{00026}}\ \textcolor{preprocessor}{\#define\ TTAK\_PTHREAD\_SHIM\_H}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00028}00028\ \textcolor{preprocessor}{\#if\ defined(\_MSC\_VER)\ \&\&\ defined(\_WIN32)}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00029}00029\ \textcolor{comment}{/*\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00030}00030\ \textcolor{comment}{\ *\ MSVC\ /\ Windows\ implementation}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00031}00031\ \textcolor{comment}{\ *\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00033}00033\ \textcolor{preprocessor}{\#ifndef\ WIN32\_LEAN\_AND\_MEAN}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00034}00034\ \textcolor{preprocessor}{\#\ \ define\ WIN32\_LEAN\_AND\_MEAN}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00035}00035\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00036}00036\ \textcolor{preprocessor}{\#include\ <windows.h>}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00037}00037\ \textcolor{preprocessor}{\#include\ <process.h>}\ \ \textcolor{comment}{/*\ \_beginthreadex\ */}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00038}00038\ \textcolor{preprocessor}{\#include\ <stdlib.h>}\ \ \ \textcolor{comment}{/*\ malloc\ /\ free\ \ */}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00039}00039\ \textcolor{preprocessor}{\#include\ <time.h>}\ \ \ \ \ \textcolor{comment}{/*\ struct\ timespec,\ timespec\_get\ */}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00040}00040\ \textcolor{preprocessor}{\#include\ <errno.h>}\ \ \ \ \textcolor{comment}{/*\ ETIMEDOUT\ */}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00042}00042\ \textcolor{comment}{/*\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ types\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00044}00044\ \textcolor{keyword}{typedef}\ SRWLOCK\ \ \ \ \ \ \ \ \ \ \ \ \ pthread\_mutex\_t;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00045}00045\ \textcolor{keyword}{typedef}\ CONDITION\_VARIABLE\ \ pthread\_cond\_t;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00046}00046\ \textcolor{keyword}{typedef}\ HANDLE\ \ \ \ \ \ \ \ \ \ \ \ \ \ pthread\_t;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00047}00047\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{volatile}\ LONG\ \ \ \ \ \ \ pthread\_once\_t;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00049}00049\ \textcolor{comment}{/*\ pthread\_rwlock\_t:\ wrap\ SRWLOCK\ with\ a\ flag\ to\ distinguish\ shared\ vs}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00050}00050\ \textcolor{comment}{\ *\ exclusive\ mode\ so\ that\ a\ single\ pthread\_rwlock\_unlock()\ can\ work.\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00051}00051\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00052}00052\ \ \ \ \ SRWLOCK\ \ \ \ \ \ \ \ \ \ lock;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00053}00053\ \ \ \ \ \textcolor{keyword}{volatile}\ \textcolor{keywordtype}{int}\ \ \ \ \ exclusive;\ \textcolor{comment}{/*\ 1\ when\ write-\/locked,\ 0\ otherwise\ */}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00054}00054\ \}\ pthread\_rwlock\_t;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00056}00056\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{int}\ pthread\_mutexattr\_t;\ \ \ \textcolor{comment}{/*\ unused\ stub\ */}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00057}00057\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{int}\ pthread\_condattr\_t;\ \ \ \ \textcolor{comment}{/*\ unused\ stub\ */}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00058}00058\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{int}\ pthread\_rwlockattr\_t;\ \ \textcolor{comment}{/*\ unused\ stub\ */}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00060}00060\ \textcolor{comment}{/*\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ static-\/initialiser\ macros\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00061}00061\ }
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00062}00062\ \textcolor{preprocessor}{\#define\ PTHREAD\_MUTEX\_INITIALIZER\ \ \ SRWLOCK\_INIT\ \ \ }\textcolor{comment}{/*\ \{0\}\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00063}00063\ \textcolor{preprocessor}{\#define\ PTHREAD\_ONCE\_INIT\ \ \ \ \ \ \ \ \ \ \ 0L}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00064}00064\ \textcolor{preprocessor}{\#define\ PTHREAD\_RWLOCK\_PREFER\_WRITER\_NONRECURSIVE\_NP\ \ 1\ \ }\textcolor{comment}{/*\ stub\ value\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00066}00066\ \textcolor{comment}{/*\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ mutex\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00068}00068\ \textcolor{keyword}{static}\ \_\_inline\ \textcolor{keywordtype}{int}\ pthread\_mutex\_init(pthread\_mutex\_t\ *m,}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ pthread\_mutexattr\_t\ *attr)\ \{}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00070}00070\ \ \ \ \ (void)attr;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00071}00071\ \ \ \ \ InitializeSRWLock(m);}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00072}00072\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00073}00073\ \}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00074}00074\ \textcolor{keyword}{static}\ \_\_inline\ \textcolor{keywordtype}{int}\ pthread\_mutex\_lock(pthread\_mutex\_t\ *m)\ \{}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00075}00075\ \ \ \ \ AcquireSRWLockExclusive(m);}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00076}00076\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00077}00077\ \}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00078}00078\ \textcolor{keyword}{static}\ \_\_inline\ \textcolor{keywordtype}{int}\ pthread\_mutex\_trylock(pthread\_mutex\_t\ *m)\ \{}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00079}00079\ \ \ \ \ \textcolor{keywordflow}{return}\ TryAcquireSRWLockExclusive(m)\ ?\ 0\ :\ 16\ \textcolor{comment}{/*\ EBUSY\ */};}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00080}00080\ \}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00081}00081\ \textcolor{keyword}{static}\ \_\_inline\ \textcolor{keywordtype}{int}\ pthread\_mutex\_unlock(pthread\_mutex\_t\ *m)\ \{}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00082}00082\ \ \ \ \ ReleaseSRWLockExclusive(m);}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00083}00083\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00084}00084\ \}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00085}00085\ \textcolor{keyword}{static}\ \_\_inline\ \textcolor{keywordtype}{int}\ pthread\_mutex\_destroy(pthread\_mutex\_t\ *m)\ \{}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00086}00086\ \ \ \ \ (void)m;\ \textcolor{comment}{/*\ SRWLOCK\ requires\ no\ cleanup\ */}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00087}00087\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00088}00088\ \}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00089}00089\ }
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00090}00090\ \textcolor{comment}{/*\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ condition\ variable\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00091}00091\ }
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00092}00092\ \textcolor{keyword}{static}\ \_\_inline\ \textcolor{keywordtype}{int}\ pthread\_cond\_init(pthread\_cond\_t\ *c,}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ pthread\_condattr\_t\ *attr)\ \{}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00094}00094\ \ \ \ \ (void)attr;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00095}00095\ \ \ \ \ InitializeConditionVariable(c);}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00096}00096\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00097}00097\ \}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00098}00098\ \textcolor{keyword}{static}\ \_\_inline\ \textcolor{keywordtype}{int}\ pthread\_cond\_wait(pthread\_cond\_t\ *c,\ pthread\_mutex\_t\ *m)\ \{}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00099}00099\ \ \ \ \ \textcolor{comment}{/*\ mutex\ is\ an\ SRWLOCK\ held\ in\ exclusive\ mode\ */}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00100}00100\ \ \ \ \ \textcolor{keywordflow}{return}\ SleepConditionVariableSRW(c,\ m,\ INFINITE,\ 0)\ ?\ 0\ :\ (int)GetLastError();}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00101}00101\ \}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00102}00102\ \textcolor{keyword}{static}\ \_\_inline\ \textcolor{keywordtype}{int}\ pthread\_cond\_timedwait(pthread\_cond\_t\ *c,}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pthread\_mutex\_t\ *m,}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{struct}\ timespec\ *abstime)\ \{}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00105}00105\ \ \ \ \ \textcolor{comment}{/*\ Maximum\ safe\ millisecond\ value\ for\ SleepConditionVariableSRW}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00106}00106\ \textcolor{comment}{\ \ \ \ \ *\ (one\ less\ than\ INFINITE\ =\ 0xFFFFFFFF\ to\ avoid\ the\ sentinel\ value).\ */}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00107}00107\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ DWORD\ k\_max\_sleep\_ms\ =\ 0xFFFFFFFEUL;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00108}00108\ \ \ \ \ DWORD\ timeout\_ms\ =\ INFINITE;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00109}00109\ \ \ \ \ \textcolor{keywordflow}{if}\ (abstime)\ \{}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00110}00110\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }timespec\ now;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00111}00111\ \ \ \ \ \ \ \ \ timespec\_get(\&now,\ TIME\_UTC);}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00112}00112\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ diff\_ns\ =}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ ((\textcolor{keywordtype}{long}\ long)(abstime-\/>tv\_sec\ \ -\/\ now.tv\_sec)\ \ *\ 1000000000LL)\ +}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ ((\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long})\ abstime-\/>tv\_nsec\ -\/\ (\textcolor{keywordtype}{long}\ long)now.tv\_nsec);}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00115}00115\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (diff\_ns\ <=\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ timeout\_ms\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00117}00117\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ diff\_ms\ =\ (diff\_ns\ +\ 999999LL)\ /\ 1000000LL;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ timeout\_ms\ =\ (diff\_ms\ >=\ (\textcolor{keywordtype}{long}\ long)k\_max\_sleep\_ms)}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ?\ k\_max\_sleep\_ms}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ (DWORD)diff\_ms;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00122}00122\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00123}00123\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00124}00124\ \ \ \ \ \textcolor{keywordflow}{if}\ (SleepConditionVariableSRW(c,\ m,\ timeout\_ms,\ 0))\ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00125}00125\ \ \ \ \ \textcolor{keywordflow}{return}\ (GetLastError()\ ==\ ERROR\_TIMEOUT)\ ?\ ETIMEDOUT\ :\ (int)GetLastError();}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00126}00126\ \}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00127}00127\ \textcolor{keyword}{static}\ \_\_inline\ \textcolor{keywordtype}{int}\ pthread\_cond\_signal(pthread\_cond\_t\ *c)\ \{}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00128}00128\ \ \ \ \ WakeConditionVariable(c);}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00129}00129\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00130}00130\ \}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00131}00131\ \textcolor{keyword}{static}\ \_\_inline\ \textcolor{keywordtype}{int}\ pthread\_cond\_broadcast(pthread\_cond\_t\ *c)\ \{}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00132}00132\ \ \ \ \ WakeAllConditionVariable(c);}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00133}00133\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00134}00134\ \}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00135}00135\ \textcolor{keyword}{static}\ \_\_inline\ \textcolor{keywordtype}{int}\ pthread\_cond\_destroy(pthread\_cond\_t\ *c)\ \{}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00136}00136\ \ \ \ \ (void)c;\ \textcolor{comment}{/*\ CONDITION\_VARIABLE\ requires\ no\ cleanup\ */}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00137}00137\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00138}00138\ \}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00139}00139\ }
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00140}00140\ \textcolor{comment}{/*\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ read-\/write\ lock\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00141}00141\ }
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00142}00142\ \textcolor{keyword}{static}\ \_\_inline\ \textcolor{keywordtype}{int}\ pthread\_rwlock\_init(pthread\_rwlock\_t\ *rw,}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ pthread\_rwlockattr\_t\ *attr)\ \{}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00144}00144\ \ \ \ \ (void)attr;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00145}00145\ \ \ \ \ InitializeSRWLock(\&rw-\/>lock);}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00146}00146\ \ \ \ \ rw-\/>exclusive\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00147}00147\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00148}00148\ \}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00149}00149\ \textcolor{keyword}{static}\ \_\_inline\ \textcolor{keywordtype}{int}\ pthread\_rwlock\_rdlock(pthread\_rwlock\_t\ *rw)\ \{}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00150}00150\ \ \ \ \ AcquireSRWLockShared(\&rw-\/>lock);}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00151}00151\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00152}00152\ \}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00153}00153\ \textcolor{keyword}{static}\ \_\_inline\ \textcolor{keywordtype}{int}\ pthread\_rwlock\_wrlock(pthread\_rwlock\_t\ *rw)\ \{}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00154}00154\ \ \ \ \ AcquireSRWLockExclusive(\&rw-\/>lock);}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00155}00155\ \ \ \ \ rw-\/>exclusive\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00156}00156\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00157}00157\ \}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00158}00158\ \textcolor{keyword}{static}\ \_\_inline\ \textcolor{keywordtype}{int}\ pthread\_rwlock\_unlock(pthread\_rwlock\_t\ *rw)\ \{}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00159}00159\ \ \ \ \ \textcolor{keywordflow}{if}\ (rw-\/>exclusive)\ \{}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00160}00160\ \ \ \ \ \ \ \ \ rw-\/>exclusive\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00161}00161\ \ \ \ \ \ \ \ \ ReleaseSRWLockExclusive(\&rw-\/>lock);}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00162}00162\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00163}00163\ \ \ \ \ \ \ \ \ ReleaseSRWLockShared(\&rw-\/>lock);}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00164}00164\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00165}00165\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00166}00166\ \}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00167}00167\ \textcolor{keyword}{static}\ \_\_inline\ \textcolor{keywordtype}{int}\ pthread\_rwlock\_destroy(pthread\_rwlock\_t\ *rw)\ \{}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00168}00168\ \ \ \ \ (void)rw;\ \textcolor{comment}{/*\ SRWLOCK\ requires\ no\ cleanup\ */}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00169}00169\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00170}00170\ \}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00171}00171\ }
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00172}00172\ \textcolor{comment}{/*\ rwlock\ attribute\ stubs\ (glibc\ extension\ used\ in\ detachable.c)\ */}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00173}00173\ \textcolor{keyword}{static}\ \_\_inline\ \textcolor{keywordtype}{int}\ pthread\_rwlockattr\_init(pthread\_rwlockattr\_t\ *a)\ \{}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00174}00174\ \ \ \ \ (void)a;\ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00175}00175\ \}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00176}00176\ \textcolor{keyword}{static}\ \_\_inline\ \textcolor{keywordtype}{int}\ pthread\_rwlockattr\_destroy(pthread\_rwlockattr\_t\ *a)\ \{}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00177}00177\ \ \ \ \ (void)a;\ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00178}00178\ \}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00179}00179\ \textcolor{keyword}{static}\ \_\_inline\ \textcolor{keywordtype}{int}\ pthread\_rwlockattr\_setkind\_np(pthread\_rwlockattr\_t\ *a,}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ pref)\ \{}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00181}00181\ \ \ \ \ (void)a;\ (void)pref;\ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00182}00182\ \}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00183}00183\ }
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00184}00184\ \textcolor{comment}{/*\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ one-\/time\ initialisation\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00185}00185\ }
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00186}00186\ \textcolor{keyword}{static}\ \_\_inline\ \textcolor{keywordtype}{int}\ pthread\_once(pthread\_once\_t\ *once\_ctrl,}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ (*init\_routine)(\textcolor{keywordtype}{void}))\ \{}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00188}00188\ \ \ \ \ \textcolor{comment}{/*\ State:\ 0=not\ started,\ 1=in\ progress,\ 2=done\ */}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00189}00189\ \ \ \ \ \textcolor{keywordflow}{if}\ (*once\_ctrl\ ==\ 2L)\ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00190}00190\ \ \ \ \ \textcolor{keywordflow}{if}\ (InterlockedCompareExchange(once\_ctrl,\ 1L,\ 0L)\ ==\ 0L)\ \{}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00191}00191\ \ \ \ \ \ \ \ \ init\_routine();}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00192}00192\ \ \ \ \ \ \ \ \ InterlockedExchange(once\_ctrl,\ 2L);}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00193}00193\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00194}00194\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (*once\_ctrl\ !=\ 2L)}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ SwitchToThread();}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00196}00196\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00197}00197\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00198}00198\ \}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00199}00199\ }
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00200}00200\ \textcolor{comment}{/*\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ thread\ creation\ /\ join\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00201}00201\ }
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00202}00202\ \textcolor{comment}{/*\ Helper\ to\ bridge\ void*(*)(void*)\ to\ unsigned\ \_\_stdcall\ (*)(void*)\ */}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00203}00203\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00204}00204\ \ \ \ \ \textcolor{keywordtype}{void}\ *(*func)(\textcolor{keywordtype}{void}\ *);}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00205}00205\ \ \ \ \ \textcolor{keywordtype}{void}\ *arg;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00206}00206\ \}\ \_\_ttak\_pthread\_start\_t;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00207}00207\ }
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00208}00208\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{unsigned}\ \_\_stdcall\ \_\_ttak\_pthread\_entry(\textcolor{keywordtype}{void}\ *raw)\ \{}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00209}00209\ \ \ \ \ \_\_ttak\_pthread\_start\_t\ *s\ =\ (\_\_ttak\_pthread\_start\_t\ *)raw;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00210}00210\ \ \ \ \ \textcolor{keywordtype}{void}\ *(*f)(\textcolor{keywordtype}{void}\ *)\ =\ s-\/>func;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00211}00211\ \ \ \ \ \textcolor{keywordtype}{void}\ *a\ \ \ \ \ \ \ \ \ \ \ \ =\ s-\/>arg;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00212}00212\ \ \ \ \ free(s);}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00213}00213\ \ \ \ \ f(a);}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00214}00214\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00215}00215\ \}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00216}00216\ }
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00217}00217\ \textcolor{keyword}{static}\ \_\_inline\ \textcolor{keywordtype}{int}\ pthread\_create(pthread\_t\ *thread,}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *attr,}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ *(*start\_routine)(\textcolor{keywordtype}{void}\ *),}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ *arg)\ \{}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00221}00221\ \ \ \ \ \_\_ttak\_pthread\_start\_t\ *s;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00222}00222\ \ \ \ \ (void)attr;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00223}00223\ \ \ \ \ s\ =\ ((\_\_ttak\_pthread\_start\_t\ *)malloc(\textcolor{keyword}{sizeof}(*s)));}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00224}00224\ \ \ \ \ \textcolor{keywordflow}{if}\ (!s)\ \textcolor{keywordflow}{return}\ 12\ \textcolor{comment}{/*\ ENOMEM\ */};}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00225}00225\ \ \ \ \ s-\/>func\ \ \ =\ start\_routine;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00226}00226\ \ \ \ \ s-\/>arg\ \ \ \ =\ arg;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00227}00227\ \ \ \ \ *thread\ =\ (HANDLE)\_beginthreadex(NULL,\ 0,\ \_\_ttak\_pthread\_entry,\ s,\ 0,\ NULL);}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00228}00228\ \ \ \ \ \textcolor{keywordflow}{if}\ (!*thread)\ \{\ free(s);\ \textcolor{keywordflow}{return}\ (\textcolor{keywordtype}{int})GetLastError();\ \}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00229}00229\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00230}00230\ \}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00231}00231\ }
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00232}00232\ \textcolor{keyword}{static}\ \_\_inline\ \textcolor{keywordtype}{int}\ pthread\_join(pthread\_t\ thread,\ \textcolor{keywordtype}{void}\ **retval)\ \{}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00233}00233\ \ \ \ \ (void)retval;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00234}00234\ \ \ \ \ WaitForSingleObject(thread,\ INFINITE);}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00235}00235\ \ \ \ \ CloseHandle(thread);}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00236}00236\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00237}00237\ \}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00238}00238\ }
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00239}00239\ \textcolor{keyword}{static}\ \_\_inline\ pthread\_t\ pthread\_self(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00240}00240\ \ \ \ \ \textcolor{keywordflow}{return}\ GetCurrentThread();}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00241}00241\ \}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00242}00242\ }
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00243}00243\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ \_MSC\_VER\ \&\&\ \_WIN32\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00244}00244\ }
+\DoxyCodeLine{\Hypertarget{pthread_8h_source_l00245}00245\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ TTAK\_PTHREAD\_SHIM\_H\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

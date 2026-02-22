@@ -20,5 +20,6 @@ var searchData=
   ['_5f_5fttak_5fregion_5fcanonical_5fctx_5f_5f_17',['__TTAK_REGION_CANONICAL_CTX__',['../region_8h.html#a99596a8898e83a96943e80034e591fd8',1,'region.h']]],
   ['_5f_5fttak_5funsafe_5fmem_5fforever_5f_5f_18',['__TTAK_UNSAFE_MEM_FOREVER__',['../mem_8h.html#a798ceb4ce7e1d84af3001d7ec38d3da2',1,'mem.h']]],
   ['_5fatomic_19',['_Atomic',['../include_2stdatomic_8h.html#a94674db2fe3c7496dfdcaa9b81486e79',1,'stdatomic.h']]],
-  ['_5fxopen_5fsource_20',['_XOPEN_SOURCE',['../sync_2sync_8h.html#a78c99ffd76a7bb3c8c74db76207e9ab4',1,'sync.h']]]
+  ['_5fbool_5fdefined_20',['_BOOL_DEFINED',['../include_2stdatomic_8h.html#ad87ea8b8e6e5edd21da6ea973b847b22',1,'stdatomic.h']]],
+  ['_5fxopen_5fsource_21',['_XOPEN_SOURCE',['../sync_2sync_8h.html#a78c99ffd76a7bb3c8c74db76207e9ab4',1,'sync.h']]]
 ];

@@ -5,6 +5,7 @@ var include_2stdatomic_8h =
     [ "__TT_ATOMIC_UNLOCK", "include_2stdatomic_8h.html#a078ff22b16930edd2268d1cb679445a5", null ],
     [ "__TTAK_NEEDS_PORTABLE_STDATOMIC__", "include_2stdatomic_8h.html#a58014a490f8aa8f5dd78cd9203229cdf", null ],
     [ "_Atomic", "include_2stdatomic_8h.html#a94674db2fe3c7496dfdcaa9b81486e79", null ],
+    [ "_BOOL_DEFINED", "include_2stdatomic_8h.html#ad87ea8b8e6e5edd21da6ea973b847b22", null ],
     [ "atomic_compare_exchange_weak", "include_2stdatomic_8h.html#a55257ac5977e775b87563bb8cc955863", null ],
     [ "atomic_compare_exchange_weak_explicit", "include_2stdatomic_8h.html#a97a5f3e6f5f733e94b1ddeff904d3bc0", null ],
     [ "atomic_exchange", "include_2stdatomic_8h.html#a5c1dada141423cb165cf2d4f3a38f89f", null ],
