@@ -19,8 +19,7 @@ Include dependency graph for mem.\+h\+:
 \includegraphics[width=350pt]{mem_8h__incl}
 \end{center}
 \end{figure}
-This graph shows which files directly or indirectly include this file\+:
-\nopagebreak
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -34,6 +33,8 @@ struct \mbox{\hyperlink{structttak__mem__header__t}{ttak\+\_\+mem\+\_\+header\+\
 \begin{DoxyCompactList}\small\item\em "{}\+Fortress"{} Memory Header stored before user data. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Macros}
 \begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{mem_8h_a4c8f2c14a51569a7e6518fe83d873d41}{TTAK\+\_\+\+ATOMIC\+\_\+\+FETCH\+\_\+\+ADD\+\_\+\+U64}}(ptr,  val)~\mbox{\hyperlink{include_2stdatomic_8h_ac0a4bfbcb6b982cae35b44fc104a09b6}{atomic\+\_\+fetch\+\_\+add}}((\mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\+\_\+\+Atomic}} uint64\+\_\+t \texorpdfstring{$\ast$}{*})(ptr), (val))
 \item 
 \#define \mbox{\hyperlink{mem_8h_a56bacec5f02dbd8cad7b15e6682fbf20}{TTAK\+\_\+\+CACHE\+\_\+\+LINE\+\_\+\+SIZE}}~64
 \begin{DoxyCompactList}\small\item\em Alignment for cache-\/line optimization (64-\/byte). \end{DoxyCompactList}\item 
@@ -143,7 +144,7 @@ Macro to indicate that the allocated memory should persist forever.
 
 
 
-Definition at line \mbox{\hyperlink{mem_8h_source_l00043}{43}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00049}{49}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
 \Hypertarget{mem_8h_ae47a1cb6076cec70cf9ea8efc1d5f3ff}\label{mem_8h_ae47a1cb6076cec70cf9ea8efc1d5f3ff} 
 \index{mem.h@{mem.h}!EMBEDDED@{EMBEDDED}}
@@ -153,7 +154,7 @@ Definition at line \mbox{\hyperlink{mem_8h_source_l00043}{43}} of file \mbox{\hy
 
 
 
-Definition at line \mbox{\hyperlink{mem_8h_source_l00239}{239}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00245}{245}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
 \Hypertarget{mem_8h_ac5b096c74969e7dbd5e24d44a446c015}\label{mem_8h_ac5b096c74969e7dbd5e24d44a446c015} 
 \index{mem.h@{mem.h}!SAFE\_NULL@{SAFE\_NULL}}
@@ -167,7 +168,17 @@ Sentinel for invalidated references.
 
 
 
-Definition at line \mbox{\hyperlink{mem_8h_source_l00053}{53}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00059}{59}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+
+\Hypertarget{mem_8h_a4c8f2c14a51569a7e6518fe83d873d41}\label{mem_8h_a4c8f2c14a51569a7e6518fe83d873d41} 
+\index{mem.h@{mem.h}!TTAK\_ATOMIC\_FETCH\_ADD\_U64@{TTAK\_ATOMIC\_FETCH\_ADD\_U64}}
+\index{TTAK\_ATOMIC\_FETCH\_ADD\_U64@{TTAK\_ATOMIC\_FETCH\_ADD\_U64}!mem.h@{mem.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_ATOMIC\_FETCH\_ADD\_U64}{TTAK\_ATOMIC\_FETCH\_ADD\_U64}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+ATOMIC\+\_\+\+FETCH\+\_\+\+ADD\+\_\+\+U64(\begin{DoxyParamCaption}\item[{}]{ptr,  }\item[{}]{val }\end{DoxyParamCaption})~\mbox{\hyperlink{include_2stdatomic_8h_ac0a4bfbcb6b982cae35b44fc104a09b6}{atomic\+\_\+fetch\+\_\+add}}((\mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\+\_\+\+Atomic}} uint64\+\_\+t \texorpdfstring{$\ast$}{*})(ptr), (val))}
+
+
+
+Definition at line \mbox{\hyperlink{mem_8h_source_l00022}{22}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
 \Hypertarget{mem_8h_a56bacec5f02dbd8cad7b15e6682fbf20}\label{mem_8h_a56bacec5f02dbd8cad7b15e6682fbf20} 
 \index{mem.h@{mem.h}!TTAK\_CACHE\_LINE\_SIZE@{TTAK\_CACHE\_LINE\_SIZE}}
@@ -181,7 +192,7 @@ Alignment for cache-\/line optimization (64-\/byte).
 
 
 
-Definition at line \mbox{\hyperlink{mem_8h_source_l00038}{38}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00044}{44}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
 \Hypertarget{mem_8h_a02d61fafa21eadc8010ca9803d77bafb}\label{mem_8h_a02d61fafa21eadc8010ca9803d77bafb} 
 \index{mem.h@{mem.h}!TTAK\_MAGIC\_NUMBER@{TTAK\_MAGIC\_NUMBER}}
@@ -195,7 +206,7 @@ Definition at line \mbox{\hyperlink{mem_8h_source_l00038}{38}} of file \mbox{\hy
 
 
 
-Definition at line \mbox{\hyperlink{mem_8h_source_l00048}{48}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00054}{54}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
 \Hypertarget{mem_8h_aa4fb4762838f23fd8edc26f01d12f0e5}\label{mem_8h_aa4fb4762838f23fd8edc26f01d12f0e5} 
 \index{mem.h@{mem.h}!ttak\_mem\_alloc@{ttak\_mem\_alloc}}
@@ -205,7 +216,7 @@ Definition at line \mbox{\hyperlink{mem_8h_source_l00048}{48}} of file \mbox{\hy
 
 
 
-Definition at line \mbox{\hyperlink{mem_8h_source_l00231}{231}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00237}{237}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
 \Hypertarget{mem_8h_a29ae926197a7e7154d98730bd3de6242}\label{mem_8h_a29ae926197a7e7154d98730bd3de6242} 
 \index{mem.h@{mem.h}!ttak\_mem\_alloc\_with\_flags@{ttak\_mem\_alloc\_with\_flags}}
@@ -215,7 +226,7 @@ Definition at line \mbox{\hyperlink{mem_8h_source_l00231}{231}} of file \mbox{\h
 
 
 
-Definition at line \mbox{\hyperlink{mem_8h_source_l00232}{232}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00238}{238}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
 \Hypertarget{mem_8h_aafdc8a651b46ebef1e1055f9ec21c03b}\label{mem_8h_aafdc8a651b46ebef1e1055f9ec21c03b} 
 \index{mem.h@{mem.h}!ttak\_mem\_dup@{ttak\_mem\_dup}}
@@ -225,7 +236,7 @@ Definition at line \mbox{\hyperlink{mem_8h_source_l00232}{232}} of file \mbox{\h
 
 
 
-Definition at line \mbox{\hyperlink{mem_8h_source_l00235}{235}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00241}{241}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
 \Hypertarget{mem_8h_abc7e126aa61344f6b46c2508a9901ebf}\label{mem_8h_abc7e126aa61344f6b46c2508a9901ebf} 
 \index{mem.h@{mem.h}!ttak\_mem\_dup\_with\_flags@{ttak\_mem\_dup\_with\_flags}}
@@ -235,7 +246,7 @@ Definition at line \mbox{\hyperlink{mem_8h_source_l00235}{235}} of file \mbox{\h
 
 
 
-Definition at line \mbox{\hyperlink{mem_8h_source_l00236}{236}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00242}{242}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
 \Hypertarget{mem_8h_aecbcfc6a4045b6bd854f785a49706a77}\label{mem_8h_aecbcfc6a4045b6bd854f785a49706a77} 
 \index{mem.h@{mem.h}!ttak\_mem\_realloc@{ttak\_mem\_realloc}}
@@ -245,7 +256,7 @@ Definition at line \mbox{\hyperlink{mem_8h_source_l00236}{236}} of file \mbox{\h
 
 
 
-Definition at line \mbox{\hyperlink{mem_8h_source_l00233}{233}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00239}{239}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
 \Hypertarget{mem_8h_ac436c1f90ce06b2759063c0d124cbd90}\label{mem_8h_ac436c1f90ce06b2759063c0d124cbd90} 
 \index{mem.h@{mem.h}!ttak\_mem\_realloc\_with\_flags@{ttak\_mem\_realloc\_with\_flags}}
@@ -255,7 +266,7 @@ Definition at line \mbox{\hyperlink{mem_8h_source_l00233}{233}} of file \mbox{\h
 
 
 
-Definition at line \mbox{\hyperlink{mem_8h_source_l00234}{234}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00240}{240}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
 
 
@@ -268,7 +279,7 @@ Definition at line \mbox{\hyperlink{mem_8h_source_l00234}{234}} of file \mbox{\h
 
 
 
-Definition at line \mbox{\hyperlink{mem_8h_source_l00230}{230}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00236}{236}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
 \Hypertarget{mem_8h_a574c320689c9aed0ca6559697013d05a}\label{mem_8h_a574c320689c9aed0ca6559697013d05a} 
 \index{mem.h@{mem.h}!ttak\_mem\_header\_t@{ttak\_mem\_header\_t}}
@@ -317,7 +328,7 @@ TTAK\+\_\+\+ALLOC\+\_\+\+TIER\+\_\+\+GENERAL&Allocated via general system alloca
 \end{DoxyEnumFields}
 
 
-Definition at line \mbox{\hyperlink{mem_8h_source_l00026}{26}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00032}{32}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
 \Hypertarget{mem_8h_a05020ce7df6068f7d7f515ee4ea9cdad}\label{mem_8h_a05020ce7df6068f7d7f515ee4ea9cdad} 
 \index{mem.h@{mem.h}!ttak\_mem\_flags\_t@{ttak\_mem\_flags\_t}}
@@ -353,7 +364,7 @@ TTAK\+\_\+\+MEM\+\_\+\+LOW\+\_\+\+PRIORITY&Reject if under memory pressure/high 
 \end{DoxyEnumFields}
 
 
-Definition at line \mbox{\hyperlink{mem_8h_source_l00090}{90}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00096}{96}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
 
 
@@ -433,7 +444,7 @@ Calculated checksum.
 \end{DoxyReturn}
 
 
-Definition at line \mbox{\hyperlink{mem_8h_source_l00208}{208}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00214}{214}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
 \Hypertarget{mem_8h_ab6f5b08c17dc0db9a4b09eeb8bab4dc6}\label{mem_8h_ab6f5b08c17dc0db9a4b09eeb8bab4dc6} 
 \index{mem.h@{mem.h}!ttak\_mem\_access@{ttak\_mem\_access}}
@@ -457,7 +468,7 @@ Validated pointer, or NULL if security check fails or block is expired.
 \end{DoxyReturn}
 
 
-Definition at line \mbox{\hyperlink{mem_8h_source_l00148}{148}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00154}{154}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
 \Hypertarget{mem_8h_aff3d4e6c920caf8bdeee3b2561a2ae46}\label{mem_8h_aff3d4e6c920caf8bdeee3b2561a2ae46} 
 \index{mem.h@{mem.h}!ttak\_mem\_alloc\_safe@{ttak\_mem\_alloc\_safe}}

@@ -4,6 +4,7 @@ var mem_8h =
     [ "__TTAK_UNSAFE_MEM_FOREVER__", "mem_8h.html#a798ceb4ce7e1d84af3001d7ec38d3da2", null ],
     [ "EMBEDDED", "mem_8h.html#ae47a1cb6076cec70cf9ea8efc1d5f3ff", null ],
     [ "SAFE_NULL", "mem_8h.html#ac5b096c74969e7dbd5e24d44a446c015", null ],
+    [ "TTAK_ATOMIC_FETCH_ADD_U64", "mem_8h.html#a4c8f2c14a51569a7e6518fe83d873d41", null ],
     [ "TTAK_CACHE_LINE_SIZE", "mem_8h.html#a56bacec5f02dbd8cad7b15e6682fbf20", null ],
     [ "TTAK_MAGIC_NUMBER", "mem_8h.html#a02d61fafa21eadc8010ca9803d77bafb", null ],
     [ "ttak_mem_alloc", "mem_8h.html#aa4fb4762838f23fd8edc26f01d12f0e5", null ],

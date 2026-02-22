@@ -109,7 +109,7 @@ $(document).ready(function(){initNavTree('thread__compat_8h_source.html',''); in
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#define TTAK_THREAD_CALL WINAPI</span></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#define ttak_thread_yield() Sleep(0)</span></div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#else</span></div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;pthread.h&gt;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;<a class="code" href="pthread_8h.html">pthread.h</a>&gt;</span></div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &lt;unistd.h&gt;</span></div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &lt;<a class="code" href="sched_8h.html">sched.h</a>&gt;</span></div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="thread__compat_8h.html#a5e92380b97dd7511fd0d4a31c43a6e31">   15</a></span><span class="keyword">typedef</span> pthread_t <a class="code hl_typedef" href="thread__compat_8h.html#a5e92380b97dd7511fd0d4a31c43a6e31">ttak_thread_t</a>;</div>
@@ -145,6 +145,7 @@ $(document).ready(function(){initNavTree('thread__compat_8h_source.html',''); in
 </div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="preprocessor">#endif </span><span class="comment">// TTAK_THREAD_COMPAT_H</span></div>
+<div class="ttc" id="apthread_8h_html"><div class="ttname"><a href="pthread_8h.html">pthread.h</a></div><div class="ttdoc">POSIX thread compatibility shim.</div></div>
 <div class="ttc" id="asched_8h_html"><div class="ttname"><a href="sched_8h.html">sched.h</a></div></div>
 <div class="ttc" id="athread__compat_8h_html_a5e92380b97dd7511fd0d4a31c43a6e31"><div class="ttname"><a href="thread__compat_8h.html#a5e92380b97dd7511fd0d4a31c43a6e31">ttak_thread_t</a></div><div class="ttdeci">pthread_t ttak_thread_t</div><div class="ttdef"><b>Definition</b> <a href="thread__compat_8h_source.html#l00015">thread_compat.h:15</a></div></div>
 <div class="ttc" id="athread__compat_8h_html_a99da1eadff2d3dbed9d01c2e7f00220c"><div class="ttname"><a href="thread__compat_8h.html#a99da1eadff2d3dbed9d01c2e7f00220c">TTAK_THREAD_CALL</a></div><div class="ttdeci">#define TTAK_THREAD_CALL</div><div class="ttdef"><b>Definition</b> <a href="thread__compat_8h_source.html#l00017">thread_compat.h:17</a></div></div>

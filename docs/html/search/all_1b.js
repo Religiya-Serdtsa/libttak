@@ -11,7 +11,7 @@ var searchData=
   ['peak_8',['High-Churn Lock-Free Peak',['..//home/yjlee/libttak/README.md#autotoc_md30',1,'']]],
   ['peek_9',['Example Code Sneak Peek',['..//home/yjlee/libttak/tutorials/37-shared-memory-ownership/README.md#autotoc_md116',1,'']]],
   ['per_20lesson_20folders_10',['Per-lesson folders',['..//home/yjlee/libttak/tutorials/README.md#autotoc_md167',1,'']]],
-  ['pin_5fcount_11',['pin_count',['../structttak__unsafe__region.html#a9d0037c98f07c17f86b7a50380894c00',1,'ttak_unsafe_region::pin_count'],['../structttak__mem__header__t.html#a6f56f8247cfdee283312f6d76b0625a1',1,'ttak_mem_header_t::pin_count']]],
+  ['pin_5fcount_11',['pin_count',['../structttak__mem__header__t.html#a6f56f8247cfdee283312f6d76b0625a1',1,'ttak_mem_header_t::pin_count'],['../structttak__unsafe__region.html#a9d0037c98f07c17f86b7a50380894c00',1,'ttak_unsafe_region::pin_count']]],
   ['pocket_5fmagic_12',['POCKET_MAGIC',['../mem__internal_8h.html#a2398e4bc6e13be162959e6418b48ad9b',1,'mem_internal.h']]],
   ['policy_5fflags_13',['policy_flags',['../structttak__owner.html#a870e95008012760ad3712fe902a39c20',1,'ttak_owner::policy_flags'],['../structttak__net__session__mgr.html#abd585492da9cb44f80ce9bfd76fb199f',1,'ttak_net_session_mgr::policy_flags']]],
   ['poll_5fwait_14',['poll_wait',['../structttak__net__driver__ops.html#a1ba4ffcc0ca4d0af2872f625b7ca0c0f',1,'ttak_net_driver_ops']]],
@@ -26,11 +26,11 @@ var searchData=
   ['practical_20utility_20for_20ai_20assisted_20development_23',['Practical Utility for AI-Assisted Development',['..//home/yjlee/libttak/README.md#autotoc_md19',1,'']]],
   ['predictable_20resource_20discipline_24',['Predictable Resource Discipline',['..//home/yjlee/libttak/README.md#autotoc_md21',1,'']]],
   ['preferred_5ftarget_25',['preferred_target',['../structttak__accel__config.html#ac31a68d0148f4b0b8d2852149ee15feb',1,'ttak_accel_config']]],
-  ['pressure_5fthreshold_26',['pressure_threshold',['../structttak__mem__friction__matrix__t.html#aee248efcae576a2d7a8a758d7e400b79',1,'ttak_mem_friction_matrix_t::pressure_threshold'],['../structttak__mem__tree.html#acc33637b86a2992c5d7f46679624d2c9',1,'ttak_mem_tree::pressure_threshold']]],
+  ['pressure_5fthreshold_26',['pressure_threshold',['../structttak__mem__tree.html#acc33637b86a2992c5d7f46679624d2c9',1,'ttak_mem_tree::pressure_threshold'],['../structttak__mem__friction__matrix__t.html#aee248efcae576a2d7a8a758d7e400b79',1,'ttak_mem_friction_matrix_t::pressure_threshold']]],
   ['prev_27',['prev',['../structttak__mem__node.html#acb2b54c056a6a3d13af15e476e96888b',1,'ttak_mem_node']]],
   ['primitive_5froot_28',['primitive_root',['../structttak__ntt__prime.html#a9b8cd05275c746fe6ed2a8a99492d36c',1,'ttak_ntt_prime']]],
   ['primitives_29',['Stage 2 – Concurrency Primitives',['../md_tutorials_2CLONE__PATH.html#autotoc_md149',1,'']]],
-  ['priority_30',['priority',['../struct____internal__ttak__qnode__t.html#ab72f67b87a5ededef5a7b13e719b7a97',1,'__internal_ttak_qnode_t::priority'],['../structttak__mem__req.html#a54843af6bd1bd7814c2e9a324b48f815',1,'ttak_mem_req::priority']]],
+  ['priority_30',['priority',['../structttak__mem__req.html#a54843af6bd1bd7814c2e9a324b48f815',1,'ttak_mem_req::priority'],['../struct____internal__ttak__qnode__t.html#ab72f67b87a5ededef5a7b13e719b7a97',1,'__internal_ttak_qnode_t::priority']]],
   ['product_31',['product',['../structttak__bigmul.html#aca0681bb45e464d0194f7a7dd4b0355c',1,'ttak_bigmul']]],
   ['promise_32',['promise',['../structttak__worker__wrapper.html#ac9fe79d88ef76f3726f154afac405ad1',1,'ttak_worker_wrapper']]],
   ['promise_2eh_33',['promise.h',['../promise_8h.html',1,'']]],
@@ -39,6 +39,7 @@ var searchData=
   ['protected_20false_20tt_36',['&lt;tt&gt;access_ebr(..., protected=false)&lt;/tt&gt;',['..//home/yjlee/libttak/tutorials/38-ebr-shared/README.md#autotoc_md123',1,'']]],
   ['protected_20true_20tt_37',['&lt;tt&gt;access_ebr(..., protected=true)&lt;/tt&gt;',['..//home/yjlee/libttak/tutorials/38-ebr-shared/README.md#autotoc_md122',1,'']]],
   ['protocol_38',['protocol',['../structttak__net__endpoint.html#a159708c6dcd570ddf8e99da66b102f24',1,'ttak_net_endpoint']]],
-  ['ptr_39',['ptr',['../structttak__unsafe__region.html#aadf750e793b69d9a6cbe8e13dfe386ff',1,'ttak_unsafe_region::ptr'],['../structttak__mem__node.html#a23a25a9a5600d18e2666c96ad38608e5',1,'ttak_mem_node::ptr'],['../structttak__retired__node.html#a0079ce009a75daaf259d97db594f396c',1,'ttak_retired_node::ptr']]],
-  ['push_40',['push',['../struct____internal__ttak__proc__priority__queue__t.html#a6e905df5cb0dd39ba5e87a656d8213d5',1,'__internal_ttak_proc_priority_queue_t']]]
+  ['pthread_2eh_39',['pthread.h',['../pthread_8h.html',1,'']]],
+  ['ptr_40',['ptr',['../structttak__unsafe__region.html#aadf750e793b69d9a6cbe8e13dfe386ff',1,'ttak_unsafe_region::ptr'],['../structttak__mem__node.html#a23a25a9a5600d18e2666c96ad38608e5',1,'ttak_mem_node::ptr'],['../structttak__retired__node.html#a0079ce009a75daaf259d97db594f396c',1,'ttak_retired_node::ptr']]],
+  ['push_41',['push',['../struct____internal__ttak__proc__priority__queue__t.html#a6e905df5cb0dd39ba5e87a656d8213d5',1,'__internal_ttak_proc_priority_queue_t']]]
 ];

@@ -10,6 +10,6 @@
 <area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="244,104,244,138,239,138,239,104"/>
 <area shape="rect" id="Node000006" title=" " alt="" coords="307,152,405,177"/>
 <area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="261,102,327,142,324,147,258,106"/>
-<area shape="rect" id="Node000007" title=" " alt="" coords="430,152,514,177"/>
+<area shape="rect" id="Node000007" href="$pthread_8h.html" title="POSIX thread compatibility shim." alt="" coords="430,152,514,177"/>
 <area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="279,101,423,145,421,151,278,107"/>
 </map>
