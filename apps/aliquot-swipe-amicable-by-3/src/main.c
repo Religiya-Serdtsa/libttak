@@ -40,7 +40,7 @@
 /*                            Scanner Configuration                           */
 /* ========================================================================== */
 #define BLOCK_SIZE          10000ULL
-#define DEFAULT_START_SEED  1000ULL
+#define DEFAULT_START_SEED  0ULL
 #define STATE_DIR           "/opt/aliquot-3"
 #define HASH_LOG_NAME       "range_proofs.log"
 #define FOUND_LOG_NAME      "sociable_found.jsonl"
@@ -110,16 +110,19 @@ static bool ttak_bigint_init_from_string(ttak_bigint_t *bi, const char *s, uint6
  * @brief Ensures the persistent storage directory exists and updates log paths.
  */
 static void ensure_log_directory(void) {
+    const char *state_dir = getenv("ALIQUOT_STATE_DIR");
+    if (!state_dir || !*state_dir) state_dir = STATE_DIR;
+
     struct stat st;
-    if (stat(STATE_DIR, &st) != 0) {
-        if (mkdir(STATE_DIR, 0755) != 0 && errno != EEXIST) {
-            fprintf(stderr, "[FATAL] Unable to create state directory: %s\n", STATE_DIR);
+    if (stat(state_dir, &st) != 0) {
+        if (mkdir(state_dir, 0755) != 0 && errno != EEXIST) {
+            fprintf(stderr, "[FATAL] Unable to create state directory: %s\n", state_dir);
             exit(EXIT_FAILURE);
         }
     }
-    snprintf(g_hash_log_path, sizeof(g_hash_log_path), "%s/%s", STATE_DIR, HASH_LOG_NAME);
-    snprintf(g_found_log_path, sizeof(g_found_log_path), "%s/%s", STATE_DIR, FOUND_LOG_NAME);
-    snprintf(g_checkpoint_path, sizeof(g_checkpoint_path), "%s/%s", STATE_DIR, CHECKPOINT_FILE);
+    snprintf(g_hash_log_path, sizeof(g_hash_log_path), "%s/%s", state_dir, HASH_LOG_NAME);
+    snprintf(g_found_log_path, sizeof(g_found_log_path), "%s/%s", state_dir, FOUND_LOG_NAME);
+    snprintf(g_checkpoint_path, sizeof(g_checkpoint_path), "%s/%s", state_dir, CHECKPOINT_FILE);
 }
 
 /**
@@ -217,6 +220,66 @@ static void load_checkpoint(uint64_t now) {
 }
 
 /**
+ * @brief Scans the hash log to find the highest verified range end.
+ * @details This acts as a recovery mechanism if the checkpoint file is missing or stale.
+ */
+static void recover_frontier_from_log(uint64_t now) {
+    FILE *fp = fopen(g_hash_log_path, "r");
+    if (!fp) return;
+
+    ttak_bigint_t max_verified;
+    ttak_bigint_init_u64(&max_verified, 0, now);
+
+    char line[4096];
+    while (fgets(line, sizeof(line), fp)) {
+        char *start_ptr = strstr(line, "\"range_start\":\"");
+        char *count_ptr = strstr(line, "\"count\":");
+        if (!start_ptr || !count_ptr) continue;
+
+        /* Extract count before modifying the buffer for range_start. */
+        uint64_t count_val = strtoull(count_ptr + 8, NULL, 10);
+
+        char *val_begin = start_ptr + 15;
+        char *val_end = strchr(val_begin, '\"');
+        if (!val_end) continue;
+
+        ttak_bigint_t current_start, current_end;
+        ttak_bigint_init(&current_start, now);
+        ttak_bigint_init(&current_end, now);
+
+        /* Temporarily null-terminate the value string for init_from_string. */
+        char saved = *val_end;
+        *val_end = '\0';
+
+        if (ttak_bigint_init_from_string(&current_start, val_begin, now)) {
+            if (ttak_bigint_copy(&current_end, &current_start, now)) {
+                if (ttak_bigint_add_u64(&current_end, &current_end, count_val, now)) {
+                    if (ttak_bigint_cmp(&current_end, &max_verified) > 0) {
+                        ttak_bigint_copy(&max_verified, &current_end, now);
+                    }
+                }
+            }
+        }
+        *val_end = saved; /* Restore the buffer. */
+
+        ttak_bigint_free(&current_start, now);
+        ttak_bigint_free(&current_end, now);
+    }
+    fclose(fp);
+
+    pthread_mutex_lock(&g_state_lock);
+    if (ttak_bigint_cmp(&max_verified, &g_verified_frontier) > 0) {
+        ttak_bigint_copy(&g_verified_frontier, &max_verified, now);
+    }
+    if (ttak_bigint_cmp(&max_verified, &g_next_range_start) > 0) {
+        ttak_bigint_copy(&g_next_range_start, &max_verified, now);
+    }
+    pthread_mutex_unlock(&g_state_lock);
+
+    ttak_bigint_free(&max_verified, now);
+}
+
+/**
  * @brief Persists the current scanning frontier to disk using an atomic
  *        write (temp file + rename) so a crash between open and write can
  *        never leave a truncated or empty checkpoint behind.
@@ -227,17 +290,27 @@ static void save_checkpoint(const ttak_bigint_t *value, uint64_t now) {
     char tmp_path[4104];
     snprintf(tmp_path, sizeof(tmp_path), "%s.tmp", g_checkpoint_path);
     FILE *fp = fopen(tmp_path, "w");
-    if (!fp) return;
+    if (!fp) {
+        fprintf(stderr, "[ERROR] Failed to open checkpoint temporary file %s for writing: %s\n", tmp_path, strerror(errno));
+        return;
+    }
     char *repr = ttak_bigint_to_string(value, now);
     bool write_ok = false;
     if (repr) {
-        write_ok = (fprintf(fp, "%s\n", repr) > 0);
+        if (fprintf(fp, "%s\n", repr) > 0) {
+            write_ok = true;
+        } else {
+            fprintf(stderr, "[ERROR] Failed to write to checkpoint temporary file %s: %s\n", tmp_path, strerror(errno));
+        }
         ttak_mem_free(repr);
     }
     fflush(fp);
     fclose(fp);
     if (write_ok) {
-        rename(tmp_path, g_checkpoint_path);
+        if (rename(tmp_path, g_checkpoint_path) != 0) {
+            fprintf(stderr, "[ERROR] Failed to rename checkpoint file from %s to %s: %s\n", tmp_path, g_checkpoint_path, strerror(errno));
+            remove(tmp_path); // Clean up temp file on rename failure.
+        }
     } else {
         remove(tmp_path);
     }
@@ -294,9 +367,13 @@ static void log_proof_unlocked(const ttak_bigint_t *start, uint64_t count, const
     FILE *fp = fopen(g_hash_log_path, "a");
     if (fp) {
         const char *label = start_str ? start_str : "conversion_error";
-        fprintf(fp, "{\"range_start\":\"%s\",\"count\":%" PRIu64 ",\"proof_sha256\":\"%s\",\"ts\":%" PRIu64 "}\n",
-                label, count, hash_hex, (uint64_t)time(NULL));
+        if (fprintf(fp, "{\"range_start\":\"%s\",\"count\":%" PRIu64 ",\"proof_sha256\":\"%s\",\"ts\":%" PRIu64 "}\n",
+                    label, count, hash_hex, (uint64_t)time(NULL)) < 0) {
+            fprintf(stderr, "[ERROR] Failed to write to hash log file %s: %s\n", g_hash_log_path, strerror(errno));
+        }
         fclose(fp);
+    } else {
+        fprintf(stderr, "[ERROR] Failed to open hash log file %s for writing: %s\n", g_hash_log_path, strerror(errno));
     }
     if (start_str) {
         ttak_mem_free(start_str);
@@ -391,6 +468,9 @@ static void *worker_scan_range(void *arg) {
     uint64_t processed = 0;
 
     for (uint64_t i = 0; i < task->count; i++) {
+        if (ttak_atomic_read64(&g_shutdown_requested)) {
+            break;
+        }
         /* Step 1: hash the current seed. */
         sha256_update_bigint(&sha_ctx, &seed_val, now);
 
@@ -413,7 +493,10 @@ static void *worker_scan_range(void *arg) {
                     break;
                 }
                 if (ttak_bigint_cmp(&bn_s3, &seed_val) == 0) {
-                    log_found_seed(&seed_val, now);
+                    /* Only log the cycle once by picking the smallest element as the representative. */
+                    if (ttak_bigint_cmp(&seed_val, &bn_next) < 0 && ttak_bigint_cmp(&seed_val, &bn_s2) < 0) {
+                        log_found_seed(&seed_val, now);
+                    }
                 }
             }
         }
@@ -497,6 +580,7 @@ int main(int argc, char **argv) {
     ttak_bigint_init_u64(&g_verified_frontier, DEFAULT_START_SEED, init_now);
     ensure_log_directory();
     load_checkpoint(init_now);
+    recover_frontier_from_log(init_now);
     configure_progress_quantum();
 
     long cpus = sysconf(_SC_NPROCESSORS_ONLN);
