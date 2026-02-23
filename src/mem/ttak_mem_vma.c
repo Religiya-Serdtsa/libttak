@@ -51,15 +51,11 @@ static pthread_once_t vma_init_once = PTHREAD_ONCE_INIT;
 static void _init_vma_region(void) {
     void* addr = _ttak_mmap_region(TTAK_VMA_REGION_SIZE);
     if (addr == NULL) {
-        fprintf(stderr, "ttak_mem_vma: Failed to allocate VMA region: size %uMB\n",
-                (unsigned int)(TTAK_VMA_REGION_SIZE / (1024 * 1024)));
         return;
     }
 
     global_vma_region.start_addr = addr;
     atomic_store(&global_vma_region.current_cursor, (uintptr_t)addr);
-    fprintf(stderr, "ttak_mem_vma: VMA region initialized at %p, size %uMB\n", 
-            global_vma_region.start_addr, (unsigned int)(TTAK_VMA_REGION_SIZE / (1024 * 1024)));
 }
 
 ttak_mem_header_t* ttak_mem_vma_alloc_internal(size_t user_requested_size) {
@@ -86,7 +82,6 @@ ttak_mem_header_t* ttak_mem_vma_alloc_internal(size_t user_requested_size) {
         new_cursor = current_aligned_start + aligned_total_alloc_size;
 
         if (new_cursor > (uintptr_t)global_vma_region.start_addr + TTAK_VMA_REGION_SIZE) {
-            fprintf(stderr, "ttak_mem_vma: VMA region exhausted for size %zu\n", aligned_total_alloc_size);
             t_reentrancy_guard = false;
             return NULL; 
         }
@@ -118,6 +113,5 @@ static void _destroy_vma_region(void) {
         _ttak_munmap_region(global_vma_region.start_addr, TTAK_VMA_REGION_SIZE);
         global_vma_region.start_addr = NULL;
         atomic_store(&global_vma_region.current_cursor, (uintptr_t)NULL);
-        fprintf(stderr, "ttak_mem_vma: VMA region unmapped.\n");
     }
 }

@@ -116,28 +116,28 @@ typedef struct {
 // --- Internal Tiered Allocator Interfaces ---
 
 /**
- * @brief Allocates from the thread-local pocket tier.
- * @param user_requested_size Size requested by user.
- * @return Allocated header, or NULL.
+ * @brief Allocates memory from the pocket (slab-like) tier.
+ * @param size Requested user memory size.
+ * @return Pointer to the ttak_mem_header_t of the allocated block, or NULL on failure.
  */
-ttak_mem_header_t* ttak_mem_pocket_alloc_internal(size_t user_requested_size);
+ttak_mem_header_t* ttak_mem_pocket_alloc_internal(size_t size);
 
 /**
- * @brief Frees a header back to the thread-local pocket.
- * @param header Header to return.
+ * @brief Allocates memory from the VMA (Virtual Mapping Area) tier.
+ * @param size Requested user memory size.
+ * @return Pointer to the ttak_mem_header_t of the allocated block, or NULL on failure.
+ */
+ttak_mem_header_t* ttak_mem_vma_alloc_internal(size_t size);
+
+/**
+ * @brief Releases a memory block back to the pocket tier.
+ * @param header Pointer to the memory header to be freed.
  */
 void _pocket_free_internal(ttak_mem_header_t* header);
 
 /**
- * @brief Allocates from the lock-free VMA tier.
- * @param user_requested_size Size requested by user.
- * @return Allocated header, or NULL.
- */
-ttak_mem_header_t* ttak_mem_vma_alloc_internal(size_t user_requested_size);
-
-/**
- * @brief Release VMA allocation (currently no-op for linear allocator).
- * @param header Header to release.
+ * @brief Releases a memory block back to the VMA tier.
+ * @param header Pointer to the memory header to be freed.
  */
 void _vma_free_internal(ttak_mem_header_t* header);
 
