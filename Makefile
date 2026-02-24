@@ -45,7 +45,7 @@ PERF_STACK_FLAGS ?= -O3 -march=native -mtune=native -pipe -flto -ffat-lto-object
                    -fvisibility=hidden -DNDEBUG
 
 ifeq ($(BUILD_PROFILE),tcc)
-CFLAGS = $(COMMON_WARNINGS) $(TCC_STACK_FLAGS)
+CFLAGS = $(COMMON_WARNINGS) $(TCC_STACK_FLAGS) -fPIC
 LDFLAGS = $(LDFLAGS_BASE)
 else
 CFLAGS = $(COMMON_WARNINGS) $(PERF_WARNINGS) $(PERF_STACK_FLAGS)
