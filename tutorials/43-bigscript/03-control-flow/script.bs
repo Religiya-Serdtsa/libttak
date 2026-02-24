@@ -1,0 +1,12 @@
+fn main(seed, sn) {
+  // Comparison operators: ==, !=, <, >, <=, >=
+  if (seed == 100) {
+    return 1;
+  }
+  
+  if (seed < 50) {
+    return 2;
+  }
+  
+  return 0;
+}

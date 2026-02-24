@@ -1,0 +1,11 @@
+fn main(seed, sn) {
+  let x = 10;
+  let y = 20;
+  let z = (x + y) * 2 - 5;
+  
+  // BigScript supports +, -, *, /, %
+  let quotient = z / 3;
+  let remainder = z % 3;
+  
+  return quotient + remainder;
+}

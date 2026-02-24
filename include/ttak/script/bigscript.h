@@ -5,6 +5,8 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <ttak/math/bigint.h>
+#include <ttak/math/bigreal.h>
+#include <ttak/math/bigcomplex.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -26,7 +28,6 @@ typedef struct {
     /**
      * @brief Frees bytes allocated by read_all.
      * @param ctx User-provided context.
-     * @param bytes The bytes to free.
      */
     void (*free_bytes)(void *ctx, uint8_t *bytes);
     void *ctx;
@@ -51,6 +52,23 @@ typedef struct {
     uint32_t max_bigint_bits;
 } ttak_bigscript_limits_t;
 
+/** @brief Bigscript value types. */
+typedef enum {
+    TTAK_BIGSCRIPT_VAL_INT = 0,
+    TTAK_BIGSCRIPT_VAL_REAL,
+    TTAK_BIGSCRIPT_VAL_COMPLEX
+} ttak_bigscript_val_type_t;
+
+/** @brief Variant type that can hold any bigscript value. */
+typedef struct {
+    ttak_bigscript_val_type_t type;
+    union {
+        ttak_bigint_t     i;
+        ttak_bigreal_t    r;
+        ttak_bigcomplex_t c;
+    } v;
+} ttak_bigscript_variant_t;
+
 /** @brief Error codes returned by compilation and execution. */
 typedef enum {
     TTAK_BIGSCRIPT_ERR_NONE = 0,
@@ -69,7 +87,7 @@ typedef struct {
 
 /** @brief Output value resulting from evaluating a seed. */
 typedef struct {
-    ttak_bigint_t value;
+    ttak_bigscript_variant_t value;
     bool is_found;
 } ttak_bigscript_value_t;
 
@@ -142,6 +160,13 @@ bool ttak_bigscript_eval_seed(
  * @param out_hex 65-byte output buffer for hex string.
  */
 void ttak_bigscript_hash_program(ttak_bigscript_program_t *prog, char out_hex[65]);
+
+/**
+ * @brief Frees resources held by a bigscript value.
+ * @param val Value to free.
+ * @param now Monotonic timestamp.
+ */
+void ttak_bigscript_value_free(ttak_bigscript_value_t *val, uint64_t now);
 
 #ifdef __cplusplus
 }

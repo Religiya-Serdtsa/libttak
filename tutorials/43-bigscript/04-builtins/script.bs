@@ -1,0 +1,16 @@
+fn main(seed, sn) {
+  // s(n) is a builtin function that calculates the sum of proper divisors of n.
+  // The 'sn' argument passed to main is already precomputed for 'seed'.
+  
+  if (s(seed) == seed) {
+    // This is a perfect number (e.g., 6, 28, 496)
+    return 1;
+  }
+  
+  if (sn == seed) {
+    // This is also a perfect number, using the precomputed value.
+    return 2;
+  }
+  
+  return 0;
+}

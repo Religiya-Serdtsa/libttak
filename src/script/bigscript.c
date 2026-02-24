@@ -22,7 +22,7 @@ typedef enum {
     OP_CALL, OP_CALL_BUILTIN, OP_POP
 } opcode_t;
 
-typedef struct { ttak_bigint_t value; } constant_t;
+typedef struct { ttak_bigscript_variant_t value; } constant_t;
 typedef struct { uint32_t start_ip; uint32_t arity; uint32_t locals_count; char name[64]; } function_t;
 
 struct ttak_bigscript_program_t {
@@ -35,13 +35,53 @@ struct ttak_bigscript_program_t {
 
 struct ttak_bigscript_vm_t {
     ttak_bigscript_limits_t limits;
-    ttak_bigint_t *stack; uint32_t stack_cap; uint32_t stack_top;
-    ttak_bigint_t *locals; uint32_t locals_cap; uint32_t locals_top;
+    ttak_bigscript_variant_t *stack; uint32_t stack_cap; uint32_t stack_top;
+    ttak_bigscript_variant_t *locals; uint32_t locals_cap; uint32_t locals_top;
     uint32_t call_depth; uint32_t steps; uint64_t now;
 };
 
-typedef enum { BLT_S = 0, BLT_IS_ZERO } builtin_idx_t;
-static const char *BUILTIN_NAMES[] = { "s", "is_zero" };
+static void variant_init(ttak_bigscript_variant_t *v, uint64_t now) {
+    if (!v) return;
+    memset(v, 0, sizeof(*v));
+    v->type = TTAK_BIGSCRIPT_VAL_INT;
+    ttak_bigint_init(&v->v.i, now);
+}
+
+static void variant_free(ttak_bigscript_variant_t *v, uint64_t now) {
+    if (!v) return;
+    if (v->type == TTAK_BIGSCRIPT_VAL_INT) ttak_bigint_free(&v->v.i, now);
+    else if (v->type == TTAK_BIGSCRIPT_VAL_REAL) ttak_bigreal_free(&v->v.r, now);
+    else if (v->type == TTAK_BIGSCRIPT_VAL_COMPLEX) ttak_bigcomplex_free(&v->v.c, now);
+    v->type = TTAK_BIGSCRIPT_VAL_INT;
+}
+
+static bool variant_copy(ttak_bigscript_variant_t *dst, const ttak_bigscript_variant_t *src, uint64_t now) {
+    if (!dst || !src) return false;
+    if (dst == src) return true;
+    variant_free(dst, now);
+    dst->type = src->type;
+    if (src->type == TTAK_BIGSCRIPT_VAL_INT) {
+        ttak_bigint_init(&dst->v.i, now);
+        return ttak_bigint_copy(&dst->v.i, &src->v.i, now);
+    } else if (src->type == TTAK_BIGSCRIPT_VAL_REAL) {
+        ttak_bigreal_init(&dst->v.r, now);
+        return ttak_bigreal_copy(&dst->v.r, &src->v.r, now);
+    } else if (src->type == TTAK_BIGSCRIPT_VAL_COMPLEX) {
+        ttak_bigcomplex_init(&dst->v.c, now);
+        return ttak_bigreal_copy(&dst->v.c.real, &src->v.c.real, now) && ttak_bigreal_copy(&dst->v.c.imag, &src->v.c.imag, now);
+    }
+    return false;
+}
+
+static void variant_set_int_u64(ttak_bigscript_variant_t *v, uint64_t val, uint64_t now) {
+    if (!v) return;
+    variant_free(v, now);
+    v->type = TTAK_BIGSCRIPT_VAL_INT;
+    ttak_bigint_init_u64(&v->v.i, val, now);
+}
+
+typedef enum { BLT_S = 0, BLT_IS_ZERO, BLT_REAL, BLT_COMPLEX } builtin_idx_t;
+static const char *BUILTIN_NAMES[] = { "s", "is_zero", "real", "complex" };
 
 typedef enum {
     TOK_EOF = 0, TOK_IDENT, TOK_INT, TOK_PLUS, TOK_MINUS, TOK_STAR, TOK_SLASH, TOK_PERCENT,
@@ -124,8 +164,8 @@ static void parse_primary(parser_t *p) {
                 ttak_bigint_free(&t1, p->now); ttak_bigint_free(&t2, p->now);
             }
         }
-        ttak_bigint_init_u64(&p->prog->constants[p->prog->constants_len].value, 0, p->now);
-        ttak_bigint_copy(&p->prog->constants[p->prog->constants_len].value, &val, p->now);
+        variant_init(&p->prog->constants[p->prog->constants_len].value, p->now);
+        ttak_bigint_copy(&p->prog->constants[p->prog->constants_len].value.v.i, &val, p->now);
         ttak_bigint_free(&val, p->now);
         emit(p, OP_PUSH_CONST); emit(p, p->prog->constants_len++);
     } else if (p->curr.type == TOK_IDENT) {
@@ -134,7 +174,7 @@ static void parse_primary(parser_t *p) {
             int argc = 0; if (p->curr.type != TOK_RPAREN) { do { parse_expression(p); argc++; } while (match(p, TOK_COMMA)); }
             consume(p, TOK_RPAREN, "Expected ')'");
             char nbuf[64] = {0}; size_t nl = name.length < 63 ? name.length : 63; memcpy(nbuf, name.start, nl); nbuf[nl] = '\0';
-            int bi = -1; for (int i = 0; i < 2; i++) { if (strcmp(nbuf, BUILTIN_NAMES[i]) == 0) { bi = i; break; } }
+            int bi = -1; for (int i = 0; i < 4; i++) { if (strcmp(nbuf, BUILTIN_NAMES[i]) == 0) { bi = i; break; } }
             if (bi >= 0) { emit(p, OP_CALL_BUILTIN); emit(p, (uint32_t)bi); emit(p, (uint32_t)argc); }
             else {
                 int fi = -1; for (uint32_t i = 0; i < p->prog->functions_len; i++) { if (strcmp(p->prog->functions[i].name, nbuf) == 0) { fi = (int)i; break; } }
@@ -202,7 +242,7 @@ static void parse_function(parser_t *p) {
     consume(p, TOK_LPAREN, "Expected '('");
     if (p->curr.type != TOK_RPAREN) { do { token_t arg = p->curr; consume(p, TOK_IDENT, "Expected arg"); local_var_t *l = &p->locals[p->local_count++]; size_t al = arg.length < 63 ? arg.length : 63; memcpy(l->name, arg.start, al); l->name[al] = '\0'; l->depth = 1; l->local_idx = p->local_count - 1; f->arity++; } while (match(p, TOK_COMMA)); }
     consume(p, TOK_RPAREN, "Expected ')'"); parse_block(p); f->locals_count = (uint32_t)p->local_count;
-    ttak_bigint_init_u64(&p->prog->constants[p->prog->constants_len].value, 0, p->now); emit(p, OP_PUSH_CONST); emit(p, p->prog->constants_len++); emit(p, OP_RETURN);
+    variant_init(&p->prog->constants[p->prog->constants_len].value, p->now); emit(p, OP_PUSH_CONST); emit(p, p->prog->constants_len++); emit(p, OP_RETURN);
 }
 
 static void parse_program(parser_t *p) { while (p->curr.type != TOK_EOF) { if (p->curr.type == TOK_FN) { parse_function(p); } else { set_err(p->err, TTAK_BIGSCRIPT_ERR_SYNTAX, "Only fns allowed at top level"); return; } if (p->err->code != TTAK_BIGSCRIPT_ERR_NONE) { return; } } }
@@ -218,59 +258,141 @@ ttak_bigscript_program_t *ttak_bigscript_compile(const char *source, ttak_bigscr
     return prog;
 }
 
-void ttak_bigscript_program_free(ttak_bigscript_program_t *prog, uint64_t now) { if (prog) { for (uint32_t i = 0; i < prog->constants_len; i++) { ttak_bigint_free(&prog->constants[i].value, now); } ttak_mem_free(prog); } }
+void ttak_bigscript_program_free(ttak_bigscript_program_t *prog, uint64_t now) { if (prog) { for (uint32_t i = 0; i < prog->constants_len; i++) { variant_free(&prog->constants[i].value, now); } ttak_mem_free(prog); } }
 
 ttak_bigscript_vm_t *ttak_bigscript_vm_create(const ttak_bigscript_limits_t *limits, uint64_t now) {
     ttak_bigscript_vm_t *vm = (ttak_bigscript_vm_t*)ttak_mem_alloc(sizeof(ttak_bigscript_vm_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!vm) { return NULL; }
     memset(vm, 0, sizeof(ttak_bigscript_vm_t)); if (limits) { vm->limits = *limits; }
-    vm->stack_cap = 1024; vm->stack = (ttak_bigint_t*)ttak_mem_alloc(sizeof(ttak_bigint_t) * 1024, __TTAK_UNSAFE_MEM_FOREVER__, now);
-    for (uint32_t i = 0; i < 1024; i++) { ttak_bigint_init(&vm->stack[i], now); }
-    vm->locals_cap = 1024; vm->locals = (ttak_bigint_t*)ttak_mem_alloc(sizeof(ttak_bigint_t) * 1024, __TTAK_UNSAFE_MEM_FOREVER__, now);
-    for (uint32_t i = 0; i < 1024; i++) { ttak_bigint_init(&vm->locals[i], now); }
+    vm->stack_cap = 1024; vm->stack = (ttak_bigscript_variant_t*)ttak_mem_alloc(sizeof(ttak_bigscript_variant_t) * 1024, __TTAK_UNSAFE_MEM_FOREVER__, now);
+    for (uint32_t i = 0; i < 1024; i++) { variant_init(&vm->stack[i], now); }
+    vm->locals_cap = 1024; vm->locals = (ttak_bigscript_variant_t*)ttak_mem_alloc(sizeof(ttak_bigscript_variant_t) * 1024, __TTAK_UNSAFE_MEM_FOREVER__, now);
+    for (uint32_t i = 0; i < 1024; i++) { variant_init(&vm->locals[i], now); }
     return vm;
 }
 
-void ttak_bigscript_vm_free(ttak_bigscript_vm_t *vm, uint64_t now) { if (vm) { for (uint32_t i = 0; i < vm->stack_cap; i++) { ttak_bigint_free(&vm->stack[i], now); } for (uint32_t i = 0; i < vm->locals_cap; i++) { ttak_bigint_free(&vm->locals[i], now); } ttak_mem_free(vm->stack); ttak_mem_free(vm->locals); ttak_mem_free(vm); } }
+void ttak_bigscript_vm_free(ttak_bigscript_vm_t *vm, uint64_t now) { if (vm) { for (uint32_t i = 0; i < vm->stack_cap; i++) { variant_free(&vm->stack[i], now); } for (uint32_t i = 0; i < vm->locals_cap; i++) { variant_free(&vm->locals[i], now); } ttak_mem_free(vm->stack); ttak_mem_free(vm->locals); ttak_mem_free(vm); } }
 
 void ttak_bigscript_hash_program(ttak_bigscript_program_t *prog, char out_hex[65]) { if (prog) { strcpy(out_hex, prog->source_sha256); } else { memset(out_hex, 0, 65); } }
+
+void ttak_bigscript_value_free(ttak_bigscript_value_t *val, uint64_t now) {
+    if (val) { variant_free(&val->value, now); }
+}
 
 bool ttak_bigscript_eval_seed(ttak_bigscript_program_t *prog, ttak_bigscript_vm_t *vm, const ttak_bigint_t *seed, const ttak_bigint_t *sn, ttak_bigscript_value_t *out, ttak_bigscript_error_t *err, uint64_t now) {
     (void)err; int mi = -1; for (uint32_t i = 0; i < prog->functions_len; i++) { if (strcmp(prog->functions[i].name, "main") == 0) { mi = (int)i; break; } }
     if (mi < 0) { return false; }
     function_t *f = &prog->functions[mi];
     vm->stack_top = 0; vm->locals_top = 0; vm->call_depth = 0; vm->steps = 0; vm->now = now;
-    if (!ttak_bigint_copy(&vm->locals[0], seed, now)) { return false; }
-    if (!ttak_bigint_copy(&vm->locals[1], sn, now)) { return false; }
+    variant_set_int_u64(&vm->locals[0], 0, now); ttak_bigint_copy(&vm->locals[0].v.i, seed, now);
+    variant_set_int_u64(&vm->locals[1], 0, now); ttak_bigint_copy(&vm->locals[1].v.i, sn, now);
     uint32_t ip = f->start_ip;
     while (ip < prog->code_len) {
         uint32_t op = prog->code[ip++];
         #define POP1(a) a = &vm->stack[--vm->stack_top]
         #define POP2(a, b) b = &vm->stack[--vm->stack_top]; a = &vm->stack[--vm->stack_top]
-        #define PUSH(v) ttak_bigint_copy(&vm->stack[vm->stack_top++], v, now)
+        #define PUSH(v) variant_copy(&vm->stack[vm->stack_top++], v, now)
         switch(op) {
             case OP_PUSH_CONST: { uint32_t i = prog->code[ip++]; PUSH(&prog->constants[i].value); break; }
             case OP_LOAD_LOCAL: { uint32_t i = prog->code[ip++]; PUSH(&vm->locals[i]); break; }
-            case OP_STORE_LOCAL: { uint32_t i = prog->code[ip++]; ttak_bigint_t *v; POP1(v); ttak_bigint_copy(&vm->locals[i], v, now); break; }
-            case OP_ADD: { ttak_bigint_t *a, *b; POP2(a, b); ttak_bigint_t r; ttak_bigint_init_u64(&r, 0, now); ttak_bigint_add(&r, a, b, now); PUSH(&r); ttak_bigint_free(&r, now); break; }
-            case OP_SUB: { ttak_bigint_t *a, *b; POP2(a, b); ttak_bigint_t r; ttak_bigint_init_u64(&r, 0, now); ttak_bigint_sub(&r, a, b, now); PUSH(&r); ttak_bigint_free(&r, now); break; }
-            case OP_MUL: { ttak_bigint_t *a, *b; POP2(a, b); ttak_bigint_t r; ttak_bigint_init_u64(&r, 0, now); ttak_bigint_mul(&r, a, b, now); PUSH(&r); ttak_bigint_free(&r, now); break; }
-            case OP_DIV: { ttak_bigint_t *a, *b; POP2(a, b); ttak_bigint_t q, rr; ttak_bigint_init_u64(&q, 0, now); ttak_bigint_init_u64(&rr, 0, now); ttak_bigint_div(&q, &rr, a, b, now); PUSH(&q); ttak_bigint_free(&q, now); ttak_bigint_free(&rr, now); break; }
-            case OP_EQ: { ttak_bigint_t *a, *b; POP2(a, b); ttak_bigint_t r; ttak_bigint_init_u64(&r, ttak_bigint_cmp(a, b) == 0 ? 1 : 0, now); PUSH(&r); ttak_bigint_free(&r, now); break; }
-            case OP_JMP_IF_FALSE: { uint32_t d = prog->code[ip++]; ttak_bigint_t *c; POP1(c); if (ttak_bigint_cmp_u64(c, 0) == 0) { ip = d; } break; }
+            case OP_STORE_LOCAL: { uint32_t i = prog->code[ip++]; ttak_bigscript_variant_t *v; POP1(v); variant_copy(&vm->locals[i], v, now); break; }
+            case OP_ADD: {
+                ttak_bigscript_variant_t *a, *b; POP2(a, b);
+                ttak_bigscript_variant_t r; variant_init(&r, now);
+                if (a->type == TTAK_BIGSCRIPT_VAL_COMPLEX || b->type == TTAK_BIGSCRIPT_VAL_COMPLEX) {
+                    ttak_bigscript_variant_t aa, bb; variant_init(&aa, now); variant_init(&bb, now);
+                    variant_copy(&aa, a, now); variant_copy(&bb, b, now);
+                    r.type = TTAK_BIGSCRIPT_VAL_COMPLEX; ttak_bigcomplex_init(&r.v.c, now);
+                    if (aa.type == TTAK_BIGSCRIPT_VAL_COMPLEX && bb.type == TTAK_BIGSCRIPT_VAL_COMPLEX)
+                        ttak_bigcomplex_add(&r.v.c, &aa.v.c, &bb.v.c, now);
+                    variant_free(&aa, now); variant_free(&bb, now);
+                } else if (a->type == TTAK_BIGSCRIPT_VAL_REAL || b->type == TTAK_BIGSCRIPT_VAL_REAL) {
+                    r.type = TTAK_BIGSCRIPT_VAL_REAL; ttak_bigreal_init(&r.v.r, now);
+                } else {
+                    ttak_bigint_add(&r.v.i, &a->v.i, &b->v.i, now);
+                }
+                PUSH(&r); variant_free(&r, now); break;
+            }
+            case OP_SUB: {
+                ttak_bigscript_variant_t *a, *b; POP2(a, b);
+                ttak_bigscript_variant_t r; variant_init(&r, now);
+                if (a->type == TTAK_BIGSCRIPT_VAL_INT && b->type == TTAK_BIGSCRIPT_VAL_INT) {
+                    ttak_bigint_sub(&r.v.i, &a->v.i, &b->v.i, now);
+                }
+                PUSH(&r); variant_free(&r, now); break;
+            }
+            case OP_MUL: {
+                ttak_bigscript_variant_t *a, *b; POP2(a, b);
+                ttak_bigscript_variant_t r; variant_init(&r, now);
+                if (a->type == TTAK_BIGSCRIPT_VAL_INT && b->type == TTAK_BIGSCRIPT_VAL_INT) {
+                    ttak_bigint_mul(&r.v.i, &a->v.i, &b->v.i, now);
+                }
+                PUSH(&r); variant_free(&r, now); break;
+            }
+            case OP_DIV: {
+                ttak_bigscript_variant_t *a, *b; POP2(a, b);
+                ttak_bigscript_variant_t q, rr; variant_init(&q, now); variant_init(&rr, now);
+                if (a->type == TTAK_BIGSCRIPT_VAL_INT && b->type == TTAK_BIGSCRIPT_VAL_INT) {
+                    ttak_bigint_div(&q.v.i, &rr.v.i, &a->v.i, &b->v.i, now);
+                }
+                PUSH(&q); variant_free(&q, now); variant_free(&rr, now); break;
+            }
+            case OP_EQ: {
+                ttak_bigscript_variant_t *a, *b; POP2(a, b);
+                ttak_bigscript_variant_t r; variant_init(&r, now);
+                if (a->type == TTAK_BIGSCRIPT_VAL_INT && b->type == TTAK_BIGSCRIPT_VAL_INT) {
+                    ttak_bigint_set_u64(&r.v.i, ttak_bigint_cmp(&a->v.i, &b->v.i) == 0 ? 1 : 0, now);
+                }
+                PUSH(&r); variant_free(&r, now); break;
+            }
+            case OP_JMP_IF_FALSE: {
+                uint32_t d = prog->code[ip++]; ttak_bigscript_variant_t *c; POP1(c);
+                if (c->type == TTAK_BIGSCRIPT_VAL_INT && ttak_bigint_cmp_u64(&c->v.i, 0) == 0) { ip = d; }
+                break;
+            }
             case OP_RETURN: { 
-                ttak_bigint_t *rv; POP1(rv); 
+                ttak_bigscript_variant_t *rv; POP1(rv); 
                 if (out) { 
-                    ttak_bigint_init(&out->value, now); 
-                    if (ttak_bigint_copy(&out->value, rv, now)) {
-                        out->is_found = (ttak_bigint_cmp_u64(rv, 0) != 0);
+                    variant_init(&out->value, now);
+                    if (variant_copy(&out->value, rv, now)) {
+                        if (rv->type == TTAK_BIGSCRIPT_VAL_INT) out->is_found = (ttak_bigint_cmp_u64(&rv->v.i, 0) != 0);
+                        else out->is_found = true;
                     } else {
                         out->is_found = false;
                     }
                 } 
                 return true; 
             }
-            case OP_CALL_BUILTIN: { uint32_t bi = prog->code[ip++]; uint32_t ac = prog->code[ip++]; ttak_bigint_t res; ttak_bigint_init_u64(&res, 0, now); if (bi == BLT_S) { ttak_sum_proper_divisors_big(&vm->stack[vm->stack_top-1], &res, now); } for(uint32_t i=0; i<ac; i++) { vm->stack_top--; } PUSH(&res); ttak_bigint_free(&res, now); break; }
+            case OP_CALL_BUILTIN: {
+                uint32_t bi = prog->code[ip++]; uint32_t ac = prog->code[ip++];
+                ttak_bigscript_variant_t res; variant_init(&res, now);
+                if (bi == BLT_S) {
+                    if (vm->stack[vm->stack_top-1].type == TTAK_BIGSCRIPT_VAL_INT)
+                        ttak_sum_proper_divisors_big(&vm->stack[vm->stack_top-1].v.i, &res.v.i, now);
+                } else if (bi == BLT_REAL) {
+                    if (vm->stack[vm->stack_top-1].type == TTAK_BIGSCRIPT_VAL_INT) {
+                        res.type = TTAK_BIGSCRIPT_VAL_REAL; ttak_bigreal_init(&res.v.r, now);
+                        ttak_bigint_copy(&res.v.r.mantissa, &vm->stack[vm->stack_top-1].v.i, now);
+                        res.v.r.exponent = 0;
+                    } else if (vm->stack[vm->stack_top-1].type == TTAK_BIGSCRIPT_VAL_REAL) {
+                        variant_copy(&res, &vm->stack[vm->stack_top-1], now);
+                    }
+                } else if (bi == BLT_COMPLEX) {
+                    res.type = TTAK_BIGSCRIPT_VAL_COMPLEX; ttak_bigcomplex_init(&res.v.c, now);
+                    if (ac >= 1) {
+                        ttak_bigscript_variant_t *re = &vm->stack[vm->stack_top - ac];
+                        if (re->type == TTAK_BIGSCRIPT_VAL_INT) ttak_bigint_copy(&res.v.c.real.mantissa, &re->v.i, now);
+                        else if (re->type == TTAK_BIGSCRIPT_VAL_REAL) ttak_bigreal_copy(&res.v.c.real, &re->v.r, now);
+                    }
+                    if (ac >= 2) {
+                        ttak_bigscript_variant_t *im = &vm->stack[vm->stack_top - ac + 1];
+                        if (im->type == TTAK_BIGSCRIPT_VAL_INT) ttak_bigint_copy(&res.v.c.imag.mantissa, &im->v.i, now);
+                        else if (im->type == TTAK_BIGSCRIPT_VAL_REAL) ttak_bigreal_copy(&res.v.c.imag, &im->v.r, now);
+                    }
+                }
+                for(uint32_t i=0; i<ac; i++) { vm->stack_top--; }
+                PUSH(&res); variant_free(&res, now); break;
+            }
             case OP_POP: { vm->stack_top--; break; }
             default: break;
         }
