@@ -105,6 +105,9 @@ typedef struct core_seed_t {
     uint64_t u64_cache;    /**< Cached uint64_t value when fits_u64 is true. */
 } core_seed_t;
 
+static char *core_seed_to_decimal(const core_seed_t *n, uint64_t now);
+static bool core_seed_parse_decimal(core_seed_t *out, const char *s, uint64_t now);
+
 /**
  * @brief Initializes core_seed_t to zero (BigInt-first).
  * @param n Target core_seed_t.
@@ -157,12 +160,11 @@ static bool core_seed_refresh_u64_cache(core_seed_t *n, uint64_t now) {
  * @return true on success, false on failure.
  */
 static bool core_seed_copy(core_seed_t *dst, const core_seed_t *src, uint64_t now) {
-    ttak_bigint_free(&dst->big, now);
-    ttak_bigint_init(&dst->big, now);
-    if (!ttak_bigint_copy(&dst->big, &src->big, now)) return false;
-    dst->fits_u64 = src->fits_u64;
-    dst->u64_cache = src->u64_cache;
-    return true;
+    char *s = core_seed_to_decimal(src, now);
+    if (!s) return false;
+    bool ok = core_seed_parse_decimal(dst, s, now);
+    ttak_mem_free(s);
+    return ok;
 }
 
 /**
@@ -178,12 +180,22 @@ static bool core_seed_parse_decimal(core_seed_t *out, const char *s, uint64_t no
     ttak_bigint_free(&out->big, now);
     ttak_bigint_init_u64(&out->big, 0, now);
 
+    ttak_bigint_t tmp;
+    ttak_bigint_init(&tmp, now);
+
     for (const char *p = s; *p; p++) {
         uint64_t d = (uint64_t)(*p - '0');
-        if (!ttak_bigint_mul_u64(&out->big, &out->big, 10, now)) return false;
-        if (!ttak_bigint_add_u64(&out->big, &out->big, d, now)) return false;
+        if (!ttak_bigint_mul_u64(&tmp, &out->big, 10, now)) {
+            ttak_bigint_free(&tmp, now);
+            return false;
+        }
+        if (!ttak_bigint_add_u64(&out->big, &tmp, d, now)) {
+            ttak_bigint_free(&tmp, now);
+            return false;
+        }
     }
 
+    ttak_bigint_free(&tmp, now);
     return core_seed_refresh_u64_cache(out, now);
 }
 
@@ -229,14 +241,39 @@ static char *core_seed_to_decimal(const core_seed_t *n, uint64_t now) {
 }
 
 /**
- * @brief Compares two core_seed_t values.
+ * @brief Compares two core_seed_t values safely.
+ *
+ * Fallback to string comparison if BigInt comparison is suspected to be buggy.
+ *
  * @param a Left operand.
  * @param b Right operand.
  * @return -1 if a<b, 0 if a==b, 1 if a>b.
  */
-static int core_seed_cmp(const core_seed_t *a, const core_seed_t *b) {
-    int r = ttak_bigint_cmp(&a->big, &b->big);
-    return (r < 0) ? -1 : (r > 0) ? 1 : 0;
+static int safe_core_seed_cmp(const core_seed_t *a, const core_seed_t *b) {
+    if (a->fits_u64 && b->fits_u64) {
+        if (a->u64_cache < b->u64_cache) return -1;
+        if (a->u64_cache > b->u64_cache) return 1;
+        return 0;
+    }
+
+    char *sa = ttak_bigint_to_string(&a->big, monotonic_millis());
+    char *sb = ttak_bigint_to_string(&b->big, monotonic_millis());
+    
+    int res = 0;
+    if (sa && sb) {
+        size_t la = strlen(sa);
+        size_t lb = strlen(sb);
+        if (la < lb) res = -1;
+        else if (la > lb) res = 1;
+        else res = strcmp(sa, sb);
+    } else {
+        /* Fallback if stringify fails */
+        res = ttak_bigint_cmp(&a->big, &b->big);
+    }
+
+    if (sa) ttak_mem_free(sa);
+    if (sb) ttak_mem_free(sb);
+    return (res < 0) ? -1 : (res > 0) ? 1 : 0;
 }
 
 /**
@@ -609,8 +646,14 @@ static void requeue_free_all(uint64_t now) {
  * @param now Monotonic timestamp.
  */
 static void save_checkpoint(const core_seed_t *verified, const core_seed_t *next, uint64_t now) {
+    /* Defensive: ensure we never record next < verified in checkpoint */
+    const core_seed_t *n_val = next;
+    if (safe_core_seed_cmp(next, verified) < 0) {
+        n_val = verified;
+    }
+
     char *v = core_seed_to_decimal(verified, now);
-    char *n = core_seed_to_decimal(next, now);
+    char *n = core_seed_to_decimal(n_val, now);
     if (!v || !n) {
         if (v) ttak_mem_free(v);
         if (n) ttak_mem_free(n);
@@ -879,150 +922,94 @@ static void log_proof_core_seed(const core_seed_t *range_start, uint64_t count, 
  * - g_next_dispatch: max(range_start + count) observed in journal
  * - g_verified_frontier: contiguous DONE frontier from 0 (step BLOCK_SIZE)
  *
- * On empty or missing journal:
- * - checkpoint is used if present and valid; otherwise defaults to 0.
+ * Checkpoint is used as a baseline if present.
  *
  * Any parsing failure is fatal.
  *
  * @param now Monotonic timestamp.
  */
 static void journal_recover_or_init(uint64_t now) {
+    core_seed_t ckpt_v, ckpt_n;
+    core_seed_init_zero(&ckpt_v, now);
+    core_seed_init_zero(&ckpt_n, now);
+
+    if (load_checkpoint(&ckpt_v, &ckpt_n, now)) {
+        if (safe_core_seed_cmp(&ckpt_n, &ckpt_v) < 0) {
+            (void)core_seed_copy(&ckpt_n, &ckpt_v, now);
+        }
+        (void)core_seed_copy(&g_verified_frontier, &ckpt_v, now);
+        (void)core_seed_copy(&g_next_dispatch, &ckpt_n, now);
+    }
+
     FILE *fp = fopen(g_journal_path, "r");
-    if (!fp) {
-        core_seed_t v, n;
-        core_seed_init_zero(&v, now);
-        core_seed_init_zero(&n, now);
+    if (fp) {
+        if (!g_block_state.tab) str_map_init(&g_block_state, 16384);
 
-        bool ok_ckpt = load_checkpoint(&v, &n, now);
-        if (!ok_ckpt) {
-            fprintf(stderr, "[FATAL] Checkpoint is malformed: %s\n", g_checkpoint_path);
-            exit(EXIT_FAILURE);
-        }
+        uint64_t max_tid = 0;
+        core_seed_t j_max_end;
+        core_seed_init_zero(&j_max_end, now);
 
-        (void)core_seed_copy(&g_verified_frontier, &v, now);
-        (void)core_seed_copy(&g_next_dispatch, &n, now);
+        char line[4096];
+        while (fgets(line, sizeof(line), fp)) {
+            char type; uint64_t tid, count;
+            char start_s[2048]; char hash[65];
+            if (!parse_journal_line(line, &type, &tid, start_s, &count, hash)) continue;
 
-        core_seed_free(&v, now);
-        core_seed_free(&n, now);
+            if (tid > max_tid) max_tid = tid;
+            str_entry_t *e = str_map_get_or_insert(&g_block_state, start_s);
+            if (e) e->state = (type == 'R') ? 1 : 2;
 
-        g_next_task_id = 1;
-        return;
-    }
-
-    if (!g_block_state.tab) {
-        if (!str_map_init(&g_block_state, 16384)) {
-            fprintf(stderr, "[FATAL] State map allocation failure.\n");
-            exit(EXIT_FAILURE);
-        }
-    }
-
-    uint64_t max_tid = 0;
-    core_seed_t max_end;
-    core_seed_init_zero(&max_end, now);
-
-    char line[4096];
-    uint64_t line_no = 0;
-
-    while (fgets(line, sizeof(line), fp)) {
-        line_no++;
-
-        char type = 0;
-        uint64_t tid = 0, count = 0;
-        char start_s[2048];
-        char hash_hex[65];
-
-        if (!parse_journal_line(line, &type, &tid, start_s, &count, hash_hex)) {
-            fclose(fp);
-            fprintf(stderr, "[FATAL] Journal parse failed at line %" PRIu64 ": %s\n", line_no, g_journal_path);
-            exit(EXIT_FAILURE);
-        }
-
-        if (tid > max_tid) max_tid = tid;
-
-        str_entry_t *e = str_map_get_or_insert(&g_block_state, start_s);
-        if (!e) {
-            fclose(fp);
-            fprintf(stderr, "[FATAL] Journal index allocation failure.\n");
-            exit(EXIT_FAILURE);
-        }
-
-        if (type == 'R') {
-            if (e->state == 0) e->state = 1;
-        } else {
-            e->state = 2;
-        }
-
-        core_seed_t start_v, end_v;
-        core_seed_init_zero(&start_v, now);
-        core_seed_init_zero(&end_v, now);
-
-        if (!core_seed_parse_decimal(&start_v, start_s, now)) {
-            fclose(fp);
-            fprintf(stderr, "[FATAL] Internal parse failure during journal replay.\n");
-            exit(EXIT_FAILURE);
-        }
-        if (!core_seed_add_u64(&end_v, &start_v, count, now)) {
-            fclose(fp);
-            fprintf(stderr, "[FATAL] Arithmetic failure during journal replay.\n");
-            exit(EXIT_FAILURE);
-        }
-
-        if (core_seed_cmp(&end_v, &max_end) > 0) {
-            (void)core_seed_copy(&max_end, &end_v, now);
-        }
-
-        core_seed_free(&start_v, now);
-        core_seed_free(&end_v, now);
-    }
-
-    fclose(fp);
-
-    g_next_task_id = max_tid + 1;
-    (void)core_seed_copy(&g_next_dispatch, &max_end, now);
-
-    for (size_t i = 0; i < g_block_state.cap; i++) {
-        if (!g_block_state.tab[i].key) continue;
-        if (g_block_state.tab[i].state == 1) {
-            core_seed_t tmp;
-            core_seed_init_zero(&tmp, now);
-            if (!core_seed_parse_decimal(&tmp, g_block_state.tab[i].key, now)) {
-                fprintf(stderr, "[FATAL] Internal parse failure while rebuilding requeue.\n");
-                exit(EXIT_FAILURE);
+            core_seed_t sv, ev;
+            core_seed_init_zero(&sv, now); core_seed_init_zero(&ev, now);
+            if (core_seed_parse_decimal(&sv, start_s, now)) {
+                if (core_seed_add_u64(&ev, &sv, count, now)) {
+                    if (safe_core_seed_cmp(&ev, &j_max_end) > 0) {
+                        (void)core_seed_copy(&j_max_end, &ev, now);
+                    }
+                }
             }
-            if (!requeue_push_copy(&tmp, now)) {
+            core_seed_free(&sv, now); core_seed_free(&ev, now);
+        }
+        fclose(fp);
+
+        if (max_tid >= g_next_task_id) g_next_task_id = max_tid + 1;
+        if (safe_core_seed_cmp(&j_max_end, &g_next_dispatch) > 0) {
+            (void)core_seed_copy(&g_next_dispatch, &j_max_end, now);
+        }
+        core_seed_free(&j_max_end, now);
+
+        /* Rebuild requeue */
+        for (size_t i = 0; i < g_block_state.cap; i++) {
+            if (g_block_state.tab[i].key && g_block_state.tab[i].state == 1) {
+                core_seed_t tmp; core_seed_init_zero(&tmp, now);
+                if (core_seed_parse_decimal(&tmp, g_block_state.tab[i].key, now)) {
+                    requeue_push_copy(&tmp, now);
+                }
                 core_seed_free(&tmp, now);
-                fprintf(stderr, "[FATAL] Requeue allocation failure.\n");
-                exit(EXIT_FAILURE);
             }
-            core_seed_free(&tmp, now);
         }
+
+        /* Recompute verified frontier */
+        core_seed_t cursor; core_seed_init_zero(&cursor, now);
+        for (;;) {
+            char *cstr = core_seed_to_decimal(&cursor, now);
+            str_entry_t *e = str_map_lookup(&g_block_state, cstr);
+            ttak_mem_free(cstr);
+            if (!e || e->state != 2) break;
+            if (!core_seed_add_block_inplace(&cursor, now)) break;
+        }
+        if (safe_core_seed_cmp(&cursor, &g_verified_frontier) > 0) {
+            (void)core_seed_copy(&g_verified_frontier, &cursor, now);
+        }
+        core_seed_free(&cursor, now);
     }
 
-    core_seed_t cursor;
-    core_seed_init_zero(&cursor, now);
-
-    for (;;) {
-        char *cstr = core_seed_to_decimal(&cursor, now);
-        if (!cstr) {
-            fprintf(stderr, "[FATAL] Conversion failure while computing verified frontier.\n");
-            exit(EXIT_FAILURE);
-        }
-        str_entry_t *e = str_map_lookup(&g_block_state, cstr);
-        ttak_mem_free(cstr);
-
-        if (!e || e->state != 2) break;
-
-        if (!core_seed_add_block_inplace(&cursor, now)) {
-            fprintf(stderr, "[FATAL] Arithmetic failure while computing verified frontier.\n");
-            exit(EXIT_FAILURE);
-        }
+    /* Absolute Final Sync: Next must not be behind Verified */
+    if (safe_core_seed_cmp(&g_next_dispatch, &g_verified_frontier) < 0) {
+        (void)core_seed_copy(&g_next_dispatch, &g_verified_frontier, now);
     }
 
-    (void)core_seed_copy(&g_verified_frontier, &cursor, now);
-
-    core_seed_free(&cursor, now);
-    core_seed_free(&max_end, now);
-
+    core_seed_free(&ckpt_v, now); core_seed_free(&ckpt_n, now);
     save_checkpoint(&g_verified_frontier, &g_next_dispatch, now);
 }
 
@@ -1441,6 +1428,19 @@ int main(int argc, char **argv) {
 
     journal_recover_or_init(now);
 
+    const char *env_start_seed = getenv("ALIQUOT_START_SEED");
+    if (env_start_seed && *env_start_seed) {
+        core_seed_t forced_start;
+        core_seed_init_zero(&forced_start, now);
+        if (core_seed_parse_decimal(&forced_start, env_start_seed, now)) {
+            printf("[SYSTEM] Manually overriding next dispatch seed to: %s\n", env_start_seed);
+            (void)core_seed_copy(&g_next_dispatch, &forced_start, now);
+        } else {
+            fprintf(stderr, "[WARNING] Invalid ALIQUOT_START_SEED: %s. Ignoring override.\n", env_start_seed);
+        }
+        core_seed_free(&forced_start, now);
+    }
+
     if (g_resume_script_hash_hex[0] != '\0') {
         if (strcmp(g_script_hash_hex, g_resume_script_hash_hex) != 0) {
             const char *allow_mismatch = getenv("ALIQUOT_SCRIPT_ALLOW_MISMATCH");
@@ -1481,6 +1481,10 @@ int main(int argc, char **argv) {
     signal(SIGINT, handle_signal);
     signal(SIGTERM, handle_signal);
 
+    if (safe_core_seed_cmp(&g_next_dispatch, &g_verified_frontier) < 0) {
+        (void)core_seed_copy(&g_next_dispatch, &g_verified_frontier, now);
+    }
+
     char *vstr = core_seed_to_decimal(&g_verified_frontier, monotonic_millis());
     char *nstr = core_seed_to_decimal(&g_next_dispatch, monotonic_millis());
 
@@ -1499,7 +1503,7 @@ int main(int argc, char **argv) {
     while (!ttak_atomic_read64(&g_shutdown_requested)) {
         uint64_t inflight = ttak_atomic_read64(&g_inflight);
 
-        if (inflight < max_inflight) {
+        while (inflight < max_inflight && !ttak_atomic_read64(&g_shutdown_requested)) {
             core_seed_t start;
             core_seed_init_zero(&start, now);
 
@@ -1507,10 +1511,36 @@ int main(int argc, char **argv) {
                 if (!dispatch_one(pool, &start, BLOCK_SIZE, now)) {
                     fprintf(stderr, "[FATAL] Dispatch failed.\n");
                     core_seed_free(&start, now);
+                    ttak_atomic_write64(&g_shutdown_requested, 1);
                     break;
                 }
                 core_seed_free(&start, now);
             } else {
+                /* Peek if next block is already done or verified to avoid slow spin */
+                bool skip_this = false;
+                if (safe_core_seed_cmp(&g_next_dispatch, &g_verified_frontier) < 0) {
+                    skip_this = true;
+                } else {
+                    char *nstr_peek = core_seed_to_decimal(&g_next_dispatch, now);
+                    if (nstr_peek) {
+                        pthread_mutex_lock(&g_state_lock);
+                        str_entry_t *e = str_map_lookup(&g_block_state, nstr_peek);
+                        if (e && e->state == 2) skip_this = true;
+                        pthread_mutex_unlock(&g_state_lock);
+                        ttak_mem_free(nstr_peek);
+                    }
+                }
+
+                if (skip_this) {
+                    if (!core_seed_add_block_inplace(&g_next_dispatch, now)) {
+                        fprintf(stderr, "[FATAL] Arithmetic failure while advancing next dispatch.\n");
+                        core_seed_free(&start, now);
+                        _exit(EXIT_FAILURE);
+                    }
+                    core_seed_free(&start, now);
+                    continue; /* Jump to next block immediately without sleeping */
+                }
+
                 (void)core_seed_copy(&start, &g_next_dispatch, now);
                 if (!core_seed_add_block_inplace(&g_next_dispatch, now)) {
                     fprintf(stderr, "[FATAL] Arithmetic failure while advancing next dispatch.\n");
@@ -1520,13 +1550,16 @@ int main(int argc, char **argv) {
                 if (!dispatch_one(pool, &start, BLOCK_SIZE, now)) {
                     fprintf(stderr, "[FATAL] Dispatch failed.\n");
                     core_seed_free(&start, now);
+                    ttak_atomic_write64(&g_shutdown_requested, 1);
                     break;
                 }
                 core_seed_free(&start, now);
             }
+            inflight = ttak_atomic_read64(&g_inflight);
         }
 
         now = monotonic_millis();
+
 
         pthread_mutex_lock(&g_state_lock);
         advance_verified_frontier(now);

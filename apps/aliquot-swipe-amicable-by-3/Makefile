@@ -5,7 +5,7 @@ LIBTTK ?= $(ROOT)/lib/libttak.a
 
 CPPFLAGS += -I$(ROOT)/include
 CFLAGS += -std=c11 -Wall
-LDFLAGS += -L$(ROOT)/lib -L/usr/local/cuda-13.1/targets/x86_64-linux/lib -lttak -pthread -lm
+LDFLAGS += -L$(ROOT)/lib -lttak -pthread -lm
 
 BIN_DIR = bin
 SRC_DIR = src
