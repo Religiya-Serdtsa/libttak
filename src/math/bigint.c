@@ -258,22 +258,34 @@ _Bool ttak_bigint_copy(ttak_bigint_t *dst, const ttak_bigint_t *src, uint64_t no
  * @return -1, 0, or 1 following the standard ordering semantics.
  */
 int ttak_bigint_cmp(const ttak_bigint_t *lhs, const ttak_bigint_t *rhs) {
+    size_t l_used = lhs->used;
+    const limb_t *l_limbs = get_const_limbs(lhs);
+    while (l_used > 0 && l_limbs[l_used-1] == 0) l_used--;
+
+    size_t r_used = rhs->used;
+    const limb_t *r_limbs = get_const_limbs(rhs);
+    while (r_used > 0 && r_limbs[r_used-1] == 0) r_used--;
+
+    bool l_zero = (l_used == 0);
+    bool r_zero = (r_used == 0);
+
+    if (l_zero && r_zero) return 0;
+    if (l_zero) return rhs->is_negative ? 1 : -1;
+    if (r_zero) return lhs->is_negative ? -1 : 1;
+
     if (lhs->is_negative != rhs->is_negative) {
         return lhs->is_negative ? -1 : 1;
     }
     
     int sign = lhs->is_negative ? -1 : 1;
 
-    if (lhs->used != rhs->used) {
-        return (lhs->used > rhs->used) ? sign : -sign;
+    if (l_used != r_used) {
+        return (l_used > r_used) ? sign : -sign;
     }
 
-    const limb_t *l = get_const_limbs(lhs);
-    const limb_t *r = get_const_limbs(rhs);
-
-    for (size_t i = lhs->used; i > 0; --i) {
-        if (l[i-1] != r[i-1]) {
-            return (l[i-1] > r[i-1]) ? sign : -sign;
+    for (size_t i = l_used; i > 0; --i) {
+        if (l_limbs[i-1] != r_limbs[i-1]) {
+            return (l_limbs[i-1] > r_limbs[i-1]) ? sign : -sign;
         }
     }
     return 0;
@@ -301,7 +313,12 @@ int ttak_bigint_cmp_u64(const ttak_bigint_t *lhs, uint64_t rhs) {
  * @return true if the integer is zero, false otherwise.
  */
 bool ttak_bigint_is_zero(const ttak_bigint_t *bi) {
-    return bi->used == 0 || (bi->used == 1 && get_const_limbs(bi)[0] == 0);
+    if (!bi || bi->used == 0) return true;
+    const limb_t *limbs = get_const_limbs(bi);
+    for (size_t i = 0; i < bi->used; i++) {
+        if (limbs[i] != 0) return false;
+    }
+    return true;
 }
 
 /**
