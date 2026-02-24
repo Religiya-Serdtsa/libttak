@@ -25,6 +25,7 @@ Key ideas:
 - **Arena Memory (Lesson 40).** Demonstrates how tracked arena rows plug into the mem tree + epoch GC combo that powers the lock-free cache bench.
 - **IO & Network Guards (Lesson 41).** Builds the new `ttak_io_guard_t` + zero-copy layer, shared net endpoints, and the session manager so you can reason about descriptor lifetimes that ride on owners and epoch reclamation.
 - **Guarded IO Streams (Lesson 42).** Separates the IO side from networking so you can practice `ttak_io_guard_t`, synchronous read/write helpers, manual TTL refresh, `ttak_io_async_read`, and direct `ttak_io_poll_wait` flows before layering net endpoints on top.
+- **BigScript Language (Lesson 43).** [Introduction to BigScript](./bigscript/README.md), the custom mathematical scripting language for `libttak`. Covers syntax, built-ins, and execution.
 
 ## Coverage Guarantees
 
@@ -50,6 +51,7 @@ Each lesson now has a sibling workspace under `tutorials/NN-lesson-name/` where 
 - `tutorials/01-getting-started/` – ships a buildable sample program (`getting_started.c`) plus a `Makefile` that assumes you already ran `make && sudo make install` for `libttak`. Use it to confirm your compiler can include `<ttak/...>` headers and link against `-lttak`.
 - `tutorials/02-helper-workflow/` – quick checklist for practicing the helper tool interface (build, run against `libttak.hlp`, jot down shortcuts).
 - `tutorials/03-hash-table-buckets/` – scratchpad for the first data-structure clone; keep your sketches and hash-table test results here before moving on.
+- `tutorials/bigscript/` – source for the BigScript language course, covering syntax, arithmetic, and mathematical built-ins.
 
 Continue creating folders that match the remaining lesson numbers whenever you want to capture scratch code or logs separate from the main source tree.
 

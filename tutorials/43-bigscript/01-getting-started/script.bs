@@ -1,0 +1,7 @@
+fn main(seed, sn) {
+  // Every BigScript program must have a main function.
+  // 'seed' is the input number.
+  // 'sn' is the precomputed sum of proper divisors of seed.
+  
+  return 42; // Simply return a constant
+}

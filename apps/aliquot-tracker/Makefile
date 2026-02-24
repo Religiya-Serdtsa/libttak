@@ -5,7 +5,7 @@ LIBTTK ?= $(ROOT)/lib/libttak.a
 
 CPPFLAGS += -I$(ROOT)/include
 CFLAGS += -std=c11 -Wall
-LDFLAGS += -L$(ROOT)/lib -lttak -pthread -lm -lstdc++
+LDFLAGS += -L$(ROOT)/lib -lttak -pthread -lm
 
 BIN_DIR = bin
 SRC_DIR = src

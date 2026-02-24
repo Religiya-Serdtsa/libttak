@@ -1,0 +1,10 @@
+fn main(seed, sn) {
+  // real(n) converts an integer to a real number.
+  let r = real(seed);
+  
+  // complex(re, im) creates a complex number.
+  let c = complex(r, 10);
+  
+  // You can return complex numbers too.
+  return c;
+}

@@ -1,0 +1,2 @@
+## Please link your library by GPU.
+## See Makefile.cuda for NVIDIA Example

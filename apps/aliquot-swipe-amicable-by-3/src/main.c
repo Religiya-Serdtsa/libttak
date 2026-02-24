@@ -1158,7 +1158,7 @@ static void *worker_scan_range(void *arg) {
                 if (out_val.is_found) {
                     log_found_seed_bigint(&seed_val, now);
                 }
-                ttak_bigint_free(&out_val.value, now);
+                ttak_bigscript_value_free(&out_val, now);
             } else {
                 fprintf(stderr, "[FATAL] eval_seed failed: %s\n", err.message ? err.message : "Unknown");
                 _exit(EXIT_FAILURE);
