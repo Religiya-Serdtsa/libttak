@@ -87,7 +87,11 @@ SRC_DIRS = src/ht src/thread src/timing src/mem src/async src/priority \
            src/net src/phys/mem src/script
 
 SRCS = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
+ifeq ($(BUILD_PROFILE),tcc)
+C_BASE_ACCEL_SRCS = src/accel/ttak_accel_dispatch.c
+else
 C_BASE_ACCEL_SRCS = src/accel/accel_cpu.c src/accel/ttak_accel_dispatch.c
+endif
 SRCS += $(C_BASE_ACCEL_SRCS)
 C_OPTIONAL_SRCS =
 CUDA_SRCS =

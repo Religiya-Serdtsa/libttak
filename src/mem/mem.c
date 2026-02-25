@@ -118,7 +118,7 @@ static pthread_mutex_t global_init_lock = PTHREAD_MUTEX_INITIALIZER;
 
 #if EMBEDDED
 #include <ttak/phys/mem/buddy.h>
-static TTAK_THREAD_LOCAL uint8_t buddy_pool[1 << 20];
+static TTAK_THREAD_LOCAL _Alignas(64) uint8_t buddy_pool[1 << 20];
 static pthread_once_t buddy_once = PTHREAD_ONCE_INIT;
 /**
  * @brief Lazy-init for the buddy system in embedded builds.
