@@ -12,6 +12,18 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stddef.h>
+#include <stdatomic.h>
+
+/* Internal thread-local ID for Latin Square isolation */
+static _Thread_local int ttak_tid = -1;
+static atomic_int ttak_tid_counter = ATOMIC_VAR_INIT(0);
+
+static inline int get_ttak_tid() {
+    if (ttak_tid == -1) {
+        ttak_tid = atomic_fetch_add(&ttak_tid_counter, 1) & TTAK_LATTICE_MASK;
+    }
+    return ttak_tid;
+}
 
 /* Internal payload header for atomic consistency of size, ts, and data */
 typedef struct {
@@ -34,24 +46,6 @@ static void _ttak_shared_payload_free(void *ptr) {
     ttak_mem_free(header);
 }
 
-/* Internal helper to ensure timestamp array capacity */
-static bool _ttak_shared_ensure_ts_capacity(ttak_shared_t *self, uint32_t owner_id) {
-    if (owner_id < self->ts_capacity) {
-        return true;
-    }
-
-    uint32_t new_capacity = ((owner_id / 64) + 1) * 64;
-    uint64_t now = ttak_get_tick_count();
-    uint64_t *new_ts = ttak_mem_realloc(self->last_sync_ts, sizeof(uint64_t) * new_capacity, __TTAK_UNSAFE_MEM_FOREVER__, now);
-    if (!new_ts) return false;
-
-    memset(new_ts + self->ts_capacity, 0, sizeof(uint64_t) * (new_capacity - self->ts_capacity));
-    self->last_sync_ts = new_ts;
-    self->ts_capacity = new_capacity;
-
-    return true;
-}
-
 /* Internal helper for O(1) ownership validation */
 static ttak_shared_result_t _ttak_shared_validate_owner(ttak_shared_t *self, ttak_owner_t *claimant, uint64_t current_ts) {
     if (self->level == TTAK_SHARED_NO_LEVEL) {
@@ -68,9 +62,20 @@ static ttak_shared_result_t _ttak_shared_validate_owner(ttak_shared_t *self, tta
     }
 
     if (self->level >= TTAK_SHARED_LEVEL_2) {
-        /* Check for timestamp drift or corruption */
-        /* Note: accessing last_sync_ts should ideally be inside self->rwlock */
-        if (claimant->id >= self->ts_capacity || self->last_sync_ts[claimant->id] < current_ts) {
+        /* 
+         * [CORE LOGIC: LATIN SQUARE BROADCAST]
+         * By reading one row in the lattice, we intersect all diagonals.
+         * This ensures we see the latest sync timestamp from any worker thread
+         * without using any locks or global barriers.
+         */
+        int tid = get_ttak_tid();
+        uint64_t max_sync_ts = 0;
+        for (int c = 0; c < TTAK_LATTICE_SIZE; c++) {
+            uint64_t ts = atomic_load_explicit(&self->lattice.slots[tid][c], memory_order_acquire);
+            if (ts > max_sync_ts) max_sync_ts = ts;
+        }
+
+        if (max_sync_ts < current_ts) {
             return TTAK_OWNER_CORRUPTED;
         }
     }
@@ -93,7 +98,7 @@ static ttak_shared_result_t ttak_shared_allocate_impl(ttak_shared_t *self, size_
     header->size = size;
     header->ts = ttak_get_tick_count_ns();
     
-    self->shared = header->data;
+    atomic_init(&self->shared, header->data);
     self->cleanup = _ttak_shared_payload_free;
     self->size = size;
     self->level = level;
@@ -121,15 +126,7 @@ static ttak_shared_result_t ttak_shared_add_owner_impl(ttak_shared_t *self, ttak
         return TTAK_OWNER_SHARE_DENIED;
     }
 
-    /* Update sync timestamp under shared lock */
-    ttak_rwlock_wrlock(&self->rwlock);
-    if (!_ttak_shared_ensure_ts_capacity(self, owner->id)) {
-        ttak_rwlock_unlock(&self->rwlock);
-        return TTAK_OWNER_SHARE_DENIED;
-    }
-    self->last_sync_ts[owner->id] = self->ts;
-    ttak_rwlock_unlock(&self->rwlock);
-
+    /* In the lock-free Lattice model, per-owner sync timestamps are not needed */
     return TTAK_OWNER_SUCCESS;
 }
 
@@ -143,8 +140,8 @@ static const void *ttak_shared_access_impl(ttak_shared_t *self, ttak_owner_t *cl
         ttak_rwlock_rdlock(&self->rwlock);
     }
 
-    /* Rough load */
-    void *ptr = self->shared;
+    /* Atomic load with acquire barrier to see the header contents */
+    void *ptr = atomic_load_explicit(&self->shared, memory_order_acquire);
     uint64_t current_ts = ptr ? TTAK_GET_HEADER(ptr)->ts : self->ts;
 
     ttak_shared_result_t res = _ttak_shared_validate_owner(self, claimant, current_ts);
@@ -171,7 +168,7 @@ static const void *ttak_shared_access_ebr_impl(ttak_shared_t *self, ttak_owner_t
     }
 
     /* Atomic load with acquire barrier to see the header contents */
-    void *ptr = atomic_load_explicit((void * _Atomic *)&self->shared, memory_order_acquire);
+    void *ptr = atomic_load_explicit(&self->shared, memory_order_acquire);
     uint64_t current_ts = ptr ? TTAK_GET_HEADER(ptr)->ts : self->ts;
 
     ttak_shared_result_t res = _ttak_shared_validate_owner(self, claimant, current_ts);
@@ -182,11 +179,6 @@ static const void *ttak_shared_access_ebr_impl(ttak_shared_t *self, ttak_owner_t
         return NULL;
     }
 
-    /* 
-     * In EBR mode, even if swap_ebr happens concurrently, the old pointer 
-     * (which we just loaded) is guaranteed to remain valid until we exit.
-     * The metadata (size, ts) can be retrieved from TTAK_GET_HEADER(ptr).
-     */
     return ptr;
 }
 
@@ -209,41 +201,31 @@ static void ttak_shared_release_ebr_impl(ttak_shared_t *self) {
 static ttak_shared_result_t ttak_shared_sync_all_impl(ttak_shared_t *self, ttak_owner_t *claimant, int *affected) {
     if (!self) return TTAK_OWNER_INVALID;
 
-    ttak_rwlock_wrlock(&self->rwlock);
-
+    /* Check owner permission first (uses Lattice row-read) */
     ttak_shared_result_t res = _ttak_shared_validate_owner(self, claimant, self->ts);
     if (res != TTAK_OWNER_SUCCESS && self->level == TTAK_SHARED_LEVEL_3) {
-        ttak_rwlock_unlock(&self->rwlock);
         return res;
     }
 
     /* Update global timestamp and clear dirty flag */
-    self->ts = ttak_get_tick_count_ns();
+    uint64_t new_ts = ttak_get_tick_count_ns();
+    self->ts = new_ts;
     self->status &= ~TTAK_SHARED_DIRTY;
 
-    int count = 0;
-    
-    /* Iterate over the mask safely */
-    ttak_rwlock_rdlock(&self->owners_mask.lock);
-    for (uint32_t i = 0; i < self->owners_mask.capacity / 64; ++i) {
-        uint64_t mask = self->owners_mask.bits[i];
-        if (mask == 0) continue;
-
-        for (int b = 0; b < 64; ++b) {
-            if (mask & (1ULL << b)) {
-                uint32_t owner_id = i * 64 + b;
-                if (owner_id < self->ts_capacity) {
-                    self->last_sync_ts[owner_id] = self->ts;
-                    count++;
-                }
-            }
-        }
+    /* 
+     * [CORE LOGIC: LATIN SQUARE DIAGONAL WRITE]
+     * Instead of iterating over all owners (O(N)), we update only our assigned 
+     * diagonal in the lattice (O(LATTICE_SIZE)).
+     * This 'broadcast' is eventually seen by all owners when they read a row.
+     */
+    int tid = get_ttak_tid();
+    for (int r = 0; r < TTAK_LATTICE_SIZE; r++) {
+        int c = (tid - r + TTAK_LATTICE_SIZE) & TTAK_LATTICE_MASK;
+        atomic_store_explicit(&self->lattice.slots[r][c], new_ts, memory_order_release);
     }
-    ttak_rwlock_unlock(&self->owners_mask.lock);
 
-    if (affected) *affected = count;
+    if (affected) *affected = self->owners_mask.count;
 
-    ttak_rwlock_unlock(&self->rwlock);
     return TTAK_OWNER_SUCCESS;
 }
 
@@ -275,7 +257,6 @@ static void _ttak_shared_container_cleanup(void *ptr) {
     if (!self) return;
 
     /* Free resources other than self->shared (which is already retired) */
-    ttak_mem_free(self->last_sync_ts);
     ttak_dynamic_mask_destroy(&self->owners_mask);
     ttak_rwlock_destroy(&self->rwlock);
     
@@ -287,9 +268,10 @@ static void ttak_shared_retire_impl(ttak_shared_t *self) {
     if (!self) return;
 
     /* Retire the internal data if it exists */
-    if (self->shared) {
-        ttak_epoch_retire(self->shared, self->cleanup ? self->cleanup : ttak_mem_free);
-        self->shared = NULL; 
+    void *ptr = atomic_load(&self->shared);
+    if (ptr) {
+        ttak_epoch_retire(ptr, self->cleanup ? self->cleanup : ttak_mem_free);
+        atomic_store(&self->shared, (void *)0);
     }
 
     /* Retire the container itself */
@@ -308,6 +290,13 @@ void ttak_shared_init(ttak_shared_t *self) {
     ttak_rwlock_init(&self->rwlock);
     ttak_dynamic_mask_init(&self->owners_mask);
     atomic_init(&self->retired_ptr, (void *)0);
+
+    /* Initialize Latin Square Lattice */
+    for (int r = 0; r < TTAK_LATTICE_SIZE; r++) {
+        for (int c = 0; c < TTAK_LATTICE_SIZE; c++) {
+            atomic_init(&self->lattice.slots[r][c], 0);
+        }
+    }
 
     /* Bind implementations */
     self->allocate = ttak_shared_allocate_impl;
@@ -332,13 +321,13 @@ void ttak_shared_destroy(ttak_shared_t *self) {
 
     ttak_rwlock_wrlock(&self->rwlock);
     
-    if (self->cleanup && self->shared) {
-        self->cleanup(self->shared);
-    } else if (self->shared) {
-        ttak_mem_free(self->shared);
+    void *ptr = atomic_load(&self->shared);
+    if (self->cleanup && ptr) {
+        self->cleanup(ptr);
+    } else if (ptr) {
+        ttak_mem_free(ptr);
     }
 
-    ttak_mem_free(self->last_sync_ts);
     ttak_dynamic_mask_destroy(&self->owners_mask);
     
     ttak_rwlock_unlock(&self->rwlock);
@@ -356,20 +345,21 @@ ttak_shared_result_t ttak_shared_swap_ebr(ttak_shared_t *self, void *new_shared,
     header->size = new_size;
     header->ts = ttak_get_tick_count_ns();
     
-    /* Using optimized duplication if possible, but here we are copying from raw buffer to payload */
+    /* Copy from raw buffer to payload */
     memcpy(header->data, new_shared, new_size);
 
     ttak_rwlock_wrlock(&self->rwlock);
     self->status |= TTAK_SHARED_SWAPPING;
 
     /* 2. Move existing shared pointer (with its header) to retirement queue */
-    if (self->shared) {
+    void *old_ptr = atomic_load(&self->shared);
+    if (old_ptr) {
         /* self->cleanup is expected to be _ttak_shared_payload_free */
-        ttak_epoch_retire(self->shared, self->cleanup ? self->cleanup : ttak_mem_free);
+        ttak_epoch_retire(old_ptr, self->cleanup ? self->cleanup : ttak_mem_free);
     }
 
     /* 3. Atomic pointer swap (Release barrier ensures header content is visible) */
-    atomic_store_explicit((void * _Atomic *)&self->shared, header->data, memory_order_release);
+    atomic_store_explicit(&self->shared, header->data, memory_order_release);
     
     /* 4. Update shadow members for rough access */
     self->size = new_size;
