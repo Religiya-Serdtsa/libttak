@@ -36,13 +36,30 @@ static const uint16_t k_small_primes[] = {
     947,953,967,971,977,983,991,997
 };
 
+/**
+ * @brief Compute Greatest Common Divisor using a binary algorithm.
+ * 
+ * This implementation is inspired by the "Dae-yeon-gu-il-sul" (Daeyeonguilsul)
+ * logic that replaces division-heavy operations with shifts and additions
+ * (Binary GCD / Stein's Algorithm).
+ */
 static inline uint64_t ttak_gcd_u64(uint64_t a, uint64_t b) {
-    while (b != 0) {
-        uint64_t t = a % b;
-        a = b;
-        b = t;
-    }
-    return a;
+    if (a == 0) return b;
+    if (b == 0) return a;
+
+    int shift = __builtin_ctzll(a | b);
+    a >>= __builtin_ctzll(a);
+    do {
+        b >>= __builtin_ctzll(b);
+        if (a > b) {
+            uint64_t t = b;
+            b = a;
+            a = t;
+        }
+        b = b - a;
+    } while (b != 0);
+
+    return a << shift;
 }
 
 static inline uint64_t ttak_abs_diff_u64(uint64_t a, uint64_t b) {

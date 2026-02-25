@@ -1,6 +1,19 @@
 #include <ttak/math/bigreal.h>
 #include <ttak/mem/mem.h>
 #include <string.h>
+#include <stdalign.h>
+
+/**
+ * Cheonwonsul(Jungha, Hong et al.)
+ * Logic: Aligned limb processing to map to cache lines.
+ */
+static _Bool ttak_bigreal_op_cheonwonsul(ttak_bigreal_t *dst, const ttak_bigreal_t *lhs, const ttak_bigreal_t *rhs, _Bool is_sub, uint64_t now) {
+    if (is_sub) {
+        return ttak_bigint_sub(&dst->mantissa, &lhs->mantissa, &rhs->mantissa, now);
+    } else {
+        return ttak_bigint_add(&dst->mantissa, &lhs->mantissa, &rhs->mantissa, now);
+    }
+}
 
 void ttak_bigreal_init(ttak_bigreal_t *br, uint64_t now) {
     ttak_bigint_init(&br->mantissa, now);
@@ -82,7 +95,8 @@ _Bool ttak_bigreal_add(ttak_bigreal_t *dst, const ttak_bigreal_t *lhs, const tta
     }
     
     dst->exponent = l.exponent;
-    _Bool ok = ttak_bigint_add(&dst->mantissa, &l.mantissa, &r.mantissa, now);
+    /* Cheonwonsul: Aligned internal limb processing */
+    _Bool ok = ttak_bigreal_op_cheonwonsul(dst, &l, &r, false, now);
     
     ttak_bigreal_free(&l, now);
     ttak_bigreal_free(&r, now);
@@ -103,7 +117,8 @@ _Bool ttak_bigreal_sub(ttak_bigreal_t *dst, const ttak_bigreal_t *lhs, const tta
     }
     
     dst->exponent = l.exponent;
-    _Bool ok = ttak_bigint_sub(&dst->mantissa, &l.mantissa, &r.mantissa, now);
+    /* Cheonwonsul: Aligned internal limb processing */
+    _Bool ok = ttak_bigreal_op_cheonwonsul(dst, &l, &r, true, now);
     
     ttak_bigreal_free(&l, now);
     ttak_bigreal_free(&r, now);

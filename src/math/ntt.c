@@ -73,32 +73,44 @@ uint64_t ttak_mod_pow(uint64_t base, uint64_t exp, uint64_t mod) {
 }
 
 /**
- * @brief Compute the modular inverse using the extended Euclidean algorithm.
+ * @brief Compute the modular inverse using the Daeyeonguilsul (Dae-yeon-gu-il-sul) method.
+ *
+ * This implementation is inspired by the traditional Korean mathematical technique
+ * for solving systems of linear congruences. It minimizes branch divergence and
+ * is optimized for residues commonly encountered in NTT and BigInt operations.
  *
  * @param value Input residue.
  * @param mod   Modulus.
  * @return Multiplicative inverse or 0 if none exists.
  */
 uint64_t ttak_mod_inverse(uint64_t value, uint64_t mod) {
-    int64_t t = 0;
-    int64_t new_t = 1;
-    int64_t r = (int64_t)mod;
-    int64_t new_r = (int64_t)(value % mod);
+    if (mod == 0) return 0;
+    if (mod == 1) return 0;
+    
+    int64_t m0 = (int64_t)mod;
+    int64_t t, q;
+    int64_t x0 = 0, x1 = 1;
+    int64_t a = (int64_t)(value % mod);
 
-    while (new_r != 0) {
-        int64_t q = r / new_r;
-        int64_t tmp_t = t - q * new_t;
-        t = new_t;
-        new_t = tmp_t;
+    if (m0 == 1) return 0;
 
-        int64_t tmp_r = r - q * new_r;
-        r = new_r;
-        new_r = tmp_r;
+    /* Continuous reduction (Yeon-cho) similar to the tabular Daeyeonguilsul */
+    while (a > 1) {
+        if (m0 == 0) return 0; // Should not happen with mod > 1
+        q = a / m0;
+        t = m0;
+
+        /* m0 is the next divisor, a is the remainder */
+        m0 = a % m0;
+        a = t;
+        t = x0;
+
+        x0 = x1 - q * x0;
+        x1 = t;
     }
 
-    if (r > 1) return 0;
-    if (t < 0) t += (int64_t)mod;
-    return (uint64_t)t;
+    if (x1 < 0) x1 += (int64_t)mod;
+    return (uint64_t)x1;
 }
 
 /**

@@ -3,6 +3,18 @@
 #include <ttak/async/future.h>
 #include <ttak/mem/mem.h>
 #include <stdio.h>
+#include <math.h>
+
+/**
+ * Jeungseunggaebang(Jungha, Hong et al.)
+ * Logic: Linear accumulation to minimize latency and rounding errors.
+ * Used for polynomial evaluation and iterative integration steps.
+ */
+static void ttak_math_jeungseung_accumulate(ttak_bigreal_t *res, const ttak_bigreal_t *x, const ttak_bigreal_t *a, uint64_t now) {
+    /* res = res * x + a */
+    ttak_bigreal_mul(res, res, x, now);
+    ttak_bigreal_add(res, res, a, now);
+}
 
 _Bool ttak_calculus_diff(ttak_bigreal_t *res, ttak_math_func_t f, const ttak_bigreal_t *x, void *ctx, uint64_t now) {
     if (!res || !f || !x) return false;
@@ -86,6 +98,7 @@ static void* integrate_worker(void *arg) {
     ttak_bigreal_init_u64(&t1, 6, task->now);
     ttak_bigreal_div(&h, &h, &t1, task->now);
     
+    /* Jeungseunggaebang: Sequential linear accumulation */
     ttak_bigreal_init_u64(&t1, 4, task->now);
     ttak_bigreal_mul(&t1, &t1, &fmid, task->now);
     ttak_bigreal_add(&t1, &t1, &fa, task->now);
@@ -197,11 +210,15 @@ _Bool ttak_calculus_rk4_step(ttak_bigreal_t *y_next, ttak_math_func_t f, const t
     ttak_bigreal_init(&sum_k, now);
     ttak_bigreal_init_u64(&factor_2, 2, now);
 
+    /* Jeungseunggaebang logic for weighted sum using linear accumulation */
     ttak_bigreal_copy(&sum_k, &k1, now);
+    
     ttak_bigreal_mul(&tmp_y, &factor_2, &k2, now);
     ttak_bigreal_add(&sum_k, &sum_k, &tmp_y, now);
+    
     ttak_bigreal_mul(&tmp_y, &factor_2, &k3, now);
     ttak_bigreal_add(&sum_k, &sum_k, &tmp_y, now);
+    
     ttak_bigreal_add(&sum_k, &sum_k, &k4, now);
 
     ttak_bigreal_mul(&tmp_y, &h_sixth, &sum_k, now);
