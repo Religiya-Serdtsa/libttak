@@ -1,6 +1,15 @@
 #include <ttak/net/view.h>
 #include <ttak/io/io.h>
+#ifdef _WIN32
+#include <winsock2.h>
+#include <ws2tcpip.h>
+#pragma comment(lib, "ws2_32.lib")
+#else
 #include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#endif
 
 
 void ttak_net_view_init(ttak_net_view_t *view) {
