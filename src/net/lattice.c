@@ -6,7 +6,11 @@
 #include <stdlib.h>
 #include <pthread.h>
 
+#if defined(__TINYC__)
+static uint32_t tls_worker_id = 0;
+#else
 static _Thread_local uint32_t tls_worker_id = 0;
+#endif
 static ttak_net_lattice_t *global_default_lattice = NULL;
 static pthread_once_t lattice_once = PTHREAD_ONCE_INIT;
 

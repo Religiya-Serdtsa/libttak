@@ -214,9 +214,40 @@ typedef enum {
     memory_order_seq_cst
 } memory_order;
 
-typedef volatile bool atomic_bool;
-typedef volatile size_t atomic_size_t;
-typedef volatile uint_fast64_t atomic_uint_fast64_t;
+typedef volatile bool               atomic_bool;
+typedef volatile char               atomic_char;
+typedef volatile signed char        atomic_schar;
+typedef volatile unsigned char      atomic_uchar;
+typedef volatile short              atomic_short;
+typedef volatile unsigned short     atomic_ushort;
+typedef volatile int                atomic_int;
+typedef volatile unsigned int       atomic_uint;
+typedef volatile long               atomic_long;
+typedef volatile unsigned long      atomic_ulong;
+typedef volatile long long          atomic_llong;
+typedef volatile unsigned long long atomic_ullong;
+typedef volatile int_least8_t       atomic_int_least8_t;
+typedef volatile uint_least8_t      atomic_uint_least8_t;
+typedef volatile int_least16_t      atomic_int_least16_t;
+typedef volatile uint_least16_t     atomic_uint_least16_t;
+typedef volatile int_least32_t      atomic_int_least32_t;
+typedef volatile uint_least32_t     atomic_uint_least32_t;
+typedef volatile int_least64_t      atomic_int_least64_t;
+typedef volatile uint_least64_t     atomic_uint_least64_t;
+typedef volatile int_fast8_t        atomic_int_fast8_t;
+typedef volatile uint_fast8_t       atomic_uint_fast8_t;
+typedef volatile int_fast16_t       atomic_int_fast16_t;
+typedef volatile uint_fast16_t      atomic_uint_fast16_t;
+typedef volatile int_fast32_t       atomic_int_fast32_t;
+typedef volatile uint_fast32_t      atomic_uint_fast32_t;
+typedef volatile int_fast64_t       atomic_int_fast64_t;
+typedef volatile uint_fast64_t      atomic_uint_fast64_t;
+typedef volatile intptr_t           atomic_intptr_t;
+typedef volatile uintptr_t          atomic_uintptr_t;
+typedef volatile size_t             atomic_size_t;
+typedef volatile ptrdiff_t          atomic_ptrdiff_t;
+typedef volatile intmax_t           atomic_intmax_t;
+typedef volatile uintmax_t          atomic_uintmax_t;
 
 typedef struct {
     volatile unsigned char _value;
@@ -224,7 +255,8 @@ typedef struct {
 
 extern pthread_mutex_t __ttak_atomic_global_lock;
 
-#define ATOMIC_FLAG_INIT {0}
+#define ATOMIC_FLAG_INIT   {0}
+#define ATOMIC_VAR_INIT(v) (v)
 
 #define __TT_ATOMIC_LOCK() pthread_mutex_lock(&__ttak_atomic_global_lock)
 #define __TT_ATOMIC_UNLOCK() pthread_mutex_unlock(&__ttak_atomic_global_lock)

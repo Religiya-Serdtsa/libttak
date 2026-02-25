@@ -15,7 +15,11 @@
 #include <stdatomic.h>
 
 /* Internal thread-local ID for Latin Square isolation */
+#if defined(__TINYC__)
+static int ttak_tid = -1;
+#else
 static _Thread_local int ttak_tid = -1;
+#endif
 static atomic_int ttak_tid_counter = ATOMIC_VAR_INIT(0);
 
 static inline int get_ttak_tid() {

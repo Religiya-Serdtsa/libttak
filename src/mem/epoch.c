@@ -17,7 +17,11 @@
 ttak_epoch_manager_t g_epoch_mgr = {0};
 
 /* Thread-local state */
+#if defined(__TINYC__)
+ttak_thread_state_t *t_local_state = NULL;
+#else
 _Thread_local ttak_thread_state_t *t_local_state = NULL;
+#endif
 
 /* 
  * A simple linked list to track all registered thread states 
