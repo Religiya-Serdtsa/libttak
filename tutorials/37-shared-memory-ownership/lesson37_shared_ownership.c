@@ -31,7 +31,7 @@ int main() {
 	ttak_owner_t *bob = ttak_owner_create(TTAK_OWNER_SAFE_DEFAULT);
 	ttak_owner_t *intruder = ttak_owner_create(TTAK_OWNER_SAFE_DEFAULT);
 
-	printf("[+] Created owners: Alice (ID:%u), Bob (ID:%u), Intruder (ID:%u)\n", 
+	printf("[+] Created owners: Alice (ID:%u), Bob (ID:%u), Intruder (ID:%u)\n",
 	       alice->id, bob->id, intruder->id);
 
 	shared.add_owner(&shared, alice);

@@ -25,7 +25,7 @@
 
 #ifndef _WIN32
 typedef struct {
-    atomic_bool triggered;
+    _Atomic _Bool triggered;
     _Bool graceful;
     int exit_code;
 } ttak_signal_guard_t;
@@ -41,7 +41,7 @@ static size_t g_ctx_registry_cap = 0;
 
 #ifndef _WIN32
 static ttak_signal_guard_t g_signal_guard = {
-    .triggered = ATOMIC_VAR_INIT(false),
+    .triggered = false,
     .graceful = true,
     .exit_code = -1
 };

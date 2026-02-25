@@ -82,8 +82,8 @@ static int global_trace_enabled = 0;                    /**< Flag for JSON traci
  * @brief Initialize the global friction matrix for Damping.
  */
 ttak_mem_friction_matrix_t global_friction_matrix = {
-    .values = { ATOMIC_VAR_INIT(TTAK_FP_ONE), ATOMIC_VAR_INIT(TTAK_FP_ONE), ATOMIC_VAR_INIT(TTAK_FP_ONE), ATOMIC_VAR_INIT(TTAK_FP_ONE) },
-    .global_friction = ATOMIC_VAR_INIT(TTAK_FP_ONE),
+    .values = { TTAK_FP_ONE, TTAK_FP_ONE, TTAK_FP_ONE, TTAK_FP_ONE },
+    .global_friction = TTAK_FP_ONE,
     .pressure_threshold = TTAK_FP_FROM_INT(1)
 };
 

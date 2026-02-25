@@ -5,17 +5,6 @@
 #include <stdint.h>
 #include <stdatomic.h>
 
-/**
- * Handle tcc's lack of C11 support for _Atomic and _Thread_local.
- */
-#if defined(__TINYC__)
-    #undef _Atomic
-    #define _Atomic
-    /* TCC doesn't support _Thread_local / __thread in many environments */
-    #ifndef _Thread_local
-        #define _Thread_local
-    #endif
-#endif
 
 #define TTAK_EPOCH_SESSIONS 3
 
@@ -37,12 +26,10 @@ typedef struct {
 
 extern ttak_epoch_manager_t g_epoch_mgr;
 
-/* For tcc compatibility, avoid combining extern and _Thread_local if possible, 
-   or ensure the compiler-specific keyword is used. */
 #if defined(__TINYC__)
-    extern ttak_thread_state_t *t_local_state;
+extern ttak_thread_state_t *t_local_state;
 #else
-    extern _Thread_local ttak_thread_state_t *t_local_state;
+extern _Thread_local ttak_thread_state_t *t_local_state;
 #endif
 
 /**
