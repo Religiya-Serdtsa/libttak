@@ -1,6 +1,7 @@
 #ifndef TTAK_MATH_VECTOR_H
 #define TTAK_MATH_VECTOR_H
 
+#include <stdint.h>
 #include <ttak/math/bigreal.h>
 #include <ttak/shared/shared.h>
 #include <ttak/mem/owner.h>
