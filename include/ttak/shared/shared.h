@@ -15,6 +15,23 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include <stdatomic.h>
+
+/**
+ * @brief Lattice size for Choi Seok-jeong's orthogonal isolation.
+ * Power of 2 (e.g., 8) allows for efficient masking.
+ */
+#define TTAK_LATTICE_SIZE 8
+#define TTAK_LATTICE_MASK (TTAK_LATTICE_SIZE - 1)
+
+/**
+ * @struct ttak_lattice_t
+ * @brief The 'Sanpan' (Counting Board) - Shared Buffer Lattice.
+ * Uses Deterministic Slot Isolation to avoid hardware locks.
+ */
+typedef struct {
+	atomic_uint_least64_t slots[TTAK_LATTICE_SIZE][TTAK_LATTICE_SIZE];
+} ttak_lattice_t;
 
 /**
  * @brief Bitmask flags representing the current status of the shared resource.
@@ -53,17 +70,16 @@ typedef enum {
  * @brief Core structure for managing shared variables among multiple owners.
  */
 typedef struct ttak_shared_s {
-	void *shared;                   /**< Pointer to the actual data payload */
+	void * _Atomic  shared;         /**< Pointer to the actual data payload (Atomic for lock-free access) */
 	size_t size;                    /**< Total byte size of the payload */
 	const char *type_name;          /**< String representation of the payload type */
 	uint32_t type_id;               /**< Optional numeric ID for the type */
 
 	ttak_dynamic_mask_t owners_mask; /**< Thread-safe dynamic mask for ownership */
-	uint64_t *last_sync_ts;         /**< Array of timestamps, indexed by owner ID */
-	uint32_t ts_capacity;           /**< Max owner ID supported by last_sync_ts array */
+	ttak_lattice_t lattice;         /**< Deterministic Lattice for lock-free sync */
 	uint64_t ts;                    /**< Timestamp to track its lifetime */
 
-	ttak_rwlock_t rwlock;           /**< R/W lock for thread-safe access to payload and timestamps */
+	ttak_rwlock_t rwlock;           /**< R/W lock for metadata (swap, status) */
 	ttak_shared_status_t status;    /**< Current status flags (DIRTY, EXPIRED, etc.) */
 	ttak_shared_level_t level;      /**< Enforced security level for this resource */
 	bool is_atomic_read;            /**< Flag to enable/disable atomic read operations */
