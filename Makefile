@@ -73,6 +73,9 @@ OBJEXT     = o
 LIBEXT     = a
 AR_EXTRA   = rcs
 AR_OUTFLAG =
+ifeq ($(OS),Windows_NT)
+LDFLAGS += -lws2_32
+endif
 endif
 # ------------------------------------------------------------------------
 
