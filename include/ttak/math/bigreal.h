@@ -41,6 +41,7 @@ _Bool ttak_bigreal_add(ttak_bigreal_t *dst, const ttak_bigreal_t *lhs, const tta
 _Bool ttak_bigreal_sub(ttak_bigreal_t *dst, const ttak_bigreal_t *lhs, const ttak_bigreal_t *rhs, uint64_t now);
 _Bool ttak_bigreal_mul(ttak_bigreal_t *dst, const ttak_bigreal_t *lhs, const ttak_bigreal_t *rhs, uint64_t now);
 _Bool ttak_bigreal_div(ttak_bigreal_t *dst, const ttak_bigreal_t *lhs, const ttak_bigreal_t *rhs, uint64_t now);
+_Bool ttak_bigreal_sqrt(ttak_bigreal_t *res, const ttak_bigreal_t *src, uint64_t tt_now);
 
 int ttak_bigreal_cmp(const ttak_bigreal_t *lhs, const ttak_bigreal_t *rhs, uint64_t now);
 

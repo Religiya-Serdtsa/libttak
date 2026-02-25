@@ -15,6 +15,124 @@ static _Bool ttak_bigreal_op_cheonwonsul(ttak_bigreal_t *dst, const ttak_bigreal
     }
 }
 
+
+static _Bool ttak_bigreal_export_u128(const ttak_bigreal_t *src, ttak_u128_t *out) {
+    if (!src || !out) return false;
+    if (src->mantissa.is_negative || src->exponent != 0) return false;
+    return ttak_bigint_export_u128(&src->mantissa, out);
+}
+
+static _Bool ttak_bigreal_set_u128(ttak_bigreal_t *dst, ttak_u128_t value, uint64_t tt_now) {
+    if (!dst) return false;
+    dst->exponent = 0;
+    return ttak_bigint_set_u128(&dst->mantissa, value, tt_now);
+}
+
+static ttak_u128_t ttak_bigreal_al_kashi_seed64(ttak_u128_t src_u128) {
+    uint64_t hi = ttak_u128_get_hi(src_u128);
+    uint64_t lo = ttak_u128_get_lo(src_u128);
+    if (hi == 0 && lo < 2) {
+        return src_u128;
+    }
+
+    unsigned bitlen = (hi != 0)
+        ? (64u + (64u - (unsigned)__builtin_clzll(hi)))
+        : (64u - (unsigned)__builtin_clzll(lo));
+
+    unsigned root_bits = (bitlen + 1u) >> 1;
+    unsigned shift = (root_bits > 1u) ? (root_bits - 1u) : 0u;
+
+    return ttak_u128_shl(ttak_u128_from_u64(1), shift);
+}
+
+/**
+ * @brief Base-64 Al-Kashi refinement kernel for unsigned u128 square roots.
+ *
+ * Iteration:
+ *   x_{n+1} = ((63 * x_n) + (n / x_n)) >> 6
+ *
+ * The division by 64 is implemented with a right-shift (`>> 6`) for
+ * cycle-level efficiency while preserving deterministic monotonic refinement.
+ */
+static _Bool ttak_bigreal_sqrt_u128_base64(ttak_u128_t *root_out, ttak_u128_t src_u128, uint64_t tt_now) {
+    if (!root_out) return false;
+    if (ttak_u128_is_zero(src_u128)) {
+        *root_out = ttak_u128_zero();
+        return true;
+    }
+
+    ttak_bigreal_t n_br, x_br, q_br, weighted_br, sum_br, x_next_br;
+    ttak_bigreal_init(&n_br, tt_now);
+    ttak_bigreal_init(&x_br, tt_now);
+    ttak_bigreal_init(&q_br, tt_now);
+    ttak_bigreal_init(&weighted_br, tt_now);
+    ttak_bigreal_init(&sum_br, tt_now);
+    ttak_bigreal_init(&x_next_br, tt_now);
+
+    _Bool ok = true;
+    ttak_u128_t x_u128 = ttak_bigreal_al_kashi_seed64(src_u128);
+
+    if (!ttak_bigreal_set_u128(&n_br, src_u128, tt_now)) ok = false;
+    if (ok && !ttak_bigreal_set_u128(&x_br, x_u128, tt_now)) ok = false;
+
+    for (uint8_t iter = 0; ok && iter < 24; ++iter) {
+        if (!ttak_bigreal_div(&q_br, &n_br, &x_br, tt_now)) {
+            ok = false;
+            break;
+        }
+
+        if (!ttak_bigint_mul_u64(&weighted_br.mantissa, &x_br.mantissa, 63u, tt_now)) {
+            ok = false;
+            break;
+        }
+        weighted_br.exponent = x_br.exponent;
+        weighted_br.mantissa.is_negative = false;
+
+        if (!ttak_bigreal_add(&sum_br, &weighted_br, &q_br, tt_now)) {
+            ok = false;
+            break;
+        }
+
+        ttak_u128_t sum_u128;
+        if (!ttak_bigreal_export_u128(&sum_br, &sum_u128)) {
+            ok = false;
+            break;
+        }
+
+        ttak_u128_t x_next = ttak_u128_shr(sum_u128, 6);
+        if (ttak_u128_is_zero(x_next)) {
+            x_next = ttak_u128_from_u64(1);
+        }
+
+        if (ttak_u128_cmp(x_next, x_u128) == 0) {
+            x_u128 = x_next;
+            break;
+        }
+
+        x_u128 = x_next;
+        if (!ttak_bigreal_set_u128(&x_next_br, x_u128, tt_now)) {
+            ok = false;
+            break;
+        }
+        if (!ttak_bigreal_copy(&x_br, &x_next_br, tt_now)) {
+            ok = false;
+            break;
+        }
+    }
+
+    if (ok) {
+        *root_out = x_u128;
+    }
+
+    ttak_bigreal_free(&n_br, tt_now);
+    ttak_bigreal_free(&x_br, tt_now);
+    ttak_bigreal_free(&q_br, tt_now);
+    ttak_bigreal_free(&weighted_br, tt_now);
+    ttak_bigreal_free(&sum_br, tt_now);
+    ttak_bigreal_free(&x_next_br, tt_now);
+    return ok;
+}
+
 void ttak_bigreal_init(ttak_bigreal_t *br, uint64_t now) {
     ttak_bigint_init(&br->mantissa, now);
     br->exponent = 0;
@@ -161,4 +279,22 @@ int ttak_bigreal_cmp(const ttak_bigreal_t *lhs, const ttak_bigreal_t *rhs, uint6
     ttak_bigreal_free(&l, now);
     ttak_bigreal_free(&r, now);
     return res;
+}
+
+
+_Bool ttak_bigreal_sqrt(ttak_bigreal_t *res, const ttak_bigreal_t *src, uint64_t tt_now) {
+    if (!res || !src) return false;
+    if (src->mantissa.is_negative) return false;
+
+    ttak_u128_t src_u128;
+    if (!ttak_bigreal_export_u128(src, &src_u128)) {
+        return false;
+    }
+
+    ttak_u128_t root_u128;
+    if (!ttak_bigreal_sqrt_u128_base64(&root_u128, src_u128, tt_now)) {
+        return false;
+    }
+
+    return ttak_bigreal_set_u128(res, root_u128, tt_now);
 }

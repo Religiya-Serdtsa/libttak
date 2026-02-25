@@ -61,6 +61,16 @@ _Bool ttak_matrix_set_flip(tt_shared_matrix_t *m, tt_owner_t *owner, uint8_t axi
  * Inspired by Choi Seok-jeong's Gusuryak, this creates a pattern that
  * minimizes collisions in grid-based data placement.
  */
+
+/**
+ * @brief High precision rotation matrix from axis-angle using Rodrigues' formula.
+ */
+_Bool ttak_matrix_rotate_high_prec(tt_shared_matrix_t *m,
+                                   tt_shared_vector_t *axis,
+                                   const ttak_bigreal_t *angle,
+                                   tt_owner_t *owner,
+                                   uint64_t tt_now);
+
 _Bool ttak_matrix_set_gusuryak_4x4(tt_shared_matrix_t *m, tt_owner_t *owner, uint64_t now);
 
 #endif // TTAK_MATH_MATRIX_H
