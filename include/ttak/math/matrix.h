@@ -55,4 +55,12 @@ _Bool ttak_matrix_set_shearing(tt_shared_matrix_t *m, tt_owner_t *owner, uint8_t
  */
 _Bool ttak_matrix_set_flip(tt_shared_matrix_t *m, tt_owner_t *owner, uint8_t axis, uint64_t now);
 
+/**
+ * @brief Initializes the matrix as a 4x4 Orthogonal Latin Square.
+ *
+ * Inspired by Choi Seok-jeong's Gusuryak, this creates a pattern that
+ * minimizes collisions in grid-based data placement.
+ */
+_Bool ttak_matrix_set_gusuryak_4x4(tt_shared_matrix_t *m, tt_owner_t *owner, uint64_t now);
+
 #endif // TTAK_MATH_MATRIX_H

@@ -62,6 +62,7 @@ ttak_shared_net_endpoint_t *ttak_net_endpoint_create(ttak_owner_t *owner, uint64
     payload->restart = ttak_net_endpoint_restart_client;
     payload->listen_backlog = SOMAXCONN;
     payload->restart_ctx = NULL;
+    payload->lattice = ttak_net_lattice_get_default();
     payload->guard.fd = -1;
     payload->guard.ttl_ns = 0;
     payload->guard.expires_at = now;

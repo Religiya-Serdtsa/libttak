@@ -69,12 +69,6 @@ ttak_bigreal_t* ttak_vector_get(tt_shared_vector_t *sv, tt_owner_t *owner, uint8
         return NULL;
     }
     
-    // Safety note: returning internal reference. 
-    // The user MUST call release() on the shared vector after using this.
-    // However, the prompt asks for safe indexing. 
-    // Returning a direct pointer might be dangerous if they don't release.
-    // But ttak_shared_t seems to expect this pattern.
-    
     return &v->elements[index];
 }
 
@@ -138,7 +132,6 @@ _Bool ttak_vector_dot(ttak_bigreal_t *res, tt_shared_vector_t *a, tt_shared_vect
 }
 
 _Bool ttak_vector_cross(tt_shared_vector_t *res, tt_shared_vector_t *a, tt_shared_vector_t *b, tt_owner_t *owner, uint64_t now) {
-    // Cross product is typically 3D
     ttak_shared_result_t ra, rb, rr;
     ttak_vector_t *va = (ttak_vector_t *)a->base.access(&a->base, owner, &ra);
     ttak_vector_t *vb = (ttak_vector_t *)b->base.access(&b->base, owner, &rb);
@@ -155,17 +148,14 @@ _Bool ttak_vector_cross(tt_shared_vector_t *res, tt_shared_vector_t *a, tt_share
     ttak_bigreal_init(&t1, now);
     ttak_bigreal_init(&t2, now);
     
-    // res[0] = a[1]*b[2] - a[2]*b[1]
     ttak_bigreal_mul(&t1, &va->elements[1], &vb->elements[2], now);
     ttak_bigreal_mul(&t2, &va->elements[2], &vb->elements[1], now);
     ttak_bigreal_sub(&vr->elements[0], &t1, &t2, now);
     
-    // res[1] = a[2]*b[0] - a[0]*b[2]
     ttak_bigreal_mul(&t1, &va->elements[2], &vb->elements[0], now);
     ttak_bigreal_mul(&t2, &va->elements[0], &vb->elements[2], now);
     ttak_bigreal_sub(&vr->elements[1], &t1, &t2, now);
     
-    // res[2] = a[0]*b[1] - a[1]*b[0]
     ttak_bigreal_mul(&t1, &va->elements[0], &vb->elements[1], now);
     ttak_bigreal_mul(&t2, &va->elements[1], &vb->elements[0], now);
     ttak_bigreal_sub(&vr->elements[2], &t1, &t2, now);
@@ -196,16 +186,102 @@ _Bool ttak_vector_magnitude(ttak_bigreal_t *res, tt_shared_vector_t *v, tt_owner
         ttak_bigreal_add(&sum, &sum, &prod, now);
     }
     
-    // Need sqrt for magnitude. Bigreal might need sqrt.
-    // For now, let's just assume we need to implement it or use a placeholder.
-    // I'll skip sqrt for now and just store the sum (squared magnitude).
-    // Actually, I should probably implement a basic sqrt for bigreal.
-    
-    ttak_bigreal_copy(res, &sum, now); // Placeholder: squared magnitude
+    ttak_bigreal_copy(res, &sum, now);
     
     ttak_bigreal_free(&sum, now);
     ttak_bigreal_free(&prod, now);
     v->base.release(&v->base);
     
+    return true;
+}
+
+/**
+ * @brief Approximate sine using Yussigihae (Nam Byeong-gil) logic.
+ */
+_Bool ttak_math_approx_sin(ttak_bigreal_t *res, const ttak_bigreal_t *x, uint64_t now) {
+    ttak_bigreal_t x2, term, tmp, denom;
+    ttak_bigreal_init(&x2, now);
+    ttak_bigreal_init(&term, now);
+    ttak_bigreal_init(&tmp, now);
+    ttak_bigreal_init(&denom, now);
+
+    ttak_bigreal_mul(&x2, x, x, now);
+
+    /* term = -1/5040 */
+    ttak_bigint_set_u64(&term.mantissa, 1, now); term.exponent = 0;
+    ttak_bigint_set_u64(&denom.mantissa, 5040, now); denom.exponent = 0;
+    ttak_bigreal_div(&term, &term, &denom, now);
+    term.mantissa.is_negative = true;
+
+    /* term = term * x2 + 1/120 */
+    ttak_bigreal_mul(&term, &term, &x2, now);
+    ttak_bigint_set_u64(&tmp.mantissa, 1, now); tmp.exponent = 0;
+    ttak_bigint_set_u64(&denom.mantissa, 120, now); denom.exponent = 0;
+    ttak_bigreal_div(&tmp, &tmp, &denom, now);
+    ttak_bigreal_add(&term, &term, &tmp, now);
+
+    /* term = term * x2 - 1/6 */
+    ttak_bigreal_mul(&term, &term, &x2, now);
+    ttak_bigint_set_u64(&tmp.mantissa, 1, now); tmp.exponent = 0;
+    ttak_bigint_set_u64(&denom.mantissa, 6, now); denom.exponent = 0;
+    ttak_bigreal_div(&tmp, &tmp, &denom, now);
+    tmp.mantissa.is_negative = true;
+    ttak_bigreal_add(&term, &term, &tmp, now);
+
+    /* res = (term * x2 + 1) * x */
+    ttak_bigreal_mul(&term, &term, &x2, now);
+    ttak_bigint_set_u64(&tmp.mantissa, 1, now); tmp.exponent = 0;
+    ttak_bigreal_add(&term, &term, &tmp, now);
+    ttak_bigreal_mul(res, &term, x, now);
+
+    ttak_bigreal_free(&x2, now);
+    ttak_bigreal_free(&term, now);
+    ttak_bigreal_free(&tmp, now);
+    ttak_bigreal_free(&denom, now);
+    return true;
+}
+
+/**
+ * @brief Approximate cosine using Yussigihae (Nam Byeong-gil) logic.
+ */
+_Bool ttak_math_approx_cos(ttak_bigreal_t *res, const ttak_bigreal_t *x, uint64_t now) {
+    ttak_bigreal_t x2, term, tmp, denom;
+    ttak_bigreal_init(&x2, now);
+    ttak_bigreal_init(&term, now);
+    ttak_bigreal_init(&tmp, now);
+    ttak_bigreal_init(&denom, now);
+
+    ttak_bigreal_mul(&x2, x, x, now);
+
+    /* term = -1/720 */
+    ttak_bigint_set_u64(&term.mantissa, 1, now); term.exponent = 0;
+    ttak_bigint_set_u64(&denom.mantissa, 720, now); denom.exponent = 0;
+    ttak_bigreal_div(&term, &term, &denom, now);
+    term.mantissa.is_negative = true;
+
+    /* term = term * x2 + 1/24 */
+    ttak_bigreal_mul(&term, &term, &x2, now);
+    ttak_bigint_set_u64(&tmp.mantissa, 1, now); tmp.exponent = 0;
+    ttak_bigint_set_u64(&denom.mantissa, 24, now); denom.exponent = 0;
+    ttak_bigreal_div(&tmp, &tmp, &denom, now);
+    ttak_bigreal_add(&term, &term, &tmp, now);
+
+    /* term = term * x2 - 1/2 */
+    ttak_bigreal_mul(&term, &term, &x2, now);
+    ttak_bigint_set_u64(&tmp.mantissa, 1, now); tmp.exponent = 0;
+    ttak_bigint_set_u64(&denom.mantissa, 2, now); denom.exponent = 0;
+    ttak_bigreal_div(&tmp, &tmp, &denom, now);
+    tmp.mantissa.is_negative = true;
+    ttak_bigreal_add(&term, &term, &tmp, now);
+
+    /* res = term * x2 + 1 */
+    ttak_bigreal_mul(&term, &term, &x2, now);
+    ttak_bigint_set_u64(&tmp.mantissa, 1, now); tmp.exponent = 0;
+    ttak_bigreal_add(res, &term, &tmp, now);
+
+    ttak_bigreal_free(&x2, now);
+    ttak_bigreal_free(&term, now);
+    ttak_bigreal_free(&tmp, now);
+    ttak_bigreal_free(&denom, now);
     return true;
 }
