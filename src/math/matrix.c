@@ -2,7 +2,6 @@
 #include <ttak/mem/mem.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
 
 /**
  * Multivariate System: Dawonsul(Jungha, Hong et al.)
@@ -263,4 +262,142 @@ _Bool ttak_matrix_set_gusuryak_4x4(tt_shared_matrix_t *m, tt_owner_t *owner, uin
 
     m->base.release(&m->base);
     return true;
+}
+
+
+_Bool ttak_matrix_rotate_high_prec(tt_shared_matrix_t *m,
+                                   tt_shared_vector_t *axis,
+                                   const ttak_bigreal_t *angle,
+                                   tt_owner_t *owner,
+                                   uint64_t tt_now) {
+    if (!m || !axis || !angle || !owner) return false;
+
+    ttak_shared_result_t rm, ra;
+    ttak_matrix_t *mat = (ttak_matrix_t *)m->base.access(&m->base, owner, &rm);
+    ttak_vector_t *axis_vec = (ttak_vector_t *)axis->base.access(&axis->base, owner, &ra);
+
+    if (!mat || !axis_vec || axis_vec->dim < 3 || mat->rows < 3 || mat->cols < 3) {
+        if (mat) m->base.release(&m->base);
+        if (axis_vec) axis->base.release(&axis->base);
+        return false;
+    }
+
+    _Bool ok = true;
+    ttak_bigreal_t nx, ny, nz, x2, y2, z2, xy, xz, yz;
+    ttak_bigreal_t mag2, mag, inv_mag;
+    ttak_bigreal_t s, c, one, one_minus_c;
+    ttak_bigreal_t tmp1, tmp2;
+
+    ttak_bigreal_init(&nx, tt_now);
+    ttak_bigreal_init(&ny, tt_now);
+    ttak_bigreal_init(&nz, tt_now);
+    ttak_bigreal_init(&x2, tt_now);
+    ttak_bigreal_init(&y2, tt_now);
+    ttak_bigreal_init(&z2, tt_now);
+    ttak_bigreal_init(&xy, tt_now);
+    ttak_bigreal_init(&xz, tt_now);
+    ttak_bigreal_init(&yz, tt_now);
+    ttak_bigreal_init(&mag2, tt_now);
+    ttak_bigreal_init(&mag, tt_now);
+    ttak_bigreal_init(&inv_mag, tt_now);
+    ttak_bigreal_init(&s, tt_now);
+    ttak_bigreal_init(&c, tt_now);
+    ttak_bigreal_init(&one, tt_now);
+    ttak_bigreal_init(&one_minus_c, tt_now);
+    ttak_bigreal_init(&tmp1, tt_now);
+    ttak_bigreal_init(&tmp2, tt_now);
+
+    ttak_bigint_set_u64(&one.mantissa, 1, tt_now);
+    one.exponent = 0;
+
+    if (ok && !ttak_bigreal_mul(&x2, &axis_vec->elements[0], &axis_vec->elements[0], tt_now)) ok = false;
+    if (ok && !ttak_bigreal_mul(&y2, &axis_vec->elements[1], &axis_vec->elements[1], tt_now)) ok = false;
+    if (ok && !ttak_bigreal_mul(&z2, &axis_vec->elements[2], &axis_vec->elements[2], tt_now)) ok = false;
+    if (ok && !ttak_bigreal_add(&mag2, &x2, &y2, tt_now)) ok = false;
+    if (ok && !ttak_bigreal_add(&mag2, &mag2, &z2, tt_now)) ok = false;
+    if (ok && !ttak_bigreal_sqrt(&mag, &mag2, tt_now)) ok = false;
+    if (ok && ttak_bigint_is_zero(&mag.mantissa)) ok = false;
+
+    if (ok && !ttak_bigreal_div(&inv_mag, &one, &mag, tt_now)) ok = false;
+    if (ok && !ttak_bigreal_mul(&nx, &axis_vec->elements[0], &inv_mag, tt_now)) ok = false;
+    if (ok && !ttak_bigreal_mul(&ny, &axis_vec->elements[1], &inv_mag, tt_now)) ok = false;
+    if (ok && !ttak_bigreal_mul(&nz, &axis_vec->elements[2], &inv_mag, tt_now)) ok = false;
+
+    /* Ho-si-beop polynomial geometric mapping */
+    if (ok && !ttak_math_approx_sin(&s, angle, tt_now)) ok = false;
+    if (ok && !ttak_math_approx_cos(&c, angle, tt_now)) ok = false;
+    if (ok && !ttak_bigreal_sub(&one_minus_c, &one, &c, tt_now)) ok = false;
+
+    if (ok && !ttak_bigreal_mul(&x2, &nx, &nx, tt_now)) ok = false;
+    if (ok && !ttak_bigreal_mul(&y2, &ny, &ny, tt_now)) ok = false;
+    if (ok && !ttak_bigreal_mul(&z2, &nz, &nz, tt_now)) ok = false;
+    if (ok && !ttak_bigreal_mul(&xy, &nx, &ny, tt_now)) ok = false;
+    if (ok && !ttak_bigreal_mul(&xz, &nx, &nz, tt_now)) ok = false;
+    if (ok && !ttak_bigreal_mul(&yz, &ny, &nz, tt_now)) ok = false;
+
+    if (ok) {
+        for (int i = 0; i < 16; i++) {
+            ttak_bigint_set_u64(&mat->elements[i].mantissa, 0, tt_now);
+            mat->elements[i].exponent = 0;
+        }
+        ttak_bigint_set_u64(&mat->elements[15].mantissa, 1, tt_now);
+        mat->elements[15].exponent = 0;
+    }
+
+    /* Chun-won-sul term reduction: reuse tmp1/tmp2 to avoid extra temporaries. */
+    if (ok && !ttak_bigreal_mul(&tmp1, &x2, &one_minus_c, tt_now)) ok = false;
+    if (ok && !ttak_bigreal_add(&mat->elements[0], &c, &tmp1, tt_now)) ok = false;
+
+    if (ok && !ttak_bigreal_mul(&tmp1, &xy, &one_minus_c, tt_now)) ok = false;
+    if (ok && !ttak_bigreal_mul(&tmp2, &nz, &s, tt_now)) ok = false;
+    if (ok && !ttak_bigreal_sub(&mat->elements[1], &tmp1, &tmp2, tt_now)) ok = false;
+
+    if (ok && !ttak_bigreal_mul(&tmp1, &xz, &one_minus_c, tt_now)) ok = false;
+    if (ok && !ttak_bigreal_mul(&tmp2, &ny, &s, tt_now)) ok = false;
+    if (ok && !ttak_bigreal_add(&mat->elements[2], &tmp1, &tmp2, tt_now)) ok = false;
+
+    if (ok && !ttak_bigreal_mul(&tmp1, &xy, &one_minus_c, tt_now)) ok = false;
+    if (ok && !ttak_bigreal_mul(&tmp2, &nz, &s, tt_now)) ok = false;
+    if (ok && !ttak_bigreal_add(&mat->elements[4], &tmp1, &tmp2, tt_now)) ok = false;
+
+    if (ok && !ttak_bigreal_mul(&tmp1, &y2, &one_minus_c, tt_now)) ok = false;
+    if (ok && !ttak_bigreal_add(&mat->elements[5], &c, &tmp1, tt_now)) ok = false;
+
+    if (ok && !ttak_bigreal_mul(&tmp1, &yz, &one_minus_c, tt_now)) ok = false;
+    if (ok && !ttak_bigreal_mul(&tmp2, &nx, &s, tt_now)) ok = false;
+    if (ok && !ttak_bigreal_sub(&mat->elements[6], &tmp1, &tmp2, tt_now)) ok = false;
+
+    if (ok && !ttak_bigreal_mul(&tmp1, &xz, &one_minus_c, tt_now)) ok = false;
+    if (ok && !ttak_bigreal_mul(&tmp2, &ny, &s, tt_now)) ok = false;
+    if (ok && !ttak_bigreal_sub(&mat->elements[8], &tmp1, &tmp2, tt_now)) ok = false;
+
+    if (ok && !ttak_bigreal_mul(&tmp1, &yz, &one_minus_c, tt_now)) ok = false;
+    if (ok && !ttak_bigreal_mul(&tmp2, &nx, &s, tt_now)) ok = false;
+    if (ok && !ttak_bigreal_add(&mat->elements[9], &tmp1, &tmp2, tt_now)) ok = false;
+
+    if (ok && !ttak_bigreal_mul(&tmp1, &z2, &one_minus_c, tt_now)) ok = false;
+    if (ok && !ttak_bigreal_add(&mat->elements[10], &c, &tmp1, tt_now)) ok = false;
+
+    ttak_bigreal_free(&nx, tt_now);
+    ttak_bigreal_free(&ny, tt_now);
+    ttak_bigreal_free(&nz, tt_now);
+    ttak_bigreal_free(&x2, tt_now);
+    ttak_bigreal_free(&y2, tt_now);
+    ttak_bigreal_free(&z2, tt_now);
+    ttak_bigreal_free(&xy, tt_now);
+    ttak_bigreal_free(&xz, tt_now);
+    ttak_bigreal_free(&yz, tt_now);
+    ttak_bigreal_free(&mag2, tt_now);
+    ttak_bigreal_free(&mag, tt_now);
+    ttak_bigreal_free(&inv_mag, tt_now);
+    ttak_bigreal_free(&s, tt_now);
+    ttak_bigreal_free(&c, tt_now);
+    ttak_bigreal_free(&one, tt_now);
+    ttak_bigreal_free(&one_minus_c, tt_now);
+    ttak_bigreal_free(&tmp1, tt_now);
+    ttak_bigreal_free(&tmp2, tt_now);
+
+    axis->base.release(&axis->base);
+    m->base.release(&m->base);
+    return ok;
 }
