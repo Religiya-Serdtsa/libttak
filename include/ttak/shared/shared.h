@@ -13,7 +13,9 @@
 #include <ttak/mask/dynamic_mask.h>
 #include <ttak/mem/epoch.h>
 #include <stddef.h>
-#include <stdint.h>
+#ifndef _STDINT
+#  include <stdint.h>
+#endif
 #include <stdbool.h>
 #include <stdatomic.h>
 
