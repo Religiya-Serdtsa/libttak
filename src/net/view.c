@@ -52,7 +52,11 @@ ttak_io_status_t ttak_net_view_from_endpoint(ttak_net_view_t *view,
                     ttak_net_lattice_slot_t *slot = &lat->slots[r * dim + c];
                     if (ttak_atomic_read64(&slot->state) == 0) {
                         ttak_atomic_write64(&slot->state, 1);
+#ifdef _WIN32
                         int valread = recv(fd, (char *)slot->data, (int)TTAK_LATTICE_SLOT_SIZE, flags);
+#else
+                        ssize_t valread = recv(fd, slot->data, TTAK_LATTICE_SLOT_SIZE, flags);
+#endif
                         if (valread > 0) {
                             slot->len = (uint32_t)valread;
                             slot->timestamp = now;
