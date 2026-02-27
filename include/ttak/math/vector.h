@@ -4,6 +4,7 @@
 #include <ttak/math/bigreal.h>
 #include <ttak/shared/shared.h>
 #include <ttak/mem/owner.h>
+#include <stdbool.h>
 
 /**
  * @brief Vector structure for 2D, 3D, and 4D.
