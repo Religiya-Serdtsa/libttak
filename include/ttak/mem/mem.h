@@ -15,6 +15,7 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include <ttak/mem/epoch_gc.h>
 #include <ttak/types/ttak_compiler.h>
 #include <stdalign.h>
 #include <pthread.h>
