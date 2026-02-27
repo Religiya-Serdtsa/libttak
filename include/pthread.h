@@ -39,7 +39,7 @@
 #include <time.h>     /* struct timespec, timespec_get */
 #include <errno.h>    /* ETIMEDOUT */
 
-/* ---------- types ------------------------------------------------------- */
+/* --- types --- */
 
 typedef SRWLOCK             pthread_mutex_t;
 typedef CONDITION_VARIABLE  pthread_cond_t;
@@ -57,13 +57,14 @@ typedef int pthread_mutexattr_t;   /* unused stub */
 typedef int pthread_condattr_t;    /* unused stub */
 typedef int pthread_rwlockattr_t;  /* unused stub */
 
-/* ---------- static-initialiser macros ---------------------------------- */
+/* --- static-initialiser macros --- */
 
 #define PTHREAD_MUTEX_INITIALIZER   SRWLOCK_INIT   /* {0} */
 #define PTHREAD_ONCE_INIT           0L
+#define PTHREAD_RWLOCK_INITIALIZER   { SRWLOCK_INIT, 0 }
 #define PTHREAD_RWLOCK_PREFER_WRITER_NONRECURSIVE_NP  1  /* stub value */
 
-/* ---------- mutex ------------------------------------------------------- */
+/* --- mutex --- */
 
 static __inline int pthread_mutex_init(pthread_mutex_t *m,
                                         const pthread_mutexattr_t *attr) {
@@ -87,7 +88,7 @@ static __inline int pthread_mutex_destroy(pthread_mutex_t *m) {
     return 0;
 }
 
-/* ---------- condition variable ----------------------------------------- */
+/* --- condition variable --- */
 
 static __inline int pthread_cond_init(pthread_cond_t *c,
                                        const pthread_condattr_t *attr) {
@@ -137,7 +138,7 @@ static __inline int pthread_cond_destroy(pthread_cond_t *c) {
     return 0;
 }
 
-/* ---------- read-write lock -------------------------------------------- */
+/* --- read-write lock --- */
 
 static __inline int pthread_rwlock_init(pthread_rwlock_t *rw,
                                          const pthread_rwlockattr_t *attr) {
@@ -181,7 +182,7 @@ static __inline int pthread_rwlockattr_setkind_np(pthread_rwlockattr_t *a,
     (void)a; (void)pref; return 0;
 }
 
-/* ---------- one-time initialisation ------------------------------------ */
+/* --- one-time initialisation --- */
 
 static __inline int pthread_once(pthread_once_t *once_ctrl,
                                   void (*init_routine)(void)) {
@@ -197,7 +198,7 @@ static __inline int pthread_once(pthread_once_t *once_ctrl,
     return 0;
 }
 
-/* ---------- thread creation / join ------------------------------------- */
+/* --- thread creation / join --- */
 
 /* Helper to bridge void*(*)(void*) to unsigned __stdcall (*)(void*) */
 typedef struct {

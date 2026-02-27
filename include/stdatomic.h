@@ -70,6 +70,7 @@ typedef volatile long               atomic_long;
 typedef volatile unsigned long      atomic_ulong;
 typedef volatile long long          atomic_llong;
 typedef volatile unsigned long long atomic_ullong;
+typedef volatile uint_least64_t     atomic_uint_least64_t;
 typedef volatile size_t             atomic_size_t;
 typedef volatile unsigned long long atomic_uint_fast64_t;
 typedef volatile uintptr_t          atomic_uintptr_t;
@@ -89,7 +90,7 @@ typedef struct { volatile unsigned char _value; } atomic_flag;
 #define atomic_store_explicit(obj, desired, order) ((void)(order), (void)(*(obj) = (desired)))
 #define atomic_store(obj, desired)                 ((void)(*(obj) = (desired)))
 
-/* --- fetch_add helpers ------------------------------------------------- */
+/* --- fetch_add helpers --- */
 static __inline char __ttak_fa8(volatile char *p, char v)
     { return _InterlockedExchangeAdd8(p, v); }
 static __inline long __ttak_fa32(volatile long *p, long v)
@@ -120,7 +121,16 @@ static __inline __int64 __ttak_fa64(volatile __int64 *p, __int64 v)
 #define atomic_fetch_sub(obj, val) \
     atomic_fetch_sub_explicit((obj), (val), memory_order_seq_cst)
 
-/* --- exchange helpers -------------------------------------------------- */
+static __inline unsigned long long __ttak_fo64(volatile unsigned long long *p, unsigned long long v)
+    { return (unsigned long long)_InterlockedOr64((volatile __int64*)p, (__int64)v); }
+static __inline unsigned long long __ttak_fand64(volatile unsigned long long *p, unsigned long long v)
+    { return (unsigned long long)_InterlockedAnd64((volatile __int64*)p, (__int64)v); }
+#define atomic_fetch_or_explicit(obj, val, order)     ((void)(order), __ttak_fo64((volatile unsigned long long*)(obj), (unsigned long long)(val)))
+#define atomic_fetch_or(obj, val)     atomic_fetch_or_explicit((obj), (val), memory_order_seq_cst)
+#define atomic_fetch_and_explicit(obj, val, order)     ((void)(order), __ttak_fand64((volatile unsigned long long*)(obj), (unsigned long long)(val)))
+#define atomic_fetch_and(obj, val)     atomic_fetch_and_explicit((obj), (val), memory_order_seq_cst)
+
+/* --- exchange helpers --- */
 static __inline long __ttak_xch32(volatile long *p, long v)
     { return _InterlockedExchange(p, v); }
 static __inline __int64 __ttak_xch64(volatile __int64 *p, __int64 v)
@@ -139,7 +149,7 @@ static __inline __int64 __ttak_xch64(volatile __int64 *p, __int64 v)
 #define atomic_exchange(obj, desired) \
     atomic_exchange_explicit((obj), (desired), memory_order_seq_cst)
 
-/* --- compare-exchange helpers ------------------------------------------ */
+/* --- compare-exchange helpers --- */
 static __inline _Bool __ttak_cx32(volatile long *obj, long *exp, long des) {
     long old = _InterlockedCompareExchange(obj, des, *exp);
     if (old == *exp) return 1;
@@ -170,7 +180,7 @@ static __inline _Bool __ttak_cx64(volatile __int64 *obj, __int64 *exp, __int64 d
 #define atomic_compare_exchange_strong(obj, expected, desired) \
     atomic_compare_exchange_weak((obj), (expected), (desired))
 
-/* --- atomic_flag ------------------------------------------------------- */
+/* --- atomic_flag --- */
 static __inline _Bool __msvc_flag_tas(volatile atomic_flag *f) {
     return _InterlockedExchange8((volatile char*)&f->_value, 1) != 0;
 }
