@@ -3,8 +3,24 @@
 #ifdef _WIN32
 #include <winsock2.h>
 #include <ws2tcpip.h>
-#include <basetsd.h>
-typedef SSIZE_T ssize_t;
+
+// Include basetsd to import _SSIZE_T_ macro
+#ifdef __has_include
+#  if __has_include(<basetsd.h>)
+#    include <basetsd.h>
+#  elif __has_include(<BaseTsd.h>)
+#    include <BaseTsd.h>
+#  endif
+#endif
+
+#if defined(_WIN32)
+#  if !defined(_SSIZE_T_DEFINED) && !defined(_SSIZE_T_)
+#    include <stddef.h>
+     typedef ptrdiff_t ssize_t;
+#    define _SSIZE_T_DEFINED
+#    define _SSIZE_T_
+#  endif
+#endif
 #pragma comment(lib, "ws2_32.lib")
 #else
 #include <sys/socket.h>
