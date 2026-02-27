@@ -4,6 +4,7 @@
 #include <ttak/math/bigreal.h>
 #include <ttak/shared/shared.h>
 #include <ttak/mem/owner.h>
+#include <stdbool.h>
 
 /**
  * @brief Vector structure for 2D, 3D, and 4D.
@@ -13,8 +14,9 @@ typedef struct ttak_vector {
     ttak_bigreal_t elements[4];
 } ttak_vector_t;
 
-TTAK_SHARED_DEFINE_WRAPPER(vector, ttak_vector_t)
-typedef ttak_shared_vector_t tt_shared_vector_t;
+typedef struct tt_shared_vector {
+    ttak_shared_t base;
+} tt_shared_vector_t;
 
 /**
  * @brief Creates a shared vector.

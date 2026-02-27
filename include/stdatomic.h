@@ -70,6 +70,7 @@ typedef volatile long               atomic_long;
 typedef volatile unsigned long      atomic_ulong;
 typedef volatile long long          atomic_llong;
 typedef volatile unsigned long long atomic_ullong;
+typedef volatile uint_least64_t     atomic_uint_least64_t;
 typedef volatile size_t             atomic_size_t;
 typedef volatile unsigned long long atomic_uint_fast64_t;
 typedef volatile uintptr_t          atomic_uintptr_t;
