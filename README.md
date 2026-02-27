@@ -23,7 +23,7 @@ By applying deterministic slot isolation through OLS-inspired segmented shard ta
 
 ## Integrated Architectural Map
 
-![Blueprint](./blueprints/png/all.png)
+![Blueprint](./blueprints/png/integration/all.png)
 
 Generational arenas, epoch reclamation, and context bridges are wired together exactly as shown: arenas own lifetimes, epochs enforce bulk reclamation barriers, and worker threads cross the bridge via explicit context binding. No hidden allocators, no implicit threads.
 
