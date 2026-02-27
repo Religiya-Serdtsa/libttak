@@ -107,7 +107,7 @@ typedef enum {
  * @brief Unified memory allocation with lifecycle management.
  * @param size Number of bytes requested.
  * @param lifetime_ticks Lifetime hint in ticks (__TTAK_UNSAFE_MEM_FOREVER__ for infinite).
- * @param now Current timestamp in ticks.
+ * @param now_tick Current timestamp in ticks.
  * @param is_const Marks the buffer as immutable.
  * @param is_volatile Indicates volatile access patterns.
  * @param allow_direct If false, direct access via ttak_mem_access is restricted.
@@ -115,20 +115,20 @@ typedef enum {
  * @param flags Allocation behavior flags.
  * @return Pointer to zeroed user memory, or NULL on failure.
  */
-void *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, uint64_t now, _Bool is_const, _Bool is_volatile, _Bool allow_direct, _Bool is_root, ttak_mem_flags_t flags);
+void *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, uint64_t now_tick, bool is_const, bool is_volatile, bool allow_direct, bool is_root, ttak_mem_flags_t flags);
 /* @brief Wrapper for easy allocation with auto GC registering */
-void *ttak_fastalloc(ttak_epoch_gc_t *gc, size_t size, uint64_t lifetime_ticks, uint64_t now);
+void *ttak_fastalloc(ttak_epoch_gc_t *gc, size_t size, uint64_t lifetime_ticks, uint64_t now_tick);
 /**
  * @brief Reallocates memory with lifecycle management.
  * @param ptr Existing allocation pointer.
  * @param new_size Requested new size.
  * @param lifetime_ticks Updated lifetime hint.
- * @param now Current timestamp in ticks.
+ * @param now_tick Current timestamp in ticks.
  * @param is_root Whether the new allocation is a root node.
  * @param flags Allocation behavior flags.
  * @return Reallocated pointer, or NULL on failure.
  */
-void *ttak_mem_realloc_safe(void *ptr, size_t new_size, uint64_t lifetime_ticks, uint64_t now, _Bool is_root, ttak_mem_flags_t flags);
+void *ttak_mem_realloc_safe(void *ptr, size_t new_size, uint64_t lifetime_ticks, uint64_t now_tick, bool is_root, ttak_mem_flags_t flags);
 /**
  * @brief Primitive allocator for internal subsystem bootstrap.
  *
@@ -171,12 +171,12 @@ void ttak_mem_free(void *ptr);
  * @param src Source memory block.
  * @param size Number of bytes to copy.
  * @param lifetime_ticks Updated lifetime hint.
- * @param now Current timestamp in ticks.
+ * @param now_tick Current timestamp in ticks.
  * @param is_root Whether the new allocation is a root node.
  * @param flags Allocation behavior flags.
  * @return Duplicated pointer, or NULL on failure.
  */
-void *ttak_mem_dup_safe(const void *src, size_t size, uint64_t lifetime_ticks, uint64_t now, _Bool is_root, ttak_mem_flags_t flags);
+void *ttak_mem_dup_safe(const void *src, size_t size, uint64_t lifetime_ticks, uint64_t now_tick, bool is_root, ttak_mem_flags_t flags);
 
 /**
  * @brief Frees a memory block and updates usage statistics.
@@ -187,16 +187,16 @@ void ttak_mem_free(void *ptr);
 /**
  * @brief Accesses a memory block, verifying its lifecycle and security.
  * @param ptr Pointer to user memory.
- * @param now Current timestamp in ticks.
+ * @param now_tick Current timestamp in ticks.
  * @return Validated pointer, or NULL if security check fails or block is expired.
  */
-static inline void *ttak_mem_access(void *ptr, uint64_t now) {
+static inline void *ttak_mem_access(void *ptr, uint64_t now_tick) {
     if (!ptr) return NULL;
     ttak_mem_header_t *header = (ttak_mem_header_t *)ptr - 1;
 
     if (header->magic != TTAK_MAGIC_NUMBER) return NULL;
     if (header->freed) return NULL;
-    if (header->expires_tick != __TTAK_UNSAFE_MEM_FOREVER__ && now > header->expires_tick) return NULL;
+    if (header->expires_tick != __TTAK_UNSAFE_MEM_FOREVER__ && now_tick > header->expires_tick) return NULL;
     if (!header->allow_direct_access) return NULL;
 
     TTAK_ATOMIC_FETCH_ADD_U64(&header->access_count, 1ULL);
@@ -205,17 +205,17 @@ static inline void *ttak_mem_access(void *ptr, uint64_t now) {
 
 /**
  * @brief Inspects for "dirty" pointers (expired or over-accessed).
- * @param now Current timestamp.
+ * @param now_tick Current timestamp.
  * @param count_out Pointer to store the number of dirty pointers found.
  * @return Array of pointers (caller must free), or NULL.
  */
-void **tt_inspect_dirty_pointers(uint64_t now, size_t *count_out);
+void **tt_inspect_dirty_pointers(uint64_t now_tick, size_t *count_out);
 
 /**
  * @brief Automatically cleans up expired memory blocks.
- * @param now Current timestamp.
+ * @param now_tick Current timestamp.
  */
-void tt_autoclean_dirty_pointers(uint64_t now);
+void tt_autoclean_dirty_pointers(uint64_t now_tick);
 
 /**
  * @brief Configures background GC parameters.
@@ -227,11 +227,11 @@ void ttak_mem_configure_gc(uint64_t min_interval_ns, uint64_t max_interval_ns, s
 
 /**
  * @brief Sweeps and returns dirty pointers in a single pass.
- * @param now Current timestamp.
+ * @param now_tick Current timestamp.
  * @param count_out Pointer to store found count.
  * @return Array of dirty pointers.
  */
-void **tt_autoclean_and_inspect(uint64_t now, size_t *count_out);
+void **tt_autoclean_and_inspect(uint64_t now_tick, size_t *count_out);
 
 /**
  * @brief Sets the global memory tracing flag.
@@ -273,12 +273,12 @@ static inline uint32_t ttak_calc_header_checksum(const ttak_mem_header_t *h) {
 
 /* Compatibility macros */
 typedef void ttak_lifecycle_obj_t;
-#define ttak_mem_alloc(size, lifetime, now) ttak_mem_alloc_safe(size, lifetime, now, false, false, true, false, TTAK_MEM_DEFAULT)
-#define ttak_mem_alloc_with_flags(size, lifetime, now, flags) ttak_mem_alloc_safe(size, lifetime, now, false, false, true, false, flags)
-#define ttak_mem_realloc(ptr, size, lifetime, now) ttak_mem_realloc_safe(ptr, size, lifetime, now, false, TTAK_MEM_DEFAULT)
-#define ttak_mem_realloc_with_flags(ptr, size, lifetime, now, flags) ttak_mem_realloc_safe(ptr, size, lifetime, now, false, flags)
-#define ttak_mem_dup(src, size, lifetime, now) ttak_mem_dup_safe(src, size, lifetime, now, false, TTAK_MEM_DEFAULT)
-#define ttak_mem_dup_with_flags(src, size, lifetime, now, flags) ttak_mem_dup_safe(src, size, lifetime, now, false, flags)
+#define ttak_mem_alloc(size, lifetime, now_tick) ttak_mem_alloc_safe(size, lifetime, now_tick, false, false, true, false, TTAK_MEM_DEFAULT)
+#define ttak_mem_alloc_with_flags(size, lifetime, now_tick, flags) ttak_mem_alloc_safe(size, lifetime, now_tick, false, false, true, false, flags)
+#define ttak_mem_realloc(ptr, size, lifetime, now_tick) ttak_mem_realloc_safe(ptr, size, lifetime, now_tick, false, TTAK_MEM_DEFAULT)
+#define ttak_mem_realloc_with_flags(ptr, size, lifetime, now_tick, flags) ttak_mem_realloc_safe(ptr, size, lifetime, now_tick, false, flags)
+#define ttak_mem_dup(src, size, lifetime, now_tick) ttak_mem_dup_safe(src, size, lifetime, now_tick, false, TTAK_MEM_DEFAULT)
+#define ttak_mem_dup_with_flags(src, size, lifetime, now_tick, flags) ttak_mem_dup_safe(src, size, lifetime, now_tick, false, flags)
 
 #ifndef EMBEDDED
 #define EMBEDDED 0
