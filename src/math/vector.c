@@ -72,7 +72,7 @@ ttak_bigreal_t* ttak_vector_get(tt_shared_vector_t *sv, tt_owner_t *owner, uint8
     return &v->elements[index];
 }
 
-_Bool ttak_vector_set(tt_shared_vector_t *sv, tt_owner_t *owner, uint8_t index, const ttak_bigreal_t *val, uint64_t now) {
+bool ttak_vector_set(tt_shared_vector_t *sv, tt_owner_t *owner, uint8_t index, const ttak_bigreal_t *val, uint64_t now) {
     if (!sv || !owner || !val) return false;
     
     ttak_shared_result_t res;
@@ -84,12 +84,12 @@ _Bool ttak_vector_set(tt_shared_vector_t *sv, tt_owner_t *owner, uint8_t index, 
         return false;
     }
     
-    _Bool ok = ttak_bigreal_copy(&v->elements[index], val, now);
+    bool ok = ttak_bigreal_copy(&v->elements[index], val, now);
     sv->base.release(&sv->base);
     return ok;
 }
 
-_Bool ttak_vector_dot(ttak_bigreal_t *res, tt_shared_vector_t *a, tt_shared_vector_t *b, tt_owner_t *owner, uint64_t now) {
+bool ttak_vector_dot(ttak_bigreal_t *res, tt_shared_vector_t *a, tt_shared_vector_t *b, tt_owner_t *owner, uint64_t now) {
     if (!res || !a || !b || !owner) return false;
     
     ttak_shared_result_t res_a, res_b;
@@ -106,7 +106,7 @@ _Bool ttak_vector_dot(ttak_bigreal_t *res, tt_shared_vector_t *a, tt_shared_vect
     ttak_bigreal_init(&sum, now);
     ttak_bigreal_init(&prod, now);
     
-    _Bool success = true;
+    bool success = true;
     for (uint8_t i = 0; i < va->dim; i++) {
         if (!ttak_bigreal_mul(&prod, &va->elements[i], &vb->elements[i], now)) {
             success = false;
@@ -131,7 +131,7 @@ _Bool ttak_vector_dot(ttak_bigreal_t *res, tt_shared_vector_t *a, tt_shared_vect
     return success;
 }
 
-_Bool ttak_vector_cross(tt_shared_vector_t *res, tt_shared_vector_t *a, tt_shared_vector_t *b, tt_owner_t *owner, uint64_t now) {
+bool ttak_vector_cross(tt_shared_vector_t *res, tt_shared_vector_t *a, tt_shared_vector_t *b, tt_owner_t *owner, uint64_t now) {
     ttak_shared_result_t ra, rb, rr;
     ttak_vector_t *va = (ttak_vector_t *)a->base.access(&a->base, owner, &ra);
     ttak_vector_t *vb = (ttak_vector_t *)b->base.access(&b->base, owner, &rb);
@@ -170,7 +170,7 @@ _Bool ttak_vector_cross(tt_shared_vector_t *res, tt_shared_vector_t *a, tt_share
     return true;
 }
 
-_Bool ttak_vector_magnitude(ttak_bigreal_t *res, tt_shared_vector_t *v, tt_owner_t *owner, uint64_t now) {
+bool ttak_vector_magnitude(ttak_bigreal_t *res, tt_shared_vector_t *v, tt_owner_t *owner, uint64_t now) {
     if (!res || !v || !owner) return false;
     
     ttak_shared_result_t rv;
@@ -198,7 +198,7 @@ _Bool ttak_vector_magnitude(ttak_bigreal_t *res, tt_shared_vector_t *v, tt_owner
 /**
  * @brief Approximate sine using Yussigihae (Nam Byeong-gil) logic.
  */
-_Bool ttak_math_approx_sin(ttak_bigreal_t *res, const ttak_bigreal_t *x, uint64_t now) {
+bool ttak_math_approx_sin(ttak_bigreal_t *res, const ttak_bigreal_t *x, uint64_t now) {
     ttak_bigreal_t x2, term, tmp, denom;
     ttak_bigreal_init(&x2, now);
     ttak_bigreal_init(&term, now);
@@ -244,7 +244,7 @@ _Bool ttak_math_approx_sin(ttak_bigreal_t *res, const ttak_bigreal_t *x, uint64_
 /**
  * @brief Approximate cosine using Yussigihae (Nam Byeong-gil) logic.
  */
-_Bool ttak_math_approx_cos(ttak_bigreal_t *res, const ttak_bigreal_t *x, uint64_t now) {
+bool ttak_math_approx_cos(ttak_bigreal_t *res, const ttak_bigreal_t *x, uint64_t now) {
     ttak_bigreal_t x2, term, tmp, denom;
     ttak_bigreal_init(&x2, now);
     ttak_bigreal_init(&term, now);
