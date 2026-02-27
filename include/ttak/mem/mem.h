@@ -21,7 +21,6 @@
 #include <pthread.h>
 #ifndef _MSC_VER
 #include <stdatomic.h>
-#include <ttak/mem/epoch_gc.h>
 #define TTAK_ATOMIC_FETCH_ADD_U64(ptr, val) atomic_fetch_add((_Atomic uint64_t *)(ptr), (val))
 #else
 #include <windows.h>
