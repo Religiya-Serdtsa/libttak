@@ -10,3 +10,9 @@ bench/ttak_bench
 bench/ttl-cache-multithread-bench/ttl_cache_bench
 bench/ttl-cache-multithread-bench/ttl_cache_bench_lockfree
 apps/*/bin/
+
+# bench artifacts / core dumps
+bench/vgcore.*
+bench/*.core
+core.*
+vgcore.*
