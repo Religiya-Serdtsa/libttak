@@ -193,10 +193,10 @@ static const void *ttak_shared_access_impl(ttak_shared_t *self, ttak_owner_t *cl
     return ptr;
 }
 
-static const void *ttak_shared_access_ebr_impl(ttak_shared_t *self, ttak_owner_t *claimant, bool protected, ttak_shared_result_t *result) {
+static const void *ttak_shared_access_ebr_impl(ttak_shared_t *self, ttak_owner_t *claimant, bool use_ebr_protection, ttak_shared_result_t *result) {
     if (TTAK_UNLIKELY(!self)) return NULL;
 
-    if (TTAK_LIKELY(protected)) {
+    if (TTAK_LIKELY(use_ebr_protection)) {
         ttak_epoch_enter();
     }
 
@@ -214,7 +214,7 @@ static const void *ttak_shared_access_ebr_impl(ttak_shared_t *self, ttak_owner_t
     if (result) *result = res;
 
     if (TTAK_UNLIKELY(res != TTAK_OWNER_SUCCESS && self->level == TTAK_SHARED_LEVEL_3)) {
-        if (protected) ttak_epoch_exit();
+        if (use_ebr_protection) ttak_epoch_exit();
         return NULL;
     }
 
@@ -230,7 +230,7 @@ static void ttak_shared_release_impl(ttak_shared_t *self) {
 
 static void ttak_shared_release_ebr_impl(ttak_shared_t *self) {
     (void)self;
-    /* Assumes caller used protected=true in access_ebr */
+    /* Assumes caller used use_ebr_protection=true in access_ebr */
     ttak_epoch_exit();
 }
 
