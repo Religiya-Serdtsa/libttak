@@ -42,9 +42,6 @@
 #if defined(_MSC_VER)
 #define TTAK_VIS_DEFAULT
 #define TTAK_CONSTRUCTOR(prio)
-#ifndef _Thread_local
-#define _Thread_local __declspec(thread)
-#endif
 #else
 #define TTAK_VIS_DEFAULT __attribute__((visibility("default")))
 #define TTAK_CONSTRUCTOR(prio) __attribute__((constructor(prio)))
@@ -57,14 +54,6 @@
 #ifndef _Atomic
 #define _Atomic volatile
 #endif
-
-typedef enum {
-    memory_order_relaxed,
-    memory_order_acquire,
-    memory_order_release,
-    memory_order_acq_rel,
-    memory_order_seq_cst
-} memory_order;
 
 static __forceinline void tt_atomic_fence(memory_order order) {
     (void)order;
