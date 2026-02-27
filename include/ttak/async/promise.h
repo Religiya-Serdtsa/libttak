@@ -3,7 +3,6 @@
 
 #include <stdint.h>
 #include <ttak/async/future.h>
-#include <ttak/thread/pool.h>
 
 typedef struct ttak_promise {
     ttak_future_t *future;
