@@ -16,12 +16,13 @@
 /**
  * @struct ttak_dynamic_mask_t
  * @brief Thread-safe dynamic bitmap.
+ * Optimized for lock-free reads via EBR.
  */
 typedef struct {
-    uint64_t *bits;             /**< The actual bitmap array */
+    uint64_t * _Atomic bits;    /**< The actual bitmap array (Atomic for lock-free read) */
     uint32_t capacity;          /**< Capacity in bits (multiples of 64) */
     uint32_t count;             /**< Number of set bits (optional tracking) */
-    ttak_rwlock_t lock;         /**< RWLock for atomic access to the mask */
+    ttak_rwlock_t lock;         /**< RWLock for writer synchronization */
 } ttak_dynamic_mask_t;
 
 /**

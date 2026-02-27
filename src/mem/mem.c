@@ -90,6 +90,9 @@ ttak_mem_friction_matrix_t global_friction_matrix = {
 /**
  * @brief Internal validation macro for header integrity and canaries.
  */
+#if defined(__TINYC__)
+#define V_HEADER(ptr) ((void)0)
+#else
 #define V_HEADER(ptr) do { \
     if (!ptr) break; \
     ttak_mem_header_t *_h = (ttak_mem_header_t *)(ptr) - 1; \
@@ -108,7 +111,9 @@ ttak_mem_friction_matrix_t global_friction_matrix = {
             abort(); \
         } \
     } \
-} while(0)
+} while (0)
+#endif
+
 
 #define GET_HEADER(ptr) ((ttak_mem_header_t *)(ptr) - 1)
 #define GET_USER_PTR(header) ((void *)((ttak_mem_header_t *)(header) + 1))
@@ -118,20 +123,91 @@ static pthread_mutex_t global_init_lock = PTHREAD_MUTEX_INITIALIZER;
 
 #if EMBEDDED
 #include <ttak/phys/mem/buddy.h>
-static TTAK_THREAD_LOCAL _Alignas(64) uint8_t buddy_pool[1 << 20];
+#ifndef TTAK_EMBEDDED_POOL_ORDER
+#define TTAK_EMBEDDED_POOL_ORDER 24
+#endif
+#define TTAK_EMBEDDED_POOL_SIZE (1ULL << TTAK_EMBEDDED_POOL_ORDER)
+#if TTAK_EMBEDDED_POOL_ORDER >= 63
+#error "TTAK_EMBEDDED_POOL_ORDER must be less than 63"
+#endif
+static _Alignas(64) uint8_t buddy_pool[TTAK_EMBEDDED_POOL_SIZE];
 static pthread_once_t buddy_once = PTHREAD_ONCE_INIT;
+
+#ifndef TTAK_BUDDY_DEFAULT_EMBEDDED_MODE
+#define TTAK_BUDDY_DEFAULT_EMBEDDED_MODE 0 /* override to 1 for strict embedded builds */
+#endif
+
+static int ttak_detect_embedded_pool_mode(void) {
+    const char *env = getenv("TTAK_MEM_EMBEDDED_POOL");
+    if (!env || !*env) {
+        return TTAK_BUDDY_DEFAULT_EMBEDDED_MODE;
+    }
+    switch (env[0]) {
+        case '0':
+        case 'n':
+        case 'N':
+        case 'f':
+        case 'F':
+            return 0;
+        default:
+            return 1;
+    }
+}
+
 /**
  * @brief Lazy-init for the buddy system in embedded builds.
  */
 static void buddy_bootstrap(void) {
-    ttak_mem_buddy_init(buddy_pool, sizeof(buddy_pool), 1);
+    ttak_mem_buddy_init(buddy_pool, sizeof(buddy_pool), ttak_detect_embedded_pool_mode());
 }
 #endif
 
 TTAK_THREAD_LOCAL bool t_reentrancy_guard = false;  /**< Thread-local guard against recursive allocation */
-TTAK_THREAD_LOCAL int in_mem_op = 0;              /**< Guard for pointer-map operations */
+TTAK_THREAD_LOCAL int in_mem_op = 0;               /**< Guard for pointer-map operations */
 TTAK_THREAD_LOCAL int in_mem_init = 0;            /**< Guard for subsystem initialization */
 static volatile int global_init_done = 0;         /**< Subsystem initialization ready flag */
+
+/**
+ * @brief Primitive allocator for internal subsystem bootstrap.
+ *
+ * Bypasses all managed logic (Header, Map, Tree) to prevent recursive cycles
+ * during early initialization of the epoch or memory subsystems.
+ */
+void *ttak_dangerous_alloc(size_t size) {
+    if (size == 0) return NULL;
+    void *ptr = NULL;
+#if EMBEDDED
+    pthread_once(&buddy_once, buddy_bootstrap);
+    ttak_mem_req_t req = { .size_bytes = size, .priority = 0, .owner_tag = 0, .call_safety = 0, .flags = 0 };
+    ptr = ttak_mem_buddy_alloc(&req);
+    if (ptr) memset(ptr, 0, size);
+#else
+    if (posix_memalign(&ptr, 64, size) != 0) return NULL;
+    memset(ptr, 0, size);
+#endif
+    return ptr;
+}
+
+void *ttak_dangerous_calloc(size_t nmemb, size_t size) {
+    size_t total = nmemb * size;
+    if (nmemb && size && total / nmemb != size) return NULL; /* Overflow check */
+    return ttak_dangerous_alloc(total);
+}
+
+/**
+ * @brief Primitive deallocator for internal subsystem cleanup.
+ *
+ * Directly returns memory to the underlying system allocator or buddy pool
+ * without performing any managed header or checksum validations.
+ */
+void ttak_dangerous_free(void *ptr) {
+    if (!ptr) return;
+#if EMBEDDED
+    ttak_mem_buddy_free(ptr);
+#else
+    posix_memfree(ptr);
+#endif
+}
 
 /**
  * @brief Recalculates the global friction as the product of all class values.
@@ -150,7 +226,7 @@ static ttak_fixed_16_16_t ttak_mem_calculate_global_friction(void) {
  */
 static void ttak_mem_update_friction_value(int size_class_idx, bool waste_detected) {
     if (size_class_idx < 0 || size_class_idx >= 4) return;
-    ttak_fixed_16_16_t alpha = TTAK_FP_FROM_INT(1) / 4; 
+    ttak_fixed_16_16_t alpha = TTAK_FP_FROM_INT(1) / 4;
     ttak_fixed_16_16_t one_minus_alpha = TTAK_FP_FROM_INT(1) - alpha;
     ttak_fixed_16_16_t old_value = atomic_load(&global_friction_matrix.values[size_class_idx]);
     ttak_fixed_16_16_t new_target = waste_detected ? TTAK_FP_FROM_INT(2) : TTAK_FP_FROM_INT(1);
@@ -301,6 +377,12 @@ void TTAK_HOT_PATH *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, ui
 
     t_reentrancy_guard = false;
     return user_ptr;
+}
+
+void * ttak_fastalloc(ttak_epoch_gc_t *gc, size_t size, uint64_t lifetime_ticks, uint64_t now) {
+    void *ptr = ttak_mem_alloc(size, lifetime_ticks, now);
+    ttak_epoch_gc_register(gc, ptr, size);
+    return ptr;
 }
 
 void TTAK_HOT_PATH *ttak_mem_realloc_safe(void *ptr, size_t new_size, uint64_t lifetime_ticks, uint64_t now, _Bool is_root, ttak_mem_flags_t flags) {

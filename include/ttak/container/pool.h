@@ -18,6 +18,15 @@ typedef struct ttak_object_pool {
     size_t item_size;       /**< Size of a single item. */
     size_t capacity;        /**< Total capacity of the pool. */
     size_t used_count;      /**< Number of currently allocated items. */
+
+    /* Orthogonal Latin Square traversal state (order 8, 64 slots per lattice). */
+    size_t ols_chunk_count;   /**< Number of 8x8 tiles covering the capacity. */
+    size_t ols_chunk_cursor;  /**< Current tile cursor. */
+    uint8_t ols_lane_seed;    /**< Current 6-bit lane seed within the tile. */
+    uint8_t ols_lane_guard;   /**< Cycle guard to detect when to advance tiles. */
+    uint8_t ols_lane_stride;  /**< Coprime stride applied to the lane seed. */
+    size_t last_recycled_index; /**< Hot-slot recycled on the next allocation. */
+
     ttak_spin_t lock;       /**< Spinlock for protecting the bitmap. */
 } ttak_object_pool_t;
 

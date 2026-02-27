@@ -16,6 +16,14 @@
     fprintf(stderr, "[PASS] %s\n", message); \
 } while(0)
 
+#if EMBEDDED
+#define EXPECTED_GENERAL_TIER TTAK_ALLOC_TIER_BUDDY
+#define GENERAL_TIER_LABEL "BUDDY"
+#else
+#define EXPECTED_GENERAL_TIER TTAK_ALLOC_TIER_GENERAL
+#define GENERAL_TIER_LABEL "GENERAL"
+#endif
+
 // Function to get a dummy current timestamp
 static uint64_t get_test_tick_count(void) {
     static uint64_t tick = 1;
@@ -93,7 +101,7 @@ void test_general_allocator(void) {
         ttak_mem_header_t* header = (ttak_mem_header_t*)ptr - 1;
         TEST_ASSERT(header->magic == TTAK_MAGIC_NUMBER, "Header magic is correct");
         TEST_ASSERT(header->size == test_size, "Header reports correct user size");
-        TEST_ASSERT(header->allocation_tier == TTAK_ALLOC_TIER_GENERAL, "Allocation tier is GENERAL");
+        TEST_ASSERT(header->allocation_tier == EXPECTED_GENERAL_TIER, "Allocation tier is " GENERAL_TIER_LABEL);
         TEST_ASSERT(header->freed == false, "Header reports not freed");
 
         // Write some data

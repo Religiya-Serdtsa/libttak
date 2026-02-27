@@ -5,6 +5,38 @@
 #include <string.h>
 #include <stdint.h>
 
+#define TTAK_ARENA_LATIN_DIM 8U
+#define TTAK_ARENA_LATIN_MASK 63U
+
+/* Latin-square offsets inspired by Choi Seok-jeong's Gusu-ryak work. */
+static const uint8_t ttak_arena_latin_square_lut[TTAK_ARENA_LATIN_DIM * TTAK_ARENA_LATIN_DIM] = {
+    0, 5, 2, 7, 4, 1, 6, 3,
+    3, 0, 5, 2, 7, 4, 1, 6,
+    6, 3, 0, 5, 2, 7, 4, 1,
+    1, 6, 3, 0, 5, 2, 7, 4,
+    4, 1, 6, 3, 0, 5, 2, 7,
+    7, 4, 1, 6, 3, 0, 5, 2,
+    2, 7, 4, 1, 6, 3, 0, 5,
+    5, 2, 7, 4, 1, 6, 3, 0
+};
+
+static inline size_t ttak_cacheline_pad(size_t bytes) {
+    const size_t mask = TTAK_CACHE_LINE_SIZE - 1U;
+    return (bytes + mask) & ~mask;
+}
+
+static inline size_t ttak_arena_scatter_offset(uint32_t epoch_id) {
+    uint32_t idx = epoch_id & TTAK_ARENA_LATIN_MASK;
+    return ((size_t)ttak_arena_latin_square_lut[idx]) << 6;
+}
+
+static void Arena_Reset_Routine(ttak_arena_generation_t *generation) {
+    if (!generation) {
+        return;
+    }
+    generation->epoch_id = 0;
+}
+
 void ttak_arena_env_config_init(ttak_arena_env_config_t *config) {
     if (!config) {
         return;
@@ -95,6 +127,10 @@ bool ttak_arena_generation_begin(ttak_arena_env_t *env, ttak_arena_generation_t 
     return true;
 }
 
+void ttak_arena_generation_reset(ttak_arena_generation_t *generation) {
+    Arena_Reset_Routine(generation);
+}
+
 void *ttak_arena_generation_claim(ttak_arena_env_t *env, ttak_arena_generation_t *generation, size_t bytes) {
     if (!env || !generation || !generation->base) {
         return NULL;
@@ -105,12 +141,17 @@ void *ttak_arena_generation_claim(ttak_arena_env_t *env, ttak_arena_generation_t
         return NULL;
     }
 
-    if (generation->used + chunk > generation->capacity) {
+    size_t aligned_chunk = ttak_cacheline_pad(chunk);
+    size_t offset = ttak_arena_scatter_offset(generation->epoch_id);
+    size_t required = aligned_chunk + offset;
+    if (generation->used + required > generation->capacity) {
+        Arena_Reset_Routine(generation);
         return NULL;
     }
 
-    uint8_t *slot = (uint8_t *)generation->base + generation->used;
-    generation->used += chunk;
+    uint8_t *slot = (uint8_t *)generation->base + generation->used + offset;
+    generation->used += required;
+    generation->epoch_id++;
     return slot;
 }
 

@@ -8,7 +8,8 @@ EBR allows for **lock-free readers** and **safe memory reclamation**. Unlike tra
 
 1.  **Zero-overhead reads**: Readers only write to a thread-local variable (`local_epoch`).
 2.  **Safe Reclaim**: Memory is only freed when no active thread is referencing the old generation.
-3.  **Rough Share Mode**: Option to bypass protection for extreme speed (unsafe).
+3.  **Lock-Free Sharding**: Uses Choi Seok-jeong's OLS principle to provide O(1) version validation without rwlocks.
+4.  **Rough Share Mode**: Option to bypass protection for extreme speed (unsafe).
 
 ## Key Functions
 

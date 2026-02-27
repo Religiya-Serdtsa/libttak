@@ -19,6 +19,8 @@ typedef struct ttak_net_view {
     size_t len;
     uint64_t birth_ns;
     ttak_io_zerocopy_region_t region;
+    ttak_net_lattice_slot_t *slot;
+    ttak_net_lattice_t *slot_lattice;
 } ttak_net_view_t;
 
 /**

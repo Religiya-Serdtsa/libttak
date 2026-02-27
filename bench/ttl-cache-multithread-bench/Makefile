@@ -1,6 +1,18 @@
 CC ?= gcc
-CFLAGS = -Wall -std=c11 -pthread -I../../include -O3 -march=native -flto -D_GNU_SOURCE
-LDFLAGS = -L../../lib -lttak -lpthread -flto
+CFLAGS_GCC = -Wall -std=c11 -pthread -I../../include -O3 -march=native -flto -D_GNU_SOURCE
+LDFLAGS_GCC = -L../../lib -lttak -lpthread -flto
+
+CFLAGS_TCC = -Wall -std=c11 -pthread -I../../include -O3 -D_GNU_SOURCE
+LDFLAGS_TCC = -L../../lib -lttak -lpthread
+
+# Detect compiler
+ifeq ($(notdir $(CC)),tcc)
+	CFLAGS = $(CFLAGS_TCC)
+	LDFLAGS = $(LDFLAGS_TCC)
+else
+	CFLAGS = $(CFLAGS_GCC)
+	LDFLAGS = $(LDFLAGS_GCC)
+endif
 
 # Define all targets
 TARGETS = ttl_cache_bench ttl_cache_bench_lockfree

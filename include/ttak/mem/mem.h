@@ -15,10 +15,12 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include <ttak/types/ttak_compiler.h>
 #include <stdalign.h>
 #include <pthread.h>
 #ifndef _MSC_VER
 #include <stdatomic.h>
+#include <ttak/mem/epoch_gc.h>
 #define TTAK_ATOMIC_FETCH_ADD_U64(ptr, val) atomic_fetch_add((_Atomic uint64_t *)(ptr), (val))
 #else
 #include <windows.h>
@@ -74,18 +76,18 @@ typedef struct ttak_mem_header_t {
     uint64_t pin_count;                 /**< Atomic reference count for pinning */
     size_t   size;                      /**< User-requested size in bytes */
     pthread_mutex_t lock;               /**< Per-header synchronization lock */
-    _Bool    freed;                     /**< True if the block has been deallocated */
-    _Bool    is_const;                  /**< Immutability hint */
-    _Bool    is_volatile;               /**< Volatility hint */
-    _Bool    allow_direct_access;       /**< Safety bypass flag for direct pointer access */
-    _Bool    is_huge;                   /**< True if mapped via hugepages */
-    _Bool    should_join;               /**< Indicates if associated resource needs joining */
-    _Bool    strict_check;              /**< Enable strict memory boundary (canary) checks */
-    _Bool    is_root;                   /**< Marks the allocation as a root node for the mem_tree */
+    uint8_t  freed;                     /**< True if the block has been deallocated */
+    uint8_t  is_const;                  /**< Immutability hint */
+    uint8_t  is_volatile;               /**< Volatility hint */
+    uint8_t  allow_direct_access;       /**< Safety bypass flag for direct pointer access */
+    uint8_t  is_huge;                   /**< True if mapped via hugepages */
+    uint8_t  should_join;               /**< Indicates if associated resource needs joining */
+    uint8_t  strict_check;              /**< Enable strict memory boundary (canary) checks */
+    uint8_t  is_root;                   /**< Marks the allocation as a root node for the mem_tree */
     uint64_t canary_start;              /**< Magic number for start of user data (in strict mode) */
     uint64_t canary_end;                /**< Magic number for end of user data (in strict mode) */
     char     *tracking_log;             /**< Dynamic memory operation tracking log (JSON) */
-    ttak_allocation_tier_t allocation_tier; /**< Tier that performed the allocation */
+    uint8_t  allocation_tier;           /**< Tier that performed the allocation */
     char     reserved[10];              /**< Explicit padding for header alignment */
 } ttak_mem_header_t;
 
@@ -114,7 +116,8 @@ typedef enum {
  * @return Pointer to zeroed user memory, or NULL on failure.
  */
 void *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, uint64_t now, _Bool is_const, _Bool is_volatile, _Bool allow_direct, _Bool is_root, ttak_mem_flags_t flags);
-
+/* @brief Wrapper for easy allocation with auto GC registering */
+void *ttak_fastalloc(ttak_epoch_gc_t *gc, size_t size, uint64_t lifetime_ticks, uint64_t now);
 /**
  * @brief Reallocates memory with lifecycle management.
  * @param ptr Existing allocation pointer.
@@ -126,6 +129,42 @@ void *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, uint64_t now, _B
  * @return Reallocated pointer, or NULL on failure.
  */
 void *ttak_mem_realloc_safe(void *ptr, size_t new_size, uint64_t lifetime_ticks, uint64_t now, _Bool is_root, ttak_mem_flags_t flags);
+/**
+ * @brief Primitive allocator for internal subsystem bootstrap.
+ *
+ * Bypasses all managed logic (Header, Map, Tree) to prevent recursive cycles
+ * during early initialization of the epoch or memory subsystems.
+ *
+ * @param size Number of bytes requested.
+ * @return Pointer to zeroed user memory (64-byte aligned), or NULL on failure.
+ */
+
+void *ttak_dangerous_alloc(size_t size);
+
+/**
+ * @brief Primitive calloc for internal subsystem bootstrap.
+ *
+ * @param nmemb Number of elements.
+ * @param size Size of each element.
+ * @return Pointer to zeroed user memory (64-byte aligned), or NULL on failure.
+ */
+void *ttak_dangerous_calloc(size_t nmemb, size_t size);
+
+/**
+ * @brief Primitive deallocator for internal subsystem cleanup.
+ *
+ * Directly returns memory to the underlying system allocator or buddy pool
+ * without performing any managed header or checksum validations.
+ *
+ * @param ptr Pointer to memory allocated via ttak_dangerous_alloc.
+ */
+void ttak_dangerous_free(void *ptr);
+
+/**
+ * @brief Frees a memory block and updates usage statistics.
+ * @param ptr Pointer to user memory.
+ */
+void ttak_mem_free(void *ptr);
 
 /**
  * @brief Duplicates a memory block with lifecycle management.

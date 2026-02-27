@@ -1,6 +1,7 @@
 #include <ttak/async/sched.h>
 #include <ttak/thread/pool.h>
 #include <ttak/timing/timing.h>
+#include <ttak/mem/epoch.h>
 #ifndef _WIN32
 #include <sched.h>
 #endif
@@ -84,5 +85,7 @@ void ttak_async_schedule(ttak_task_t *task, uint64_t now, int priority) {
         }
     }
 
+    ttak_epoch_enter();
     ttak_task_execute(task, now);
+    ttak_epoch_exit();
 }

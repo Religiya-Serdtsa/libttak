@@ -5,6 +5,7 @@
 #include <ttak/priority/nice.h>
 #include <pthread.h>
 #include <stddef.h>
+#include <string.h>
 
 static tt_map_t *history_map = NULL;
 static pthread_mutex_t history_lock = PTHREAD_MUTEX_INITIALIZER;
@@ -13,9 +14,21 @@ static _Bool history_initialized = 0;
 void ttak_scheduler_init(void) {
     pthread_mutex_lock(&history_lock);
     if (!history_initialized) {
-        // Initial capacity 128, current time for allocation
-        history_map = ttak_create_map(128, ttak_get_tick_count());
-        history_initialized = 1;
+        // Use dangerous_alloc to break recursion with managed mem_alloc
+        size_t map_size = sizeof(tt_map_t);
+        history_map = (tt_map_t *)ttak_dangerous_alloc(map_size);
+        if (history_map) {
+            history_map->cap = 128; // pow of 2
+            history_map->size = 0;
+            history_map->tbl = (ttak_node_t *)ttak_dangerous_alloc(history_map->cap * sizeof(tt_nd_t));
+            if (history_map->tbl) {
+                memset(history_map->tbl, 0, history_map->cap * sizeof(tt_nd_t));
+                history_initialized = 1;
+            } else {
+                ttak_dangerous_free(history_map);
+                history_map = NULL;
+            }
+        }
     }
     pthread_mutex_unlock(&history_lock);
 }
@@ -78,20 +91,6 @@ int ttak_scheduler_get_adjusted_priority(ttak_task_t *task, int base_priority) {
         adj_priority += 1;
     }
 
-    // Clamp to valid range (assuming -20 to 19 or similar, logic from nice.h)
-    // __TT_PRIO_MAX is 19, MIN is -20.
-    // Higher value usually means LOWER priority in nice, but here the queue implementation 
-    // in queue.c treats 'priority' as "higher = sooner" (standard PQ behavior).
-    // Let's check queue.c again.
-    // queue.c: "if (!q->head || q->head->priority < priority)" -> Higher int = Higher priority (Front of queue).
-    // nice.h: URGENT (-20), LAZY (19). Standard nice: Low number = High priority.
-    
-    // CONFLICT: nice.h uses standard nice (low=high), but queue.c uses high=high.
-    // I need to invert the nice logic if I use queue.c.
-    // Assuming 'base_priority' passed here is intended for queue.c (High=High).
-    
-    // If I just return adjusted integer, it's fine.
-    
     return adj_priority;
 }
 

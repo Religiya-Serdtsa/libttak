@@ -1,6 +1,7 @@
 #include <ttak/thread/worker.h>
 #include <ttak/thread/pool.h>
 #include <ttak/mem/mem.h>
+#include <ttak/mem/epoch.h>
 #include <ttak/timing/timing.h>
 #include <ttak/priority/scheduler.h>
 #ifdef _WIN32
@@ -71,6 +72,8 @@ void *ttak_worker_routine(void *arg) {
     ttak_thread_pool_t *pool = self->pool;
 
     current_worker = self;
+    ttak_epoch_register_thread();
+    ttak_epoch_exit();
 
     if (self->wrapper) {
 #ifdef _WIN32
@@ -101,15 +104,25 @@ void *ttak_worker_routine(void *arg) {
         pthread_mutex_unlock(&pool->pool_lock);
 
         if (task) {
+            volatile _Bool epoch_active = 0;
             if (tt_setjmp(self->wrapper->env, &self->wrapper->jmp_magic, &self->wrapper->jmp_tid) == 0) {
+                ttak_epoch_enter();
+                epoch_active = 1;
                 threaded_function_wrapper(self, task);
+                ttak_epoch_exit();
+                epoch_active = 0;
             } else {
                 // Recovered from longjmp
+                if (epoch_active) {
+                    ttak_epoch_exit();
+                    epoch_active = 0;
+                }
                 self->exit_code = TTAK_ERR_FATAL_EXIT;
             }
             ttak_task_destroy(task, now);
         }
     }
 
+    ttak_epoch_deregister_thread();
     return (void *)(uintptr_t)self->exit_code;
 }

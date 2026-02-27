@@ -5,7 +5,7 @@ This lesson focuses on the generational arena workflow built on top of `ttak_mem
 ## Objectives
 
 1. Clone the arena-related entry points inside `src/mem/mem.c`, `src/mem/epoch_gc.c`, and `src/mem_tree/mem_tree.c` so you understand how tracked allocations feed the tree and epochs.
-2. Study how `bench/ttl-cache-multithread-bench/ttl_cache_bench_lockfree.c` seeds four arenas per epoch and why cache-line alignment matters for predictable RSS.
+2. Study how `bench/ttl-cache-multithread-bench/ttl_cache_bench_lockfree.c` seeds four arenas per epoch and how segmented version sharding (OLS) enables **29M+ Ops/s** by isolating thread lifetimes.
 3. Build and run the sample program in this folder to verify that retiring an arena generation releases its mem-tree node and that `ttak_epoch_gc_rotate` frees the backing buffer.
 
 > **Blueprint reference:** The arena + epoch interaction is illustrated in `blueprints/09_epoch_reclamation.puml`; use it alongside the README sections that describe the lock-free arena measurements.

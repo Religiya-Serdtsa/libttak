@@ -5,7 +5,7 @@
 #include <math.h>
 
 /**
- * Multivariate System: Dawonsul(Jungha, Hong et al.)
+ * Multivariate System: Dawonsul(Hong Jungha et al.)
  * Logic: Independent lane processing for multivariate linear systems.
  * Uses hardware-accelerated FMA for each lane to maximize throughput.
  */

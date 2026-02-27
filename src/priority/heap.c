@@ -28,7 +28,7 @@ static void heapify_up(ttak_heap_tree_t *heap, size_t index) {
     while (index > 0) {
         size_t parent = (index - 1) / 2;
         // If child violates heap property relative to parent (child > parent for max heap logic if cmp returns a-b)
-        // Wait, standard comparator: a < b => negative.
+        // standard comparator: a < b => negative.
         // Let's assume Min-Heap behavior for "priority queue" defaults usually, or Max.
         // If cmp(child, parent) > 0, we swap. This means "child has higher priority".
         if (heap->cmp(heap->data[index], heap->data[parent]) > 0) {

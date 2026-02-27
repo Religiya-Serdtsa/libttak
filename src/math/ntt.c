@@ -4,6 +4,8 @@
 
 #define ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]))
 
+#define TTAK_NTT_MAX_LATTICE_DIM 32U
+
 const ttak_ntt_prime_t ttak_ntt_primes[TTAK_NTT_PRIME_COUNT] = {
     { 998244353ULL, 3ULL, 23U, 17450252288407896063ULL, 299560064ULL },
     { 1004535809ULL, 3ULL, 21U, 8214279848305098751ULL, 742115580ULL },
@@ -143,6 +145,28 @@ uint64_t ttak_montgomery_mul(uint64_t lhs, uint64_t rhs, const ttak_ntt_prime_t 
 }
 
 /**
+ * @brief Choose lattice tile size for the current butterfly width.
+ */
+static inline size_t ttak_ntt_lattice_dim(size_t len) {
+    if (len >= 64) return 32;
+    if (len >= 32) return 16;
+    if (len >= 16) return 8;
+    if (len >= 8)  return 4;
+    if (len >= 4)  return 2;
+    return 1;
+}
+
+static inline size_t ttak_ntt_lattice_shift(size_t dim) {
+#if defined(__GNUC__) || defined(__clang__)
+    return (size_t)__builtin_ctzll(dim);
+#else
+    size_t shift = 0;
+    while ((1ULL << shift) < dim) ++shift;
+    return shift;
+#endif
+}
+
+/**
  * @brief Convert a standard residue into Montgomery representation.
  *
  * @param value Value in standard form.
@@ -233,18 +257,39 @@ _Bool ttak_ntt_transform(uint64_t *data, size_t n, const ttak_ntt_prime_t *prime
     for (size_t len = 1; len < n; len <<= 1) {
         uint64_t wlen = ttak_mod_pow(root, n / (len << 1), modulus);
         uint64_t wlen_mont = ttak_montgomery_convert(wlen, prime);
+        size_t lattice_dim = ttak_ntt_lattice_dim(len);
+        size_t lattice_shift = ttak_ntt_lattice_shift(lattice_dim);
+        size_t lattice_mask = lattice_dim - 1;
+        size_t lattice_rows = len >> lattice_shift;
+        uint64_t lane_pows[TTAK_NTT_MAX_LATTICE_DIM];
+        lane_pows[0] = unity;
+        for (size_t idx = 1; idx < lattice_dim; ++idx) {
+            lane_pows[idx] = ttak_montgomery_mul(lane_pows[idx - 1], wlen_mont, prime);
+        }
+        uint64_t lattice_stride = unity;
+        for (size_t step = 0; step < lattice_dim; ++step) {
+            lattice_stride = ttak_montgomery_mul(lattice_stride, wlen_mont, prime);
+        }
 
         for (size_t i = 0; i < n; i += (len << 1)) {
-            uint64_t w = unity;
-            for (size_t j = 0; j < len; ++j) {
-                uint64_t u = data[i + j];
-                uint64_t v = ttak_montgomery_mul(data[i + j + len], w, prime);
-                uint64_t add = u + v;
-                if (add >= modulus) add -= modulus;
-                uint64_t sub = (u >= v) ? (u - v) : (u + modulus - v);
-                data[i + j] = add;
-                data[i + j + len] = sub;
-                w = ttak_montgomery_mul(w, wlen_mont, prime);
+            uint64_t row_factor = unity;
+            for (size_t row = 0; row < lattice_rows; ++row) {
+                size_t row_seed = row & lattice_mask;
+                size_t row_base = row << lattice_shift;
+                for (size_t lane = 0; lane < lattice_dim; ++lane) {
+                    size_t lane_idx = (row_seed + lane) & lattice_mask;
+                    size_t j = row_base | lane_idx;
+                    uint64_t w = ttak_montgomery_mul(row_factor, lane_pows[lane_idx], prime);
+
+                    uint64_t u = data[i + j];
+                    uint64_t v = ttak_montgomery_mul(data[i + j + len], w, prime);
+                    uint64_t add = u + v;
+                    if (add >= modulus) add -= modulus;
+                    uint64_t sub = (u >= v) ? (u - v) : (u + modulus - v);
+                    data[i + j] = add;
+                    data[i + j + len] = sub;
+                }
+                row_factor = ttak_montgomery_mul(row_factor, lattice_stride, prime);
             }
         }
     }

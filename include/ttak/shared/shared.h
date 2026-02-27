@@ -18,20 +18,19 @@
 #include <stdatomic.h>
 
 /**
- * @brief Lattice size for Choi Seok-jeong's orthogonal isolation.
- * Power of 2 (e.g., 8) allows for efficient masking.
+ * @struct ttak_shard_table_t
+ * @brief Lock-free Segmented Shard Array (Page Table).
+ * Maps thread logical IDs to unique timestamp slots without locks or reallocations.
  */
-#define TTAK_LATTICE_SIZE 8
-#define TTAK_LATTICE_MASK (TTAK_LATTICE_SIZE - 1)
+#define TTAK_SHARD_PAGE_SHIFT 4 // 16 slots per page
+#define TTAK_SHARD_PAGE_SIZE (1 << TTAK_SHARD_PAGE_SHIFT)
+#define TTAK_SHARD_PAGE_MASK (TTAK_SHARD_PAGE_SIZE - 1)
+#define TTAK_SHARD_DIR_SIZE 64  // 64 pages * 16 slots = 1024 threads max per object
 
-/**
- * @struct ttak_lattice_t
- * @brief The 'Sanpan' (Counting Board) - Shared Buffer Lattice.
- * Uses Deterministic Slot Isolation to avoid hardware locks.
- */
 typedef struct {
-	atomic_uint_least64_t slots[TTAK_LATTICE_SIZE][TTAK_LATTICE_SIZE];
-} ttak_lattice_t;
+	atomic_uint_least64_t * _Atomic dir[TTAK_SHARD_DIR_SIZE]; /**< Array of atomic pointers to pages */
+	uint32_t _Atomic active_pages; /**< High-water mark of allocated pages for fast iteration */
+} ttak_shard_table_t;
 
 /**
  * @brief Bitmask flags representing the current status of the shared resource.
@@ -49,20 +48,21 @@ typedef uint32_t ttak_shared_status_t;
  * @brief Operational result codes for shared memory actions.
  */
 typedef uint32_t ttak_shared_result_t;
-#define TTAK_OWNER_VALID        (0)      /**< Level 3: Pure safety guaranteed */
-#define TTAK_OWNER_CORRUPTED    (1 << 0) /**< Level 2: Timestamp mismatch detected */
-#define TTAK_OWNER_INVALID      (1 << 1) /**< Level 1: Owner information mismatch */
-#define TTAK_OWNER_SHARE_DENIED (1 << 2) /**< Error: Failed to register new owner */
-#define TTAK_OWNER_SUCCESS      (1 << 3) /**< Operation completed successfully */
+#define TTAK_OWNER_VALID        (0)      /**< Success: Access granted and validated */
+#define TTAK_OWNER_CORRUPTED    (1 << 0) /**< Safety Error: Timestamp mismatch detected */
+#define TTAK_OWNER_INVALID      (1 << 1) /**< Auth Error: Owner information mismatch */
+#define TTAK_OWNER_SHARE_DENIED (1 << 2) /**< Resource Error: Failed to register new owner */
+#define TTAK_OWNER_CAP_EXHAUSTED (1 << 3) /**< Scalability Error: Thread capacity exceeded */
+#define TTAK_OWNER_SUCCESS      (1 << 4) /**< General Success indicator */
 
 /**
  * @brief Security enforcement levels for ownership validation.
  */
 typedef enum {
-	TTAK_SHARED_LEVEL_3, /**< Strict: Full ownership and timestamp validation */
-	TTAK_SHARED_LEVEL_2, /**< Moderate: Allows slight timestamp drift */
-	TTAK_SHARED_LEVEL_1, /**< Loose: Basic owner check only; not recommended */
-	TTAK_SHARED_NO_LEVEL  /**< None: No ownership check; maximum performance/danger */
+	TTAK_SHARED_LEVEL_3 = 3, /**< Strict: Full ownership and timestamp validation */
+	TTAK_SHARED_LEVEL_2 = 2, /**< Moderate: Allows slight timestamp drift */
+	TTAK_SHARED_LEVEL_1 = 1, /**< Loose: Basic owner check only; not recommended */
+	TTAK_SHARED_NO_LEVEL = 0  /**< None: No ownership check; maximum performance/danger */
 } ttak_shared_level_t;
 
 /**
@@ -76,7 +76,7 @@ typedef struct ttak_shared_s {
 	uint32_t type_id;               /**< Optional numeric ID for the type */
 
 	ttak_dynamic_mask_t owners_mask; /**< Thread-safe dynamic mask for ownership */
-	ttak_lattice_t lattice;         /**< Deterministic Lattice for lock-free sync */
+	ttak_shard_table_t shards;      /**< Lock-free Segmented Shards for sync */
 	uint64_t ts;                    /**< Timestamp to track its lifetime */
 
 	ttak_rwlock_t rwlock;           /**< R/W lock for metadata (swap, status) */

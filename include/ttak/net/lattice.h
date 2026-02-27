@@ -34,8 +34,13 @@ typedef struct ttak_net_lattice_slot {
 typedef struct ttak_net_lattice {
     uint32_t dim;      /* Dimension of the square (must be power of 2) */
     uint32_t mask;     /* dim - 1 */
+    uint32_t capacity; /* Total number of slots */
     ttak_net_lattice_slot_t *slots; /* dim * dim array */
     volatile uint64_t total_ingress;
+    volatile uint64_t used_slots;
+    _Bool is_full;
+    struct ttak_net_lattice *next; /* Grows when the lattice saturates */
+    ttak_mutex_t expand_lock;
 } ttak_net_lattice_t;
 
 /**
@@ -72,5 +77,20 @@ void ttak_net_lattice_set_worker_id(uint32_t tid);
  * @brief Gets the worker ID for the current thread.
  */
 uint32_t ttak_net_lattice_get_worker_id(void);
+
+/**
+ * @brief Ensures the current lattice has a successor allocated when needed.
+ */
+ttak_net_lattice_t* ttak_net_lattice_ensure_next(ttak_net_lattice_t *lat, uint64_t now);
+
+/**
+ * @brief Tracks that a slot has been acquired from @p lat and triggers prefetching.
+ */
+void ttak_net_lattice_mark_slot_acquired(ttak_net_lattice_t *lat, uint64_t now);
+
+/**
+ * @brief Tracks that a slot has been released back to @p lat.
+ */
+void ttak_net_lattice_mark_slot_released(ttak_net_lattice_t *lat);
 
 #endif /* TTAK_NET_LATTICE_H */

@@ -16,10 +16,7 @@
 #include <pthread.h>
 #include "../../internal/app_types.h"
 #include <ttak/mem/mem.h>
-
-#ifndef TTAK_UNLIKELY
-#define TTAK_UNLIKELY(x) __builtin_expect(!!(x), 0)
-#endif
+#include <ttak/types/ttak_compiler.h>
 
 // --- Memory Magic Numbers ---
 #define POCKET_MAGIC 0x80C4E700 /**< Base magic for 4KB pocket pages (Lower bits: freelist_idx) */

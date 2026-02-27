@@ -22,7 +22,7 @@ void ttak_io_zerocopy_region_init(ttak_io_zerocopy_region_t *region) {
     region->len = 0;
     region->capacity = 0;
     region->read_only = true;
-    region->segment_mask = 0;
+    memset(region->segment_mask, 0, sizeof(region->segment_mask));
     region->arena = NULL;
     region->allocation.data = NULL;
     region->allocation.size = 0;
@@ -54,7 +54,7 @@ ttak_io_status_t ttak_io_zerocopy_recv_fd(int fd,
     uint8_t *buffer = (uint8_t *)region->allocation.data;
     region->data = buffer;
     region->capacity = max_len;
-    region->segment_mask = 0;
+    memset(region->segment_mask, 0, sizeof(region->segment_mask));
     region->len = 0;
 
     size_t total = 0;
@@ -113,11 +113,24 @@ ttak_io_status_t ttak_io_zerocopy_recv_fd(int fd,
         size_t written = (size_t)rc;
         size_t seg_start = total >> TTAK_IO_ZC_SEG_SHIFT;
         size_t seg_count = (written + TTAK_IO_ZC_SEG_MASK) >> TTAK_IO_ZC_SEG_SHIFT;
-        if (seg_start < 32) {
-            uint32_t mask = (seg_count >= 32)
+        size_t seg_end = seg_start + seg_count;
+        if (seg_end > TTAK_IO_ZC_MAX_SEGMENTS) {
+            seg_end = TTAK_IO_ZC_MAX_SEGMENTS;
+        }
+        size_t seg_idx = seg_start;
+        while (seg_idx < seg_end) {
+            size_t word = seg_idx / TTAK_IO_ZC_SEGMENT_WORD_BITS;
+            size_t bit_offset = seg_idx % TTAK_IO_ZC_SEGMENT_WORD_BITS;
+            size_t run = seg_end - seg_idx;
+            size_t available = TTAK_IO_ZC_SEGMENT_WORD_BITS - bit_offset;
+            if (run > available) {
+                run = available;
+            }
+            uint32_t mask = (run == TTAK_IO_ZC_SEGMENT_WORD_BITS)
                                 ? 0xFFFFFFFFu
-                                : ((1u << seg_count) - 1u);
-            region->segment_mask |= (mask << seg_start);
+                                : ((1u << run) - 1u);
+            region->segment_mask[word] |= (mask << bit_offset);
+            seg_idx += run;
         }
 
         total += written;

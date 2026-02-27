@@ -1,6 +1,7 @@
 #include <ttak/mem/epoch_gc.h>
 #include <ttak/mem/mem.h>
 #include <ttak/mem_tree/mem_tree.h>
+#include <stdatomic.h>
 #include "test_macros.h"
 
 /**
@@ -9,6 +10,7 @@
 static void test_epoch_gc_register_and_destroy(void) {
     ttak_epoch_gc_t gc;
     ttak_epoch_gc_init(&gc);
+    ttak_epoch_gc_manual_rotate(&gc, true);
 
     void *ptr = ttak_mem_alloc(128, __TTAK_UNSAFE_MEM_FOREVER__, 0);
     ASSERT(ptr != NULL);
@@ -16,7 +18,7 @@ static void test_epoch_gc_register_and_destroy(void) {
     ttak_epoch_gc_register(&gc, ptr, 128);
 
     /* rotate should not free: ref_count is still 1 */
-    gc.current_epoch = 1;
+    atomic_store(&gc.current_epoch, 1);
     ttak_epoch_gc_rotate(&gc);
 
     /* destroy frees all remaining tracked memory – no manual ttak_mem_free */
@@ -29,6 +31,7 @@ static void test_epoch_gc_register_and_destroy(void) {
 static void test_epoch_gc_rotate_cleanup(void) {
     ttak_epoch_gc_t gc;
     ttak_epoch_gc_init(&gc);
+    ttak_epoch_gc_manual_rotate(&gc, true);
 
     void *ptr = ttak_mem_alloc(64, __TTAK_UNSAFE_MEM_FOREVER__, 0);
     ASSERT(ptr != NULL);

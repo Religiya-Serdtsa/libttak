@@ -103,7 +103,7 @@ static void *worker_func(void *arg) {
 
         /* UPDATE: Generational pointer bumping from pre-allocated pools */
         if (ttak_get_tick_count() % 100 < 20) {
-            uint64_t eid = g_gc.current_epoch;
+            uint64_t eid = atomic_load_explicit(&g_gc.current_epoch, memory_order_relaxed);
             cache_payload_t *node = (cache_payload_t *)ttak_object_pool_alloc(g_arenas[eid % 4]);
             
             if (node) {
@@ -141,7 +141,7 @@ int main(void) {
 
     g_cache = ttak_mem_alloc(sizeof(ttak_shared_t), 0, ttak_get_tick_count());
     ttak_shared_init(g_cache);
-    g_cache->allocate_typed(g_cache, sizeof(cache_payload_t), "cache_payload_t", TTAK_SHARED_LEVEL_1);
+    g_cache->allocate_typed(g_cache, sizeof(cache_payload_t), "cache_payload_t", TTAK_SHARED_NO_LEVEL);
 
     ttak_thread_pool_t *pool = ttak_thread_pool_create(cfg.num_threads + 1, 0, 0);
     
@@ -165,7 +165,10 @@ int main(void) {
         long rss = get_rss_kb();
 
         printf("%2ds | %8" PRIu64 " | %11" PRIu64 " | %7" PRIu64 " | %5" PRIu64 " | %ld\n",
-               i, ops, lat, swaps, (uint64_t)g_gc.current_epoch, rss);
+               i, ops, lat, swaps,
+               atomic_load_explicit(&g_gc.current_epoch, memory_order_relaxed),
+               rss);
+        fflush(stdout);
     }
 
     atomic_store(&g_running, false);

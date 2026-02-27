@@ -69,6 +69,11 @@ void ttak_arena_env_destroy(ttak_arena_env_t *env);
 bool ttak_arena_generation_begin(ttak_arena_env_t *env, ttak_arena_generation_t *generation, uint32_t epoch_id);
 
 /**
+ * @brief Resets the scatter epoch, executing the Arena_Reset_Routine.
+ */
+void ttak_arena_generation_reset(ttak_arena_generation_t *generation);
+
+/**
  * @brief Claims a chunk from a generation, using the config chunk_bytes when bytes is zero.
  */
 void *ttak_arena_generation_claim(ttak_arena_env_t *env, ttak_arena_generation_t *generation, size_t bytes);

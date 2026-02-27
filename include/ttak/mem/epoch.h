@@ -22,6 +22,7 @@ typedef struct {
 typedef struct {
     unsigned int _Atomic local_epoch;
     bool _Atomic active;
+    uint32_t logical_tid;
 } ttak_thread_state_t;
 
 extern ttak_epoch_manager_t g_epoch_mgr;

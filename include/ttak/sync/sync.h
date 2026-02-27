@@ -7,6 +7,7 @@
 
 #include <pthread.h>
 #include <stdint.h>
+#include <stdatomic.h>
 
 typedef pthread_mutex_t ttak_mutex_t;
 typedef pthread_mutex_t tt_mutex_t;

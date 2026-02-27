@@ -25,7 +25,7 @@
 
 #ifndef _WIN32
 typedef struct {
-    _Atomic _Bool triggered;
+    atomic_bool triggered;
     _Bool graceful;
     int exit_code;
 } ttak_signal_guard_t;
@@ -52,7 +52,7 @@ static void ttak_detachable_unregister_context(ttak_detachable_context_t *ctx);
 static void ttak_detachable_context_once(void);
 static void ttak_detachable_row_flush(ttak_detachable_context_t *ctx, ttak_detachable_generation_row_t *row);
 static void ttak_detachable_track_pointer(ttak_detachable_context_t *ctx, void *ptr);
-static void ttak_detachable_untrack_pointer(ttak_detachable_context_t *ctx, void *ptr);
+static bool ttak_detachable_untrack_pointer(ttak_detachable_context_t *ctx, void *ptr);
 static bool ttak_detachable_cache_store(ttak_detachable_context_t *ctx, ttak_detachable_cache_t *cache, void *ptr, size_t size);
 static void *ttak_detachable_cache_take(ttak_detachable_cache_t *cache, size_t requested);
 static void ttak_detachable_cache_drain(ttak_detachable_context_t *ctx, ttak_detachable_cache_t *cache, bool release_storage);
@@ -221,7 +221,12 @@ void ttak_detachable_mem_free(ttak_detachable_context_t *ctx, ttak_detachable_al
         }
     }
 
-    if (!stored) {
+    ttak_detachable_wrlock(ctx);
+    bool was_tracked = ttak_detachable_untrack_pointer(ctx, alloc->data);
+    ttak_detachable_unlock(ctx);
+    bool skip_retire = (!was_tracked) && (ctx->flags & TTAK_ARENA_HAS_EPOCH_RECLAMATION);
+
+    if (!stored && !skip_retire) {
         if (ctx->flags & TTAK_ARENA_HAS_EPOCH_RECLAMATION) {
             ttak_epoch_enter();
             ttak_epoch_retire(alloc->data, free);
@@ -235,10 +240,6 @@ void ttak_detachable_mem_free(ttak_detachable_context_t *ctx, ttak_detachable_al
             }
         }
     }
-
-    ttak_detachable_wrlock(ctx);
-    ttak_detachable_untrack_pointer(ctx, alloc->data);
-    ttak_detachable_unlock(ctx);
 
     alloc->data = NULL;
     alloc->size = 0;
@@ -323,18 +324,19 @@ static void ttak_detachable_track_pointer(ttak_detachable_context_t *ctx, void *
     row->columns[row->len++] = ptr;
 }
 
-static void ttak_detachable_untrack_pointer(ttak_detachable_context_t *ctx, void *ptr) {
-    if (!ptr) return;
+static bool ttak_detachable_untrack_pointer(ttak_detachable_context_t *ctx, void *ptr) {
+    if (!ptr) return false;
     for (size_t r = 0; r < ctx->matrix_rows; ++r) {
         ttak_detachable_generation_row_t *row = &ctx->rows[r];
         if (!row->columns) continue;
         for (size_t c = 0; c < row->len; ++c) {
             if (row->columns[c] == ptr) {
                 row->columns[c] = NULL;
-                return;
+                return true;
             }
         }
     }
+    return false;
 }
 
 static bool ttak_detachable_cache_store(ttak_detachable_context_t *ctx, ttak_detachable_cache_t *cache, void *ptr, size_t size) {
@@ -442,7 +444,7 @@ static void ttak_detachable_global_shutdown(_Bool flush_rows) {
 #ifndef _WIN32
 static void ttak_detachable_signal_handler(int signo) {
     bool expected = false;
-    if (!atomic_compare_exchange_strong(&g_signal_guard.triggered, &expected, true)) {
+    if (!atomic_compare_exchange_weak(&g_signal_guard.triggered, &expected, true)) {
         _exit(g_signal_guard.exit_code >= 0 ? g_signal_guard.exit_code : signo);
     }
 

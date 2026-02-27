@@ -6,7 +6,7 @@
 #include <math.h>
 
 /**
- * Jeungseunggaebang(Jungha, Hong et al.)
+ * Jeongseunggaebang(by Hong Jungha et al.)
  * Logic: Linear accumulation to minimize latency and rounding errors.
  * Used for polynomial evaluation and iterative integration steps.
  */
@@ -168,6 +168,7 @@ _Bool ttak_calculus_integrate(ttak_bigreal_t *res, ttak_math_func_t f, const tta
 _Bool ttak_calculus_rk4_step(ttak_bigreal_t *y_next, ttak_math_func_t f, const ttak_bigreal_t *t, const ttak_bigreal_t *y, const ttak_bigreal_t *h, void *ctx, uint64_t now) {
     if (!y_next || !f || !t || !y || !h) return false;
 
+    _Bool success = false;
     ttak_bigreal_t k1, k2, k3, k4;
     ttak_bigreal_t tmp_t, tmp_y, h_half, h_sixth;
     
@@ -227,7 +228,7 @@ _Bool ttak_calculus_rk4_step(ttak_bigreal_t *y_next, ttak_math_func_t f, const t
     ttak_bigreal_free(&sum_k, now);
     ttak_bigreal_free(&factor_2, now);
 
-    _Bool success = true;
+    success = true;
 cleanup:
     ttak_bigreal_free(&k1, now);
     ttak_bigreal_free(&k2, now);

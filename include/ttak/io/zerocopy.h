@@ -11,11 +11,15 @@
 extern "C" {
 #endif
 
-#define TTAK_IO_ZC_MAX_IOV       4U
-#define TTAK_IO_ZC_SEG_SHIFT     12U
-#define TTAK_IO_ZC_SEG_BYTES     (1U << TTAK_IO_ZC_SEG_SHIFT)
-#define TTAK_IO_ZC_SEG_MASK      (TTAK_IO_ZC_SEG_BYTES - 1U)
-#define TTAK_IO_ZC_MAX_SEGMENTS  32U
+#define TTAK_IO_ZC_MAX_IOV             4U
+#define TTAK_IO_ZC_SEG_SHIFT           12U
+#define TTAK_IO_ZC_SEG_BYTES           (1U << TTAK_IO_ZC_SEG_SHIFT)
+#define TTAK_IO_ZC_SEG_MASK            (TTAK_IO_ZC_SEG_BYTES - 1U)
+#define TTAK_IO_ZC_MAX_SEGMENTS        256U
+#define TTAK_IO_ZC_SEGMENT_WORD_BITS   32U
+#define TTAK_IO_ZC_SEGMENT_WORD_COUNT  \
+    ((TTAK_IO_ZC_MAX_SEGMENTS + TTAK_IO_ZC_SEGMENT_WORD_BITS - 1U) / \
+     TTAK_IO_ZC_SEGMENT_WORD_BITS)
 
 /**
  * @brief Temporary zero-copy receive window allocated in a detachable arena.
@@ -29,7 +33,7 @@ typedef struct ttak_io_zerocopy_region {
     size_t len;
     size_t capacity;
     bool read_only;
-    uint32_t segment_mask;
+    uint32_t segment_mask[TTAK_IO_ZC_SEGMENT_WORD_COUNT];
     ttak_detachable_context_t *arena;
     ttak_detachable_allocation_t allocation;
 } ttak_io_zerocopy_region_t;

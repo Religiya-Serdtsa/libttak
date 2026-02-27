@@ -129,10 +129,16 @@ ttak_net_session_t *ttak_net_session_mgr_create(ttak_net_session_mgr_t *mgr,
     ttak_shared_result_t res = 0;
     ttak_net_endpoint_t *payload = ttak_shared_net_endpoint_access(endpoint, owner, &res);
     if (payload && res == TTAK_OWNER_SUCCESS) {
-        session->lifetime_ns = payload->guard.ttl_ns ? payload->guard.ttl_ns : TTAK_NET_SANITY_INTERVAL_NS;
-        session->next_sanity_ns = now + session->lifetime_ns;
-        if (payload->guard.ttl_ns == UINT64_MAX) {
+        uint64_t ttl = payload->guard.ttl_ns;
+        if (ttl == UINT64_MAX) {
             session->state_flags |= TTAK_NET_SESSION_IMMORTAL;
+            session->lifetime_ns = UINT64_MAX;
+            session->next_sanity_ns = UINT64_MAX;
+        } else if (ttl > 0) {
+            session->lifetime_ns = ttl;
+            session->next_sanity_ns = now + ttl;
+        } else {
+            session->lifetime_ns = TTAK_NET_SANITY_INTERVAL_NS;
             session->next_sanity_ns = now + TTAK_NET_SANITY_INTERVAL_NS;
         }
         ttak_shared_net_endpoint_release(endpoint);
