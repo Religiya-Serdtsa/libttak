@@ -24,6 +24,8 @@
 #define TTAK_ATOMIC_FETCH_ADD_U64(ptr, val) atomic_fetch_add((_Atomic uint64_t *)(ptr), (val))
 #else
 #include <windows.h>
+#include <stdbool.h>
+typedef bool _Bool;
 #define TTAK_ATOMIC_FETCH_ADD_U64(ptr, val) InterlockedExchangeAdd64((volatile LONG64 *)(ptr), (LONG64)(val))
 #endif
 
