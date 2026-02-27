@@ -132,11 +132,11 @@ typedef struct ttak_shared_s {
 	 * @brief Validates and grants access with optional EBR protection.
 	 * @param self Pointer to the ttak_shared_t instance.
 	 * @param claimant The owner requesting access.
-	 * @param protected If true, enters EBR critical section.
+	 * @param use_ebr_protection If true, enters EBR critical section.
 	 * @param result Pointer to store the detailed validation result.
 	 * @return Const pointer to the shared data, or NULL if denied.
 	 */
-	const void *(*access_ebr)(struct ttak_shared_s *self, ttak_owner_t *claimant, bool protected, ttak_shared_result_t *result);
+	const void *(*access_ebr)(struct ttak_shared_s *self, ttak_owner_t *claimant, bool use_ebr_protection, ttak_shared_result_t *result);
 
 	/**
 	 * @brief Releases the access acquired via access().
