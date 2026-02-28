@@ -67,6 +67,8 @@ There are no assembly fast paths or exotic TLS caches. Standard `malloc` plus di
 
 ## Benchmarks
 
+Test: Ryzen 5600X, RTX 3070 Lite Hash Rate, Samsung DDR4 3200MHz 32GB x 2
+
 ### High-Performance Lock-Free Baseline
 
 | Metric | Result | Note |

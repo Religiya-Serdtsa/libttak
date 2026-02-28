@@ -274,7 +274,9 @@ static inline uint32_t ttak_calc_header_checksum(const ttak_mem_header_t *h) {
 /* Compatibility macros */
 typedef void ttak_lifecycle_obj_t;
 #define ttak_mem_alloc(size, lifetime, now_tick) ttak_mem_alloc_safe(size, lifetime, now_tick, false, false, true, false, TTAK_MEM_DEFAULT)
+#define ttak_root_alloc(size, lifetime, now_tick) ttak_mem_alloc_safe(size, lifetime, now_tick, true, true, true, true, TTAK_MEM_DEFAULT)
 #define ttak_mem_alloc_with_flags(size, lifetime, now_tick, flags) ttak_mem_alloc_safe(size, lifetime, now_tick, false, false, true, false, flags)
+#define ttak_root_alloc_with_flags(size, lifetime, now_tick, flags) ttak_mem_alloc_safe(size, lifetime, now_tick, true, true, true, true, flags)
 #define ttak_mem_realloc(ptr, size, lifetime, now_tick) ttak_mem_realloc_safe(ptr, size, lifetime, now_tick, false, TTAK_MEM_DEFAULT)
 #define ttak_mem_realloc_with_flags(ptr, size, lifetime, now_tick, flags) ttak_mem_realloc_safe(ptr, size, lifetime, now_tick, false, flags)
 #define ttak_mem_dup(src, size, lifetime, now_tick) ttak_mem_dup_safe(src, size, lifetime, now_tick, false, TTAK_MEM_DEFAULT)

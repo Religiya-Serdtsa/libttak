@@ -12,7 +12,7 @@ USE_ROCM ?= 0
 # GNU (GCC/Clang) is the default on all platforms.
 TOOLCHAIN ?= gnu
 
-COMMON_WARNINGS ?= -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700
+COMMON_WARNINGS ?= -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -D_REENTRANT -fPIC
 DEPFLAGS ?= -MD -MF $(@:.o=.d)
 LDFLAGS_BASE = -pthread -lm
 
@@ -36,7 +36,7 @@ TCC_STACK_FLAGS ?= -O3 -g \
 				  -fno-trapping-math \
 				  -falign-functions=32 \
 				  -fno-plt \
-				  -fno-math-errno
+				  -fno-math-errno \
 
 PERF_WARNINGS ?= -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum
 PERF_STACK_FLAGS ?= -O3 -march=native -mtune=native -pipe -flto -ffat-lto-objects \
