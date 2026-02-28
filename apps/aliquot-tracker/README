@@ -22,3 +22,7 @@ make
 Run `./install.sh` inside `apps/aliquot-tracker` to build, stage, and copy the binary into `/opt/aliquot-tracker`. The script also initialises that directory as a git repository (if needed) and touches the JSON ledgers so you can `git diff`/`git pull` to discuss state changes across machines.
 
 By default the tracker writes checkpoints to `/opt/aliquot-tracker`. If you would like to try things locally without touching `/opt`, set `ALIQUOT_STATE_DIR=/path/to/tmp` before launching the binary. All JSON ledgers plus the queue snapshot will live at that path.
+
+## Rate safeguards
+
+Set `ALIQUOT_SUMDIV_MAX_BITS` (default: 192) to limit the largest intermediate value the divisor engine will handle inline. Oversized seeds are tagged as `overflow` in the ledgers so the worker pool never stalls on runaway factorizations.

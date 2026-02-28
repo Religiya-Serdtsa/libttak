@@ -24,3 +24,7 @@ Engine: Sociable-3 Dominator
 - This system generates cryptographic proof-of-work for all scanned ranges. 
 - All results are timestamped and hashed to ensure indisputable priority over discovered sociable cycles.
 - If you have performed extreme overclocking on your system, run this to verify your hardware stability.
+
+[RESILIENCE]
+- Set `ALIQUOT_SUMDIV_MAX_BITS` (default: 192) to cap the largest intermediate value allowed in the divisor-sum chain.
+- Seeds that exceed the cap are recorded in `skipped_seeds.jsonl` so the scanner maintains a non-zero processing rate.

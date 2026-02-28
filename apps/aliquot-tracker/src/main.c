@@ -31,6 +31,10 @@
 #include <ttak/math/sum_divisors.h>
 #include <ttak/thread/pool.h>
 
+#ifndef ALIQUOT_ACCEL_LABEL
+#define ALIQUOT_ACCEL_LABEL "CPU"
+#endif
+
 #ifndef PATH_MAX
 #define PATH_MAX 8192
 #endif
@@ -246,6 +250,84 @@ static uint64_t g_last_persist_ms;
 static uint64_t g_total_sequences;
 static uint64_t g_total_probes;
 static uint64_t g_probe_update_quantum = 1;
+
+typedef struct progress_slot_t {
+    volatile uint64_t pending;
+    volatile uint64_t active;
+} progress_slot_t;
+
+static progress_slot_t *g_progress_slots = NULL;
+static size_t g_progress_slot_count = 0;
+static pthread_mutex_t g_progress_lock = PTHREAD_MUTEX_INITIALIZER;
+
+static bool progress_slots_init(size_t count, uint64_t now) {
+    if (count == 0) return false;
+    g_progress_slots = (progress_slot_t *)ttak_mem_alloc(count * sizeof(progress_slot_t),
+                                                         __TTAK_UNSAFE_MEM_FOREVER__,
+                                                         now);
+    if (!g_progress_slots) return false;
+    memset(g_progress_slots, 0, count * sizeof(progress_slot_t));
+    g_progress_slot_count = count;
+    return true;
+}
+
+static int progress_slot_acquire(void) {
+    if (!g_progress_slots) return -1;
+    pthread_mutex_lock(&g_progress_lock);
+    for (size_t i = 0; i < g_progress_slot_count; ++i) {
+        if (ttak_atomic_read64(&g_progress_slots[i].active) == 0) {
+            ttak_atomic_write64(&g_progress_slots[i].active, 1);
+            ttak_atomic_write64(&g_progress_slots[i].pending, 0);
+            pthread_mutex_unlock(&g_progress_lock);
+            return (int)i;
+        }
+    }
+    pthread_mutex_unlock(&g_progress_lock);
+    return -1;
+}
+
+static void progress_slot_release(int idx) {
+    if (idx < 0 || !g_progress_slots) return;
+    size_t slot = (size_t)idx;
+    if (slot >= g_progress_slot_count) return;
+    ttak_atomic_write64(&g_progress_slots[slot].pending, 0);
+    ttak_atomic_write64(&g_progress_slots[slot].active, 0);
+}
+
+static void progress_slot_publish(int idx, uint64_t pending) {
+    if (idx < 0 || !g_progress_slots) return;
+    size_t slot = (size_t)idx;
+    if (slot >= g_progress_slot_count) return;
+    ttak_atomic_write64(&g_progress_slots[slot].pending, pending);
+}
+
+static uint64_t progress_slots_pending_total(void) {
+    if (!g_progress_slots) return 0;
+    uint64_t total = 0;
+    for (size_t i = 0; i < g_progress_slot_count; ++i) {
+        if (ttak_atomic_read64(&g_progress_slots[i].active)) {
+            total += ttak_atomic_read64(&g_progress_slots[i].pending);
+        }
+    }
+    return total;
+}
+
+typedef struct tracker_probe_scope_t {
+    uint64_t pending;
+    int slot;
+} tracker_probe_scope_t;
+
+static void tracker_probe_scope_init(tracker_probe_scope_t *scope) {
+    if (!scope) return;
+    scope->pending = 0;
+    scope->slot = progress_slot_acquire();
+    if (scope->slot >= 0) {
+        progress_slot_publish(scope->slot, 0);
+    }
+}
+
+static void tracker_probe_scope_destroy(tracker_probe_scope_t *scope);
+
 #if defined(ENABLE_CUDA) || defined(ENABLE_ROCM) || defined(ENABLE_OPENCL)
 static uint64_t g_gpu_rate_last_sync_ms;
 static uint64_t g_gpu_rate_last_sequences;
@@ -336,6 +418,31 @@ static void responsive_sleep(uint32_t ms) {
     }
 }
 
+static bool join_thread_with_timeout(pthread_t thread, uint64_t timeout_ms) {
+#if defined(__linux__)
+    struct timespec ts;
+    clock_gettime(CLOCK_REALTIME, &ts);
+    ts.tv_sec += timeout_ms / 1000ULL;
+    ts.tv_nsec += (timeout_ms % 1000ULL) * 1000000ULL;
+    if (ts.tv_nsec >= 1000000000L) {
+        ts.tv_sec += 1;
+        ts.tv_nsec -= 1000000000L;
+    }
+    int rc = pthread_timedjoin_np(thread, NULL, &ts);
+    if (rc == 0) {
+        return true;
+    }
+    if (rc != ETIMEDOUT) {
+        fprintf(stderr, "[ALIQUOT] pthread_timedjoin_np error: %s\n", strerror(rc));
+    }
+    return false;
+#else
+    (void)timeout_ms;
+    pthread_join(thread, NULL);
+    return true;
+#endif
+}
+
 static bool join_state_path(char *dest, size_t dest_size, const char *dir, const char *leaf) {
     if (!dest || !dir || !leaf || dest_size == 0) return false;
     size_t dir_len = strnlen(dir, dest_size);
@@ -422,20 +529,39 @@ static void configure_probe_quantum(void) {
     g_probe_update_quantum = quant;
 }
 
-static inline void tracker_probe_note(uint64_t *pending, uint64_t delta) {
-    if (!pending) return;
+static inline void tracker_probe_note(tracker_probe_scope_t *scope, uint64_t delta) {
+    if (!scope) return;
     uint64_t quantum = g_probe_update_quantum ? g_probe_update_quantum : 1;
-    *pending += delta;
-    if (*pending >= quantum) {
-        ttak_atomic_add64(&g_total_probes, *pending);
-        *pending = 0;
+    scope->pending += delta;
+    if (scope->pending >= quantum) {
+        ttak_atomic_add64(&g_total_probes, scope->pending);
+        scope->pending = 0;
+        if (scope->slot >= 0) {
+            progress_slot_publish(scope->slot, 0);
+        }
+    } else if (scope->slot >= 0) {
+        progress_slot_publish(scope->slot, scope->pending);
     }
 }
 
-static inline void tracker_probe_flush(uint64_t *pending) {
-    if (!pending || *pending == 0) return;
-    ttak_atomic_add64(&g_total_probes, *pending);
-    *pending = 0;
+static inline void tracker_probe_flush(tracker_probe_scope_t *scope) {
+    if (!scope) return;
+    if (scope->pending) {
+        ttak_atomic_add64(&g_total_probes, scope->pending);
+        scope->pending = 0;
+    }
+    if (scope->slot >= 0) {
+        progress_slot_publish(scope->slot, 0);
+    }
+}
+
+static void tracker_probe_scope_destroy(tracker_probe_scope_t *scope) {
+    if (!scope) return;
+    tracker_probe_flush(scope);
+    if (scope->slot >= 0) {
+        progress_slot_release(scope->slot);
+        scope->slot = -1;
+    }
 }
 
 static void ensure_state_dir(void) {
@@ -444,6 +570,27 @@ static void ensure_state_dir(void) {
     if (mkdir(g_state_dir, 0755) != 0 && errno != EEXIST) {
         fprintf(stderr, "[ALIQUOT] Failed to create %s: %s\n", g_state_dir, strerror(errno));
     }
+}
+
+static void configure_sumdiv_limits(void) {
+    size_t default_bits = 192;
+    size_t limit_bits = default_bits;
+    const char *env_bits = getenv("ALIQUOT_SUMDIV_MAX_BITS");
+    if (env_bits && *env_bits) {
+        char *end = NULL;
+        errno = 0;
+        unsigned long long parsed = strtoull(env_bits, &end, 10);
+        if (errno == 0 && end && *end == '\0' && parsed > 0ULL) {
+            if (parsed > 4096ULL) parsed = 4096ULL;
+            limit_bits = (size_t)parsed;
+        } else {
+            fprintf(stderr, "[ALIQUOT] Invalid ALIQUOT_SUMDIV_MAX_BITS=%s. Using default %zu bits.\n",
+                    env_bits, default_bits);
+        }
+    }
+    ttak_sumdiv_limits_t limits = { .max_input_bits = limit_bits };
+    ttak_sum_divisors_set_limits(&limits);
+    printf("[ALIQUOT] Sum-divisor input bit cap: %zu bits\n", limit_bits);
 }
 
 static bool seed_registry_try_add(const ttak_bigint_t *seed) {
@@ -654,7 +801,8 @@ static bool frontier_accept_seed(const ttak_bigint_t *seed, scan_result_t *resul
     
     uint32_t steps = 0;
     bool accepted = true;
-    uint64_t probe_progress = 0;
+    tracker_probe_scope_t probe_scope;
+    tracker_probe_scope_init(&probe_scope);
 
     while (steps < SCAN_STEP_CAP) {
         if (ttak_atomic_read64(&shutdown_requested)) break;
@@ -665,7 +813,7 @@ static bool frontier_accept_seed(const ttak_bigint_t *seed, scan_result_t *resul
         ttak_bigint_t next;
         ttak_bigint_init(&next, monotonic_millis());
         bool ok = ttak_sum_proper_divisors_big(&current, &next, monotonic_millis());
-        tracker_probe_note(&probe_progress, 1);
+        tracker_probe_note(&probe_scope, 1);
         steps++;
 
         if (!ok) {
@@ -707,7 +855,7 @@ static bool frontier_accept_seed(const ttak_bigint_t *seed, scan_result_t *resul
 cleanup:
     ttak_bigint_free(&current, monotonic_millis());
     ttak_bigint_free(&max_value, monotonic_millis());
-    tracker_probe_flush(&probe_progress);
+    tracker_probe_scope_destroy(&probe_scope);
     return accepted;
 }
 
@@ -731,7 +879,8 @@ static void run_aliquot_sequence(const ttak_bigint_t *seed, uint32_t max_steps, 
     ttak_bigint_t current;
     ttak_bigint_init_copy(&current, seed, now);
     uint32_t steps = 0;
-    uint64_t probe_progress = 0;
+    tracker_probe_scope_t probe_scope;
+    tracker_probe_scope_init(&probe_scope);
 
     while (true) {
         if (steps == 0 && is_catalog_value(&current)) {
@@ -756,7 +905,7 @@ static void run_aliquot_sequence(const ttak_bigint_t *seed, uint32_t max_steps, 
         ttak_bigint_t next;
         ttak_bigint_init(&next, monotonic_millis());
         bool ok = ttak_sum_proper_divisors_big(&current, &next, monotonic_millis());
-        tracker_probe_note(&probe_progress, 1);
+        tracker_probe_note(&probe_scope, 1);
         steps++;
 
         if (!ok) {
@@ -820,7 +969,7 @@ static void run_aliquot_sequence(const ttak_bigint_t *seed, uint32_t max_steps, 
     aliquot_outcome_set_decimal_from_bigint(out, &out->max_value, monotonic_millis());
 
     ttak_bigint_free(&current, monotonic_millis());
-    tracker_probe_flush(&probe_progress);
+    tracker_probe_scope_destroy(&probe_scope);
     history_big_destroy(&hist);
 }
 
@@ -1665,8 +1814,8 @@ static void load_queue_checkpoint(void) {
 
 static void *worker_process_job_wrapper(void *arg) {
     aliquot_job_t *job = (aliquot_job_t *)arg;
-    pending_queue_remove(&job->seed);
     process_job(job);
+    pending_queue_remove(&job->seed);
     ttak_mem_free(job);
     return NULL;
 }
@@ -1777,7 +1926,9 @@ int main(void) {
     seed_rng();
     configure_probe_quantum();
     configure_state_paths(); ensure_state_dir(); init_catalog_filters();
+    configure_sumdiv_limits();
     printf("[ALIQUOT] Checkpoints at %s\n", g_state_dir);
+    printf("[ALIQUOT] Accelerator backend: %s\n", ALIQUOT_ACCEL_LABEL);
     if (!ledger_init_owner()) return 1;
     struct sigaction sa = {0}; sa.sa_handler = handle_signal; sigaction(SIGINT, &sa, NULL); sigaction(SIGTERM, &sa, NULL);
     ttak_atomic_write64(&g_last_persist_ms, monotonic_millis());
@@ -1793,9 +1944,15 @@ int main(void) {
     g_thread_pool = ttak_thread_pool_create((size_t)cpus, 0, monotonic_millis());
     if (!g_thread_pool) return 1;
 
+    int num_scouts = (cpus > 4) ? 2 : 1;
+    size_t slot_cap = (size_t)cpus + (size_t)num_scouts + 4;
+    if (!progress_slots_init(slot_cap, monotonic_millis())) {
+        fprintf(stderr, "[ALIQUOT] Failed to initialize progress tracking slots.\n");
+        return 1;
+    }
+
     load_queue_checkpoint();
     
-    int num_scouts = (cpus > 4) ? 2 : 1;
     pthread_t scout_threads[num_scouts];
     for (int i = 0; i < num_scouts; i++) {
         pthread_create(&scout_threads[i], NULL, scout_main, NULL);
@@ -1828,7 +1985,7 @@ int main(void) {
     }
 
     uint64_t status_last_ms = monotonic_millis();
-    uint64_t status_last_probes = ttak_atomic_read64(&g_total_probes);
+    uint64_t status_last_probes = ttak_atomic_read64(&g_total_probes) + progress_slots_pending_total();
     double status_rate = 0.0;
 
     while (!ttak_atomic_read64(&shutdown_requested)) {
@@ -1867,7 +2024,8 @@ int main(void) {
 
         uint64_t now_ms = monotonic_millis();
         uint64_t completed = ttak_atomic_read64(&g_total_sequences);
-        uint64_t probes_now = ttak_atomic_read64(&g_total_probes);
+        uint64_t pending_contrib = progress_slots_pending_total();
+        uint64_t probes_now = ttak_atomic_read64(&g_total_probes) + pending_contrib;
         uint64_t elapsed_ms = now_ms - status_last_ms;
         if (elapsed_ms >= 1000) {
             double secs = (double)elapsed_ms / 1000.0;
@@ -1888,12 +2046,29 @@ int main(void) {
     }
 
     printf("[ALIQUOT] Shutdown requested. Waiting for threads to exit...\n");
+    const uint64_t thread_join_timeout_ms = 30ULL * 1000ULL;
+    bool force_abort = false;
     for (int i = 0; i < num_scouts; i++) {
-        pthread_join(scout_threads[i], NULL);
+        if (!join_thread_with_timeout(scout_threads[i], thread_join_timeout_ms)) {
+            fprintf(stderr, "[ALIQUOT] Scout thread %d failed to exit within %" PRIu64 " ms. Forcing termination.\n",
+                    i, thread_join_timeout_ms);
+            pthread_cancel(scout_threads[i]);
+            force_abort = true;
+            break;
+        }
+    }
+    if (force_abort) {
+        fflush(stderr);
+        _exit(2);
     }
     ttak_thread_pool_destroy(g_thread_pool);
     flush_ledgers();
     ledger_destroy_owner();
+    if (g_progress_slots) {
+        ttak_mem_free(g_progress_slots);
+        g_progress_slots = NULL;
+        g_progress_slot_count = 0;
+    }
     printf("[ALIQUOT] Shutdown complete.\n");
     return 0;
 }

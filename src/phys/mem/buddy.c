@@ -597,9 +597,15 @@ void *ttak_mem_buddy_alloc(const ttak_mem_req_t *req) {
             block = select_block(order, req->priority);
         }
     }
-    if (!block && g_zone.embedded_mode) {
+    if (!block) {
         buddy_defragment();
         block = select_block(order, req->priority);
+    }
+    if (!block && !g_zone.embedded_mode) {
+        /* Hit capacity: grow silently instead of surfacing ENOMEM immediately. */
+        if (buddy_expand_zone(block_bytes)) {
+            block = select_block(order, req->priority);
+        }
     }
     if (!block) {
         fprintf(stderr, "[Buddy] ENOMEM(12): Allocation failed for needed size %zu (order %u). Current pool state: pool_len=%zu, max_order=%u\n",

@@ -22,6 +22,7 @@ typedef struct {
 static SUMDIV_THREAD_LOCAL ttak_sumdiv_big_error_t g_sumdiv_big_last_error = TTAK_SUMDIV_BIG_ERROR_NONE;
 static sumdiv_policy_state_t g_sumdiv_policy = {0, 0, 0, false};
 static ttak_logger_t *g_sumdiv_logger = NULL;
+static ttak_sumdiv_limits_t g_sumdiv_limits = { .max_input_bits = 0 };
 
 static bool sumdiv_policy_force_safe_mode(void) {
     return g_sumdiv_policy.safe_mode_budget > 0;
@@ -83,6 +84,9 @@ static bool sumdiv_policy_handle_failure(ttak_sumdiv_big_error_t err, size_t bit
                 g_sumdiv_policy.factor_backoff_bitlen = bitlen;
             }
             sumdiv_policy_log_stage("factor-backoff", err, bitlen, already_safe, g_sumdiv_policy.factor_cooldown);
+            break;
+        case TTAK_SUMDIV_BIG_ERROR_INPUT_TOO_LARGE:
+            /* deterministic fast-fail path; nothing to auto-heal */
             break;
         /* fall through */
         case TTAK_SUMDIV_BIG_ERROR_NONE:
@@ -407,6 +411,11 @@ bool ttak_sum_proper_divisors_big(const ttak_bigint_t *n, ttak_bigint_t *result_
     }
 
     size_t bitlen = ttak_bigint_get_bit_length(n);
+    size_t max_bits = g_sumdiv_limits.max_input_bits;
+    if (max_bits > 0 && bitlen > max_bits) {
+        g_sumdiv_big_last_error = TTAK_SUMDIV_BIG_ERROR_INPUT_TOO_LARGE;
+        return false;
+    }
     bool safe_mode = sumdiv_policy_force_safe_mode();
     g_sumdiv_big_last_error = TTAK_SUMDIV_BIG_ERROR_NONE;
 
@@ -442,10 +451,24 @@ const char *ttak_sum_proper_divisors_big_error_name(ttak_sumdiv_big_error_t err)
         case TTAK_SUMDIV_BIG_ERROR_SET_VALUE: return "assign";
         case TTAK_SUMDIV_BIG_ERROR_ARITHMETIC: return "arith";
         case TTAK_SUMDIV_BIG_ERROR_GENERIC: return "generic";
+        case TTAK_SUMDIV_BIG_ERROR_INPUT_TOO_LARGE: return "input-too-large";
         default: return "unknown";
     }
 }
 
 void ttak_sum_divisors_attach_logger(ttak_logger_t *logger) {
     g_sumdiv_logger = logger;
+}
+
+void ttak_sum_divisors_set_limits(const ttak_sumdiv_limits_t *limits) {
+    if (!limits) {
+        g_sumdiv_limits.max_input_bits = 0;
+        return;
+    }
+    g_sumdiv_limits.max_input_bits = limits->max_input_bits;
+}
+
+void ttak_sum_divisors_get_limits(ttak_sumdiv_limits_t *limits_out) {
+    if (!limits_out) return;
+    *limits_out = g_sumdiv_limits;
 }

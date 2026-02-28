@@ -329,6 +329,9 @@ static int add_factor_big(const ttak_bigint_t *p, ttak_prime_factor_big_t **fact
  * @param now         Timestamp for allocations.
  * @return 0 on success, -1 when allocation fails.
  */
+/* Hard stop so big-int trial division cannot stall forever on tough inputs. */
+#define FACTOR_BIG_TRIAL_LIMIT 500000
+
 int ttak_factor_big(const ttak_bigint_t *n, ttak_prime_factor_big_t **factors_out, size_t *count_out, uint64_t now) {
     if (ttak_bigint_is_zero(n) || ttak_bigint_cmp_u64(n, 1) <= 0) {
         *factors_out = NULL;
@@ -380,6 +383,7 @@ int ttak_factor_big(const ttak_bigint_t *n, ttak_prime_factor_big_t **factors_ou
     ttak_prime_factor_big_t *factors = NULL;
     size_t count = 0;
     size_t capacity = 0;
+    int ret = -1;
 
     ttak_bigint_t temp_n, rem, p;
     ttak_bigint_init_copy(&temp_n, n, now);
@@ -400,7 +404,11 @@ int ttak_factor_big(const ttak_bigint_t *n, ttak_prime_factor_big_t **factors_ou
     ttak_bigint_init(&p_squared, now);
     ttak_bigint_mul(&p_squared, &p, &p, now);
 
+    size_t trial_steps = 0;
     while (ttak_bigint_cmp(&p_squared, &temp_n) <= 0) {
+        if (trial_steps++ >= FACTOR_BIG_TRIAL_LIMIT) {
+            goto big_fail_limit;
+        }
         ttak_bigint_mod(&rem, &temp_n, &p, now);
         while (ttak_bigint_is_zero(&rem)) {
             if (add_factor_big(&p, &factors, &count, &capacity, now) != 0) goto big_fail;
@@ -425,6 +433,14 @@ int ttak_factor_big(const ttak_bigint_t *n, ttak_prime_factor_big_t **factors_ou
     return 0;
 
 big_fail:
+    ret = -1;
+    goto cleanup;
+
+big_fail_limit:
+    ret = -2;
+    goto cleanup;
+
+cleanup:
     for(size_t i = 0; i < count; ++i) {
         ttak_bigint_free(&factors[i].p, now);
     }
@@ -435,5 +451,5 @@ big_fail:
     ttak_bigint_free(&rem, now);
     ttak_bigint_free(&p, now);
     ttak_bigint_free(&p_squared, now);
-    return -1;
+    return ret;
 }

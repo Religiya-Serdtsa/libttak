@@ -14,7 +14,7 @@ make
 echo "[aliquot-tracker] Building tracker binary..."
 cd "$SCRIPT_DIR"
 make clean
-make
+make -f Makefile.cuda
 
 echo "[aliquot-tracker] Staging binary into $INSTALL_DIR ..."
 sudo mkdir -p "$BIN_DIR"

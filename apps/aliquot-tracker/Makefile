@@ -3,9 +3,40 @@ CC ?= tcc
 ROOT ?= ../..
 LIBTTK ?= $(ROOT)/lib/libttak.a
 
-CPPFLAGS += -I$(ROOT)/include
+ACCEL ?= cpu
+ACCEL_MODE := $(shell echo $(ACCEL) | tr '[:upper:]' '[:lower:]')
+
+ACCEL_CPPFLAGS :=
+ACCEL_LDFLAGS :=
+LIBTTK_ACCEL_FLAGS :=
+ACCEL_LABEL := CPU
+
+ifeq ($(ACCEL_MODE),cuda)
+ACCEL_CPPFLAGS += -DENABLE_CUDA
+ACCEL_LDFLAGS += -lcuda
+LIBTTK_ACCEL_FLAGS = USE_CUDA=1 USE_OPENCL=0 USE_ROCM=0
+ACCEL_LABEL := CUDA
+else ifeq ($(ACCEL_MODE),rocm)
+ACCEL_CPPFLAGS += -DENABLE_ROCM
+ACCEL_LDFLAGS += -lamdhip64
+LIBTTK_ACCEL_FLAGS = USE_CUDA=0 USE_OPENCL=0 USE_ROCM=1
+ACCEL_LABEL := ROCm
+else ifeq ($(ACCEL_MODE),opencl)
+ACCEL_CPPFLAGS += -DENABLE_OPENCL
+ACCEL_LDFLAGS += -lOpenCL
+LIBTTK_ACCEL_FLAGS = USE_CUDA=0 USE_OPENCL=1 USE_ROCM=0
+ACCEL_LABEL := OpenCL
+else ifeq ($(ACCEL_MODE),cpu)
+ACCEL_CPPFLAGS += -DENABLE_CPU_ONLY
+LIBTTK_ACCEL_FLAGS = USE_CUDA=0 USE_OPENCL=0 USE_ROCM=0
+ACCEL_LABEL := CPU
+else
+$(error Unknown ACCEL backend '$(ACCEL)')
+endif
+
+CPPFLAGS += -I$(ROOT)/include $(ACCEL_CPPFLAGS) -DALIQUOT_ACCEL_LABEL=\"$(ACCEL_LABEL)\"
 CFLAGS += -std=c11 -Wall
-LDFLAGS += -L$(ROOT)/lib -lttak -pthread -lm
+LDFLAGS += -L$(ROOT)/lib -lttak -pthread -lm $(ACCEL_LDFLAGS)
 
 BIN_DIR = bin
 SRC_DIR = src
@@ -32,7 +63,7 @@ $(CROSS_VERIFY_TARGET): $(CROSS_VERIFY_OBJS) $(LIBTTK)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
 $(LIBTTK):
-	$(MAKE) -C $(ROOT) lib/libttak.a
+	$(MAKE) -C $(ROOT) $(LIBTTK_ACCEL_FLAGS) lib/libttak.a
 
 clean:
 	rm -f $(OBJS) $(TARGET) $(CROSS_VERIFY_OBJS) $(CROSS_VERIFY_TARGET)

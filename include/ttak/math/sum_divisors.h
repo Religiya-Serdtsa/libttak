@@ -5,6 +5,7 @@
 #include <ttak/math/bigint.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include <stddef.h>
 
 typedef enum {
     TTAK_SUMDIV_BIG_ERROR_NONE = 0,
@@ -12,7 +13,8 @@ typedef enum {
     TTAK_SUMDIV_BIG_ERROR_EXPORT,
     TTAK_SUMDIV_BIG_ERROR_SET_VALUE,
     TTAK_SUMDIV_BIG_ERROR_ARITHMETIC,
-    TTAK_SUMDIV_BIG_ERROR_GENERIC
+    TTAK_SUMDIV_BIG_ERROR_GENERIC,
+    TTAK_SUMDIV_BIG_ERROR_INPUT_TOO_LARGE
 } ttak_sumdiv_big_error_t;
 
 /**
@@ -53,5 +55,12 @@ const char *ttak_sum_proper_divisors_big_error_name(ttak_sumdiv_big_error_t err)
  * @brief Attaches a logger for auto-heal stage reporting.
  */
 void ttak_sum_divisors_attach_logger(ttak_logger_t *logger);
+
+typedef struct {
+    size_t max_input_bits; /**< Fail fast when n exceeds this bit-length (0 disables limit). */
+} ttak_sumdiv_limits_t;
+
+void ttak_sum_divisors_set_limits(const ttak_sumdiv_limits_t *limits);
+void ttak_sum_divisors_get_limits(ttak_sumdiv_limits_t *limits_out);
 
 #endif // TTAK_MATH_SUM_DIVISORS_H

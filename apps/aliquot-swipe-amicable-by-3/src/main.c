@@ -36,12 +36,17 @@
 #include <ttak/timing/timing.h>
 #include <ttak/script/bigscript.h>
 
+#ifndef ALIQUOT_ACCEL_LABEL
+#define ALIQUOT_ACCEL_LABEL "CPU"
+#endif
+
 #define BLOCK_SIZE              10000ULL
 #define DEFAULT_START_SEED      0ULL
 
 #define STATE_DIR               "/opt/aliquot-3"
 #define HASH_LOG_NAME           "range_proofs.log"
 #define FOUND_LOG_NAME          "sociable_found.jsonl"
+#define SKIP_LOG_NAME           "skipped_seeds.jsonl"
 #define CHECKPOINT_FILE         "scanner_checkpoint.txt"
 #define JOURNAL_FILE            "task_journal.jnl"
 #define LOCK_FILE               "scanner.lock"
@@ -51,7 +56,7 @@
 #define DISPATCH_POLL_NS        2000000L
 #define MAX_INFLIGHT_FACTOR     2
 #define SHUTDOWN_TIMEOUT_S      30
-#define PROGRESS_FLUSH_STRIDE   1024ULL
+#define PROGRESS_FLUSH_STRIDE   64ULL
 
 /* -------------------------------------------------------------------------- */
 /* Time helper                                                                  */
@@ -316,6 +321,7 @@ typedef struct scan_task_t {
     uint64_t task_id;
     uint64_t count;
     core_seed_t start;
+    int progress_slot;
 } scan_task_t;
 
 /* -------------------------------------------------------------------------- */
@@ -327,6 +333,7 @@ static volatile uint64_t g_hard_shutdown_requested = 0;
 
 static volatile uint64_t g_total_scanned = 0;
 static volatile uint64_t g_inflight = 0;
+static volatile uint64_t g_skipped_seeds = 0;
 
 static pthread_mutex_t g_log_lock = PTHREAD_MUTEX_INITIALIZER;
 static pthread_mutex_t g_journal_lock = PTHREAD_MUTEX_INITIALIZER;
@@ -340,6 +347,7 @@ static char g_resume_script_hash_hex[65] = {0};
 
 static char g_hash_log_path[4096];
 static char g_found_log_path[4096];
+static char g_skip_log_path[4096];
 static char g_checkpoint_path[4096];
 static char g_journal_path[4096];
 static char g_lock_path[4096];
@@ -384,6 +392,7 @@ static void configure_state_paths(void) {
 
     snprintf(g_hash_log_path, sizeof(g_hash_log_path), "%s/%s", state_dir, HASH_LOG_NAME);
     snprintf(g_found_log_path, sizeof(g_found_log_path), "%s/%s", state_dir, FOUND_LOG_NAME);
+    snprintf(g_skip_log_path, sizeof(g_skip_log_path), "%s/%s", state_dir, SKIP_LOG_NAME);
     snprintf(g_checkpoint_path, sizeof(g_checkpoint_path), "%s/%s", state_dir, CHECKPOINT_FILE);
     snprintf(g_journal_path, sizeof(g_journal_path), "%s/%s", state_dir, JOURNAL_FILE);
     snprintf(g_lock_path, sizeof(g_lock_path), "%s/%s", state_dir, LOCK_FILE);
@@ -588,6 +597,71 @@ static str_entry_t *str_map_lookup(str_map_t *m, const char *key) {
 
 static str_map_t g_block_state;
 static str_map_t g_inflight_state;
+
+/* -------------------------------------------------------------------------- */
+/* Progress slot tracking (shared pending counters)                            */
+/* -------------------------------------------------------------------------- */
+
+typedef struct progress_slot_t {
+    volatile uint64_t pending;
+    volatile uint64_t active;
+} progress_slot_t;
+
+static progress_slot_t *g_progress_slots = NULL;
+static size_t g_progress_slot_count = 0;
+static pthread_mutex_t g_progress_lock = PTHREAD_MUTEX_INITIALIZER;
+
+static bool progress_slots_init(size_t count, uint64_t now) {
+    if (count == 0) return false;
+    g_progress_slots = (progress_slot_t *)ttak_mem_alloc(count * sizeof(progress_slot_t),
+                                                         __TTAK_UNSAFE_MEM_FOREVER__,
+                                                         now);
+    if (!g_progress_slots) return false;
+    memset(g_progress_slots, 0, count * sizeof(progress_slot_t));
+    g_progress_slot_count = count;
+    return true;
+}
+
+static int progress_slot_acquire(void) {
+    if (!g_progress_slots) return -1;
+    pthread_mutex_lock(&g_progress_lock);
+    for (size_t i = 0; i < g_progress_slot_count; ++i) {
+        if (ttak_atomic_read64(&g_progress_slots[i].active) == 0) {
+            ttak_atomic_write64(&g_progress_slots[i].active, 1);
+            ttak_atomic_write64(&g_progress_slots[i].pending, 0);
+            pthread_mutex_unlock(&g_progress_lock);
+            return (int)i;
+        }
+    }
+    pthread_mutex_unlock(&g_progress_lock);
+    return -1;
+}
+
+static void progress_slot_release(int idx) {
+    if (idx < 0 || !g_progress_slots) return;
+    size_t slot = (size_t)idx;
+    if (slot >= g_progress_slot_count) return;
+    ttak_atomic_write64(&g_progress_slots[slot].pending, 0);
+    ttak_atomic_write64(&g_progress_slots[slot].active, 0);
+}
+
+static void progress_slot_publish(int idx, uint64_t pending) {
+    if (idx < 0 || !g_progress_slots) return;
+    size_t slot = (size_t)idx;
+    if (slot >= g_progress_slot_count) return;
+    ttak_atomic_write64(&g_progress_slots[slot].pending, pending);
+}
+
+static uint64_t progress_slots_pending_total(void) {
+    if (!g_progress_slots) return 0;
+    uint64_t total = 0;
+    for (size_t i = 0; i < g_progress_slot_count; ++i) {
+        if (ttak_atomic_read64(&g_progress_slots[i].active)) {
+            total += ttak_atomic_read64(&g_progress_slots[i].pending);
+        }
+    }
+    return total;
+}
 
 /* -------------------------------------------------------------------------- */
 /* Requeue stack (BigInt-first)                                                 */
@@ -908,6 +982,69 @@ static void log_proof_core_seed(const core_seed_t *range_start, uint64_t count, 
     pthread_mutex_unlock(&g_log_lock);
 }
 
+static void sha_log_skip_marker(SHA256_CTX *ctx, const char *stage) {
+    if (!ctx) return;
+    char tag[64];
+    const char *label = stage ? stage : "?";
+    int n = snprintf(tag, sizeof(tag), "[skip:%s]", label);
+    if (n <= 0) return;
+    size_t len = (size_t)n;
+    if (len >= sizeof(tag)) len = sizeof(tag) - 1;
+    sha256_update(ctx, (const uint8_t *)tag, len);
+}
+
+static void log_skipped_seed_bigint(const ttak_bigint_t *value, const char *stage, ttak_sumdiv_big_error_t err, uint64_t now) {
+    if (!value) return;
+    char *v = ttak_bigint_to_string(value, now);
+    if (!v) return;
+    const char *err_name = ttak_sum_proper_divisors_big_error_name(err);
+    if (!err_name) err_name = "unknown";
+    const char *phase = stage ? stage : "unknown";
+
+    char buf[4096];
+    int n;
+    if (g_script_hash_hex[0] != '\0') {
+        n = snprintf(buf, sizeof(buf),
+                     "{\"status\":\"skipped\",\"value\":\"%s\",\"phase\":\"%s\",\"error\":\"%s\",\"ts\":%" PRIu64 ",\"script_sha256\":\"%s\"}\n",
+                     v, phase, err_name, (uint64_t)time(NULL), g_script_hash_hex);
+    } else {
+        n = snprintf(buf, sizeof(buf),
+                     "{\"status\":\"skipped\",\"value\":\"%s\",\"phase\":\"%s\",\"error\":\"%s\",\"ts\":%" PRIu64 "}\n",
+                     v, phase, err_name, (uint64_t)time(NULL));
+    }
+
+    if (n > 0 && (size_t)n < sizeof(buf)) {
+        pthread_mutex_lock(&g_log_lock);
+        (void)append_line_best_effort(g_skip_log_path, buf);
+        pthread_mutex_unlock(&g_log_lock);
+    }
+
+    ttak_mem_free(v);
+    ttak_atomic_add64(&g_skipped_seeds, 1);
+}
+
+static void configure_sumdiv_limits(void) {
+    size_t default_bits = 192;
+    size_t limit_bits = default_bits;
+    const char *env_bits = getenv("ALIQUOT_SUMDIV_MAX_BITS");
+    if (env_bits && *env_bits) {
+        char *end = NULL;
+        errno = 0;
+        unsigned long long parsed = strtoull(env_bits, &end, 10);
+        if (errno == 0 && end && *end == '\0' && parsed > 0ULL) {
+            if (parsed > 4096ULL) parsed = 4096ULL;
+            limit_bits = (size_t)parsed;
+        } else {
+            fprintf(stderr, "[WARNING] Invalid ALIQUOT_SUMDIV_MAX_BITS=%s. Using default %zu bits.\n",
+                    env_bits, default_bits);
+        }
+    }
+
+    ttak_sumdiv_limits_t limits = { .max_input_bits = limit_bits };
+    ttak_sum_divisors_set_limits(&limits);
+    printf("[SYSTEM] Sum-divisor input bit limit: %zu bits.\n", limit_bits);
+}
+
 /* -------------------------------------------------------------------------- */
 /* Recovery: journal authoritative                                               */
 /* -------------------------------------------------------------------------- */
@@ -1098,6 +1235,10 @@ static void *worker_scan_range(void *arg) {
 
     uint64_t processed = 0;
     uint64_t pending_flush = 0;
+    int progress_slot = task->progress_slot;
+    if (progress_slot >= 0) {
+        progress_slot_publish(progress_slot, 0);
+    }
 
     ttak_bigscript_vm_t *vm = NULL;
     if (g_script_prog) {
@@ -1121,8 +1262,9 @@ static void *worker_scan_range(void *arg) {
         ttak_mem_free(seed_s);
 
         if (!ttak_sum_proper_divisors_big(&seed_val, &s1, now)) {
-            fprintf(stderr, "[FATAL] sum_proper_divisors failed.\n");
-            _exit(EXIT_FAILURE);
+            sha_log_skip_marker(&sha_ctx, "s");
+            log_skipped_seed_bigint(&seed_val, "s", ttak_sum_proper_divisors_big_last_error(), now);
+            goto advance_seed;
         }
 
         char *s1_s = ttak_bigint_to_string(&s1, now);
@@ -1150,26 +1292,25 @@ static void *worker_scan_range(void *arg) {
                 fprintf(stderr, "[FATAL] eval_seed failed: %s\n", err.message ? err.message : "Unknown");
                 _exit(EXIT_FAILURE);
             }
-        } else {
-            if (ttak_bigint_cmp(&s1, &seed_val) != 0 && ttak_bigint_cmp_u64(&s1, 1) > 0) {
-                if (!ttak_sum_proper_divisors_big(&s1, &s2, now)) {
-                    fprintf(stderr, "[FATAL] sum_proper_divisors failed.\n");
-                    _exit(EXIT_FAILURE);
+        } else if (ttak_bigint_cmp(&s1, &seed_val) != 0 && ttak_bigint_cmp_u64(&s1, 1) > 0) {
+            if (!ttak_sum_proper_divisors_big(&s1, &s2, now)) {
+                log_skipped_seed_bigint(&s1, "s2", ttak_sum_proper_divisors_big_last_error(), now);
+                goto advance_seed;
+            }
+            if (ttak_bigint_cmp(&s2, &seed_val) != 0) {
+                if (!ttak_sum_proper_divisors_big(&s2, &s3, now)) {
+                    log_skipped_seed_bigint(&s2, "s3", ttak_sum_proper_divisors_big_last_error(), now);
+                    goto advance_seed;
                 }
-                if (ttak_bigint_cmp(&s2, &seed_val) != 0) {
-                    if (!ttak_sum_proper_divisors_big(&s2, &s3, now)) {
-                        fprintf(stderr, "[FATAL] sum_proper_divisors failed.\n");
-                        _exit(EXIT_FAILURE);
-                    }
-                    if (ttak_bigint_cmp(&s3, &seed_val) == 0) {
-                        if (ttak_bigint_cmp(&seed_val, &s1) < 0 && ttak_bigint_cmp(&seed_val, &s2) < 0) {
-                            log_found_seed_bigint(&seed_val, now);
-                        }
+                if (ttak_bigint_cmp(&s3, &seed_val) == 0) {
+                    if (ttak_bigint_cmp(&seed_val, &s1) < 0 && ttak_bigint_cmp(&seed_val, &s2) < 0) {
+                        log_found_seed_bigint(&seed_val, now);
                     }
                 }
             }
         }
 
+advance_seed:
         if (!ttak_bigint_add_u64(&seed_val, &seed_val, 1, now)) {
             fprintf(stderr, "[FATAL] BigInt add failed.\n");
             _exit(EXIT_FAILURE);
@@ -1177,9 +1318,15 @@ static void *worker_scan_range(void *arg) {
 
         processed++;
         pending_flush++;
+        if (progress_slot >= 0) {
+            progress_slot_publish(progress_slot, pending_flush);
+        }
         if (pending_flush >= PROGRESS_FLUSH_STRIDE) {
             ttak_atomic_add64(&g_total_scanned, pending_flush);
             pending_flush = 0;
+            if (progress_slot >= 0) {
+                progress_slot_publish(progress_slot, 0);
+            }
         }
     }
 
@@ -1187,6 +1334,10 @@ static void *worker_scan_range(void *arg) {
 
     if (pending_flush) {
         ttak_atomic_add64(&g_total_scanned, pending_flush);
+        pending_flush = 0;
+    }
+    if (progress_slot >= 0) {
+        progress_slot_publish(progress_slot, 0);
     }
 
     bool completed = (processed == task->count && !ttak_atomic_read64(&g_shutdown_requested));
@@ -1238,6 +1389,10 @@ static void *worker_scan_range(void *arg) {
 
     core_seed_free(&task->start, now);
     ttak_mem_free(task);
+
+    if (progress_slot >= 0) {
+        progress_slot_release(progress_slot);
+    }
 
     ttak_atomic_add64(&g_inflight, (uint64_t)(-1LL));
     return NULL;
@@ -1298,11 +1453,26 @@ static bool dispatch_one(ttak_thread_pool_t *pool, const core_seed_t *range_star
         return false;
     }
 
+    task->progress_slot = -1;
+    int slot = progress_slot_acquire();
+    if (slot < 0) {
+        pthread_mutex_lock(&g_state_lock);
+        str_entry_t *rb = str_map_lookup(&g_inflight_state, start_s);
+        if (rb) rb->state = 0;
+        pthread_mutex_unlock(&g_state_lock);
+        ttak_mem_free(start_s);
+        ttak_mem_free(task);
+        return false;
+    }
+    task->progress_slot = slot;
+    progress_slot_publish(task->progress_slot, 0);
+
     task->task_id = g_next_task_id++;
     task->count = count;
     core_seed_init_zero(&task->start, now);
     if (!ttak_bigint_copy(&task->start.big, &range_start->big, now)) {
         core_seed_free(&task->start, now);
+        progress_slot_release(task->progress_slot);
         ttak_mem_free(task);
         ttak_mem_free(start_s);
         return false;
@@ -1386,6 +1556,8 @@ int main(int argc, char **argv) {
 
     core_seed_init_zero(&g_next_dispatch, now);
     core_seed_init_zero(&g_verified_frontier, now);
+
+    configure_sumdiv_limits();
 
     const char *script_path = getenv("ALIQUOT_SCRIPT_PATH");
     const char *script_text = getenv("ALIQUOT_SCRIPT_TEXT");
@@ -1478,6 +1650,11 @@ int main(int argc, char **argv) {
         return EXIT_FAILURE;
     }
 
+    if (!progress_slots_init(max_inflight, now)) {
+        fprintf(stderr, "[FATAL] Unable to initialize progress slots.\n");
+        return EXIT_FAILURE;
+    }
+
     signal(SIGINT, handle_signal);
     signal(SIGTERM, handle_signal);
 
@@ -1491,6 +1668,7 @@ int main(int argc, char **argv) {
     printf("[SYSTEM] Aliquot scanner online with %ld worker threads.\n", cpus);
     printf("[SYSTEM] Resuming from verified seed %s\n", vstr ? vstr : "conversion_error");
     printf("[SYSTEM] Next dispatch seed %s\n", nstr ? nstr : "conversion_error");
+    printf("[SYSTEM] Accelerator backend: %s\n", ALIQUOT_ACCEL_LABEL);
 
     if (vstr) ttak_mem_free(vstr);
     if (nstr) ttak_mem_free(nstr);
@@ -1566,7 +1744,8 @@ int main(int argc, char **argv) {
         pthread_mutex_unlock(&g_state_lock);
 
         if (now - last_status >= STATUS_INTERVAL_MS) {
-            uint64_t current_total = ttak_atomic_read64(&g_total_scanned);
+            uint64_t pending_total = progress_slots_pending_total();
+            uint64_t current_total = ttak_atomic_read64(&g_total_scanned) + pending_total;
             double dt = (now - last_rate_ts) / 1000.0;
             double rate = 0.0;
             if (dt > 0.0 && current_total >= last_rate_total) {
@@ -1574,16 +1753,17 @@ int main(int argc, char **argv) {
             }
 
             uint64_t inflight_now = ttak_atomic_read64(&g_inflight);
+            uint64_t skipped_now = ttak_atomic_read64(&g_skipped_seeds);
 
             pthread_mutex_lock(&g_state_lock);
             char *next_s = core_seed_to_decimal(&g_next_dispatch, now);
             char *ver_s  = core_seed_to_decimal(&g_verified_frontier, now);
             pthread_mutex_unlock(&g_state_lock);
 
-            printf("[STATUS] Next %s | Verified %s | Rate %.2f seeds/sec | InFlight %" PRIu64 "/%" PRIu64 "\n",
+            printf("[STATUS] Next %s | Verified %s | Rate %.2f seeds/sec | InFlight %" PRIu64 "/%" PRIu64 " | Skipped %" PRIu64 "\n",
                    next_s ? next_s : "conversion_error",
                    ver_s ? ver_s : "conversion_error",
-                   rate, inflight_now, max_inflight);
+                   rate, inflight_now, max_inflight, skipped_now);
 
             if (next_s) ttak_mem_free(next_s);
             if (ver_s) ttak_mem_free(ver_s);
@@ -1631,9 +1811,17 @@ int main(int argc, char **argv) {
         ttak_mem_free(final_v);
     }
 
+    uint64_t skipped_final = ttak_atomic_read64(&g_skipped_seeds);
+    printf("[RETIRE] Skipped seeds recorded: %" PRIu64 "\n", skipped_final);
+
     printf("[RETIRE] Scanner shutdown complete.\n");
 
     requeue_free_all(now);
+    if (g_progress_slots) {
+        ttak_mem_free(g_progress_slots);
+        g_progress_slots = NULL;
+        g_progress_slot_count = 0;
+    }
     str_map_free(&g_inflight_state);
     str_map_free(&g_block_state);
 

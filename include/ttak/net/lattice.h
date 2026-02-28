@@ -39,6 +39,8 @@ typedef struct ttak_net_lattice {
     volatile uint64_t total_ingress;
     volatile uint64_t used_slots;
     _Bool is_full;
+    _Bool is_stub;
+    struct ttak_net_lattice *prev;
     struct ttak_net_lattice *next; /* Grows when the lattice saturates */
     ttak_mutex_t expand_lock;
 } ttak_net_lattice_t;

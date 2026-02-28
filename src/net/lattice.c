@@ -5,12 +5,20 @@
 #include <string.h>
 #include <stdlib.h>
 #include <pthread.h>
+#include <stdatomic.h>
 
 #if defined(__TINYC__)
 static uint32_t tls_worker_id = 0;
 #else
 static _Thread_local uint32_t tls_worker_id = 0;
 #endif
+
+#define TTAK_LATTICE_COMPACT_MIN_FREE_PCT 65U
+#define TTAK_LATTICE_COMPACT_THROTTLE_MASK 0x3FU
+
+static pthread_mutex_t g_lattice_compact_lock = PTHREAD_MUTEX_INITIALIZER;
+static _Atomic uint32_t g_lattice_compact_counter = 0;
+
 static ttak_net_lattice_t *global_default_lattice = NULL;
 static pthread_once_t lattice_once = PTHREAD_ONCE_INIT;
 
@@ -18,6 +26,155 @@ static void lattice_init_default(void) {
     /* Auto-detect CPU count or use a safe default (4) for lattice dimension */
     uint32_t dim = 4;
     global_default_lattice = ttak_net_lattice_create(dim, ttak_get_tick_count());
+}
+
+static ttak_net_lattice_t *ttak_net_lattice_head(ttak_net_lattice_t *lat) {
+    while (lat && lat->prev) {
+        lat = lat->prev;
+    }
+    return lat;
+}
+
+static inline _Bool ttak_net_lattice_is_real(const ttak_net_lattice_t *lat) {
+    return lat && !lat->is_stub && lat->dim != 0 && lat->slots;
+}
+
+static _Bool ttak_net_lattice_slots_idle(const ttak_net_lattice_t *lat) {
+    if (!ttak_net_lattice_is_real(lat)) {
+        return false;
+    }
+    size_t slots_count = (size_t)lat->dim * (size_t)lat->dim;
+    for (size_t i = 0; i < slots_count; ++i) {
+        if (ttak_atomic_read64(&lat->slots[i].state) != 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+static void ttak_net_lattice_mark_stub(ttak_net_lattice_t *lat) {
+    if (!lat || lat->is_stub) {
+        return;
+    }
+    if (lat->slots) {
+        ttak_mem_free(lat->slots);
+    }
+    lat->slots = NULL;
+    lat->dim = 0;
+    lat->mask = 0;
+    lat->capacity = 0;
+    lat->is_stub = true;
+    ttak_atomic_write64(&lat->used_slots, 0);
+    ttak_atomic_write64(&lat->total_ingress, 0);
+    lat->is_full = false;
+}
+
+static _Bool ttak_net_lattice_rehydrate(ttak_net_lattice_t *lat, uint32_t dim, uint64_t now) {
+    if (!lat || dim == 0) {
+        return false;
+    }
+
+    size_t slots_count = (size_t)dim * (size_t)dim;
+    ttak_net_lattice_slot_t *slots = ttak_mem_alloc(slots_count * sizeof(ttak_net_lattice_slot_t),
+                                                    __TTAK_UNSAFE_MEM_FOREVER__, now);
+    if (!slots) {
+        return false;
+    }
+    memset(slots, 0, slots_count * sizeof(ttak_net_lattice_slot_t));
+
+    lat->slots = slots;
+    lat->dim = dim;
+    lat->mask = dim - 1U;
+    lat->capacity = (uint32_t)slots_count;
+    lat->is_stub = false;
+    ttak_atomic_write64(&lat->used_slots, 0);
+    ttak_atomic_write64(&lat->total_ingress, 0);
+    lat->is_full = false;
+    return true;
+}
+
+static void ttak_net_lattice_try_compact(ttak_net_lattice_t *lat) {
+    if (!lat) {
+        return;
+    }
+
+    uint32_t ticket = atomic_fetch_add_explicit(&g_lattice_compact_counter, 1U, memory_order_relaxed);
+    if ((ticket & TTAK_LATTICE_COMPACT_THROTTLE_MASK) != 0U) {
+        return;
+    }
+
+    ttak_net_lattice_t *head = ttak_net_lattice_head(lat);
+    uint64_t total_capacity = 0;
+    uint64_t total_used = 0;
+    size_t real_nodes = 0;
+
+    for (ttak_net_lattice_t *node = head; node; node = node->next) {
+        if (!ttak_net_lattice_is_real(node)) {
+            continue;
+        }
+        real_nodes++;
+        total_capacity += node->capacity;
+        total_used += ttak_atomic_read64(&node->used_slots);
+    }
+
+    if (real_nodes < 2 || total_capacity == 0) {
+        return;
+    }
+
+    uint64_t free_pct = ((total_capacity - total_used) * 100ULL) / total_capacity;
+    if (free_pct < TTAK_LATTICE_COMPACT_MIN_FREE_PCT) {
+        return;
+    }
+
+    ttak_net_lattice_t *cursor = head;
+    while (cursor && cursor->next) {
+        cursor = cursor->next;
+    }
+
+    ttak_net_lattice_t *first = NULL;
+    ttak_net_lattice_t *second = NULL;
+
+    for (; cursor; cursor = cursor->prev) {
+        if (!ttak_net_lattice_is_real(cursor) || ttak_atomic_read64(&cursor->used_slots) != 0) {
+            continue;
+        }
+        ttak_net_lattice_t *prev = cursor->prev;
+        while (prev && !ttak_net_lattice_is_real(prev)) {
+            prev = prev->prev;
+        }
+        if (!prev) {
+            break;
+        }
+        if (ttak_atomic_read64(&prev->used_slots) != 0) {
+            continue;
+        }
+        first = prev;
+        second = cursor;
+        break;
+    }
+
+    if (!first || !second) {
+        return;
+    }
+
+    pthread_mutex_lock(&g_lattice_compact_lock);
+    if (!ttak_net_lattice_is_real(first) || !ttak_net_lattice_is_real(second) ||
+        ttak_atomic_read64(&first->used_slots) != 0 ||
+        ttak_atomic_read64(&second->used_slots) != 0 ||
+        first->dim != second->dim) {
+        pthread_mutex_unlock(&g_lattice_compact_lock);
+        return;
+    }
+
+    if (!ttak_net_lattice_slots_idle(first) || !ttak_net_lattice_slots_idle(second)) {
+        pthread_mutex_unlock(&g_lattice_compact_lock);
+        return;
+    }
+
+    size_t slots_bytes = (size_t)first->capacity * sizeof(ttak_net_lattice_slot_t);
+    memset(first->slots, 0, slots_bytes);
+    ttak_net_lattice_mark_stub(second);
+    pthread_mutex_unlock(&g_lattice_compact_lock);
 }
 
 ttak_net_lattice_t* ttak_net_lattice_get_default(void) {
@@ -53,6 +210,8 @@ ttak_net_lattice_t* ttak_net_lattice_create(uint32_t dim, uint64_t now) {
     lat->total_ingress = 0;
     lat->used_slots = 0;
     lat->is_full = false;
+    lat->is_stub = false;
+    lat->prev = NULL;
     lat->next = NULL;
     if (ttak_mutex_init(&lat->expand_lock) != 0) {
         ttak_mem_free(lat->slots);
@@ -83,11 +242,25 @@ void ttak_net_lattice_destroy(ttak_net_lattice_t *lat, uint64_t now) {
  */
 _Bool ttak_net_lattice_write(ttak_net_lattice_t *lat, uint32_t tid, const void *data, uint32_t len, uint64_t now) {
     if (!lat || !data || len > TTAK_LATTICE_SLOT_SIZE) return false;
-    
-    uint32_t mask = lat->mask;
+
+    ttak_net_lattice_t *head = ttak_net_lattice_head(lat);
+    ttak_net_lattice_t *mask_node = head;
+    while (mask_node && !ttak_net_lattice_is_real(mask_node)) {
+        mask_node = mask_node->next;
+    }
+    if (!mask_node) {
+        return false;
+    }
+
+    uint32_t mask = mask_node->mask;
     uint32_t my_tid = tid & mask;
     
-    for (ttak_net_lattice_t *node = lat; node; ) {
+    for (ttak_net_lattice_t *node = head; node; ) {
+        if (!ttak_net_lattice_is_real(node)) {
+            node = node->next;
+            continue;
+        }
+
         uint32_t dim = node->dim;
         /* Iterate through the Sanpan (Counting Board) lattice */
         for (uint32_t r = 0; r < dim; r++) {
@@ -127,10 +300,23 @@ _Bool ttak_net_lattice_read(ttak_net_lattice_t *lat, uint32_t tid, void *dst, ui
     if (!lat || !dst || !len_out) return false;
     (void)now;
     
-    uint32_t mask = lat->mask;
+    ttak_net_lattice_t *head = ttak_net_lattice_head(lat);
+    ttak_net_lattice_t *mask_node = head;
+    while (mask_node && !ttak_net_lattice_is_real(mask_node)) {
+        mask_node = mask_node->next;
+    }
+    if (!mask_node) {
+        return false;
+    }
+
+    uint32_t mask = mask_node->mask;
     uint32_t my_tid = tid & mask;
     
-    for (ttak_net_lattice_t *node = lat; node; node = node->next) {
+    for (ttak_net_lattice_t *node = head; node; node = node->next) {
+        if (!ttak_net_lattice_is_real(node)) {
+            continue;
+        }
+
         uint32_t dim = node->dim;
         for (uint32_t r = 0; r < dim; r++) {
             for (uint32_t c = 0; c < dim; c++) {
@@ -158,33 +344,45 @@ _Bool ttak_net_lattice_read(ttak_net_lattice_t *lat, uint32_t tid, void *dst, ui
 
 ttak_net_lattice_t* ttak_net_lattice_ensure_next(ttak_net_lattice_t *lat, uint64_t now) {
     if (!lat) return NULL;
-    if (lat->next) return lat->next;
+    if (lat->next && !lat->next->is_stub) return lat->next;
 
     ttak_mutex_lock(&lat->expand_lock);
-    if (!lat->next) {
-        lat->next = ttak_net_lattice_create(lat->dim, now);
+    ttak_net_lattice_t *next = lat->next;
+    if (!next) {
+        next = ttak_net_lattice_create(lat->dim, now);
+        if (next) {
+            next->prev = lat;
+            lat->next = next;
+        }
+    } else if (next->is_stub) {
+        if (!ttak_net_lattice_rehydrate(next, lat->dim, now)) {
+            next = NULL;
+        }
     }
     ttak_mutex_unlock(&lat->expand_lock);
-    return lat->next;
+    return next;
 }
 
 void ttak_net_lattice_mark_slot_acquired(ttak_net_lattice_t *lat, uint64_t now) {
-    if (!lat) return;
+    if (!lat || lat->capacity == 0) return;
     uint64_t used = ttak_atomic_add64(&lat->used_slots, 1);
     if (used >= lat->capacity) {
         lat->is_full = true;
     }
     uint64_t scaled = used * 100;
     uint64_t threshold = (uint64_t)lat->capacity * 80;
-    if (!lat->next && scaled >= threshold) {
+    if (scaled >= threshold) {
         ttak_net_lattice_ensure_next(lat, now);
     }
 }
 
 void ttak_net_lattice_mark_slot_released(ttak_net_lattice_t *lat) {
-    if (!lat) return;
+    if (!lat || lat->capacity == 0) return;
     uint64_t remaining = ttak_atomic_sub64(&lat->used_slots, 1);
     if (remaining < lat->capacity) {
         lat->is_full = false;
+    }
+    if (remaining == 0) {
+        ttak_net_lattice_try_compact(lat);
     }
 }

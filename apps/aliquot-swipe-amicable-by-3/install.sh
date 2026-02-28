@@ -14,7 +14,7 @@ make
 echo "[aliquot-3] Building swipe/cross-verify binaries..."
 cd "$SCRIPT_DIR"
 make clean
-make -f Makefile
+make ACCEL=cuda
 
 echo "[aliquot-3] Staging binary into $INSTALL_DIR ..."
 sudo mkdir -p "$BIN_DIR"
