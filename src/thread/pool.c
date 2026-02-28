@@ -76,7 +76,7 @@ ttak_thread_pool_t *ttak_thread_pool_create(size_t num_threads, int default_nice
         pool->workers[i]->wrapper->jmp_magic = 0; 
         pool->workers[i]->wrapper->jmp_tid = 0;
 
-        pthread_create(&pool->workers[i]->thread, NULL, ttak_worker_routine, pool->workers[i]);
+        pthread_create(&pool->workers[i]->thread, &attr, ttak_worker_routine, pool->workers[i]);
     }
 
     pthread_attr_destroy(&attr);
