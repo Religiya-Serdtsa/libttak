@@ -36,11 +36,21 @@ static void pool_force_shutdown(ttak_thread_pool_t *pool) {
  * @return Pointer to the created pool or NULL on failure.
  */
 ttak_thread_pool_t *ttak_thread_pool_create(size_t num_threads, int default_nice, uint64_t now) {
+    // Initialize pthread attribute
+    pthread_attr_t attr;
+    pthread_attr_init(&attr);
+
+    // Ensure pthread's stack size is 512KB
+    pthread_attr_setstacksize(&attr, 1024 * 512);
+
     // Ensure smart scheduler is ready
     ttak_scheduler_init();
 
     ttak_thread_pool_t *pool = (ttak_thread_pool_t *)ttak_mem_alloc(sizeof(ttak_thread_pool_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
-    if (!pool) return NULL;
+    if (!pool) {
+        pthread_attr_destroy(&attr);
+        return NULL;
+    }
 
     pool->num_threads = num_threads;
     pool->creation_ts = now;
@@ -69,6 +79,7 @@ ttak_thread_pool_t *ttak_thread_pool_create(size_t num_threads, int default_nice
         pthread_create(&pool->workers[i]->thread, NULL, ttak_worker_routine, pool->workers[i]);
     }
 
+    pthread_attr_destroy(&attr);
     return pool;
 }
 
