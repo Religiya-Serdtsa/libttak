@@ -162,9 +162,60 @@ static void buddy_bootstrap(void) {
 }
 #endif
 
+#if defined(__TINYC__)
+static pthread_once_t ttak_tls_once = PTHREAD_ONCE_INIT;
+static pthread_key_t ttak_tls_guard_key;
+static pthread_key_t ttak_tls_memop_key;
+static pthread_key_t ttak_tls_meminit_key;
+static pthread_key_t ttak_tls_retrying_key;
+
+static void ttak_tls_init_keys(void) {
+    pthread_key_create(&ttak_tls_guard_key, free);
+    pthread_key_create(&ttak_tls_memop_key, free);
+    pthread_key_create(&ttak_tls_meminit_key, free);
+    pthread_key_create(&ttak_tls_retrying_key, free);
+}
+
+static void *ttak_tls_get_slot(pthread_key_t key, size_t slot_size, void *fallback) {
+    pthread_once(&ttak_tls_once, ttak_tls_init_keys);
+    void *slot = pthread_getspecific(key);
+    if (!slot) {
+        slot = calloc(1, slot_size);
+        if (slot && pthread_setspecific(key, slot) != 0) {
+            free(slot);
+            slot = NULL;
+        }
+    }
+    return slot ? slot : fallback;
+}
+
+bool *ttak_tls_get_reentrancy_guard(void) {
+    static bool global_fallback = false;
+    return (bool *)ttak_tls_get_slot(ttak_tls_guard_key, sizeof(bool), &global_fallback);
+}
+
+static int *ttak_tls_get_in_mem_op(void) {
+    static int fallback = 0;
+    return (int *)ttak_tls_get_slot(ttak_tls_memop_key, sizeof(int), &fallback);
+}
+
+static int *ttak_tls_get_in_mem_init(void) {
+    static int fallback = 0;
+    return (int *)ttak_tls_get_slot(ttak_tls_meminit_key, sizeof(int), &fallback);
+}
+
+static int *ttak_tls_get_retrying_counter(void) {
+    static int fallback = 0;
+    return (int *)ttak_tls_get_slot(ttak_tls_retrying_key, sizeof(int), &fallback);
+}
+
+#define in_mem_op        (*ttak_tls_get_in_mem_op())
+#define in_mem_init      (*ttak_tls_get_in_mem_init())
+#else
 TTAK_THREAD_LOCAL bool t_reentrancy_guard = false;  /**< Thread-local guard against recursive allocation */
 TTAK_THREAD_LOCAL int in_mem_op = 0;               /**< Guard for pointer-map operations */
 TTAK_THREAD_LOCAL int in_mem_init = 0;            /**< Guard for subsystem initialization */
+#endif
 static volatile int global_init_done = 0;         /**< Subsystem initialization ready flag */
 
 /**
@@ -311,13 +362,18 @@ void TTAK_HOT_PATH *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, ui
             else allocated_tier = TTAK_ALLOC_TIER_GENERAL;
         }
         if (!header && errno == ENOMEM) {
+#if defined(__TINYC__)
+            int *retrying_ptr = ttak_tls_get_retrying_counter();
+#else
             static TTAK_THREAD_LOCAL int retrying = 0;
-            if (!retrying) {
-                retrying = 1; t_reentrancy_guard = false;
+            int *retrying_ptr = &retrying;
+#endif
+            if (retrying_ptr && !*retrying_ptr) {
+                *retrying_ptr = 1; t_reentrancy_guard = false;
                 tt_autoclean_dirty_pointers(now);
                 t_reentrancy_guard = true;
                 void *res = ttak_mem_alloc_safe(size, lifetime_ticks, now, is_const, is_volatile, allow_direct, is_root, flags);
-                retrying = 0; t_reentrancy_guard = false;
+                *retrying_ptr = 0; t_reentrancy_guard = false;
                 return res;
             }
         }

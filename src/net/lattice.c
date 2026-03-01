@@ -8,6 +8,105 @@
 #include <stdatomic.h>
 
 #if defined(__TINYC__)
+static inline void ttak_net_lattice_copy_bytes(uint8_t *dst, const uint8_t *src, uint32_t len) {
+    if (!dst || !src || len == 0) {
+        return;
+    }
+#if defined(__x86_64__) || defined(_M_X64)
+    size_t cnt = len;
+    __asm__ __volatile__(
+        "rep movsb"
+        : "+D"(dst), "+S"(src), "+c"(cnt)
+        :
+        : "memory");
+#elif defined(__aarch64__)
+    register uint8_t *d = dst;
+    register const uint8_t *s = src;
+    register uint64_t n = len;
+    uint64_t tmp;
+    __asm__ __volatile__(
+        "cbz %w2, 2f\n"
+        "1:\n"
+        "ldrb %w3, [%1], #1\n"
+        "strb %w3, [%0], #1\n"
+        "subs %w2, %w2, #1\n"
+        "b.ne 1b\n"
+        "2:\n"
+        : "+r"(d), "+r"(s), "+r"(n), "=&r"(tmp)
+        :
+        : "memory");
+#elif defined(__riscv) && (__riscv_xlen == 64)
+    register uint8_t *d = dst;
+    register const uint8_t *s = src;
+    register uint64_t n = len;
+    unsigned long tmp;
+    __asm__ __volatile__(
+        "beqz %2, 2f\n"
+        "1:\n"
+        "lb %3, 0(%1)\n"
+        "addi %1, %1, 1\n"
+        "sb %3, 0(%0)\n"
+        "addi %0, %0, 1\n"
+        "addi %2, %2, -1\n"
+        "bnez %2, 1b\n"
+        "2:\n"
+        : "+r"(d), "+r"(s), "+r"(n), "=&r"(tmp)
+        :
+        : "memory");
+#elif defined(__powerpc64__) || defined(__ppc64__)
+    register uint8_t *d = dst;
+    register const uint8_t *s = src;
+    register uint64_t n = len;
+    unsigned long tmp;
+    __asm__ __volatile__(
+        "cmpdi %2, 0\n"
+        "beq 2f\n"
+        "1:\n"
+        "lbz %3, 0(%1)\n"
+        "addi %1, %1, 1\n"
+        "stb %3, 0(%0)\n"
+        "addi %0, %0, 1\n"
+        "addi %2, %2, -1\n"
+        "cmpdi %2, 0\n"
+        "bne 1b\n"
+        "2:\n"
+        : "+r"(d), "+r"(s), "+r"(n), "=&r"(tmp)
+        :
+        : "memory");
+#elif defined(__mips64) || defined(__mips64__) || (defined(__mips) && (__mips == 64))
+    register uint8_t *d = dst;
+    register const uint8_t *s = src;
+    register uint64_t n = len;
+    unsigned long tmp;
+    __asm__ __volatile__(
+        "beqz %2, 2f\n"
+        "1:\n"
+        "lbu %3, 0(%1)\n"
+        "daddi %1, %1, 1\n"
+        "sb %3, 0(%0)\n"
+        "daddi %0, %0, 1\n"
+        "daddi %2, %2, -1\n"
+        "bnez %2, 1b\n"
+        "2:\n"
+        : "+r"(d), "+r"(s), "+r"(n), "=&r"(tmp)
+        :
+        : "memory");
+#else
+    for (uint32_t i = 0; i < len; ++i) {
+        dst[i] = src[i];
+    }
+#endif
+}
+#else
+static inline void ttak_net_lattice_copy_bytes(uint8_t *dst, const uint8_t *src, uint32_t len) {
+    if (!dst || !src || len == 0) {
+        return;
+    }
+    memcpy(dst, src, len);
+}
+#endif
+
+#if defined(__TINYC__)
 static uint32_t tls_worker_id = 0;
 #else
 static _Thread_local uint32_t tls_worker_id = 0;
@@ -15,9 +114,20 @@ static _Thread_local uint32_t tls_worker_id = 0;
 
 #define TTAK_LATTICE_COMPACT_MIN_FREE_PCT 65U
 #define TTAK_LATTICE_COMPACT_THROTTLE_MASK 0x3FU
+#define TTAK_LATTICE_COMPACT_TOKEN 0x1U
+#if defined(__TINYC__)
+#define TTAK_LATTICE_NODE_IS_BUSY(node) (false)
+#else
+#define TTAK_LATTICE_NODE_IS_BUSY(node) \
+    (atomic_load_explicit(&(node)->compact_state, memory_order_acquire) != 0U)
+#endif
 
-static pthread_mutex_t g_lattice_compact_lock = PTHREAD_MUTEX_INITIALIZER;
 static _Atomic uint32_t g_lattice_compact_counter = 0;
+#if defined(__TINYC__)
+static pthread_mutex_t g_lattice_compact_lock = PTHREAD_MUTEX_INITIALIZER;
+#else
+static atomic_flag g_lattice_compact_guard = ATOMIC_FLAG_INIT;
+#endif
 
 static ttak_net_lattice_t *global_default_lattice = NULL;
 static pthread_once_t lattice_once = PTHREAD_ONCE_INIT;
@@ -38,6 +148,28 @@ static ttak_net_lattice_t *ttak_net_lattice_head(ttak_net_lattice_t *lat) {
 static inline _Bool ttak_net_lattice_is_real(const ttak_net_lattice_t *lat) {
     return lat && !lat->is_stub && lat->dim != 0 && lat->slots;
 }
+
+#if !defined(__TINYC__)
+static inline _Bool ttak_net_lattice_claim_compaction(ttak_net_lattice_t *lat) {
+    if (!lat) {
+        return false;
+    }
+    uint32_t expected = 0U;
+    return atomic_compare_exchange_strong_explicit(
+        &lat->compact_state,
+        &expected,
+        TTAK_LATTICE_COMPACT_TOKEN,
+        memory_order_acq_rel,
+        memory_order_acquire
+    );
+}
+
+static inline void ttak_net_lattice_release_compaction(ttak_net_lattice_t *lat) {
+    if (lat) {
+        atomic_store_explicit(&lat->compact_state, 0U, memory_order_release);
+    }
+}
+#endif
 
 static _Bool ttak_net_lattice_slots_idle(const ttak_net_lattice_t *lat) {
     if (!ttak_net_lattice_is_real(lat)) {
@@ -67,6 +199,7 @@ static void ttak_net_lattice_mark_stub(ttak_net_lattice_t *lat) {
     ttak_atomic_write64(&lat->used_slots, 0);
     ttak_atomic_write64(&lat->total_ingress, 0);
     lat->is_full = false;
+    atomic_store_explicit(&lat->compact_state, 0U, memory_order_release);
 }
 
 static _Bool ttak_net_lattice_rehydrate(ttak_net_lattice_t *lat, uint32_t dim, uint64_t now) {
@@ -90,6 +223,7 @@ static _Bool ttak_net_lattice_rehydrate(ttak_net_lattice_t *lat, uint32_t dim, u
     ttak_atomic_write64(&lat->used_slots, 0);
     ttak_atomic_write64(&lat->total_ingress, 0);
     lat->is_full = false;
+    atomic_store_explicit(&lat->compact_state, 0U, memory_order_release);
     return true;
 }
 
@@ -157,6 +291,7 @@ static void ttak_net_lattice_try_compact(ttak_net_lattice_t *lat) {
         return;
     }
 
+#if defined(__TINYC__)
     pthread_mutex_lock(&g_lattice_compact_lock);
     if (!ttak_net_lattice_is_real(first) || !ttak_net_lattice_is_real(second) ||
         ttak_atomic_read64(&first->used_slots) != 0 ||
@@ -165,16 +300,57 @@ static void ttak_net_lattice_try_compact(ttak_net_lattice_t *lat) {
         pthread_mutex_unlock(&g_lattice_compact_lock);
         return;
     }
-
     if (!ttak_net_lattice_slots_idle(first) || !ttak_net_lattice_slots_idle(second)) {
         pthread_mutex_unlock(&g_lattice_compact_lock);
         return;
     }
-
     size_t slots_bytes = (size_t)first->capacity * sizeof(ttak_net_lattice_slot_t);
     memset(first->slots, 0, slots_bytes);
     ttak_net_lattice_mark_stub(second);
     pthread_mutex_unlock(&g_lattice_compact_lock);
+    return;
+#else
+    if (atomic_flag_test_and_set_explicit(&g_lattice_compact_guard, memory_order_acquire)) {
+        return;
+    }
+    _Bool claimed_first = false;
+    _Bool claimed_second = false;
+
+    do {
+        if (!ttak_net_lattice_is_real(first) || !ttak_net_lattice_is_real(second) ||
+            ttak_atomic_read64(&first->used_slots) != 0 ||
+            ttak_atomic_read64(&second->used_slots) != 0 ||
+            first->dim != second->dim) {
+            break;
+        }
+
+        claimed_first = ttak_net_lattice_claim_compaction(first);
+        if (!claimed_first) {
+            break;
+        }
+
+        claimed_second = ttak_net_lattice_claim_compaction(second);
+        if (!claimed_second) {
+            break;
+        }
+
+        if (!ttak_net_lattice_slots_idle(first) || !ttak_net_lattice_slots_idle(second)) {
+            break;
+        }
+
+        size_t slots_bytes = (size_t)first->capacity * sizeof(ttak_net_lattice_slot_t);
+        memset(first->slots, 0, slots_bytes);
+        ttak_net_lattice_mark_stub(second);
+    } while (0);
+
+    if (claimed_first) {
+        ttak_net_lattice_release_compaction(first);
+    }
+    if (claimed_second) {
+        ttak_net_lattice_release_compaction(second);
+    }
+    atomic_flag_clear_explicit(&g_lattice_compact_guard, memory_order_release);
+#endif
 }
 
 ttak_net_lattice_t* ttak_net_lattice_get_default(void) {
@@ -209,6 +385,7 @@ ttak_net_lattice_t* ttak_net_lattice_create(uint32_t dim, uint64_t now) {
     lat->capacity = (uint32_t)slots_count;
     lat->total_ingress = 0;
     lat->used_slots = 0;
+    atomic_store_explicit(&lat->compact_state, 0U, memory_order_relaxed);
     lat->is_full = false;
     lat->is_stub = false;
     lat->prev = NULL;
@@ -256,7 +433,7 @@ _Bool ttak_net_lattice_write(ttak_net_lattice_t *lat, uint32_t tid, const void *
     uint32_t my_tid = tid & mask;
     
     for (ttak_net_lattice_t *node = head; node; ) {
-        if (!ttak_net_lattice_is_real(node)) {
+        if (!ttak_net_lattice_is_real(node) || TTAK_LATTICE_NODE_IS_BUSY(node)) {
             node = node->next;
             continue;
         }
@@ -272,7 +449,7 @@ _Bool ttak_net_lattice_write(ttak_net_lattice_t *lat, uint32_t tid, const void *
                     if (ttak_atomic_read64(&slot->state) == 0) {
                         ttak_atomic_write64(&slot->state, 1); /* Entering writing state */
                         
-                        memcpy(slot->data, data, len);
+                        ttak_net_lattice_copy_bytes(slot->data, (const uint8_t *)data, len);
                         slot->len = len;
                         slot->timestamp = now;
                         slot->seq++;
@@ -313,7 +490,7 @@ _Bool ttak_net_lattice_read(ttak_net_lattice_t *lat, uint32_t tid, void *dst, ui
     uint32_t my_tid = tid & mask;
     
     for (ttak_net_lattice_t *node = head; node; node = node->next) {
-        if (!ttak_net_lattice_is_real(node)) {
+        if (!ttak_net_lattice_is_real(node) || TTAK_LATTICE_NODE_IS_BUSY(node)) {
             continue;
         }
 
@@ -327,7 +504,7 @@ _Bool ttak_net_lattice_read(ttak_net_lattice_t *lat, uint32_t tid, void *dst, ui
                         ttak_atomic_write64(&slot->state, 3); /* Mark as reading/processing */
                         
                         uint32_t len = slot->len;
-                        memcpy(dst, slot->data, len);
+                        ttak_net_lattice_copy_bytes((uint8_t *)dst, slot->data, len);
                         *len_out = len;
                         
                         ttak_atomic_write64(&slot->state, 0); /* Reset to empty */

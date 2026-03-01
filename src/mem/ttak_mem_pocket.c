@@ -19,8 +19,12 @@
         return (p == MAP_FAILED) ? NULL : p;
     }
 #endif
+#include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#if defined(__TINYC__)
+#include <pthread.h>
+#endif
 
 #include "../../internal/ttak/mem_internal.h"
 #include "../../include/ttak/mem/mem.h"
@@ -28,7 +32,35 @@
 /**
  * @brief Thread-local freelists for each pocket size class.
  */
+#if defined(__TINYC__)
+static pthread_once_t pocket_tls_once = PTHREAD_ONCE_INIT;
+static pthread_key_t pocket_tls_key;
+
+static void pocket_tls_init(void) {
+    pthread_key_create(&pocket_tls_key, free);
+}
+
+ttak_mem_pocket_freelist_t *ttak_tls_get_pocket_freelists(void) {
+    pthread_once(&pocket_tls_once, pocket_tls_init);
+    ttak_mem_pocket_freelist_t *lists = pthread_getspecific(pocket_tls_key);
+    if (!lists) {
+        lists = calloc(TTAK_NUM_POCKET_FREELISTS, sizeof(*lists));
+        if (lists) {
+            if (pthread_setspecific(pocket_tls_key, lists) != 0) {
+                free(lists);
+                lists = NULL;
+            }
+        }
+    }
+    if (!lists) {
+        static ttak_mem_pocket_freelist_t fallback[TTAK_NUM_POCKET_FREELISTS];
+        return fallback;
+    }
+    return lists;
+}
+#else
 TTAK_THREAD_LOCAL ttak_mem_pocket_freelist_t ttak_pocket_freelists[TTAK_NUM_POCKET_FREELISTS] = {0};
+#endif
 
 /**
  * @brief Allocates and populates a new 4KB pocket page.

@@ -38,6 +38,7 @@ typedef struct ttak_net_lattice {
     ttak_net_lattice_slot_t *slots; /* dim * dim array */
     volatile uint64_t total_ingress;
     volatile uint64_t used_slots;
+    _Atomic uint32_t compact_state;
     _Bool is_full;
     _Bool is_stub;
     struct ttak_net_lattice *prev;

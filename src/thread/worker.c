@@ -11,16 +11,41 @@
     #include <unistd.h>
 #endif
 #include <stdlib.h>
+#if defined(__TINYC__)
+#include <pthread.h>
+#endif
 #include "../../internal/app_types.h"
 #include "../../internal/tt_jmp.h"
 
+#if defined(__TINYC__)
+static pthread_once_t worker_tls_once = PTHREAD_ONCE_INIT;
+static pthread_key_t worker_tls_key;
+
+static void worker_tls_init(void) {
+    pthread_key_create(&worker_tls_key, NULL);
+}
+
+static ttak_worker_t *get_current_worker(void) {
+    pthread_once(&worker_tls_once, worker_tls_init);
+    return (ttak_worker_t *)pthread_getspecific(worker_tls_key);
+}
+
+static void set_current_worker(ttak_worker_t *worker) {
+    pthread_once(&worker_tls_once, worker_tls_init);
+    pthread_setspecific(worker_tls_key, worker);
+}
+#else
 static TTAK_THREAD_LOCAL ttak_worker_t *current_worker = NULL;
+static inline ttak_worker_t *get_current_worker(void) { return current_worker; }
+static inline void set_current_worker(ttak_worker_t *worker) { current_worker = worker; }
+#endif
 
 void ttak_worker_abort(void) {
-    if (current_worker && current_worker->wrapper && current_worker->wrapper->jmp_magic == TT_JMP_MAGIC) {
-        tt_longjmp(current_worker->wrapper->env,
-                   &current_worker->wrapper->jmp_magic,
-                   &current_worker->wrapper->jmp_tid,
+    ttak_worker_t *worker = get_current_worker();
+    if (worker && worker->wrapper && worker->wrapper->jmp_magic == TT_JMP_MAGIC) {
+        tt_longjmp(worker->wrapper->env,
+                   &worker->wrapper->jmp_magic,
+                   &worker->wrapper->jmp_tid,
                    1);
     }
 }
@@ -71,7 +96,7 @@ void *ttak_worker_routine(void *arg) {
     ttak_worker_t *self = (ttak_worker_t *)arg;
     ttak_thread_pool_t *pool = self->pool;
 
-    current_worker = self;
+    set_current_worker(self);
     ttak_epoch_register_thread();
     ttak_epoch_exit();
 

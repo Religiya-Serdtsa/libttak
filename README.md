@@ -1,5 +1,7 @@
 ![Memuh the sea rabbit](./mascot.png)
+
 ![Compiler Performance Comparison](./bench/ttl-cache-multithread-bench/throughput_comparison.png)
+![Compiler RSS Footprint Comparison](./bench/ttl-cache-multithread-bench/rss_comparison.png)
 
 # LibTTAK
 

@@ -22,11 +22,16 @@
 #define POCKET_MAGIC 0x80C4E700 /**< Base magic for 4KB pocket pages (Lower bits: freelist_idx) */
 #define SLAB_MAGIC   0x51ABCA5E /**< Magic for Slab pages */
 
+#if defined(__TINYC__)
+bool *ttak_tls_get_reentrancy_guard(void);
+#define t_reentrancy_guard (*ttak_tls_get_reentrancy_guard())
+#else
 /**
  * @brief Reentrancy guard to prevent recursive calls during boot/allocation.
  * Defined in mem.c.
  */
 extern TTAK_THREAD_LOCAL bool t_reentrancy_guard;
+#endif
 
 /**
  * @typedef ttak_fixed_16_16_t
@@ -72,11 +77,16 @@ typedef struct ttak_mem_pocket_freelist {
     void* head; /**< Top of the free-stack */
 } ttak_mem_pocket_freelist_t;
 
+#if defined(__TINYC__)
+ttak_mem_pocket_freelist_t *ttak_tls_get_pocket_freelists(void);
+#define ttak_pocket_freelists (ttak_tls_get_pocket_freelists())
+#else
 /**
  * @brief Thread-local pocket freelists.
  * Defined in ttak_mem_pocket.c.
  */
 extern TTAK_THREAD_LOCAL ttak_mem_pocket_freelist_t ttak_pocket_freelists[TTAK_NUM_POCKET_FREELISTS];
+#endif
 
 // --- Bare-Metal VMA (Virtual Mapping Area) ---
 #define TTAK_VMA_REGION_SIZE (16 * 1024 * 1024) 

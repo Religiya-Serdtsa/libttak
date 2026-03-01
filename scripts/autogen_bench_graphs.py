@@ -9,6 +9,10 @@ BENCH_DIR = "bench/ttl-cache-multithread-bench"
 COMPILERS = ["gcc", "tcc", "clang"]
 RUN_SECONDS = 10
 
+def _parse_elapsed_seconds(label):
+    digits = "".join(ch for ch in label if ch.isdigit())
+    return int(digits) if digits else None
+
 def run_bench(compiler):
     print(f"--- Benchmarking with {compiler} ---")
     try:
@@ -23,27 +27,45 @@ def run_bench(compiler):
         subprocess.run(["make", "-C", BENCH_DIR], check=True, env=env, capture_output=True)
         
         # Run
-        proc = subprocess.Popen([f"./{BENCH_DIR}/ttl_cache_bench_lockfree"], 
-                                stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
-        
+        run_env = os.environ.copy()
+        if compiler == "tcc":
+            run_env.setdefault("MALLOC_CHECK_", "2")
+
         results = []
-        start_time = time.time()
-        while time.time() - start_time < RUN_SECONDS:
-            line = proc.stdout.readline()
-            if not line:
-                break
-            # Parse line like: " 1s | 29182046 |          90 |  212136 |  6339 | 555052"
-            parts = [p.strip() for p in line.split("|")]
-            if len(parts) >= 6:
-                try:
-                    ops = int(parts[1])
-                    rss = int(parts[-1])
-                    results.append((ops, rss))
-                    print(f"  {compiler}: {ops} Ops/s, {rss} KB")
-                except ValueError:
+        for attempt in range(3):
+            proc = subprocess.Popen([f"./{BENCH_DIR}/ttl_cache_bench_lockfree"], 
+                                    stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, env=run_env)
+            results = []
+            while True:
+                line = proc.stdout.readline()
+                if not line:
+                    if proc.poll() is not None:
+                        break
                     continue
-        
-        proc.terminate()
+                # Parse line like: " 1s | 29182046 |          90 |  212136 |  6339 | 555052"
+                parts = [p.strip() for p in line.split("|")]
+                if len(parts) >= 6:
+                    try:
+                        ops = int(parts[1])
+                        rss = int(parts[-1])
+                        elapsed = _parse_elapsed_seconds(parts[0])
+                        results.append((ops, rss, elapsed))
+                        elapsed_txt = f"{elapsed}s" if elapsed is not None else "?"
+                        print(f"  {compiler}: t={elapsed_txt} {ops} Ops/s, {rss} KB")
+                        if elapsed is not None and elapsed >= RUN_SECONDS:
+                            break
+                    except ValueError:
+                        continue
+            
+            try:
+                proc.wait(timeout=2)
+            except subprocess.TimeoutExpired:
+                proc.kill()
+
+            if results or compiler != "tcc":
+                break
+            print(f"  {compiler}: no samples collected (attempt {attempt + 1}), retrying...")
+            time.sleep(1)
         
         if not results:
             return None
