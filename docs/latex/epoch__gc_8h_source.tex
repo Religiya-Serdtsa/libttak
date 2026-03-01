@@ -6,56 +6,77 @@
 \DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ TTAK\_MEM\_EPOCH\_GC\_H}}
 \DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00003}00003\ }
 \DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{mem__tree_8h}{ttak/mem\_tree/mem\_tree.h}}>}}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00005}00005\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00006}00006\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00007}00007\ \textcolor{comment}{\ *\ @brief\ Epoch-\/based\ garbage\ collection\ context.}}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00008}00008\ \textcolor{comment}{\ *\ }}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00009}00009\ \textcolor{comment}{\ *\ Manages\ memory\ lifecycle\ using\ generational\ epochs.}}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00010}00010\ \textcolor{comment}{\ *\ Designed\ for\ periodic,\ non-\/blocking\ cleanup\ where\ the\ user\ triggers\ the\ cycle.}}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00011}00011\ \textcolor{comment}{\ *\ Traverses\ the\ heap\ tree\ to\ identify\ and\ free\ expired\ blocks\ without\ a\ global\ stop-\/the-\/world\ pause.}}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00012}00012\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00013}\mbox{\hyperlink{structttak__epoch__gc}{00013}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__epoch__gc}{ttak\_epoch\_gc}}\ \{}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00014}\mbox{\hyperlink{structttak__epoch__gc_a9377dd939116b8afa03f01ba1691ee17}{00014}}\ \ \ \ \ \mbox{\hyperlink{structttak__mem__tree}{ttak\_mem\_tree\_t}}\ \mbox{\hyperlink{structttak__epoch__gc_a9377dd939116b8afa03f01ba1691ee17}{tree}};\ \ \ \ \ \ \ \textcolor{comment}{/**<\ Underlying\ memory\ tree\ tracking\ allocations.\ */}}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00015}\mbox{\hyperlink{structttak__epoch__gc_ab3a7c8a89fbdc06128a6b176ed2132eb}{00015}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__epoch__gc_ab3a7c8a89fbdc06128a6b176ed2132eb}{current\_epoch}};\ \ \ \ \ \textcolor{comment}{/**<\ Current\ active\ epoch\ ID.\ */}}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00016}\mbox{\hyperlink{structttak__epoch__gc_a20d6d9cd563837e4cbe0c5c785202279}{00016}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__epoch__gc_a20d6d9cd563837e4cbe0c5c785202279}{last\_cleanup\_ts}};\ \ \ \textcolor{comment}{/**<\ Timestamp\ of\ the\ last\ cleanup\ execution.\ */}}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00017}\mbox{\hyperlink{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4}{00017}}\ \}\ \mbox{\hyperlink{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4}{ttak\_epoch\_gc\_t}};}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00018}00018\ }
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00019}\mbox{\hyperlink{epoch__gc_8h_a19a48ee392866ef40aed9cc4fa6bbf41}{00019}}\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{structttak__epoch__gc}{ttak\_epoch\_gc\_t}}\ \mbox{\hyperlink{epoch__gc_8h_a19a48ee392866ef40aed9cc4fa6bbf41}{tt\_epoch\_gc\_t}};}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00020}00020\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00021}00021\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00022}00022\ \textcolor{comment}{\ *\ @brief\ Initializes\ the\ Epoch\ GC.}}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00023}00023\ \textcolor{comment}{\ *\ }}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00024}00024\ \textcolor{comment}{\ *\ @param\ gc\ Pointer\ to\ the\ GC\ structure.}}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00025}00025\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00026}\mbox{\hyperlink{epoch__gc_8h_ad33bfc5d616f25de473c9dea52d0ae24}{00026}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{epoch__gc_8h_ad33bfc5d616f25de473c9dea52d0ae24}{ttak\_epoch\_gc\_init}}(\mbox{\hyperlink{structttak__epoch__gc}{ttak\_epoch\_gc\_t}}\ *gc);}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00027}00027\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00028}00028\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00029}00029\ \textcolor{comment}{\ *\ @brief\ Destroys\ the\ GC\ context\ and\ frees\ tracked\ resources.}}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00030}00030\ \textcolor{comment}{\ *\ }}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00031}00031\ \textcolor{comment}{\ *\ @param\ gc\ Pointer\ to\ the\ GC\ structure.}}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00032}00032\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00033}\mbox{\hyperlink{epoch__gc_8h_af549ef9e0036830f203fa10a01c2d484}{00033}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{epoch__gc_8h_af549ef9e0036830f203fa10a01c2d484}{ttak\_epoch\_gc\_destroy}}(\mbox{\hyperlink{structttak__epoch__gc}{ttak\_epoch\_gc\_t}}\ *gc);}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00034}00034\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00035}00035\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00036}00036\ \textcolor{comment}{\ *\ @brief\ Registers\ a\ pointer\ to\ be\ managed\ by\ the\ current\ epoch.}}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00037}00037\ \textcolor{comment}{\ *\ }}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00038}00038\ \textcolor{comment}{\ *\ @param\ gc\ Pointer\ to\ the\ GC\ structure.}}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00039}00039\ \textcolor{comment}{\ *\ @param\ ptr\ Pointer\ to\ the\ allocated\ memory.}}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00040}00040\ \textcolor{comment}{\ *\ @param\ size\ Size\ of\ the\ memory\ block.}}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00041}00041\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00042}\mbox{\hyperlink{epoch__gc_8h_a6bedbb1da48f451a81bac7e5cc47a50d}{00042}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{epoch__gc_8h_a6bedbb1da48f451a81bac7e5cc47a50d}{ttak\_epoch\_gc\_register}}(\mbox{\hyperlink{structttak__epoch__gc}{ttak\_epoch\_gc\_t}}\ *gc,\ \textcolor{keywordtype}{void}\ *ptr,\ \textcolor{keywordtype}{size\_t}\ size);}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00043}00043\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00044}00044\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00045}00045\ \textcolor{comment}{\ *\ @brief\ Advances\ the\ epoch\ and\ triggers\ a\ non-\/blocking\ cleanup\ pass.}}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00046}00046\ \textcolor{comment}{\ *\ }}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00047}00047\ \textcolor{comment}{\ *\ This\ should\ be\ called\ periodically\ by\ the\ user.\ It\ increments\ the\ epoch}}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00048}00048\ \textcolor{comment}{\ *\ and\ traverses\ the\ heap\ tree\ to\ free\ blocks\ associated\ with\ expired\ epochs}}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00049}00049\ \textcolor{comment}{\ *\ (based\ on\ configured\ retention\ or\ explicit\ lifetime).}}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00050}00050\ \textcolor{comment}{\ *\ }}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00051}00051\ \textcolor{comment}{\ *\ @param\ gc\ Pointer\ to\ the\ GC\ structure.}}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00052}00052\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00053}\mbox{\hyperlink{epoch__gc_8h_a2c9fb90ed22fe61eea9bbcafddf53625}{00053}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{epoch__gc_8h_a2c9fb90ed22fe61eea9bbcafddf53625}{ttak\_epoch\_gc\_rotate}}(\mbox{\hyperlink{structttak__epoch__gc}{ttak\_epoch\_gc\_t}}\ *gc);}
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00054}00054\ }
-\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00055}00055\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_MEM\_EPOCH\_GC\_H}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{pthread_8h}{pthread.h}}>}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <stdatomic.h>}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00007}00007\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00008}00008\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00009}00009\ \textcolor{comment}{\ *\ @brief\ Epoch-\/based\ garbage\ collection\ context.}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00010}00010\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00011}00011\ \textcolor{comment}{\ *\ Manages\ memory\ lifecycle\ using\ generational\ epochs.}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00012}00012\ \textcolor{comment}{\ *\ Designed\ for\ periodic,\ non-\/blocking\ cleanup\ where\ the\ user\ triggers\ the\ cycle.}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00013}00013\ \textcolor{comment}{\ *\ Traverses\ the\ heap\ tree\ to\ identify\ and\ free\ expired\ blocks\ without\ a\ global\ stop-\/the-\/world\ pause.}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00014}00014\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00015}\mbox{\hyperlink{structttak__epoch__gc}{00015}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__epoch__gc}{ttak\_epoch\_gc}}\ \{}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00016}\mbox{\hyperlink{structttak__epoch__gc_a9377dd939116b8afa03f01ba1691ee17}{00016}}\ \ \ \ \ \mbox{\hyperlink{structttak__mem__tree}{ttak\_mem\_tree\_t}}\ \mbox{\hyperlink{structttak__epoch__gc_a9377dd939116b8afa03f01ba1691ee17}{tree}};\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Underlying\ memory\ tree\ tracking\ allocations.\ */}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00017}\mbox{\hyperlink{structttak__epoch__gc_a6712a4f4964ade138af8872882ba8143}{00017}}\ \ \ \ \ \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\_Atomic}}\ uint64\_t\ \mbox{\hyperlink{structttak__epoch__gc_a6712a4f4964ade138af8872882ba8143}{current\_epoch}};\ \ \ \textcolor{comment}{/**<\ Current\ active\ epoch\ ID.\ */}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00018}\mbox{\hyperlink{structttak__epoch__gc_af2a2777f54fadbf9d21a2c5492c0ffdd}{00018}}\ \ \ \ \ \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\_Atomic}}\ uint64\_t\ \mbox{\hyperlink{structttak__epoch__gc_af2a2777f54fadbf9d21a2c5492c0ffdd}{last\_cleanup\_ts}};\ \textcolor{comment}{/**<\ Timestamp\ of\ the\ last\ cleanup\ execution.\ */}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00019}\mbox{\hyperlink{structttak__epoch__gc_a5d10fc708c17218894d855c4c4014ebf}{00019}}\ \ \ \ \ pthread\_t\ \mbox{\hyperlink{structttak__epoch__gc_a5d10fc708c17218894d855c4c4014ebf}{rotate\_thread}};\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Background\ thread\ handling\ automatic\ epoch\ rotation.\ */}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00020}\mbox{\hyperlink{structttak__epoch__gc_a72607c3f140725ba5cf806c3854e482a}{00020}}\ \ \ \ \ pthread\_mutex\_t\ \mbox{\hyperlink{structttak__epoch__gc_a72607c3f140725ba5cf806c3854e482a}{rotate\_lock}};\ \ \ \ \ \ \textcolor{comment}{/**<\ Synchronization\ primitive\ for\ thread\ wake/sleep.\ */}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00021}\mbox{\hyperlink{structttak__epoch__gc_a77f265d61c8cd33696655372a99073c9}{00021}}\ \ \ \ \ pthread\_cond\_t\ \mbox{\hyperlink{structttak__epoch__gc_a77f265d61c8cd33696655372a99073c9}{rotate\_cond}};\ \ \ \ \ \ \ \textcolor{comment}{/**<\ Condition\ variable\ to\ nudge\ the\ rotate\ thread.\ */}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00022}\mbox{\hyperlink{structttak__epoch__gc_a9380d51b368eb4b578005c710d4b18b3}{00022}}\ \ \ \ \ \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\_Atomic}}\ \_Bool\ \mbox{\hyperlink{structttak__epoch__gc_a9380d51b368eb4b578005c710d4b18b3}{shutdown\_requested}};\ \textcolor{comment}{/**<\ Signals\ rotate\ thread\ to\ exit.\ */}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00023}\mbox{\hyperlink{structttak__epoch__gc_a57eddf693f329d72cee6bbcd87461233}{00023}}\ \ \ \ \ \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\_Atomic}}\ \_Bool\ \mbox{\hyperlink{structttak__epoch__gc_a57eddf693f329d72cee6bbcd87461233}{manual\_rotation}};\ \ \ \ \textcolor{comment}{/**<\ True\ when\ the\ user\ wants\ manual\ rotation\ mode.\ */}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00024}\mbox{\hyperlink{structttak__epoch__gc_a2838becb5e51dca930d461a0c5bde257}{00024}}\ \ \ \ \ \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\_Atomic}}\ uint64\_t\ \mbox{\hyperlink{structttak__epoch__gc_a2838becb5e51dca930d461a0c5bde257}{min\_rotate\_ns}};\ \ \ \textcolor{comment}{/**<\ Minimum\ wait\ interval\ (ns)\ between\ auto\ rotations.\ */}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00025}\mbox{\hyperlink{structttak__epoch__gc_aefc5cb5c9e1ebbf9ed12216b7770c8ec}{00025}}\ \ \ \ \ \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\_Atomic}}\ uint64\_t\ \mbox{\hyperlink{structttak__epoch__gc_aefc5cb5c9e1ebbf9ed12216b7770c8ec}{max\_rotate\_ns}};\ \ \ \textcolor{comment}{/**<\ Maximum\ backoff\ interval\ (ns)\ between\ auto\ rotations.\ */}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00026}\mbox{\hyperlink{structttak__epoch__gc_a947c87df0f376bc4feb53beef0fbec47}{00026}}\ \ \ \ \ \_Bool\ \mbox{\hyperlink{structttak__epoch__gc_a947c87df0f376bc4feb53beef0fbec47}{rotate\_thread\_started}};\ \ \ \ \ \ \textcolor{comment}{/**<\ Tracks\ whether\ the\ rotate\ thread\ was\ launched.\ */}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00027}\mbox{\hyperlink{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4}{00027}}\ \}\ \mbox{\hyperlink{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4}{ttak\_epoch\_gc\_t}};}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00029}\mbox{\hyperlink{epoch__gc_8h_a19a48ee392866ef40aed9cc4fa6bbf41}{00029}}\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{structttak__epoch__gc}{ttak\_epoch\_gc\_t}}\ \mbox{\hyperlink{epoch__gc_8h_a19a48ee392866ef40aed9cc4fa6bbf41}{tt\_epoch\_gc\_t}};}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00030}00030\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00031}00031\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00032}00032\ \textcolor{comment}{\ *\ @brief\ Initializes\ the\ Epoch\ GC.}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00033}00033\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00034}00034\ \textcolor{comment}{\ *\ @param\ gc\ Pointer\ to\ the\ GC\ structure.}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00035}00035\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00036}\mbox{\hyperlink{epoch__gc_8h_ad33bfc5d616f25de473c9dea52d0ae24}{00036}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{epoch__gc_8h_ad33bfc5d616f25de473c9dea52d0ae24}{ttak\_epoch\_gc\_init}}(\mbox{\hyperlink{structttak__epoch__gc}{ttak\_epoch\_gc\_t}}\ *gc);}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00037}00037\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00038}00038\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00039}00039\ \textcolor{comment}{\ *\ @brief\ Destroys\ the\ GC\ context\ and\ frees\ tracked\ resources.}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00040}00040\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00041}00041\ \textcolor{comment}{\ *\ @param\ gc\ Pointer\ to\ the\ GC\ structure.}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00042}00042\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00043}\mbox{\hyperlink{epoch__gc_8h_af549ef9e0036830f203fa10a01c2d484}{00043}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{epoch__gc_8h_af549ef9e0036830f203fa10a01c2d484}{ttak\_epoch\_gc\_destroy}}(\mbox{\hyperlink{structttak__epoch__gc}{ttak\_epoch\_gc\_t}}\ *gc);}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00044}00044\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00045}00045\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00046}00046\ \textcolor{comment}{\ *\ @brief\ Registers\ a\ pointer\ to\ be\ managed\ by\ the\ current\ epoch.}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00047}00047\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00048}00048\ \textcolor{comment}{\ *\ @param\ gc\ Pointer\ to\ the\ GC\ structure.}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00049}00049\ \textcolor{comment}{\ *\ @param\ ptr\ Pointer\ to\ the\ allocated\ memory.}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00050}00050\ \textcolor{comment}{\ *\ @param\ size\ Size\ of\ the\ memory\ block.}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00051}00051\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00052}\mbox{\hyperlink{epoch__gc_8h_a6bedbb1da48f451a81bac7e5cc47a50d}{00052}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{epoch__gc_8h_a6bedbb1da48f451a81bac7e5cc47a50d}{ttak\_epoch\_gc\_register}}(\mbox{\hyperlink{structttak__epoch__gc}{ttak\_epoch\_gc\_t}}\ *gc,\ \textcolor{keywordtype}{void}\ *ptr,\ \textcolor{keywordtype}{size\_t}\ size);}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00053}00053\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00054}00054\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00055}00055\ \textcolor{comment}{\ *\ @brief\ Advances\ the\ epoch\ and\ triggers\ a\ non-\/blocking\ cleanup\ pass.}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00056}00056\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00057}00057\ \textcolor{comment}{\ *\ This\ should\ be\ called\ periodically\ by\ the\ user.\ It\ increments\ the\ epoch}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00058}00058\ \textcolor{comment}{\ *\ and\ traverses\ the\ heap\ tree\ to\ free\ blocks\ associated\ with\ expired\ epochs}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00059}00059\ \textcolor{comment}{\ *\ (based\ on\ configured\ retention\ or\ explicit\ lifetime).}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00060}00060\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00061}00061\ \textcolor{comment}{\ *\ @param\ gc\ Pointer\ to\ the\ GC\ structure.}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00062}00062\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00063}\mbox{\hyperlink{epoch__gc_8h_a2c9fb90ed22fe61eea9bbcafddf53625}{00063}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{epoch__gc_8h_a2c9fb90ed22fe61eea9bbcafddf53625}{ttak\_epoch\_gc\_rotate}}(\mbox{\hyperlink{structttak__epoch__gc}{ttak\_epoch\_gc\_t}}\ *gc);}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00064}00064\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00065}00065\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00066}00066\ \textcolor{comment}{\ *\ @brief\ Enables\ or\ disables\ the\ automatic\ rotation\ worker.}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00067}00067\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00068}00068\ \textcolor{comment}{\ *\ When\ manual\ mode\ is\ enabled,\ callers\ are\ responsible\ for\ invoking}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00069}00069\ \textcolor{comment}{\ *\ ttak\_epoch\_gc\_rotate()\ (and\ ttak\_epoch\_reclaim())\ explicitly.}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00070}00070\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00071}00071\ \textcolor{comment}{\ *\ @param\ gc\ Pointer\ to\ the\ GC\ structure.}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00072}00072\ \textcolor{comment}{\ *\ @param\ manual\_mode\ True\ to\ disable\ the\ auto-\/rotator,\ false\ to\ re-\/enable\ it.}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00073}00073\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00074}\mbox{\hyperlink{epoch__gc_8h_a78ff9f44d1919ebb90542bfdd87f946e}{00074}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{epoch__gc_8h_a78ff9f44d1919ebb90542bfdd87f946e}{ttak\_epoch\_gc\_manual\_rotate}}(\mbox{\hyperlink{structttak__epoch__gc}{ttak\_epoch\_gc\_t}}\ *gc,\ \_Bool\ manual\_mode);}
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{epoch__gc_8h_source_l00076}00076\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_MEM\_EPOCH\_GC\_H}}
 
 \end{DoxyCode}

@@ -25,17 +25,17 @@
 var NAVTREE =
 [
   [ "libttak", "index.html", [
-    [ "Blueprints", "index.html", "index" ],
+    [ "LibTTAK Benchmark Suite", "index.html", "index" ],
     [ "TCC-Oriented Build and Math Tuning", "md_docs_2TCC__OPTIMIZATION.html", [
-      [ "Build Expectations", "md_docs_2TCC__OPTIMIZATION.html#autotoc_md6", null ],
-      [ "Hardcore C Tricks", "md_docs_2TCC__OPTIMIZATION.html#autotoc_md7", null ],
-      [ "Portable Assembly Strategy", "md_docs_2TCC__OPTIMIZATION.html#autotoc_md8", null ],
-      [ "Applying the Tricks Elsewhere", "md_docs_2TCC__OPTIMIZATION.html#autotoc_md9", null ]
+      [ "Build Expectations", "md_docs_2TCC__OPTIMIZATION.html#autotoc_md17", null ],
+      [ "Hardcore C Tricks", "md_docs_2TCC__OPTIMIZATION.html#autotoc_md18", null ],
+      [ "Portable Assembly Strategy", "md_docs_2TCC__OPTIMIZATION.html#autotoc_md19", null ],
+      [ "Applying the Tricks Elsewhere", "md_docs_2TCC__OPTIMIZATION.html#autotoc_md20", null ]
     ] ],
     [ "Development History", "md_HISTORY.html", [
-      [ "2026-01-30", "md_HISTORY.html#autotoc_md11", [
-        [ "Initial Skeleton Creation & Build Stabilization", "md_HISTORY.html#autotoc_md12", null ],
-        [ "Key Diffs Overview", "md_HISTORY.html#autotoc_md13", null ]
+      [ "2026-01-30", "md_HISTORY.html#autotoc_md22", [
+        [ "Initial Skeleton Creation & Build Stabilization", "md_HISTORY.html#autotoc_md23", null ],
+        [ "Key Diffs Overview", "md_HISTORY.html#autotoc_md24", null ]
       ] ]
     ] ],
     [ "Clone Coding Path", "md_tutorials_2CLONE__PATH.html", null ],
@@ -44,6 +44,7 @@ var NAVTREE =
       [ "Class Index", "classes.html", null ],
       [ "Class Members", "functions.html", [
         [ "All", "functions.html", "functions_dup" ],
+        [ "Functions", "functions_func.html", null ],
         [ "Variables", "functions_vars.html", "functions_vars" ]
       ] ]
     ] ],
@@ -65,13 +66,14 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "00__overview_8puml.html",
-"detachable_8h.html#a1be650514f253f5129ff7e791c2e9a47",
-"functions_vars_b.html",
-"mem_8h.html#a901d371e2cc570055bc60bcea5653df5",
-"spinlock_8h.html#a1d8bc2a3d70c40ddea51a71127bbbd91",
-"structttak__io__zerocopy__region.html#ac70a33d80e159a62721c2b56674533e5",
-"structttak__spin.html",
-"zerocopy_8h.html"
+"context_8h.html#a3ce5ce1f27b068f718459c1316c97bc9",
+"fixed_8h.html#ac0d78544bdf52b1e7be2adad8d318749",
+"lattice_8h.html#a66ecd7734451a2c81904dd69903e61b0",
+"ringbuf_8h.html#abe2e766a3c7a5e4497d44c76e56b8918",
+"structttak__bigcomplex.html",
+"structttak__mem__header__t.html#afb19e735d7af574abc849acff5d5a3e2",
+"structttak__stats__ext.html",
+"worker_8h.html#a3cd30f2c4e30576065ee8e7347240afc"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

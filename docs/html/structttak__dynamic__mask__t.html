@@ -97,15 +97,15 @@ $(document).ready(function(){initNavTree('structttak__dynamic__mask__t.html','')
 </div><!--header-->
 <div class="contents">
 
-<p>Thread-safe dynamic bitmap.  
+<p>Thread-safe dynamic bitmap. Optimized for lock-free reads via EBR.  
  <a href="structttak__dynamic__mask__t.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="dynamic__mask_8h_source.html">dynamic_mask.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a16d53f0a1317edf26715d8cd2da88273" id="r_a16d53f0a1317edf26715d8cd2da88273"><td class="memItemLeft" align="right" valign="top">uint64_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__dynamic__mask__t.html#a16d53f0a1317edf26715d8cd2da88273">bits</a></td></tr>
-<tr class="separator:a16d53f0a1317edf26715d8cd2da88273"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a888a142a9acc56e0c1113a0bde6260d5" id="r_a888a142a9acc56e0c1113a0bde6260d5"><td class="memItemLeft" align="right" valign="top">uint64_t *<a class="el" href="include_2stdatomic_8h.html#a94674db2fe3c7496dfdcaa9b81486e79">_Atomic</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__dynamic__mask__t.html#a888a142a9acc56e0c1113a0bde6260d5">bits</a></td></tr>
+<tr class="separator:a888a142a9acc56e0c1113a0bde6260d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a60132ba5b95c01ebfeac22bd5e6e41a4" id="r_a60132ba5b95c01ebfeac22bd5e6e41a4"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__dynamic__mask__t.html#a60132ba5b95c01ebfeac22bd5e6e41a4">capacity</a></td></tr>
 <tr class="separator:a60132ba5b95c01ebfeac22bd5e6e41a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a414d73da8f63ec1e4bd9f3e813f5e751" id="r_a414d73da8f63ec1e4bd9f3e813f5e751"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__dynamic__mask__t.html#a414d73da8f63ec1e4bd9f3e813f5e751">count</a></td></tr>
@@ -114,24 +114,24 @@ Public Attributes</h2></td></tr>
 <tr class="separator:ad03397543e5bad84405b34ddc9407a30"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Thread-safe dynamic bitmap. </p>
+<div class="textblock"><p>Thread-safe dynamic bitmap. Optimized for lock-free reads via EBR. </p>
 
-<p class="definition">Definition at line <a class="el" href="dynamic__mask_8h_source.html#l00020">20</a> of file <a class="el" href="dynamic__mask_8h_source.html">dynamic_mask.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="dynamic__mask_8h_source.html#l00021">21</a> of file <a class="el" href="dynamic__mask_8h_source.html">dynamic_mask.h</a>.</p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
-<a id="a16d53f0a1317edf26715d8cd2da88273" name="a16d53f0a1317edf26715d8cd2da88273"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a16d53f0a1317edf26715d8cd2da88273">&#9670;&#160;</a></span>bits</h2>
+<a id="a888a142a9acc56e0c1113a0bde6260d5" name="a888a142a9acc56e0c1113a0bde6260d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a888a142a9acc56e0c1113a0bde6260d5">&#9670;&#160;</a></span>bits</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint64_t* ttak_dynamic_mask_t::bits</td>
+          <td class="memname">uint64_t* <a class="el" href="include_2stdatomic_8h.html#a94674db2fe3c7496dfdcaa9b81486e79">_Atomic</a> ttak_dynamic_mask_t::bits</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The actual bitmap array </p>
+<p>The actual bitmap array (Atomic for lock-free read) </p>
 
-<p class="definition">Definition at line <a class="el" href="dynamic__mask_8h_source.html#l00021">21</a> of file <a class="el" href="dynamic__mask_8h_source.html">dynamic_mask.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="dynamic__mask_8h_source.html#l00022">22</a> of file <a class="el" href="dynamic__mask_8h_source.html">dynamic_mask.h</a>.</p>
 
 </div>
 </div>
@@ -148,7 +148,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Capacity in bits (multiples of 64) </p>
 
-<p class="definition">Definition at line <a class="el" href="dynamic__mask_8h_source.html#l00022">22</a> of file <a class="el" href="dynamic__mask_8h_source.html">dynamic_mask.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="dynamic__mask_8h_source.html#l00023">23</a> of file <a class="el" href="dynamic__mask_8h_source.html">dynamic_mask.h</a>.</p>
 
 </div>
 </div>
@@ -165,7 +165,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Number of set bits (optional tracking) </p>
 
-<p class="definition">Definition at line <a class="el" href="dynamic__mask_8h_source.html#l00023">23</a> of file <a class="el" href="dynamic__mask_8h_source.html">dynamic_mask.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="dynamic__mask_8h_source.html#l00024">24</a> of file <a class="el" href="dynamic__mask_8h_source.html">dynamic_mask.h</a>.</p>
 
 </div>
 </div>
@@ -180,9 +180,9 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>RWLock for atomic access to the mask </p>
+<p>RWLock for writer synchronization </p>
 
-<p class="definition">Definition at line <a class="el" href="dynamic__mask_8h_source.html#l00024">24</a> of file <a class="el" href="dynamic__mask_8h_source.html">dynamic_mask.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="dynamic__mask_8h_source.html#l00025">25</a> of file <a class="el" href="dynamic__mask_8h_source.html">dynamic_mask.h</a>.</p>
 
 </div>
 </div>

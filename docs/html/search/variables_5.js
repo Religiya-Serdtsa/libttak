@@ -6,8 +6,9 @@ var searchData=
   ['epoch_5fdelay_3',['epoch_delay',['../structttak__detachable__context.html#ab7b260b8073bbb406ae8b302c0fc6fd4',1,'ttak_detachable_context']]],
   ['epoch_5fid_4',['epoch_id',['../structttak__arena__generation.html#a1d837933301f3e45f76cfc6608feff21',1,'ttak_arena_generation']]],
   ['exit_5fcode_5',['exit_code',['../structttak__worker.html#abc558d47ac88b389c6668b151423d1a9',1,'ttak_worker']]],
-  ['expired_6',['expired',['../structttak__func__wrapper.html#a1824b96148678c8c7b980edc41429cf5',1,'ttak_func_wrapper']]],
-  ['expires_5fat_7',['expires_at',['../structttak__io__guard.html#a27ce08200665acb63547c2f5264d1c66',1,'ttak_io_guard']]],
-  ['expires_5ftick_8',['expires_tick',['../structttak__mem__header__t.html#a0362d896df5d92be01157426136ad6b0',1,'ttak_mem_header_t::expires_tick'],['../structttak__mem__node.html#a57e33bb2997c65fba791df62dd986e22',1,'ttak_mem_node::expires_tick']]],
-  ['exponent_9',['exponent',['../structttak__bigreal.html#a9b799814a1f37e7a84b72439ddf8805c',1,'ttak_bigreal']]]
+  ['expand_5flock_6',['expand_lock',['../structttak__net__lattice.html#aa9dec0cfede463e45920179552098b0b',1,'ttak_net_lattice']]],
+  ['expired_7',['expired',['../structttak__func__wrapper.html#a1824b96148678c8c7b980edc41429cf5',1,'ttak_func_wrapper']]],
+  ['expires_5fat_8',['expires_at',['../structttak__io__guard.html#a27ce08200665acb63547c2f5264d1c66',1,'ttak_io_guard']]],
+  ['expires_5ftick_9',['expires_tick',['../structttak__mem__header__t.html#a0362d896df5d92be01157426136ad6b0',1,'ttak_mem_header_t::expires_tick'],['../structttak__mem__node.html#a57e33bb2997c65fba791df62dd986e22',1,'ttak_mem_node::expires_tick']]],
+  ['exponent_10',['exponent',['../structttak__bigreal.html#a9b799814a1f37e7a84b72439ddf8805c',1,'ttak_bigreal']]]
 ];

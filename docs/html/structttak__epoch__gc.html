@@ -122,48 +122,200 @@ $(document).ready(function(){initNavTree('structttak__epoch__gc.html',''); initR
 Public Attributes</h2></td></tr>
 <tr class="memitem:a9377dd939116b8afa03f01ba1691ee17" id="r_a9377dd939116b8afa03f01ba1691ee17"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mem__tree_8h.html#a247fb2ceb1803d4d3ad077d0785cc858">ttak_mem_tree_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__epoch__gc.html#a9377dd939116b8afa03f01ba1691ee17">tree</a></td></tr>
 <tr class="separator:a9377dd939116b8afa03f01ba1691ee17"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab3a7c8a89fbdc06128a6b176ed2132eb" id="r_ab3a7c8a89fbdc06128a6b176ed2132eb"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__epoch__gc.html#ab3a7c8a89fbdc06128a6b176ed2132eb">current_epoch</a></td></tr>
-<tr class="separator:ab3a7c8a89fbdc06128a6b176ed2132eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a20d6d9cd563837e4cbe0c5c785202279" id="r_a20d6d9cd563837e4cbe0c5c785202279"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__epoch__gc.html#a20d6d9cd563837e4cbe0c5c785202279">last_cleanup_ts</a></td></tr>
-<tr class="separator:a20d6d9cd563837e4cbe0c5c785202279"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6712a4f4964ade138af8872882ba8143" id="r_a6712a4f4964ade138af8872882ba8143"><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2stdatomic_8h.html#a94674db2fe3c7496dfdcaa9b81486e79">_Atomic</a> uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__epoch__gc.html#a6712a4f4964ade138af8872882ba8143">current_epoch</a></td></tr>
+<tr class="separator:a6712a4f4964ade138af8872882ba8143"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2a2777f54fadbf9d21a2c5492c0ffdd" id="r_af2a2777f54fadbf9d21a2c5492c0ffdd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2stdatomic_8h.html#a94674db2fe3c7496dfdcaa9b81486e79">_Atomic</a> uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__epoch__gc.html#af2a2777f54fadbf9d21a2c5492c0ffdd">last_cleanup_ts</a></td></tr>
+<tr class="separator:af2a2777f54fadbf9d21a2c5492c0ffdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d10fc708c17218894d855c4c4014ebf" id="r_a5d10fc708c17218894d855c4c4014ebf"><td class="memItemLeft" align="right" valign="top">pthread_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__epoch__gc.html#a5d10fc708c17218894d855c4c4014ebf">rotate_thread</a></td></tr>
+<tr class="separator:a5d10fc708c17218894d855c4c4014ebf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72607c3f140725ba5cf806c3854e482a" id="r_a72607c3f140725ba5cf806c3854e482a"><td class="memItemLeft" align="right" valign="top">pthread_mutex_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__epoch__gc.html#a72607c3f140725ba5cf806c3854e482a">rotate_lock</a></td></tr>
+<tr class="separator:a72607c3f140725ba5cf806c3854e482a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77f265d61c8cd33696655372a99073c9" id="r_a77f265d61c8cd33696655372a99073c9"><td class="memItemLeft" align="right" valign="top">pthread_cond_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__epoch__gc.html#a77f265d61c8cd33696655372a99073c9">rotate_cond</a></td></tr>
+<tr class="separator:a77f265d61c8cd33696655372a99073c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9380d51b368eb4b578005c710d4b18b3" id="r_a9380d51b368eb4b578005c710d4b18b3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2stdatomic_8h.html#a94674db2fe3c7496dfdcaa9b81486e79">_Atomic</a> _Bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__epoch__gc.html#a9380d51b368eb4b578005c710d4b18b3">shutdown_requested</a></td></tr>
+<tr class="separator:a9380d51b368eb4b578005c710d4b18b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57eddf693f329d72cee6bbcd87461233" id="r_a57eddf693f329d72cee6bbcd87461233"><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2stdatomic_8h.html#a94674db2fe3c7496dfdcaa9b81486e79">_Atomic</a> _Bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__epoch__gc.html#a57eddf693f329d72cee6bbcd87461233">manual_rotation</a></td></tr>
+<tr class="separator:a57eddf693f329d72cee6bbcd87461233"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2838becb5e51dca930d461a0c5bde257" id="r_a2838becb5e51dca930d461a0c5bde257"><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2stdatomic_8h.html#a94674db2fe3c7496dfdcaa9b81486e79">_Atomic</a> uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__epoch__gc.html#a2838becb5e51dca930d461a0c5bde257">min_rotate_ns</a></td></tr>
+<tr class="separator:a2838becb5e51dca930d461a0c5bde257"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefc5cb5c9e1ebbf9ed12216b7770c8ec" id="r_aefc5cb5c9e1ebbf9ed12216b7770c8ec"><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2stdatomic_8h.html#a94674db2fe3c7496dfdcaa9b81486e79">_Atomic</a> uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__epoch__gc.html#aefc5cb5c9e1ebbf9ed12216b7770c8ec">max_rotate_ns</a></td></tr>
+<tr class="separator:aefc5cb5c9e1ebbf9ed12216b7770c8ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a947c87df0f376bc4feb53beef0fbec47" id="r_a947c87df0f376bc4feb53beef0fbec47"><td class="memItemLeft" align="right" valign="top">_Bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__epoch__gc.html#a947c87df0f376bc4feb53beef0fbec47">rotate_thread_started</a></td></tr>
+<tr class="separator:a947c87df0f376bc4feb53beef0fbec47"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Epoch-based garbage collection context. </p>
 <p>Manages memory lifecycle using generational epochs. Designed for periodic, non-blocking cleanup where the user triggers the cycle. Traverses the heap tree to identify and free expired blocks without a global stop-the-world pause. </p>
 
-<p class="definition">Definition at line <a class="el" href="epoch__gc_8h_source.html#l00013">13</a> of file <a class="el" href="epoch__gc_8h_source.html">epoch_gc.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epoch__gc_8h_source.html#l00015">15</a> of file <a class="el" href="epoch__gc_8h_source.html">epoch_gc.h</a>.</p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
-<a id="ab3a7c8a89fbdc06128a6b176ed2132eb" name="ab3a7c8a89fbdc06128a6b176ed2132eb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab3a7c8a89fbdc06128a6b176ed2132eb">&#9670;&#160;</a></span>current_epoch</h2>
+<a id="a6712a4f4964ade138af8872882ba8143" name="a6712a4f4964ade138af8872882ba8143"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6712a4f4964ade138af8872882ba8143">&#9670;&#160;</a></span>current_epoch</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint64_t ttak_epoch_gc::current_epoch</td>
+          <td class="memname"><a class="el" href="include_2stdatomic_8h.html#a94674db2fe3c7496dfdcaa9b81486e79">_Atomic</a> uint64_t ttak_epoch_gc::current_epoch</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Current active epoch ID. </p>
 
-<p class="definition">Definition at line <a class="el" href="epoch__gc_8h_source.html#l00015">15</a> of file <a class="el" href="epoch__gc_8h_source.html">epoch_gc.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epoch__gc_8h_source.html#l00017">17</a> of file <a class="el" href="epoch__gc_8h_source.html">epoch_gc.h</a>.</p>
 
 </div>
 </div>
-<a id="a20d6d9cd563837e4cbe0c5c785202279" name="a20d6d9cd563837e4cbe0c5c785202279"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a20d6d9cd563837e4cbe0c5c785202279">&#9670;&#160;</a></span>last_cleanup_ts</h2>
+<a id="af2a2777f54fadbf9d21a2c5492c0ffdd" name="af2a2777f54fadbf9d21a2c5492c0ffdd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af2a2777f54fadbf9d21a2c5492c0ffdd">&#9670;&#160;</a></span>last_cleanup_ts</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint64_t ttak_epoch_gc::last_cleanup_ts</td>
+          <td class="memname"><a class="el" href="include_2stdatomic_8h.html#a94674db2fe3c7496dfdcaa9b81486e79">_Atomic</a> uint64_t ttak_epoch_gc::last_cleanup_ts</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Timestamp of the last cleanup execution. </p>
 
-<p class="definition">Definition at line <a class="el" href="epoch__gc_8h_source.html#l00016">16</a> of file <a class="el" href="epoch__gc_8h_source.html">epoch_gc.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epoch__gc_8h_source.html#l00018">18</a> of file <a class="el" href="epoch__gc_8h_source.html">epoch_gc.h</a>.</p>
+
+</div>
+</div>
+<a id="a57eddf693f329d72cee6bbcd87461233" name="a57eddf693f329d72cee6bbcd87461233"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a57eddf693f329d72cee6bbcd87461233">&#9670;&#160;</a></span>manual_rotation</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="include_2stdatomic_8h.html#a94674db2fe3c7496dfdcaa9b81486e79">_Atomic</a> _Bool ttak_epoch_gc::manual_rotation</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>True when the user wants manual rotation mode. </p>
+
+<p class="definition">Definition at line <a class="el" href="epoch__gc_8h_source.html#l00023">23</a> of file <a class="el" href="epoch__gc_8h_source.html">epoch_gc.h</a>.</p>
+
+</div>
+</div>
+<a id="aefc5cb5c9e1ebbf9ed12216b7770c8ec" name="aefc5cb5c9e1ebbf9ed12216b7770c8ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aefc5cb5c9e1ebbf9ed12216b7770c8ec">&#9670;&#160;</a></span>max_rotate_ns</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="include_2stdatomic_8h.html#a94674db2fe3c7496dfdcaa9b81486e79">_Atomic</a> uint64_t ttak_epoch_gc::max_rotate_ns</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Maximum backoff interval (ns) between auto rotations. </p>
+
+<p class="definition">Definition at line <a class="el" href="epoch__gc_8h_source.html#l00025">25</a> of file <a class="el" href="epoch__gc_8h_source.html">epoch_gc.h</a>.</p>
+
+</div>
+</div>
+<a id="a2838becb5e51dca930d461a0c5bde257" name="a2838becb5e51dca930d461a0c5bde257"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2838becb5e51dca930d461a0c5bde257">&#9670;&#160;</a></span>min_rotate_ns</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="include_2stdatomic_8h.html#a94674db2fe3c7496dfdcaa9b81486e79">_Atomic</a> uint64_t ttak_epoch_gc::min_rotate_ns</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Minimum wait interval (ns) between auto rotations. </p>
+
+<p class="definition">Definition at line <a class="el" href="epoch__gc_8h_source.html#l00024">24</a> of file <a class="el" href="epoch__gc_8h_source.html">epoch_gc.h</a>.</p>
+
+</div>
+</div>
+<a id="a77f265d61c8cd33696655372a99073c9" name="a77f265d61c8cd33696655372a99073c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77f265d61c8cd33696655372a99073c9">&#9670;&#160;</a></span>rotate_cond</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">pthread_cond_t ttak_epoch_gc::rotate_cond</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Condition variable to nudge the rotate thread. </p>
+
+<p class="definition">Definition at line <a class="el" href="epoch__gc_8h_source.html#l00021">21</a> of file <a class="el" href="epoch__gc_8h_source.html">epoch_gc.h</a>.</p>
+
+</div>
+</div>
+<a id="a72607c3f140725ba5cf806c3854e482a" name="a72607c3f140725ba5cf806c3854e482a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72607c3f140725ba5cf806c3854e482a">&#9670;&#160;</a></span>rotate_lock</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">pthread_mutex_t ttak_epoch_gc::rotate_lock</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Synchronization primitive for thread wake/sleep. </p>
+
+<p class="definition">Definition at line <a class="el" href="epoch__gc_8h_source.html#l00020">20</a> of file <a class="el" href="epoch__gc_8h_source.html">epoch_gc.h</a>.</p>
+
+</div>
+</div>
+<a id="a5d10fc708c17218894d855c4c4014ebf" name="a5d10fc708c17218894d855c4c4014ebf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d10fc708c17218894d855c4c4014ebf">&#9670;&#160;</a></span>rotate_thread</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">pthread_t ttak_epoch_gc::rotate_thread</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Background thread handling automatic epoch rotation. </p>
+
+<p class="definition">Definition at line <a class="el" href="epoch__gc_8h_source.html#l00019">19</a> of file <a class="el" href="epoch__gc_8h_source.html">epoch_gc.h</a>.</p>
+
+</div>
+</div>
+<a id="a947c87df0f376bc4feb53beef0fbec47" name="a947c87df0f376bc4feb53beef0fbec47"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a947c87df0f376bc4feb53beef0fbec47">&#9670;&#160;</a></span>rotate_thread_started</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Bool ttak_epoch_gc::rotate_thread_started</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Tracks whether the rotate thread was launched. </p>
+
+<p class="definition">Definition at line <a class="el" href="epoch__gc_8h_source.html#l00026">26</a> of file <a class="el" href="epoch__gc_8h_source.html">epoch_gc.h</a>.</p>
+
+</div>
+</div>
+<a id="a9380d51b368eb4b578005c710d4b18b3" name="a9380d51b368eb4b578005c710d4b18b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9380d51b368eb4b578005c710d4b18b3">&#9670;&#160;</a></span>shutdown_requested</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="include_2stdatomic_8h.html#a94674db2fe3c7496dfdcaa9b81486e79">_Atomic</a> _Bool ttak_epoch_gc::shutdown_requested</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Signals rotate thread to exit. </p>
+
+<p class="definition">Definition at line <a class="el" href="epoch__gc_8h_source.html#l00022">22</a> of file <a class="el" href="epoch__gc_8h_source.html">epoch_gc.h</a>.</p>
 
 </div>
 </div>
@@ -180,7 +332,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Underlying memory tree tracking allocations. </p>
 
-<p class="definition">Definition at line <a class="el" href="epoch__gc_8h_source.html#l00014">14</a> of file <a class="el" href="epoch__gc_8h_source.html">epoch_gc.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epoch__gc_8h_source.html#l00016">16</a> of file <a class="el" href="epoch__gc_8h_source.html">epoch_gc.h</a>.</p>
 
 </div>
 </div>

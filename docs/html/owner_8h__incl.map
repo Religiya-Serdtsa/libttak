@@ -3,11 +3,11 @@
 <area shape="rect" id="Node000002" href="$map_8h.html" title=" " alt="" coords="106,79,217,104"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="304,33,203,76,201,71,302,28"/>
 <area shape="rect" id="Node000004" title=" " alt="" coords="230,225,301,251"/>
-<area shape="poly" id="edge12_Node000001_Node000004" title=" " alt="" coords="328,32,308,80,287,151,273,212,268,211,282,150,303,78,323,30"/>
+<area shape="poly" id="edge13_Node000001_Node000004" title=" " alt="" coords="328,32,308,80,287,151,273,212,268,211,282,150,303,78,323,30"/>
 <area shape="rect" id="Node000007" href="$sync_2sync_8h.html" title=" " alt="" coords="317,79,445,104"/>
 <area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="341,29,367,66,363,69,337,33"/>
-<area shape="rect" id="Node000009" title=" " alt="" coords="469,79,552,104"/>
-<area shape="poly" id="edge11_Node000001_Node000009" title=" " alt="" coords="361,28,470,71,468,76,359,33"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="469,79,552,104"/>
+<area shape="poly" id="edge12_Node000001_Node000010" title=" " alt="" coords="361,28,470,71,468,76,359,33"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="5,225,80,251"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="134,106,100,126,70,154,55,183,48,212,43,211,50,181,66,150,97,121,132,102"/>
 <area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="172,103,251,213,247,216,168,106"/>
@@ -20,4 +20,6 @@
 <area shape="poly" id="edge10_Node000007_Node000004" title=" " alt="" coords="374,106,285,216,281,213,370,103"/>
 <area shape="rect" id="Node000008" href="$pthread_8h.html" title="POSIX thread compatibility shim." alt="" coords="369,152,453,177"/>
 <area shape="poly" id="edge9_Node000007_Node000008" title=" " alt="" coords="389,103,403,138,398,140,384,105"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="477,152,576,177"/>
+<area shape="poly" id="edge11_Node000007_Node000009" title=" " alt="" coords="406,102,492,144,490,148,404,106"/>
 </map>

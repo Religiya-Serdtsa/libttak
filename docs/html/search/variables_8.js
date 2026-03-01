@@ -7,5 +7,6 @@ var searchData=
   ['hist_5fmin_4',['hist_min',['../structttak__stats.html#ab51ebdd3e5c43fbaa2dbeb59804057c2',1,'ttak_stats']]],
   ['hist_5fstep_5',['hist_step',['../structttak__stats.html#a61409b0d6c251a2573a5173c9e44915a',1,'ttak_stats']]],
   ['histogram_6',['histogram',['../structttak__stats.html#aed5a4e8e63554f066ed1858e18a33409',1,'ttak_stats']]],
-  ['hits_7',['hits',['../structttak__detachable__cache.html#aee7eb751a826cd514855549f9c35fc7b',1,'ttak_detachable_cache']]]
+  ['hits_7',['hits',['../structttak__detachable__cache.html#aee7eb751a826cd514855549f9c35fc7b',1,'ttak_detachable_cache']]],
+  ['hw_5fstate_8',['hw_state',['../structttak__crypto__ctx.html#a8368381127429c06e5d1ad8c0059f4d2',1,'ttak_crypto_ctx']]]
 ];

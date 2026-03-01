@@ -1,9 +1,11 @@
 <map id="include/ttak/atomic/atomic.h" name="include/ttak/atomic/atomic.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="115,5,263,45"/>
-<area shape="rect" id="Node000002" href="$mem_8h.html" title=" " alt="" coords="96,93,283,119"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="192,59,192,93,187,93,187,59"/>
-<area shape="rect" id="Node000003" href="$arena__helper_8h.html" title=" " alt="" coords="5,167,184,207"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="167,129,119,169,116,164,163,125"/>
-<area shape="rect" id="Node000004" href="$app__types_8h.html" title=" " alt="" coords="208,174,363,199"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="216,125,273,172,269,176,212,129"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="127,5,275,45"/>
+<area shape="rect" id="Node000002" href="$lattice_8h.html" title="Choi Seok&#45;jeong&#39;s Lattice (Sanpan) for Lock&#45;Free Parallel Ingress." alt="" coords="111,93,292,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="204,59,204,93,199,93,199,59"/>
+<area shape="rect" id="Node000003" href="$endpoint_8h.html" title=" " alt="" coords="103,167,300,192"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="204,132,204,167,199,167,199,132"/>
+<area shape="rect" id="Node000004" href="$session_8h.html" title=" " alt="" coords="5,240,195,265"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="175,202,118,242,115,238,172,198"/>
+<area shape="rect" id="Node000005" href="$view_8h.html" title=" " alt="" coords="219,240,389,265"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="231,198,289,238,286,242,228,202"/>
 </map>

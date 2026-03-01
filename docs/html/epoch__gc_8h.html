@@ -98,6 +98,8 @@ $(document).ready(function(){initNavTree('epoch__gc_8h.html',''); initResizable(
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;<a class="el" href="mem__tree_8h_source.html">ttak/mem_tree/mem_tree.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="pthread_8h_source.html">pthread.h</a>&gt;</code><br />
+<code>#include &lt;stdatomic.h&gt;</code><br />
 </div><div class="textblock"><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Include dependency graph for epoch_gc.h:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -105,18 +107,20 @@ $(document).ready(function(){initNavTree('epoch__gc_8h.html',''); initResizable(
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="epoch__gc_8h__incl.png" border="0" usemap="#ainclude_2ttak_2mem_2epoch__gc_8h" alt=""/></div>
 <map name="ainclude_2ttak_2mem_2epoch__gc_8h" id="ainclude_2ttak_2mem_2epoch__gc_8h">
-<area shape="rect" title=" " alt="" coords="134,5,349,31"/>
+<area shape="rect" title=" " alt="" coords="273,5,487,31"/>
 <area shape="rect" href="mem__tree_8h.html" title=" " alt="" coords="140,79,343,104"/>
-<area shape="poly" title=" " alt="" coords="244,31,244,65,239,65,239,31"/>
+<area shape="poly" title=" " alt="" coords="359,33,277,75,275,70,357,28"/>
+<area shape="rect" title=" " alt="" coords="307,152,405,177"/>
+<area shape="poly" title=" " alt="" coords="381,32,363,139,358,138,375,31"/>
+<area shape="rect" href="pthread_8h.html" title="POSIX thread compatibility shim." alt="" coords="430,152,514,177"/>
+<area shape="poly" title=" " alt="" coords="390,30,460,139,455,142,385,33"/>
 <area shape="rect" title=" " alt="" coords="5,152,80,177"/>
 <area shape="poly" title=" " alt="" coords="210,107,89,150,87,145,209,102"/>
 <area shape="rect" title=" " alt="" coords="105,152,175,177"/>
 <area shape="poly" title=" " alt="" coords="227,106,169,146,166,142,224,102"/>
 <area shape="rect" title=" " alt="" coords="200,152,283,177"/>
 <area shape="poly" title=" " alt="" coords="244,104,244,138,239,138,239,104"/>
-<area shape="rect" title=" " alt="" coords="307,152,405,177"/>
 <area shape="poly" title=" " alt="" coords="261,102,327,142,324,147,258,106"/>
-<area shape="rect" href="pthread_8h.html" title="POSIX thread compatibility shim." alt="" coords="430,152,514,177"/>
 <area shape="poly" title=" " alt="" coords="279,101,423,145,421,151,278,107"/>
 </map>
 </div>
@@ -127,9 +131,25 @@ $(document).ready(function(){initNavTree('epoch__gc_8h.html',''); initResizable(
 <div id="dynsection-1-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="epoch__gc_8h__dep__incl.png" border="0" usemap="#ainclude_2ttak_2mem_2epoch__gc_8hdep" alt=""/></div>
 <map name="ainclude_2ttak_2mem_2epoch__gc_8hdep" id="ainclude_2ttak_2mem_2epoch__gc_8hdep">
-<area shape="rect" title=" " alt="" coords="5,5,220,31"/>
-<area shape="rect" href="arena__helper_8h.html" title=" " alt="" coords="23,79,202,119"/>
-<area shape="poly" title=" " alt="" coords="115,44,115,79,110,79,110,44"/>
+<area shape="rect" title=" " alt="" coords="90,5,305,31"/>
+<area shape="rect" href="arena__helper_8h.html" title=" " alt="" coords="5,152,184,192"/>
+<area shape="poly" title=" " alt="" coords="184,44,110,153,105,150,180,41"/>
+<area shape="rect" href="mem_8h.html" title="TTAK Unified Memory Subsystem with Lifecycle Management and Hardware Optimization." alt="" coords="205,79,392,104"/>
+<area shape="poly" title=" " alt="" coords="226,36,284,76,281,81,223,41"/>
+<area shape="poly" title=" " alt="" coords="257,111,145,154,143,149,255,106"/>
+<area shape="rect" href="lattice_8h.html" title="Choi Seok&#45;jeong&#39;s Lattice (Sanpan) for Lock&#45;Free Parallel Ingress." alt="" coords="208,159,389,185"/>
+<area shape="poly" title=" " alt="" coords="301,118,301,159,296,159,296,118"/>
+<area shape="rect" href="app__types_8h.html" title=" " alt="" coords="413,159,568,185"/>
+<area shape="poly" title=" " alt="" coords="340,107,464,157,462,162,338,112"/>
+<area shape="rect" href="mem__internal_8h.html" title="Internal memory subsystem definitions and tiered allocator interfaces." alt="" coords="461,240,670,265"/>
+<area shape="poly" title=" " alt="" coords="406,99,511,117,554,131,582,150,592,173,591,198,583,222,575,241,570,238,578,220,585,197,586,174,578,154,552,136,510,122,405,104"/>
+<area shape="rect" href="endpoint_8h.html" title=" " alt="" coords="200,240,397,265"/>
+<area shape="poly" title=" " alt="" coords="301,198,301,240,296,240,296,198"/>
+<area shape="rect" href="session_8h.html" title=" " alt="" coords="103,313,292,339"/>
+<area shape="poly" title=" " alt="" coords="273,275,215,315,212,311,270,271"/>
+<area shape="rect" href="view_8h.html" title=" " alt="" coords="316,313,487,339"/>
+<area shape="poly" title=" " alt="" coords="328,271,386,311,383,315,325,275"/>
+<area shape="poly" title=" " alt="" coords="513,193,556,238,552,242,509,196"/>
 </map>
 </div>
 </div>
@@ -163,6 +183,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a2c9fb90ed22fe61eea9bbcafddf53625" id="r_a2c9fb90ed22fe61eea9bbcafddf53625"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="epoch__gc_8h.html#a2c9fb90ed22fe61eea9bbcafddf53625">ttak_epoch_gc_rotate</a> (<a class="el" href="epoch__gc_8h.html#a2f90109b245cba56d85e82cf71a8eef4">ttak_epoch_gc_t</a> *gc)</td></tr>
 <tr class="memdesc:a2c9fb90ed22fe61eea9bbcafddf53625"><td class="mdescLeft">&#160;</td><td class="mdescRight">Advances the epoch and triggers a non-blocking cleanup pass.  <br /></td></tr>
 <tr class="separator:a2c9fb90ed22fe61eea9bbcafddf53625"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78ff9f44d1919ebb90542bfdd87f946e" id="r_a78ff9f44d1919ebb90542bfdd87f946e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="epoch__gc_8h.html#a78ff9f44d1919ebb90542bfdd87f946e">ttak_epoch_gc_manual_rotate</a> (<a class="el" href="epoch__gc_8h.html#a2f90109b245cba56d85e82cf71a8eef4">ttak_epoch_gc_t</a> *gc, _Bool manual_mode)</td></tr>
+<tr class="memdesc:a78ff9f44d1919ebb90542bfdd87f946e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables the automatic rotation worker.  <br /></td></tr>
+<tr class="separator:a78ff9f44d1919ebb90542bfdd87f946e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a id="a19a48ee392866ef40aed9cc4fa6bbf41" name="a19a48ee392866ef40aed9cc4fa6bbf41"></a>
@@ -177,7 +200,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="epoch__gc_8h_source.html#l00019">19</a> of file <a class="el" href="epoch__gc_8h_source.html">epoch_gc.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epoch__gc_8h_source.html#l00029">29</a> of file <a class="el" href="epoch__gc_8h_source.html">epoch_gc.h</a>.</p>
 
 </div>
 </div>
@@ -245,6 +268,44 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">gc</td><td>Pointer to the GC structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a78ff9f44d1919ebb90542bfdd87f946e" name="a78ff9f44d1919ebb90542bfdd87f946e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78ff9f44d1919ebb90542bfdd87f946e">&#9670;&#160;</a></span>ttak_epoch_gc_manual_rotate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ttak_epoch_gc_manual_rotate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="epoch__gc_8h.html#a2f90109b245cba56d85e82cf71a8eef4">ttak_epoch_gc_t</a> *&#160;</td>
+          <td class="paramname"><em>gc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">_Bool&#160;</td>
+          <td class="paramname"><em>manual_mode</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enables or disables the automatic rotation worker. </p>
+<p>When manual mode is enabled, callers are responsible for invoking <a class="el" href="epoch__gc_8h.html#a2c9fb90ed22fe61eea9bbcafddf53625" title="Advances the epoch and triggers a non-blocking cleanup pass.">ttak_epoch_gc_rotate()</a> (and <a class="el" href="epoch_8h.html#aa6be6071c276481154cceb40f5720f32" title="Attempts to reclaim memory from safe epochs.">ttak_epoch_reclaim()</a>) explicitly.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">gc</td><td>Pointer to the GC structure. </td></tr>
+    <tr><td class="paramname">manual_mode</td><td>True to disable the auto-rotator, false to re-enable it. </td></tr>
   </table>
   </dd>
 </dl>

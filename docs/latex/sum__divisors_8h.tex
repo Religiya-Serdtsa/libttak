@@ -4,13 +4,20 @@
 {\ttfamily \#include $<$ttak/math/bigint.\+h$>$}\newline
 {\ttfamily \#include $<$stdint.\+h$>$}\newline
 {\ttfamily \#include $<$stdbool.\+h$>$}\newline
-Include dependency graph for sum\+\_\+divisors.\+h\+:\nopagebreak
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+Include dependency graph for sum\+\_\+divisors.\+h\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=350pt]{sum__divisors_8h__incl}
 \end{center}
 \end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structttak__sumdiv__limits__t}{ttak\+\_\+sumdiv\+\_\+limits\+\_\+t}}
+\end{DoxyCompactItemize}
 \doxysubsubsection*{Enumerations}
 \begin{DoxyCompactItemize}
 \item 
@@ -22,6 +29,7 @@ enum \mbox{\hyperlink{sum__divisors_8h_ad263c33f5701435721532071341d20d9}{ttak\+
 , \newline
 \mbox{\hyperlink{sum__divisors_8h_ad263c33f5701435721532071341d20d9a39c532b65da642cc44d3babcb253695d}{TTAK\+\_\+\+SUMDIV\+\_\+\+BIG\+\_\+\+ERROR\+\_\+\+ARITHMETIC}}
 , \mbox{\hyperlink{sum__divisors_8h_ad263c33f5701435721532071341d20d9a0a52efb9ed7fb52f27495b78e1772a44}{TTAK\+\_\+\+SUMDIV\+\_\+\+BIG\+\_\+\+ERROR\+\_\+\+GENERIC}}
+, \mbox{\hyperlink{sum__divisors_8h_ad263c33f5701435721532071341d20d9a1d96d0b240e9589cd5f63a4a02adbb41}{TTAK\+\_\+\+SUMDIV\+\_\+\+BIG\+\_\+\+ERROR\+\_\+\+INPUT\+\_\+\+TOO\+\_\+\+LARGE}}
  \}
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Functions}
@@ -36,7 +44,11 @@ bool \mbox{\hyperlink{sum__divisors_8h_af34288a320578a37a35a1843a4ac9c62}{ttak\+
 const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sum__divisors_8h_ad2b7aa6679870a9c5d324fe3ede48a8b}{ttak\+\_\+sum\+\_\+proper\+\_\+divisors\+\_\+big\+\_\+error\+\_\+name}} (\mbox{\hyperlink{sum__divisors_8h_ad263c33f5701435721532071341d20d9}{ttak\+\_\+sumdiv\+\_\+big\+\_\+error\+\_\+t}} err)
 \begin{DoxyCompactList}\small\item\em Returns a short symbolic name for a ttak\+\_\+sumdiv\+\_\+big\+\_\+error\+\_\+t value. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{sum__divisors_8h_ace73782f1a0a16dd5fc7c21bb8122c5b}{ttak\+\_\+sum\+\_\+divisors\+\_\+attach\+\_\+logger}} (\mbox{\hyperlink{logger_8h_a3a653b85eb05b9b2000b5e7e20fedcda}{ttak\+\_\+logger\+\_\+t}} \texorpdfstring{$\ast$}{*}logger)
-\begin{DoxyCompactList}\small\item\em Attaches a logger for auto-\/heal stage reporting. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Attaches a logger for auto-\/heal stage reporting. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{sum__divisors_8h_ac29d849aa7e1bde2cfda31494116e6cb}{ttak\+\_\+sum\+\_\+divisors\+\_\+set\+\_\+limits}} (const \mbox{\hyperlink{structttak__sumdiv__limits__t}{ttak\+\_\+sumdiv\+\_\+limits\+\_\+t}} \texorpdfstring{$\ast$}{*}limits)
+\item 
+void \mbox{\hyperlink{sum__divisors_8h_a0a2e6a914b8fd6513ce4796feaddf8d8}{ttak\+\_\+sum\+\_\+divisors\+\_\+get\+\_\+limits}} (\mbox{\hyperlink{structttak__sumdiv__limits__t}{ttak\+\_\+sumdiv\+\_\+limits\+\_\+t}} \texorpdfstring{$\ast$}{*}limits\+\_\+out)
+\end{DoxyCompactItemize}
 
 
 \doxysubsection{Enumeration Type Documentation}
@@ -71,10 +83,14 @@ TTAK\+\_\+\+SUMDIV\+\_\+\+BIG\+\_\+\+ERROR\+\_\+\+ARITHMETIC&\\
 TTAK\+\_\+\+SUMDIV\+\_\+\+BIG\+\_\+\+ERROR\+\_\+\+GENERIC&\\
 \hline
 
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_SUMDIV\_BIG\_ERROR\_INPUT\_TOO\_LARGE@{TTAK\_SUMDIV\_BIG\_ERROR\_INPUT\_TOO\_LARGE}!sum\_divisors.h@{sum\_divisors.h}}\index{sum\_divisors.h@{sum\_divisors.h}!TTAK\_SUMDIV\_BIG\_ERROR\_INPUT\_TOO\_LARGE@{TTAK\_SUMDIV\_BIG\_ERROR\_INPUT\_TOO\_LARGE}}}\Hypertarget{sum__divisors_8h_ad263c33f5701435721532071341d20d9a1d96d0b240e9589cd5f63a4a02adbb41}\label{sum__divisors_8h_ad263c33f5701435721532071341d20d9a1d96d0b240e9589cd5f63a4a02adbb41} 
+TTAK\+\_\+\+SUMDIV\+\_\+\+BIG\+\_\+\+ERROR\+\_\+\+INPUT\+\_\+\+TOO\+\_\+\+LARGE&\\
+\hline
+
 \end{DoxyEnumFields}
 
 
-Definition at line \mbox{\hyperlink{sum__divisors_8h_source_l00009}{9}} of file \mbox{\hyperlink{sum__divisors_8h_source}{sum\+\_\+divisors.\+h}}.
+Definition at line \mbox{\hyperlink{sum__divisors_8h_source_l00010}{10}} of file \mbox{\hyperlink{sum__divisors_8h_source}{sum\+\_\+divisors.\+h}}.
 
 
 
@@ -88,6 +104,18 @@ Definition at line \mbox{\hyperlink{sum__divisors_8h_source_l00009}{9}} of file 
 
 
 Attaches a logger for auto-\/heal stage reporting. 
+
+\Hypertarget{sum__divisors_8h_a0a2e6a914b8fd6513ce4796feaddf8d8}\label{sum__divisors_8h_a0a2e6a914b8fd6513ce4796feaddf8d8} 
+\index{sum\_divisors.h@{sum\_divisors.h}!ttak\_sum\_divisors\_get\_limits@{ttak\_sum\_divisors\_get\_limits}}
+\index{ttak\_sum\_divisors\_get\_limits@{ttak\_sum\_divisors\_get\_limits}!sum\_divisors.h@{sum\_divisors.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_sum\_divisors\_get\_limits()}{ttak\_sum\_divisors\_get\_limits()}}
+{\footnotesize\ttfamily void ttak\+\_\+sum\+\_\+divisors\+\_\+get\+\_\+limits (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structttak__sumdiv__limits__t}{ttak\+\_\+sumdiv\+\_\+limits\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{limits\+\_\+out }\end{DoxyParamCaption})}
+
+\Hypertarget{sum__divisors_8h_ac29d849aa7e1bde2cfda31494116e6cb}\label{sum__divisors_8h_ac29d849aa7e1bde2cfda31494116e6cb} 
+\index{sum\_divisors.h@{sum\_divisors.h}!ttak\_sum\_divisors\_set\_limits@{ttak\_sum\_divisors\_set\_limits}}
+\index{ttak\_sum\_divisors\_set\_limits@{ttak\_sum\_divisors\_set\_limits}!sum\_divisors.h@{sum\_divisors.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_sum\_divisors\_set\_limits()}{ttak\_sum\_divisors\_set\_limits()}}
+{\footnotesize\ttfamily void ttak\+\_\+sum\+\_\+divisors\+\_\+set\+\_\+limits (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structttak__sumdiv__limits__t}{ttak\+\_\+sumdiv\+\_\+limits\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{limits }\end{DoxyParamCaption})}
 
 \Hypertarget{sum__divisors_8h_af34288a320578a37a35a1843a4ac9c62}\label{sum__divisors_8h_af34288a320578a37a35a1843a4ac9c62} 
 \index{sum\_divisors.h@{sum\_divisors.h}!ttak\_sum\_proper\_divisors\_big@{ttak\_sum\_proper\_divisors\_big}}

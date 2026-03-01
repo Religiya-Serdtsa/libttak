@@ -2,7 +2,7 @@
 \hypertarget{structttak__dynamic__mask__t}{}\label{structttak__dynamic__mask__t}\index{ttak\_dynamic\_mask\_t@{ttak\_dynamic\_mask\_t}}
 
 
-Thread-\/safe dynamic bitmap.  
+Thread-\/safe dynamic bitmap. Optimized for lock-\/free reads via EBR.  
 
 
 
@@ -12,7 +12,7 @@ Thread-\/safe dynamic bitmap.
 \doxysubsubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-uint64\+\_\+t \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__dynamic__mask__t_a16d53f0a1317edf26715d8cd2da88273}{bits}}
+uint64\+\_\+t \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\+\_\+\+Atomic}} \mbox{\hyperlink{structttak__dynamic__mask__t_a888a142a9acc56e0c1113a0bde6260d5}{bits}}
 \item 
 uint32\+\_\+t \mbox{\hyperlink{structttak__dynamic__mask__t_a60132ba5b95c01ebfeac22bd5e6e41a4}{capacity}}
 \item 
@@ -23,22 +23,22 @@ uint32\+\_\+t \mbox{\hyperlink{structttak__dynamic__mask__t_a414d73da8f63ec1e4bd
 
 
 \doxysubsection{Detailed Description}
-Thread-\/safe dynamic bitmap. 
+Thread-\/safe dynamic bitmap. Optimized for lock-\/free reads via EBR. 
 
-Definition at line \mbox{\hyperlink{dynamic__mask_8h_source_l00020}{20}} of file \mbox{\hyperlink{dynamic__mask_8h_source}{dynamic\+\_\+mask.\+h}}.
+Definition at line \mbox{\hyperlink{dynamic__mask_8h_source_l00021}{21}} of file \mbox{\hyperlink{dynamic__mask_8h_source}{dynamic\+\_\+mask.\+h}}.
 
 
 
 \doxysubsection{Member Data Documentation}
-\Hypertarget{structttak__dynamic__mask__t_a16d53f0a1317edf26715d8cd2da88273}\label{structttak__dynamic__mask__t_a16d53f0a1317edf26715d8cd2da88273} 
+\Hypertarget{structttak__dynamic__mask__t_a888a142a9acc56e0c1113a0bde6260d5}\label{structttak__dynamic__mask__t_a888a142a9acc56e0c1113a0bde6260d5} 
 \index{ttak\_dynamic\_mask\_t@{ttak\_dynamic\_mask\_t}!bits@{bits}}
 \index{bits@{bits}!ttak\_dynamic\_mask\_t@{ttak\_dynamic\_mask\_t}}
 \doxysubsubsection{\texorpdfstring{bits}{bits}}
-{\footnotesize\ttfamily uint64\+\_\+t\texorpdfstring{$\ast$}{*} ttak\+\_\+dynamic\+\_\+mask\+\_\+t\+::bits}
+{\footnotesize\ttfamily uint64\+\_\+t\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\+\_\+\+Atomic}} ttak\+\_\+dynamic\+\_\+mask\+\_\+t\+::bits}
 
-The actual bitmap array 
+The actual bitmap array (Atomic for lock-\/free read) 
 
-Definition at line \mbox{\hyperlink{dynamic__mask_8h_source_l00021}{21}} of file \mbox{\hyperlink{dynamic__mask_8h_source}{dynamic\+\_\+mask.\+h}}.
+Definition at line \mbox{\hyperlink{dynamic__mask_8h_source_l00022}{22}} of file \mbox{\hyperlink{dynamic__mask_8h_source}{dynamic\+\_\+mask.\+h}}.
 
 \Hypertarget{structttak__dynamic__mask__t_a60132ba5b95c01ebfeac22bd5e6e41a4}\label{structttak__dynamic__mask__t_a60132ba5b95c01ebfeac22bd5e6e41a4} 
 \index{ttak\_dynamic\_mask\_t@{ttak\_dynamic\_mask\_t}!capacity@{capacity}}
@@ -48,7 +48,7 @@ Definition at line \mbox{\hyperlink{dynamic__mask_8h_source_l00021}{21}} of file
 
 Capacity in bits (multiples of 64) 
 
-Definition at line \mbox{\hyperlink{dynamic__mask_8h_source_l00022}{22}} of file \mbox{\hyperlink{dynamic__mask_8h_source}{dynamic\+\_\+mask.\+h}}.
+Definition at line \mbox{\hyperlink{dynamic__mask_8h_source_l00023}{23}} of file \mbox{\hyperlink{dynamic__mask_8h_source}{dynamic\+\_\+mask.\+h}}.
 
 \Hypertarget{structttak__dynamic__mask__t_a414d73da8f63ec1e4bd9f3e813f5e751}\label{structttak__dynamic__mask__t_a414d73da8f63ec1e4bd9f3e813f5e751} 
 \index{ttak\_dynamic\_mask\_t@{ttak\_dynamic\_mask\_t}!count@{count}}
@@ -58,7 +58,7 @@ Definition at line \mbox{\hyperlink{dynamic__mask_8h_source_l00022}{22}} of file
 
 Number of set bits (optional tracking) 
 
-Definition at line \mbox{\hyperlink{dynamic__mask_8h_source_l00023}{23}} of file \mbox{\hyperlink{dynamic__mask_8h_source}{dynamic\+\_\+mask.\+h}}.
+Definition at line \mbox{\hyperlink{dynamic__mask_8h_source_l00024}{24}} of file \mbox{\hyperlink{dynamic__mask_8h_source}{dynamic\+\_\+mask.\+h}}.
 
 \Hypertarget{structttak__dynamic__mask__t_ad03397543e5bad84405b34ddc9407a30}\label{structttak__dynamic__mask__t_ad03397543e5bad84405b34ddc9407a30} 
 \index{ttak\_dynamic\_mask\_t@{ttak\_dynamic\_mask\_t}!lock@{lock}}
@@ -66,9 +66,9 @@ Definition at line \mbox{\hyperlink{dynamic__mask_8h_source_l00023}{23}} of file
 \doxysubsubsection{\texorpdfstring{lock}{lock}}
 {\footnotesize\ttfamily \mbox{\hyperlink{sync_2sync_8h_ad3f9b08e4c066e7bb7b1ed98d2a90386}{ttak\+\_\+rwlock\+\_\+t}} ttak\+\_\+dynamic\+\_\+mask\+\_\+t\+::lock}
 
-RWLock for atomic access to the mask 
+RWLock for writer synchronization 
 
-Definition at line \mbox{\hyperlink{dynamic__mask_8h_source_l00024}{24}} of file \mbox{\hyperlink{dynamic__mask_8h_source}{dynamic\+\_\+mask.\+h}}.
+Definition at line \mbox{\hyperlink{dynamic__mask_8h_source_l00025}{25}} of file \mbox{\hyperlink{dynamic__mask_8h_source}{dynamic\+\_\+mask.\+h}}.
 
 
 

@@ -1,0 +1,92 @@
+\doxysection{ttak\+\_\+bigscript\+\_\+loader\+\_\+t Struct Reference}
+\hypertarget{structttak__bigscript__loader__t}{}\label{structttak__bigscript__loader__t}\index{ttak\_bigscript\_loader\_t@{ttak\_bigscript\_loader\_t}}
+
+
+Loader interface for resolving file paths to contents at compile time.  
+
+
+
+
+{\ttfamily \#include $<$bigscript.\+h$>$}
+
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__bigscript__loader__t_a4746557d397442268d18d45660e03b5e}{read\+\_\+all}} )(void \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{structttak__bigscript__loader__t_a86d991d855028ce6f068a3467fa24be7}{ctx}}, const char \texorpdfstring{$\ast$}{*}path, uint8\+\_\+t \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}out\+\_\+bytes, size\+\_\+t \texorpdfstring{$\ast$}{*}out\+\_\+len)
+\begin{DoxyCompactList}\small\item\em Reads all bytes from a path. \end{DoxyCompactList}\item 
+void(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__bigscript__loader__t_a17a664eb0d62382265ae7ae17da666d1}{free\+\_\+bytes}} )(void \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{structttak__bigscript__loader__t_a86d991d855028ce6f068a3467fa24be7}{ctx}}, uint8\+\_\+t \texorpdfstring{$\ast$}{*}bytes)
+\begin{DoxyCompactList}\small\item\em Frees bytes allocated by read\+\_\+all. \end{DoxyCompactList}\item 
+void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__bigscript__loader__t_a86d991d855028ce6f068a3467fa24be7}{ctx}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Loader interface for resolving file paths to contents at compile time. 
+
+Definition at line \mbox{\hyperlink{bigscript_8h_source_l00018}{18}} of file \mbox{\hyperlink{bigscript_8h_source}{bigscript.\+h}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structttak__bigscript__loader__t_a86d991d855028ce6f068a3467fa24be7}\label{structttak__bigscript__loader__t_a86d991d855028ce6f068a3467fa24be7} 
+\index{ttak\_bigscript\_loader\_t@{ttak\_bigscript\_loader\_t}!ctx@{ctx}}
+\index{ctx@{ctx}!ttak\_bigscript\_loader\_t@{ttak\_bigscript\_loader\_t}}
+\doxysubsubsection{\texorpdfstring{ctx}{ctx}}
+{\footnotesize\ttfamily void\texorpdfstring{$\ast$}{*} ttak\+\_\+bigscript\+\_\+loader\+\_\+t\+::ctx}
+
+
+
+Definition at line \mbox{\hyperlink{bigscript_8h_source_l00033}{33}} of file \mbox{\hyperlink{bigscript_8h_source}{bigscript.\+h}}.
+
+\Hypertarget{structttak__bigscript__loader__t_a17a664eb0d62382265ae7ae17da666d1}\label{structttak__bigscript__loader__t_a17a664eb0d62382265ae7ae17da666d1} 
+\index{ttak\_bigscript\_loader\_t@{ttak\_bigscript\_loader\_t}!free\_bytes@{free\_bytes}}
+\index{free\_bytes@{free\_bytes}!ttak\_bigscript\_loader\_t@{ttak\_bigscript\_loader\_t}}
+\doxysubsubsection{\texorpdfstring{free\_bytes}{free\_bytes}}
+{\footnotesize\ttfamily void(\texorpdfstring{$\ast$}{*} ttak\+\_\+bigscript\+\_\+loader\+\_\+t\+::free\+\_\+bytes) (void \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{structttak__bigscript__loader__t_a86d991d855028ce6f068a3467fa24be7}{ctx}}, uint8\+\_\+t \texorpdfstring{$\ast$}{*}bytes)}
+
+
+
+Frees bytes allocated by read\+\_\+all. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ctx} & User-\/provided context. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{bigscript_8h_source_l00032}{32}} of file \mbox{\hyperlink{bigscript_8h_source}{bigscript.\+h}}.
+
+\Hypertarget{structttak__bigscript__loader__t_a4746557d397442268d18d45660e03b5e}\label{structttak__bigscript__loader__t_a4746557d397442268d18d45660e03b5e} 
+\index{ttak\_bigscript\_loader\_t@{ttak\_bigscript\_loader\_t}!read\_all@{read\_all}}
+\index{read\_all@{read\_all}!ttak\_bigscript\_loader\_t@{ttak\_bigscript\_loader\_t}}
+\doxysubsubsection{\texorpdfstring{read\_all}{read\_all}}
+{\footnotesize\ttfamily bool(\texorpdfstring{$\ast$}{*} ttak\+\_\+bigscript\+\_\+loader\+\_\+t\+::read\+\_\+all) (void \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{structttak__bigscript__loader__t_a86d991d855028ce6f068a3467fa24be7}{ctx}}, const char \texorpdfstring{$\ast$}{*}path, uint8\+\_\+t \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}out\+\_\+bytes, size\+\_\+t \texorpdfstring{$\ast$}{*}out\+\_\+len)}
+
+
+
+Reads all bytes from a path. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ctx} & User-\/provided context. \\
+\hline
+{\em path} & The path or module to resolve. \\
+\hline
+{\em out\+\_\+bytes} & Pointer to receive allocated bytes. \\
+\hline
+{\em out\+\_\+len} & Pointer to receive byte count. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success, false on failure. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{bigscript_8h_source_l00027}{27}} of file \mbox{\hyperlink{bigscript_8h_source}{bigscript.\+h}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/ttak/script/\mbox{\hyperlink{bigscript_8h}{bigscript.\+h}}\end{DoxyCompactItemize}

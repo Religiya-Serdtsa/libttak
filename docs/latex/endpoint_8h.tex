@@ -4,6 +4,7 @@
 {\ttfamily \#include $<$stdbool.\+h$>$}\newline
 {\ttfamily \#include $<$ttak/shared/shared.\+h$>$}\newline
 {\ttfamily \#include $<$ttak/io/io.\+h$>$}\newline
+{\ttfamily \#include $<$ttak/net/lattice.\+h$>$}\newline
 Include dependency graph for endpoint.\+h\+:
 \nopagebreak
 \begin{figure}[H]
@@ -54,6 +55,7 @@ enum \mbox{\hyperlink{endpoint_8h_a90d039f18d1593c634513881f837b80c}{ttak\+\_\+n
 enum \mbox{\hyperlink{endpoint_8h_a5e04a88fbb25550b7b9ef37621e7d701}{ttak\+\_\+net\+\_\+endpoint\+\_\+role}} \{ \mbox{\hyperlink{endpoint_8h_a5e04a88fbb25550b7b9ef37621e7d701ac9290097fdb4170238fd482074651b6d}{TTAK\+\_\+\+NET\+\_\+\+ROLE\+\_\+\+CLIENT}} = (1u \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 0)
 , \mbox{\hyperlink{endpoint_8h_a5e04a88fbb25550b7b9ef37621e7d701af67f15d969b62ba00b07db2470b4bc05}{TTAK\+\_\+\+NET\+\_\+\+ROLE\+\_\+\+SERVER}} = (1u \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1)
 , \mbox{\hyperlink{endpoint_8h_a5e04a88fbb25550b7b9ef37621e7d701ae2d23504f4c9c32e566398e9c5115381}{TTAK\+\_\+\+NET\+\_\+\+ROLE\+\_\+\+CUSTOM}} = (1u \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 2)
+, \mbox{\hyperlink{endpoint_8h_a5e04a88fbb25550b7b9ef37621e7d701a27547860027d1363cc784d9d3b3f48e7}{TTAK\+\_\+\+NET\+\_\+\+ROLE\+\_\+\+LATTICE\+\_\+\+ACCEL}} = (1u \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 3)
  \}
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Functions}
@@ -139,7 +141,7 @@ Transport families supported by the endpoint wrapper.
 
 
 
-Definition at line \mbox{\hyperlink{endpoint_8h_source_l00030}{30}} of file \mbox{\hyperlink{endpoint_8h_source}{endpoint.\+h}}.
+Definition at line \mbox{\hyperlink{endpoint_8h_source_l00032}{32}} of file \mbox{\hyperlink{endpoint_8h_source}{endpoint.\+h}}.
 
 
 
@@ -163,10 +165,14 @@ TTAK\+\_\+\+NET\+\_\+\+ROLE\+\_\+\+SERVER&\\
 TTAK\+\_\+\+NET\+\_\+\+ROLE\+\_\+\+CUSTOM&\\
 \hline
 
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_NET\_ROLE\_LATTICE\_ACCEL@{TTAK\_NET\_ROLE\_LATTICE\_ACCEL}!endpoint.h@{endpoint.h}}\index{endpoint.h@{endpoint.h}!TTAK\_NET\_ROLE\_LATTICE\_ACCEL@{TTAK\_NET\_ROLE\_LATTICE\_ACCEL}}}\Hypertarget{endpoint_8h_a5e04a88fbb25550b7b9ef37621e7d701a27547860027d1363cc784d9d3b3f48e7}\label{endpoint_8h_a5e04a88fbb25550b7b9ef37621e7d701a27547860027d1363cc784d9d3b3f48e7} 
+TTAK\+\_\+\+NET\+\_\+\+ROLE\+\_\+\+LATTICE\+\_\+\+ACCEL&\\
+\hline
+
 \end{DoxyEnumFields}
 
 
-Definition at line \mbox{\hyperlink{endpoint_8h_source_l00023}{23}} of file \mbox{\hyperlink{endpoint_8h_source}{endpoint.\+h}}.
+Definition at line \mbox{\hyperlink{endpoint_8h_source_l00024}{24}} of file \mbox{\hyperlink{endpoint_8h_source}{endpoint.\+h}}.
 
 \Hypertarget{endpoint_8h_a90d039f18d1593c634513881f837b80c}\label{endpoint_8h_a90d039f18d1593c634513881f837b80c} 
 \index{endpoint.h@{endpoint.h}!ttak\_net\_endpoint\_type@{ttak\_net\_endpoint\_type}}
@@ -194,7 +200,7 @@ TTAK\+\_\+\+NET\+\_\+\+ENDPOINT\+\_\+\+UNIX&\\
 \end{DoxyEnumFields}
 
 
-Definition at line \mbox{\hyperlink{endpoint_8h_source_l00017}{17}} of file \mbox{\hyperlink{endpoint_8h_source}{endpoint.\+h}}.
+Definition at line \mbox{\hyperlink{endpoint_8h_source_l00018}{18}} of file \mbox{\hyperlink{endpoint_8h_source}{endpoint.\+h}}.
 
 
 

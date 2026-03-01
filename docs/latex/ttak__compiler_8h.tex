@@ -1,0 +1,120 @@
+\doxysection{include/ttak/types/ttak\+\_\+compiler.h File Reference}
+\hypertarget{ttak__compiler_8h}{}\label{ttak__compiler_8h}\index{include/ttak/types/ttak\_compiler.h@{include/ttak/types/ttak\_compiler.h}}
+
+
+Compiler-\/specific macros and compatibility layer.  
+
+
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{ttak__compiler_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{ttak__compiler_8h_a4e4c8922939b18c2f54aadc28824cbfd}{TTAK\+\_\+\+LIKELY}}(x)~(x)
+\item 
+\#define \mbox{\hyperlink{ttak__compiler_8h_a79e6ab9372fcc255fb4075c4ed8857dd}{TTAK\+\_\+\+UNLIKELY}}(x)~(x)
+\item 
+\#define \mbox{\hyperlink{ttak__compiler_8h_a7759c1f89dd694da3576024767572ddc}{TTAK\+\_\+\+FORCE\+\_\+\+INLINE}}~inline
+\item 
+\#define \mbox{\hyperlink{ttak__compiler_8h_a7127135e8502e259083fbc93d189db9d}{\+\_\+\+\_\+builtin\+\_\+ctzll}}(x)~\mbox{\hyperlink{ttak__compiler_8h_a57c438c3efdb8824d6f208df9c25d47e}{\+\_\+\+\_\+ttak\+\_\+ctzll}}(x)
+\item 
+\#define \mbox{\hyperlink{ttak__compiler_8h_aded4ba7a8e210443e0f6245a10ee5e5b}{\+\_\+\+\_\+builtin\+\_\+clzll}}(x)~\mbox{\hyperlink{ttak__compiler_8h_a973a1217d00a575f1d04db14c4ad3298}{\+\_\+\+\_\+ttak\+\_\+clzll}}(x)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+static int \mbox{\hyperlink{ttak__compiler_8h_a57c438c3efdb8824d6f208df9c25d47e}{\+\_\+\+\_\+ttak\+\_\+ctzll}} (unsigned long long v)
+\item 
+static int \mbox{\hyperlink{ttak__compiler_8h_a973a1217d00a575f1d04db14c4ad3298}{\+\_\+\+\_\+ttak\+\_\+clzll}} (unsigned long long v)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Compiler-\/specific macros and compatibility layer. 
+
+
+
+Definition in file \mbox{\hyperlink{ttak__compiler_8h_source}{ttak\+\_\+compiler.\+h}}.
+
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{ttak__compiler_8h_aded4ba7a8e210443e0f6245a10ee5e5b}\label{ttak__compiler_8h_aded4ba7a8e210443e0f6245a10ee5e5b} 
+\index{ttak\_compiler.h@{ttak\_compiler.h}!\_\_builtin\_clzll@{\_\_builtin\_clzll}}
+\index{\_\_builtin\_clzll@{\_\_builtin\_clzll}!ttak\_compiler.h@{ttak\_compiler.h}}
+\doxysubsubsection{\texorpdfstring{\_\_builtin\_clzll}{\_\_builtin\_clzll}}
+{\footnotesize\ttfamily \#define \+\_\+\+\_\+builtin\+\_\+clzll(\begin{DoxyParamCaption}\item[{}]{x }\end{DoxyParamCaption})~\mbox{\hyperlink{ttak__compiler_8h_a973a1217d00a575f1d04db14c4ad3298}{\+\_\+\+\_\+ttak\+\_\+clzll}}(x)}
+
+
+
+Definition at line \mbox{\hyperlink{ttak__compiler_8h_source_l00042}{42}} of file \mbox{\hyperlink{ttak__compiler_8h_source}{ttak\+\_\+compiler.\+h}}.
+
+\Hypertarget{ttak__compiler_8h_a7127135e8502e259083fbc93d189db9d}\label{ttak__compiler_8h_a7127135e8502e259083fbc93d189db9d} 
+\index{ttak\_compiler.h@{ttak\_compiler.h}!\_\_builtin\_ctzll@{\_\_builtin\_ctzll}}
+\index{\_\_builtin\_ctzll@{\_\_builtin\_ctzll}!ttak\_compiler.h@{ttak\_compiler.h}}
+\doxysubsubsection{\texorpdfstring{\_\_builtin\_ctzll}{\_\_builtin\_ctzll}}
+{\footnotesize\ttfamily \#define \+\_\+\+\_\+builtin\+\_\+ctzll(\begin{DoxyParamCaption}\item[{}]{x }\end{DoxyParamCaption})~\mbox{\hyperlink{ttak__compiler_8h_a57c438c3efdb8824d6f208df9c25d47e}{\+\_\+\+\_\+ttak\+\_\+ctzll}}(x)}
+
+
+
+Definition at line \mbox{\hyperlink{ttak__compiler_8h_source_l00041}{41}} of file \mbox{\hyperlink{ttak__compiler_8h_source}{ttak\+\_\+compiler.\+h}}.
+
+\Hypertarget{ttak__compiler_8h_a7759c1f89dd694da3576024767572ddc}\label{ttak__compiler_8h_a7759c1f89dd694da3576024767572ddc} 
+\index{ttak\_compiler.h@{ttak\_compiler.h}!TTAK\_FORCE\_INLINE@{TTAK\_FORCE\_INLINE}}
+\index{TTAK\_FORCE\_INLINE@{TTAK\_FORCE\_INLINE}!ttak\_compiler.h@{ttak\_compiler.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_FORCE\_INLINE}{TTAK\_FORCE\_INLINE}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+FORCE\+\_\+\+INLINE~inline}
+
+
+
+Definition at line \mbox{\hyperlink{ttak__compiler_8h_source_l00022}{22}} of file \mbox{\hyperlink{ttak__compiler_8h_source}{ttak\+\_\+compiler.\+h}}.
+
+\Hypertarget{ttak__compiler_8h_a4e4c8922939b18c2f54aadc28824cbfd}\label{ttak__compiler_8h_a4e4c8922939b18c2f54aadc28824cbfd} 
+\index{ttak\_compiler.h@{ttak\_compiler.h}!TTAK\_LIKELY@{TTAK\_LIKELY}}
+\index{TTAK\_LIKELY@{TTAK\_LIKELY}!ttak\_compiler.h@{ttak\_compiler.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_LIKELY}{TTAK\_LIKELY}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+LIKELY(\begin{DoxyParamCaption}\item[{}]{x }\end{DoxyParamCaption})~(x)}
+
+
+
+Definition at line \mbox{\hyperlink{ttak__compiler_8h_source_l00013}{13}} of file \mbox{\hyperlink{ttak__compiler_8h_source}{ttak\+\_\+compiler.\+h}}.
+
+\Hypertarget{ttak__compiler_8h_a79e6ab9372fcc255fb4075c4ed8857dd}\label{ttak__compiler_8h_a79e6ab9372fcc255fb4075c4ed8857dd} 
+\index{ttak\_compiler.h@{ttak\_compiler.h}!TTAK\_UNLIKELY@{TTAK\_UNLIKELY}}
+\index{TTAK\_UNLIKELY@{TTAK\_UNLIKELY}!ttak\_compiler.h@{ttak\_compiler.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_UNLIKELY}{TTAK\_UNLIKELY}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+UNLIKELY(\begin{DoxyParamCaption}\item[{}]{x }\end{DoxyParamCaption})~(x)}
+
+
+
+Definition at line \mbox{\hyperlink{ttak__compiler_8h_source_l00014}{14}} of file \mbox{\hyperlink{ttak__compiler_8h_source}{ttak\+\_\+compiler.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{ttak__compiler_8h_a973a1217d00a575f1d04db14c4ad3298}\label{ttak__compiler_8h_a973a1217d00a575f1d04db14c4ad3298} 
+\index{ttak\_compiler.h@{ttak\_compiler.h}!\_\_ttak\_clzll@{\_\_ttak\_clzll}}
+\index{\_\_ttak\_clzll@{\_\_ttak\_clzll}!ttak\_compiler.h@{ttak\_compiler.h}}
+\doxysubsubsection{\texorpdfstring{\_\_ttak\_clzll()}{\_\_ttak\_clzll()}}
+{\footnotesize\ttfamily static int \+\_\+\+\_\+ttak\+\_\+clzll (\begin{DoxyParamCaption}\item[{unsigned long long}]{v }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{ttak__compiler_8h_source_l00032}{32}} of file \mbox{\hyperlink{ttak__compiler_8h_source}{ttak\+\_\+compiler.\+h}}.
+
+\Hypertarget{ttak__compiler_8h_a57c438c3efdb8824d6f208df9c25d47e}\label{ttak__compiler_8h_a57c438c3efdb8824d6f208df9c25d47e} 
+\index{ttak\_compiler.h@{ttak\_compiler.h}!\_\_ttak\_ctzll@{\_\_ttak\_ctzll}}
+\index{\_\_ttak\_ctzll@{\_\_ttak\_ctzll}!ttak\_compiler.h@{ttak\_compiler.h}}
+\doxysubsubsection{\texorpdfstring{\_\_ttak\_ctzll()}{\_\_ttak\_ctzll()}}
+{\footnotesize\ttfamily static int \+\_\+\+\_\+ttak\+\_\+ctzll (\begin{DoxyParamCaption}\item[{unsigned long long}]{v }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{ttak__compiler_8h_source_l00026}{26}} of file \mbox{\hyperlink{ttak__compiler_8h_source}{ttak\+\_\+compiler.\+h}}.
+

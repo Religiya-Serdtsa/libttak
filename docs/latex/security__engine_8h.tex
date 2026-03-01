@@ -1,0 +1,191 @@
+\doxysection{include/ttak/security/security\+\_\+engine.h File Reference}
+\hypertarget{security__engine_8h}{}\label{security__engine_8h}\index{include/ttak/security/security\_engine.h@{include/ttak/security/security\_engine.h}}
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdalign.\+h$>$}\newline
+{\ttfamily \#include $<$ttak/io/io.\+h$>$}\newline
+Include dependency graph for security\+\_\+engine.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{security__engine_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=330pt]{security__engine_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structttak__security__driver}{ttak\+\_\+security\+\_\+driver}}
+\item 
+struct \mbox{\hyperlink{structttak__crypto__ctx}{ttak\+\_\+crypto\+\_\+ctx}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef enum \mbox{\hyperlink{security__engine_8h_add1d2c567a8ac6909074cf553fef29b4}{ttak\+\_\+security\+\_\+op}} \mbox{\hyperlink{security__engine_8h_a2dcd4881b6fd9e46e1c03c6de2e05b07}{ttak\+\_\+security\+\_\+op\+\_\+t}}
+\item 
+typedef enum \mbox{\hyperlink{security__engine_8h_ab9de941d814c6649fe343e2b77ec2b4e}{ttak\+\_\+security\+\_\+driver\+\_\+kind}} \mbox{\hyperlink{security__engine_8h_a8e276b65ec43990086feed738d913922}{ttak\+\_\+security\+\_\+driver\+\_\+kind\+\_\+t}}
+\item 
+typedef struct \mbox{\hyperlink{structttak__security__driver}{ttak\+\_\+security\+\_\+driver}} \mbox{\hyperlink{security__engine_8h_a0a2faa157fed8910f71a319d2ea04f4d}{ttak\+\_\+security\+\_\+driver\+\_\+t}}
+\item 
+typedef struct \mbox{\hyperlink{structttak__crypto__ctx}{ttak\+\_\+crypto\+\_\+ctx}} \mbox{\hyperlink{security__engine_8h_ab35679fcbd68d19ad05f01ff21fe7825}{ttak\+\_\+crypto\+\_\+ctx\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{security__engine_8h_add1d2c567a8ac6909074cf553fef29b4}{ttak\+\_\+security\+\_\+op}} \{ \newline
+\mbox{\hyperlink{security__engine_8h_add1d2c567a8ac6909074cf553fef29b4ad9d59cffe6edf0f9fb1cbc4ab3159e84}{TTAK\+\_\+\+SECURITY\+\_\+\+LEA\+\_\+\+ENC}} = 0
+, \mbox{\hyperlink{security__engine_8h_add1d2c567a8ac6909074cf553fef29b4a3947b9bf0ed3020d0639e0825c4480ef}{TTAK\+\_\+\+SECURITY\+\_\+\+SEED\+\_\+\+ENC}}
+, \mbox{\hyperlink{security__engine_8h_add1d2c567a8ac6909074cf553fef29b4af8b717d0bc03cd4f59c44a3d49b6fd17}{TTAK\+\_\+\+SECURITY\+\_\+\+AES\+\_\+\+GCM}}
+, \mbox{\hyperlink{security__engine_8h_add1d2c567a8ac6909074cf553fef29b4af163c710f6c05eaca74a5d0297341214}{TTAK\+\_\+\+SECURITY\+\_\+\+CHACHA20\+\_\+\+POLY1305}}
+, \newline
+\mbox{\hyperlink{security__engine_8h_add1d2c567a8ac6909074cf553fef29b4a2282a907d5a5810d930e3dd5874efa00}{TTAK\+\_\+\+SECURITY\+\_\+\+SIGN\+\_\+\+PQC}}
+, \mbox{\hyperlink{security__engine_8h_add1d2c567a8ac6909074cf553fef29b4ae6e56720ac46744de190a3c74e3662d8}{TTAK\+\_\+\+SECURITY\+\_\+\+HASH\+\_\+\+FAST}}
+, \mbox{\hyperlink{security__engine_8h_add1d2c567a8ac6909074cf553fef29b4af4af73f27be7bbeafc0a7c37439516fe}{TTAK\+\_\+\+SECURITY\+\_\+\+KDF\+\_\+\+HARD}}
+ \}
+\item 
+enum \mbox{\hyperlink{security__engine_8h_ab9de941d814c6649fe343e2b77ec2b4e}{ttak\+\_\+security\+\_\+driver\+\_\+kind}} \{ \mbox{\hyperlink{security__engine_8h_ab9de941d814c6649fe343e2b77ec2b4ea5d7a05ea4916a5fb8ed81dd1b808c046}{TTAK\+\_\+\+SECURITY\+\_\+\+DRIVER\+\_\+\+SCALAR}} = 0
+, \mbox{\hyperlink{security__engine_8h_ab9de941d814c6649fe343e2b77ec2b4ea519946e828ce366761b644535a4371e1}{TTAK\+\_\+\+SECURITY\+\_\+\+DRIVER\+\_\+\+SIMD}}
+, \mbox{\hyperlink{security__engine_8h_ab9de941d814c6649fe343e2b77ec2b4ea19cc28036ef67434dded3ecf548bd342}{TTAK\+\_\+\+SECURITY\+\_\+\+DRIVER\+\_\+\+ACCEL}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} \mbox{\hyperlink{security__engine_8h_a06a5f74132646f90e822ccd1528a62a0}{ttak\+\_\+security\+\_\+execute}} (\mbox{\hyperlink{security__engine_8h_ab35679fcbd68d19ad05f01ff21fe7825}{ttak\+\_\+crypto\+\_\+ctx\+\_\+t}} \texorpdfstring{$\ast$}{*}ctx, \mbox{\hyperlink{security__engine_8h_a2dcd4881b6fd9e46e1c03c6de2e05b07}{ttak\+\_\+security\+\_\+op\+\_\+t}} op, uint64\+\_\+t now)
+\item 
+const \mbox{\hyperlink{security__engine_8h_a0a2faa157fed8910f71a319d2ea04f4d}{ttak\+\_\+security\+\_\+driver\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{security__engine_8h_a106f7f3363646dd4da144a19c070f515}{ttak\+\_\+security\+\_\+pick\+\_\+driver}} (\mbox{\hyperlink{security__engine_8h_a2dcd4881b6fd9e46e1c03c6de2e05b07}{ttak\+\_\+security\+\_\+op\+\_\+t}} op)
+\item 
+\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} \mbox{\hyperlink{security__engine_8h_a1a60e4a8d56872201c875ea93dc26beb}{ttak\+\_\+aes256\+\_\+gcm\+\_\+execute}} (\mbox{\hyperlink{security__engine_8h_ab35679fcbd68d19ad05f01ff21fe7825}{ttak\+\_\+crypto\+\_\+ctx\+\_\+t}} \texorpdfstring{$\ast$}{*}ctx, const uint8\+\_\+t \texorpdfstring{$\ast$}{*}in, uint8\+\_\+t \texorpdfstring{$\ast$}{*}out, size\+\_\+t len)
+\item 
+\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} \mbox{\hyperlink{security__engine_8h_a74e20562d152be4b5e9c90acc5129226}{ttak\+\_\+chacha20\+\_\+poly1305\+\_\+execute}} (\mbox{\hyperlink{security__engine_8h_ab35679fcbd68d19ad05f01ff21fe7825}{ttak\+\_\+crypto\+\_\+ctx\+\_\+t}} \texorpdfstring{$\ast$}{*}ctx, const uint8\+\_\+t \texorpdfstring{$\ast$}{*}in, uint8\+\_\+t \texorpdfstring{$\ast$}{*}out, size\+\_\+t len)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{security__engine_8h_ab35679fcbd68d19ad05f01ff21fe7825}\label{security__engine_8h_ab35679fcbd68d19ad05f01ff21fe7825} 
+\index{security\_engine.h@{security\_engine.h}!ttak\_crypto\_ctx\_t@{ttak\_crypto\_ctx\_t}}
+\index{ttak\_crypto\_ctx\_t@{ttak\_crypto\_ctx\_t}!security\_engine.h@{security\_engine.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_crypto\_ctx\_t}{ttak\_crypto\_ctx\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__crypto__ctx}{ttak\+\_\+crypto\+\_\+ctx}} \mbox{\hyperlink{security__engine_8h_ab35679fcbd68d19ad05f01ff21fe7825}{ttak\+\_\+crypto\+\_\+ctx\+\_\+t}}}
+
+\Hypertarget{security__engine_8h_a8e276b65ec43990086feed738d913922}\label{security__engine_8h_a8e276b65ec43990086feed738d913922} 
+\index{security\_engine.h@{security\_engine.h}!ttak\_security\_driver\_kind\_t@{ttak\_security\_driver\_kind\_t}}
+\index{ttak\_security\_driver\_kind\_t@{ttak\_security\_driver\_kind\_t}!security\_engine.h@{security\_engine.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_security\_driver\_kind\_t}{ttak\_security\_driver\_kind\_t}}
+{\footnotesize\ttfamily typedef enum \mbox{\hyperlink{security__engine_8h_ab9de941d814c6649fe343e2b77ec2b4e}{ttak\+\_\+security\+\_\+driver\+\_\+kind}} \mbox{\hyperlink{security__engine_8h_a8e276b65ec43990086feed738d913922}{ttak\+\_\+security\+\_\+driver\+\_\+kind\+\_\+t}}}
+
+\Hypertarget{security__engine_8h_a0a2faa157fed8910f71a319d2ea04f4d}\label{security__engine_8h_a0a2faa157fed8910f71a319d2ea04f4d} 
+\index{security\_engine.h@{security\_engine.h}!ttak\_security\_driver\_t@{ttak\_security\_driver\_t}}
+\index{ttak\_security\_driver\_t@{ttak\_security\_driver\_t}!security\_engine.h@{security\_engine.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_security\_driver\_t}{ttak\_security\_driver\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__security__driver}{ttak\+\_\+security\+\_\+driver}} \mbox{\hyperlink{security__engine_8h_a0a2faa157fed8910f71a319d2ea04f4d}{ttak\+\_\+security\+\_\+driver\+\_\+t}}}
+
+\Hypertarget{security__engine_8h_a2dcd4881b6fd9e46e1c03c6de2e05b07}\label{security__engine_8h_a2dcd4881b6fd9e46e1c03c6de2e05b07} 
+\index{security\_engine.h@{security\_engine.h}!ttak\_security\_op\_t@{ttak\_security\_op\_t}}
+\index{ttak\_security\_op\_t@{ttak\_security\_op\_t}!security\_engine.h@{security\_engine.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_security\_op\_t}{ttak\_security\_op\_t}}
+{\footnotesize\ttfamily typedef enum \mbox{\hyperlink{security__engine_8h_add1d2c567a8ac6909074cf553fef29b4}{ttak\+\_\+security\+\_\+op}} \mbox{\hyperlink{security__engine_8h_a2dcd4881b6fd9e46e1c03c6de2e05b07}{ttak\+\_\+security\+\_\+op\+\_\+t}}}
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{security__engine_8h_ab9de941d814c6649fe343e2b77ec2b4e}\label{security__engine_8h_ab9de941d814c6649fe343e2b77ec2b4e} 
+\index{security\_engine.h@{security\_engine.h}!ttak\_security\_driver\_kind@{ttak\_security\_driver\_kind}}
+\index{ttak\_security\_driver\_kind@{ttak\_security\_driver\_kind}!security\_engine.h@{security\_engine.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_security\_driver\_kind}{ttak\_security\_driver\_kind}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{security__engine_8h_ab9de941d814c6649fe343e2b77ec2b4e}{ttak\+\_\+security\+\_\+driver\+\_\+kind}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_SECURITY\_DRIVER\_SCALAR@{TTAK\_SECURITY\_DRIVER\_SCALAR}!security\_engine.h@{security\_engine.h}}\index{security\_engine.h@{security\_engine.h}!TTAK\_SECURITY\_DRIVER\_SCALAR@{TTAK\_SECURITY\_DRIVER\_SCALAR}}}\Hypertarget{security__engine_8h_ab9de941d814c6649fe343e2b77ec2b4ea5d7a05ea4916a5fb8ed81dd1b808c046}\label{security__engine_8h_ab9de941d814c6649fe343e2b77ec2b4ea5d7a05ea4916a5fb8ed81dd1b808c046} 
+TTAK\+\_\+\+SECURITY\+\_\+\+DRIVER\+\_\+\+SCALAR&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_SECURITY\_DRIVER\_SIMD@{TTAK\_SECURITY\_DRIVER\_SIMD}!security\_engine.h@{security\_engine.h}}\index{security\_engine.h@{security\_engine.h}!TTAK\_SECURITY\_DRIVER\_SIMD@{TTAK\_SECURITY\_DRIVER\_SIMD}}}\Hypertarget{security__engine_8h_ab9de941d814c6649fe343e2b77ec2b4ea519946e828ce366761b644535a4371e1}\label{security__engine_8h_ab9de941d814c6649fe343e2b77ec2b4ea519946e828ce366761b644535a4371e1} 
+TTAK\+\_\+\+SECURITY\+\_\+\+DRIVER\+\_\+\+SIMD&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_SECURITY\_DRIVER\_ACCEL@{TTAK\_SECURITY\_DRIVER\_ACCEL}!security\_engine.h@{security\_engine.h}}\index{security\_engine.h@{security\_engine.h}!TTAK\_SECURITY\_DRIVER\_ACCEL@{TTAK\_SECURITY\_DRIVER\_ACCEL}}}\Hypertarget{security__engine_8h_ab9de941d814c6649fe343e2b77ec2b4ea19cc28036ef67434dded3ecf548bd342}\label{security__engine_8h_ab9de941d814c6649fe343e2b77ec2b4ea19cc28036ef67434dded3ecf548bd342} 
+TTAK\+\_\+\+SECURITY\+\_\+\+DRIVER\+\_\+\+ACCEL&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{security__engine_8h_source_l00024}{24}} of file \mbox{\hyperlink{security__engine_8h_source}{security\+\_\+engine.\+h}}.
+
+\Hypertarget{security__engine_8h_add1d2c567a8ac6909074cf553fef29b4}\label{security__engine_8h_add1d2c567a8ac6909074cf553fef29b4} 
+\index{security\_engine.h@{security\_engine.h}!ttak\_security\_op@{ttak\_security\_op}}
+\index{ttak\_security\_op@{ttak\_security\_op}!security\_engine.h@{security\_engine.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_security\_op}{ttak\_security\_op}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{security__engine_8h_add1d2c567a8ac6909074cf553fef29b4}{ttak\+\_\+security\+\_\+op}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_SECURITY\_LEA\_ENC@{TTAK\_SECURITY\_LEA\_ENC}!security\_engine.h@{security\_engine.h}}\index{security\_engine.h@{security\_engine.h}!TTAK\_SECURITY\_LEA\_ENC@{TTAK\_SECURITY\_LEA\_ENC}}}\Hypertarget{security__engine_8h_add1d2c567a8ac6909074cf553fef29b4ad9d59cffe6edf0f9fb1cbc4ab3159e84}\label{security__engine_8h_add1d2c567a8ac6909074cf553fef29b4ad9d59cffe6edf0f9fb1cbc4ab3159e84} 
+TTAK\+\_\+\+SECURITY\+\_\+\+LEA\+\_\+\+ENC&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_SECURITY\_SEED\_ENC@{TTAK\_SECURITY\_SEED\_ENC}!security\_engine.h@{security\_engine.h}}\index{security\_engine.h@{security\_engine.h}!TTAK\_SECURITY\_SEED\_ENC@{TTAK\_SECURITY\_SEED\_ENC}}}\Hypertarget{security__engine_8h_add1d2c567a8ac6909074cf553fef29b4a3947b9bf0ed3020d0639e0825c4480ef}\label{security__engine_8h_add1d2c567a8ac6909074cf553fef29b4a3947b9bf0ed3020d0639e0825c4480ef} 
+TTAK\+\_\+\+SECURITY\+\_\+\+SEED\+\_\+\+ENC&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_SECURITY\_AES\_GCM@{TTAK\_SECURITY\_AES\_GCM}!security\_engine.h@{security\_engine.h}}\index{security\_engine.h@{security\_engine.h}!TTAK\_SECURITY\_AES\_GCM@{TTAK\_SECURITY\_AES\_GCM}}}\Hypertarget{security__engine_8h_add1d2c567a8ac6909074cf553fef29b4af8b717d0bc03cd4f59c44a3d49b6fd17}\label{security__engine_8h_add1d2c567a8ac6909074cf553fef29b4af8b717d0bc03cd4f59c44a3d49b6fd17} 
+TTAK\+\_\+\+SECURITY\+\_\+\+AES\+\_\+\+GCM&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_SECURITY\_CHACHA20\_POLY1305@{TTAK\_SECURITY\_CHACHA20\_POLY1305}!security\_engine.h@{security\_engine.h}}\index{security\_engine.h@{security\_engine.h}!TTAK\_SECURITY\_CHACHA20\_POLY1305@{TTAK\_SECURITY\_CHACHA20\_POLY1305}}}\Hypertarget{security__engine_8h_add1d2c567a8ac6909074cf553fef29b4af163c710f6c05eaca74a5d0297341214}\label{security__engine_8h_add1d2c567a8ac6909074cf553fef29b4af163c710f6c05eaca74a5d0297341214} 
+TTAK\+\_\+\+SECURITY\+\_\+\+CHACHA20\+\_\+\+POLY1305&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_SECURITY\_SIGN\_PQC@{TTAK\_SECURITY\_SIGN\_PQC}!security\_engine.h@{security\_engine.h}}\index{security\_engine.h@{security\_engine.h}!TTAK\_SECURITY\_SIGN\_PQC@{TTAK\_SECURITY\_SIGN\_PQC}}}\Hypertarget{security__engine_8h_add1d2c567a8ac6909074cf553fef29b4a2282a907d5a5810d930e3dd5874efa00}\label{security__engine_8h_add1d2c567a8ac6909074cf553fef29b4a2282a907d5a5810d930e3dd5874efa00} 
+TTAK\+\_\+\+SECURITY\+\_\+\+SIGN\+\_\+\+PQC&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_SECURITY\_HASH\_FAST@{TTAK\_SECURITY\_HASH\_FAST}!security\_engine.h@{security\_engine.h}}\index{security\_engine.h@{security\_engine.h}!TTAK\_SECURITY\_HASH\_FAST@{TTAK\_SECURITY\_HASH\_FAST}}}\Hypertarget{security__engine_8h_add1d2c567a8ac6909074cf553fef29b4ae6e56720ac46744de190a3c74e3662d8}\label{security__engine_8h_add1d2c567a8ac6909074cf553fef29b4ae6e56720ac46744de190a3c74e3662d8} 
+TTAK\+\_\+\+SECURITY\+\_\+\+HASH\+\_\+\+FAST&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_SECURITY\_KDF\_HARD@{TTAK\_SECURITY\_KDF\_HARD}!security\_engine.h@{security\_engine.h}}\index{security\_engine.h@{security\_engine.h}!TTAK\_SECURITY\_KDF\_HARD@{TTAK\_SECURITY\_KDF\_HARD}}}\Hypertarget{security__engine_8h_add1d2c567a8ac6909074cf553fef29b4af4af73f27be7bbeafc0a7c37439516fe}\label{security__engine_8h_add1d2c567a8ac6909074cf553fef29b4af4af73f27be7bbeafc0a7c37439516fe} 
+TTAK\+\_\+\+SECURITY\+\_\+\+KDF\+\_\+\+HARD&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{security__engine_8h_source_l00014}{14}} of file \mbox{\hyperlink{security__engine_8h_source}{security\+\_\+engine.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{security__engine_8h_a1a60e4a8d56872201c875ea93dc26beb}\label{security__engine_8h_a1a60e4a8d56872201c875ea93dc26beb} 
+\index{security\_engine.h@{security\_engine.h}!ttak\_aes256\_gcm\_execute@{ttak\_aes256\_gcm\_execute}}
+\index{ttak\_aes256\_gcm\_execute@{ttak\_aes256\_gcm\_execute}!security\_engine.h@{security\_engine.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_aes256\_gcm\_execute()}{ttak\_aes256\_gcm\_execute()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} ttak\+\_\+aes256\+\_\+gcm\+\_\+execute (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{security__engine_8h_ab35679fcbd68d19ad05f01ff21fe7825}{ttak\+\_\+crypto\+\_\+ctx\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{ctx,  }\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{in,  }\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{out,  }\item[{size\+\_\+t}]{len }\end{DoxyParamCaption})}
+
+\Hypertarget{security__engine_8h_a74e20562d152be4b5e9c90acc5129226}\label{security__engine_8h_a74e20562d152be4b5e9c90acc5129226} 
+\index{security\_engine.h@{security\_engine.h}!ttak\_chacha20\_poly1305\_execute@{ttak\_chacha20\_poly1305\_execute}}
+\index{ttak\_chacha20\_poly1305\_execute@{ttak\_chacha20\_poly1305\_execute}!security\_engine.h@{security\_engine.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_chacha20\_poly1305\_execute()}{ttak\_chacha20\_poly1305\_execute()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} ttak\+\_\+chacha20\+\_\+poly1305\+\_\+execute (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{security__engine_8h_ab35679fcbd68d19ad05f01ff21fe7825}{ttak\+\_\+crypto\+\_\+ctx\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{ctx,  }\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{in,  }\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{out,  }\item[{size\+\_\+t}]{len }\end{DoxyParamCaption})}
+
+\Hypertarget{security__engine_8h_a06a5f74132646f90e822ccd1528a62a0}\label{security__engine_8h_a06a5f74132646f90e822ccd1528a62a0} 
+\index{security\_engine.h@{security\_engine.h}!ttak\_security\_execute@{ttak\_security\_execute}}
+\index{ttak\_security\_execute@{ttak\_security\_execute}!security\_engine.h@{security\_engine.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_security\_execute()}{ttak\_security\_execute()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} ttak\+\_\+security\+\_\+execute (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{security__engine_8h_ab35679fcbd68d19ad05f01ff21fe7825}{ttak\+\_\+crypto\+\_\+ctx\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{ctx,  }\item[{\mbox{\hyperlink{security__engine_8h_a2dcd4881b6fd9e46e1c03c6de2e05b07}{ttak\+\_\+security\+\_\+op\+\_\+t}}}]{op,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+\Hypertarget{security__engine_8h_a106f7f3363646dd4da144a19c070f515}\label{security__engine_8h_a106f7f3363646dd4da144a19c070f515} 
+\index{security\_engine.h@{security\_engine.h}!ttak\_security\_pick\_driver@{ttak\_security\_pick\_driver}}
+\index{ttak\_security\_pick\_driver@{ttak\_security\_pick\_driver}!security\_engine.h@{security\_engine.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_security\_pick\_driver()}{ttak\_security\_pick\_driver()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{security__engine_8h_a0a2faa157fed8910f71a319d2ea04f4d}{ttak\+\_\+security\+\_\+driver\+\_\+t}} \texorpdfstring{$\ast$}{*} ttak\+\_\+security\+\_\+pick\+\_\+driver (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{security__engine_8h_a2dcd4881b6fd9e46e1c03c6de2e05b07}{ttak\+\_\+security\+\_\+op\+\_\+t}}}]{op }\end{DoxyParamCaption})}
+

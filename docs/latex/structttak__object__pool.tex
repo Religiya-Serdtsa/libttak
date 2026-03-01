@@ -31,6 +31,18 @@ size\+\_\+t \mbox{\hyperlink{structttak__object__pool_ad6c6f8215988b972296cc49fe
 \item 
 size\+\_\+t \mbox{\hyperlink{structttak__object__pool_a53077709490b4f7933fd2a6609d14e84}{used\+\_\+count}}
 \item 
+size\+\_\+t \mbox{\hyperlink{structttak__object__pool_aafc723c0f55b9a51eed774931edfc897}{ols\+\_\+chunk\+\_\+count}}
+\item 
+size\+\_\+t \mbox{\hyperlink{structttak__object__pool_ab56703e2886f72d1fb41a7bc2e4113bf}{ols\+\_\+chunk\+\_\+cursor}}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{structttak__object__pool_a562c49dae52f1bdf34910047bb58d245}{ols\+\_\+lane\+\_\+seed}}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{structttak__object__pool_af47611e66bb8945b0d064dd0b3bf81e3}{ols\+\_\+lane\+\_\+guard}}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{structttak__object__pool_a99ed722dc1c32e7c10c190b0c88836c9}{ols\+\_\+lane\+\_\+stride}}
+\item 
+size\+\_\+t \mbox{\hyperlink{structttak__object__pool_a99b559fdee05b35fcb9faefdce869105}{last\+\_\+recycled\+\_\+index}}
+\item 
 \mbox{\hyperlink{spinlock_8h_a705f9b9b5f7cf440ded7db544f974487}{ttak\+\_\+spin\+\_\+t}} \mbox{\hyperlink{structttak__object__pool_a5c261e179030cdd19276708d98142e46}{lock}}
 \end{DoxyCompactItemize}
 
@@ -85,6 +97,16 @@ Size of a single item.
 
 Definition at line \mbox{\hyperlink{container_2pool_8h_source_l00018}{18}} of file \mbox{\hyperlink{container_2pool_8h_source}{pool.\+h}}.
 
+\Hypertarget{structttak__object__pool_a99b559fdee05b35fcb9faefdce869105}\label{structttak__object__pool_a99b559fdee05b35fcb9faefdce869105} 
+\index{ttak\_object\_pool@{ttak\_object\_pool}!last\_recycled\_index@{last\_recycled\_index}}
+\index{last\_recycled\_index@{last\_recycled\_index}!ttak\_object\_pool@{ttak\_object\_pool}}
+\doxysubsubsection{\texorpdfstring{last\_recycled\_index}{last\_recycled\_index}}
+{\footnotesize\ttfamily size\+\_\+t ttak\+\_\+object\+\_\+pool\+::last\+\_\+recycled\+\_\+index}
+
+Hot-\/slot recycled on the next allocation. 
+
+Definition at line \mbox{\hyperlink{container_2pool_8h_source_l00028}{28}} of file \mbox{\hyperlink{container_2pool_8h_source}{pool.\+h}}.
+
 \Hypertarget{structttak__object__pool_a5c261e179030cdd19276708d98142e46}\label{structttak__object__pool_a5c261e179030cdd19276708d98142e46} 
 \index{ttak\_object\_pool@{ttak\_object\_pool}!lock@{lock}}
 \index{lock@{lock}!ttak\_object\_pool@{ttak\_object\_pool}}
@@ -93,7 +115,57 @@ Definition at line \mbox{\hyperlink{container_2pool_8h_source_l00018}{18}} of fi
 
 Spinlock for protecting the bitmap. 
 
-Definition at line \mbox{\hyperlink{container_2pool_8h_source_l00021}{21}} of file \mbox{\hyperlink{container_2pool_8h_source}{pool.\+h}}.
+Definition at line \mbox{\hyperlink{container_2pool_8h_source_l00030}{30}} of file \mbox{\hyperlink{container_2pool_8h_source}{pool.\+h}}.
+
+\Hypertarget{structttak__object__pool_aafc723c0f55b9a51eed774931edfc897}\label{structttak__object__pool_aafc723c0f55b9a51eed774931edfc897} 
+\index{ttak\_object\_pool@{ttak\_object\_pool}!ols\_chunk\_count@{ols\_chunk\_count}}
+\index{ols\_chunk\_count@{ols\_chunk\_count}!ttak\_object\_pool@{ttak\_object\_pool}}
+\doxysubsubsection{\texorpdfstring{ols\_chunk\_count}{ols\_chunk\_count}}
+{\footnotesize\ttfamily size\+\_\+t ttak\+\_\+object\+\_\+pool\+::ols\+\_\+chunk\+\_\+count}
+
+Number of 8x8 tiles covering the capacity. 
+
+Definition at line \mbox{\hyperlink{container_2pool_8h_source_l00023}{23}} of file \mbox{\hyperlink{container_2pool_8h_source}{pool.\+h}}.
+
+\Hypertarget{structttak__object__pool_ab56703e2886f72d1fb41a7bc2e4113bf}\label{structttak__object__pool_ab56703e2886f72d1fb41a7bc2e4113bf} 
+\index{ttak\_object\_pool@{ttak\_object\_pool}!ols\_chunk\_cursor@{ols\_chunk\_cursor}}
+\index{ols\_chunk\_cursor@{ols\_chunk\_cursor}!ttak\_object\_pool@{ttak\_object\_pool}}
+\doxysubsubsection{\texorpdfstring{ols\_chunk\_cursor}{ols\_chunk\_cursor}}
+{\footnotesize\ttfamily size\+\_\+t ttak\+\_\+object\+\_\+pool\+::ols\+\_\+chunk\+\_\+cursor}
+
+Current tile cursor. 
+
+Definition at line \mbox{\hyperlink{container_2pool_8h_source_l00024}{24}} of file \mbox{\hyperlink{container_2pool_8h_source}{pool.\+h}}.
+
+\Hypertarget{structttak__object__pool_af47611e66bb8945b0d064dd0b3bf81e3}\label{structttak__object__pool_af47611e66bb8945b0d064dd0b3bf81e3} 
+\index{ttak\_object\_pool@{ttak\_object\_pool}!ols\_lane\_guard@{ols\_lane\_guard}}
+\index{ols\_lane\_guard@{ols\_lane\_guard}!ttak\_object\_pool@{ttak\_object\_pool}}
+\doxysubsubsection{\texorpdfstring{ols\_lane\_guard}{ols\_lane\_guard}}
+{\footnotesize\ttfamily uint8\+\_\+t ttak\+\_\+object\+\_\+pool\+::ols\+\_\+lane\+\_\+guard}
+
+Cycle guard to detect when to advance tiles. 
+
+Definition at line \mbox{\hyperlink{container_2pool_8h_source_l00026}{26}} of file \mbox{\hyperlink{container_2pool_8h_source}{pool.\+h}}.
+
+\Hypertarget{structttak__object__pool_a562c49dae52f1bdf34910047bb58d245}\label{structttak__object__pool_a562c49dae52f1bdf34910047bb58d245} 
+\index{ttak\_object\_pool@{ttak\_object\_pool}!ols\_lane\_seed@{ols\_lane\_seed}}
+\index{ols\_lane\_seed@{ols\_lane\_seed}!ttak\_object\_pool@{ttak\_object\_pool}}
+\doxysubsubsection{\texorpdfstring{ols\_lane\_seed}{ols\_lane\_seed}}
+{\footnotesize\ttfamily uint8\+\_\+t ttak\+\_\+object\+\_\+pool\+::ols\+\_\+lane\+\_\+seed}
+
+Current 6-\/bit lane seed within the tile. 
+
+Definition at line \mbox{\hyperlink{container_2pool_8h_source_l00025}{25}} of file \mbox{\hyperlink{container_2pool_8h_source}{pool.\+h}}.
+
+\Hypertarget{structttak__object__pool_a99ed722dc1c32e7c10c190b0c88836c9}\label{structttak__object__pool_a99ed722dc1c32e7c10c190b0c88836c9} 
+\index{ttak\_object\_pool@{ttak\_object\_pool}!ols\_lane\_stride@{ols\_lane\_stride}}
+\index{ols\_lane\_stride@{ols\_lane\_stride}!ttak\_object\_pool@{ttak\_object\_pool}}
+\doxysubsubsection{\texorpdfstring{ols\_lane\_stride}{ols\_lane\_stride}}
+{\footnotesize\ttfamily uint8\+\_\+t ttak\+\_\+object\+\_\+pool\+::ols\+\_\+lane\+\_\+stride}
+
+Coprime stride applied to the lane seed. 
+
+Definition at line \mbox{\hyperlink{container_2pool_8h_source_l00027}{27}} of file \mbox{\hyperlink{container_2pool_8h_source}{pool.\+h}}.
 
 \Hypertarget{structttak__object__pool_a53077709490b4f7933fd2a6609d14e84}\label{structttak__object__pool_a53077709490b4f7933fd2a6609d14e84} 
 \index{ttak\_object\_pool@{ttak\_object\_pool}!used\_count@{used\_count}}

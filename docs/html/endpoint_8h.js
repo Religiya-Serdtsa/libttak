@@ -12,7 +12,8 @@ var endpoint_8h =
     [ "ttak_net_endpoint_role", "endpoint_8h.html#a5e04a88fbb25550b7b9ef37621e7d701", [
       [ "TTAK_NET_ROLE_CLIENT", "endpoint_8h.html#a5e04a88fbb25550b7b9ef37621e7d701ac9290097fdb4170238fd482074651b6d", null ],
       [ "TTAK_NET_ROLE_SERVER", "endpoint_8h.html#a5e04a88fbb25550b7b9ef37621e7d701af67f15d969b62ba00b07db2470b4bc05", null ],
-      [ "TTAK_NET_ROLE_CUSTOM", "endpoint_8h.html#a5e04a88fbb25550b7b9ef37621e7d701ae2d23504f4c9c32e566398e9c5115381", null ]
+      [ "TTAK_NET_ROLE_CUSTOM", "endpoint_8h.html#a5e04a88fbb25550b7b9ef37621e7d701ae2d23504f4c9c32e566398e9c5115381", null ],
+      [ "TTAK_NET_ROLE_LATTICE_ACCEL", "endpoint_8h.html#a5e04a88fbb25550b7b9ef37621e7d701a27547860027d1363cc784d9d3b3f48e7", null ]
     ] ],
     [ "ttak_net_endpoint_type", "endpoint_8h.html#a90d039f18d1593c634513881f837b80c", [
       [ "TTAK_NET_ENDPOINT_IPV4", "endpoint_8h.html#a90d039f18d1593c634513881f837b80cae5e7c9cefccf4b5874449e42a817ab5f", null ],

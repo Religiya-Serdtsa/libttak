@@ -20,168 +20,165 @@
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00016}00016\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{pthread_8h}{pthread.h}}>}}
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00017}00017\ \textcolor{preprocessor}{\#include\ "{}../../internal/app\_types.h"{}}}
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00018}00018\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{mem_8h}{ttak/mem/mem.h}}>}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00019}00019\ }
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00020}00020\ \textcolor{preprocessor}{\#ifndef\ TTAK\_UNLIKELY}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00021}\mbox{\hyperlink{mem__internal_8h_a79e6ab9372fcc255fb4075c4ed8857dd}{00021}}\ \textcolor{preprocessor}{\#define\ TTAK\_UNLIKELY(x)\ \_\_builtin\_expect(!!(x),\ 0)}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00022}00022\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00023}00023\ }
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00024}00024\ \textcolor{comment}{//\ -\/-\/-\/\ Memory\ Magic\ Numbers\ -\/-\/-\/}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00025}\mbox{\hyperlink{mem__internal_8h_a2398e4bc6e13be162959e6418b48ad9b}{00025}}\ \textcolor{preprocessor}{\#define\ POCKET\_MAGIC\ 0x80C4E700\ }\textcolor{comment}{/**<\ Base\ magic\ for\ 4KB\ pocket\ pages\ (Lower\ bits:\ freelist\_idx)\ */}\textcolor{preprocessor}{}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00026}\mbox{\hyperlink{mem__internal_8h_a48534a142d77bccefdcd20ae71d4777e}{00026}}\ \textcolor{preprocessor}{\#define\ SLAB\_MAGIC\ \ \ 0x51ABCA5E\ }\textcolor{comment}{/**<\ Magic\ for\ Slab\ pages\ */}\textcolor{preprocessor}{}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00027}00027\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00028}00028\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00029}00029\ \textcolor{comment}{\ *\ @brief\ Reentrancy\ guard\ to\ prevent\ recursive\ calls\ during\ boot/allocation.}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00030}00030\ \textcolor{comment}{\ *\ Defined\ in\ mem.c.}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00031}00031\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00032}00032\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{app__types_8h_a75cdd26ec56c06d5e1abe50b17a8f837}{TTAK\_THREAD\_LOCAL}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{mem__internal_8h_a65ce8794ebbfc56397e402f7da0eb8ad}{t\_reentrancy\_guard}};}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00033}00033\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00034}00034\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00035}00035\ \textcolor{comment}{\ *\ @typedef\ ttak\_fixed\_16\_16\_t}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00036}00036\ \textcolor{comment}{\ *\ @brief\ 16.16\ Fixed-\/point\ type\ for\ friction\ calculation.}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00037}00037\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00038}\mbox{\hyperlink{mem__internal_8h_aa52f0af3a2626d67b61777a1504a4415}{00038}}\ \textcolor{keyword}{typedef}\ int32\_t\ \mbox{\hyperlink{mem__internal_8h_aa52f0af3a2626d67b61777a1504a4415}{ttak\_fixed\_16\_16\_t}};}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00039}00039\ }
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00040}\mbox{\hyperlink{mem__internal_8h_ad923ad1117b87a296109d5ed8b2b0ecf}{00040}}\ \textcolor{preprocessor}{\#define\ TTAK\_FP\_ONE\ (1\ <<\ 16)}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00041}\mbox{\hyperlink{mem__internal_8h_a001ec8a1869c8ce91a283e742ff056a2}{00041}}\ \textcolor{preprocessor}{\#define\ TTAK\_FP\_FROM\_INT(val)\ ((ttak\_fixed\_16\_16\_t)(val)\ <<\ 16)}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00042}\mbox{\hyperlink{mem__internal_8h_a69e122ba63345025fa7bd742fc502e22}{00042}}\ \textcolor{preprocessor}{\#define\ TTAK\_FP\_TO\_INT(val)\ ((val)\ >>\ 16)}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00043}\mbox{\hyperlink{mem__internal_8h_a8458ee8fa183292861fb996885599add}{00043}}\ \textcolor{preprocessor}{\#define\ TTAK\_FP\_MUL(a,\ b)\ (((int64\_t)(a)\ *\ (b))\ >>\ 16)}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00044}\mbox{\hyperlink{mem__internal_8h_a8a9e97ecd3599442ae8c393732eec240}{00044}}\ \textcolor{preprocessor}{\#define\ TTAK\_FP\_DIV(a,\ b)\ (((int64\_t)(a)\ <<\ 16)\ /\ (b))}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00045}00045\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00046}00046\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00047}00047\ \textcolor{comment}{\ *\ @struct\ ttak\_mem\_friction\_matrix\_t}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00048}00048\ \textcolor{comment}{\ *\ @brief\ Matrix\ for\ tracking\ memory\ pressure\ and\ "{}Mechanical\ Damping"{}.}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00049}00049\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00050}\mbox{\hyperlink{structttak__mem__friction__matrix__t}{00050}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00051}\mbox{\hyperlink{structttak__mem__friction__matrix__t_ac07dd43aa7da57011cabf90b208c36f6}{00051}}\ \ \ \ \ \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\_Atomic}}\ \mbox{\hyperlink{mem__internal_8h_aa52f0af3a2626d67b61777a1504a4415}{ttak\_fixed\_16\_16\_t}}\ values[4];\ \ \ \textcolor{comment}{/**<\ Per-\/size-\/class\ friction\ values\ */}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00052}\mbox{\hyperlink{structttak__mem__friction__matrix__t_a00aa5aa478a1fcd54691026789da2c7c}{00052}}\ \ \ \ \ \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\_Atomic}}\ \mbox{\hyperlink{mem__internal_8h_aa52f0af3a2626d67b61777a1504a4415}{ttak\_fixed\_16\_16\_t}}\ \mbox{\hyperlink{structttak__mem__friction__matrix__t_a00aa5aa478a1fcd54691026789da2c7c}{global\_friction}};\ \textcolor{comment}{/**<\ Resulting\ product\ friction\ */}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00053}\mbox{\hyperlink{structttak__mem__friction__matrix__t_aee248efcae576a2d7a8a758d7e400b79}{00053}}\ \ \ \ \ \mbox{\hyperlink{mem__internal_8h_aa52f0af3a2626d67b61777a1504a4415}{ttak\_fixed\_16\_16\_t}}\ \mbox{\hyperlink{structttak__mem__friction__matrix__t_aee248efcae576a2d7a8a758d7e400b79}{pressure\_threshold}};\ \ \ \ \ \ \textcolor{comment}{/**<\ High\ friction\ rejection\ point\ */}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00054}00054\ \}\ \mbox{\hyperlink{structttak__mem__friction__matrix__t}{ttak\_mem\_friction\_matrix\_t}};}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00055}00055\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00056}00056\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00057}00057\ \textcolor{comment}{\ *\ @brief\ Global\ friction\ matrix\ instance.}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00058}00058\ \textcolor{comment}{\ *\ Defined\ in\ mem.c.}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00059}00059\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00060}00060\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{structttak__mem__friction__matrix__t}{ttak\_mem\_friction\_matrix\_t}}\ \mbox{\hyperlink{mem__internal_8h_a01418a27cc1879ab847f8bb8a395dc47}{global\_friction\_matrix}};}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00019}00019\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{ttak__compiler_8h}{ttak/types/ttak\_compiler.h}}>}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00021}00021\ \textcolor{comment}{//\ -\/-\/-\/\ Memory\ Magic\ Numbers\ -\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00022}\mbox{\hyperlink{mem__internal_8h_a2398e4bc6e13be162959e6418b48ad9b}{00022}}\ \textcolor{preprocessor}{\#define\ POCKET\_MAGIC\ 0x80C4E700\ }\textcolor{comment}{/**<\ Base\ magic\ for\ 4KB\ pocket\ pages\ (Lower\ bits:\ freelist\_idx)\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00023}\mbox{\hyperlink{mem__internal_8h_a48534a142d77bccefdcd20ae71d4777e}{00023}}\ \textcolor{preprocessor}{\#define\ SLAB\_MAGIC\ \ \ 0x51ABCA5E\ }\textcolor{comment}{/**<\ Magic\ for\ Slab\ pages\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00024}00024\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00025}00025\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00026}00026\ \textcolor{comment}{\ *\ @brief\ Reentrancy\ guard\ to\ prevent\ recursive\ calls\ during\ boot/allocation.}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00027}00027\ \textcolor{comment}{\ *\ Defined\ in\ mem.c.}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00028}00028\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00029}00029\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{app__types_8h_a75cdd26ec56c06d5e1abe50b17a8f837}{TTAK\_THREAD\_LOCAL}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{mem__internal_8h_a65ce8794ebbfc56397e402f7da0eb8ad}{t\_reentrancy\_guard}};}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00030}00030\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00031}00031\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00032}00032\ \textcolor{comment}{\ *\ @typedef\ ttak\_fixed\_16\_16\_t}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00033}00033\ \textcolor{comment}{\ *\ @brief\ 16.16\ Fixed-\/point\ type\ for\ friction\ calculation.}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00034}00034\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00035}\mbox{\hyperlink{mem__internal_8h_aa52f0af3a2626d67b61777a1504a4415}{00035}}\ \textcolor{keyword}{typedef}\ int32\_t\ \mbox{\hyperlink{mem__internal_8h_aa52f0af3a2626d67b61777a1504a4415}{ttak\_fixed\_16\_16\_t}};}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00037}\mbox{\hyperlink{mem__internal_8h_ad923ad1117b87a296109d5ed8b2b0ecf}{00037}}\ \textcolor{preprocessor}{\#define\ TTAK\_FP\_ONE\ (1\ <<\ 16)}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00038}\mbox{\hyperlink{mem__internal_8h_a001ec8a1869c8ce91a283e742ff056a2}{00038}}\ \textcolor{preprocessor}{\#define\ TTAK\_FP\_FROM\_INT(val)\ ((ttak\_fixed\_16\_16\_t)(val)\ <<\ 16)}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00039}\mbox{\hyperlink{mem__internal_8h_a69e122ba63345025fa7bd742fc502e22}{00039}}\ \textcolor{preprocessor}{\#define\ TTAK\_FP\_TO\_INT(val)\ ((val)\ >>\ 16)}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00040}\mbox{\hyperlink{mem__internal_8h_a8458ee8fa183292861fb996885599add}{00040}}\ \textcolor{preprocessor}{\#define\ TTAK\_FP\_MUL(a,\ b)\ (((int64\_t)(a)\ *\ (b))\ >>\ 16)}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00041}\mbox{\hyperlink{mem__internal_8h_a8a9e97ecd3599442ae8c393732eec240}{00041}}\ \textcolor{preprocessor}{\#define\ TTAK\_FP\_DIV(a,\ b)\ (((int64\_t)(a)\ <<\ 16)\ /\ (b))}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00042}00042\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00043}00043\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00044}00044\ \textcolor{comment}{\ *\ @struct\ ttak\_mem\_friction\_matrix\_t}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00045}00045\ \textcolor{comment}{\ *\ @brief\ Matrix\ for\ tracking\ memory\ pressure\ and\ "{}Mechanical\ Damping"{}.}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00046}00046\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00047}\mbox{\hyperlink{structttak__mem__friction__matrix__t}{00047}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00048}\mbox{\hyperlink{structttak__mem__friction__matrix__t_ac07dd43aa7da57011cabf90b208c36f6}{00048}}\ \ \ \ \ \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\_Atomic}}\ \mbox{\hyperlink{mem__internal_8h_aa52f0af3a2626d67b61777a1504a4415}{ttak\_fixed\_16\_16\_t}}\ values[4];\ \ \ \textcolor{comment}{/**<\ Per-\/size-\/class\ friction\ values\ */}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00049}\mbox{\hyperlink{structttak__mem__friction__matrix__t_a00aa5aa478a1fcd54691026789da2c7c}{00049}}\ \ \ \ \ \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\_Atomic}}\ \mbox{\hyperlink{mem__internal_8h_aa52f0af3a2626d67b61777a1504a4415}{ttak\_fixed\_16\_16\_t}}\ \mbox{\hyperlink{structttak__mem__friction__matrix__t_a00aa5aa478a1fcd54691026789da2c7c}{global\_friction}};\ \textcolor{comment}{/**<\ Resulting\ product\ friction\ */}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00050}\mbox{\hyperlink{structttak__mem__friction__matrix__t_aee248efcae576a2d7a8a758d7e400b79}{00050}}\ \ \ \ \ \mbox{\hyperlink{mem__internal_8h_aa52f0af3a2626d67b61777a1504a4415}{ttak\_fixed\_16\_16\_t}}\ \mbox{\hyperlink{structttak__mem__friction__matrix__t_aee248efcae576a2d7a8a758d7e400b79}{pressure\_threshold}};\ \ \ \ \ \ \textcolor{comment}{/**<\ High\ friction\ rejection\ point\ */}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00051}00051\ \}\ \mbox{\hyperlink{structttak__mem__friction__matrix__t}{ttak\_mem\_friction\_matrix\_t}};}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00052}00052\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00053}00053\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00054}00054\ \textcolor{comment}{\ *\ @brief\ Global\ friction\ matrix\ instance.}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00055}00055\ \textcolor{comment}{\ *\ Defined\ in\ mem.c.}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00056}00056\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00057}00057\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{structttak__mem__friction__matrix__t}{ttak\_mem\_friction\_matrix\_t}}\ \mbox{\hyperlink{mem__internal_8h_a01418a27cc1879ab847f8bb8a395dc47}{global\_friction\_matrix}};}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00059}00059\ \textcolor{comment}{//\ Forward\ declare\ ttak\_mem\_header\_t}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00060}\mbox{\hyperlink{mem__internal_8h_a574c320689c9aed0ca6559697013d05a}{00060}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__mem__header__t}{ttak\_mem\_header\_t}}\ \mbox{\hyperlink{structttak__mem__header__t}{ttak\_mem\_header\_t}};}
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00061}00061\ }
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00062}00062\ \textcolor{comment}{//\ Forward\ declare\ ttak\_mem\_header\_t}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00063}\mbox{\hyperlink{mem__internal_8h_a574c320689c9aed0ca6559697013d05a}{00063}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__mem__header__t}{ttak\_mem\_header\_t}}\ \mbox{\hyperlink{structttak__mem__header__t}{ttak\_mem\_header\_t}};}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00064}00064\ }
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00065}00065\ \textcolor{comment}{//\ -\/-\/-\/\ Thread-\/Local\ Pockets\ (Objects\ <=\ 128B\ total\ block)\ -\/-\/-\/}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00066}\mbox{\hyperlink{mem__internal_8h_a1d7f42e54833cbd413fa059f040e9455}{00066}}\ \textcolor{preprocessor}{\#define\ TTAK\_POCKET\_PAGE\_SIZE\ 4096\ }}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00067}\mbox{\hyperlink{mem__internal_8h_a453bdb33e06b4275bdc24e123cc01c0f}{00067}}\ \textcolor{preprocessor}{\#define\ TTAK\_POCKET\_ALIGNMENT\ 4096\ }}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00068}\mbox{\hyperlink{mem__internal_8h_a10254fab4ae3ccc752ddcf5ca91a9803}{00068}}\ \textcolor{preprocessor}{\#define\ TTAK\_NUM\_POCKET\_FREELISTS\ 2\ }}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00069}00069\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00070}00070\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00071}00071\ \textcolor{comment}{\ *\ @struct\ ttak\_mem\_pocket\_freelist}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00072}00072\ \textcolor{comment}{\ *\ @brief\ Simple\ LIFO\ freelist\ for\ thread-\/local\ blocks.}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00073}00073\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00074}\mbox{\hyperlink{structttak__mem__pocket__freelist}{00074}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__mem__pocket__freelist}{ttak\_mem\_pocket\_freelist}}\ \{}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00075}\mbox{\hyperlink{structttak__mem__pocket__freelist_af73ed4ed07e772ecf5659b5603464c1f}{00075}}\ \ \ \ \ \textcolor{keywordtype}{void}*\ \mbox{\hyperlink{structttak__mem__pocket__freelist_af73ed4ed07e772ecf5659b5603464c1f}{head}};\ \textcolor{comment}{/**<\ Top\ of\ the\ free-\/stack\ */}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00076}\mbox{\hyperlink{mem__internal_8h_af43b32a954757220aaa62ba3c6ecca77}{00076}}\ \}\ \mbox{\hyperlink{mem__internal_8h_af43b32a954757220aaa62ba3c6ecca77}{ttak\_mem\_pocket\_freelist\_t}};}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00077}00077\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00078}00078\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00079}00079\ \textcolor{comment}{\ *\ @brief\ Thread-\/local\ pocket\ freelists.}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00080}00080\ \textcolor{comment}{\ *\ Defined\ in\ ttak\_mem\_pocket.c.}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00081}00081\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00082}00082\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{app__types_8h_a75cdd26ec56c06d5e1abe50b17a8f837}{TTAK\_THREAD\_LOCAL}}\ \mbox{\hyperlink{structttak__mem__pocket__freelist}{ttak\_mem\_pocket\_freelist\_t}}\ \mbox{\hyperlink{mem__internal_8h_aba9f426693a9a72a5154cfe22137dfbc}{ttak\_pocket\_freelists}}[\mbox{\hyperlink{mem__internal_8h_a10254fab4ae3ccc752ddcf5ca91a9803}{TTAK\_NUM\_POCKET\_FREELISTS}}];}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00083}00083\ }
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00084}00084\ \textcolor{comment}{//\ -\/-\/-\/\ Bare-\/Metal\ VMA\ (Virtual\ Mapping\ Area)\ -\/-\/-\/}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00085}\mbox{\hyperlink{mem__internal_8h_a8ac651bb471a64ef8d6448811eb129ac}{00085}}\ \textcolor{preprocessor}{\#define\ TTAK\_VMA\_REGION\_SIZE\ (16\ *\ 1024\ *\ 1024)\ }}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00086}\mbox{\hyperlink{mem__internal_8h_a2bb3ddaa78d345560fe8626105cf6084}{00086}}\ \textcolor{preprocessor}{\#define\ TTAK\_VMA\_ALIGNMENT\ 64\ }}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00087}00087\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00088}00088\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00089}00089\ \textcolor{comment}{\ *\ @struct\ ttak\_mem\_vma\_region}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00090}00090\ \textcolor{comment}{\ *\ @brief\ Linear\ virtual\ mapping\ area\ for\ lock-\/free\ bump\ allocation.}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00091}00091\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00092}\mbox{\hyperlink{structttak__mem__vma__region}{00092}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__mem__vma__region}{ttak\_mem\_vma\_region}}\ \{}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00093}\mbox{\hyperlink{structttak__mem__vma__region_a9db33ae608a76d6dea384f885a264bef}{00093}}\ \ \ \ \ \textcolor{keywordtype}{void}*\ \mbox{\hyperlink{structttak__mem__vma__region_a9db33ae608a76d6dea384f885a264bef}{start\_addr}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Base\ address\ of\ the\ mmap'd\ region\ */}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00094}\mbox{\hyperlink{structttak__mem__vma__region_a62dbe7a27a2143912a726d1942b0d062}{00094}}\ \ \ \ \ \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\_Atomic}}\ uintptr\_t\ \mbox{\hyperlink{structttak__mem__vma__region_a62dbe7a27a2143912a726d1942b0d062}{current\_cursor}};\ \textcolor{comment}{/**<\ Atomic\ cursor\ for\ linear\ allocation\ */}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00095}\mbox{\hyperlink{mem__internal_8h_a6c76dcfc177f693f5fbfed57f4ce0bb2}{00095}}\ \}\ \mbox{\hyperlink{mem__internal_8h_a6c76dcfc177f693f5fbfed57f4ce0bb2}{ttak\_mem\_vma\_region\_t}};}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00096}00096\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00097}00097\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00098}00098\ \textcolor{comment}{\ *\ @brief\ Global\ VMA\ region\ instance.}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00099}00099\ \textcolor{comment}{\ *\ Defined\ in\ ttak\_mem\_vma.c.}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00100}00100\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00101}00101\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{structttak__mem__vma__region}{ttak\_mem\_vma\_region\_t}}\ \mbox{\hyperlink{mem__internal_8h_a786e428521881ef54ae52854d0b18b5e}{global\_vma\_region}};}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00102}00102\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00103}00103\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00104}00104\ \textcolor{comment}{\ *\ @struct\ ttak\_slab\_t}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00105}00105\ \textcolor{comment}{\ *\ @brief\ Metadata\ for\ Slab\ vanguard\ (64KB\ -\/\ 512KB\ Dynamic\ Path).}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00106}00106\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00107}\mbox{\hyperlink{structttak__slab__t}{00107}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00108}\mbox{\hyperlink{structttak__slab__t_a5b0a15f2fff516a93c15ba9d69625eaa}{00108}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__slab__t_a5b0a15f2fff516a93c15ba9d69625eaa}{magic}};\ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ SLAB\_MAGIC\ */}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00109}\mbox{\hyperlink{structttak__slab__t_a35b93f7693dcc569da512c5bd827f44d}{00109}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__slab__t_a35b93f7693dcc569da512c5bd827f44d}{block\_size}};\ \ \ \ \textcolor{comment}{/**<\ Size\ of\ objects\ in\ this\ slab\ */}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00110}\mbox{\hyperlink{structttak__slab__t_a5664e352c2dc42f625db26ce51ce1b60}{00110}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__slab__t_a5664e352c2dc42f625db26ce51ce1b60}{total\_blocks}};}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00111}\mbox{\hyperlink{structttak__slab__t_a7bbf6e9431f3bf03d7d3303e955e0376}{00111}}\ \ \ \ \ \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\_Atomic}}\ uint32\_t\ \mbox{\hyperlink{structttak__slab__t_a7bbf6e9431f3bf03d7d3303e955e0376}{active\_count}};}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00112}\mbox{\hyperlink{structttak__slab__t_a4641ee5903bf440c378152ab928b357a}{00112}}\ \ \ \ \ \textcolor{keywordtype}{void}*\ \mbox{\hyperlink{structttak__slab__t_a4641ee5903bf440c378152ab928b357a}{free\_stack}};}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00113}\mbox{\hyperlink{structttak__slab__t_a4a83f4fd1366a1a9153d787e218409d9}{00113}}\ \ \ \ \ \textcolor{keywordtype}{void}*\ \mbox{\hyperlink{structttak__slab__t_a4a83f4fd1366a1a9153d787e218409d9}{page\_start}};}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00114}00114\ \}\ \mbox{\hyperlink{structttak__slab__t}{ttak\_slab\_t}};}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00115}00115\ }
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00116}00116\ \textcolor{comment}{//\ -\/-\/-\/\ Internal\ Tiered\ Allocator\ Interfaces\ -\/-\/-\/}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00117}00117\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00118}00118\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00119}00119\ \textcolor{comment}{\ *\ @brief\ Allocates\ from\ the\ thread-\/local\ pocket\ tier.}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00120}00120\ \textcolor{comment}{\ *\ @param\ user\_requested\_size\ Size\ requested\ by\ user.}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00121}00121\ \textcolor{comment}{\ *\ @return\ Allocated\ header,\ or\ NULL.}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00122}00122\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00123}\mbox{\hyperlink{mem__internal_8h_a9967ba62776d96bb9a96f0a376d704fe}{00123}}\ \mbox{\hyperlink{structttak__mem__header__t}{ttak\_mem\_header\_t}}*\ \mbox{\hyperlink{mem__internal_8h_a9967ba62776d96bb9a96f0a376d704fe}{ttak\_mem\_pocket\_alloc\_internal}}(\textcolor{keywordtype}{size\_t}\ user\_requested\_size);}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00124}00124\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00125}00125\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00126}00126\ \textcolor{comment}{\ *\ @brief\ Frees\ a\ header\ back\ to\ the\ thread-\/local\ pocket.}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00127}00127\ \textcolor{comment}{\ *\ @param\ header\ Header\ to\ return.}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00128}00128\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00129}\mbox{\hyperlink{mem__internal_8h_a937a888cc086072386c71a0b33730cfa}{00129}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{mem__internal_8h_a937a888cc086072386c71a0b33730cfa}{\_pocket\_free\_internal}}(\mbox{\hyperlink{structttak__mem__header__t}{ttak\_mem\_header\_t}}*\ header);}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00130}00130\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00131}00131\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00132}00132\ \textcolor{comment}{\ *\ @brief\ Allocates\ from\ the\ lock-\/free\ VMA\ tier.}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00133}00133\ \textcolor{comment}{\ *\ @param\ user\_requested\_size\ Size\ requested\ by\ user.}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00134}00134\ \textcolor{comment}{\ *\ @return\ Allocated\ header,\ or\ NULL.}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00135}00135\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00136}\mbox{\hyperlink{mem__internal_8h_a95874d8ac4b29ed22519a033552df2f6}{00136}}\ \mbox{\hyperlink{structttak__mem__header__t}{ttak\_mem\_header\_t}}*\ \mbox{\hyperlink{mem__internal_8h_a95874d8ac4b29ed22519a033552df2f6}{ttak\_mem\_vma\_alloc\_internal}}(\textcolor{keywordtype}{size\_t}\ user\_requested\_size);}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00137}00137\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00138}00138\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00139}00139\ \textcolor{comment}{\ *\ @brief\ Release\ VMA\ allocation\ (currently\ no-\/op\ for\ linear\ allocator).}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00140}00140\ \textcolor{comment}{\ *\ @param\ header\ Header\ to\ release.}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00141}00141\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00142}\mbox{\hyperlink{mem__internal_8h_a03b066948cc18c92697707a2d014eb0d}{00142}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{mem__internal_8h_a03b066948cc18c92697707a2d014eb0d}{\_vma\_free\_internal}}(\mbox{\hyperlink{structttak__mem__header__t}{ttak\_mem\_header\_t}}*\ header);}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00143}00143\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00144}00144\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00145}00145\ \textcolor{comment}{\ *\ @brief\ Raw\ linear\ VMA\ allocator\ (internal\ use).}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00146}00146\ \textcolor{comment}{\ *\ @param\ size\ Total\ bytes\ to\ allocate.}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00147}00147\ \textcolor{comment}{\ *\ @return\ Start\ pointer.}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00148}00148\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00149}\mbox{\hyperlink{mem__internal_8h_a8abad2af668cdec241ddf164f6f2f152}{00149}}\ \textcolor{keywordtype}{void}*\ \mbox{\hyperlink{mem__internal_8h_a8abad2af668cdec241ddf164f6f2f152}{\_vma\_alloc\_linear}}(\textcolor{keywordtype}{size\_t}\ size);}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00150}00150\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00151}00151\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00152}00152\ \textcolor{comment}{\ *\ @brief\ Slab\ rectified\ allocator\ (Dynamic\ path).}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00153}00153\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00154}\mbox{\hyperlink{mem__internal_8h_a777accb0ca5bba4e0291b1902778a095}{00154}}\ \mbox{\hyperlink{structttak__mem__header__t}{ttak\_mem\_header\_t}}*\ \mbox{\hyperlink{mem__internal_8h_a777accb0ca5bba4e0291b1902778a095}{\_slab\_alloc\_rectified}}(\textcolor{keywordtype}{size\_t}\ user\_requested\_size);}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00155}00155\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00156}00156\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00157}00157\ \textcolor{comment}{\ *\ @brief\ Returns\ slab\ block\ to\ pool.}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00158}00158\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00159}\mbox{\hyperlink{mem__internal_8h_aaf2ff6638f6d6b4351ec093ca2d6de4c}{00159}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{mem__internal_8h_aaf2ff6638f6d6b4351ec093ca2d6de4c}{\_slab\_free\_internal}}(\mbox{\hyperlink{structttak__mem__header__t}{ttak\_mem\_header\_t}}*\ header,\ uintptr\_t\ slab\_page\_start\_addr);}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00160}00160\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00161}00161\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00162}00162\ \textcolor{comment}{\ *\ @brief\ Maps\ a\ total\ block\ size\ to\ a\ pocket\ freelist\ index.}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00163}00163\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00164}\mbox{\hyperlink{mem__internal_8h_a412d07726f648de60cf44fc039dadb29}{00164}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{mem__internal_8h_a412d07726f648de60cf44fc039dadb29}{get\_pocket\_size\_class\_idx}}(\textcolor{keywordtype}{size\_t}\ total\_block\_size)\ \{}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00165}00165\ \ \ \ \ \textcolor{keywordflow}{if}\ (total\_block\_size\ <=\ 192)\ \textcolor{keywordflow}{return}\ 0;}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00166}00166\ \ \ \ \ \textcolor{keywordflow}{if}\ (total\_block\_size\ <=\ 256)\ \textcolor{keywordflow}{return}\ 1;}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00167}00167\ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1;}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00168}00168\ \}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00169}00169\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00170}00170\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00171}00171\ \textcolor{comment}{\ *\ @brief\ Returns\ the\ total\ block\ size\ for\ a\ given\ pocket\ index.}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00172}00172\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00173}\mbox{\hyperlink{mem__internal_8h_ae342f8cc558efdfaa89d03a462132edd}{00173}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{mem__internal_8h_ae342f8cc558efdfaa89d03a462132edd}{get\_total\_block\_size\_for\_freelist}}(\textcolor{keywordtype}{int}\ idx)\ \{}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00174}00174\ \ \ \ \ \textcolor{keywordflow}{switch}\ (idx)\ \{}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00175}00175\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0:\ \textcolor{keywordflow}{return}\ 192;}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00176}00176\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1:\ \textcolor{keywordflow}{return}\ 256;}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00177}00177\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00178}00178\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00179}00179\ \}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00180}00180\ }
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00181}00181\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_MEM\_INTERNAL\_H}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00062}00062\ \textcolor{comment}{//\ -\/-\/-\/\ Thread-\/Local\ Pockets\ (Objects\ <=\ 128B\ total\ block)\ -\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00063}\mbox{\hyperlink{mem__internal_8h_a1d7f42e54833cbd413fa059f040e9455}{00063}}\ \textcolor{preprocessor}{\#define\ TTAK\_POCKET\_PAGE\_SIZE\ 4096\ }}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00064}\mbox{\hyperlink{mem__internal_8h_a453bdb33e06b4275bdc24e123cc01c0f}{00064}}\ \textcolor{preprocessor}{\#define\ TTAK\_POCKET\_ALIGNMENT\ 4096\ }}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00065}\mbox{\hyperlink{mem__internal_8h_a10254fab4ae3ccc752ddcf5ca91a9803}{00065}}\ \textcolor{preprocessor}{\#define\ TTAK\_NUM\_POCKET\_FREELISTS\ 2\ }}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00066}00066\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00067}00067\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00068}00068\ \textcolor{comment}{\ *\ @struct\ ttak\_mem\_pocket\_freelist}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00069}00069\ \textcolor{comment}{\ *\ @brief\ Simple\ LIFO\ freelist\ for\ thread-\/local\ blocks.}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00070}00070\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00071}\mbox{\hyperlink{structttak__mem__pocket__freelist}{00071}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__mem__pocket__freelist}{ttak\_mem\_pocket\_freelist}}\ \{}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00072}\mbox{\hyperlink{structttak__mem__pocket__freelist_af73ed4ed07e772ecf5659b5603464c1f}{00072}}\ \ \ \ \ \textcolor{keywordtype}{void}*\ \mbox{\hyperlink{structttak__mem__pocket__freelist_af73ed4ed07e772ecf5659b5603464c1f}{head}};\ \textcolor{comment}{/**<\ Top\ of\ the\ free-\/stack\ */}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00073}\mbox{\hyperlink{mem__internal_8h_af43b32a954757220aaa62ba3c6ecca77}{00073}}\ \}\ \mbox{\hyperlink{mem__internal_8h_af43b32a954757220aaa62ba3c6ecca77}{ttak\_mem\_pocket\_freelist\_t}};}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00074}00074\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00075}00075\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00076}00076\ \textcolor{comment}{\ *\ @brief\ Thread-\/local\ pocket\ freelists.}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00077}00077\ \textcolor{comment}{\ *\ Defined\ in\ ttak\_mem\_pocket.c.}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00078}00078\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00079}00079\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{app__types_8h_a75cdd26ec56c06d5e1abe50b17a8f837}{TTAK\_THREAD\_LOCAL}}\ \mbox{\hyperlink{structttak__mem__pocket__freelist}{ttak\_mem\_pocket\_freelist\_t}}\ \mbox{\hyperlink{mem__internal_8h_aba9f426693a9a72a5154cfe22137dfbc}{ttak\_pocket\_freelists}}[\mbox{\hyperlink{mem__internal_8h_a10254fab4ae3ccc752ddcf5ca91a9803}{TTAK\_NUM\_POCKET\_FREELISTS}}];}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00080}00080\ }
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00081}00081\ \textcolor{comment}{//\ -\/-\/-\/\ Bare-\/Metal\ VMA\ (Virtual\ Mapping\ Area)\ -\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00082}\mbox{\hyperlink{mem__internal_8h_a8ac651bb471a64ef8d6448811eb129ac}{00082}}\ \textcolor{preprocessor}{\#define\ TTAK\_VMA\_REGION\_SIZE\ (16\ *\ 1024\ *\ 1024)\ }}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00083}\mbox{\hyperlink{mem__internal_8h_a2bb3ddaa78d345560fe8626105cf6084}{00083}}\ \textcolor{preprocessor}{\#define\ TTAK\_VMA\_ALIGNMENT\ 64\ }}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00084}00084\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00085}00085\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00086}00086\ \textcolor{comment}{\ *\ @struct\ ttak\_mem\_vma\_region}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00087}00087\ \textcolor{comment}{\ *\ @brief\ Linear\ virtual\ mapping\ area\ for\ lock-\/free\ bump\ allocation.}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00088}00088\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00089}\mbox{\hyperlink{structttak__mem__vma__region}{00089}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__mem__vma__region}{ttak\_mem\_vma\_region}}\ \{}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00090}\mbox{\hyperlink{structttak__mem__vma__region_a9db33ae608a76d6dea384f885a264bef}{00090}}\ \ \ \ \ \textcolor{keywordtype}{void}*\ \mbox{\hyperlink{structttak__mem__vma__region_a9db33ae608a76d6dea384f885a264bef}{start\_addr}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Base\ address\ of\ the\ mmap'd\ region\ */}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00091}\mbox{\hyperlink{structttak__mem__vma__region_a62dbe7a27a2143912a726d1942b0d062}{00091}}\ \ \ \ \ \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\_Atomic}}\ uintptr\_t\ \mbox{\hyperlink{structttak__mem__vma__region_a62dbe7a27a2143912a726d1942b0d062}{current\_cursor}};\ \textcolor{comment}{/**<\ Atomic\ cursor\ for\ linear\ allocation\ */}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00092}\mbox{\hyperlink{mem__internal_8h_a6c76dcfc177f693f5fbfed57f4ce0bb2}{00092}}\ \}\ \mbox{\hyperlink{mem__internal_8h_a6c76dcfc177f693f5fbfed57f4ce0bb2}{ttak\_mem\_vma\_region\_t}};}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00093}00093\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00094}00094\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00095}00095\ \textcolor{comment}{\ *\ @brief\ Global\ VMA\ region\ instance.}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00096}00096\ \textcolor{comment}{\ *\ Defined\ in\ ttak\_mem\_vma.c.}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00097}00097\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00098}00098\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{structttak__mem__vma__region}{ttak\_mem\_vma\_region\_t}}\ \mbox{\hyperlink{mem__internal_8h_a786e428521881ef54ae52854d0b18b5e}{global\_vma\_region}};}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00099}00099\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00100}00100\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00101}00101\ \textcolor{comment}{\ *\ @struct\ ttak\_slab\_t}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00102}00102\ \textcolor{comment}{\ *\ @brief\ Metadata\ for\ Slab\ vanguard\ (64KB\ -\/\ 512KB\ Dynamic\ Path).}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00103}00103\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00104}\mbox{\hyperlink{structttak__slab__t}{00104}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00105}\mbox{\hyperlink{structttak__slab__t_a5b0a15f2fff516a93c15ba9d69625eaa}{00105}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__slab__t_a5b0a15f2fff516a93c15ba9d69625eaa}{magic}};\ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ SLAB\_MAGIC\ */}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00106}\mbox{\hyperlink{structttak__slab__t_a35b93f7693dcc569da512c5bd827f44d}{00106}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__slab__t_a35b93f7693dcc569da512c5bd827f44d}{block\_size}};\ \ \ \ \textcolor{comment}{/**<\ Size\ of\ objects\ in\ this\ slab\ */}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00107}\mbox{\hyperlink{structttak__slab__t_a5664e352c2dc42f625db26ce51ce1b60}{00107}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__slab__t_a5664e352c2dc42f625db26ce51ce1b60}{total\_blocks}};}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00108}\mbox{\hyperlink{structttak__slab__t_a7bbf6e9431f3bf03d7d3303e955e0376}{00108}}\ \ \ \ \ \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\_Atomic}}\ uint32\_t\ \mbox{\hyperlink{structttak__slab__t_a7bbf6e9431f3bf03d7d3303e955e0376}{active\_count}};}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00109}\mbox{\hyperlink{structttak__slab__t_a4641ee5903bf440c378152ab928b357a}{00109}}\ \ \ \ \ \textcolor{keywordtype}{void}*\ \mbox{\hyperlink{structttak__slab__t_a4641ee5903bf440c378152ab928b357a}{free\_stack}};}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00110}\mbox{\hyperlink{structttak__slab__t_a4a83f4fd1366a1a9153d787e218409d9}{00110}}\ \ \ \ \ \textcolor{keywordtype}{void}*\ \mbox{\hyperlink{structttak__slab__t_a4a83f4fd1366a1a9153d787e218409d9}{page\_start}};}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00111}00111\ \}\ \mbox{\hyperlink{structttak__slab__t}{ttak\_slab\_t}};}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00112}00112\ }
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00113}00113\ \textcolor{comment}{//\ -\/-\/-\/\ Internal\ Tiered\ Allocator\ Interfaces\ -\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00114}00114\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00115}00115\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00116}00116\ \textcolor{comment}{\ *\ @brief\ Allocates\ memory\ from\ the\ pocket\ (slab-\/like)\ tier.}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00117}00117\ \textcolor{comment}{\ *\ @param\ size\ Requested\ user\ memory\ size.}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00118}00118\ \textcolor{comment}{\ *\ @return\ Pointer\ to\ the\ ttak\_mem\_header\_t\ of\ the\ allocated\ block,\ or\ NULL\ on\ failure.}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00119}00119\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00120}\mbox{\hyperlink{mem__internal_8h_a0685b9c215102d9177efbc20848d01dd}{00120}}\ \mbox{\hyperlink{structttak__mem__header__t}{ttak\_mem\_header\_t}}*\ \mbox{\hyperlink{mem__internal_8h_a0685b9c215102d9177efbc20848d01dd}{ttak\_mem\_pocket\_alloc\_internal}}(\textcolor{keywordtype}{size\_t}\ size);}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00121}00121\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00122}00122\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00123}00123\ \textcolor{comment}{\ *\ @brief\ Allocates\ memory\ from\ the\ VMA\ (Virtual\ Mapping\ Area)\ tier.}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00124}00124\ \textcolor{comment}{\ *\ @param\ size\ Requested\ user\ memory\ size.}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00125}00125\ \textcolor{comment}{\ *\ @return\ Pointer\ to\ the\ ttak\_mem\_header\_t\ of\ the\ allocated\ block,\ or\ NULL\ on\ failure.}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00126}00126\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00127}\mbox{\hyperlink{mem__internal_8h_a5e435171c1e6f2d7b9e093ace30c2453}{00127}}\ \mbox{\hyperlink{structttak__mem__header__t}{ttak\_mem\_header\_t}}*\ \mbox{\hyperlink{mem__internal_8h_a5e435171c1e6f2d7b9e093ace30c2453}{ttak\_mem\_vma\_alloc\_internal}}(\textcolor{keywordtype}{size\_t}\ size);}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00128}00128\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00129}00129\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00130}00130\ \textcolor{comment}{\ *\ @brief\ Releases\ a\ memory\ block\ back\ to\ the\ pocket\ tier.}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00131}00131\ \textcolor{comment}{\ *\ @param\ header\ Pointer\ to\ the\ memory\ header\ to\ be\ freed.}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00132}00132\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00133}\mbox{\hyperlink{mem__internal_8h_a937a888cc086072386c71a0b33730cfa}{00133}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{mem__internal_8h_a937a888cc086072386c71a0b33730cfa}{\_pocket\_free\_internal}}(\mbox{\hyperlink{structttak__mem__header__t}{ttak\_mem\_header\_t}}*\ header);}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00134}00134\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00135}00135\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00136}00136\ \textcolor{comment}{\ *\ @brief\ Releases\ a\ memory\ block\ back\ to\ the\ VMA\ tier.}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00137}00137\ \textcolor{comment}{\ *\ @param\ header\ Pointer\ to\ the\ memory\ header\ to\ be\ freed.}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00138}00138\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00139}\mbox{\hyperlink{mem__internal_8h_a03b066948cc18c92697707a2d014eb0d}{00139}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{mem__internal_8h_a03b066948cc18c92697707a2d014eb0d}{\_vma\_free\_internal}}(\mbox{\hyperlink{structttak__mem__header__t}{ttak\_mem\_header\_t}}*\ header);}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00140}00140\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00141}00141\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00142}00142\ \textcolor{comment}{\ *\ @brief\ Raw\ linear\ VMA\ allocator\ (internal\ use).}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00143}00143\ \textcolor{comment}{\ *\ @param\ size\ Total\ bytes\ to\ allocate.}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00144}00144\ \textcolor{comment}{\ *\ @return\ Start\ pointer.}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00145}00145\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00146}\mbox{\hyperlink{mem__internal_8h_a8abad2af668cdec241ddf164f6f2f152}{00146}}\ \textcolor{keywordtype}{void}*\ \mbox{\hyperlink{mem__internal_8h_a8abad2af668cdec241ddf164f6f2f152}{\_vma\_alloc\_linear}}(\textcolor{keywordtype}{size\_t}\ size);}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00147}00147\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00148}00148\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00149}00149\ \textcolor{comment}{\ *\ @brief\ Slab\ rectified\ allocator\ (Dynamic\ path).}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00150}00150\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00151}\mbox{\hyperlink{mem__internal_8h_a777accb0ca5bba4e0291b1902778a095}{00151}}\ \mbox{\hyperlink{structttak__mem__header__t}{ttak\_mem\_header\_t}}*\ \mbox{\hyperlink{mem__internal_8h_a777accb0ca5bba4e0291b1902778a095}{\_slab\_alloc\_rectified}}(\textcolor{keywordtype}{size\_t}\ user\_requested\_size);}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00152}00152\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00153}00153\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00154}00154\ \textcolor{comment}{\ *\ @brief\ Returns\ slab\ block\ to\ pool.}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00155}00155\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00156}\mbox{\hyperlink{mem__internal_8h_aaf2ff6638f6d6b4351ec093ca2d6de4c}{00156}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{mem__internal_8h_aaf2ff6638f6d6b4351ec093ca2d6de4c}{\_slab\_free\_internal}}(\mbox{\hyperlink{structttak__mem__header__t}{ttak\_mem\_header\_t}}*\ header,\ uintptr\_t\ slab\_page\_start\_addr);}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00157}00157\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00158}00158\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00159}00159\ \textcolor{comment}{\ *\ @brief\ Maps\ a\ total\ block\ size\ to\ a\ pocket\ freelist\ index.}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00160}00160\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00161}\mbox{\hyperlink{mem__internal_8h_a412d07726f648de60cf44fc039dadb29}{00161}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{mem__internal_8h_a412d07726f648de60cf44fc039dadb29}{get\_pocket\_size\_class\_idx}}(\textcolor{keywordtype}{size\_t}\ total\_block\_size)\ \{}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00162}00162\ \ \ \ \ \textcolor{keywordflow}{if}\ (total\_block\_size\ <=\ 192)\ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00163}00163\ \ \ \ \ \textcolor{keywordflow}{if}\ (total\_block\_size\ <=\ 256)\ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00164}00164\ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1;}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00165}00165\ \}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00166}00166\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00167}00167\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00168}00168\ \textcolor{comment}{\ *\ @brief\ Returns\ the\ total\ block\ size\ for\ a\ given\ pocket\ index.}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00169}00169\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00170}\mbox{\hyperlink{mem__internal_8h_ae342f8cc558efdfaa89d03a462132edd}{00170}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{mem__internal_8h_ae342f8cc558efdfaa89d03a462132edd}{get\_total\_block\_size\_for\_freelist}}(\textcolor{keywordtype}{int}\ idx)\ \{}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00171}00171\ \ \ \ \ \textcolor{keywordflow}{switch}\ (idx)\ \{}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00172}00172\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0:\ \textcolor{keywordflow}{return}\ 192;}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00173}00173\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1:\ \textcolor{keywordflow}{return}\ 256;}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00174}00174\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00175}00175\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00176}00176\ \}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00177}00177\ }
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00178}00178\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_MEM\_INTERNAL\_H}}
 
 \end{DoxyCode}

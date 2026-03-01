@@ -20,50 +20,51 @@
 \DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00016}00016\ \textcolor{comment}{/**}}
 \DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00017}00017\ \textcolor{comment}{\ *\ @struct\ ttak\_dynamic\_mask\_t}}
 \DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00018}00018\ \textcolor{comment}{\ *\ @brief\ Thread-\/safe\ dynamic\ bitmap.}}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00019}00019\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00020}\mbox{\hyperlink{structttak__dynamic__mask__t}{00020}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00021}\mbox{\hyperlink{structttak__dynamic__mask__t_a16d53f0a1317edf26715d8cd2da88273}{00021}}\ \ \ \ \ uint64\_t\ *\mbox{\hyperlink{structttak__dynamic__mask__t_a16d53f0a1317edf26715d8cd2da88273}{bits}};\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ The\ actual\ bitmap\ array\ */}}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00022}\mbox{\hyperlink{structttak__dynamic__mask__t_a60132ba5b95c01ebfeac22bd5e6e41a4}{00022}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__dynamic__mask__t_a60132ba5b95c01ebfeac22bd5e6e41a4}{capacity}};\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Capacity\ in\ bits\ (multiples\ of\ 64)\ */}}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00023}\mbox{\hyperlink{structttak__dynamic__mask__t_a414d73da8f63ec1e4bd9f3e813f5e751}{00023}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__dynamic__mask__t_a414d73da8f63ec1e4bd9f3e813f5e751}{count}};\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Number\ of\ set\ bits\ (optional\ tracking)\ */}}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00024}\mbox{\hyperlink{structttak__dynamic__mask__t_ad03397543e5bad84405b34ddc9407a30}{00024}}\ \ \ \ \ \mbox{\hyperlink{sync_2sync_8h_ad3f9b08e4c066e7bb7b1ed98d2a90386}{ttak\_rwlock\_t}}\ \mbox{\hyperlink{structttak__dynamic__mask__t_ad03397543e5bad84405b34ddc9407a30}{lock}};\ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ RWLock\ for\ atomic\ access\ to\ the\ mask\ */}}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00025}00025\ \}\ \mbox{\hyperlink{structttak__dynamic__mask__t}{ttak\_dynamic\_mask\_t}};}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00026}00026\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00027}00027\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00028}00028\ \textcolor{comment}{\ *\ @brief\ Initializes\ a\ dynamic\ mask.}}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00029}00029\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00030}\mbox{\hyperlink{dynamic__mask_8h_ac44bc237a9016822d81068b04a8fed79}{00030}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{dynamic__mask_8h_ac44bc237a9016822d81068b04a8fed79}{ttak\_dynamic\_mask\_init}}(\mbox{\hyperlink{structttak__dynamic__mask__t}{ttak\_dynamic\_mask\_t}}\ *mask);}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00031}00031\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00032}00032\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00033}00033\ \textcolor{comment}{\ *\ @brief\ Destroys\ a\ dynamic\ mask\ and\ frees\ memory.}}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00034}00034\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00035}\mbox{\hyperlink{dynamic__mask_8h_ae5e98a0d786c120cff06094eff57d74c}{00035}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{dynamic__mask_8h_ae5e98a0d786c120cff06094eff57d74c}{ttak\_dynamic\_mask\_destroy}}(\mbox{\hyperlink{structttak__dynamic__mask__t}{ttak\_dynamic\_mask\_t}}\ *mask);}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00036}00036\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00037}00037\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00038}00038\ \textcolor{comment}{\ *\ @brief\ Sets\ a\ bit\ at\ the\ given\ index,\ expanding\ the\ mask\ if\ necessary.}}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00039}00039\ \textcolor{comment}{\ *\ @return\ true\ if\ successful.}}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00040}00040\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00041}\mbox{\hyperlink{dynamic__mask_8h_a3ecf206227c2c4eebfe097a26726bd73}{00041}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{dynamic__mask_8h_a3ecf206227c2c4eebfe097a26726bd73}{ttak\_dynamic\_mask\_set}}(\mbox{\hyperlink{structttak__dynamic__mask__t}{ttak\_dynamic\_mask\_t}}\ *mask,\ uint32\_t\ bit\_idx);}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00042}00042\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00043}00043\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00044}00044\ \textcolor{comment}{\ *\ @brief\ Clears\ a\ bit\ at\ the\ given\ index.}}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00045}00045\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00046}\mbox{\hyperlink{dynamic__mask_8h_a61feb521a2fb8a2ce4eb5b59154e153e}{00046}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{dynamic__mask_8h_a61feb521a2fb8a2ce4eb5b59154e153e}{ttak\_dynamic\_mask\_clear}}(\mbox{\hyperlink{structttak__dynamic__mask__t}{ttak\_dynamic\_mask\_t}}\ *mask,\ uint32\_t\ bit\_idx);}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00047}00047\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00048}00048\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00049}00049\ \textcolor{comment}{\ *\ @brief\ Checks\ if\ a\ bit\ is\ set\ at\ the\ given\ index.}}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00050}00050\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00051}\mbox{\hyperlink{dynamic__mask_8h_a7f1d36492b26269414cfc46715bfb1c2}{00051}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{dynamic__mask_8h_a7f1d36492b26269414cfc46715bfb1c2}{ttak\_dynamic\_mask\_test}}(\mbox{\hyperlink{structttak__dynamic__mask__t}{ttak\_dynamic\_mask\_t}}\ *mask,\ uint32\_t\ bit\_idx);}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00052}00052\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00053}00053\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00054}00054\ \textcolor{comment}{\ *\ @brief\ Checks\ if\ a\ bit\ is\ set\ without\ taking\ a\ lock\ (use\ with\ external\ lock).}}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00055}00055\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00056}\mbox{\hyperlink{dynamic__mask_8h_adaeb7baf3f3c17b035b18a793c3861a4}{00056}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{dynamic__mask_8h_adaeb7baf3f3c17b035b18a793c3861a4}{ttak\_dynamic\_mask\_test\_unsafe}}(\mbox{\hyperlink{structttak__dynamic__mask__t}{ttak\_dynamic\_mask\_t}}\ *mask,\ uint32\_t\ bit\_idx);}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00057}00057\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00058}00058\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00059}00059\ \textcolor{comment}{\ *\ @brief\ Ensures\ the\ mask\ has\ capacity\ for\ the\ given\ bit\ index.}}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00060}00060\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00061}\mbox{\hyperlink{dynamic__mask_8h_af2702abe5f6707178b26d4782fcfeb0d}{00061}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{dynamic__mask_8h_af2702abe5f6707178b26d4782fcfeb0d}{ttak\_dynamic\_mask\_ensure}}(\mbox{\hyperlink{structttak__dynamic__mask__t}{ttak\_dynamic\_mask\_t}}\ *mask,\ uint32\_t\ bit\_idx);}
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00062}00062\ }
-\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00063}00063\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ TTAK\_DYNAMIC\_MASK\_H\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00019}00019\ \textcolor{comment}{\ *\ Optimized\ for\ lock-\/free\ reads\ via\ EBR.}}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00020}00020\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00021}\mbox{\hyperlink{structttak__dynamic__mask__t}{00021}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00022}\mbox{\hyperlink{structttak__dynamic__mask__t_a888a142a9acc56e0c1113a0bde6260d5}{00022}}\ \ \ \ \ uint64\_t\ *\ \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\_Atomic}}\ \mbox{\hyperlink{structttak__dynamic__mask__t_a888a142a9acc56e0c1113a0bde6260d5}{bits}};\ \ \ \ \textcolor{comment}{/**<\ The\ actual\ bitmap\ array\ (Atomic\ for\ lock-\/free\ read)\ */}}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00023}\mbox{\hyperlink{structttak__dynamic__mask__t_a60132ba5b95c01ebfeac22bd5e6e41a4}{00023}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__dynamic__mask__t_a60132ba5b95c01ebfeac22bd5e6e41a4}{capacity}};\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Capacity\ in\ bits\ (multiples\ of\ 64)\ */}}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00024}\mbox{\hyperlink{structttak__dynamic__mask__t_a414d73da8f63ec1e4bd9f3e813f5e751}{00024}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__dynamic__mask__t_a414d73da8f63ec1e4bd9f3e813f5e751}{count}};\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Number\ of\ set\ bits\ (optional\ tracking)\ */}}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00025}\mbox{\hyperlink{structttak__dynamic__mask__t_ad03397543e5bad84405b34ddc9407a30}{00025}}\ \ \ \ \ \mbox{\hyperlink{sync_2sync_8h_ad3f9b08e4c066e7bb7b1ed98d2a90386}{ttak\_rwlock\_t}}\ \mbox{\hyperlink{structttak__dynamic__mask__t_ad03397543e5bad84405b34ddc9407a30}{lock}};\ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ RWLock\ for\ writer\ synchronization\ */}}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00026}00026\ \}\ \mbox{\hyperlink{structttak__dynamic__mask__t}{ttak\_dynamic\_mask\_t}};}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00027}00027\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00028}00028\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00029}00029\ \textcolor{comment}{\ *\ @brief\ Initializes\ a\ dynamic\ mask.}}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00030}00030\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00031}\mbox{\hyperlink{dynamic__mask_8h_ac44bc237a9016822d81068b04a8fed79}{00031}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{dynamic__mask_8h_ac44bc237a9016822d81068b04a8fed79}{ttak\_dynamic\_mask\_init}}(\mbox{\hyperlink{structttak__dynamic__mask__t}{ttak\_dynamic\_mask\_t}}\ *mask);}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00032}00032\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00033}00033\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00034}00034\ \textcolor{comment}{\ *\ @brief\ Destroys\ a\ dynamic\ mask\ and\ frees\ memory.}}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00035}00035\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00036}\mbox{\hyperlink{dynamic__mask_8h_ae5e98a0d786c120cff06094eff57d74c}{00036}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{dynamic__mask_8h_ae5e98a0d786c120cff06094eff57d74c}{ttak\_dynamic\_mask\_destroy}}(\mbox{\hyperlink{structttak__dynamic__mask__t}{ttak\_dynamic\_mask\_t}}\ *mask);}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00037}00037\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00038}00038\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00039}00039\ \textcolor{comment}{\ *\ @brief\ Sets\ a\ bit\ at\ the\ given\ index,\ expanding\ the\ mask\ if\ necessary.}}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00040}00040\ \textcolor{comment}{\ *\ @return\ true\ if\ successful.}}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00041}00041\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00042}\mbox{\hyperlink{dynamic__mask_8h_a3ecf206227c2c4eebfe097a26726bd73}{00042}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{dynamic__mask_8h_a3ecf206227c2c4eebfe097a26726bd73}{ttak\_dynamic\_mask\_set}}(\mbox{\hyperlink{structttak__dynamic__mask__t}{ttak\_dynamic\_mask\_t}}\ *mask,\ uint32\_t\ bit\_idx);}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00043}00043\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00044}00044\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00045}00045\ \textcolor{comment}{\ *\ @brief\ Clears\ a\ bit\ at\ the\ given\ index.}}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00046}00046\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00047}\mbox{\hyperlink{dynamic__mask_8h_a61feb521a2fb8a2ce4eb5b59154e153e}{00047}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{dynamic__mask_8h_a61feb521a2fb8a2ce4eb5b59154e153e}{ttak\_dynamic\_mask\_clear}}(\mbox{\hyperlink{structttak__dynamic__mask__t}{ttak\_dynamic\_mask\_t}}\ *mask,\ uint32\_t\ bit\_idx);}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00048}00048\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00049}00049\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00050}00050\ \textcolor{comment}{\ *\ @brief\ Checks\ if\ a\ bit\ is\ set\ at\ the\ given\ index.}}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00051}00051\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00052}\mbox{\hyperlink{dynamic__mask_8h_a7f1d36492b26269414cfc46715bfb1c2}{00052}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{dynamic__mask_8h_a7f1d36492b26269414cfc46715bfb1c2}{ttak\_dynamic\_mask\_test}}(\mbox{\hyperlink{structttak__dynamic__mask__t}{ttak\_dynamic\_mask\_t}}\ *mask,\ uint32\_t\ bit\_idx);}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00053}00053\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00054}00054\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00055}00055\ \textcolor{comment}{\ *\ @brief\ Checks\ if\ a\ bit\ is\ set\ without\ taking\ a\ lock\ (use\ with\ external\ lock).}}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00056}00056\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00057}\mbox{\hyperlink{dynamic__mask_8h_adaeb7baf3f3c17b035b18a793c3861a4}{00057}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{dynamic__mask_8h_adaeb7baf3f3c17b035b18a793c3861a4}{ttak\_dynamic\_mask\_test\_unsafe}}(\mbox{\hyperlink{structttak__dynamic__mask__t}{ttak\_dynamic\_mask\_t}}\ *mask,\ uint32\_t\ bit\_idx);}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00058}00058\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00059}00059\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00060}00060\ \textcolor{comment}{\ *\ @brief\ Ensures\ the\ mask\ has\ capacity\ for\ the\ given\ bit\ index.}}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00061}00061\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00062}\mbox{\hyperlink{dynamic__mask_8h_af2702abe5f6707178b26d4782fcfeb0d}{00062}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{dynamic__mask_8h_af2702abe5f6707178b26d4782fcfeb0d}{ttak\_dynamic\_mask\_ensure}}(\mbox{\hyperlink{structttak__dynamic__mask__t}{ttak\_dynamic\_mask\_t}}\ *mask,\ uint32\_t\ bit\_idx);}
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00063}00063\ }
+\DoxyCodeLine{\Hypertarget{dynamic__mask_8h_source_l00064}00064\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ TTAK\_DYNAMIC\_MASK\_H\ */}\textcolor{preprocessor}{}}
 
 \end{DoxyCode}

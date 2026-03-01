@@ -1,5 +1,6 @@
 var files_dup =
 [
+    [ "bench", "dir_a36c4719283424f51e58ca3678e5dea3.html", "dir_a36c4719283424f51e58ca3678e5dea3" ],
     [ "blueprints", "dir_10dbec0af93740bad037aebcca3e71f7.html", "dir_10dbec0af93740bad037aebcca3e71f7" ],
     [ "docs", "dir_49e56c817e5e54854c35e136979f97ca.html", null ],
     [ "examples", "dir_d28a4824dc47e487b107a5db32ef43c4.html", "dir_d28a4824dc47e487b107a5db32ef43c4" ],

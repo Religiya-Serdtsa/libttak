@@ -105,16 +105,18 @@ $(document).ready(function(){initNavTree('structttak__shared__s.html',''); initR
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="structttak__shared__s__coll__graph.png" border="0" usemap="#attak__shared__s_coll__map" alt="Collaboration graph"/></div>
 <map name="attak__shared__s_coll__map" id="attak__shared__s_coll__map">
-<area shape="rect" title=" " alt="" coords="32,93,145,119"/>
-<area shape="rect" href="structttak__dynamic__mask__t.html" title="Thread&#45;safe dynamic bitmap." alt="" coords="5,5,172,31"/>
-<area shape="poly" title=" " alt="" coords="91,45,91,93,86,93,86,45"/>
+<area shape="rect" title=" " alt="" coords="121,93,235,119"/>
+<area shape="rect" href="structttak__dynamic__mask__t.html" title="Thread&#45;safe dynamic bitmap. Optimized for lock&#45;free reads via EBR." alt="" coords="5,5,172,31"/>
+<area shape="poly" title=" " alt="" coords="112,38,167,91,164,95,109,42"/>
+<area shape="rect" href="structttak__shard__table__t.html" title="Lock&#45;free Segmented Shard Array (Page Table). Maps thread logical IDs to unique timestamp slots witho..." alt="" coords="196,5,339,31"/>
+<area shape="poly" title=" " alt="" coords="259,44,240,71,205,95,202,91,236,67,255,41"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a59475eb1b0d144017b47b7fc30ef9819" id="r_a59475eb1b0d144017b47b7fc30ef9819"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__shared__s.html#a59475eb1b0d144017b47b7fc30ef9819">shared</a></td></tr>
-<tr class="separator:a59475eb1b0d144017b47b7fc30ef9819"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c3e1d4035b9a4794fff894e156c1b48" id="r_a4c3e1d4035b9a4794fff894e156c1b48"><td class="memItemLeft" align="right" valign="top">void *<a class="el" href="include_2stdatomic_8h.html#a94674db2fe3c7496dfdcaa9b81486e79">_Atomic</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__shared__s.html#a4c3e1d4035b9a4794fff894e156c1b48">shared</a></td></tr>
+<tr class="separator:a4c3e1d4035b9a4794fff894e156c1b48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a651cb63b390a7507b0596d63cb108acb" id="r_a651cb63b390a7507b0596d63cb108acb"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__shared__s.html#a651cb63b390a7507b0596d63cb108acb">size</a></td></tr>
 <tr class="separator:a651cb63b390a7507b0596d63cb108acb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a376ba9c57928a57dcc04408e2d1c0807" id="r_a376ba9c57928a57dcc04408e2d1c0807"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__shared__s.html#a376ba9c57928a57dcc04408e2d1c0807">type_name</a></td></tr>
@@ -123,10 +125,8 @@ Public Attributes</h2></td></tr>
 <tr class="separator:addcea0e45ca5d63153ed55e7f7cc7b60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a90b2c98f4e669cf13405e2dc67d8ba13" id="r_a90b2c98f4e669cf13405e2dc67d8ba13"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structttak__dynamic__mask__t.html">ttak_dynamic_mask_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__shared__s.html#a90b2c98f4e669cf13405e2dc67d8ba13">owners_mask</a></td></tr>
 <tr class="separator:a90b2c98f4e669cf13405e2dc67d8ba13"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a77ca8d3a4a6ac245bec3b74606b3f196" id="r_a77ca8d3a4a6ac245bec3b74606b3f196"><td class="memItemLeft" align="right" valign="top">uint64_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__shared__s.html#a77ca8d3a4a6ac245bec3b74606b3f196">last_sync_ts</a></td></tr>
-<tr class="separator:a77ca8d3a4a6ac245bec3b74606b3f196"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a11f44c1998580cb32afddc93dbc0316f" id="r_a11f44c1998580cb32afddc93dbc0316f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__shared__s.html#a11f44c1998580cb32afddc93dbc0316f">ts_capacity</a></td></tr>
-<tr class="separator:a11f44c1998580cb32afddc93dbc0316f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9bc30781d9d079cd89123f964fc4ef43" id="r_a9bc30781d9d079cd89123f964fc4ef43"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structttak__shard__table__t.html">ttak_shard_table_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__shared__s.html#a9bc30781d9d079cd89123f964fc4ef43">shards</a></td></tr>
+<tr class="separator:a9bc30781d9d079cd89123f964fc4ef43"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a195013c2e4f21633b1854e8c67c0b418" id="r_a195013c2e4f21633b1854e8c67c0b418"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__shared__s.html#a195013c2e4f21633b1854e8c67c0b418">ts</a></td></tr>
 <tr class="separator:a195013c2e4f21633b1854e8c67c0b418"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a755e6430599aa01a19ce36b3730f5b92" id="r_a755e6430599aa01a19ce36b3730f5b92"><td class="memItemLeft" align="right" valign="top"><a class="el" href="sync_2sync_8h.html#ad3f9b08e4c066e7bb7b1ed98d2a90386">ttak_rwlock_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__shared__s.html#a755e6430599aa01a19ce36b3730f5b92">rwlock</a></td></tr>
@@ -154,14 +154,14 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a42f2e13886e5802246e449e67eef376e" id="r_a42f2e13886e5802246e449e67eef376e"><td class="memItemLeft" align="right" valign="top">const void *(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__shared__s.html#a42f2e13886e5802246e449e67eef376e">access</a> )(struct <a class="el" href="structttak__shared__s.html">ttak_shared_s</a> *self, <a class="el" href="owner_8h.html#a8e92d0c2dff13d75471e19a1596d4b9c">ttak_owner_t</a> *claimant, <a class="el" href="shared_8h.html#a9e87115c8ab89cdc85a268b523179cef">ttak_shared_result_t</a> *result)</td></tr>
 <tr class="memdesc:a42f2e13886e5802246e449e67eef376e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Validates and grants access to the shared data.  <br /></td></tr>
 <tr class="separator:a42f2e13886e5802246e449e67eef376e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9645bfee9cee6ff603729da217b4242c" id="r_a9645bfee9cee6ff603729da217b4242c"><td class="memItemLeft" align="right" valign="top">const void *(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__shared__s.html#a9645bfee9cee6ff603729da217b4242c">access_ebr</a> )(struct <a class="el" href="structttak__shared__s.html">ttak_shared_s</a> *self, <a class="el" href="owner_8h.html#a8e92d0c2dff13d75471e19a1596d4b9c">ttak_owner_t</a> *claimant, bool protected, <a class="el" href="shared_8h.html#a9e87115c8ab89cdc85a268b523179cef">ttak_shared_result_t</a> *result)</td></tr>
-<tr class="memdesc:a9645bfee9cee6ff603729da217b4242c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Validates and grants access with optional EBR protection.  <br /></td></tr>
-<tr class="separator:a9645bfee9cee6ff603729da217b4242c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c9942afdf460fd8dbbdfeec1e6798a9" id="r_a2c9942afdf460fd8dbbdfeec1e6798a9"><td class="memItemLeft" align="right" valign="top">const void *(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__shared__s.html#a2c9942afdf460fd8dbbdfeec1e6798a9">access_ebr</a> )(struct <a class="el" href="structttak__shared__s.html">ttak_shared_s</a> *self, <a class="el" href="owner_8h.html#a8e92d0c2dff13d75471e19a1596d4b9c">ttak_owner_t</a> *claimant, bool use_ebr_protection, <a class="el" href="shared_8h.html#a9e87115c8ab89cdc85a268b523179cef">ttak_shared_result_t</a> *result)</td></tr>
+<tr class="memdesc:a2c9942afdf460fd8dbbdfeec1e6798a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Validates and grants access with optional EBR protection.  <br /></td></tr>
+<tr class="separator:a2c9942afdf460fd8dbbdfeec1e6798a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1c3be42a22a37a517e0ce1fc309b15fe" id="r_a1c3be42a22a37a517e0ce1fc309b15fe"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__shared__s.html#a1c3be42a22a37a517e0ce1fc309b15fe">release</a> )(struct <a class="el" href="structttak__shared__s.html">ttak_shared_s</a> *self)</td></tr>
 <tr class="memdesc:a1c3be42a22a37a517e0ce1fc309b15fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Releases the access acquired via <a class="el" href="structttak__shared__s.html#a42f2e13886e5802246e449e67eef376e" title="Validates and grants access to the shared data.">access()</a>.  <br /></td></tr>
 <tr class="separator:a1c3be42a22a37a517e0ce1fc309b15fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa66a52e872be2be1cfa08dfc90d7b034" id="r_aa66a52e872be2be1cfa08dfc90d7b034"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__shared__s.html#aa66a52e872be2be1cfa08dfc90d7b034">release_ebr</a> )(struct <a class="el" href="structttak__shared__s.html">ttak_shared_s</a> *self)</td></tr>
-<tr class="memdesc:aa66a52e872be2be1cfa08dfc90d7b034"><td class="mdescLeft">&#160;</td><td class="mdescRight">Releases access acquired via <a class="el" href="structttak__shared__s.html#a9645bfee9cee6ff603729da217b4242c" title="Validates and grants access with optional EBR protection.">access_ebr()</a>.  <br /></td></tr>
+<tr class="memdesc:aa66a52e872be2be1cfa08dfc90d7b034"><td class="mdescLeft">&#160;</td><td class="mdescRight">Releases access acquired via <a class="el" href="structttak__shared__s.html#a2c9942afdf460fd8dbbdfeec1e6798a9" title="Validates and grants access with optional EBR protection.">access_ebr()</a>.  <br /></td></tr>
 <tr class="separator:aa66a52e872be2be1cfa08dfc90d7b034"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaeaee3f499617ca0022b63aeb9cb29eb" id="r_aaeaee3f499617ca0022b63aeb9cb29eb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="shared_8h.html#a9e87115c8ab89cdc85a268b523179cef">ttak_shared_result_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__shared__s.html#aaeaee3f499617ca0022b63aeb9cb29eb">sync_all</a> )(struct <a class="el" href="structttak__shared__s.html">ttak_shared_s</a> *self, <a class="el" href="owner_8h.html#a8e92d0c2dff13d75471e19a1596d4b9c">ttak_owner_t</a> *claimant, int *affected)</td></tr>
 <tr class="memdesc:aaeaee3f499617ca0022b63aeb9cb29eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Synchronizes changes across all registered owners.  <br /></td></tr>
@@ -181,7 +181,7 @@ Public Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00055">55</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00072">72</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
 <a id="a42f2e13886e5802246e449e67eef376e" name="a42f2e13886e5802246e449e67eef376e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a42f2e13886e5802246e449e67eef376e">&#9670;&#160;</a></span>access</h2>
@@ -206,18 +206,18 @@ Public Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Const pointer to the shared data, or NULL if denied. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00113">113</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00129">129</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 
 </div>
 </div>
-<a id="a9645bfee9cee6ff603729da217b4242c" name="a9645bfee9cee6ff603729da217b4242c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9645bfee9cee6ff603729da217b4242c">&#9670;&#160;</a></span>access_ebr</h2>
+<a id="a2c9942afdf460fd8dbbdfeec1e6798a9" name="a2c9942afdf460fd8dbbdfeec1e6798a9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c9942afdf460fd8dbbdfeec1e6798a9">&#9670;&#160;</a></span>access_ebr</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const void *(* ttak_shared_s::access_ebr) (struct <a class="el" href="structttak__shared__s.html">ttak_shared_s</a> *self, <a class="el" href="owner_8h.html#a8e92d0c2dff13d75471e19a1596d4b9c">ttak_owner_t</a> *claimant, bool protected, <a class="el" href="shared_8h.html#a9e87115c8ab89cdc85a268b523179cef">ttak_shared_result_t</a> *result)</td>
+          <td class="memname">const void *(* ttak_shared_s::access_ebr) (struct <a class="el" href="structttak__shared__s.html">ttak_shared_s</a> *self, <a class="el" href="owner_8h.html#a8e92d0c2dff13d75471e19a1596d4b9c">ttak_owner_t</a> *claimant, bool use_ebr_protection, <a class="el" href="shared_8h.html#a9e87115c8ab89cdc85a268b523179cef">ttak_shared_result_t</a> *result)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -227,14 +227,14 @@ Public Attributes</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">self</td><td>Pointer to the <a class="el" href="structttak__shared__t.html" title="Core structure for managing shared variables among multiple owners.">ttak_shared_t</a> instance. </td></tr>
     <tr><td class="paramname">claimant</td><td>The owner requesting access. </td></tr>
-    <tr><td class="paramname">protected</td><td>If true, enters EBR critical section. </td></tr>
+    <tr><td class="paramname">use_ebr_protection</td><td>If true, enters EBR critical section. </td></tr>
     <tr><td class="paramname">result</td><td>Pointer to store the detailed validation result. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Const pointer to the shared data, or NULL if denied. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00123">123</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00139">139</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 
 </div>
 </div>
@@ -260,7 +260,7 @@ Public Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Result code of the operation. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00104">104</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00120">120</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 
 </div>
 </div>
@@ -287,7 +287,7 @@ Public Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Result code of the allocation. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00086">86</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00102">102</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 
 </div>
 </div>
@@ -315,7 +315,7 @@ Public Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Result code of the allocation. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00096">96</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00112">112</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 
 </div>
 </div>
@@ -339,7 +339,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00077">77</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00093">93</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 
 </div>
 </div>
@@ -356,24 +356,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Flag to enable/disable atomic read operations </p>
 
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00069">69</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
-
-</div>
-</div>
-<a id="a77ca8d3a4a6ac245bec3b74606b3f196" name="a77ca8d3a4a6ac245bec3b74606b3f196"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a77ca8d3a4a6ac245bec3b74606b3f196">&#9670;&#160;</a></span>last_sync_ts</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint64_t* ttak_shared_s::last_sync_ts</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Array of timestamps, indexed by owner ID </p>
-
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00062">62</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00085">85</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 
 </div>
 </div>
@@ -390,7 +373,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Enforced security level for this resource </p>
 
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00068">68</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00084">84</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 
 </div>
 </div>
@@ -407,7 +390,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Thread-safe dynamic mask for ownership </p>
 
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00061">61</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00078">78</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 
 </div>
 </div>
@@ -431,7 +414,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00129">129</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00145">145</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 
 </div>
 </div>
@@ -447,7 +430,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Releases access acquired via <a class="el" href="structttak__shared__s.html#a9645bfee9cee6ff603729da217b4242c" title="Validates and grants access with optional EBR protection.">access_ebr()</a>. </p>
+<p>Releases access acquired via <a class="el" href="structttak__shared__s.html#a2c9942afdf460fd8dbbdfeec1e6798a9" title="Validates and grants access with optional EBR protection.">access_ebr()</a>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">self</td><td>Pointer to the <a class="el" href="structttak__shared__t.html" title="Core structure for managing shared variables among multiple owners.">ttak_shared_t</a> instance. </td></tr>
@@ -455,7 +438,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00135">135</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00151">151</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 
 </div>
 </div>
@@ -479,7 +462,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00167">167</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00183">183</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 
 </div>
 </div>
@@ -496,7 +479,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Pointer currently being retired (internal use) </p>
 
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00071">71</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00087">87</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 
 </div>
 </div>
@@ -511,9 +494,9 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>R/W lock for thread-safe access to payload and timestamps </p>
+<p>R/W lock for metadata (swap, status) </p>
 
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00066">66</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00082">82</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 
 </div>
 </div>
@@ -538,7 +521,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00161">161</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00177">177</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 
 </div>
 </div>
@@ -556,7 +539,7 @@ Public Attributes</h2></td></tr>
 
 <p>Sets the resource to read-only mode. </p>
 
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00149">149</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00165">165</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 
 </div>
 </div>
@@ -574,24 +557,41 @@ Public Attributes</h2></td></tr>
 
 <p>Sets the resource to read-write mode. </p>
 
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00154">154</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00170">170</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 
 </div>
 </div>
-<a id="a59475eb1b0d144017b47b7fc30ef9819" name="a59475eb1b0d144017b47b7fc30ef9819"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a59475eb1b0d144017b47b7fc30ef9819">&#9670;&#160;</a></span>shared</h2>
+<a id="a9bc30781d9d079cd89123f964fc4ef43" name="a9bc30781d9d079cd89123f964fc4ef43"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9bc30781d9d079cd89123f964fc4ef43">&#9670;&#160;</a></span>shards</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void* ttak_shared_s::shared</td>
+          <td class="memname"><a class="el" href="structttak__shard__table__t.html">ttak_shard_table_t</a> ttak_shared_s::shards</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Pointer to the actual data payload </p>
+<p>Lock-free Segmented Shards for sync </p>
 
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00056">56</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00079">79</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+
+</div>
+</div>
+<a id="a4c3e1d4035b9a4794fff894e156c1b48" name="a4c3e1d4035b9a4794fff894e156c1b48"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c3e1d4035b9a4794fff894e156c1b48">&#9670;&#160;</a></span>shared</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* <a class="el" href="include_2stdatomic_8h.html#a94674db2fe3c7496dfdcaa9b81486e79">_Atomic</a> ttak_shared_s::shared</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Pointer to the actual data payload (Atomic for lock-free access) </p>
+
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00073">73</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 
 </div>
 </div>
@@ -608,7 +608,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Total byte size of the payload </p>
 
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00057">57</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00074">74</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 
 </div>
 </div>
@@ -625,7 +625,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Current status flags (DIRTY, EXPIRED, etc.) </p>
 
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00067">67</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00083">83</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 
 </div>
 </div>
@@ -652,7 +652,7 @@ Public Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Result code of the synchronization. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00144">144</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00160">160</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 
 </div>
 </div>
@@ -669,24 +669,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Timestamp to track its lifetime </p>
 
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00064">64</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
-
-</div>
-</div>
-<a id="a11f44c1998580cb32afddc93dbc0316f" name="a11f44c1998580cb32afddc93dbc0316f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a11f44c1998580cb32afddc93dbc0316f">&#9670;&#160;</a></span>ts_capacity</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ttak_shared_s::ts_capacity</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Max owner ID supported by last_sync_ts array </p>
-
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00063">63</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00080">80</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 
 </div>
 </div>
@@ -703,7 +686,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Optional numeric ID for the type </p>
 
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00059">59</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00076">76</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 
 </div>
 </div>
@@ -720,7 +703,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>String representation of the payload type </p>
 
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00058">58</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00075">75</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 
 </div>
 </div>

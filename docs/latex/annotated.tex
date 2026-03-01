@@ -5,6 +5,7 @@ Here are the classes, structs, unions and interfaces with brief descriptions\+:\
 \item\contentsline{section}{\mbox{\hyperlink{struct__node}{\+\_\+node}} \\*Node structure with max\+\_\+align\+\_\+t padding for Raspberry Pi compatibility }{\pageref{struct__node}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structatomic__flag}{atomic\+\_\+flag}} }{\pageref{structatomic__flag}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structSHA256__CTX}{SHA256\+\_\+\+CTX}} }{\pageref{structSHA256__CTX}}{}
+\item\contentsline{section}{\mbox{\hyperlink{structtt__shared__vector}{tt\+\_\+shared\+\_\+vector}} }{\pageref{structtt__shared__vector}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structtt__type__shared}{tt\+\_\+type\+\_\+shared}} \\*Shared resource structure }{\pageref{structtt__type__shared}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__accel__batch__item}{ttak\+\_\+accel\+\_\+batch\+\_\+item}} \\*Work fragment passed to an accelerator implementation }{\pageref{structttak__accel__batch__item}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__accel__config}{ttak\+\_\+accel\+\_\+config}} \\*Batch-\/level configuration knobs shared by all targets }{\pageref{structttak__accel__config}}{}
@@ -18,19 +19,25 @@ Here are the classes, structs, unions and interfaces with brief descriptions\+:\
 \item\contentsline{section}{\mbox{\hyperlink{structttak__bigint}{ttak\+\_\+bigint}} \\*Arbitrary-\/precision integer engine with Small Stack Optimization (SSO) }{\pageref{structttak__bigint}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__bigmul}{ttak\+\_\+bigmul}} \\*Helper container for bigint multiplication workflows }{\pageref{structttak__bigmul}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__bigreal}{ttak\+\_\+bigreal}} \\*Arbitrary-\/precision real number engine. Represents value = mantissa \texorpdfstring{$\ast$}{*} 10\texorpdfstring{$^\wedge$}{\string^}exponent }{\pageref{structttak__bigreal}}{}
+\item\contentsline{section}{\mbox{\hyperlink{structttak__bigscript__error__t}{ttak\+\_\+bigscript\+\_\+error\+\_\+t}} \\*Detailed error structure }{\pageref{structttak__bigscript__error__t}}{}
+\item\contentsline{section}{\mbox{\hyperlink{structttak__bigscript__limits__t}{ttak\+\_\+bigscript\+\_\+limits\+\_\+t}} \\*Limits applied to the script engine for safety and budget enforcement }{\pageref{structttak__bigscript__limits__t}}{}
+\item\contentsline{section}{\mbox{\hyperlink{structttak__bigscript__loader__t}{ttak\+\_\+bigscript\+\_\+loader\+\_\+t}} \\*Loader interface for resolving file paths to contents at compile time }{\pageref{structttak__bigscript__loader__t}}{}
+\item\contentsline{section}{\mbox{\hyperlink{structttak__bigscript__value__t}{ttak\+\_\+bigscript\+\_\+value\+\_\+t}} \\*Output value resulting from evaluating a seed }{\pageref{structttak__bigscript__value__t}}{}
+\item\contentsline{section}{\mbox{\hyperlink{structttak__bigscript__variant__t}{ttak\+\_\+bigscript\+\_\+variant\+\_\+t}} \\*Variant type that can hold any bigscript value }{\pageref{structttak__bigscript__variant__t}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__bplus__node}{ttak\+\_\+bplus\+\_\+node}} }{\pageref{structttak__bplus__node}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__bplus__tree}{ttak\+\_\+bplus\+\_\+tree}} }{\pageref{structttak__bplus__tree}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__btree}{ttak\+\_\+btree}} }{\pageref{structttak__btree}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__btree__node}{ttak\+\_\+btree\+\_\+node}} }{\pageref{structttak__btree__node}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__context}{ttak\+\_\+context}} }{\pageref{structttak__context}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__crt__term}{ttak\+\_\+crt\+\_\+term}} }{\pageref{structttak__crt__term}}{}
+\item\contentsline{section}{\mbox{\hyperlink{structttak__crypto__ctx}{ttak\+\_\+crypto\+\_\+ctx}} }{\pageref{structttak__crypto__ctx}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__deadline}{ttak\+\_\+deadline}} \\*Represents a specific point in time used for deadline checks }{\pageref{structttak__deadline}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__detach__status}{ttak\+\_\+detach\+\_\+status}} \\*Tracks the detach lifecycle of a detachable block }{\pageref{structttak__detach__status}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__detachable__allocation}{ttak\+\_\+detachable\+\_\+allocation}} \\*Description of the detachable allocation returned to callers }{\pageref{structttak__detachable__allocation}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__detachable__cache}{ttak\+\_\+detachable\+\_\+cache}} \\*Per-\/context cache for tiny detachable chunks (\texorpdfstring{$<$}{<}= 16 bytes) }{\pageref{structttak__detachable__cache}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__detachable__context}{ttak\+\_\+detachable\+\_\+context}} \\*State holder for detachable memory contexts }{\pageref{structttak__detachable__context}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__detachable__generation__row}{ttak\+\_\+detachable\+\_\+generation\+\_\+row}} \\*Fixed-\/width arena row descriptor }{\pageref{structttak__detachable__generation__row}}{}
-\item\contentsline{section}{\mbox{\hyperlink{structttak__dynamic__mask__t}{ttak\+\_\+dynamic\+\_\+mask\+\_\+t}} \\*Thread-\/safe dynamic bitmap }{\pageref{structttak__dynamic__mask__t}}{}
+\item\contentsline{section}{\mbox{\hyperlink{structttak__dynamic__mask__t}{ttak\+\_\+dynamic\+\_\+mask\+\_\+t}} \\*Thread-\/safe dynamic bitmap. Optimized for lock-\/free reads via EBR }{\pageref{structttak__dynamic__mask__t}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__epoch__gc}{ttak\+\_\+epoch\+\_\+gc}} \\*Epoch-\/based garbage collection context }{\pageref{structttak__epoch__gc}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__epoch__manager__t}{ttak\+\_\+epoch\+\_\+manager\+\_\+t}} }{\pageref{structttak__epoch__manager__t}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__func__wrapper}{ttak\+\_\+func\+\_\+wrapper}} }{\pageref{structttak__func__wrapper}}{}
@@ -39,6 +46,7 @@ Here are the classes, structs, unions and interfaces with brief descriptions\+:\
 \item\contentsline{section}{\mbox{\hyperlink{structttak__io__buffer}{ttak\+\_\+io\+\_\+buffer}} }{\pageref{structttak__io__buffer}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__io__guard}{ttak\+\_\+io\+\_\+guard}} }{\pageref{structttak__io__guard}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__io__zerocopy__region}{ttak\+\_\+io\+\_\+zerocopy\+\_\+region}} \\*Temporary zero-\/copy receive window allocated in a detachable arena }{\pageref{structttak__io__zerocopy__region}}{}
+\item\contentsline{section}{\mbox{\hyperlink{structttak__lea__schedule}{ttak\+\_\+lea\+\_\+schedule}} }{\pageref{structttak__lea__schedule}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__lf__queue__t}{ttak\+\_\+lf\+\_\+queue\+\_\+t}} }{\pageref{structttak__lf__queue__t}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__logger}{ttak\+\_\+logger}} \\*Logger structure }{\pageref{structttak__logger}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__map__t}{ttak\+\_\+map\+\_\+t}} }{\pageref{structttak__map__t}}{}
@@ -55,6 +63,8 @@ Here are the classes, structs, unions and interfaces with brief descriptions\+:\
 \item\contentsline{section}{\mbox{\hyperlink{structttak__net__endpoint}{ttak\+\_\+net\+\_\+endpoint}} \\*Shared socket wrapper guarded by ttak\+\_\+io\+\_\+guard\+\_\+t and owner policies }{\pageref{structttak__net__endpoint}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__net__endpoint__attr}{ttak\+\_\+net\+\_\+endpoint\+\_\+attr}} \\*Role configuration passed to \doxylink{endpoint_8h_af9eccfebee007d36c94b48975d845c23}{ttak\+\_\+net\+\_\+endpoint\+\_\+set\+\_\+role()} }{\pageref{structttak__net__endpoint__attr}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__net__guard__snapshot}{ttak\+\_\+net\+\_\+guard\+\_\+snapshot}} }{\pageref{structttak__net__guard__snapshot}}{}
+\item\contentsline{section}{\mbox{\hyperlink{structttak__net__lattice}{ttak\+\_\+net\+\_\+lattice}} \\*The Lattice (Sanpan) structure }{\pageref{structttak__net__lattice}}{}
+\item\contentsline{section}{\mbox{\hyperlink{structttak__net__lattice__slot}{ttak\+\_\+net\+\_\+lattice\+\_\+slot}} \\*A single data slot in the lattice }{\pageref{structttak__net__lattice__slot}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__net__session}{ttak\+\_\+net\+\_\+session}} \\*Logical connection wrapper that ties an endpoint to parent/child relationships }{\pageref{structttak__net__session}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__net__session__mgr}{ttak\+\_\+net\+\_\+session\+\_\+mgr}} }{\pageref{structttak__net__session__mgr}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__net__view}{ttak\+\_\+net\+\_\+view}} \\*Read-\/only zero-\/copy snapshot returned by \doxylink{view_8h_a06a3edf488055485ebf9862be3604086}{ttak\+\_\+net\+\_\+view\+\_\+from\+\_\+endpoint()} }{\pageref{structttak__net__view}}{}
@@ -69,8 +79,10 @@ Here are the classes, structs, unions and interfaces with brief descriptions\+:\
 \item\contentsline{section}{\mbox{\hyperlink{structttak__retired__node}{ttak\+\_\+retired\+\_\+node}} }{\pageref{structttak__retired__node}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__ringbuf}{ttak\+\_\+ringbuf}} \\*Thread-\/safe Ring Buffer structure }{\pageref{structttak__ringbuf}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__scheduler}{ttak\+\_\+scheduler}} }{\pageref{structttak__scheduler}}{}
+\item\contentsline{section}{\mbox{\hyperlink{structttak__security__driver}{ttak\+\_\+security\+\_\+driver}} }{\pageref{structttak__security__driver}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__set}{ttak\+\_\+set}} }{\pageref{structttak__set}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__shard}{ttak\+\_\+shard}} \\*Generic shard structure }{\pageref{structttak__shard}}{}
+\item\contentsline{section}{\mbox{\hyperlink{structttak__shard__table__t}{ttak\+\_\+shard\+\_\+table\+\_\+t}} \\*Lock-\/free Segmented Shard Array (Page Table). Maps thread logical IDs to unique timestamp slots without locks or reallocations }{\pageref{structttak__shard__table__t}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__shared__s}{ttak\+\_\+shared\+\_\+s}} }{\pageref{structttak__shared__s}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__shared__t}{ttak\+\_\+shared\+\_\+t}} \\*Core structure for managing shared variables among multiple owners }{\pageref{structttak__shared__t}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__simple__node}{ttak\+\_\+simple\+\_\+node}} \\*Generic singly linked list node used by simple stacks and queues }{\pageref{structttak__simple__node}}{}
@@ -80,6 +92,7 @@ Here are the classes, structs, unions and interfaces with brief descriptions\+:\
 \item\contentsline{section}{\mbox{\hyperlink{structttak__spin}{ttak\+\_\+spin}} \\*Spinlock structure }{\pageref{structttak__spin}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__stats}{ttak\+\_\+stats}} \\*Thread-\/safe Statistics structure }{\pageref{structttak__stats}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__stats__ext}{ttak\+\_\+stats\+\_\+ext}} \\*Extended statistics structure with automatic promotion and high precision }{\pageref{structttak__stats__ext}}{}
+\item\contentsline{section}{\mbox{\hyperlink{structttak__sumdiv__limits__t}{ttak\+\_\+sumdiv\+\_\+limits\+\_\+t}} }{\pageref{structttak__sumdiv__limits__t}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__table}{ttak\+\_\+table}} \\*Generic Sip\+Hash Table }{\pageref{structttak__table}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__table__entry}{ttak\+\_\+table\+\_\+entry}} \\*Generic Table Entry }{\pageref{structttak__table__entry}}{}
 \item\contentsline{section}{\mbox{\hyperlink{structttak__thread__pool}{ttak\+\_\+thread\+\_\+pool}} }{\pageref{structttak__thread__pool}}{}

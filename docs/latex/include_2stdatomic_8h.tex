@@ -4,8 +4,7 @@
 {\ttfamily \#include $<$stddef.\+h$>$}\newline
 {\ttfamily \#include $<$stdint.\+h$>$}\newline
 {\ttfamily \#include $<$pthread.\+h$>$}\newline
-Include dependency graph for stdatomic.\+h\+:
-\nopagebreak
+Include dependency graph for stdatomic.\+h\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -26,9 +25,15 @@ struct \mbox{\hyperlink{structatomic__flag}{atomic\+\_\+flag}}
 \item 
 \#define \mbox{\hyperlink{include_2stdatomic_8h_a58014a490f8aa8f5dd78cd9203229cdf}{\+\_\+\+\_\+\+TTAK\+\_\+\+NEEDS\+\_\+\+PORTABLE\+\_\+\+STDATOMIC\+\_\+\+\_\+}}~1
 \item 
+\#define \mbox{\hyperlink{include_2stdatomic_8h_a3cf6ded3b463faf0cedce1718caaa695}{ATOMIC\+\_\+\+FLAG\+\_\+\+INIT}}~\{0\}
+\item 
+\#define \mbox{\hyperlink{include_2stdatomic_8h_a2a34d10749d8ee0cbb6c471d3d16f994}{ATOMIC\+\_\+\+VAR\+\_\+\+INIT}}(v)~(v)
+\item 
 \#define \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\+\_\+\+Atomic}}~volatile
 \item 
 \#define \mbox{\hyperlink{include_2stdatomic_8h_a3cf6ded3b463faf0cedce1718caaa695}{ATOMIC\+\_\+\+FLAG\+\_\+\+INIT}}~\{0\}
+\item 
+\#define \mbox{\hyperlink{include_2stdatomic_8h_a2a34d10749d8ee0cbb6c471d3d16f994}{ATOMIC\+\_\+\+VAR\+\_\+\+INIT}}(v)~(v)
 \item 
 \#define \mbox{\hyperlink{include_2stdatomic_8h_a7b82615cb418a296137e2abcff7db14e}{\+\_\+\+\_\+\+TT\+\_\+\+ATOMIC\+\_\+\+LOCK}}()~pthread\+\_\+mutex\+\_\+lock(\&\mbox{\hyperlink{include_2stdatomic_8h_a7082a0c612e692d1d2182aea6fcecb26}{\+\_\+\+\_\+ttak\+\_\+atomic\+\_\+global\+\_\+lock}})
 \item 
@@ -36,31 +41,43 @@ struct \mbox{\hyperlink{structatomic__flag}{atomic\+\_\+flag}}
 \item 
 \#define \mbox{\hyperlink{include_2stdatomic_8h_a817535e09bf9c427a1cbee66d06e7030}{atomic\+\_\+thread\+\_\+fence}}(order)~do \{ (void)(order); \mbox{\hyperlink{include_2stdatomic_8h_a7b82615cb418a296137e2abcff7db14e}{\+\_\+\+\_\+\+TT\+\_\+\+ATOMIC\+\_\+\+LOCK}}(); \mbox{\hyperlink{include_2stdatomic_8h_a078ff22b16930edd2268d1cb679445a5}{\+\_\+\+\_\+\+TT\+\_\+\+ATOMIC\+\_\+\+UNLOCK}}(); \} while (0)
 \item 
-\#define \mbox{\hyperlink{include_2stdatomic_8h_af8a9cbe9495fcafaa892b24b383acf96}{atomic\+\_\+init}}(obj,  value)~    do \{ \mbox{\hyperlink{include_2stdatomic_8h_a9f712e57179afb1b855da84b14ed670c}{atomic\+\_\+store\+\_\+explicit}}((obj), (value), \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752}{memory\+\_\+order\+\_\+seq\+\_\+cst}}); \} while (0)
+\#define \mbox{\hyperlink{include_2stdatomic_8h_af8a9cbe9495fcafaa892b24b383acf96}{atomic\+\_\+init}}(obj,  value)~do \{ \texorpdfstring{$\ast$}{*}(obj) = (value); \} while (0)
 \item 
-\#define \mbox{\hyperlink{include_2stdatomic_8h_a9f712e57179afb1b855da84b14ed670c}{atomic\+\_\+store\+\_\+explicit}}(obj,  desired,  order)~    do \{ (void)(order); \mbox{\hyperlink{include_2stdatomic_8h_a7b82615cb418a296137e2abcff7db14e}{\+\_\+\+\_\+\+TT\+\_\+\+ATOMIC\+\_\+\+LOCK}}(); \texorpdfstring{$\ast$}{*}(obj) = (desired); \mbox{\hyperlink{include_2stdatomic_8h_a078ff22b16930edd2268d1cb679445a5}{\+\_\+\+\_\+\+TT\+\_\+\+ATOMIC\+\_\+\+UNLOCK}}(); \} while (0)
+\#define \mbox{\hyperlink{include_2stdatomic_8h_a9f712e57179afb1b855da84b14ed670c}{atomic\+\_\+store\+\_\+explicit}}(obj,  desired,  order)~do \{ (void)(order); \mbox{\hyperlink{include_2stdatomic_8h_a7b82615cb418a296137e2abcff7db14e}{\+\_\+\+\_\+\+TT\+\_\+\+ATOMIC\+\_\+\+LOCK}}(); \texorpdfstring{$\ast$}{*}(obj) = (desired); \mbox{\hyperlink{include_2stdatomic_8h_a078ff22b16930edd2268d1cb679445a5}{\+\_\+\+\_\+\+TT\+\_\+\+ATOMIC\+\_\+\+UNLOCK}}(); \} while (0)
 \item 
-\#define \mbox{\hyperlink{include_2stdatomic_8h_a87fbed10bf5d77e3b80f356e5246f102}{atomic\+\_\+store}}(obj,  desired)~    \mbox{\hyperlink{include_2stdatomic_8h_a9f712e57179afb1b855da84b14ed670c}{atomic\+\_\+store\+\_\+explicit}}((obj), (desired), \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752}{memory\+\_\+order\+\_\+seq\+\_\+cst}})
+\#define \mbox{\hyperlink{include_2stdatomic_8h_a87fbed10bf5d77e3b80f356e5246f102}{atomic\+\_\+store}}(obj,  desired)~\mbox{\hyperlink{include_2stdatomic_8h_a9f712e57179afb1b855da84b14ed670c}{atomic\+\_\+store\+\_\+explicit}}((obj), (desired), \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752}{memory\+\_\+order\+\_\+seq\+\_\+cst}})
 \item 
-\#define \mbox{\hyperlink{include_2stdatomic_8h_abcbf72e31b4b3100152d409e9637441a}{atomic\+\_\+load\+\_\+explicit}}(obj,  order)~    (\{ \mbox{\hyperlink{include_2stdatomic_8h_a7b82615cb418a296137e2abcff7db14e}{\+\_\+\+\_\+\+TT\+\_\+\+ATOMIC\+\_\+\+LOCK}}(); \+\_\+\+\_\+typeof\+\_\+\+\_\+(\texorpdfstring{$\ast$}{*}(obj)) \+\_\+\+\_\+val = \texorpdfstring{$\ast$}{*}(obj); (void)(order); \mbox{\hyperlink{include_2stdatomic_8h_a078ff22b16930edd2268d1cb679445a5}{\+\_\+\+\_\+\+TT\+\_\+\+ATOMIC\+\_\+\+UNLOCK}}(); \+\_\+\+\_\+val; \})
+\#define \mbox{\hyperlink{include_2stdatomic_8h_abcbf72e31b4b3100152d409e9637441a}{atomic\+\_\+load\+\_\+explicit}}(obj,  order)~(\{ \mbox{\hyperlink{include_2stdatomic_8h_a7b82615cb418a296137e2abcff7db14e}{\+\_\+\+\_\+\+TT\+\_\+\+ATOMIC\+\_\+\+LOCK}}(); \+\_\+\+\_\+typeof\+\_\+\+\_\+(\texorpdfstring{$\ast$}{*}(obj)) \+\_\+\+\_\+val = \texorpdfstring{$\ast$}{*}(obj); (void)(order); \mbox{\hyperlink{include_2stdatomic_8h_a078ff22b16930edd2268d1cb679445a5}{\+\_\+\+\_\+\+TT\+\_\+\+ATOMIC\+\_\+\+UNLOCK}}(); \+\_\+\+\_\+val; \})
 \item 
-\#define \mbox{\hyperlink{include_2stdatomic_8h_afb8e12dba0aa6280b29e3d403e4ce384}{atomic\+\_\+load}}(obj)~    \mbox{\hyperlink{include_2stdatomic_8h_abcbf72e31b4b3100152d409e9637441a}{atomic\+\_\+load\+\_\+explicit}}((obj) , \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752}{memory\+\_\+order\+\_\+seq\+\_\+cst}})
+\#define \mbox{\hyperlink{include_2stdatomic_8h_afb8e12dba0aa6280b29e3d403e4ce384}{atomic\+\_\+load}}(obj)~\mbox{\hyperlink{include_2stdatomic_8h_abcbf72e31b4b3100152d409e9637441a}{atomic\+\_\+load\+\_\+explicit}}((obj) , \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752}{memory\+\_\+order\+\_\+seq\+\_\+cst}})
 \item 
-\#define \mbox{\hyperlink{include_2stdatomic_8h_ace8ab452db03f62569b8d4dbedf8ff09}{atomic\+\_\+fetch\+\_\+add\+\_\+explicit}}(obj,  operand,  order)~    (\{ \mbox{\hyperlink{include_2stdatomic_8h_a7b82615cb418a296137e2abcff7db14e}{\+\_\+\+\_\+\+TT\+\_\+\+ATOMIC\+\_\+\+LOCK}}(); \+\_\+\+\_\+typeof\+\_\+\+\_\+(\texorpdfstring{$\ast$}{*}(obj)) \+\_\+\+\_\+old = \texorpdfstring{$\ast$}{*}(obj); \texorpdfstring{$\ast$}{*}(obj) = \+\_\+\+\_\+old + (operand); (void)(order); \mbox{\hyperlink{include_2stdatomic_8h_a078ff22b16930edd2268d1cb679445a5}{\+\_\+\+\_\+\+TT\+\_\+\+ATOMIC\+\_\+\+UNLOCK}}(); \+\_\+\+\_\+old; \})
+\#define \mbox{\hyperlink{include_2stdatomic_8h_ace8ab452db03f62569b8d4dbedf8ff09}{atomic\+\_\+fetch\+\_\+add\+\_\+explicit}}(obj,  operand,  order)~(\{ \mbox{\hyperlink{include_2stdatomic_8h_a7b82615cb418a296137e2abcff7db14e}{\+\_\+\+\_\+\+TT\+\_\+\+ATOMIC\+\_\+\+LOCK}}(); \+\_\+\+\_\+typeof\+\_\+\+\_\+(\texorpdfstring{$\ast$}{*}(obj)) \+\_\+\+\_\+old = \texorpdfstring{$\ast$}{*}(obj); \texorpdfstring{$\ast$}{*}(obj) = \+\_\+\+\_\+old + (operand); (void)(order); \mbox{\hyperlink{include_2stdatomic_8h_a078ff22b16930edd2268d1cb679445a5}{\+\_\+\+\_\+\+TT\+\_\+\+ATOMIC\+\_\+\+UNLOCK}}(); \+\_\+\+\_\+old; \})
 \item 
-\#define \mbox{\hyperlink{include_2stdatomic_8h_ac0a4bfbcb6b982cae35b44fc104a09b6}{atomic\+\_\+fetch\+\_\+add}}(obj,  operand)~    \mbox{\hyperlink{include_2stdatomic_8h_ace8ab452db03f62569b8d4dbedf8ff09}{atomic\+\_\+fetch\+\_\+add\+\_\+explicit}}((obj), (operand), \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752}{memory\+\_\+order\+\_\+seq\+\_\+cst}})
-\item 
-\#define \mbox{\hyperlink{include_2stdatomic_8h_af4371ce6237310eedf5a1036178ada1f}{atomic\+\_\+fetch\+\_\+sub\+\_\+explicit}}(obj,  operand,  order)~    (\{ \mbox{\hyperlink{include_2stdatomic_8h_a7b82615cb418a296137e2abcff7db14e}{\+\_\+\+\_\+\+TT\+\_\+\+ATOMIC\+\_\+\+LOCK}}(); \+\_\+\+\_\+typeof\+\_\+\+\_\+(\texorpdfstring{$\ast$}{*}(obj)) \+\_\+\+\_\+old = \texorpdfstring{$\ast$}{*}(obj); \texorpdfstring{$\ast$}{*}(obj) = \+\_\+\+\_\+old -\/ (operand); (void)(order); \mbox{\hyperlink{include_2stdatomic_8h_a078ff22b16930edd2268d1cb679445a5}{\+\_\+\+\_\+\+TT\+\_\+\+ATOMIC\+\_\+\+UNLOCK}}(); \+\_\+\+\_\+old; \})
-\item 
-\#define \mbox{\hyperlink{include_2stdatomic_8h_a5911a234da3c1fce86bbebea7650e562}{atomic\+\_\+fetch\+\_\+sub}}(obj,  operand)~    \mbox{\hyperlink{include_2stdatomic_8h_af4371ce6237310eedf5a1036178ada1f}{atomic\+\_\+fetch\+\_\+sub\+\_\+explicit}}((obj), (operand), \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752}{memory\+\_\+order\+\_\+seq\+\_\+cst}})
-\item 
-\#define \mbox{\hyperlink{include_2stdatomic_8h_a182d869f2a69147266c1cfbf8ef62d71}{atomic\+\_\+exchange\+\_\+explicit}}(obj,  desired,  order)~    (\{ \mbox{\hyperlink{include_2stdatomic_8h_a7b82615cb418a296137e2abcff7db14e}{\+\_\+\+\_\+\+TT\+\_\+\+ATOMIC\+\_\+\+LOCK}}(); \+\_\+\+\_\+typeof\+\_\+\+\_\+(\texorpdfstring{$\ast$}{*}(obj)) \+\_\+\+\_\+old = \texorpdfstring{$\ast$}{*}(obj); \texorpdfstring{$\ast$}{*}(obj) = (desired); (void)(order); \mbox{\hyperlink{include_2stdatomic_8h_a078ff22b16930edd2268d1cb679445a5}{\+\_\+\+\_\+\+TT\+\_\+\+ATOMIC\+\_\+\+UNLOCK}}(); \+\_\+\+\_\+old; \})
-\item 
-\#define \mbox{\hyperlink{include_2stdatomic_8h_a5c1dada141423cb165cf2d4f3a38f89f}{atomic\+\_\+exchange}}(obj,  desired)~    \mbox{\hyperlink{include_2stdatomic_8h_a182d869f2a69147266c1cfbf8ef62d71}{atomic\+\_\+exchange\+\_\+explicit}}((obj), (desired), \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752}{memory\+\_\+order\+\_\+seq\+\_\+cst}})
+\#define \mbox{\hyperlink{include_2stdatomic_8h_ac0a4bfbcb6b982cae35b44fc104a09b6}{atomic\+\_\+fetch\+\_\+add}}(obj,  operand)~\mbox{\hyperlink{include_2stdatomic_8h_ace8ab452db03f62569b8d4dbedf8ff09}{atomic\+\_\+fetch\+\_\+add\+\_\+explicit}}((obj), (operand), \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752}{memory\+\_\+order\+\_\+seq\+\_\+cst}})
 \item 
 \#define \mbox{\hyperlink{include_2stdatomic_8h_a97a5f3e6f5f733e94b1ddeff904d3bc0}{atomic\+\_\+compare\+\_\+exchange\+\_\+weak\+\_\+explicit}}(obj,  expected,  desired,  success,  failure)
 \item 
+\#define \mbox{\hyperlink{include_2stdatomic_8h_af4371ce6237310eedf5a1036178ada1f}{atomic\+\_\+fetch\+\_\+sub\+\_\+explicit}}(obj,  operand,  order)
+\item 
+\#define \mbox{\hyperlink{include_2stdatomic_8h_a5911a234da3c1fce86bbebea7650e562}{atomic\+\_\+fetch\+\_\+sub}}(obj,  operand)~\mbox{\hyperlink{include_2stdatomic_8h_af4371ce6237310eedf5a1036178ada1f}{atomic\+\_\+fetch\+\_\+sub\+\_\+explicit}}((obj), (operand), \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752}{memory\+\_\+order\+\_\+seq\+\_\+cst}})
+\item 
+\#define \mbox{\hyperlink{include_2stdatomic_8h_a80a85808288d53e46f094008990f075e}{atomic\+\_\+fetch\+\_\+or\+\_\+explicit}}(obj,  operand,  order)
+\item 
+\#define \mbox{\hyperlink{include_2stdatomic_8h_a0dd14e6f82ca9166b0d3eb8f872fab5a}{atomic\+\_\+fetch\+\_\+or}}(obj,  operand)~\mbox{\hyperlink{include_2stdatomic_8h_a80a85808288d53e46f094008990f075e}{atomic\+\_\+fetch\+\_\+or\+\_\+explicit}}((obj), (operand), \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752}{memory\+\_\+order\+\_\+seq\+\_\+cst}})
+\item 
+\#define \mbox{\hyperlink{include_2stdatomic_8h_a243f2c635251ada5decdbc6ff198f70d}{atomic\+\_\+fetch\+\_\+and\+\_\+explicit}}(obj,  operand,  order)
+\item 
+\#define \mbox{\hyperlink{include_2stdatomic_8h_a18e371b22b9b969eeda3c36a8cefc954}{atomic\+\_\+fetch\+\_\+and}}(obj,  operand)~\mbox{\hyperlink{include_2stdatomic_8h_a243f2c635251ada5decdbc6ff198f70d}{atomic\+\_\+fetch\+\_\+and\+\_\+explicit}}((obj), (operand), \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752}{memory\+\_\+order\+\_\+seq\+\_\+cst}})
+\item 
+\#define \mbox{\hyperlink{include_2stdatomic_8h_a182d869f2a69147266c1cfbf8ef62d71}{atomic\+\_\+exchange\+\_\+explicit}}(obj,  desired,  order)
+\item 
+\#define \mbox{\hyperlink{include_2stdatomic_8h_a5c1dada141423cb165cf2d4f3a38f89f}{atomic\+\_\+exchange}}(obj,  desired)~\mbox{\hyperlink{include_2stdatomic_8h_a182d869f2a69147266c1cfbf8ef62d71}{atomic\+\_\+exchange\+\_\+explicit}}((obj), (desired), \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752}{memory\+\_\+order\+\_\+seq\+\_\+cst}})
+\item 
 \#define \mbox{\hyperlink{include_2stdatomic_8h_a55257ac5977e775b87563bb8cc955863}{atomic\+\_\+compare\+\_\+exchange\+\_\+weak}}(obj,  expected,  desired)~    \mbox{\hyperlink{include_2stdatomic_8h_a97a5f3e6f5f733e94b1ddeff904d3bc0}{atomic\+\_\+compare\+\_\+exchange\+\_\+weak\+\_\+explicit}}((obj), (expected), (desired), \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752}{memory\+\_\+order\+\_\+seq\+\_\+cst}}, \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752}{memory\+\_\+order\+\_\+seq\+\_\+cst}})
+\item 
+\#define \mbox{\hyperlink{include_2stdatomic_8h_abd5c20444124cc075609f21d19fc1cda}{atomic\+\_\+compare\+\_\+exchange\+\_\+strong\+\_\+explicit}}(obj,  expected,  desired,  success,  failure)~    \mbox{\hyperlink{include_2stdatomic_8h_a97a5f3e6f5f733e94b1ddeff904d3bc0}{atomic\+\_\+compare\+\_\+exchange\+\_\+weak\+\_\+explicit}}((obj), (expected), (desired), (success), (failure))
+\item 
+\#define \mbox{\hyperlink{include_2stdatomic_8h_a52b0a9d2e3259dc20deb405fe77b0191}{atomic\+\_\+compare\+\_\+exchange\+\_\+strong}}(obj,  expected,  desired)~    \mbox{\hyperlink{include_2stdatomic_8h_abd5c20444124cc075609f21d19fc1cda}{atomic\+\_\+compare\+\_\+exchange\+\_\+strong\+\_\+explicit}}((obj), (expected), (desired), \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752}{memory\+\_\+order\+\_\+seq\+\_\+cst}}, \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752}{memory\+\_\+order\+\_\+seq\+\_\+cst}})
 \item 
 \#define \mbox{\hyperlink{include_2stdatomic_8h_ac207cf1efb51bc53fc9078301afa391f}{atomic\+\_\+flag\+\_\+test\+\_\+and\+\_\+set}}(obj)~    \mbox{\hyperlink{include_2stdatomic_8h_aeca7c45606fc2b5e0c8dca53a76f40ac}{atomic\+\_\+flag\+\_\+test\+\_\+and\+\_\+set\+\_\+explicit}}((obj), \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752}{memory\+\_\+order\+\_\+seq\+\_\+cst}})
 \item 
@@ -71,9 +88,71 @@ struct \mbox{\hyperlink{structatomic__flag}{atomic\+\_\+flag}}
 \item 
 typedef volatile bool \mbox{\hyperlink{include_2stdatomic_8h_aef4aec84224d1f46d0ba87f52ca08f69}{atomic\+\_\+bool}}
 \item 
-typedef volatile size\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_a579c826aec0f3d9971c22c3629abcbfe}{atomic\+\_\+size\+\_\+t}}
+typedef volatile char \mbox{\hyperlink{include_2stdatomic_8h_aae91dd0fabf89334979da4075767723a}{atomic\+\_\+char}}
+\item 
+typedef volatile signed char \mbox{\hyperlink{include_2stdatomic_8h_a0772ed223cc212a17979d8f86eca0d0c}{atomic\+\_\+schar}}
+\item 
+typedef volatile unsigned char \mbox{\hyperlink{include_2stdatomic_8h_a753a736777dce1d447da5210b3609f20}{atomic\+\_\+uchar}}
+\item 
+typedef volatile short \mbox{\hyperlink{include_2stdatomic_8h_a819f411fe66d5bb295ed6b37b2234796}{atomic\+\_\+short}}
+\item 
+typedef volatile unsigned short \mbox{\hyperlink{include_2stdatomic_8h_a4eb27564617e84f78976767860dae14a}{atomic\+\_\+ushort}}
+\item 
+typedef volatile int \mbox{\hyperlink{include_2stdatomic_8h_a47af6185878ed08e05cf92aeb391e4c5}{atomic\+\_\+int}}
+\item 
+typedef volatile unsigned int \mbox{\hyperlink{include_2stdatomic_8h_acbc5f29da83246878bb8fd141533c797}{atomic\+\_\+uint}}
+\item 
+typedef volatile long \mbox{\hyperlink{include_2stdatomic_8h_a1252081478eb7160219c2e2bf4b8b26a}{atomic\+\_\+long}}
+\item 
+typedef volatile unsigned long \mbox{\hyperlink{include_2stdatomic_8h_a654b5604043dc806cdf6b6e7aa688f48}{atomic\+\_\+ulong}}
+\item 
+typedef volatile long long \mbox{\hyperlink{include_2stdatomic_8h_ac6d2892304538baffbb9759ef417276f}{atomic\+\_\+llong}}
+\item 
+typedef volatile unsigned long long \mbox{\hyperlink{include_2stdatomic_8h_ad5049efa83e60cc859efba4c6f636dc8}{atomic\+\_\+ullong}}
+\item 
+typedef volatile int\+\_\+least8\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_a2914a295069ac08b4ba7f14a4ccb44e1}{atomic\+\_\+int\+\_\+least8\+\_\+t}}
+\item 
+typedef volatile uint\+\_\+least8\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_ac4514a29e7a7837bed1e52ef294e8f85}{atomic\+\_\+uint\+\_\+least8\+\_\+t}}
+\item 
+typedef volatile int\+\_\+least16\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_a86d56a528bb84decf79d9f78f090cbaf}{atomic\+\_\+int\+\_\+least16\+\_\+t}}
+\item 
+typedef volatile uint\+\_\+least16\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_a9da88867ad2d24655055e619a7b24414}{atomic\+\_\+uint\+\_\+least16\+\_\+t}}
+\item 
+typedef volatile int\+\_\+least32\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_a572044581a00ae85e2f6df493b7cec54}{atomic\+\_\+int\+\_\+least32\+\_\+t}}
+\item 
+typedef volatile uint\+\_\+least32\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_aa23fa0ef41c89deef533b3805887968f}{atomic\+\_\+uint\+\_\+least32\+\_\+t}}
+\item 
+typedef volatile int\+\_\+least64\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_a753852398c578c7b0e671ebe39a5a099}{atomic\+\_\+int\+\_\+least64\+\_\+t}}
+\item 
+typedef volatile uint\+\_\+least64\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_aa9d30dd336a44b1409370e6632a95b46}{atomic\+\_\+uint\+\_\+least64\+\_\+t}}
+\item 
+typedef volatile int\+\_\+fast8\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_ab68830b9273d86fb6f2294b57ffc4a99}{atomic\+\_\+int\+\_\+fast8\+\_\+t}}
+\item 
+typedef volatile uint\+\_\+fast8\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_aabf99ce6da7804f051d4f34463095a26}{atomic\+\_\+uint\+\_\+fast8\+\_\+t}}
+\item 
+typedef volatile int\+\_\+fast16\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_a393105253dde147dbe8d17c729c3b3cc}{atomic\+\_\+int\+\_\+fast16\+\_\+t}}
+\item 
+typedef volatile uint\+\_\+fast16\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_a3e21d6a8151a23b8a7ab27f277afda3c}{atomic\+\_\+uint\+\_\+fast16\+\_\+t}}
+\item 
+typedef volatile int\+\_\+fast32\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_a46345a1e828879eff1e867fb2a2704b4}{atomic\+\_\+int\+\_\+fast32\+\_\+t}}
+\item 
+typedef volatile uint\+\_\+fast32\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_a5b39a75b6539e1118c775986b95409dd}{atomic\+\_\+uint\+\_\+fast32\+\_\+t}}
+\item 
+typedef volatile int\+\_\+fast64\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_aeb9f0ed97c801d27e7c650bfc8cabbba}{atomic\+\_\+int\+\_\+fast64\+\_\+t}}
 \item 
 typedef volatile uint\+\_\+fast64\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_acc9ed8d56c5c645e7d5503aa72d1da49}{atomic\+\_\+uint\+\_\+fast64\+\_\+t}}
+\item 
+typedef volatile intptr\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_a0021b3c35266e139f055c6568a9b340e}{atomic\+\_\+intptr\+\_\+t}}
+\item 
+typedef volatile uintptr\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_a5a3e1cb5ef21e493807f14a4920f5dcd}{atomic\+\_\+uintptr\+\_\+t}}
+\item 
+typedef volatile size\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_a579c826aec0f3d9971c22c3629abcbfe}{atomic\+\_\+size\+\_\+t}}
+\item 
+typedef volatile ptrdiff\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_a63b627276aca47a56ffa1409d958b072}{atomic\+\_\+ptrdiff\+\_\+t}}
+\item 
+typedef volatile intmax\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_ae007cd33a18f7ee428a3785c47cee39a}{atomic\+\_\+intmax\+\_\+t}}
+\item 
+typedef volatile uintmax\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_ada37a33b3b038f87fe29b013dbcc6d3e}{atomic\+\_\+uintmax\+\_\+t}}
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Enumerations}
 \begin{DoxyCompactItemize}
@@ -111,7 +190,7 @@ pthread\+\_\+mutex\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_a7082a0c612e692
 
 
 
-Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00229}{229}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00513}{513}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
 
 \Hypertarget{include_2stdatomic_8h_a078ff22b16930edd2268d1cb679445a5}\label{include_2stdatomic_8h_a078ff22b16930edd2268d1cb679445a5} 
 \index{stdatomic.h@{stdatomic.h}!\_\_TT\_ATOMIC\_UNLOCK@{\_\_TT\_ATOMIC\_UNLOCK}}
@@ -121,7 +200,7 @@ Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00229}{229}} o
 
 
 
-Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00230}{230}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00514}{514}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
 
 \Hypertarget{include_2stdatomic_8h_a58014a490f8aa8f5dd78cd9203229cdf}\label{include_2stdatomic_8h_a58014a490f8aa8f5dd78cd9203229cdf} 
 \index{stdatomic.h@{stdatomic.h}!\_\_TTAK\_NEEDS\_PORTABLE\_STDATOMIC\_\_@{\_\_TTAK\_NEEDS\_PORTABLE\_STDATOMIC\_\_}}
@@ -131,7 +210,7 @@ Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00230}{230}} o
 
 
 
-Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00192}{192}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00206}{206}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
 
 \Hypertarget{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}\label{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79} 
 \index{stdatomic.h@{stdatomic.h}!\_Atomic@{\_Atomic}}
@@ -141,7 +220,7 @@ Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00192}{192}} o
 
 
 
-Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00205}{205}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00222}{222}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
 
 \Hypertarget{include_2stdatomic_8h_ad87ea8b8e6e5edd21da6ea973b847b22}\label{include_2stdatomic_8h_ad87ea8b8e6e5edd21da6ea973b847b22} 
 \index{stdatomic.h@{stdatomic.h}!\_BOOL\_DEFINED@{\_BOOL\_DEFINED}}
@@ -153,6 +232,26 @@ Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00205}{205}} o
 
 Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00011}{11}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
 
+\Hypertarget{include_2stdatomic_8h_a52b0a9d2e3259dc20deb405fe77b0191}\label{include_2stdatomic_8h_a52b0a9d2e3259dc20deb405fe77b0191} 
+\index{stdatomic.h@{stdatomic.h}!atomic\_compare\_exchange\_strong@{atomic\_compare\_exchange\_strong}}
+\index{atomic\_compare\_exchange\_strong@{atomic\_compare\_exchange\_strong}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{atomic\_compare\_exchange\_strong}{atomic\_compare\_exchange\_strong}}
+{\footnotesize\ttfamily \#define atomic\+\_\+compare\+\_\+exchange\+\_\+strong(\begin{DoxyParamCaption}\item[{}]{obj,  }\item[{}]{expected,  }\item[{}]{desired }\end{DoxyParamCaption})~    \mbox{\hyperlink{include_2stdatomic_8h_abd5c20444124cc075609f21d19fc1cda}{atomic\+\_\+compare\+\_\+exchange\+\_\+strong\+\_\+explicit}}((obj), (expected), (desired), \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752}{memory\+\_\+order\+\_\+seq\+\_\+cst}}, \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752}{memory\+\_\+order\+\_\+seq\+\_\+cst}})}
+
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00578}{578}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
+\Hypertarget{include_2stdatomic_8h_abd5c20444124cc075609f21d19fc1cda}\label{include_2stdatomic_8h_abd5c20444124cc075609f21d19fc1cda} 
+\index{stdatomic.h@{stdatomic.h}!atomic\_compare\_exchange\_strong\_explicit@{atomic\_compare\_exchange\_strong\_explicit}}
+\index{atomic\_compare\_exchange\_strong\_explicit@{atomic\_compare\_exchange\_strong\_explicit}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{atomic\_compare\_exchange\_strong\_explicit}{atomic\_compare\_exchange\_strong\_explicit}}
+{\footnotesize\ttfamily \#define atomic\+\_\+compare\+\_\+exchange\+\_\+strong\+\_\+explicit(\begin{DoxyParamCaption}\item[{}]{obj,  }\item[{}]{expected,  }\item[{}]{desired,  }\item[{}]{success,  }\item[{}]{failure }\end{DoxyParamCaption})~    \mbox{\hyperlink{include_2stdatomic_8h_a97a5f3e6f5f733e94b1ddeff904d3bc0}{atomic\+\_\+compare\+\_\+exchange\+\_\+weak\+\_\+explicit}}((obj), (expected), (desired), (success), (failure))}
+
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00575}{575}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
 \Hypertarget{include_2stdatomic_8h_a55257ac5977e775b87563bb8cc955863}\label{include_2stdatomic_8h_a55257ac5977e775b87563bb8cc955863} 
 \index{stdatomic.h@{stdatomic.h}!atomic\_compare\_exchange\_weak@{atomic\_compare\_exchange\_weak}}
 \index{atomic\_compare\_exchange\_weak@{atomic\_compare\_exchange\_weak}!stdatomic.h@{stdatomic.h}}
@@ -161,7 +260,7 @@ Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00011}{11}} of
 
 
 
-Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00273}{273}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00572}{572}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
 
 \Hypertarget{include_2stdatomic_8h_a97a5f3e6f5f733e94b1ddeff904d3bc0}\label{include_2stdatomic_8h_a97a5f3e6f5f733e94b1ddeff904d3bc0} 
 \index{stdatomic.h@{stdatomic.h}!atomic\_compare\_exchange\_weak\_explicit@{atomic\_compare\_exchange\_weak\_explicit}}
@@ -179,67 +278,135 @@ Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00273}{273}} o
 \end{DoxyCode}
 
 
-Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00267}{267}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00524}{524}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
 
 \Hypertarget{include_2stdatomic_8h_a5c1dada141423cb165cf2d4f3a38f89f}\label{include_2stdatomic_8h_a5c1dada141423cb165cf2d4f3a38f89f} 
 \index{stdatomic.h@{stdatomic.h}!atomic\_exchange@{atomic\_exchange}}
 \index{atomic\_exchange@{atomic\_exchange}!stdatomic.h@{stdatomic.h}}
 \doxysubsubsection{\texorpdfstring{atomic\_exchange}{atomic\_exchange}}
-{\footnotesize\ttfamily \#define atomic\+\_\+exchange(\begin{DoxyParamCaption}\item[{}]{obj,  }\item[{}]{desired }\end{DoxyParamCaption})~    \mbox{\hyperlink{include_2stdatomic_8h_a182d869f2a69147266c1cfbf8ef62d71}{atomic\+\_\+exchange\+\_\+explicit}}((obj), (desired), \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752}{memory\+\_\+order\+\_\+seq\+\_\+cst}})}
+{\footnotesize\ttfamily \#define atomic\+\_\+exchange(\begin{DoxyParamCaption}\item[{}]{obj,  }\item[{}]{desired }\end{DoxyParamCaption})~\mbox{\hyperlink{include_2stdatomic_8h_a182d869f2a69147266c1cfbf8ef62d71}{atomic\+\_\+exchange\+\_\+explicit}}((obj), (desired), \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752}{memory\+\_\+order\+\_\+seq\+\_\+cst}})}
 
 
 
-Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00264}{264}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00569}{569}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
 
 \Hypertarget{include_2stdatomic_8h_a182d869f2a69147266c1cfbf8ef62d71}\label{include_2stdatomic_8h_a182d869f2a69147266c1cfbf8ef62d71} 
 \index{stdatomic.h@{stdatomic.h}!atomic\_exchange\_explicit@{atomic\_exchange\_explicit}}
 \index{atomic\_exchange\_explicit@{atomic\_exchange\_explicit}!stdatomic.h@{stdatomic.h}}
 \doxysubsubsection{\texorpdfstring{atomic\_exchange\_explicit}{atomic\_exchange\_explicit}}
-{\footnotesize\ttfamily \#define atomic\+\_\+exchange\+\_\+explicit(\begin{DoxyParamCaption}\item[{}]{obj,  }\item[{}]{desired,  }\item[{}]{order }\end{DoxyParamCaption})~    (\{ \mbox{\hyperlink{include_2stdatomic_8h_a7b82615cb418a296137e2abcff7db14e}{\+\_\+\+\_\+\+TT\+\_\+\+ATOMIC\+\_\+\+LOCK}}(); \+\_\+\+\_\+typeof\+\_\+\+\_\+(\texorpdfstring{$\ast$}{*}(obj)) \+\_\+\+\_\+old = \texorpdfstring{$\ast$}{*}(obj); \texorpdfstring{$\ast$}{*}(obj) = (desired); (void)(order); \mbox{\hyperlink{include_2stdatomic_8h_a078ff22b16930edd2268d1cb679445a5}{\+\_\+\+\_\+\+TT\+\_\+\+ATOMIC\+\_\+\+UNLOCK}}(); \+\_\+\+\_\+old; \})}
+{\footnotesize\ttfamily \#define atomic\+\_\+exchange\+\_\+explicit(\begin{DoxyParamCaption}\item[{}]{obj,  }\item[{}]{desired,  }\item[{}]{order }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ (\{\ \_\_typeof\_\_(*(obj))\ \_\_expected\ =\ \mbox{\hyperlink{include_2stdatomic_8h_abcbf72e31b4b3100152d409e9637441a}{atomic\_load\_explicit}}(obj,\ \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1bac6489d0374e297a776f6a3db7ea5654a}{memory\_order\_relaxed}});\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ while\ (!\mbox{\hyperlink{include_2stdatomic_8h_a97a5f3e6f5f733e94b1ddeff904d3bc0}{atomic\_compare\_exchange\_weak\_explicit}}(obj,\ \&\_\_expected,\ (desired),\ order,\ \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1bac6489d0374e297a776f6a3db7ea5654a}{memory\_order\_relaxed}}));\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \_\_expected;\ \})}
+
+\end{DoxyCode}
 
 
-
-Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00261}{261}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00563}{563}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
 
 \Hypertarget{include_2stdatomic_8h_ac0a4bfbcb6b982cae35b44fc104a09b6}\label{include_2stdatomic_8h_ac0a4bfbcb6b982cae35b44fc104a09b6} 
 \index{stdatomic.h@{stdatomic.h}!atomic\_fetch\_add@{atomic\_fetch\_add}}
 \index{atomic\_fetch\_add@{atomic\_fetch\_add}!stdatomic.h@{stdatomic.h}}
 \doxysubsubsection{\texorpdfstring{atomic\_fetch\_add}{atomic\_fetch\_add}}
-{\footnotesize\ttfamily \#define atomic\+\_\+fetch\+\_\+add(\begin{DoxyParamCaption}\item[{}]{obj,  }\item[{}]{operand }\end{DoxyParamCaption})~    \mbox{\hyperlink{include_2stdatomic_8h_ace8ab452db03f62569b8d4dbedf8ff09}{atomic\+\_\+fetch\+\_\+add\+\_\+explicit}}((obj), (operand), \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752}{memory\+\_\+order\+\_\+seq\+\_\+cst}})}
+{\footnotesize\ttfamily \#define atomic\+\_\+fetch\+\_\+add(\begin{DoxyParamCaption}\item[{}]{obj,  }\item[{}]{operand }\end{DoxyParamCaption})~\mbox{\hyperlink{include_2stdatomic_8h_ace8ab452db03f62569b8d4dbedf8ff09}{atomic\+\_\+fetch\+\_\+add\+\_\+explicit}}((obj), (operand), \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752}{memory\+\_\+order\+\_\+seq\+\_\+cst}})}
 
 
 
-Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00252}{252}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00523}{523}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
 
 \Hypertarget{include_2stdatomic_8h_ace8ab452db03f62569b8d4dbedf8ff09}\label{include_2stdatomic_8h_ace8ab452db03f62569b8d4dbedf8ff09} 
 \index{stdatomic.h@{stdatomic.h}!atomic\_fetch\_add\_explicit@{atomic\_fetch\_add\_explicit}}
 \index{atomic\_fetch\_add\_explicit@{atomic\_fetch\_add\_explicit}!stdatomic.h@{stdatomic.h}}
 \doxysubsubsection{\texorpdfstring{atomic\_fetch\_add\_explicit}{atomic\_fetch\_add\_explicit}}
-{\footnotesize\ttfamily \#define atomic\+\_\+fetch\+\_\+add\+\_\+explicit(\begin{DoxyParamCaption}\item[{}]{obj,  }\item[{}]{operand,  }\item[{}]{order }\end{DoxyParamCaption})~    (\{ \mbox{\hyperlink{include_2stdatomic_8h_a7b82615cb418a296137e2abcff7db14e}{\+\_\+\+\_\+\+TT\+\_\+\+ATOMIC\+\_\+\+LOCK}}(); \+\_\+\+\_\+typeof\+\_\+\+\_\+(\texorpdfstring{$\ast$}{*}(obj)) \+\_\+\+\_\+old = \texorpdfstring{$\ast$}{*}(obj); \texorpdfstring{$\ast$}{*}(obj) = \+\_\+\+\_\+old + (operand); (void)(order); \mbox{\hyperlink{include_2stdatomic_8h_a078ff22b16930edd2268d1cb679445a5}{\+\_\+\+\_\+\+TT\+\_\+\+ATOMIC\+\_\+\+UNLOCK}}(); \+\_\+\+\_\+old; \})}
+{\footnotesize\ttfamily \#define atomic\+\_\+fetch\+\_\+add\+\_\+explicit(\begin{DoxyParamCaption}\item[{}]{obj,  }\item[{}]{operand,  }\item[{}]{order }\end{DoxyParamCaption})~(\{ \mbox{\hyperlink{include_2stdatomic_8h_a7b82615cb418a296137e2abcff7db14e}{\+\_\+\+\_\+\+TT\+\_\+\+ATOMIC\+\_\+\+LOCK}}(); \+\_\+\+\_\+typeof\+\_\+\+\_\+(\texorpdfstring{$\ast$}{*}(obj)) \+\_\+\+\_\+old = \texorpdfstring{$\ast$}{*}(obj); \texorpdfstring{$\ast$}{*}(obj) = \+\_\+\+\_\+old + (operand); (void)(order); \mbox{\hyperlink{include_2stdatomic_8h_a078ff22b16930edd2268d1cb679445a5}{\+\_\+\+\_\+\+TT\+\_\+\+ATOMIC\+\_\+\+UNLOCK}}(); \+\_\+\+\_\+old; \})}
 
 
 
-Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00249}{249}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00522}{522}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
+\Hypertarget{include_2stdatomic_8h_a18e371b22b9b969eeda3c36a8cefc954}\label{include_2stdatomic_8h_a18e371b22b9b969eeda3c36a8cefc954} 
+\index{stdatomic.h@{stdatomic.h}!atomic\_fetch\_and@{atomic\_fetch\_and}}
+\index{atomic\_fetch\_and@{atomic\_fetch\_and}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{atomic\_fetch\_and}{atomic\_fetch\_and}}
+{\footnotesize\ttfamily \#define atomic\+\_\+fetch\+\_\+and(\begin{DoxyParamCaption}\item[{}]{obj,  }\item[{}]{operand }\end{DoxyParamCaption})~\mbox{\hyperlink{include_2stdatomic_8h_a243f2c635251ada5decdbc6ff198f70d}{atomic\+\_\+fetch\+\_\+and\+\_\+explicit}}((obj), (operand), \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752}{memory\+\_\+order\+\_\+seq\+\_\+cst}})}
+
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00559}{559}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
+\Hypertarget{include_2stdatomic_8h_a243f2c635251ada5decdbc6ff198f70d}\label{include_2stdatomic_8h_a243f2c635251ada5decdbc6ff198f70d} 
+\index{stdatomic.h@{stdatomic.h}!atomic\_fetch\_and\_explicit@{atomic\_fetch\_and\_explicit}}
+\index{atomic\_fetch\_and\_explicit@{atomic\_fetch\_and\_explicit}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{atomic\_fetch\_and\_explicit}{atomic\_fetch\_and\_explicit}}
+{\footnotesize\ttfamily \#define atomic\+\_\+fetch\+\_\+and\+\_\+explicit(\begin{DoxyParamCaption}\item[{}]{obj,  }\item[{}]{operand,  }\item[{}]{order }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ (\{\ \_\_typeof\_\_(*(obj))\ \_\_expected\ =\ \mbox{\hyperlink{include_2stdatomic_8h_abcbf72e31b4b3100152d409e9637441a}{atomic\_load\_explicit}}(obj,\ \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1bac6489d0374e297a776f6a3db7ea5654a}{memory\_order\_relaxed}});\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ while\ (!\mbox{\hyperlink{include_2stdatomic_8h_a97a5f3e6f5f733e94b1ddeff904d3bc0}{atomic\_compare\_exchange\_weak\_explicit}}(obj,\ \&\_\_expected,\ \_\_expected\ \&\ (operand),\ order,\ \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1bac6489d0374e297a776f6a3db7ea5654a}{memory\_order\_relaxed}}));\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \_\_expected;\ \})}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00553}{553}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
+\Hypertarget{include_2stdatomic_8h_a0dd14e6f82ca9166b0d3eb8f872fab5a}\label{include_2stdatomic_8h_a0dd14e6f82ca9166b0d3eb8f872fab5a} 
+\index{stdatomic.h@{stdatomic.h}!atomic\_fetch\_or@{atomic\_fetch\_or}}
+\index{atomic\_fetch\_or@{atomic\_fetch\_or}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{atomic\_fetch\_or}{atomic\_fetch\_or}}
+{\footnotesize\ttfamily \#define atomic\+\_\+fetch\+\_\+or(\begin{DoxyParamCaption}\item[{}]{obj,  }\item[{}]{operand }\end{DoxyParamCaption})~\mbox{\hyperlink{include_2stdatomic_8h_a80a85808288d53e46f094008990f075e}{atomic\+\_\+fetch\+\_\+or\+\_\+explicit}}((obj), (operand), \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752}{memory\+\_\+order\+\_\+seq\+\_\+cst}})}
+
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00549}{549}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
+\Hypertarget{include_2stdatomic_8h_a80a85808288d53e46f094008990f075e}\label{include_2stdatomic_8h_a80a85808288d53e46f094008990f075e} 
+\index{stdatomic.h@{stdatomic.h}!atomic\_fetch\_or\_explicit@{atomic\_fetch\_or\_explicit}}
+\index{atomic\_fetch\_or\_explicit@{atomic\_fetch\_or\_explicit}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{atomic\_fetch\_or\_explicit}{atomic\_fetch\_or\_explicit}}
+{\footnotesize\ttfamily \#define atomic\+\_\+fetch\+\_\+or\+\_\+explicit(\begin{DoxyParamCaption}\item[{}]{obj,  }\item[{}]{operand,  }\item[{}]{order }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ (\{\ \_\_typeof\_\_(*(obj))\ \_\_expected\ =\ \mbox{\hyperlink{include_2stdatomic_8h_abcbf72e31b4b3100152d409e9637441a}{atomic\_load\_explicit}}(obj,\ \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1bac6489d0374e297a776f6a3db7ea5654a}{memory\_order\_relaxed}});\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ while\ (!\mbox{\hyperlink{include_2stdatomic_8h_a97a5f3e6f5f733e94b1ddeff904d3bc0}{atomic\_compare\_exchange\_weak\_explicit}}(obj,\ \&\_\_expected,\ \_\_expected\ |\ (operand),\ order,\ \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1bac6489d0374e297a776f6a3db7ea5654a}{memory\_order\_relaxed}}));\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \_\_expected;\ \})}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00543}{543}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
 
 \Hypertarget{include_2stdatomic_8h_a5911a234da3c1fce86bbebea7650e562}\label{include_2stdatomic_8h_a5911a234da3c1fce86bbebea7650e562} 
 \index{stdatomic.h@{stdatomic.h}!atomic\_fetch\_sub@{atomic\_fetch\_sub}}
 \index{atomic\_fetch\_sub@{atomic\_fetch\_sub}!stdatomic.h@{stdatomic.h}}
 \doxysubsubsection{\texorpdfstring{atomic\_fetch\_sub}{atomic\_fetch\_sub}}
-{\footnotesize\ttfamily \#define atomic\+\_\+fetch\+\_\+sub(\begin{DoxyParamCaption}\item[{}]{obj,  }\item[{}]{operand }\end{DoxyParamCaption})~    \mbox{\hyperlink{include_2stdatomic_8h_af4371ce6237310eedf5a1036178ada1f}{atomic\+\_\+fetch\+\_\+sub\+\_\+explicit}}((obj), (operand), \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752}{memory\+\_\+order\+\_\+seq\+\_\+cst}})}
+{\footnotesize\ttfamily \#define atomic\+\_\+fetch\+\_\+sub(\begin{DoxyParamCaption}\item[{}]{obj,  }\item[{}]{operand }\end{DoxyParamCaption})~\mbox{\hyperlink{include_2stdatomic_8h_af4371ce6237310eedf5a1036178ada1f}{atomic\+\_\+fetch\+\_\+sub\+\_\+explicit}}((obj), (operand), \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752}{memory\+\_\+order\+\_\+seq\+\_\+cst}})}
 
 
 
-Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00258}{258}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00539}{539}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
 
 \Hypertarget{include_2stdatomic_8h_af4371ce6237310eedf5a1036178ada1f}\label{include_2stdatomic_8h_af4371ce6237310eedf5a1036178ada1f} 
 \index{stdatomic.h@{stdatomic.h}!atomic\_fetch\_sub\_explicit@{atomic\_fetch\_sub\_explicit}}
 \index{atomic\_fetch\_sub\_explicit@{atomic\_fetch\_sub\_explicit}!stdatomic.h@{stdatomic.h}}
 \doxysubsubsection{\texorpdfstring{atomic\_fetch\_sub\_explicit}{atomic\_fetch\_sub\_explicit}}
-{\footnotesize\ttfamily \#define atomic\+\_\+fetch\+\_\+sub\+\_\+explicit(\begin{DoxyParamCaption}\item[{}]{obj,  }\item[{}]{operand,  }\item[{}]{order }\end{DoxyParamCaption})~    (\{ \mbox{\hyperlink{include_2stdatomic_8h_a7b82615cb418a296137e2abcff7db14e}{\+\_\+\+\_\+\+TT\+\_\+\+ATOMIC\+\_\+\+LOCK}}(); \+\_\+\+\_\+typeof\+\_\+\+\_\+(\texorpdfstring{$\ast$}{*}(obj)) \+\_\+\+\_\+old = \texorpdfstring{$\ast$}{*}(obj); \texorpdfstring{$\ast$}{*}(obj) = \+\_\+\+\_\+old -\/ (operand); (void)(order); \mbox{\hyperlink{include_2stdatomic_8h_a078ff22b16930edd2268d1cb679445a5}{\+\_\+\+\_\+\+TT\+\_\+\+ATOMIC\+\_\+\+UNLOCK}}(); \+\_\+\+\_\+old; \})}
+{\footnotesize\ttfamily \#define atomic\+\_\+fetch\+\_\+sub\+\_\+explicit(\begin{DoxyParamCaption}\item[{}]{obj,  }\item[{}]{operand,  }\item[{}]{order }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ (\{\ \_\_typeof\_\_(*(obj))\ \_\_expected\ =\ \mbox{\hyperlink{include_2stdatomic_8h_abcbf72e31b4b3100152d409e9637441a}{atomic\_load\_explicit}}(obj,\ \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1bac6489d0374e297a776f6a3db7ea5654a}{memory\_order\_relaxed}});\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ while\ (!\mbox{\hyperlink{include_2stdatomic_8h_a97a5f3e6f5f733e94b1ddeff904d3bc0}{atomic\_compare\_exchange\_weak\_explicit}}(obj,\ \&\_\_expected,\ \_\_expected\ -\/\ (operand),\ order,\ \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1bac6489d0374e297a776f6a3db7ea5654a}{memory\_order\_relaxed}}));\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \_\_expected;\ \})}
+
+\end{DoxyCode}
 
 
-
-Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00255}{255}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00533}{533}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
 
 \Hypertarget{include_2stdatomic_8h_ae8e62cb9801fedb40ccaca61f60d8617}\label{include_2stdatomic_8h_ae8e62cb9801fedb40ccaca61f60d8617} 
 \index{stdatomic.h@{stdatomic.h}!atomic\_flag\_clear@{atomic\_flag\_clear}}
@@ -249,17 +416,27 @@ Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00255}{255}} o
 
 
 
-Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00295}{295}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00593}{593}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
 
 \Hypertarget{include_2stdatomic_8h_a3cf6ded3b463faf0cedce1718caaa695}\label{include_2stdatomic_8h_a3cf6ded3b463faf0cedce1718caaa695} 
 \index{stdatomic.h@{stdatomic.h}!ATOMIC\_FLAG\_INIT@{ATOMIC\_FLAG\_INIT}}
 \index{ATOMIC\_FLAG\_INIT@{ATOMIC\_FLAG\_INIT}!stdatomic.h@{stdatomic.h}}
-\doxysubsubsection{\texorpdfstring{ATOMIC\_FLAG\_INIT}{ATOMIC\_FLAG\_INIT}}
+\doxysubsubsection{\texorpdfstring{ATOMIC\_FLAG\_INIT}{ATOMIC\_FLAG\_INIT}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
 {\footnotesize\ttfamily \#define ATOMIC\+\_\+\+FLAG\+\_\+\+INIT~\{0\}}
 
 
 
-Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00227}{227}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00213}{213}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
+\Hypertarget{include_2stdatomic_8h_a3cf6ded3b463faf0cedce1718caaa695}\label{include_2stdatomic_8h_a3cf6ded3b463faf0cedce1718caaa695} 
+\index{stdatomic.h@{stdatomic.h}!ATOMIC\_FLAG\_INIT@{ATOMIC\_FLAG\_INIT}}
+\index{ATOMIC\_FLAG\_INIT@{ATOMIC\_FLAG\_INIT}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{ATOMIC\_FLAG\_INIT}{ATOMIC\_FLAG\_INIT}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \#define ATOMIC\+\_\+\+FLAG\+\_\+\+INIT~\{0\}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00213}{213}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
 
 \Hypertarget{include_2stdatomic_8h_ac207cf1efb51bc53fc9078301afa391f}\label{include_2stdatomic_8h_ac207cf1efb51bc53fc9078301afa391f} 
 \index{stdatomic.h@{stdatomic.h}!atomic\_flag\_test\_and\_set@{atomic\_flag\_test\_and\_set}}
@@ -269,57 +446,57 @@ Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00227}{227}} o
 
 
 
-Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00292}{292}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00590}{590}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
 
 \Hypertarget{include_2stdatomic_8h_af8a9cbe9495fcafaa892b24b383acf96}\label{include_2stdatomic_8h_af8a9cbe9495fcafaa892b24b383acf96} 
 \index{stdatomic.h@{stdatomic.h}!atomic\_init@{atomic\_init}}
 \index{atomic\_init@{atomic\_init}!stdatomic.h@{stdatomic.h}}
 \doxysubsubsection{\texorpdfstring{atomic\_init}{atomic\_init}}
-{\footnotesize\ttfamily \#define atomic\+\_\+init(\begin{DoxyParamCaption}\item[{}]{obj,  }\item[{}]{value }\end{DoxyParamCaption})~    do \{ \mbox{\hyperlink{include_2stdatomic_8h_a9f712e57179afb1b855da84b14ed670c}{atomic\+\_\+store\+\_\+explicit}}((obj), (value), \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752}{memory\+\_\+order\+\_\+seq\+\_\+cst}}); \} while (0)}
+{\footnotesize\ttfamily \#define atomic\+\_\+init(\begin{DoxyParamCaption}\item[{}]{obj,  }\item[{}]{value }\end{DoxyParamCaption})~do \{ \texorpdfstring{$\ast$}{*}(obj) = (value); \} while (0)}
 
 
 
-Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00234}{234}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00517}{517}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
 
 \Hypertarget{include_2stdatomic_8h_afb8e12dba0aa6280b29e3d403e4ce384}\label{include_2stdatomic_8h_afb8e12dba0aa6280b29e3d403e4ce384} 
 \index{stdatomic.h@{stdatomic.h}!atomic\_load@{atomic\_load}}
 \index{atomic\_load@{atomic\_load}!stdatomic.h@{stdatomic.h}}
 \doxysubsubsection{\texorpdfstring{atomic\_load}{atomic\_load}}
-{\footnotesize\ttfamily \#define atomic\+\_\+load(\begin{DoxyParamCaption}\item[{}]{obj }\end{DoxyParamCaption})~    \mbox{\hyperlink{include_2stdatomic_8h_abcbf72e31b4b3100152d409e9637441a}{atomic\+\_\+load\+\_\+explicit}}((obj) , \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752}{memory\+\_\+order\+\_\+seq\+\_\+cst}})}
+{\footnotesize\ttfamily \#define atomic\+\_\+load(\begin{DoxyParamCaption}\item[{}]{obj }\end{DoxyParamCaption})~\mbox{\hyperlink{include_2stdatomic_8h_abcbf72e31b4b3100152d409e9637441a}{atomic\+\_\+load\+\_\+explicit}}((obj) , \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752}{memory\+\_\+order\+\_\+seq\+\_\+cst}})}
 
 
 
-Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00246}{246}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00521}{521}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
 
 \Hypertarget{include_2stdatomic_8h_abcbf72e31b4b3100152d409e9637441a}\label{include_2stdatomic_8h_abcbf72e31b4b3100152d409e9637441a} 
 \index{stdatomic.h@{stdatomic.h}!atomic\_load\_explicit@{atomic\_load\_explicit}}
 \index{atomic\_load\_explicit@{atomic\_load\_explicit}!stdatomic.h@{stdatomic.h}}
 \doxysubsubsection{\texorpdfstring{atomic\_load\_explicit}{atomic\_load\_explicit}}
-{\footnotesize\ttfamily \#define atomic\+\_\+load\+\_\+explicit(\begin{DoxyParamCaption}\item[{}]{obj,  }\item[{}]{order }\end{DoxyParamCaption})~    (\{ \mbox{\hyperlink{include_2stdatomic_8h_a7b82615cb418a296137e2abcff7db14e}{\+\_\+\+\_\+\+TT\+\_\+\+ATOMIC\+\_\+\+LOCK}}(); \+\_\+\+\_\+typeof\+\_\+\+\_\+(\texorpdfstring{$\ast$}{*}(obj)) \+\_\+\+\_\+val = \texorpdfstring{$\ast$}{*}(obj); (void)(order); \mbox{\hyperlink{include_2stdatomic_8h_a078ff22b16930edd2268d1cb679445a5}{\+\_\+\+\_\+\+TT\+\_\+\+ATOMIC\+\_\+\+UNLOCK}}(); \+\_\+\+\_\+val; \})}
+{\footnotesize\ttfamily \#define atomic\+\_\+load\+\_\+explicit(\begin{DoxyParamCaption}\item[{}]{obj,  }\item[{}]{order }\end{DoxyParamCaption})~(\{ \mbox{\hyperlink{include_2stdatomic_8h_a7b82615cb418a296137e2abcff7db14e}{\+\_\+\+\_\+\+TT\+\_\+\+ATOMIC\+\_\+\+LOCK}}(); \+\_\+\+\_\+typeof\+\_\+\+\_\+(\texorpdfstring{$\ast$}{*}(obj)) \+\_\+\+\_\+val = \texorpdfstring{$\ast$}{*}(obj); (void)(order); \mbox{\hyperlink{include_2stdatomic_8h_a078ff22b16930edd2268d1cb679445a5}{\+\_\+\+\_\+\+TT\+\_\+\+ATOMIC\+\_\+\+UNLOCK}}(); \+\_\+\+\_\+val; \})}
 
 
 
-Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00243}{243}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00520}{520}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
 
 \Hypertarget{include_2stdatomic_8h_a87fbed10bf5d77e3b80f356e5246f102}\label{include_2stdatomic_8h_a87fbed10bf5d77e3b80f356e5246f102} 
 \index{stdatomic.h@{stdatomic.h}!atomic\_store@{atomic\_store}}
 \index{atomic\_store@{atomic\_store}!stdatomic.h@{stdatomic.h}}
 \doxysubsubsection{\texorpdfstring{atomic\_store}{atomic\_store}}
-{\footnotesize\ttfamily \#define atomic\+\_\+store(\begin{DoxyParamCaption}\item[{}]{obj,  }\item[{}]{desired }\end{DoxyParamCaption})~    \mbox{\hyperlink{include_2stdatomic_8h_a9f712e57179afb1b855da84b14ed670c}{atomic\+\_\+store\+\_\+explicit}}((obj), (desired), \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752}{memory\+\_\+order\+\_\+seq\+\_\+cst}})}
+{\footnotesize\ttfamily \#define atomic\+\_\+store(\begin{DoxyParamCaption}\item[{}]{obj,  }\item[{}]{desired }\end{DoxyParamCaption})~\mbox{\hyperlink{include_2stdatomic_8h_a9f712e57179afb1b855da84b14ed670c}{atomic\+\_\+store\+\_\+explicit}}((obj), (desired), \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752}{memory\+\_\+order\+\_\+seq\+\_\+cst}})}
 
 
 
-Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00240}{240}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00519}{519}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
 
 \Hypertarget{include_2stdatomic_8h_a9f712e57179afb1b855da84b14ed670c}\label{include_2stdatomic_8h_a9f712e57179afb1b855da84b14ed670c} 
 \index{stdatomic.h@{stdatomic.h}!atomic\_store\_explicit@{atomic\_store\_explicit}}
 \index{atomic\_store\_explicit@{atomic\_store\_explicit}!stdatomic.h@{stdatomic.h}}
 \doxysubsubsection{\texorpdfstring{atomic\_store\_explicit}{atomic\_store\_explicit}}
-{\footnotesize\ttfamily \#define atomic\+\_\+store\+\_\+explicit(\begin{DoxyParamCaption}\item[{}]{obj,  }\item[{}]{desired,  }\item[{}]{order }\end{DoxyParamCaption})~    do \{ (void)(order); \mbox{\hyperlink{include_2stdatomic_8h_a7b82615cb418a296137e2abcff7db14e}{\+\_\+\+\_\+\+TT\+\_\+\+ATOMIC\+\_\+\+LOCK}}(); \texorpdfstring{$\ast$}{*}(obj) = (desired); \mbox{\hyperlink{include_2stdatomic_8h_a078ff22b16930edd2268d1cb679445a5}{\+\_\+\+\_\+\+TT\+\_\+\+ATOMIC\+\_\+\+UNLOCK}}(); \} while (0)}
+{\footnotesize\ttfamily \#define atomic\+\_\+store\+\_\+explicit(\begin{DoxyParamCaption}\item[{}]{obj,  }\item[{}]{desired,  }\item[{}]{order }\end{DoxyParamCaption})~do \{ (void)(order); \mbox{\hyperlink{include_2stdatomic_8h_a7b82615cb418a296137e2abcff7db14e}{\+\_\+\+\_\+\+TT\+\_\+\+ATOMIC\+\_\+\+LOCK}}(); \texorpdfstring{$\ast$}{*}(obj) = (desired); \mbox{\hyperlink{include_2stdatomic_8h_a078ff22b16930edd2268d1cb679445a5}{\+\_\+\+\_\+\+TT\+\_\+\+ATOMIC\+\_\+\+UNLOCK}}(); \} while (0)}
 
 
 
-Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00237}{237}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00518}{518}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
 
 \Hypertarget{include_2stdatomic_8h_a817535e09bf9c427a1cbee66d06e7030}\label{include_2stdatomic_8h_a817535e09bf9c427a1cbee66d06e7030} 
 \index{stdatomic.h@{stdatomic.h}!atomic\_thread\_fence@{atomic\_thread\_fence}}
@@ -329,7 +506,27 @@ Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00237}{237}} o
 
 
 
-Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00232}{232}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00516}{516}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
+\Hypertarget{include_2stdatomic_8h_a2a34d10749d8ee0cbb6c471d3d16f994}\label{include_2stdatomic_8h_a2a34d10749d8ee0cbb6c471d3d16f994} 
+\index{stdatomic.h@{stdatomic.h}!ATOMIC\_VAR\_INIT@{ATOMIC\_VAR\_INIT}}
+\index{ATOMIC\_VAR\_INIT@{ATOMIC\_VAR\_INIT}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{ATOMIC\_VAR\_INIT}{ATOMIC\_VAR\_INIT}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \#define ATOMIC\+\_\+\+VAR\+\_\+\+INIT(\begin{DoxyParamCaption}\item[{}]{v }\end{DoxyParamCaption})~(v)}
+
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00214}{214}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
+\Hypertarget{include_2stdatomic_8h_a2a34d10749d8ee0cbb6c471d3d16f994}\label{include_2stdatomic_8h_a2a34d10749d8ee0cbb6c471d3d16f994} 
+\index{stdatomic.h@{stdatomic.h}!ATOMIC\_VAR\_INIT@{ATOMIC\_VAR\_INIT}}
+\index{ATOMIC\_VAR\_INIT@{ATOMIC\_VAR\_INIT}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{ATOMIC\_VAR\_INIT}{ATOMIC\_VAR\_INIT}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \#define ATOMIC\+\_\+\+VAR\+\_\+\+INIT(\begin{DoxyParamCaption}\item[{}]{v }\end{DoxyParamCaption})~(v)}
+
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00214}{214}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
 
 \Hypertarget{include_2stdatomic_8h_a7f4e925ad8ccb259c41cda0e797dd7a6}\label{include_2stdatomic_8h_a7f4e925ad8ccb259c41cda0e797dd7a6} 
 \index{stdatomic.h@{stdatomic.h}!TTAK\_PORTABLE\_STDATOMIC\_H@{TTAK\_PORTABLE\_STDATOMIC\_H}}
@@ -339,7 +536,7 @@ Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00232}{232}} o
 
 
 
-Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00028}{28}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00032}{32}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
 
 
 
@@ -352,7 +549,177 @@ Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00028}{28}} of
 
 
 
-Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00217}{217}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00234}{234}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
+\Hypertarget{include_2stdatomic_8h_aae91dd0fabf89334979da4075767723a}\label{include_2stdatomic_8h_aae91dd0fabf89334979da4075767723a} 
+\index{stdatomic.h@{stdatomic.h}!atomic\_char@{atomic\_char}}
+\index{atomic\_char@{atomic\_char}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{atomic\_char}{atomic\_char}}
+{\footnotesize\ttfamily typedef volatile char \mbox{\hyperlink{include_2stdatomic_8h_aae91dd0fabf89334979da4075767723a}{atomic\+\_\+char}}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00235}{235}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
+\Hypertarget{include_2stdatomic_8h_a47af6185878ed08e05cf92aeb391e4c5}\label{include_2stdatomic_8h_a47af6185878ed08e05cf92aeb391e4c5} 
+\index{stdatomic.h@{stdatomic.h}!atomic\_int@{atomic\_int}}
+\index{atomic\_int@{atomic\_int}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{atomic\_int}{atomic\_int}}
+{\footnotesize\ttfamily typedef volatile int \mbox{\hyperlink{include_2stdatomic_8h_a47af6185878ed08e05cf92aeb391e4c5}{atomic\+\_\+int}}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00240}{240}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
+\Hypertarget{include_2stdatomic_8h_a393105253dde147dbe8d17c729c3b3cc}\label{include_2stdatomic_8h_a393105253dde147dbe8d17c729c3b3cc} 
+\index{stdatomic.h@{stdatomic.h}!atomic\_int\_fast16\_t@{atomic\_int\_fast16\_t}}
+\index{atomic\_int\_fast16\_t@{atomic\_int\_fast16\_t}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{atomic\_int\_fast16\_t}{atomic\_int\_fast16\_t}}
+{\footnotesize\ttfamily typedef volatile int\+\_\+fast16\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_a393105253dde147dbe8d17c729c3b3cc}{atomic\+\_\+int\+\_\+fast16\+\_\+t}}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00256}{256}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
+\Hypertarget{include_2stdatomic_8h_a46345a1e828879eff1e867fb2a2704b4}\label{include_2stdatomic_8h_a46345a1e828879eff1e867fb2a2704b4} 
+\index{stdatomic.h@{stdatomic.h}!atomic\_int\_fast32\_t@{atomic\_int\_fast32\_t}}
+\index{atomic\_int\_fast32\_t@{atomic\_int\_fast32\_t}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{atomic\_int\_fast32\_t}{atomic\_int\_fast32\_t}}
+{\footnotesize\ttfamily typedef volatile int\+\_\+fast32\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_a46345a1e828879eff1e867fb2a2704b4}{atomic\+\_\+int\+\_\+fast32\+\_\+t}}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00258}{258}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
+\Hypertarget{include_2stdatomic_8h_aeb9f0ed97c801d27e7c650bfc8cabbba}\label{include_2stdatomic_8h_aeb9f0ed97c801d27e7c650bfc8cabbba} 
+\index{stdatomic.h@{stdatomic.h}!atomic\_int\_fast64\_t@{atomic\_int\_fast64\_t}}
+\index{atomic\_int\_fast64\_t@{atomic\_int\_fast64\_t}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{atomic\_int\_fast64\_t}{atomic\_int\_fast64\_t}}
+{\footnotesize\ttfamily typedef volatile int\+\_\+fast64\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_aeb9f0ed97c801d27e7c650bfc8cabbba}{atomic\+\_\+int\+\_\+fast64\+\_\+t}}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00260}{260}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
+\Hypertarget{include_2stdatomic_8h_ab68830b9273d86fb6f2294b57ffc4a99}\label{include_2stdatomic_8h_ab68830b9273d86fb6f2294b57ffc4a99} 
+\index{stdatomic.h@{stdatomic.h}!atomic\_int\_fast8\_t@{atomic\_int\_fast8\_t}}
+\index{atomic\_int\_fast8\_t@{atomic\_int\_fast8\_t}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{atomic\_int\_fast8\_t}{atomic\_int\_fast8\_t}}
+{\footnotesize\ttfamily typedef volatile int\+\_\+fast8\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_ab68830b9273d86fb6f2294b57ffc4a99}{atomic\+\_\+int\+\_\+fast8\+\_\+t}}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00254}{254}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
+\Hypertarget{include_2stdatomic_8h_a86d56a528bb84decf79d9f78f090cbaf}\label{include_2stdatomic_8h_a86d56a528bb84decf79d9f78f090cbaf} 
+\index{stdatomic.h@{stdatomic.h}!atomic\_int\_least16\_t@{atomic\_int\_least16\_t}}
+\index{atomic\_int\_least16\_t@{atomic\_int\_least16\_t}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{atomic\_int\_least16\_t}{atomic\_int\_least16\_t}}
+{\footnotesize\ttfamily typedef volatile int\+\_\+least16\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_a86d56a528bb84decf79d9f78f090cbaf}{atomic\+\_\+int\+\_\+least16\+\_\+t}}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00248}{248}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
+\Hypertarget{include_2stdatomic_8h_a572044581a00ae85e2f6df493b7cec54}\label{include_2stdatomic_8h_a572044581a00ae85e2f6df493b7cec54} 
+\index{stdatomic.h@{stdatomic.h}!atomic\_int\_least32\_t@{atomic\_int\_least32\_t}}
+\index{atomic\_int\_least32\_t@{atomic\_int\_least32\_t}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{atomic\_int\_least32\_t}{atomic\_int\_least32\_t}}
+{\footnotesize\ttfamily typedef volatile int\+\_\+least32\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_a572044581a00ae85e2f6df493b7cec54}{atomic\+\_\+int\+\_\+least32\+\_\+t}}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00250}{250}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
+\Hypertarget{include_2stdatomic_8h_a753852398c578c7b0e671ebe39a5a099}\label{include_2stdatomic_8h_a753852398c578c7b0e671ebe39a5a099} 
+\index{stdatomic.h@{stdatomic.h}!atomic\_int\_least64\_t@{atomic\_int\_least64\_t}}
+\index{atomic\_int\_least64\_t@{atomic\_int\_least64\_t}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{atomic\_int\_least64\_t}{atomic\_int\_least64\_t}}
+{\footnotesize\ttfamily typedef volatile int\+\_\+least64\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_a753852398c578c7b0e671ebe39a5a099}{atomic\+\_\+int\+\_\+least64\+\_\+t}}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00252}{252}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
+\Hypertarget{include_2stdatomic_8h_a2914a295069ac08b4ba7f14a4ccb44e1}\label{include_2stdatomic_8h_a2914a295069ac08b4ba7f14a4ccb44e1} 
+\index{stdatomic.h@{stdatomic.h}!atomic\_int\_least8\_t@{atomic\_int\_least8\_t}}
+\index{atomic\_int\_least8\_t@{atomic\_int\_least8\_t}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{atomic\_int\_least8\_t}{atomic\_int\_least8\_t}}
+{\footnotesize\ttfamily typedef volatile int\+\_\+least8\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_a2914a295069ac08b4ba7f14a4ccb44e1}{atomic\+\_\+int\+\_\+least8\+\_\+t}}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00246}{246}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
+\Hypertarget{include_2stdatomic_8h_ae007cd33a18f7ee428a3785c47cee39a}\label{include_2stdatomic_8h_ae007cd33a18f7ee428a3785c47cee39a} 
+\index{stdatomic.h@{stdatomic.h}!atomic\_intmax\_t@{atomic\_intmax\_t}}
+\index{atomic\_intmax\_t@{atomic\_intmax\_t}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{atomic\_intmax\_t}{atomic\_intmax\_t}}
+{\footnotesize\ttfamily typedef volatile intmax\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_ae007cd33a18f7ee428a3785c47cee39a}{atomic\+\_\+intmax\+\_\+t}}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00266}{266}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
+\Hypertarget{include_2stdatomic_8h_a0021b3c35266e139f055c6568a9b340e}\label{include_2stdatomic_8h_a0021b3c35266e139f055c6568a9b340e} 
+\index{stdatomic.h@{stdatomic.h}!atomic\_intptr\_t@{atomic\_intptr\_t}}
+\index{atomic\_intptr\_t@{atomic\_intptr\_t}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{atomic\_intptr\_t}{atomic\_intptr\_t}}
+{\footnotesize\ttfamily typedef volatile intptr\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_a0021b3c35266e139f055c6568a9b340e}{atomic\+\_\+intptr\+\_\+t}}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00262}{262}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
+\Hypertarget{include_2stdatomic_8h_ac6d2892304538baffbb9759ef417276f}\label{include_2stdatomic_8h_ac6d2892304538baffbb9759ef417276f} 
+\index{stdatomic.h@{stdatomic.h}!atomic\_llong@{atomic\_llong}}
+\index{atomic\_llong@{atomic\_llong}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{atomic\_llong}{atomic\_llong}}
+{\footnotesize\ttfamily typedef volatile long long \mbox{\hyperlink{include_2stdatomic_8h_ac6d2892304538baffbb9759ef417276f}{atomic\+\_\+llong}}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00244}{244}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
+\Hypertarget{include_2stdatomic_8h_a1252081478eb7160219c2e2bf4b8b26a}\label{include_2stdatomic_8h_a1252081478eb7160219c2e2bf4b8b26a} 
+\index{stdatomic.h@{stdatomic.h}!atomic\_long@{atomic\_long}}
+\index{atomic\_long@{atomic\_long}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{atomic\_long}{atomic\_long}}
+{\footnotesize\ttfamily typedef volatile long \mbox{\hyperlink{include_2stdatomic_8h_a1252081478eb7160219c2e2bf4b8b26a}{atomic\+\_\+long}}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00242}{242}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
+\Hypertarget{include_2stdatomic_8h_a63b627276aca47a56ffa1409d958b072}\label{include_2stdatomic_8h_a63b627276aca47a56ffa1409d958b072} 
+\index{stdatomic.h@{stdatomic.h}!atomic\_ptrdiff\_t@{atomic\_ptrdiff\_t}}
+\index{atomic\_ptrdiff\_t@{atomic\_ptrdiff\_t}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{atomic\_ptrdiff\_t}{atomic\_ptrdiff\_t}}
+{\footnotesize\ttfamily typedef volatile ptrdiff\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_a63b627276aca47a56ffa1409d958b072}{atomic\+\_\+ptrdiff\+\_\+t}}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00265}{265}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
+\Hypertarget{include_2stdatomic_8h_a0772ed223cc212a17979d8f86eca0d0c}\label{include_2stdatomic_8h_a0772ed223cc212a17979d8f86eca0d0c} 
+\index{stdatomic.h@{stdatomic.h}!atomic\_schar@{atomic\_schar}}
+\index{atomic\_schar@{atomic\_schar}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{atomic\_schar}{atomic\_schar}}
+{\footnotesize\ttfamily typedef volatile signed char \mbox{\hyperlink{include_2stdatomic_8h_a0772ed223cc212a17979d8f86eca0d0c}{atomic\+\_\+schar}}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00236}{236}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
+\Hypertarget{include_2stdatomic_8h_a819f411fe66d5bb295ed6b37b2234796}\label{include_2stdatomic_8h_a819f411fe66d5bb295ed6b37b2234796} 
+\index{stdatomic.h@{stdatomic.h}!atomic\_short@{atomic\_short}}
+\index{atomic\_short@{atomic\_short}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{atomic\_short}{atomic\_short}}
+{\footnotesize\ttfamily typedef volatile short \mbox{\hyperlink{include_2stdatomic_8h_a819f411fe66d5bb295ed6b37b2234796}{atomic\+\_\+short}}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00238}{238}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
 
 \Hypertarget{include_2stdatomic_8h_a579c826aec0f3d9971c22c3629abcbfe}\label{include_2stdatomic_8h_a579c826aec0f3d9971c22c3629abcbfe} 
 \index{stdatomic.h@{stdatomic.h}!atomic\_size\_t@{atomic\_size\_t}}
@@ -362,7 +729,47 @@ Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00217}{217}} o
 
 
 
-Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00218}{218}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00264}{264}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
+\Hypertarget{include_2stdatomic_8h_a753a736777dce1d447da5210b3609f20}\label{include_2stdatomic_8h_a753a736777dce1d447da5210b3609f20} 
+\index{stdatomic.h@{stdatomic.h}!atomic\_uchar@{atomic\_uchar}}
+\index{atomic\_uchar@{atomic\_uchar}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{atomic\_uchar}{atomic\_uchar}}
+{\footnotesize\ttfamily typedef volatile unsigned char \mbox{\hyperlink{include_2stdatomic_8h_a753a736777dce1d447da5210b3609f20}{atomic\+\_\+uchar}}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00237}{237}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
+\Hypertarget{include_2stdatomic_8h_acbc5f29da83246878bb8fd141533c797}\label{include_2stdatomic_8h_acbc5f29da83246878bb8fd141533c797} 
+\index{stdatomic.h@{stdatomic.h}!atomic\_uint@{atomic\_uint}}
+\index{atomic\_uint@{atomic\_uint}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{atomic\_uint}{atomic\_uint}}
+{\footnotesize\ttfamily typedef volatile unsigned int \mbox{\hyperlink{include_2stdatomic_8h_acbc5f29da83246878bb8fd141533c797}{atomic\+\_\+uint}}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00241}{241}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
+\Hypertarget{include_2stdatomic_8h_a3e21d6a8151a23b8a7ab27f277afda3c}\label{include_2stdatomic_8h_a3e21d6a8151a23b8a7ab27f277afda3c} 
+\index{stdatomic.h@{stdatomic.h}!atomic\_uint\_fast16\_t@{atomic\_uint\_fast16\_t}}
+\index{atomic\_uint\_fast16\_t@{atomic\_uint\_fast16\_t}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{atomic\_uint\_fast16\_t}{atomic\_uint\_fast16\_t}}
+{\footnotesize\ttfamily typedef volatile uint\+\_\+fast16\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_a3e21d6a8151a23b8a7ab27f277afda3c}{atomic\+\_\+uint\+\_\+fast16\+\_\+t}}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00257}{257}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
+\Hypertarget{include_2stdatomic_8h_a5b39a75b6539e1118c775986b95409dd}\label{include_2stdatomic_8h_a5b39a75b6539e1118c775986b95409dd} 
+\index{stdatomic.h@{stdatomic.h}!atomic\_uint\_fast32\_t@{atomic\_uint\_fast32\_t}}
+\index{atomic\_uint\_fast32\_t@{atomic\_uint\_fast32\_t}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{atomic\_uint\_fast32\_t}{atomic\_uint\_fast32\_t}}
+{\footnotesize\ttfamily typedef volatile uint\+\_\+fast32\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_a5b39a75b6539e1118c775986b95409dd}{atomic\+\_\+uint\+\_\+fast32\+\_\+t}}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00259}{259}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
 
 \Hypertarget{include_2stdatomic_8h_acc9ed8d56c5c645e7d5503aa72d1da49}\label{include_2stdatomic_8h_acc9ed8d56c5c645e7d5503aa72d1da49} 
 \index{stdatomic.h@{stdatomic.h}!atomic\_uint\_fast64\_t@{atomic\_uint\_fast64\_t}}
@@ -372,7 +779,107 @@ Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00218}{218}} o
 
 
 
-Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00219}{219}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00261}{261}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
+\Hypertarget{include_2stdatomic_8h_aabf99ce6da7804f051d4f34463095a26}\label{include_2stdatomic_8h_aabf99ce6da7804f051d4f34463095a26} 
+\index{stdatomic.h@{stdatomic.h}!atomic\_uint\_fast8\_t@{atomic\_uint\_fast8\_t}}
+\index{atomic\_uint\_fast8\_t@{atomic\_uint\_fast8\_t}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{atomic\_uint\_fast8\_t}{atomic\_uint\_fast8\_t}}
+{\footnotesize\ttfamily typedef volatile uint\+\_\+fast8\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_aabf99ce6da7804f051d4f34463095a26}{atomic\+\_\+uint\+\_\+fast8\+\_\+t}}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00255}{255}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
+\Hypertarget{include_2stdatomic_8h_a9da88867ad2d24655055e619a7b24414}\label{include_2stdatomic_8h_a9da88867ad2d24655055e619a7b24414} 
+\index{stdatomic.h@{stdatomic.h}!atomic\_uint\_least16\_t@{atomic\_uint\_least16\_t}}
+\index{atomic\_uint\_least16\_t@{atomic\_uint\_least16\_t}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{atomic\_uint\_least16\_t}{atomic\_uint\_least16\_t}}
+{\footnotesize\ttfamily typedef volatile uint\+\_\+least16\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_a9da88867ad2d24655055e619a7b24414}{atomic\+\_\+uint\+\_\+least16\+\_\+t}}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00249}{249}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
+\Hypertarget{include_2stdatomic_8h_aa23fa0ef41c89deef533b3805887968f}\label{include_2stdatomic_8h_aa23fa0ef41c89deef533b3805887968f} 
+\index{stdatomic.h@{stdatomic.h}!atomic\_uint\_least32\_t@{atomic\_uint\_least32\_t}}
+\index{atomic\_uint\_least32\_t@{atomic\_uint\_least32\_t}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{atomic\_uint\_least32\_t}{atomic\_uint\_least32\_t}}
+{\footnotesize\ttfamily typedef volatile uint\+\_\+least32\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_aa23fa0ef41c89deef533b3805887968f}{atomic\+\_\+uint\+\_\+least32\+\_\+t}}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00251}{251}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
+\Hypertarget{include_2stdatomic_8h_aa9d30dd336a44b1409370e6632a95b46}\label{include_2stdatomic_8h_aa9d30dd336a44b1409370e6632a95b46} 
+\index{stdatomic.h@{stdatomic.h}!atomic\_uint\_least64\_t@{atomic\_uint\_least64\_t}}
+\index{atomic\_uint\_least64\_t@{atomic\_uint\_least64\_t}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{atomic\_uint\_least64\_t}{atomic\_uint\_least64\_t}}
+{\footnotesize\ttfamily typedef volatile uint\+\_\+least64\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_aa9d30dd336a44b1409370e6632a95b46}{atomic\+\_\+uint\+\_\+least64\+\_\+t}}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00253}{253}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
+\Hypertarget{include_2stdatomic_8h_ac4514a29e7a7837bed1e52ef294e8f85}\label{include_2stdatomic_8h_ac4514a29e7a7837bed1e52ef294e8f85} 
+\index{stdatomic.h@{stdatomic.h}!atomic\_uint\_least8\_t@{atomic\_uint\_least8\_t}}
+\index{atomic\_uint\_least8\_t@{atomic\_uint\_least8\_t}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{atomic\_uint\_least8\_t}{atomic\_uint\_least8\_t}}
+{\footnotesize\ttfamily typedef volatile uint\+\_\+least8\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_ac4514a29e7a7837bed1e52ef294e8f85}{atomic\+\_\+uint\+\_\+least8\+\_\+t}}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00247}{247}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
+\Hypertarget{include_2stdatomic_8h_ada37a33b3b038f87fe29b013dbcc6d3e}\label{include_2stdatomic_8h_ada37a33b3b038f87fe29b013dbcc6d3e} 
+\index{stdatomic.h@{stdatomic.h}!atomic\_uintmax\_t@{atomic\_uintmax\_t}}
+\index{atomic\_uintmax\_t@{atomic\_uintmax\_t}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{atomic\_uintmax\_t}{atomic\_uintmax\_t}}
+{\footnotesize\ttfamily typedef volatile uintmax\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_ada37a33b3b038f87fe29b013dbcc6d3e}{atomic\+\_\+uintmax\+\_\+t}}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00267}{267}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
+\Hypertarget{include_2stdatomic_8h_a5a3e1cb5ef21e493807f14a4920f5dcd}\label{include_2stdatomic_8h_a5a3e1cb5ef21e493807f14a4920f5dcd} 
+\index{stdatomic.h@{stdatomic.h}!atomic\_uintptr\_t@{atomic\_uintptr\_t}}
+\index{atomic\_uintptr\_t@{atomic\_uintptr\_t}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{atomic\_uintptr\_t}{atomic\_uintptr\_t}}
+{\footnotesize\ttfamily typedef volatile uintptr\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_a5a3e1cb5ef21e493807f14a4920f5dcd}{atomic\+\_\+uintptr\+\_\+t}}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00263}{263}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
+\Hypertarget{include_2stdatomic_8h_ad5049efa83e60cc859efba4c6f636dc8}\label{include_2stdatomic_8h_ad5049efa83e60cc859efba4c6f636dc8} 
+\index{stdatomic.h@{stdatomic.h}!atomic\_ullong@{atomic\_ullong}}
+\index{atomic\_ullong@{atomic\_ullong}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{atomic\_ullong}{atomic\_ullong}}
+{\footnotesize\ttfamily typedef volatile unsigned long long \mbox{\hyperlink{include_2stdatomic_8h_ad5049efa83e60cc859efba4c6f636dc8}{atomic\+\_\+ullong}}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00245}{245}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
+\Hypertarget{include_2stdatomic_8h_a654b5604043dc806cdf6b6e7aa688f48}\label{include_2stdatomic_8h_a654b5604043dc806cdf6b6e7aa688f48} 
+\index{stdatomic.h@{stdatomic.h}!atomic\_ulong@{atomic\_ulong}}
+\index{atomic\_ulong@{atomic\_ulong}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{atomic\_ulong}{atomic\_ulong}}
+{\footnotesize\ttfamily typedef volatile unsigned long \mbox{\hyperlink{include_2stdatomic_8h_a654b5604043dc806cdf6b6e7aa688f48}{atomic\+\_\+ulong}}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00243}{243}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+
+\Hypertarget{include_2stdatomic_8h_a4eb27564617e84f78976767860dae14a}\label{include_2stdatomic_8h_a4eb27564617e84f78976767860dae14a} 
+\index{stdatomic.h@{stdatomic.h}!atomic\_ushort@{atomic\_ushort}}
+\index{atomic\_ushort@{atomic\_ushort}!stdatomic.h@{stdatomic.h}}
+\doxysubsubsection{\texorpdfstring{atomic\_ushort}{atomic\_ushort}}
+{\footnotesize\ttfamily typedef volatile unsigned short \mbox{\hyperlink{include_2stdatomic_8h_a4eb27564617e84f78976767860dae14a}{atomic\+\_\+ushort}}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00239}{239}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
 
 
 
@@ -411,7 +918,7 @@ memory\+\_\+order\+\_\+seq\+\_\+cst&\\
 \end{DoxyEnumFields}
 
 
-Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00208}{208}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00225}{225}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
 
 
 
@@ -424,7 +931,7 @@ Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00208}{208}} o
 
 
 
-Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00285}{285}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00586}{586}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
 
 Here is the caller graph for this function\+:\nopagebreak
 \begin{figure}[H]
@@ -441,7 +948,7 @@ Here is the caller graph for this function\+:\nopagebreak
 
 
 
-Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00276}{276}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00581}{581}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
 
 Here is the caller graph for this function\+:\nopagebreak
 \begin{figure}[H]
@@ -458,4 +965,8 @@ Here is the caller graph for this function\+:\nopagebreak
 \index{\_\_ttak\_atomic\_global\_lock@{\_\_ttak\_atomic\_global\_lock}!stdatomic.h@{stdatomic.h}}
 \doxysubsubsection{\texorpdfstring{\_\_ttak\_atomic\_global\_lock}{\_\_ttak\_atomic\_global\_lock}}
 {\footnotesize\ttfamily pthread\+\_\+mutex\+\_\+t \+\_\+\+\_\+ttak\+\_\+atomic\+\_\+global\+\_\+lock\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2stdatomic_8h_source_l00512}{512}} of file \mbox{\hyperlink{include_2stdatomic_8h_source}{stdatomic.\+h}}.
 

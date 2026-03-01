@@ -8,53 +8,75 @@
 \DoxyCodeLine{\Hypertarget{vector_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{bigreal_8h}{ttak/math/bigreal.h}}>}}
 \DoxyCodeLine{\Hypertarget{vector_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{shared_8h}{ttak/shared/shared.h}}>}}
 \DoxyCodeLine{\Hypertarget{vector_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{owner_8h}{ttak/mem/owner.h}}>}}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00007}00007\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00008}00008\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00009}00009\ \textcolor{comment}{\ *\ @brief\ Vector\ structure\ for\ 2D,\ 3D,\ and\ 4D.}}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00010}00010\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00011}\mbox{\hyperlink{structttak__vector}{00011}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__vector}{ttak\_vector}}\ \{}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00012}\mbox{\hyperlink{structttak__vector_a4fea3b875d7cd1f0ffb8c973bc4d33e6}{00012}}\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structttak__vector_a4fea3b875d7cd1f0ffb8c973bc4d33e6}{dim}};}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00013}\mbox{\hyperlink{structttak__vector_aa5e69b6a9d51c014d0c52d3c12e731fe}{00013}}\ \ \ \ \ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ \mbox{\hyperlink{structttak__vector_aa5e69b6a9d51c014d0c52d3c12e731fe}{elements}}[4];}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00014}\mbox{\hyperlink{vector_8h_afdad4416f1070c7b0bee06d72bf3ea17}{00014}}\ \}\ \mbox{\hyperlink{vector_8h_afdad4416f1070c7b0bee06d72bf3ea17}{ttak\_vector\_t}};}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00015}00015\ }
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00016}00016\ \mbox{\hyperlink{shared_8h_a23651acba69b58a505231b47b0802839}{TTAK\_SHARED\_DEFINE\_WRAPPER}}(vector,\ \mbox{\hyperlink{structttak__vector}{ttak\_vector\_t}})}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00017}\mbox{\hyperlink{vector_8h_a369355c13a77e16de351f18e21606590}{00017}}\ typedef\ ttak\_shared\_vector\_t\ \mbox{\hyperlink{vector_8h_a369355c13a77e16de351f18e21606590}{tt\_shared\_vector\_t}};}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00018}00018\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00019}00019\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00020}00020\ \textcolor{comment}{\ *\ @brief\ Creates\ a\ shared\ vector.}}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00021}00021\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00022}\mbox{\hyperlink{vector_8h_a765041ba76f7928b75e757fc48310498}{00022}}\ \mbox{\hyperlink{vector_8h_a369355c13a77e16de351f18e21606590}{tt\_shared\_vector\_t}}*\ \mbox{\hyperlink{vector_8h_a765041ba76f7928b75e757fc48310498}{ttak\_vector\_create}}(uint8\_t\ dim,\ \mbox{\hyperlink{structttak__owner}{tt\_owner\_t}}\ *owner,\ uint64\_t\ now);}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00023}00023\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00024}00024\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00025}00025\ \textcolor{comment}{\ *\ @brief\ Destroys\ a\ shared\ vector.}}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00026}00026\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00027}\mbox{\hyperlink{vector_8h_a702b99d16bbcb734b1de8f8bfdcebdd1}{00027}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{vector_8h_a702b99d16bbcb734b1de8f8bfdcebdd1}{ttak\_vector\_destroy}}(\mbox{\hyperlink{vector_8h_a369355c13a77e16de351f18e21606590}{tt\_shared\_vector\_t}}\ *sv,\ uint64\_t\ now);}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00028}00028\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00029}00029\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00030}00030\ \textcolor{comment}{\ *\ @brief\ Safe\ access\ to\ an\ element.\ Validates\ owner\ and\ bounds.}}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00031}00031\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00032}\mbox{\hyperlink{vector_8h_a96a2a9d3ba497cb63ad637f3b75736d2}{00032}}\ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}*\ \mbox{\hyperlink{vector_8h_a96a2a9d3ba497cb63ad637f3b75736d2}{ttak\_vector\_get}}(\mbox{\hyperlink{vector_8h_a369355c13a77e16de351f18e21606590}{tt\_shared\_vector\_t}}\ *sv,\ \mbox{\hyperlink{structttak__owner}{tt\_owner\_t}}\ *owner,\ uint8\_t\ index,\ uint64\_t\ now);}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00033}00033\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00034}00034\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00035}00035\ \textcolor{comment}{\ *\ @brief\ Sets\ an\ element\ value.}}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00036}00036\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00037}\mbox{\hyperlink{vector_8h_a34f618fe9f9be6c07aa68351aacdcfd4}{00037}}\ \_Bool\ \mbox{\hyperlink{vector_8h_a34f618fe9f9be6c07aa68351aacdcfd4}{ttak\_vector\_set}}(\mbox{\hyperlink{vector_8h_a369355c13a77e16de351f18e21606590}{tt\_shared\_vector\_t}}\ *sv,\ \mbox{\hyperlink{structttak__owner}{tt\_owner\_t}}\ *owner,\ uint8\_t\ index,\ const\ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *val,\ uint64\_t\ now);}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00038}00038\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00039}00039\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00040}00040\ \textcolor{comment}{\ *\ @brief\ Vector\ Dot\ Product.}}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00041}00041\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00042}\mbox{\hyperlink{vector_8h_a930369abe28ccf397719f2e7ff684f53}{00042}}\ \_Bool\ \mbox{\hyperlink{vector_8h_a930369abe28ccf397719f2e7ff684f53}{ttak\_vector\_dot}}(\mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *res,\ \mbox{\hyperlink{vector_8h_a369355c13a77e16de351f18e21606590}{tt\_shared\_vector\_t}}\ *a,\ \mbox{\hyperlink{vector_8h_a369355c13a77e16de351f18e21606590}{tt\_shared\_vector\_t}}\ *b,\ \mbox{\hyperlink{structttak__owner}{tt\_owner\_t}}\ *owner,\ uint64\_t\ now);}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00043}00043\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00044}00044\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00045}00045\ \textcolor{comment}{\ *\ @brief\ Vector\ Cross\ Product\ (3D\ only).}}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00046}00046\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00047}\mbox{\hyperlink{vector_8h_ab1b6402590d65531358adbe1b364f884}{00047}}\ \_Bool\ \mbox{\hyperlink{vector_8h_ab1b6402590d65531358adbe1b364f884}{ttak\_vector\_cross}}(\mbox{\hyperlink{vector_8h_a369355c13a77e16de351f18e21606590}{tt\_shared\_vector\_t}}\ *res,\ \mbox{\hyperlink{vector_8h_a369355c13a77e16de351f18e21606590}{tt\_shared\_vector\_t}}\ *a,\ \mbox{\hyperlink{vector_8h_a369355c13a77e16de351f18e21606590}{tt\_shared\_vector\_t}}\ *b,\ \mbox{\hyperlink{structttak__owner}{tt\_owner\_t}}\ *owner,\ uint64\_t\ now);}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00048}00048\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00049}00049\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00050}00050\ \textcolor{comment}{\ *\ @brief\ Magnitude\ of\ the\ vector.}}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00051}00051\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00052}\mbox{\hyperlink{vector_8h_a59ca6d0c2eb28d53776e65fa53610048}{00052}}\ \_Bool\ \mbox{\hyperlink{vector_8h_a59ca6d0c2eb28d53776e65fa53610048}{ttak\_vector\_magnitude}}(\mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *res,\ \mbox{\hyperlink{vector_8h_a369355c13a77e16de351f18e21606590}{tt\_shared\_vector\_t}}\ *v,\ \mbox{\hyperlink{structttak__owner}{tt\_owner\_t}}\ *owner,\ uint64\_t\ now);}
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00053}00053\ }
-\DoxyCodeLine{\Hypertarget{vector_8h_source_l00054}00054\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_MATH\_VECTOR\_H}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00008}00008\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00009}00009\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00010}00010\ \textcolor{comment}{\ *\ @brief\ Vector\ structure\ for\ 2D,\ 3D,\ and\ 4D.}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00011}00011\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00012}\mbox{\hyperlink{structttak__vector}{00012}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__vector}{ttak\_vector}}\ \{}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00013}\mbox{\hyperlink{structttak__vector_a4fea3b875d7cd1f0ffb8c973bc4d33e6}{00013}}\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structttak__vector_a4fea3b875d7cd1f0ffb8c973bc4d33e6}{dim}};}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00014}\mbox{\hyperlink{structttak__vector_aa5e69b6a9d51c014d0c52d3c12e731fe}{00014}}\ \ \ \ \ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ \mbox{\hyperlink{structttak__vector_aa5e69b6a9d51c014d0c52d3c12e731fe}{elements}}[4];}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00015}\mbox{\hyperlink{vector_8h_afdad4416f1070c7b0bee06d72bf3ea17}{00015}}\ \}\ \mbox{\hyperlink{vector_8h_afdad4416f1070c7b0bee06d72bf3ea17}{ttak\_vector\_t}};}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00017}\mbox{\hyperlink{structtt__shared__vector}{00017}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structtt__shared__vector}{tt\_shared\_vector}}\ \{}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00018}\mbox{\hyperlink{structtt__shared__vector_aa63a64f5ac761a4c898a62d3a321fdb1}{00018}}\ \ \ \ \ \mbox{\hyperlink{structttak__shared__t}{ttak\_shared\_t}}\ \mbox{\hyperlink{structtt__shared__vector_aa63a64f5ac761a4c898a62d3a321fdb1}{base}};}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00019}\mbox{\hyperlink{vector_8h_a883a6144e73d2afbbb167470ace3f65c}{00019}}\ \}\ \mbox{\hyperlink{vector_8h_a883a6144e73d2afbbb167470ace3f65c}{tt\_shared\_vector\_t}};}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00020}00020\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00021}00021\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00022}00022\ \textcolor{comment}{\ *\ @brief\ Creates\ a\ shared\ vector.}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00023}00023\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00024}\mbox{\hyperlink{vector_8h_a765041ba76f7928b75e757fc48310498}{00024}}\ \mbox{\hyperlink{structtt__shared__vector}{tt\_shared\_vector\_t}}*\ \mbox{\hyperlink{vector_8h_a765041ba76f7928b75e757fc48310498}{ttak\_vector\_create}}(uint8\_t\ dim,\ \mbox{\hyperlink{structttak__owner}{tt\_owner\_t}}\ *owner,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00025}00025\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00026}00026\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00027}00027\ \textcolor{comment}{\ *\ @brief\ Destroys\ a\ shared\ vector.}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00028}00028\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00029}\mbox{\hyperlink{vector_8h_a702b99d16bbcb734b1de8f8bfdcebdd1}{00029}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{vector_8h_a702b99d16bbcb734b1de8f8bfdcebdd1}{ttak\_vector\_destroy}}(\mbox{\hyperlink{structtt__shared__vector}{tt\_shared\_vector\_t}}\ *sv,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00030}00030\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00031}00031\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00032}00032\ \textcolor{comment}{\ *\ @brief\ Safe\ access\ to\ an\ element.\ Validates\ owner\ and\ bounds.}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00033}00033\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00034}\mbox{\hyperlink{vector_8h_a96a2a9d3ba497cb63ad637f3b75736d2}{00034}}\ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}*\ \mbox{\hyperlink{vector_8h_a96a2a9d3ba497cb63ad637f3b75736d2}{ttak\_vector\_get}}(\mbox{\hyperlink{structtt__shared__vector}{tt\_shared\_vector\_t}}\ *sv,\ \mbox{\hyperlink{structttak__owner}{tt\_owner\_t}}\ *owner,\ uint8\_t\ index,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00035}00035\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00036}00036\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00037}00037\ \textcolor{comment}{\ *\ @brief\ Sets\ an\ element\ value.}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00038}00038\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00039}\mbox{\hyperlink{vector_8h_ad00d46a71034ebbdb69077c70dd75d37}{00039}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{vector_8h_ad00d46a71034ebbdb69077c70dd75d37}{ttak\_vector\_set}}(\mbox{\hyperlink{structtt__shared__vector}{tt\_shared\_vector\_t}}\ *sv,\ \mbox{\hyperlink{structttak__owner}{tt\_owner\_t}}\ *owner,\ uint8\_t\ index,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *val,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00040}00040\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00041}00041\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00042}00042\ \textcolor{comment}{\ *\ @brief\ Vector\ Dot\ Product.}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00043}00043\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00044}\mbox{\hyperlink{vector_8h_aff25f5c4ad56ab928a8c1eccb6e27fce}{00044}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{vector_8h_aff25f5c4ad56ab928a8c1eccb6e27fce}{ttak\_vector\_dot}}(\mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *res,\ \mbox{\hyperlink{structtt__shared__vector}{tt\_shared\_vector\_t}}\ *a,\ \mbox{\hyperlink{structtt__shared__vector}{tt\_shared\_vector\_t}}\ *b,\ \mbox{\hyperlink{structttak__owner}{tt\_owner\_t}}\ *owner,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00045}00045\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00046}00046\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00047}00047\ \textcolor{comment}{\ *\ @brief\ Vector\ Cross\ Product\ (3D\ only).}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00048}00048\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00049}\mbox{\hyperlink{vector_8h_a3706cdbd77c97faf19610bb8dc39727b}{00049}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{vector_8h_a3706cdbd77c97faf19610bb8dc39727b}{ttak\_vector\_cross}}(\mbox{\hyperlink{structtt__shared__vector}{tt\_shared\_vector\_t}}\ *res,\ \mbox{\hyperlink{structtt__shared__vector}{tt\_shared\_vector\_t}}\ *a,\ \mbox{\hyperlink{structtt__shared__vector}{tt\_shared\_vector\_t}}\ *b,\ \mbox{\hyperlink{structttak__owner}{tt\_owner\_t}}\ *owner,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00050}00050\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00051}00051\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00052}00052\ \textcolor{comment}{\ *\ @brief\ Magnitude\ of\ the\ vector.}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00053}00053\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00054}\mbox{\hyperlink{vector_8h_a09dee645105174e27be82e8a0a7d98aa}{00054}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{vector_8h_a09dee645105174e27be82e8a0a7d98aa}{ttak\_vector\_magnitude}}(\mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *res,\ \mbox{\hyperlink{structtt__shared__vector}{tt\_shared\_vector\_t}}\ *v,\ \mbox{\hyperlink{structttak__owner}{tt\_owner\_t}}\ *owner,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00055}00055\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00056}00056\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00057}00057\ \textcolor{comment}{\ *\ @brief\ Approximate\ sine\ function\ using\ Yussigihae-\/inspired\ polynomial\ expansion.}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00058}00058\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00059}00059\ \textcolor{comment}{\ *\ @param\ res\ Result\ bigreal.}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00060}00060\ \textcolor{comment}{\ *\ @param\ angle\ Angle\ in\ radians.}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00061}00061\ \textcolor{comment}{\ *\ @param\ now\ Timestamp.}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00062}00062\ \textcolor{comment}{\ *\ @return\ true\ on\ success.}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00063}00063\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00064}\mbox{\hyperlink{vector_8h_a14ea6da6f22b0a72daa1e77e8315b132}{00064}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{vector_8h_a14ea6da6f22b0a72daa1e77e8315b132}{ttak\_math\_approx\_sin}}(\mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *res,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *angle,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00065}00065\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00066}00066\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00067}00067\ \textcolor{comment}{\ *\ @brief\ Approximate\ cosine\ function\ using\ Yussigihae-\/inspired\ polynomial\ expansion.}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00068}00068\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00069}00069\ \textcolor{comment}{\ *\ @param\ res\ Result\ bigreal.}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00070}00070\ \textcolor{comment}{\ *\ @param\ angle\ Angle\ in\ radians.}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00071}00071\ \textcolor{comment}{\ *\ @param\ now\ Timestamp.}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00072}00072\ \textcolor{comment}{\ *\ @return\ true\ on\ success.}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00073}00073\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00074}\mbox{\hyperlink{vector_8h_ab0dce8963cd0e7ae8469a4e95c21672a}{00074}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{vector_8h_ab0dce8963cd0e7ae8469a4e95c21672a}{ttak\_math\_approx\_cos}}(\mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *res,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ *angle,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{vector_8h_source_l00076}00076\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_MATH\_VECTOR\_H}}
 
 \end{DoxyCode}

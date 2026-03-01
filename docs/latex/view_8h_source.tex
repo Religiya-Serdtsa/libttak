@@ -23,37 +23,39 @@
 \DoxyCodeLine{\Hypertarget{view_8h_source_l00019}\mbox{\hyperlink{structttak__net__view_a27078f10ad95101e3375ebbcebaab293}{00019}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structttak__net__view_a27078f10ad95101e3375ebbcebaab293}{len}};}
 \DoxyCodeLine{\Hypertarget{view_8h_source_l00020}\mbox{\hyperlink{structttak__net__view_a559d9fd6cfc42d7f9ebcdb495a7ed555}{00020}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__net__view_a559d9fd6cfc42d7f9ebcdb495a7ed555}{birth\_ns}};}
 \DoxyCodeLine{\Hypertarget{view_8h_source_l00021}\mbox{\hyperlink{structttak__net__view_aac3a5b6b9fb8d4a64a05fd3ff66e16c1}{00021}}\ \ \ \ \ \mbox{\hyperlink{structttak__io__zerocopy__region}{ttak\_io\_zerocopy\_region\_t}}\ \mbox{\hyperlink{structttak__net__view_aac3a5b6b9fb8d4a64a05fd3ff66e16c1}{region}};}
-\DoxyCodeLine{\Hypertarget{view_8h_source_l00022}\mbox{\hyperlink{view_8h_a764bf4963c58bc00051fe1e24de7afc8}{00022}}\ \}\ \mbox{\hyperlink{view_8h_a764bf4963c58bc00051fe1e24de7afc8}{ttak\_net\_view\_t}};}
-\DoxyCodeLine{\Hypertarget{view_8h_source_l00023}00023\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{view_8h_source_l00024}00024\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{view_8h_source_l00025}00025\ \textcolor{comment}{\ *\ @brief\ Initializes\ a\ view\ structure.}}
-\DoxyCodeLine{\Hypertarget{view_8h_source_l00026}00026\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{view_8h_source_l00027}\mbox{\hyperlink{view_8h_adcd0063d2f8a24038c7a73e486f012fe}{00027}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{view_8h_adcd0063d2f8a24038c7a73e486f012fe}{ttak\_net\_view\_init}}(\mbox{\hyperlink{structttak__net__view}{ttak\_net\_view\_t}}\ *view);}
-\DoxyCodeLine{\Hypertarget{view_8h_source_l00028}00028\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{view_8h_source_l00029}00029\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{view_8h_source_l00030}00030\ \textcolor{comment}{\ *\ @brief\ Reads\ from\ @p\ endpoint\ into\ a\ detachable\ buffer\ and\ wires\ it\ to\ @p\ view.}}
-\DoxyCodeLine{\Hypertarget{view_8h_source_l00031}00031\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{view_8h_source_l00032}\mbox{\hyperlink{view_8h_a06a3edf488055485ebf9862be3604086}{00032}}\ \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\_io\_status\_t}}\ \mbox{\hyperlink{view_8h_a06a3edf488055485ebf9862be3604086}{ttak\_net\_view\_from\_endpoint}}(\mbox{\hyperlink{structttak__net__view}{ttak\_net\_view\_t}}\ *view,}
-\DoxyCodeLine{\Hypertarget{view_8h_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ttak\_shared\_net\_endpoint\_t\ *endpoint,}
-\DoxyCodeLine{\Hypertarget{view_8h_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structttak__owner}{ttak\_owner\_t}}\ *owner,}
-\DoxyCodeLine{\Hypertarget{view_8h_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ max\_len,}
-\DoxyCodeLine{\Hypertarget{view_8h_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ flags,}
-\DoxyCodeLine{\Hypertarget{view_8h_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint64\_t\ now);}
-\DoxyCodeLine{\Hypertarget{view_8h_source_l00038}00038\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{view_8h_source_l00039}00039\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{view_8h_source_l00040}00040\ \textcolor{comment}{\ *\ @brief\ Returns\ the\ immutable\ payload\ pointer\ held\ by\ the\ view.}}
-\DoxyCodeLine{\Hypertarget{view_8h_source_l00041}00041\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{view_8h_source_l00042}\mbox{\hyperlink{view_8h_a51f5626d87222172f2a0d026ec0f5d20}{00042}}\ \textcolor{keyword}{const}\ uint8\_t\ *\mbox{\hyperlink{view_8h_a51f5626d87222172f2a0d026ec0f5d20}{ttak\_net\_view\_data}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__net__view}{ttak\_net\_view\_t}}\ *view);}
-\DoxyCodeLine{\Hypertarget{view_8h_source_l00043}00043\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{view_8h_source_l00044}00044\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{view_8h_source_l00045}00045\ \textcolor{comment}{\ *\ @brief\ Releases\ detachable\ resources\ associated\ with\ the\ view.}}
-\DoxyCodeLine{\Hypertarget{view_8h_source_l00046}00046\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{view_8h_source_l00047}\mbox{\hyperlink{view_8h_adb7955f44cd0dba998ea1c744b28f031}{00047}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{view_8h_adb7955f44cd0dba998ea1c744b28f031}{ttak\_net\_view\_release}}(\mbox{\hyperlink{structttak__net__view}{ttak\_net\_view\_t}}\ *view);}
-\DoxyCodeLine{\Hypertarget{view_8h_source_l00048}00048\ }
-\DoxyCodeLine{\Hypertarget{view_8h_source_l00049}00049\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
-\DoxyCodeLine{\Hypertarget{view_8h_source_l00050}00050\ \}}
-\DoxyCodeLine{\Hypertarget{view_8h_source_l00051}00051\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{\Hypertarget{view_8h_source_l00052}00052\ }
-\DoxyCodeLine{\Hypertarget{view_8h_source_l00053}00053\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ TTAK\_NET\_VIEW\_H\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{view_8h_source_l00022}\mbox{\hyperlink{structttak__net__view_a752ade3b4af89fef29d6ea897abdaea5}{00022}}\ \ \ \ \ \mbox{\hyperlink{structttak__net__lattice__slot}{ttak\_net\_lattice\_slot\_t}}\ *\mbox{\hyperlink{structttak__net__view_a752ade3b4af89fef29d6ea897abdaea5}{slot}};}
+\DoxyCodeLine{\Hypertarget{view_8h_source_l00023}\mbox{\hyperlink{structttak__net__view_abb602be1d6d3343cf7bdc83bb0675dee}{00023}}\ \ \ \ \ \mbox{\hyperlink{structttak__net__lattice}{ttak\_net\_lattice\_t}}\ *\mbox{\hyperlink{structttak__net__view_abb602be1d6d3343cf7bdc83bb0675dee}{slot\_lattice}};}
+\DoxyCodeLine{\Hypertarget{view_8h_source_l00024}\mbox{\hyperlink{view_8h_a764bf4963c58bc00051fe1e24de7afc8}{00024}}\ \}\ \mbox{\hyperlink{view_8h_a764bf4963c58bc00051fe1e24de7afc8}{ttak\_net\_view\_t}};}
+\DoxyCodeLine{\Hypertarget{view_8h_source_l00025}00025\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{view_8h_source_l00026}00026\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{view_8h_source_l00027}00027\ \textcolor{comment}{\ *\ @brief\ Initializes\ a\ view\ structure.}}
+\DoxyCodeLine{\Hypertarget{view_8h_source_l00028}00028\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{view_8h_source_l00029}\mbox{\hyperlink{view_8h_adcd0063d2f8a24038c7a73e486f012fe}{00029}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{view_8h_adcd0063d2f8a24038c7a73e486f012fe}{ttak\_net\_view\_init}}(\mbox{\hyperlink{structttak__net__view}{ttak\_net\_view\_t}}\ *view);}
+\DoxyCodeLine{\Hypertarget{view_8h_source_l00030}00030\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{view_8h_source_l00031}00031\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{view_8h_source_l00032}00032\ \textcolor{comment}{\ *\ @brief\ Reads\ from\ @p\ endpoint\ into\ a\ detachable\ buffer\ and\ wires\ it\ to\ @p\ view.}}
+\DoxyCodeLine{\Hypertarget{view_8h_source_l00033}00033\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{view_8h_source_l00034}\mbox{\hyperlink{view_8h_a06a3edf488055485ebf9862be3604086}{00034}}\ \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\_io\_status\_t}}\ \mbox{\hyperlink{view_8h_a06a3edf488055485ebf9862be3604086}{ttak\_net\_view\_from\_endpoint}}(\mbox{\hyperlink{structttak__net__view}{ttak\_net\_view\_t}}\ *view,}
+\DoxyCodeLine{\Hypertarget{view_8h_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ttak\_shared\_net\_endpoint\_t\ *endpoint,}
+\DoxyCodeLine{\Hypertarget{view_8h_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structttak__owner}{ttak\_owner\_t}}\ *owner,}
+\DoxyCodeLine{\Hypertarget{view_8h_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ max\_len,}
+\DoxyCodeLine{\Hypertarget{view_8h_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ flags,}
+\DoxyCodeLine{\Hypertarget{view_8h_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{view_8h_source_l00040}00040\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{view_8h_source_l00041}00041\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{view_8h_source_l00042}00042\ \textcolor{comment}{\ *\ @brief\ Returns\ the\ immutable\ payload\ pointer\ held\ by\ the\ view.}}
+\DoxyCodeLine{\Hypertarget{view_8h_source_l00043}00043\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{view_8h_source_l00044}\mbox{\hyperlink{view_8h_a51f5626d87222172f2a0d026ec0f5d20}{00044}}\ \textcolor{keyword}{const}\ uint8\_t\ *\mbox{\hyperlink{view_8h_a51f5626d87222172f2a0d026ec0f5d20}{ttak\_net\_view\_data}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__net__view}{ttak\_net\_view\_t}}\ *view);}
+\DoxyCodeLine{\Hypertarget{view_8h_source_l00045}00045\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{view_8h_source_l00046}00046\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{view_8h_source_l00047}00047\ \textcolor{comment}{\ *\ @brief\ Releases\ detachable\ resources\ associated\ with\ the\ view.}}
+\DoxyCodeLine{\Hypertarget{view_8h_source_l00048}00048\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{view_8h_source_l00049}\mbox{\hyperlink{view_8h_adb7955f44cd0dba998ea1c744b28f031}{00049}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{view_8h_adb7955f44cd0dba998ea1c744b28f031}{ttak\_net\_view\_release}}(\mbox{\hyperlink{structttak__net__view}{ttak\_net\_view\_t}}\ *view);}
+\DoxyCodeLine{\Hypertarget{view_8h_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{view_8h_source_l00051}00051\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{view_8h_source_l00052}00052\ \}}
+\DoxyCodeLine{\Hypertarget{view_8h_source_l00053}00053\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{view_8h_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{view_8h_source_l00055}00055\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ TTAK\_NET\_VIEW\_H\ */}\textcolor{preprocessor}{}}
 
 \end{DoxyCode}

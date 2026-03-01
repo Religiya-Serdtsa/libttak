@@ -1,15 +1,17 @@
 <map id="include/ttak/mem/epoch_gc.h" name="include/ttak/mem/epoch_gc.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="134,5,349,31"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="273,5,487,31"/>
 <area shape="rect" id="Node000002" href="$mem__tree_8h.html" title=" " alt="" coords="140,79,343,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="244,31,244,65,239,65,239,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="359,33,277,75,275,70,357,28"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="307,152,405,177"/>
+<area shape="poly" id="edge8_Node000001_Node000006" title=" " alt="" coords="381,32,363,139,358,138,375,31"/>
+<area shape="rect" id="Node000007" href="$pthread_8h.html" title="POSIX thread compatibility shim." alt="" coords="430,152,514,177"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="390,30,460,139,455,142,385,33"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="5,152,80,177"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="210,107,89,150,87,145,209,102"/>
 <area shape="rect" id="Node000004" title=" " alt="" coords="105,152,175,177"/>
 <area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="227,106,169,146,166,142,224,102"/>
 <area shape="rect" id="Node000005" title=" " alt="" coords="200,152,283,177"/>
 <area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="244,104,244,138,239,138,239,104"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="307,152,405,177"/>
 <area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="261,102,327,142,324,147,258,106"/>
-<area shape="rect" id="Node000007" href="$pthread_8h.html" title="POSIX thread compatibility shim." alt="" coords="430,152,514,177"/>
 <area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="279,101,423,145,421,151,278,107"/>
 </map>

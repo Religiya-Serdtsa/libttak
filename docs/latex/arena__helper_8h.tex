@@ -44,6 +44,8 @@ void \mbox{\hyperlink{arena__helper_8h_ad40c0b13b10951fc33827f7ca33c87a0}{ttak\+
 \begin{DoxyCompactList}\small\item\em Destroys an arena helper context and owned GC state. \end{DoxyCompactList}\item 
 bool \mbox{\hyperlink{arena__helper_8h_a095df399f96b12cc4c06139b81ac90a4}{ttak\+\_\+arena\+\_\+generation\+\_\+begin}} (\mbox{\hyperlink{arena__helper_8h_ab96290538ecb1f2ca8dfec621c7cff25}{ttak\+\_\+arena\+\_\+env\+\_\+t}} \texorpdfstring{$\ast$}{*}env, \mbox{\hyperlink{arena__helper_8h_ab23849d4450be18c9d5a665b2d80c63d}{ttak\+\_\+arena\+\_\+generation\+\_\+t}} \texorpdfstring{$\ast$}{*}generation, uint32\+\_\+t epoch\+\_\+id)
 \begin{DoxyCompactList}\small\item\em Allocates and registers a new generation buffer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{arena__helper_8h_ae5bdd535c45774fd4603c51390a917d9}{ttak\+\_\+arena\+\_\+generation\+\_\+reset}} (\mbox{\hyperlink{arena__helper_8h_ab23849d4450be18c9d5a665b2d80c63d}{ttak\+\_\+arena\+\_\+generation\+\_\+t}} \texorpdfstring{$\ast$}{*}generation)
+\begin{DoxyCompactList}\small\item\em Resets the scatter epoch, executing the Arena\+\_\+\+Reset\+\_\+\+Routine. \end{DoxyCompactList}\item 
 void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{arena__helper_8h_a8413879148e33cd64300c653d4e92fc4}{ttak\+\_\+arena\+\_\+generation\+\_\+claim}} (\mbox{\hyperlink{arena__helper_8h_ab96290538ecb1f2ca8dfec621c7cff25}{ttak\+\_\+arena\+\_\+env\+\_\+t}} \texorpdfstring{$\ast$}{*}env, \mbox{\hyperlink{arena__helper_8h_ab23849d4450be18c9d5a665b2d80c63d}{ttak\+\_\+arena\+\_\+generation\+\_\+t}} \texorpdfstring{$\ast$}{*}generation, size\+\_\+t bytes)
 \begin{DoxyCompactList}\small\item\em Claims a chunk from a generation, using the config chunk\+\_\+bytes when bytes is zero. \end{DoxyCompactList}\item 
 size\+\_\+t \mbox{\hyperlink{arena__helper_8h_ada6b26961ac63a95133472b4ab6ed81a}{ttak\+\_\+arena\+\_\+generation\+\_\+remaining}} (const \mbox{\hyperlink{arena__helper_8h_ab23849d4450be18c9d5a665b2d80c63d}{ttak\+\_\+arena\+\_\+generation\+\_\+t}} \texorpdfstring{$\ast$}{*}generation)
@@ -199,6 +201,16 @@ Number of chunks processed.
 
 
 Returns the remaining capacity inside the generation. 
+
+\Hypertarget{arena__helper_8h_ae5bdd535c45774fd4603c51390a917d9}\label{arena__helper_8h_ae5bdd535c45774fd4603c51390a917d9} 
+\index{arena\_helper.h@{arena\_helper.h}!ttak\_arena\_generation\_reset@{ttak\_arena\_generation\_reset}}
+\index{ttak\_arena\_generation\_reset@{ttak\_arena\_generation\_reset}!arena\_helper.h@{arena\_helper.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_arena\_generation\_reset()}{ttak\_arena\_generation\_reset()}}
+{\footnotesize\ttfamily void ttak\+\_\+arena\+\_\+generation\+\_\+reset (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{arena__helper_8h_ab23849d4450be18c9d5a665b2d80c63d}{ttak\+\_\+arena\+\_\+generation\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{generation }\end{DoxyParamCaption})}
+
+
+
+Resets the scatter epoch, executing the Arena\+\_\+\+Reset\+\_\+\+Routine. 
 
 \Hypertarget{arena__helper_8h_a09d343e3cfe82d3307c88ec1b426eaf7}\label{arena__helper_8h_a09d343e3cfe82d3307c88ec1b426eaf7} 
 \index{arena\_helper.h@{arena\_helper.h}!ttak\_arena\_generation\_retire@{ttak\_arena\_generation\_retire}}

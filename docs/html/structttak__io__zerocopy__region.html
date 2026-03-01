@@ -134,8 +134,8 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a9fbbeaad8b674c09b69e7947e19ecbfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac70a33d80e159a62721c2b56674533e5" id="r_ac70a33d80e159a62721c2b56674533e5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__io__zerocopy__region.html#ac70a33d80e159a62721c2b56674533e5">read_only</a></td></tr>
 <tr class="separator:ac70a33d80e159a62721c2b56674533e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac738e0fb860bd5f7aa2ac2b1ab064e8c" id="r_ac738e0fb860bd5f7aa2ac2b1ab064e8c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__io__zerocopy__region.html#ac738e0fb860bd5f7aa2ac2b1ab064e8c">segment_mask</a></td></tr>
-<tr class="separator:ac738e0fb860bd5f7aa2ac2b1ab064e8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb606e1f12f95b297dc2e9e3ca1fda55" id="r_acb606e1f12f95b297dc2e9e3ca1fda55"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__io__zerocopy__region.html#acb606e1f12f95b297dc2e9e3ca1fda55">segment_mask</a> [<a class="el" href="zerocopy_8h.html#a21ddff3c5ae247e5b7736b5f2ff20cda">TTAK_IO_ZC_SEGMENT_WORD_COUNT</a>]</td></tr>
+<tr class="separator:acb606e1f12f95b297dc2e9e3ca1fda55"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae33fc4988fcaaee200c453ccb7c8fc3e" id="r_ae33fc4988fcaaee200c453ccb7c8fc3e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="detachable_8h.html#ac2e1577a34551ffaedf5a16d11bdff0b">ttak_detachable_context_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__io__zerocopy__region.html#ae33fc4988fcaaee200c453ccb7c8fc3e">arena</a></td></tr>
 <tr class="separator:ae33fc4988fcaaee200c453ccb7c8fc3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab23af8d27768603c84ca2380ffd0eb1c" id="r_ab23af8d27768603c84ca2380ffd0eb1c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="detachable_8h.html#a849243c766d591f9c26aab69b9933f1b">ttak_detachable_allocation_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__io__zerocopy__region.html#ab23af8d27768603c84ca2380ffd0eb1c">allocation</a></td></tr>
@@ -145,7 +145,7 @@ Public Attributes</h2></td></tr>
 <div class="textblock"><p>Temporary zero-copy receive window allocated in a detachable arena. </p>
 <p>Data is allocated as one contiguous buffer but internally tracked as power-of-two segments. segment_mask marks which segments are populated so the recv loop can advance using bit operations. </p>
 
-<p class="definition">Definition at line <a class="el" href="zerocopy_8h_source.html#l00027">27</a> of file <a class="el" href="zerocopy_8h_source.html">zerocopy.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="zerocopy_8h_source.html#l00031">31</a> of file <a class="el" href="zerocopy_8h_source.html">zerocopy.h</a>.</p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
 <a id="ab23af8d27768603c84ca2380ffd0eb1c" name="ab23af8d27768603c84ca2380ffd0eb1c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab23af8d27768603c84ca2380ffd0eb1c">&#9670;&#160;</a></span>allocation</h2>
@@ -159,7 +159,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="zerocopy_8h_source.html#l00034">34</a> of file <a class="el" href="zerocopy_8h_source.html">zerocopy.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="zerocopy_8h_source.html#l00038">38</a> of file <a class="el" href="zerocopy_8h_source.html">zerocopy.h</a>.</p>
 
 </div>
 </div>
@@ -175,7 +175,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="zerocopy_8h_source.html#l00033">33</a> of file <a class="el" href="zerocopy_8h_source.html">zerocopy.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="zerocopy_8h_source.html#l00037">37</a> of file <a class="el" href="zerocopy_8h_source.html">zerocopy.h</a>.</p>
 
 </div>
 </div>
@@ -191,7 +191,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="zerocopy_8h_source.html#l00030">30</a> of file <a class="el" href="zerocopy_8h_source.html">zerocopy.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="zerocopy_8h_source.html#l00034">34</a> of file <a class="el" href="zerocopy_8h_source.html">zerocopy.h</a>.</p>
 
 </div>
 </div>
@@ -207,7 +207,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="zerocopy_8h_source.html#l00028">28</a> of file <a class="el" href="zerocopy_8h_source.html">zerocopy.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="zerocopy_8h_source.html#l00032">32</a> of file <a class="el" href="zerocopy_8h_source.html">zerocopy.h</a>.</p>
 
 </div>
 </div>
@@ -223,7 +223,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="zerocopy_8h_source.html#l00029">29</a> of file <a class="el" href="zerocopy_8h_source.html">zerocopy.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="zerocopy_8h_source.html#l00033">33</a> of file <a class="el" href="zerocopy_8h_source.html">zerocopy.h</a>.</p>
 
 </div>
 </div>
@@ -239,23 +239,23 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="zerocopy_8h_source.html#l00031">31</a> of file <a class="el" href="zerocopy_8h_source.html">zerocopy.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="zerocopy_8h_source.html#l00035">35</a> of file <a class="el" href="zerocopy_8h_source.html">zerocopy.h</a>.</p>
 
 </div>
 </div>
-<a id="ac738e0fb860bd5f7aa2ac2b1ab064e8c" name="ac738e0fb860bd5f7aa2ac2b1ab064e8c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac738e0fb860bd5f7aa2ac2b1ab064e8c">&#9670;&#160;</a></span>segment_mask</h2>
+<a id="acb606e1f12f95b297dc2e9e3ca1fda55" name="acb606e1f12f95b297dc2e9e3ca1fda55"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb606e1f12f95b297dc2e9e3ca1fda55">&#9670;&#160;</a></span>segment_mask</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ttak_io_zerocopy_region::segment_mask</td>
+          <td class="memname">uint32_t ttak_io_zerocopy_region::segment_mask[<a class="el" href="zerocopy_8h.html#a21ddff3c5ae247e5b7736b5f2ff20cda">TTAK_IO_ZC_SEGMENT_WORD_COUNT</a>]</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="zerocopy_8h_source.html#l00032">32</a> of file <a class="el" href="zerocopy_8h_source.html">zerocopy.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="zerocopy_8h_source.html#l00036">36</a> of file <a class="el" href="zerocopy_8h_source.html">zerocopy.h</a>.</p>
 
 </div>
 </div>

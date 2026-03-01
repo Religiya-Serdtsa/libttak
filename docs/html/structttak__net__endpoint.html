@@ -108,16 +108,21 @@ $(document).ready(function(){initNavTree('structttak__net__endpoint.html',''); i
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="structttak__net__endpoint__coll__graph.png" border="0" usemap="#attak__net__endpoint_coll__map" alt="Collaboration graph"/></div>
 <map name="attak__net__endpoint_coll__map" id="attak__net__endpoint_coll__map">
-<area shape="rect" title="Shared socket wrapper guarded by ttak_io_guard_t and owner policies." alt="" coords="5,372,145,397"/>
-<area shape="poly" title=" " alt="" coords="160,376,172,385,164,392,146,395,145,390,162,387,167,385,158,381"/>
-<area shape="rect" href="structttak__io__guard.html" title=" " alt="" coords="20,284,131,309"/>
-<area shape="poly" title=" " alt="" coords="78,323,78,371,73,371,73,323"/>
-<area shape="rect" href="structttak__owner.html" title="The Owner structure." alt="" coords="28,196,123,221"/>
-<area shape="poly" title=" " alt="" coords="78,235,78,283,73,283,73,235"/>
-<area shape="rect" href="structttak__map__t.html" title=" " alt="" coords="27,93,123,119"/>
-<area shape="poly" title=" " alt="" coords="78,133,78,196,73,196,73,133"/>
-<area shape="rect" href="struct__node.html" title="Node structure with max_align_t padding for Raspberry Pi compatibility." alt="" coords="45,5,106,31"/>
-<area shape="poly" title=" " alt="" coords="78,45,78,93,73,93,73,45"/>
+<area shape="rect" title="Shared socket wrapper guarded by ttak_io_guard_t and owner policies." alt="" coords="61,376,201,401"/>
+<area shape="poly" title=" " alt="" coords="216,380,228,389,220,396,202,399,201,394,218,391,223,389,214,385"/>
+<area shape="rect" href="structttak__io__guard.html" title=" " alt="" coords="5,286,116,311"/>
+<area shape="poly" title=" " alt="" coords="81,320,124,374,120,377,76,324"/>
+<area shape="rect" href="structttak__owner.html" title="The Owner structure." alt="" coords="8,196,103,221"/>
+<area shape="poly" title=" " alt="" coords="60,235,63,285,57,286,54,235"/>
+<area shape="rect" href="structttak__map__t.html" title=" " alt="" coords="7,93,103,119"/>
+<area shape="poly" title=" " alt="" coords="58,133,58,196,53,196,53,133"/>
+<area shape="rect" href="struct__node.html" title="Node structure with max_align_t padding for Raspberry Pi compatibility." alt="" coords="25,5,86,31"/>
+<area shape="poly" title=" " alt="" coords="58,45,58,93,53,93,53,45"/>
+<area shape="rect" href="structttak__net__lattice.html" title="The Lattice (Sanpan) structure." alt="" coords="141,286,265,311"/>
+<area shape="poly" title=" " alt="" coords="187,324,143,377,139,374,183,320"/>
+<area shape="poly" title=" " alt="" coords="281,290,292,299,284,307,266,310,265,304,282,302,287,299,278,294"/>
+<area shape="rect" href="structttak__net__lattice__slot.html" title="A single data slot in the lattice." alt="" coords="127,196,282,221"/>
+<area shape="poly" title=" " alt="" coords="207,235,206,286,201,286,202,235"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -145,6 +150,8 @@ Public Attributes</h2></td></tr>
 <tr class="separator:ac96df73b1520cec532696b22075d0924"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b93c9a965fdd649feaf50158c43c68c" id="r_a8b93c9a965fdd649feaf50158c43c68c"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__net__endpoint.html#a8b93c9a965fdd649feaf50158c43c68c">restart_ctx</a></td></tr>
 <tr class="separator:a8b93c9a965fdd649feaf50158c43c68c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d0aefe862d6522b2d3183235e1c7590" id="r_a6d0aefe862d6522b2d3183235e1c7590"><td class="memItemLeft" align="right" valign="top"><a class="el" href="lattice_8h.html#af961e989c213033a7a2cf8a755297de9">ttak_net_lattice_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__net__endpoint.html#a6d0aefe862d6522b2d3183235e1c7590">lattice</a></td></tr>
+<tr class="separator:a6d0aefe862d6522b2d3183235e1c7590"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3ab7e7442e2e13b2492e24eee9119655" id="r_a3ab7e7442e2e13b2492e24eee9119655"><td class="memItemLeft" >struct {&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a432bf6ecd4e6f4f513ba95df33fb0fa8" id="r_a432bf6ecd4e6f4f513ba95df33fb0fa8"><td class="memItemLeft" >&#160;&#160;&#160;uint8_t&#160;&#160;&#160;<a class="el" href="structttak__net__endpoint.html#a0598a717e7f0f5f2afee9a194bab77bb">storage</a> [128]&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
@@ -157,7 +164,7 @@ Public Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Shared socket wrapper guarded by ttak_io_guard_t and owner policies. </p>
 
-<p class="definition">Definition at line <a class="el" href="endpoint_8h_source.html#l00035">35</a> of file <a class="el" href="endpoint_8h_source.html">endpoint.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="endpoint_8h_source.html#l00037">37</a> of file <a class="el" href="endpoint_8h_source.html">endpoint.h</a>.</p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
 <a id="a3ab7e7442e2e13b2492e24eee9119655" name="a3ab7e7442e2e13b2492e24eee9119655"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3ab7e7442e2e13b2492e24eee9119655">&#9670;&#160;</a></span>[struct]</h2>
@@ -185,7 +192,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="endpoint_8h_source.html#l00037">37</a> of file <a class="el" href="endpoint_8h_source.html">endpoint.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="endpoint_8h_source.html#l00039">39</a> of file <a class="el" href="endpoint_8h_source.html">endpoint.h</a>.</p>
 
 </div>
 </div>
@@ -201,7 +208,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="endpoint_8h_source.html#l00036">36</a> of file <a class="el" href="endpoint_8h_source.html">endpoint.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="endpoint_8h_source.html#l00038">38</a> of file <a class="el" href="endpoint_8h_source.html">endpoint.h</a>.</p>
 
 </div>
 </div>
@@ -217,7 +224,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="endpoint_8h_source.html#l00041">41</a> of file <a class="el" href="endpoint_8h_source.html">endpoint.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="endpoint_8h_source.html#l00043">43</a> of file <a class="el" href="endpoint_8h_source.html">endpoint.h</a>.</p>
 
 </div>
 </div>
@@ -233,7 +240,23 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="endpoint_8h_source.html#l00042">42</a> of file <a class="el" href="endpoint_8h_source.html">endpoint.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="endpoint_8h_source.html#l00044">44</a> of file <a class="el" href="endpoint_8h_source.html">endpoint.h</a>.</p>
+
+</div>
+</div>
+<a id="a6d0aefe862d6522b2d3183235e1c7590" name="a6d0aefe862d6522b2d3183235e1c7590"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d0aefe862d6522b2d3183235e1c7590">&#9670;&#160;</a></span>lattice</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="lattice_8h.html#af961e989c213033a7a2cf8a755297de9">ttak_net_lattice_t</a>* ttak_net_endpoint::lattice</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="endpoint_8h_source.html#l00049">49</a> of file <a class="el" href="endpoint_8h_source.html">endpoint.h</a>.</p>
 
 </div>
 </div>
@@ -249,7 +272,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="endpoint_8h_source.html#l00049">49</a> of file <a class="el" href="endpoint_8h_source.html">endpoint.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="endpoint_8h_source.html#l00052">52</a> of file <a class="el" href="endpoint_8h_source.html">endpoint.h</a>.</p>
 
 </div>
 </div>
@@ -265,7 +288,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="endpoint_8h_source.html#l00045">45</a> of file <a class="el" href="endpoint_8h_source.html">endpoint.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="endpoint_8h_source.html#l00047">47</a> of file <a class="el" href="endpoint_8h_source.html">endpoint.h</a>.</p>
 
 </div>
 </div>
@@ -281,7 +304,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="endpoint_8h_source.html#l00039">39</a> of file <a class="el" href="endpoint_8h_source.html">endpoint.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="endpoint_8h_source.html#l00041">41</a> of file <a class="el" href="endpoint_8h_source.html">endpoint.h</a>.</p>
 
 </div>
 </div>
@@ -297,7 +320,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="endpoint_8h_source.html#l00044">44</a> of file <a class="el" href="endpoint_8h_source.html">endpoint.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="endpoint_8h_source.html#l00046">46</a> of file <a class="el" href="endpoint_8h_source.html">endpoint.h</a>.</p>
 
 </div>
 </div>
@@ -313,7 +336,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="endpoint_8h_source.html#l00046">46</a> of file <a class="el" href="endpoint_8h_source.html">endpoint.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="endpoint_8h_source.html#l00048">48</a> of file <a class="el" href="endpoint_8h_source.html">endpoint.h</a>.</p>
 
 </div>
 </div>
@@ -329,7 +352,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="endpoint_8h_source.html#l00043">43</a> of file <a class="el" href="endpoint_8h_source.html">endpoint.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="endpoint_8h_source.html#l00045">45</a> of file <a class="el" href="endpoint_8h_source.html">endpoint.h</a>.</p>
 
 </div>
 </div>
@@ -345,7 +368,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="endpoint_8h_source.html#l00038">38</a> of file <a class="el" href="endpoint_8h_source.html">endpoint.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="endpoint_8h_source.html#l00040">40</a> of file <a class="el" href="endpoint_8h_source.html">endpoint.h</a>.</p>
 
 </div>
 </div>
@@ -361,7 +384,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="endpoint_8h_source.html#l00048">48</a> of file <a class="el" href="endpoint_8h_source.html">endpoint.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="endpoint_8h_source.html#l00051">51</a> of file <a class="el" href="endpoint_8h_source.html">endpoint.h</a>.</p>
 
 </div>
 </div>
@@ -377,7 +400,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="endpoint_8h_source.html#l00040">40</a> of file <a class="el" href="endpoint_8h_source.html">endpoint.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="endpoint_8h_source.html#l00042">42</a> of file <a class="el" href="endpoint_8h_source.html">endpoint.h</a>.</p>
 
 </div>
 </div>

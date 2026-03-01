@@ -138,42 +138,60 @@ Macros</h2></td></tr>
 <tr class="separator:a7f4e925ad8ccb259c41cda0e797dd7a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a58014a490f8aa8f5dd78cd9203229cdf" id="r_a58014a490f8aa8f5dd78cd9203229cdf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a58014a490f8aa8f5dd78cd9203229cdf">__TTAK_NEEDS_PORTABLE_STDATOMIC__</a>&#160;&#160;&#160;1</td></tr>
 <tr class="separator:a58014a490f8aa8f5dd78cd9203229cdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3cf6ded3b463faf0cedce1718caaa695" id="r_a3cf6ded3b463faf0cedce1718caaa695"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a3cf6ded3b463faf0cedce1718caaa695">ATOMIC_FLAG_INIT</a>&#160;&#160;&#160;{0}</td></tr>
+<tr class="separator:a3cf6ded3b463faf0cedce1718caaa695"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a34d10749d8ee0cbb6c471d3d16f994" id="r_a2a34d10749d8ee0cbb6c471d3d16f994"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a2a34d10749d8ee0cbb6c471d3d16f994">ATOMIC_VAR_INIT</a>(v)&#160;&#160;&#160;(v)</td></tr>
+<tr class="separator:a2a34d10749d8ee0cbb6c471d3d16f994"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a94674db2fe3c7496dfdcaa9b81486e79" id="r_a94674db2fe3c7496dfdcaa9b81486e79"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a94674db2fe3c7496dfdcaa9b81486e79">_Atomic</a>&#160;&#160;&#160;volatile</td></tr>
 <tr class="separator:a94674db2fe3c7496dfdcaa9b81486e79"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3cf6ded3b463faf0cedce1718caaa695" id="r_a3cf6ded3b463faf0cedce1718caaa695"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a3cf6ded3b463faf0cedce1718caaa695">ATOMIC_FLAG_INIT</a>&#160;&#160;&#160;{0}</td></tr>
 <tr class="separator:a3cf6ded3b463faf0cedce1718caaa695"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a34d10749d8ee0cbb6c471d3d16f994" id="r_a2a34d10749d8ee0cbb6c471d3d16f994"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a2a34d10749d8ee0cbb6c471d3d16f994">ATOMIC_VAR_INIT</a>(v)&#160;&#160;&#160;(v)</td></tr>
+<tr class="separator:a2a34d10749d8ee0cbb6c471d3d16f994"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7b82615cb418a296137e2abcff7db14e" id="r_a7b82615cb418a296137e2abcff7db14e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a7b82615cb418a296137e2abcff7db14e">__TT_ATOMIC_LOCK</a>()&#160;&#160;&#160;pthread_mutex_lock(&amp;<a class="el" href="include_2stdatomic_8h.html#a7082a0c612e692d1d2182aea6fcecb26">__ttak_atomic_global_lock</a>)</td></tr>
 <tr class="separator:a7b82615cb418a296137e2abcff7db14e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a078ff22b16930edd2268d1cb679445a5" id="r_a078ff22b16930edd2268d1cb679445a5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a078ff22b16930edd2268d1cb679445a5">__TT_ATOMIC_UNLOCK</a>()&#160;&#160;&#160;pthread_mutex_unlock(&amp;<a class="el" href="include_2stdatomic_8h.html#a7082a0c612e692d1d2182aea6fcecb26">__ttak_atomic_global_lock</a>)</td></tr>
 <tr class="separator:a078ff22b16930edd2268d1cb679445a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a817535e09bf9c427a1cbee66d06e7030" id="r_a817535e09bf9c427a1cbee66d06e7030"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a817535e09bf9c427a1cbee66d06e7030">atomic_thread_fence</a>(order)&#160;&#160;&#160;do { (void)(order); <a class="el" href="include_2stdatomic_8h.html#a7b82615cb418a296137e2abcff7db14e">__TT_ATOMIC_LOCK</a>(); <a class="el" href="include_2stdatomic_8h.html#a078ff22b16930edd2268d1cb679445a5">__TT_ATOMIC_UNLOCK</a>(); } while (0)</td></tr>
 <tr class="separator:a817535e09bf9c427a1cbee66d06e7030"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af8a9cbe9495fcafaa892b24b383acf96" id="r_af8a9cbe9495fcafaa892b24b383acf96"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#af8a9cbe9495fcafaa892b24b383acf96">atomic_init</a>(obj,  value)&#160;&#160;&#160;    do { <a class="el" href="include_2stdatomic_8h.html#a9f712e57179afb1b855da84b14ed670c">atomic_store_explicit</a>((obj), (value), <a class="el" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752">memory_order_seq_cst</a>); } while (0)</td></tr>
+<tr class="memitem:af8a9cbe9495fcafaa892b24b383acf96" id="r_af8a9cbe9495fcafaa892b24b383acf96"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#af8a9cbe9495fcafaa892b24b383acf96">atomic_init</a>(obj,  value)&#160;&#160;&#160;do { *(obj) = (value); } while (0)</td></tr>
 <tr class="separator:af8a9cbe9495fcafaa892b24b383acf96"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9f712e57179afb1b855da84b14ed670c" id="r_a9f712e57179afb1b855da84b14ed670c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a9f712e57179afb1b855da84b14ed670c">atomic_store_explicit</a>(obj,  desired,  order)&#160;&#160;&#160;    do { (void)(order); <a class="el" href="include_2stdatomic_8h.html#a7b82615cb418a296137e2abcff7db14e">__TT_ATOMIC_LOCK</a>(); *(obj) = (desired); <a class="el" href="include_2stdatomic_8h.html#a078ff22b16930edd2268d1cb679445a5">__TT_ATOMIC_UNLOCK</a>(); } while (0)</td></tr>
+<tr class="memitem:a9f712e57179afb1b855da84b14ed670c" id="r_a9f712e57179afb1b855da84b14ed670c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a9f712e57179afb1b855da84b14ed670c">atomic_store_explicit</a>(obj,  desired,  order)&#160;&#160;&#160;do { (void)(order); <a class="el" href="include_2stdatomic_8h.html#a7b82615cb418a296137e2abcff7db14e">__TT_ATOMIC_LOCK</a>(); *(obj) = (desired); <a class="el" href="include_2stdatomic_8h.html#a078ff22b16930edd2268d1cb679445a5">__TT_ATOMIC_UNLOCK</a>(); } while (0)</td></tr>
 <tr class="separator:a9f712e57179afb1b855da84b14ed670c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a87fbed10bf5d77e3b80f356e5246f102" id="r_a87fbed10bf5d77e3b80f356e5246f102"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a87fbed10bf5d77e3b80f356e5246f102">atomic_store</a>(obj,  desired)&#160;&#160;&#160;    <a class="el" href="include_2stdatomic_8h.html#a9f712e57179afb1b855da84b14ed670c">atomic_store_explicit</a>((obj), (desired), <a class="el" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752">memory_order_seq_cst</a>)</td></tr>
+<tr class="memitem:a87fbed10bf5d77e3b80f356e5246f102" id="r_a87fbed10bf5d77e3b80f356e5246f102"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a87fbed10bf5d77e3b80f356e5246f102">atomic_store</a>(obj,  desired)&#160;&#160;&#160;<a class="el" href="include_2stdatomic_8h.html#a9f712e57179afb1b855da84b14ed670c">atomic_store_explicit</a>((obj), (desired), <a class="el" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752">memory_order_seq_cst</a>)</td></tr>
 <tr class="separator:a87fbed10bf5d77e3b80f356e5246f102"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abcbf72e31b4b3100152d409e9637441a" id="r_abcbf72e31b4b3100152d409e9637441a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#abcbf72e31b4b3100152d409e9637441a">atomic_load_explicit</a>(obj,  order)&#160;&#160;&#160;    ({ <a class="el" href="include_2stdatomic_8h.html#a7b82615cb418a296137e2abcff7db14e">__TT_ATOMIC_LOCK</a>(); __typeof__(*(obj)) __val = *(obj); (void)(order); <a class="el" href="include_2stdatomic_8h.html#a078ff22b16930edd2268d1cb679445a5">__TT_ATOMIC_UNLOCK</a>(); __val; })</td></tr>
+<tr class="memitem:abcbf72e31b4b3100152d409e9637441a" id="r_abcbf72e31b4b3100152d409e9637441a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#abcbf72e31b4b3100152d409e9637441a">atomic_load_explicit</a>(obj,  order)&#160;&#160;&#160;({ <a class="el" href="include_2stdatomic_8h.html#a7b82615cb418a296137e2abcff7db14e">__TT_ATOMIC_LOCK</a>(); __typeof__(*(obj)) __val = *(obj); (void)(order); <a class="el" href="include_2stdatomic_8h.html#a078ff22b16930edd2268d1cb679445a5">__TT_ATOMIC_UNLOCK</a>(); __val; })</td></tr>
 <tr class="separator:abcbf72e31b4b3100152d409e9637441a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afb8e12dba0aa6280b29e3d403e4ce384" id="r_afb8e12dba0aa6280b29e3d403e4ce384"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#afb8e12dba0aa6280b29e3d403e4ce384">atomic_load</a>(obj)&#160;&#160;&#160;    <a class="el" href="include_2stdatomic_8h.html#abcbf72e31b4b3100152d409e9637441a">atomic_load_explicit</a>((obj) , <a class="el" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752">memory_order_seq_cst</a>)</td></tr>
+<tr class="memitem:afb8e12dba0aa6280b29e3d403e4ce384" id="r_afb8e12dba0aa6280b29e3d403e4ce384"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#afb8e12dba0aa6280b29e3d403e4ce384">atomic_load</a>(obj)&#160;&#160;&#160;<a class="el" href="include_2stdatomic_8h.html#abcbf72e31b4b3100152d409e9637441a">atomic_load_explicit</a>((obj) , <a class="el" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752">memory_order_seq_cst</a>)</td></tr>
 <tr class="separator:afb8e12dba0aa6280b29e3d403e4ce384"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace8ab452db03f62569b8d4dbedf8ff09" id="r_ace8ab452db03f62569b8d4dbedf8ff09"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#ace8ab452db03f62569b8d4dbedf8ff09">atomic_fetch_add_explicit</a>(obj,  operand,  order)&#160;&#160;&#160;    ({ <a class="el" href="include_2stdatomic_8h.html#a7b82615cb418a296137e2abcff7db14e">__TT_ATOMIC_LOCK</a>(); __typeof__(*(obj)) __old = *(obj); *(obj) = __old + (operand); (void)(order); <a class="el" href="include_2stdatomic_8h.html#a078ff22b16930edd2268d1cb679445a5">__TT_ATOMIC_UNLOCK</a>(); __old; })</td></tr>
+<tr class="memitem:ace8ab452db03f62569b8d4dbedf8ff09" id="r_ace8ab452db03f62569b8d4dbedf8ff09"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#ace8ab452db03f62569b8d4dbedf8ff09">atomic_fetch_add_explicit</a>(obj,  operand,  order)&#160;&#160;&#160;({ <a class="el" href="include_2stdatomic_8h.html#a7b82615cb418a296137e2abcff7db14e">__TT_ATOMIC_LOCK</a>(); __typeof__(*(obj)) __old = *(obj); *(obj) = __old + (operand); (void)(order); <a class="el" href="include_2stdatomic_8h.html#a078ff22b16930edd2268d1cb679445a5">__TT_ATOMIC_UNLOCK</a>(); __old; })</td></tr>
 <tr class="separator:ace8ab452db03f62569b8d4dbedf8ff09"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac0a4bfbcb6b982cae35b44fc104a09b6" id="r_ac0a4bfbcb6b982cae35b44fc104a09b6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#ac0a4bfbcb6b982cae35b44fc104a09b6">atomic_fetch_add</a>(obj,  operand)&#160;&#160;&#160;    <a class="el" href="include_2stdatomic_8h.html#ace8ab452db03f62569b8d4dbedf8ff09">atomic_fetch_add_explicit</a>((obj), (operand), <a class="el" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752">memory_order_seq_cst</a>)</td></tr>
+<tr class="memitem:ac0a4bfbcb6b982cae35b44fc104a09b6" id="r_ac0a4bfbcb6b982cae35b44fc104a09b6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#ac0a4bfbcb6b982cae35b44fc104a09b6">atomic_fetch_add</a>(obj,  operand)&#160;&#160;&#160;<a class="el" href="include_2stdatomic_8h.html#ace8ab452db03f62569b8d4dbedf8ff09">atomic_fetch_add_explicit</a>((obj), (operand), <a class="el" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752">memory_order_seq_cst</a>)</td></tr>
 <tr class="separator:ac0a4bfbcb6b982cae35b44fc104a09b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af4371ce6237310eedf5a1036178ada1f" id="r_af4371ce6237310eedf5a1036178ada1f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#af4371ce6237310eedf5a1036178ada1f">atomic_fetch_sub_explicit</a>(obj,  operand,  order)&#160;&#160;&#160;    ({ <a class="el" href="include_2stdatomic_8h.html#a7b82615cb418a296137e2abcff7db14e">__TT_ATOMIC_LOCK</a>(); __typeof__(*(obj)) __old = *(obj); *(obj) = __old - (operand); (void)(order); <a class="el" href="include_2stdatomic_8h.html#a078ff22b16930edd2268d1cb679445a5">__TT_ATOMIC_UNLOCK</a>(); __old; })</td></tr>
-<tr class="separator:af4371ce6237310eedf5a1036178ada1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5911a234da3c1fce86bbebea7650e562" id="r_a5911a234da3c1fce86bbebea7650e562"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a5911a234da3c1fce86bbebea7650e562">atomic_fetch_sub</a>(obj,  operand)&#160;&#160;&#160;    <a class="el" href="include_2stdatomic_8h.html#af4371ce6237310eedf5a1036178ada1f">atomic_fetch_sub_explicit</a>((obj), (operand), <a class="el" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752">memory_order_seq_cst</a>)</td></tr>
-<tr class="separator:a5911a234da3c1fce86bbebea7650e562"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a182d869f2a69147266c1cfbf8ef62d71" id="r_a182d869f2a69147266c1cfbf8ef62d71"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a182d869f2a69147266c1cfbf8ef62d71">atomic_exchange_explicit</a>(obj,  desired,  order)&#160;&#160;&#160;    ({ <a class="el" href="include_2stdatomic_8h.html#a7b82615cb418a296137e2abcff7db14e">__TT_ATOMIC_LOCK</a>(); __typeof__(*(obj)) __old = *(obj); *(obj) = (desired); (void)(order); <a class="el" href="include_2stdatomic_8h.html#a078ff22b16930edd2268d1cb679445a5">__TT_ATOMIC_UNLOCK</a>(); __old; })</td></tr>
-<tr class="separator:a182d869f2a69147266c1cfbf8ef62d71"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c1dada141423cb165cf2d4f3a38f89f" id="r_a5c1dada141423cb165cf2d4f3a38f89f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a5c1dada141423cb165cf2d4f3a38f89f">atomic_exchange</a>(obj,  desired)&#160;&#160;&#160;    <a class="el" href="include_2stdatomic_8h.html#a182d869f2a69147266c1cfbf8ef62d71">atomic_exchange_explicit</a>((obj), (desired), <a class="el" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752">memory_order_seq_cst</a>)</td></tr>
-<tr class="separator:a5c1dada141423cb165cf2d4f3a38f89f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a97a5f3e6f5f733e94b1ddeff904d3bc0" id="r_a97a5f3e6f5f733e94b1ddeff904d3bc0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a97a5f3e6f5f733e94b1ddeff904d3bc0">atomic_compare_exchange_weak_explicit</a>(obj,  expected,  desired,  success,  failure)</td></tr>
 <tr class="separator:a97a5f3e6f5f733e94b1ddeff904d3bc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4371ce6237310eedf5a1036178ada1f" id="r_af4371ce6237310eedf5a1036178ada1f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#af4371ce6237310eedf5a1036178ada1f">atomic_fetch_sub_explicit</a>(obj,  operand,  order)</td></tr>
+<tr class="separator:af4371ce6237310eedf5a1036178ada1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5911a234da3c1fce86bbebea7650e562" id="r_a5911a234da3c1fce86bbebea7650e562"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a5911a234da3c1fce86bbebea7650e562">atomic_fetch_sub</a>(obj,  operand)&#160;&#160;&#160;<a class="el" href="include_2stdatomic_8h.html#af4371ce6237310eedf5a1036178ada1f">atomic_fetch_sub_explicit</a>((obj), (operand), <a class="el" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752">memory_order_seq_cst</a>)</td></tr>
+<tr class="separator:a5911a234da3c1fce86bbebea7650e562"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80a85808288d53e46f094008990f075e" id="r_a80a85808288d53e46f094008990f075e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a80a85808288d53e46f094008990f075e">atomic_fetch_or_explicit</a>(obj,  operand,  order)</td></tr>
+<tr class="separator:a80a85808288d53e46f094008990f075e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0dd14e6f82ca9166b0d3eb8f872fab5a" id="r_a0dd14e6f82ca9166b0d3eb8f872fab5a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a0dd14e6f82ca9166b0d3eb8f872fab5a">atomic_fetch_or</a>(obj,  operand)&#160;&#160;&#160;<a class="el" href="include_2stdatomic_8h.html#a80a85808288d53e46f094008990f075e">atomic_fetch_or_explicit</a>((obj), (operand), <a class="el" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752">memory_order_seq_cst</a>)</td></tr>
+<tr class="separator:a0dd14e6f82ca9166b0d3eb8f872fab5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a243f2c635251ada5decdbc6ff198f70d" id="r_a243f2c635251ada5decdbc6ff198f70d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a243f2c635251ada5decdbc6ff198f70d">atomic_fetch_and_explicit</a>(obj,  operand,  order)</td></tr>
+<tr class="separator:a243f2c635251ada5decdbc6ff198f70d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18e371b22b9b969eeda3c36a8cefc954" id="r_a18e371b22b9b969eeda3c36a8cefc954"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a18e371b22b9b969eeda3c36a8cefc954">atomic_fetch_and</a>(obj,  operand)&#160;&#160;&#160;<a class="el" href="include_2stdatomic_8h.html#a243f2c635251ada5decdbc6ff198f70d">atomic_fetch_and_explicit</a>((obj), (operand), <a class="el" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752">memory_order_seq_cst</a>)</td></tr>
+<tr class="separator:a18e371b22b9b969eeda3c36a8cefc954"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a182d869f2a69147266c1cfbf8ef62d71" id="r_a182d869f2a69147266c1cfbf8ef62d71"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a182d869f2a69147266c1cfbf8ef62d71">atomic_exchange_explicit</a>(obj,  desired,  order)</td></tr>
+<tr class="separator:a182d869f2a69147266c1cfbf8ef62d71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c1dada141423cb165cf2d4f3a38f89f" id="r_a5c1dada141423cb165cf2d4f3a38f89f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a5c1dada141423cb165cf2d4f3a38f89f">atomic_exchange</a>(obj,  desired)&#160;&#160;&#160;<a class="el" href="include_2stdatomic_8h.html#a182d869f2a69147266c1cfbf8ef62d71">atomic_exchange_explicit</a>((obj), (desired), <a class="el" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752">memory_order_seq_cst</a>)</td></tr>
+<tr class="separator:a5c1dada141423cb165cf2d4f3a38f89f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a55257ac5977e775b87563bb8cc955863" id="r_a55257ac5977e775b87563bb8cc955863"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a55257ac5977e775b87563bb8cc955863">atomic_compare_exchange_weak</a>(obj,  expected,  desired)&#160;&#160;&#160;    <a class="el" href="include_2stdatomic_8h.html#a97a5f3e6f5f733e94b1ddeff904d3bc0">atomic_compare_exchange_weak_explicit</a>((obj), (expected), (desired), <a class="el" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752">memory_order_seq_cst</a>, <a class="el" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752">memory_order_seq_cst</a>)</td></tr>
 <tr class="separator:a55257ac5977e775b87563bb8cc955863"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd5c20444124cc075609f21d19fc1cda" id="r_abd5c20444124cc075609f21d19fc1cda"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#abd5c20444124cc075609f21d19fc1cda">atomic_compare_exchange_strong_explicit</a>(obj,  expected,  desired,  success,  failure)&#160;&#160;&#160;    <a class="el" href="include_2stdatomic_8h.html#a97a5f3e6f5f733e94b1ddeff904d3bc0">atomic_compare_exchange_weak_explicit</a>((obj), (expected), (desired), (success), (failure))</td></tr>
+<tr class="separator:abd5c20444124cc075609f21d19fc1cda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52b0a9d2e3259dc20deb405fe77b0191" id="r_a52b0a9d2e3259dc20deb405fe77b0191"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a52b0a9d2e3259dc20deb405fe77b0191">atomic_compare_exchange_strong</a>(obj,  expected,  desired)&#160;&#160;&#160;    <a class="el" href="include_2stdatomic_8h.html#abd5c20444124cc075609f21d19fc1cda">atomic_compare_exchange_strong_explicit</a>((obj), (expected), (desired), <a class="el" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752">memory_order_seq_cst</a>, <a class="el" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752">memory_order_seq_cst</a>)</td></tr>
+<tr class="separator:a52b0a9d2e3259dc20deb405fe77b0191"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac207cf1efb51bc53fc9078301afa391f" id="r_ac207cf1efb51bc53fc9078301afa391f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#ac207cf1efb51bc53fc9078301afa391f">atomic_flag_test_and_set</a>(obj)&#160;&#160;&#160;    <a class="el" href="include_2stdatomic_8h.html#aeca7c45606fc2b5e0c8dca53a76f40ac">atomic_flag_test_and_set_explicit</a>((obj), <a class="el" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752">memory_order_seq_cst</a>)</td></tr>
 <tr class="separator:ac207cf1efb51bc53fc9078301afa391f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae8e62cb9801fedb40ccaca61f60d8617" id="r_ae8e62cb9801fedb40ccaca61f60d8617"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#ae8e62cb9801fedb40ccaca61f60d8617">atomic_flag_clear</a>(obj)&#160;&#160;&#160;    <a class="el" href="include_2stdatomic_8h.html#a4154e94db39d792afa138536ccaa0d7e">atomic_flag_clear_explicit</a>((obj), <a class="el" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752">memory_order_seq_cst</a>)</td></tr>
@@ -183,10 +201,72 @@ Macros</h2></td></tr>
 Typedefs</h2></td></tr>
 <tr class="memitem:aef4aec84224d1f46d0ba87f52ca08f69" id="r_aef4aec84224d1f46d0ba87f52ca08f69"><td class="memItemLeft" align="right" valign="top">typedef volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#aef4aec84224d1f46d0ba87f52ca08f69">atomic_bool</a></td></tr>
 <tr class="separator:aef4aec84224d1f46d0ba87f52ca08f69"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a579c826aec0f3d9971c22c3629abcbfe" id="r_a579c826aec0f3d9971c22c3629abcbfe"><td class="memItemLeft" align="right" valign="top">typedef volatile size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a579c826aec0f3d9971c22c3629abcbfe">atomic_size_t</a></td></tr>
-<tr class="separator:a579c826aec0f3d9971c22c3629abcbfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae91dd0fabf89334979da4075767723a" id="r_aae91dd0fabf89334979da4075767723a"><td class="memItemLeft" align="right" valign="top">typedef volatile char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#aae91dd0fabf89334979da4075767723a">atomic_char</a></td></tr>
+<tr class="separator:aae91dd0fabf89334979da4075767723a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0772ed223cc212a17979d8f86eca0d0c" id="r_a0772ed223cc212a17979d8f86eca0d0c"><td class="memItemLeft" align="right" valign="top">typedef volatile signed char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a0772ed223cc212a17979d8f86eca0d0c">atomic_schar</a></td></tr>
+<tr class="separator:a0772ed223cc212a17979d8f86eca0d0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a753a736777dce1d447da5210b3609f20" id="r_a753a736777dce1d447da5210b3609f20"><td class="memItemLeft" align="right" valign="top">typedef volatile unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a753a736777dce1d447da5210b3609f20">atomic_uchar</a></td></tr>
+<tr class="separator:a753a736777dce1d447da5210b3609f20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a819f411fe66d5bb295ed6b37b2234796" id="r_a819f411fe66d5bb295ed6b37b2234796"><td class="memItemLeft" align="right" valign="top">typedef volatile short&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a819f411fe66d5bb295ed6b37b2234796">atomic_short</a></td></tr>
+<tr class="separator:a819f411fe66d5bb295ed6b37b2234796"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4eb27564617e84f78976767860dae14a" id="r_a4eb27564617e84f78976767860dae14a"><td class="memItemLeft" align="right" valign="top">typedef volatile unsigned short&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a4eb27564617e84f78976767860dae14a">atomic_ushort</a></td></tr>
+<tr class="separator:a4eb27564617e84f78976767860dae14a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47af6185878ed08e05cf92aeb391e4c5" id="r_a47af6185878ed08e05cf92aeb391e4c5"><td class="memItemLeft" align="right" valign="top">typedef volatile int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a47af6185878ed08e05cf92aeb391e4c5">atomic_int</a></td></tr>
+<tr class="separator:a47af6185878ed08e05cf92aeb391e4c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbc5f29da83246878bb8fd141533c797" id="r_acbc5f29da83246878bb8fd141533c797"><td class="memItemLeft" align="right" valign="top">typedef volatile unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#acbc5f29da83246878bb8fd141533c797">atomic_uint</a></td></tr>
+<tr class="separator:acbc5f29da83246878bb8fd141533c797"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1252081478eb7160219c2e2bf4b8b26a" id="r_a1252081478eb7160219c2e2bf4b8b26a"><td class="memItemLeft" align="right" valign="top">typedef volatile long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a1252081478eb7160219c2e2bf4b8b26a">atomic_long</a></td></tr>
+<tr class="separator:a1252081478eb7160219c2e2bf4b8b26a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a654b5604043dc806cdf6b6e7aa688f48" id="r_a654b5604043dc806cdf6b6e7aa688f48"><td class="memItemLeft" align="right" valign="top">typedef volatile unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a654b5604043dc806cdf6b6e7aa688f48">atomic_ulong</a></td></tr>
+<tr class="separator:a654b5604043dc806cdf6b6e7aa688f48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6d2892304538baffbb9759ef417276f" id="r_ac6d2892304538baffbb9759ef417276f"><td class="memItemLeft" align="right" valign="top">typedef volatile long long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#ac6d2892304538baffbb9759ef417276f">atomic_llong</a></td></tr>
+<tr class="separator:ac6d2892304538baffbb9759ef417276f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5049efa83e60cc859efba4c6f636dc8" id="r_ad5049efa83e60cc859efba4c6f636dc8"><td class="memItemLeft" align="right" valign="top">typedef volatile unsigned long long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#ad5049efa83e60cc859efba4c6f636dc8">atomic_ullong</a></td></tr>
+<tr class="separator:ad5049efa83e60cc859efba4c6f636dc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2914a295069ac08b4ba7f14a4ccb44e1" id="r_a2914a295069ac08b4ba7f14a4ccb44e1"><td class="memItemLeft" align="right" valign="top">typedef volatile int_least8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a2914a295069ac08b4ba7f14a4ccb44e1">atomic_int_least8_t</a></td></tr>
+<tr class="separator:a2914a295069ac08b4ba7f14a4ccb44e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4514a29e7a7837bed1e52ef294e8f85" id="r_ac4514a29e7a7837bed1e52ef294e8f85"><td class="memItemLeft" align="right" valign="top">typedef volatile uint_least8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#ac4514a29e7a7837bed1e52ef294e8f85">atomic_uint_least8_t</a></td></tr>
+<tr class="separator:ac4514a29e7a7837bed1e52ef294e8f85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86d56a528bb84decf79d9f78f090cbaf" id="r_a86d56a528bb84decf79d9f78f090cbaf"><td class="memItemLeft" align="right" valign="top">typedef volatile int_least16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a86d56a528bb84decf79d9f78f090cbaf">atomic_int_least16_t</a></td></tr>
+<tr class="separator:a86d56a528bb84decf79d9f78f090cbaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9da88867ad2d24655055e619a7b24414" id="r_a9da88867ad2d24655055e619a7b24414"><td class="memItemLeft" align="right" valign="top">typedef volatile uint_least16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a9da88867ad2d24655055e619a7b24414">atomic_uint_least16_t</a></td></tr>
+<tr class="separator:a9da88867ad2d24655055e619a7b24414"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a572044581a00ae85e2f6df493b7cec54" id="r_a572044581a00ae85e2f6df493b7cec54"><td class="memItemLeft" align="right" valign="top">typedef volatile int_least32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a572044581a00ae85e2f6df493b7cec54">atomic_int_least32_t</a></td></tr>
+<tr class="separator:a572044581a00ae85e2f6df493b7cec54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa23fa0ef41c89deef533b3805887968f" id="r_aa23fa0ef41c89deef533b3805887968f"><td class="memItemLeft" align="right" valign="top">typedef volatile uint_least32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#aa23fa0ef41c89deef533b3805887968f">atomic_uint_least32_t</a></td></tr>
+<tr class="separator:aa23fa0ef41c89deef533b3805887968f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a753852398c578c7b0e671ebe39a5a099" id="r_a753852398c578c7b0e671ebe39a5a099"><td class="memItemLeft" align="right" valign="top">typedef volatile int_least64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a753852398c578c7b0e671ebe39a5a099">atomic_int_least64_t</a></td></tr>
+<tr class="separator:a753852398c578c7b0e671ebe39a5a099"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9d30dd336a44b1409370e6632a95b46" id="r_aa9d30dd336a44b1409370e6632a95b46"><td class="memItemLeft" align="right" valign="top">typedef volatile uint_least64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#aa9d30dd336a44b1409370e6632a95b46">atomic_uint_least64_t</a></td></tr>
+<tr class="separator:aa9d30dd336a44b1409370e6632a95b46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab68830b9273d86fb6f2294b57ffc4a99" id="r_ab68830b9273d86fb6f2294b57ffc4a99"><td class="memItemLeft" align="right" valign="top">typedef volatile int_fast8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#ab68830b9273d86fb6f2294b57ffc4a99">atomic_int_fast8_t</a></td></tr>
+<tr class="separator:ab68830b9273d86fb6f2294b57ffc4a99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabf99ce6da7804f051d4f34463095a26" id="r_aabf99ce6da7804f051d4f34463095a26"><td class="memItemLeft" align="right" valign="top">typedef volatile uint_fast8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#aabf99ce6da7804f051d4f34463095a26">atomic_uint_fast8_t</a></td></tr>
+<tr class="separator:aabf99ce6da7804f051d4f34463095a26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a393105253dde147dbe8d17c729c3b3cc" id="r_a393105253dde147dbe8d17c729c3b3cc"><td class="memItemLeft" align="right" valign="top">typedef volatile int_fast16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a393105253dde147dbe8d17c729c3b3cc">atomic_int_fast16_t</a></td></tr>
+<tr class="separator:a393105253dde147dbe8d17c729c3b3cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e21d6a8151a23b8a7ab27f277afda3c" id="r_a3e21d6a8151a23b8a7ab27f277afda3c"><td class="memItemLeft" align="right" valign="top">typedef volatile uint_fast16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a3e21d6a8151a23b8a7ab27f277afda3c">atomic_uint_fast16_t</a></td></tr>
+<tr class="separator:a3e21d6a8151a23b8a7ab27f277afda3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46345a1e828879eff1e867fb2a2704b4" id="r_a46345a1e828879eff1e867fb2a2704b4"><td class="memItemLeft" align="right" valign="top">typedef volatile int_fast32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a46345a1e828879eff1e867fb2a2704b4">atomic_int_fast32_t</a></td></tr>
+<tr class="separator:a46345a1e828879eff1e867fb2a2704b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b39a75b6539e1118c775986b95409dd" id="r_a5b39a75b6539e1118c775986b95409dd"><td class="memItemLeft" align="right" valign="top">typedef volatile uint_fast32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a5b39a75b6539e1118c775986b95409dd">atomic_uint_fast32_t</a></td></tr>
+<tr class="separator:a5b39a75b6539e1118c775986b95409dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb9f0ed97c801d27e7c650bfc8cabbba" id="r_aeb9f0ed97c801d27e7c650bfc8cabbba"><td class="memItemLeft" align="right" valign="top">typedef volatile int_fast64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#aeb9f0ed97c801d27e7c650bfc8cabbba">atomic_int_fast64_t</a></td></tr>
+<tr class="separator:aeb9f0ed97c801d27e7c650bfc8cabbba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc9ed8d56c5c645e7d5503aa72d1da49" id="r_acc9ed8d56c5c645e7d5503aa72d1da49"><td class="memItemLeft" align="right" valign="top">typedef volatile uint_fast64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#acc9ed8d56c5c645e7d5503aa72d1da49">atomic_uint_fast64_t</a></td></tr>
 <tr class="separator:acc9ed8d56c5c645e7d5503aa72d1da49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0021b3c35266e139f055c6568a9b340e" id="r_a0021b3c35266e139f055c6568a9b340e"><td class="memItemLeft" align="right" valign="top">typedef volatile intptr_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a0021b3c35266e139f055c6568a9b340e">atomic_intptr_t</a></td></tr>
+<tr class="separator:a0021b3c35266e139f055c6568a9b340e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a3e1cb5ef21e493807f14a4920f5dcd" id="r_a5a3e1cb5ef21e493807f14a4920f5dcd"><td class="memItemLeft" align="right" valign="top">typedef volatile uintptr_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a5a3e1cb5ef21e493807f14a4920f5dcd">atomic_uintptr_t</a></td></tr>
+<tr class="separator:a5a3e1cb5ef21e493807f14a4920f5dcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a579c826aec0f3d9971c22c3629abcbfe" id="r_a579c826aec0f3d9971c22c3629abcbfe"><td class="memItemLeft" align="right" valign="top">typedef volatile size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a579c826aec0f3d9971c22c3629abcbfe">atomic_size_t</a></td></tr>
+<tr class="separator:a579c826aec0f3d9971c22c3629abcbfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63b627276aca47a56ffa1409d958b072" id="r_a63b627276aca47a56ffa1409d958b072"><td class="memItemLeft" align="right" valign="top">typedef volatile ptrdiff_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#a63b627276aca47a56ffa1409d958b072">atomic_ptrdiff_t</a></td></tr>
+<tr class="separator:a63b627276aca47a56ffa1409d958b072"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae007cd33a18f7ee428a3785c47cee39a" id="r_ae007cd33a18f7ee428a3785c47cee39a"><td class="memItemLeft" align="right" valign="top">typedef volatile intmax_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#ae007cd33a18f7ee428a3785c47cee39a">atomic_intmax_t</a></td></tr>
+<tr class="separator:ae007cd33a18f7ee428a3785c47cee39a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada37a33b3b038f87fe29b013dbcc6d3e" id="r_ada37a33b3b038f87fe29b013dbcc6d3e"><td class="memItemLeft" align="right" valign="top">typedef volatile uintmax_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2stdatomic_8h.html#ada37a33b3b038f87fe29b013dbcc6d3e">atomic_uintmax_t</a></td></tr>
+<tr class="separator:ada37a33b3b038f87fe29b013dbcc6d3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -230,7 +310,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00229">229</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00513">513</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
 
 </div>
 </div>
@@ -249,7 +329,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00230">230</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00514">514</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
 
 </div>
 </div>
@@ -265,7 +345,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00192">192</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00206">206</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
 
 </div>
 </div>
@@ -281,7 +361,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00205">205</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00222">222</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
 
 </div>
 </div>
@@ -298,6 +378,90 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00011">11</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="a52b0a9d2e3259dc20deb405fe77b0191" name="a52b0a9d2e3259dc20deb405fe77b0191"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a52b0a9d2e3259dc20deb405fe77b0191">&#9670;&#160;</a></span>atomic_compare_exchange_strong</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define atomic_compare_exchange_strong</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">obj, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">expected, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">desired&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;    <a class="el" href="include_2stdatomic_8h.html#abd5c20444124cc075609f21d19fc1cda">atomic_compare_exchange_strong_explicit</a>((obj), (expected), (desired), <a class="el" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752">memory_order_seq_cst</a>, <a class="el" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752">memory_order_seq_cst</a>)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00578">578</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="abd5c20444124cc075609f21d19fc1cda" name="abd5c20444124cc075609f21d19fc1cda"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abd5c20444124cc075609f21d19fc1cda">&#9670;&#160;</a></span>atomic_compare_exchange_strong_explicit</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define atomic_compare_exchange_strong_explicit</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">obj, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">expected, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">desired, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">success, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">failure&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;    <a class="el" href="include_2stdatomic_8h.html#a97a5f3e6f5f733e94b1ddeff904d3bc0">atomic_compare_exchange_weak_explicit</a>((obj), (expected), (desired), (success), (failure))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00575">575</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
 
 </div>
 </div>
@@ -333,7 +497,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00273">273</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00572">572</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
 
 </div>
 </div>
@@ -384,9 +548,9 @@ Variables</h2></td></tr>
 <div class="line">       if (*(obj) == *(expected)) { *(obj) = (desired); __ok = <span class="keyword">true</span>; } \</div>
 <div class="line">       <span class="keywordflow">else</span> { *(expected) = *(obj); __ok = <span class="keyword">false</span>; } \</div>
 <div class="line">       __TT_ATOMIC_UNLOCK(); __ok; })</div>
-<div class="ttc" id="ainclude_2stdatomic_8h_html_a7b82615cb418a296137e2abcff7db14e"><div class="ttname"><a href="include_2stdatomic_8h.html#a7b82615cb418a296137e2abcff7db14e">__TT_ATOMIC_LOCK</a></div><div class="ttdeci">#define __TT_ATOMIC_LOCK()</div><div class="ttdef"><b>Definition</b> <a href="include_2stdatomic_8h_source.html#l00229">stdatomic.h:229</a></div></div>
+<div class="ttc" id="ainclude_2stdatomic_8h_html_a7b82615cb418a296137e2abcff7db14e"><div class="ttname"><a href="include_2stdatomic_8h.html#a7b82615cb418a296137e2abcff7db14e">__TT_ATOMIC_LOCK</a></div><div class="ttdeci">#define __TT_ATOMIC_LOCK()</div><div class="ttdef"><b>Definition</b> <a href="include_2stdatomic_8h_source.html#l00513">stdatomic.h:513</a></div></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00267">267</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00524">524</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
 
 </div>
 </div>
@@ -411,12 +575,12 @@ Variables</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;    <a class="el" href="include_2stdatomic_8h.html#a182d869f2a69147266c1cfbf8ef62d71">atomic_exchange_explicit</a>((obj), (desired), <a class="el" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752">memory_order_seq_cst</a>)</td>
+          <td></td><td>&#160;&#160;&#160;<a class="el" href="include_2stdatomic_8h.html#a182d869f2a69147266c1cfbf8ef62d71">atomic_exchange_explicit</a>((obj), (desired), <a class="el" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752">memory_order_seq_cst</a>)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00264">264</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00569">569</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
 
 </div>
 </div>
@@ -447,12 +611,18 @@ Variables</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;    ({ <a class="el" href="include_2stdatomic_8h.html#a7b82615cb418a296137e2abcff7db14e">__TT_ATOMIC_LOCK</a>(); __typeof__(*(obj)) __old = *(obj); *(obj) = (desired); (void)(order); <a class="el" href="include_2stdatomic_8h.html#a078ff22b16930edd2268d1cb679445a5">__TT_ATOMIC_UNLOCK</a>(); __old; })</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00261">261</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+<b>Value:</b><div class="fragment"><div class="line">    ({ __typeof__(*(obj)) __expected = <a class="code hl_define" href="include_2stdatomic_8h.html#abcbf72e31b4b3100152d409e9637441a">atomic_load_explicit</a>(obj, <a class="code hl_enumvalue" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1bac6489d0374e297a776f6a3db7ea5654a">memory_order_relaxed</a>); \</div>
+<div class="line">       while (!<a class="code hl_define" href="include_2stdatomic_8h.html#a97a5f3e6f5f733e94b1ddeff904d3bc0">atomic_compare_exchange_weak_explicit</a>(obj, &amp;__expected, (desired), order, <a class="code hl_enumvalue" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1bac6489d0374e297a776f6a3db7ea5654a">memory_order_relaxed</a>)); \</div>
+<div class="line">       __expected; })</div>
+<div class="ttc" id="ainclude_2stdatomic_8h_html_a17c2de5ae768960284c047a320f17d1bac6489d0374e297a776f6a3db7ea5654a"><div class="ttname"><a href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1bac6489d0374e297a776f6a3db7ea5654a">memory_order_relaxed</a></div><div class="ttdeci">@ memory_order_relaxed</div><div class="ttdef"><b>Definition</b> <a href="include_2stdatomic_8h_source.html#l00226">stdatomic.h:226</a></div></div>
+<div class="ttc" id="ainclude_2stdatomic_8h_html_a97a5f3e6f5f733e94b1ddeff904d3bc0"><div class="ttname"><a href="include_2stdatomic_8h.html#a97a5f3e6f5f733e94b1ddeff904d3bc0">atomic_compare_exchange_weak_explicit</a></div><div class="ttdeci">#define atomic_compare_exchange_weak_explicit(obj, expected, desired, success, failure)</div><div class="ttdef"><b>Definition</b> <a href="include_2stdatomic_8h_source.html#l00524">stdatomic.h:524</a></div></div>
+<div class="ttc" id="ainclude_2stdatomic_8h_html_abcbf72e31b4b3100152d409e9637441a"><div class="ttname"><a href="include_2stdatomic_8h.html#abcbf72e31b4b3100152d409e9637441a">atomic_load_explicit</a></div><div class="ttdeci">#define atomic_load_explicit(obj, order)</div><div class="ttdef"><b>Definition</b> <a href="include_2stdatomic_8h_source.html#l00520">stdatomic.h:520</a></div></div>
+</div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00563">563</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
 
 </div>
 </div>
@@ -477,12 +647,12 @@ Variables</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;    <a class="el" href="include_2stdatomic_8h.html#ace8ab452db03f62569b8d4dbedf8ff09">atomic_fetch_add_explicit</a>((obj), (operand), <a class="el" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752">memory_order_seq_cst</a>)</td>
+          <td></td><td>&#160;&#160;&#160;<a class="el" href="include_2stdatomic_8h.html#ace8ab452db03f62569b8d4dbedf8ff09">atomic_fetch_add_explicit</a>((obj), (operand), <a class="el" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752">memory_order_seq_cst</a>)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00252">252</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00523">523</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
 
 </div>
 </div>
@@ -513,12 +683,150 @@ Variables</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;    ({ <a class="el" href="include_2stdatomic_8h.html#a7b82615cb418a296137e2abcff7db14e">__TT_ATOMIC_LOCK</a>(); __typeof__(*(obj)) __old = *(obj); *(obj) = __old + (operand); (void)(order); <a class="el" href="include_2stdatomic_8h.html#a078ff22b16930edd2268d1cb679445a5">__TT_ATOMIC_UNLOCK</a>(); __old; })</td>
+          <td></td><td>&#160;&#160;&#160;({ <a class="el" href="include_2stdatomic_8h.html#a7b82615cb418a296137e2abcff7db14e">__TT_ATOMIC_LOCK</a>(); __typeof__(*(obj)) __old = *(obj); *(obj) = __old + (operand); (void)(order); <a class="el" href="include_2stdatomic_8h.html#a078ff22b16930edd2268d1cb679445a5">__TT_ATOMIC_UNLOCK</a>(); __old; })</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00249">249</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00522">522</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="a18e371b22b9b969eeda3c36a8cefc954" name="a18e371b22b9b969eeda3c36a8cefc954"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a18e371b22b9b969eeda3c36a8cefc954">&#9670;&#160;</a></span>atomic_fetch_and</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define atomic_fetch_and</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">obj, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">operand&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;<a class="el" href="include_2stdatomic_8h.html#a243f2c635251ada5decdbc6ff198f70d">atomic_fetch_and_explicit</a>((obj), (operand), <a class="el" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752">memory_order_seq_cst</a>)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00559">559</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="a243f2c635251ada5decdbc6ff198f70d" name="a243f2c635251ada5decdbc6ff198f70d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a243f2c635251ada5decdbc6ff198f70d">&#9670;&#160;</a></span>atomic_fetch_and_explicit</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define atomic_fetch_and_explicit</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">obj, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">operand, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">order&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">    ({ __typeof__(*(obj)) __expected = <a class="code hl_define" href="include_2stdatomic_8h.html#abcbf72e31b4b3100152d409e9637441a">atomic_load_explicit</a>(obj, <a class="code hl_enumvalue" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1bac6489d0374e297a776f6a3db7ea5654a">memory_order_relaxed</a>); \</div>
+<div class="line">       while (!<a class="code hl_define" href="include_2stdatomic_8h.html#a97a5f3e6f5f733e94b1ddeff904d3bc0">atomic_compare_exchange_weak_explicit</a>(obj, &amp;__expected, __expected &amp; (operand), order, <a class="code hl_enumvalue" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1bac6489d0374e297a776f6a3db7ea5654a">memory_order_relaxed</a>)); \</div>
+<div class="line">       __expected; })</div>
+</div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00553">553</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="a0dd14e6f82ca9166b0d3eb8f872fab5a" name="a0dd14e6f82ca9166b0d3eb8f872fab5a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0dd14e6f82ca9166b0d3eb8f872fab5a">&#9670;&#160;</a></span>atomic_fetch_or</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define atomic_fetch_or</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">obj, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">operand&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;<a class="el" href="include_2stdatomic_8h.html#a80a85808288d53e46f094008990f075e">atomic_fetch_or_explicit</a>((obj), (operand), <a class="el" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752">memory_order_seq_cst</a>)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00549">549</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="a80a85808288d53e46f094008990f075e" name="a80a85808288d53e46f094008990f075e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a80a85808288d53e46f094008990f075e">&#9670;&#160;</a></span>atomic_fetch_or_explicit</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define atomic_fetch_or_explicit</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">obj, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">operand, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">order&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">    ({ __typeof__(*(obj)) __expected = <a class="code hl_define" href="include_2stdatomic_8h.html#abcbf72e31b4b3100152d409e9637441a">atomic_load_explicit</a>(obj, <a class="code hl_enumvalue" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1bac6489d0374e297a776f6a3db7ea5654a">memory_order_relaxed</a>); \</div>
+<div class="line">       while (!<a class="code hl_define" href="include_2stdatomic_8h.html#a97a5f3e6f5f733e94b1ddeff904d3bc0">atomic_compare_exchange_weak_explicit</a>(obj, &amp;__expected, __expected | (operand), order, <a class="code hl_enumvalue" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1bac6489d0374e297a776f6a3db7ea5654a">memory_order_relaxed</a>)); \</div>
+<div class="line">       __expected; })</div>
+</div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00543">543</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
 
 </div>
 </div>
@@ -543,12 +851,12 @@ Variables</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;    <a class="el" href="include_2stdatomic_8h.html#af4371ce6237310eedf5a1036178ada1f">atomic_fetch_sub_explicit</a>((obj), (operand), <a class="el" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752">memory_order_seq_cst</a>)</td>
+          <td></td><td>&#160;&#160;&#160;<a class="el" href="include_2stdatomic_8h.html#af4371ce6237310eedf5a1036178ada1f">atomic_fetch_sub_explicit</a>((obj), (operand), <a class="el" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752">memory_order_seq_cst</a>)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00258">258</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00539">539</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
 
 </div>
 </div>
@@ -579,12 +887,15 @@ Variables</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;    ({ <a class="el" href="include_2stdatomic_8h.html#a7b82615cb418a296137e2abcff7db14e">__TT_ATOMIC_LOCK</a>(); __typeof__(*(obj)) __old = *(obj); *(obj) = __old - (operand); (void)(order); <a class="el" href="include_2stdatomic_8h.html#a078ff22b16930edd2268d1cb679445a5">__TT_ATOMIC_UNLOCK</a>(); __old; })</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00255">255</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+<b>Value:</b><div class="fragment"><div class="line">    ({ __typeof__(*(obj)) __expected = <a class="code hl_define" href="include_2stdatomic_8h.html#abcbf72e31b4b3100152d409e9637441a">atomic_load_explicit</a>(obj, <a class="code hl_enumvalue" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1bac6489d0374e297a776f6a3db7ea5654a">memory_order_relaxed</a>); \</div>
+<div class="line">       while (!<a class="code hl_define" href="include_2stdatomic_8h.html#a97a5f3e6f5f733e94b1ddeff904d3bc0">atomic_compare_exchange_weak_explicit</a>(obj, &amp;__expected, __expected - (operand), order, <a class="code hl_enumvalue" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1bac6489d0374e297a776f6a3db7ea5654a">memory_order_relaxed</a>)); \</div>
+<div class="line">       __expected; })</div>
+</div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00533">533</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
 
 </div>
 </div>
@@ -604,12 +915,12 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00295">295</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00593">593</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
 
 </div>
 </div>
 <a id="a3cf6ded3b463faf0cedce1718caaa695" name="a3cf6ded3b463faf0cedce1718caaa695"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3cf6ded3b463faf0cedce1718caaa695">&#9670;&#160;</a></span>ATOMIC_FLAG_INIT</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a3cf6ded3b463faf0cedce1718caaa695">&#9670;&#160;</a></span>ATOMIC_FLAG_INIT <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -620,7 +931,23 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00227">227</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00213">213</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="a3cf6ded3b463faf0cedce1718caaa695" name="a3cf6ded3b463faf0cedce1718caaa695"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3cf6ded3b463faf0cedce1718caaa695">&#9670;&#160;</a></span>ATOMIC_FLAG_INIT <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATOMIC_FLAG_INIT&#160;&#160;&#160;{0}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00213">213</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
 
 </div>
 </div>
@@ -640,7 +967,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00292">292</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00590">590</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
 
 </div>
 </div>
@@ -665,12 +992,12 @@ Variables</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;    do { <a class="el" href="include_2stdatomic_8h.html#a9f712e57179afb1b855da84b14ed670c">atomic_store_explicit</a>((obj), (value), <a class="el" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752">memory_order_seq_cst</a>); } while (0)</td>
+          <td></td><td>&#160;&#160;&#160;do { *(obj) = (value); } while (0)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00234">234</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00517">517</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
 
 </div>
 </div>
@@ -685,12 +1012,12 @@ Variables</h2></td></tr>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">obj</td><td>)</td>
-          <td>&#160;&#160;&#160;    <a class="el" href="include_2stdatomic_8h.html#abcbf72e31b4b3100152d409e9637441a">atomic_load_explicit</a>((obj) , <a class="el" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752">memory_order_seq_cst</a>)</td>
+          <td>&#160;&#160;&#160;<a class="el" href="include_2stdatomic_8h.html#abcbf72e31b4b3100152d409e9637441a">atomic_load_explicit</a>((obj) , <a class="el" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752">memory_order_seq_cst</a>)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00246">246</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00521">521</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
 
 </div>
 </div>
@@ -715,12 +1042,12 @@ Variables</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;    ({ <a class="el" href="include_2stdatomic_8h.html#a7b82615cb418a296137e2abcff7db14e">__TT_ATOMIC_LOCK</a>(); __typeof__(*(obj)) __val = *(obj); (void)(order); <a class="el" href="include_2stdatomic_8h.html#a078ff22b16930edd2268d1cb679445a5">__TT_ATOMIC_UNLOCK</a>(); __val; })</td>
+          <td></td><td>&#160;&#160;&#160;({ <a class="el" href="include_2stdatomic_8h.html#a7b82615cb418a296137e2abcff7db14e">__TT_ATOMIC_LOCK</a>(); __typeof__(*(obj)) __val = *(obj); (void)(order); <a class="el" href="include_2stdatomic_8h.html#a078ff22b16930edd2268d1cb679445a5">__TT_ATOMIC_UNLOCK</a>(); __val; })</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00243">243</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00520">520</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
 
 </div>
 </div>
@@ -745,12 +1072,12 @@ Variables</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;    <a class="el" href="include_2stdatomic_8h.html#a9f712e57179afb1b855da84b14ed670c">atomic_store_explicit</a>((obj), (desired), <a class="el" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752">memory_order_seq_cst</a>)</td>
+          <td></td><td>&#160;&#160;&#160;<a class="el" href="include_2stdatomic_8h.html#a9f712e57179afb1b855da84b14ed670c">atomic_store_explicit</a>((obj), (desired), <a class="el" href="include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752">memory_order_seq_cst</a>)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00240">240</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00519">519</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
 
 </div>
 </div>
@@ -781,12 +1108,12 @@ Variables</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;    do { (void)(order); <a class="el" href="include_2stdatomic_8h.html#a7b82615cb418a296137e2abcff7db14e">__TT_ATOMIC_LOCK</a>(); *(obj) = (desired); <a class="el" href="include_2stdatomic_8h.html#a078ff22b16930edd2268d1cb679445a5">__TT_ATOMIC_UNLOCK</a>(); } while (0)</td>
+          <td></td><td>&#160;&#160;&#160;do { (void)(order); <a class="el" href="include_2stdatomic_8h.html#a7b82615cb418a296137e2abcff7db14e">__TT_ATOMIC_LOCK</a>(); *(obj) = (desired); <a class="el" href="include_2stdatomic_8h.html#a078ff22b16930edd2268d1cb679445a5">__TT_ATOMIC_UNLOCK</a>(); } while (0)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00237">237</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00518">518</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
 
 </div>
 </div>
@@ -806,7 +1133,47 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00232">232</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00516">516</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="a2a34d10749d8ee0cbb6c471d3d16f994" name="a2a34d10749d8ee0cbb6c471d3d16f994"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a34d10749d8ee0cbb6c471d3d16f994">&#9670;&#160;</a></span>ATOMIC_VAR_INIT <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATOMIC_VAR_INIT</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">v</td><td>)</td>
+          <td>&#160;&#160;&#160;(v)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00214">214</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="a2a34d10749d8ee0cbb6c471d3d16f994" name="a2a34d10749d8ee0cbb6c471d3d16f994"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a34d10749d8ee0cbb6c471d3d16f994">&#9670;&#160;</a></span>ATOMIC_VAR_INIT <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATOMIC_VAR_INIT</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">v</td><td>)</td>
+          <td>&#160;&#160;&#160;(v)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00214">214</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
 
 </div>
 </div>
@@ -822,7 +1189,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00028">28</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00032">32</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
 
 </div>
 </div>
@@ -839,7 +1206,279 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00217">217</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00234">234</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="aae91dd0fabf89334979da4075767723a" name="aae91dd0fabf89334979da4075767723a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae91dd0fabf89334979da4075767723a">&#9670;&#160;</a></span>atomic_char</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef volatile char <a class="el" href="include_2stdatomic_8h.html#aae91dd0fabf89334979da4075767723a">atomic_char</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00235">235</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="a47af6185878ed08e05cf92aeb391e4c5" name="a47af6185878ed08e05cf92aeb391e4c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47af6185878ed08e05cf92aeb391e4c5">&#9670;&#160;</a></span>atomic_int</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef volatile int <a class="el" href="include_2stdatomic_8h.html#a47af6185878ed08e05cf92aeb391e4c5">atomic_int</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00240">240</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="a393105253dde147dbe8d17c729c3b3cc" name="a393105253dde147dbe8d17c729c3b3cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a393105253dde147dbe8d17c729c3b3cc">&#9670;&#160;</a></span>atomic_int_fast16_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef volatile int_fast16_t <a class="el" href="include_2stdatomic_8h.html#a393105253dde147dbe8d17c729c3b3cc">atomic_int_fast16_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00256">256</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="a46345a1e828879eff1e867fb2a2704b4" name="a46345a1e828879eff1e867fb2a2704b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a46345a1e828879eff1e867fb2a2704b4">&#9670;&#160;</a></span>atomic_int_fast32_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef volatile int_fast32_t <a class="el" href="include_2stdatomic_8h.html#a46345a1e828879eff1e867fb2a2704b4">atomic_int_fast32_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00258">258</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="aeb9f0ed97c801d27e7c650bfc8cabbba" name="aeb9f0ed97c801d27e7c650bfc8cabbba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb9f0ed97c801d27e7c650bfc8cabbba">&#9670;&#160;</a></span>atomic_int_fast64_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef volatile int_fast64_t <a class="el" href="include_2stdatomic_8h.html#aeb9f0ed97c801d27e7c650bfc8cabbba">atomic_int_fast64_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00260">260</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="ab68830b9273d86fb6f2294b57ffc4a99" name="ab68830b9273d86fb6f2294b57ffc4a99"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab68830b9273d86fb6f2294b57ffc4a99">&#9670;&#160;</a></span>atomic_int_fast8_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef volatile int_fast8_t <a class="el" href="include_2stdatomic_8h.html#ab68830b9273d86fb6f2294b57ffc4a99">atomic_int_fast8_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00254">254</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="a86d56a528bb84decf79d9f78f090cbaf" name="a86d56a528bb84decf79d9f78f090cbaf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a86d56a528bb84decf79d9f78f090cbaf">&#9670;&#160;</a></span>atomic_int_least16_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef volatile int_least16_t <a class="el" href="include_2stdatomic_8h.html#a86d56a528bb84decf79d9f78f090cbaf">atomic_int_least16_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00248">248</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="a572044581a00ae85e2f6df493b7cec54" name="a572044581a00ae85e2f6df493b7cec54"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a572044581a00ae85e2f6df493b7cec54">&#9670;&#160;</a></span>atomic_int_least32_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef volatile int_least32_t <a class="el" href="include_2stdatomic_8h.html#a572044581a00ae85e2f6df493b7cec54">atomic_int_least32_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00250">250</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="a753852398c578c7b0e671ebe39a5a099" name="a753852398c578c7b0e671ebe39a5a099"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a753852398c578c7b0e671ebe39a5a099">&#9670;&#160;</a></span>atomic_int_least64_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef volatile int_least64_t <a class="el" href="include_2stdatomic_8h.html#a753852398c578c7b0e671ebe39a5a099">atomic_int_least64_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00252">252</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="a2914a295069ac08b4ba7f14a4ccb44e1" name="a2914a295069ac08b4ba7f14a4ccb44e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2914a295069ac08b4ba7f14a4ccb44e1">&#9670;&#160;</a></span>atomic_int_least8_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef volatile int_least8_t <a class="el" href="include_2stdatomic_8h.html#a2914a295069ac08b4ba7f14a4ccb44e1">atomic_int_least8_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00246">246</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="ae007cd33a18f7ee428a3785c47cee39a" name="ae007cd33a18f7ee428a3785c47cee39a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae007cd33a18f7ee428a3785c47cee39a">&#9670;&#160;</a></span>atomic_intmax_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef volatile intmax_t <a class="el" href="include_2stdatomic_8h.html#ae007cd33a18f7ee428a3785c47cee39a">atomic_intmax_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00266">266</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="a0021b3c35266e139f055c6568a9b340e" name="a0021b3c35266e139f055c6568a9b340e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0021b3c35266e139f055c6568a9b340e">&#9670;&#160;</a></span>atomic_intptr_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef volatile intptr_t <a class="el" href="include_2stdatomic_8h.html#a0021b3c35266e139f055c6568a9b340e">atomic_intptr_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00262">262</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="ac6d2892304538baffbb9759ef417276f" name="ac6d2892304538baffbb9759ef417276f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6d2892304538baffbb9759ef417276f">&#9670;&#160;</a></span>atomic_llong</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef volatile long long <a class="el" href="include_2stdatomic_8h.html#ac6d2892304538baffbb9759ef417276f">atomic_llong</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00244">244</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="a1252081478eb7160219c2e2bf4b8b26a" name="a1252081478eb7160219c2e2bf4b8b26a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1252081478eb7160219c2e2bf4b8b26a">&#9670;&#160;</a></span>atomic_long</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef volatile long <a class="el" href="include_2stdatomic_8h.html#a1252081478eb7160219c2e2bf4b8b26a">atomic_long</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00242">242</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="a63b627276aca47a56ffa1409d958b072" name="a63b627276aca47a56ffa1409d958b072"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a63b627276aca47a56ffa1409d958b072">&#9670;&#160;</a></span>atomic_ptrdiff_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef volatile ptrdiff_t <a class="el" href="include_2stdatomic_8h.html#a63b627276aca47a56ffa1409d958b072">atomic_ptrdiff_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00265">265</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="a0772ed223cc212a17979d8f86eca0d0c" name="a0772ed223cc212a17979d8f86eca0d0c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0772ed223cc212a17979d8f86eca0d0c">&#9670;&#160;</a></span>atomic_schar</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef volatile signed char <a class="el" href="include_2stdatomic_8h.html#a0772ed223cc212a17979d8f86eca0d0c">atomic_schar</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00236">236</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="a819f411fe66d5bb295ed6b37b2234796" name="a819f411fe66d5bb295ed6b37b2234796"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a819f411fe66d5bb295ed6b37b2234796">&#9670;&#160;</a></span>atomic_short</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef volatile short <a class="el" href="include_2stdatomic_8h.html#a819f411fe66d5bb295ed6b37b2234796">atomic_short</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00238">238</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
 
 </div>
 </div>
@@ -855,7 +1494,71 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00218">218</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00264">264</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="a753a736777dce1d447da5210b3609f20" name="a753a736777dce1d447da5210b3609f20"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a753a736777dce1d447da5210b3609f20">&#9670;&#160;</a></span>atomic_uchar</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef volatile unsigned char <a class="el" href="include_2stdatomic_8h.html#a753a736777dce1d447da5210b3609f20">atomic_uchar</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00237">237</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="acbc5f29da83246878bb8fd141533c797" name="acbc5f29da83246878bb8fd141533c797"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acbc5f29da83246878bb8fd141533c797">&#9670;&#160;</a></span>atomic_uint</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef volatile unsigned int <a class="el" href="include_2stdatomic_8h.html#acbc5f29da83246878bb8fd141533c797">atomic_uint</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00241">241</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="a3e21d6a8151a23b8a7ab27f277afda3c" name="a3e21d6a8151a23b8a7ab27f277afda3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e21d6a8151a23b8a7ab27f277afda3c">&#9670;&#160;</a></span>atomic_uint_fast16_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef volatile uint_fast16_t <a class="el" href="include_2stdatomic_8h.html#a3e21d6a8151a23b8a7ab27f277afda3c">atomic_uint_fast16_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00257">257</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="a5b39a75b6539e1118c775986b95409dd" name="a5b39a75b6539e1118c775986b95409dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b39a75b6539e1118c775986b95409dd">&#9670;&#160;</a></span>atomic_uint_fast32_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef volatile uint_fast32_t <a class="el" href="include_2stdatomic_8h.html#a5b39a75b6539e1118c775986b95409dd">atomic_uint_fast32_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00259">259</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
 
 </div>
 </div>
@@ -871,7 +1574,167 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00219">219</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00261">261</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="aabf99ce6da7804f051d4f34463095a26" name="aabf99ce6da7804f051d4f34463095a26"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aabf99ce6da7804f051d4f34463095a26">&#9670;&#160;</a></span>atomic_uint_fast8_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef volatile uint_fast8_t <a class="el" href="include_2stdatomic_8h.html#aabf99ce6da7804f051d4f34463095a26">atomic_uint_fast8_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00255">255</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="a9da88867ad2d24655055e619a7b24414" name="a9da88867ad2d24655055e619a7b24414"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9da88867ad2d24655055e619a7b24414">&#9670;&#160;</a></span>atomic_uint_least16_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef volatile uint_least16_t <a class="el" href="include_2stdatomic_8h.html#a9da88867ad2d24655055e619a7b24414">atomic_uint_least16_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00249">249</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="aa23fa0ef41c89deef533b3805887968f" name="aa23fa0ef41c89deef533b3805887968f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa23fa0ef41c89deef533b3805887968f">&#9670;&#160;</a></span>atomic_uint_least32_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef volatile uint_least32_t <a class="el" href="include_2stdatomic_8h.html#aa23fa0ef41c89deef533b3805887968f">atomic_uint_least32_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00251">251</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="aa9d30dd336a44b1409370e6632a95b46" name="aa9d30dd336a44b1409370e6632a95b46"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9d30dd336a44b1409370e6632a95b46">&#9670;&#160;</a></span>atomic_uint_least64_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef volatile uint_least64_t <a class="el" href="include_2stdatomic_8h.html#aa9d30dd336a44b1409370e6632a95b46">atomic_uint_least64_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00253">253</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="ac4514a29e7a7837bed1e52ef294e8f85" name="ac4514a29e7a7837bed1e52ef294e8f85"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac4514a29e7a7837bed1e52ef294e8f85">&#9670;&#160;</a></span>atomic_uint_least8_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef volatile uint_least8_t <a class="el" href="include_2stdatomic_8h.html#ac4514a29e7a7837bed1e52ef294e8f85">atomic_uint_least8_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00247">247</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="ada37a33b3b038f87fe29b013dbcc6d3e" name="ada37a33b3b038f87fe29b013dbcc6d3e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada37a33b3b038f87fe29b013dbcc6d3e">&#9670;&#160;</a></span>atomic_uintmax_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef volatile uintmax_t <a class="el" href="include_2stdatomic_8h.html#ada37a33b3b038f87fe29b013dbcc6d3e">atomic_uintmax_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00267">267</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="a5a3e1cb5ef21e493807f14a4920f5dcd" name="a5a3e1cb5ef21e493807f14a4920f5dcd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a3e1cb5ef21e493807f14a4920f5dcd">&#9670;&#160;</a></span>atomic_uintptr_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef volatile uintptr_t <a class="el" href="include_2stdatomic_8h.html#a5a3e1cb5ef21e493807f14a4920f5dcd">atomic_uintptr_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00263">263</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="ad5049efa83e60cc859efba4c6f636dc8" name="ad5049efa83e60cc859efba4c6f636dc8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad5049efa83e60cc859efba4c6f636dc8">&#9670;&#160;</a></span>atomic_ullong</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef volatile unsigned long long <a class="el" href="include_2stdatomic_8h.html#ad5049efa83e60cc859efba4c6f636dc8">atomic_ullong</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00245">245</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="a654b5604043dc806cdf6b6e7aa688f48" name="a654b5604043dc806cdf6b6e7aa688f48"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a654b5604043dc806cdf6b6e7aa688f48">&#9670;&#160;</a></span>atomic_ulong</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef volatile unsigned long <a class="el" href="include_2stdatomic_8h.html#a654b5604043dc806cdf6b6e7aa688f48">atomic_ulong</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00243">243</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+
+</div>
+</div>
+<a id="a4eb27564617e84f78976767860dae14a" name="a4eb27564617e84f78976767860dae14a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4eb27564617e84f78976767860dae14a">&#9670;&#160;</a></span>atomic_ushort</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef volatile unsigned short <a class="el" href="include_2stdatomic_8h.html#a4eb27564617e84f78976767860dae14a">atomic_ushort</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00239">239</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
 
 </div>
 </div>
@@ -896,7 +1759,7 @@ Variables</h2></td></tr>
 <tr><td class="fieldname"><a id="a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752" name="a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752"></a>memory_order_seq_cst&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00208">208</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00225">225</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
 
 </div>
 </div>
@@ -935,7 +1798,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00285">285</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00586">586</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
 <div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-1-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
 <div id="dynsection-1-summary" class="dynsummary" style="display:block;">
@@ -985,7 +1848,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00276">276</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00581">581</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
 <div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-2-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
 <div id="dynsection-2-summary" class="dynsummary" style="display:block;">
@@ -1021,6 +1884,8 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2stdatomic_8h_source.html#l00512">512</a> of file <a class="el" href="include_2stdatomic_8h_source.html">stdatomic.h</a>.</p>
 
 </div>
 </div>

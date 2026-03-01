@@ -1,12 +1,18 @@
 var shared_8h =
 [
+    [ "ttak_shard_table_t", "structttak__shard__table__t.html", "structttak__shard__table__t" ],
     [ "ttak_shared_s", "structttak__shared__s.html", "structttak__shared__s" ],
     [ "tt_shared_access", "shared_8h.html#aff22de6f9a1bb6a54ed2dfa0efb78f9b", null ],
+    [ "TTAK_OWNER_CAP_EXHAUSTED", "shared_8h.html#ad0c1af1fe2e949c2ac97e9d912c76c2e", null ],
     [ "TTAK_OWNER_CORRUPTED", "shared_8h.html#a2d32c5e6e1fe6b47c116509da86d9db1", null ],
     [ "TTAK_OWNER_INVALID", "shared_8h.html#a11a718e774b3a65a5221ee162b8b0c48", null ],
     [ "TTAK_OWNER_SHARE_DENIED", "shared_8h.html#a175f4cbf2e24c7ea490888c4908fa84f", null ],
     [ "TTAK_OWNER_SUCCESS", "shared_8h.html#af42b1ce7ca73a7e2257f5007239646b8", null ],
     [ "TTAK_OWNER_VALID", "shared_8h.html#accf5253af94e3cae56352947e0437382", null ],
+    [ "TTAK_SHARD_DIR_SIZE", "shared_8h.html#a813722be96d4cafb20c1f1718da0cb4a", null ],
+    [ "TTAK_SHARD_PAGE_MASK", "shared_8h.html#aeadfd8c060de6005481122541021d401", null ],
+    [ "TTAK_SHARD_PAGE_SHIFT", "shared_8h.html#a4661b90ef621c9b517f23c155fb8e4de", null ],
+    [ "TTAK_SHARD_PAGE_SIZE", "shared_8h.html#a3200c34e4b17f4f8ff7a93f12b1dd9c4", null ],
     [ "TTAK_SHARED_DEFINE_WRAPPER", "shared_8h.html#a23651acba69b58a505231b47b0802839", null ],
     [ "TTAK_SHARED_DIRTY", "shared_8h.html#a0eed16dad2e7bfc141ab672405661d46", null ],
     [ "TTAK_SHARED_EXPIRED", "shared_8h.html#a0ce11efa90d8c4cc7edabef8401df0a1", null ],

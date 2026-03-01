@@ -106,6 +106,7 @@ $(document).ready(function(){initNavTree('shared_8h.html',''); initResizable(); 
 <code>#include &lt;stddef.h&gt;</code><br />
 <code>#include &lt;stdint.h&gt;</code><br />
 <code>#include &lt;stdbool.h&gt;</code><br />
+<code>#include &lt;stdatomic.h&gt;</code><br />
 </div><div class="textblock"><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Include dependency graph for shared.h:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -113,45 +114,47 @@ $(document).ready(function(){initNavTree('shared_8h.html',''); initResizable(); 
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="shared_8h__incl.png" border="0" usemap="#ainclude_2ttak_2shared_2shared_8h" alt=""/></div>
 <map name="ainclude_2ttak_2shared_2shared_8h" id="ainclude_2ttak_2shared_2shared_8h">
-<area shape="rect" title=" " alt="" coords="387,5,534,45"/>
-<area shape="rect" href="owner_8h.html" title=" " alt="" coords="390,93,531,119"/>
-<area shape="poly" title=" " alt="" coords="463,46,463,79,458,79,458,46"/>
-<area shape="rect" title=" " alt="" coords="28,313,103,339"/>
-<area shape="poly" title=" " alt="" coords="387,34,331,42,268,53,203,71,141,96,91,123,55,151,30,188,11,241,8,253,11,264,23,285,40,303,37,307,19,289,6,266,3,253,6,239,25,186,51,147,88,118,139,91,202,66,267,48,330,36,386,29"/>
-<area shape="rect" title=" " alt="" coords="404,313,474,339"/>
-<area shape="poly" title=" " alt="" coords="534,32,635,49,687,62,736,79,775,100,802,126,809,141,811,157,807,175,797,194,767,228,730,256,689,279,646,296,560,317,488,326,488,320,559,312,644,291,687,274,727,252,763,224,793,190,802,173,806,157,804,142,798,129,772,104,734,84,686,67,634,54,533,37"/>
-<area shape="rect" href="sync_2sync_8h.html" title=" " alt="" coords="138,167,266,192"/>
-<area shape="poly" title=" " alt="" coords="387,35,320,43,250,55,189,72,167,83,153,95,148,110,152,125,163,141,177,156,173,159,159,144,147,127,142,109,149,92,165,78,187,67,248,50,319,37,386,29"/>
-<area shape="rect" title=" " alt="" coords="527,167,610,192"/>
-<area shape="poly" title=" " alt="" coords="494,43,521,65,545,92,560,122,567,152,562,153,555,124,541,95,517,69,490,48"/>
-<area shape="rect" href="dynamic__mask_8h.html" title="Dynamic bitmap utility with thread&#45;safe access." alt="" coords="163,93,366,119"/>
-<area shape="poly" title=" " alt="" coords="414,48,307,91,305,86,412,43"/>
-<area shape="rect" href="epoch_8h.html" title=" " alt="" coords="606,93,747,119"/>
-<area shape="poly" title=" " alt="" coords="513,43,633,86,631,91,511,48"/>
-<area shape="rect" href="map_8h.html" title=" " alt="" coords="290,167,401,192"/>
-<area shape="poly" title=" " alt="" coords="443,121,377,162,374,157,440,116"/>
-<area shape="poly" title=" " alt="" coords="464,119,466,182,460,266,451,301,446,300,455,265,461,182,458,119"/>
-<area shape="poly" title=" " alt="" coords="419,121,257,166,256,160,418,116"/>
-<area shape="poly" title=" " alt="" coords="479,116,541,157,538,161,476,121"/>
-<area shape="poly" title=" " alt="" coords="302,195,241,214,177,242,129,274,90,306,87,302,126,269,175,238,240,209,300,190"/>
-<area shape="poly" title=" " alt="" coords="355,191,426,300,422,303,351,194"/>
-<area shape="rect" href="hash_8h.html" title=" " alt="" coords="188,240,300,265"/>
-<area shape="poly" title=" " alt="" coords="331,194,274,234,270,230,328,190"/>
-<area shape="poly" title=" " alt="" coords="216,268,108,311,106,306,215,263"/>
-<area shape="poly" title=" " alt="" coords="276,263,395,306,393,311,275,268"/>
-<area shape="rect" title=" " alt="" coords="201,313,288,339"/>
-<area shape="poly" title=" " alt="" coords="247,266,247,300,242,300,242,266"/>
-<area shape="poly" title=" " alt="" coords="226,190,314,238,413,303,410,308,311,242,223,194"/>
-<area shape="rect" href="pthread_8h.html" title="POSIX thread compatibility shim." alt="" coords="29,240,113,265"/>
-<area shape="poly" title=" " alt="" coords="182,194,105,236,103,231,179,190"/>
-<area shape="poly" title=" " alt="" coords="208,121,158,137,104,161,55,195,35,217,19,241,15,257,20,273,43,303,38,306,15,275,10,257,14,239,31,213,52,191,102,156,156,132,206,116"/>
-<area shape="poly" title=" " alt="" coords="331,116,376,134,397,148,414,165,433,198,442,234,445,270,444,300,439,300,440,270,437,235,428,200,410,168,393,152,374,139,329,121"/>
-<area shape="poly" title=" " alt="" coords="256,121,223,158,219,154,252,117"/>
-<area shape="poly" title=" " alt="" coords="314,116,514,163,513,168,312,121"/>
-<area shape="poly" title=" " alt="" coords="673,120,653,155,624,194,586,229,545,261,472,309,470,304,542,257,582,225,620,190,649,152,668,117"/>
-<area shape="poly" title=" " alt="" coords="660,121,599,161,596,157,657,116"/>
-<area shape="rect" title=" " alt="" coords="684,167,783,192"/>
-<area shape="poly" title=" " alt="" coords="688,117,718,154,713,158,684,121"/>
+<area shape="rect" title=" " alt="" coords="421,5,568,45"/>
+<area shape="rect" href="owner_8h.html" title=" " alt="" coords="108,93,249,119"/>
+<area shape="poly" title=" " alt="" coords="422,47,239,93,238,87,420,42"/>
+<area shape="rect" title=" " alt="" coords="5,313,80,339"/>
+<area shape="poly" title=" " alt="" coords="421,33,335,39,239,51,153,70,121,82,98,95,78,117,63,142,53,169,46,198,41,254,42,300,37,300,36,254,41,197,48,168,59,140,74,114,94,91,118,77,152,65,238,46,334,34,421,27"/>
+<area shape="rect" title=" " alt="" coords="435,313,506,339"/>
+<area shape="poly" title=" " alt="" coords="568,31,629,40,692,52,745,69,766,80,780,92,783,105,780,119,782,162,787,198,785,232,777,249,763,267,746,280,721,291,657,307,584,318,520,324,519,319,584,313,656,302,720,286,744,275,759,263,772,246,779,231,782,198,777,163,775,118,778,105,775,95,763,84,743,74,690,57,628,45,568,36"/>
+<area shape="rect" href="sync_2sync_8h.html" title=" " alt="" coords="352,167,480,192"/>
+<area shape="poly" title=" " alt="" coords="422,36,392,44,362,56,336,72,314,95,310,105,310,113,321,131,343,146,369,159,367,164,340,151,317,135,305,115,305,103,310,92,332,68,360,51,390,39,420,31"/>
+<area shape="rect" title=" " alt="" coords="627,240,725,265"/>
+<area shape="poly" title=" " alt="" coords="569,33,680,55,727,71,745,81,757,92,766,110,768,129,764,149,755,168,730,204,702,232,698,229,726,200,751,165,759,147,763,129,761,111,753,95,741,85,725,76,678,60,568,38"/>
+<area shape="rect" title=" " alt="" coords="556,167,639,192"/>
+<area shape="poly" title=" " alt="" coords="510,44,584,154,580,157,505,47"/>
+<area shape="rect" href="dynamic__mask_8h.html" title="Dynamic bitmap utility with thread&#45;safe access." alt="" coords="324,93,527,119"/>
+<area shape="poly" title=" " alt="" coords="480,47,447,84,443,81,476,44"/>
+<area shape="rect" href="epoch_8h.html" title=" " alt="" coords="601,93,743,119"/>
+<area shape="poly" title=" " alt="" coords="538,43,635,85,632,90,536,48"/>
+<area shape="rect" href="map_8h.html" title=" " alt="" coords="117,167,227,192"/>
+<area shape="poly" title=" " alt="" coords="180,119,177,153,172,153,175,119"/>
+<area shape="poly" title=" " alt="" coords="192,117,241,165,287,217,308,239,339,263,381,287,424,306,422,311,379,292,336,268,305,243,283,221,237,169,188,121"/>
+<area shape="poly" title=" " alt="" coords="218,116,365,160,364,165,216,121"/>
+<area shape="poly" title=" " alt="" coords="246,116,543,166,542,171,245,121"/>
+<area shape="poly" title=" " alt="" coords="157,194,129,215,101,242,77,272,58,302,54,299,73,269,97,238,126,211,153,190"/>
+<area shape="poly" title=" " alt="" coords="187,190,233,225,293,263,360,291,423,310,421,315,358,296,291,268,230,230,184,194"/>
+<area shape="rect" href="hash_8h.html" title=" " alt="" coords="111,240,223,265"/>
+<area shape="poly" title=" " alt="" coords="174,193,171,227,166,226,168,192"/>
+<area shape="poly" title=" " alt="" coords="148,268,76,309,73,304,145,263"/>
+<area shape="poly" title=" " alt="" coords="216,263,423,311,421,316,215,268"/>
+<area shape="rect" title=" " alt="" coords="123,313,210,339"/>
+<area shape="poly" title=" " alt="" coords="169,266,169,300,164,300,164,266"/>
+<area shape="poly" title=" " alt="" coords="425,191,448,239,467,299,462,301,443,241,420,193"/>
+<area shape="rect" href="pthread_8h.html" title="POSIX thread compatibility shim." alt="" coords="349,240,433,265"/>
+<area shape="poly" title=" " alt="" coords="414,193,402,228,397,226,409,191"/>
+<area shape="poly" title=" " alt="" coords="458,189,621,234,620,239,457,195"/>
+<area shape="poly" title=" " alt="" coords="324,118,196,137,142,151,106,169,81,198,63,233,53,269,48,300,42,299,48,268,58,231,76,195,102,165,140,146,195,131,323,113"/>
+<area shape="poly" title=" " alt="" coords="448,117,473,137,494,166,503,201,502,239,494,273,484,301,479,300,489,272,496,238,498,202,490,168,469,141,444,121"/>
+<area shape="poly" title=" " alt="" coords="426,119,422,154,417,153,421,119"/>
+<area shape="poly" title=" " alt="" coords="454,116,558,159,556,164,452,121"/>
+<area shape="poly" title=" " alt="" coords="686,117,712,145,738,184,747,205,751,226,750,247,739,267,725,279,703,290,645,306,580,317,520,324,520,318,579,312,644,301,701,285,722,275,735,264,744,246,746,227,742,206,733,186,707,148,682,121"/>
+<area shape="poly" title=" " alt="" coords="675,119,678,226,673,226,670,119"/>
+<area shape="poly" title=" " alt="" coords="662,121,621,159,618,155,658,117"/>
 </map>
 </div>
 </div><div class="textblock"><div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
@@ -179,11 +182,22 @@ $(document).ready(function(){initNavTree('shared_8h.html',''); initResizable(); 
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__shard__table__t.html">ttak_shard_table_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lock-free Segmented Shard Array (Page Table). Maps thread logical IDs to unique timestamp slots without locks or reallocations.  <a href="structttak__shard__table__t.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__shared__s.html">ttak_shared_s</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
+<tr class="memitem:a4661b90ef621c9b517f23c155fb8e4de" id="r_a4661b90ef621c9b517f23c155fb8e4de"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="shared_8h.html#a4661b90ef621c9b517f23c155fb8e4de">TTAK_SHARD_PAGE_SHIFT</a>&#160;&#160;&#160;4</td></tr>
+<tr class="separator:a4661b90ef621c9b517f23c155fb8e4de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3200c34e4b17f4f8ff7a93f12b1dd9c4" id="r_a3200c34e4b17f4f8ff7a93f12b1dd9c4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="shared_8h.html#a3200c34e4b17f4f8ff7a93f12b1dd9c4">TTAK_SHARD_PAGE_SIZE</a>&#160;&#160;&#160;(1 &lt;&lt; <a class="el" href="shared_8h.html#a4661b90ef621c9b517f23c155fb8e4de">TTAK_SHARD_PAGE_SHIFT</a>)</td></tr>
+<tr class="separator:a3200c34e4b17f4f8ff7a93f12b1dd9c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeadfd8c060de6005481122541021d401" id="r_aeadfd8c060de6005481122541021d401"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="shared_8h.html#aeadfd8c060de6005481122541021d401">TTAK_SHARD_PAGE_MASK</a>&#160;&#160;&#160;(<a class="el" href="shared_8h.html#a3200c34e4b17f4f8ff7a93f12b1dd9c4">TTAK_SHARD_PAGE_SIZE</a> - 1)</td></tr>
+<tr class="separator:aeadfd8c060de6005481122541021d401"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a813722be96d4cafb20c1f1718da0cb4a" id="r_a813722be96d4cafb20c1f1718da0cb4a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="shared_8h.html#a813722be96d4cafb20c1f1718da0cb4a">TTAK_SHARD_DIR_SIZE</a>&#160;&#160;&#160;64</td></tr>
+<tr class="separator:a813722be96d4cafb20c1f1718da0cb4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4429ac81de20a6b3aef42d08be582341" id="r_a4429ac81de20a6b3aef42d08be582341"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="shared_8h.html#a4429ac81de20a6b3aef42d08be582341">TTAK_SHARED_READY</a>&#160;&#160;&#160;(0)</td></tr>
 <tr class="separator:a4429ac81de20a6b3aef42d08be582341"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0eed16dad2e7bfc141ab672405661d46" id="r_a0eed16dad2e7bfc141ab672405661d46"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="shared_8h.html#a0eed16dad2e7bfc141ab672405661d46">TTAK_SHARED_DIRTY</a>&#160;&#160;&#160;(1 &lt;&lt; 0)</td></tr>
@@ -206,7 +220,9 @@ Macros</h2></td></tr>
 <tr class="separator:a11a718e774b3a65a5221ee162b8b0c48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a175f4cbf2e24c7ea490888c4908fa84f" id="r_a175f4cbf2e24c7ea490888c4908fa84f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="shared_8h.html#a175f4cbf2e24c7ea490888c4908fa84f">TTAK_OWNER_SHARE_DENIED</a>&#160;&#160;&#160;(1 &lt;&lt; 2)</td></tr>
 <tr class="separator:a175f4cbf2e24c7ea490888c4908fa84f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af42b1ce7ca73a7e2257f5007239646b8" id="r_af42b1ce7ca73a7e2257f5007239646b8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="shared_8h.html#af42b1ce7ca73a7e2257f5007239646b8">TTAK_OWNER_SUCCESS</a>&#160;&#160;&#160;(1 &lt;&lt; 3)</td></tr>
+<tr class="memitem:ad0c1af1fe2e949c2ac97e9d912c76c2e" id="r_ad0c1af1fe2e949c2ac97e9d912c76c2e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="shared_8h.html#ad0c1af1fe2e949c2ac97e9d912c76c2e">TTAK_OWNER_CAP_EXHAUSTED</a>&#160;&#160;&#160;(1 &lt;&lt; 3)</td></tr>
+<tr class="separator:ad0c1af1fe2e949c2ac97e9d912c76c2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af42b1ce7ca73a7e2257f5007239646b8" id="r_af42b1ce7ca73a7e2257f5007239646b8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="shared_8h.html#af42b1ce7ca73a7e2257f5007239646b8">TTAK_OWNER_SUCCESS</a>&#160;&#160;&#160;(1 &lt;&lt; 4)</td></tr>
 <tr class="separator:af42b1ce7ca73a7e2257f5007239646b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff22de6f9a1bb6a54ed2dfa0efb78f9b" id="r_aff22de6f9a1bb6a54ed2dfa0efb78f9b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="shared_8h.html#aff22de6f9a1bb6a54ed2dfa0efb78f9b">tt_shared_access</a>(type,  shared_ptr,  owner,  res_ptr)&#160;&#160;&#160;    ((type *)((shared_ptr)-&gt;access(shared_ptr, owner, res_ptr)))</td></tr>
 <tr class="memdesc:aff22de6f9a1bb6a54ed2dfa0efb78f9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper macro for typed access to shared data.  <br /></td></tr>
@@ -228,10 +244,10 @@ Typedefs</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ae6eb27b055588903d427f15cc0cec6f5" id="r_ae6eb27b055588903d427f15cc0cec6f5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="shared_8h.html#ae6eb27b055588903d427f15cc0cec6f5">ttak_shared_level_t</a> { <a class="el" href="shared_8h.html#ae6eb27b055588903d427f15cc0cec6f5a577c57951143ba8e64aff010c9383d78">TTAK_SHARED_LEVEL_3</a>
-, <a class="el" href="shared_8h.html#ae6eb27b055588903d427f15cc0cec6f5a8be541e9c283c883dc14a00f8a900f38">TTAK_SHARED_LEVEL_2</a>
-, <a class="el" href="shared_8h.html#ae6eb27b055588903d427f15cc0cec6f5abeee3bdcc7161760aea197605d2805fc">TTAK_SHARED_LEVEL_1</a>
-, <a class="el" href="shared_8h.html#ae6eb27b055588903d427f15cc0cec6f5a4526896883edb6c2d7241925d422e81e">TTAK_SHARED_NO_LEVEL</a>
+<tr class="memitem:ae6eb27b055588903d427f15cc0cec6f5" id="r_ae6eb27b055588903d427f15cc0cec6f5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="shared_8h.html#ae6eb27b055588903d427f15cc0cec6f5">ttak_shared_level_t</a> { <a class="el" href="shared_8h.html#ae6eb27b055588903d427f15cc0cec6f5a577c57951143ba8e64aff010c9383d78">TTAK_SHARED_LEVEL_3</a> = 3
+, <a class="el" href="shared_8h.html#ae6eb27b055588903d427f15cc0cec6f5a8be541e9c283c883dc14a00f8a900f38">TTAK_SHARED_LEVEL_2</a> = 2
+, <a class="el" href="shared_8h.html#ae6eb27b055588903d427f15cc0cec6f5abeee3bdcc7161760aea197605d2805fc">TTAK_SHARED_LEVEL_1</a> = 1
+, <a class="el" href="shared_8h.html#ae6eb27b055588903d427f15cc0cec6f5a4526896883edb6c2d7241925d422e81e">TTAK_SHARED_NO_LEVEL</a> = 0
  }</td></tr>
 <tr class="memdesc:ae6eb27b055588903d427f15cc0cec6f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Security enforcement levels for ownership validation.  <a href="shared_8h.html#ae6eb27b055588903d427f15cc0cec6f5">More...</a><br /></td></tr>
 <tr class="separator:ae6eb27b055588903d427f15cc0cec6f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -304,7 +320,24 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00201">201</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00217">217</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+
+</div>
+</div>
+<a id="ad0c1af1fe2e949c2ac97e9d912c76c2e" name="ad0c1af1fe2e949c2ac97e9d912c76c2e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad0c1af1fe2e949c2ac97e9d912c76c2e">&#9670;&#160;</a></span>TTAK_OWNER_CAP_EXHAUSTED</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TTAK_OWNER_CAP_EXHAUSTED&#160;&#160;&#160;(1 &lt;&lt; 3)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Scalability Error: Thread capacity exceeded </p>
+
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00055">55</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 
 </div>
 </div>
@@ -319,9 +352,9 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Level 2: Timestamp mismatch detected </p>
+<p>Safety Error: Timestamp mismatch detected </p>
 
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00036">36</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00052">52</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 
 </div>
 </div>
@@ -336,9 +369,9 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Level 1: Owner information mismatch </p>
+<p>Auth Error: Owner information mismatch </p>
 
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00037">37</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00053">53</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 
 </div>
 </div>
@@ -353,9 +386,9 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Error: Failed to register new owner </p>
+<p>Resource Error: Failed to register new owner </p>
 
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00038">38</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00054">54</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 
 </div>
 </div>
@@ -366,13 +399,13 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define TTAK_OWNER_SUCCESS&#160;&#160;&#160;(1 &lt;&lt; 3)</td>
+          <td class="memname">#define TTAK_OWNER_SUCCESS&#160;&#160;&#160;(1 &lt;&lt; 4)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Operation completed successfully </p>
+<p>General Success indicator </p>
 
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00039">39</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00056">56</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 
 </div>
 </div>
@@ -387,9 +420,73 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Level 3: Pure safety guaranteed </p>
+<p>Success: Access granted and validated </p>
 
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00035">35</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00051">51</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+
+</div>
+</div>
+<a id="a813722be96d4cafb20c1f1718da0cb4a" name="a813722be96d4cafb20c1f1718da0cb4a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a813722be96d4cafb20c1f1718da0cb4a">&#9670;&#160;</a></span>TTAK_SHARD_DIR_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TTAK_SHARD_DIR_SIZE&#160;&#160;&#160;64</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00028">28</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+
+</div>
+</div>
+<a id="aeadfd8c060de6005481122541021d401" name="aeadfd8c060de6005481122541021d401"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeadfd8c060de6005481122541021d401">&#9670;&#160;</a></span>TTAK_SHARD_PAGE_MASK</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TTAK_SHARD_PAGE_MASK&#160;&#160;&#160;(<a class="el" href="shared_8h.html#a3200c34e4b17f4f8ff7a93f12b1dd9c4">TTAK_SHARD_PAGE_SIZE</a> - 1)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00027">27</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+
+</div>
+</div>
+<a id="a4661b90ef621c9b517f23c155fb8e4de" name="a4661b90ef621c9b517f23c155fb8e4de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4661b90ef621c9b517f23c155fb8e4de">&#9670;&#160;</a></span>TTAK_SHARD_PAGE_SHIFT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TTAK_SHARD_PAGE_SHIFT&#160;&#160;&#160;4</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00025">25</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+
+</div>
+</div>
+<a id="a3200c34e4b17f4f8ff7a93f12b1dd9c4" name="a3200c34e4b17f4f8ff7a93f12b1dd9c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3200c34e4b17f4f8ff7a93f12b1dd9c4">&#9670;&#160;</a></span>TTAK_SHARD_PAGE_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TTAK_SHARD_PAGE_SIZE&#160;&#160;&#160;(1 &lt;&lt; <a class="el" href="shared_8h.html#a4661b90ef621c9b517f23c155fb8e4de">TTAK_SHARD_PAGE_SHIFT</a>)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00026">26</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 
 </div>
 </div>
@@ -433,8 +530,8 @@ Functions</h2></td></tr>
 <div class="line">    <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> ttak_shared_##name##_release(ttak_shared_##name##_t *s) { \</div>
 <div class="line">        s-&gt;base.release(&amp;s-&gt;base); \</div>
 <div class="line">    }</div>
-<div class="ttc" id="ashared_8h_html_a9e87115c8ab89cdc85a268b523179cef"><div class="ttname"><a href="shared_8h.html#a9e87115c8ab89cdc85a268b523179cef">ttak_shared_result_t</a></div><div class="ttdeci">uint32_t ttak_shared_result_t</div><div class="ttdoc">Operational result codes for shared memory actions.</div><div class="ttdef"><b>Definition</b> <a href="shared_8h_source.html#l00034">shared.h:34</a></div></div>
-<div class="ttc" id="ashared_8h_html_ae6eb27b055588903d427f15cc0cec6f5"><div class="ttname"><a href="shared_8h.html#ae6eb27b055588903d427f15cc0cec6f5">ttak_shared_level_t</a></div><div class="ttdeci">ttak_shared_level_t</div><div class="ttdoc">Security enforcement levels for ownership validation.</div><div class="ttdef"><b>Definition</b> <a href="shared_8h_source.html#l00044">shared.h:44</a></div></div>
+<div class="ttc" id="ashared_8h_html_a9e87115c8ab89cdc85a268b523179cef"><div class="ttname"><a href="shared_8h.html#a9e87115c8ab89cdc85a268b523179cef">ttak_shared_result_t</a></div><div class="ttdeci">uint32_t ttak_shared_result_t</div><div class="ttdoc">Operational result codes for shared memory actions.</div><div class="ttdef"><b>Definition</b> <a href="shared_8h_source.html#l00050">shared.h:50</a></div></div>
+<div class="ttc" id="ashared_8h_html_ae6eb27b055588903d427f15cc0cec6f5"><div class="ttname"><a href="shared_8h.html#ae6eb27b055588903d427f15cc0cec6f5">ttak_shared_level_t</a></div><div class="ttdeci">ttak_shared_level_t</div><div class="ttdoc">Security enforcement levels for ownership validation.</div><div class="ttdef"><b>Definition</b> <a href="shared_8h_source.html#l00061">shared.h:61</a></div></div>
 <div class="ttc" id="astructttak__owner_html"><div class="ttname"><a href="structttak__owner.html">ttak_owner</a></div><div class="ttdoc">The Owner structure.</div><div class="ttdef"><b>Definition</b> <a href="owner_8h_source.html#l00033">owner.h:33</a></div></div>
 <div class="ttc" id="astructttak__shared__t_html"><div class="ttname"><a href="structttak__shared__t.html">ttak_shared_t</a></div><div class="ttdoc">Core structure for managing shared variables among multiple owners.</div></div>
 </div><!-- fragment -->
@@ -448,7 +545,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00213">213</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00229">229</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 
 </div>
 </div>
@@ -465,7 +562,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Data has been modified but not synchronized </p>
 
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00024">24</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00040">40</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 
 </div>
 </div>
@@ -482,7 +579,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Resource timestamp is outdated </p>
 
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00025">25</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00041">41</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 
 </div>
 </div>
@@ -499,7 +596,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Resource is in read-only mode </p>
 
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00027">27</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00043">43</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 
 </div>
 </div>
@@ -516,7 +613,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Resource is stable and ready for use </p>
 
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00023">23</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00039">39</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 
 </div>
 </div>
@@ -533,7 +630,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Data is currently being swapped </p>
 
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00029">29</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00045">45</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 
 </div>
 </div>
@@ -550,7 +647,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>EBR protection enabled </p>
 
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00028">28</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00044">44</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 
 </div>
 </div>
@@ -567,7 +664,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>No active owners; pending deallocation </p>
 
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00026">26</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00042">42</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 
 </div>
 </div>
@@ -586,7 +683,7 @@ Functions</h2></td></tr>
 
 <p>Operational result codes for shared memory actions. </p>
 
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00034">34</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00050">50</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 
 </div>
 </div>
@@ -604,7 +701,7 @@ Functions</h2></td></tr>
 
 <p>Bitmask flags representing the current status of the shared resource. </p>
 
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00022">22</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00038">38</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 
 </div>
 </div>
@@ -647,7 +744,7 @@ Functions</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00044">44</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shared_8h_source.html#l00061">61</a> of file <a class="el" href="shared_8h_source.html">shared.h</a>.</p>
 
 </div>
 </div>

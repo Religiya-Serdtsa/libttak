@@ -23,9 +23,25 @@ Collaboration diagram for ttak\+\_\+epoch\+\_\+gc\+:\nopagebreak
 \item 
 \mbox{\hyperlink{mem__tree_8h_a247fb2ceb1803d4d3ad077d0785cc858}{ttak\+\_\+mem\+\_\+tree\+\_\+t}} \mbox{\hyperlink{structttak__epoch__gc_a9377dd939116b8afa03f01ba1691ee17}{tree}}
 \item 
-uint64\+\_\+t \mbox{\hyperlink{structttak__epoch__gc_ab3a7c8a89fbdc06128a6b176ed2132eb}{current\+\_\+epoch}}
+\mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\+\_\+\+Atomic}} uint64\+\_\+t \mbox{\hyperlink{structttak__epoch__gc_a6712a4f4964ade138af8872882ba8143}{current\+\_\+epoch}}
 \item 
-uint64\+\_\+t \mbox{\hyperlink{structttak__epoch__gc_a20d6d9cd563837e4cbe0c5c785202279}{last\+\_\+cleanup\+\_\+ts}}
+\mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\+\_\+\+Atomic}} uint64\+\_\+t \mbox{\hyperlink{structttak__epoch__gc_af2a2777f54fadbf9d21a2c5492c0ffdd}{last\+\_\+cleanup\+\_\+ts}}
+\item 
+pthread\+\_\+t \mbox{\hyperlink{structttak__epoch__gc_a5d10fc708c17218894d855c4c4014ebf}{rotate\+\_\+thread}}
+\item 
+pthread\+\_\+mutex\+\_\+t \mbox{\hyperlink{structttak__epoch__gc_a72607c3f140725ba5cf806c3854e482a}{rotate\+\_\+lock}}
+\item 
+pthread\+\_\+cond\+\_\+t \mbox{\hyperlink{structttak__epoch__gc_a77f265d61c8cd33696655372a99073c9}{rotate\+\_\+cond}}
+\item 
+\mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\+\_\+\+Atomic}} \+\_\+\+Bool \mbox{\hyperlink{structttak__epoch__gc_a9380d51b368eb4b578005c710d4b18b3}{shutdown\+\_\+requested}}
+\item 
+\mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\+\_\+\+Atomic}} \+\_\+\+Bool \mbox{\hyperlink{structttak__epoch__gc_a57eddf693f329d72cee6bbcd87461233}{manual\+\_\+rotation}}
+\item 
+\mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\+\_\+\+Atomic}} uint64\+\_\+t \mbox{\hyperlink{structttak__epoch__gc_a2838becb5e51dca930d461a0c5bde257}{min\+\_\+rotate\+\_\+ns}}
+\item 
+\mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\+\_\+\+Atomic}} uint64\+\_\+t \mbox{\hyperlink{structttak__epoch__gc_aefc5cb5c9e1ebbf9ed12216b7770c8ec}{max\+\_\+rotate\+\_\+ns}}
+\item 
+\+\_\+\+Bool \mbox{\hyperlink{structttak__epoch__gc_a947c87df0f376bc4feb53beef0fbec47}{rotate\+\_\+thread\+\_\+started}}
 \end{DoxyCompactItemize}
 
 
@@ -34,30 +50,110 @@ Epoch-\/based garbage collection context.
 
 Manages memory lifecycle using generational epochs. Designed for periodic, non-\/blocking cleanup where the user triggers the cycle. Traverses the heap tree to identify and free expired blocks without a global stop-\/the-\/world pause. 
 
-Definition at line \mbox{\hyperlink{epoch__gc_8h_source_l00013}{13}} of file \mbox{\hyperlink{epoch__gc_8h_source}{epoch\+\_\+gc.\+h}}.
+Definition at line \mbox{\hyperlink{epoch__gc_8h_source_l00015}{15}} of file \mbox{\hyperlink{epoch__gc_8h_source}{epoch\+\_\+gc.\+h}}.
 
 
 
 \doxysubsection{Member Data Documentation}
-\Hypertarget{structttak__epoch__gc_ab3a7c8a89fbdc06128a6b176ed2132eb}\label{structttak__epoch__gc_ab3a7c8a89fbdc06128a6b176ed2132eb} 
+\Hypertarget{structttak__epoch__gc_a6712a4f4964ade138af8872882ba8143}\label{structttak__epoch__gc_a6712a4f4964ade138af8872882ba8143} 
 \index{ttak\_epoch\_gc@{ttak\_epoch\_gc}!current\_epoch@{current\_epoch}}
 \index{current\_epoch@{current\_epoch}!ttak\_epoch\_gc@{ttak\_epoch\_gc}}
 \doxysubsubsection{\texorpdfstring{current\_epoch}{current\_epoch}}
-{\footnotesize\ttfamily uint64\+\_\+t ttak\+\_\+epoch\+\_\+gc\+::current\+\_\+epoch}
+{\footnotesize\ttfamily \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\+\_\+\+Atomic}} uint64\+\_\+t ttak\+\_\+epoch\+\_\+gc\+::current\+\_\+epoch}
 
 Current active epoch ID. 
 
-Definition at line \mbox{\hyperlink{epoch__gc_8h_source_l00015}{15}} of file \mbox{\hyperlink{epoch__gc_8h_source}{epoch\+\_\+gc.\+h}}.
+Definition at line \mbox{\hyperlink{epoch__gc_8h_source_l00017}{17}} of file \mbox{\hyperlink{epoch__gc_8h_source}{epoch\+\_\+gc.\+h}}.
 
-\Hypertarget{structttak__epoch__gc_a20d6d9cd563837e4cbe0c5c785202279}\label{structttak__epoch__gc_a20d6d9cd563837e4cbe0c5c785202279} 
+\Hypertarget{structttak__epoch__gc_af2a2777f54fadbf9d21a2c5492c0ffdd}\label{structttak__epoch__gc_af2a2777f54fadbf9d21a2c5492c0ffdd} 
 \index{ttak\_epoch\_gc@{ttak\_epoch\_gc}!last\_cleanup\_ts@{last\_cleanup\_ts}}
 \index{last\_cleanup\_ts@{last\_cleanup\_ts}!ttak\_epoch\_gc@{ttak\_epoch\_gc}}
 \doxysubsubsection{\texorpdfstring{last\_cleanup\_ts}{last\_cleanup\_ts}}
-{\footnotesize\ttfamily uint64\+\_\+t ttak\+\_\+epoch\+\_\+gc\+::last\+\_\+cleanup\+\_\+ts}
+{\footnotesize\ttfamily \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\+\_\+\+Atomic}} uint64\+\_\+t ttak\+\_\+epoch\+\_\+gc\+::last\+\_\+cleanup\+\_\+ts}
 
 Timestamp of the last cleanup execution. 
 
-Definition at line \mbox{\hyperlink{epoch__gc_8h_source_l00016}{16}} of file \mbox{\hyperlink{epoch__gc_8h_source}{epoch\+\_\+gc.\+h}}.
+Definition at line \mbox{\hyperlink{epoch__gc_8h_source_l00018}{18}} of file \mbox{\hyperlink{epoch__gc_8h_source}{epoch\+\_\+gc.\+h}}.
+
+\Hypertarget{structttak__epoch__gc_a57eddf693f329d72cee6bbcd87461233}\label{structttak__epoch__gc_a57eddf693f329d72cee6bbcd87461233} 
+\index{ttak\_epoch\_gc@{ttak\_epoch\_gc}!manual\_rotation@{manual\_rotation}}
+\index{manual\_rotation@{manual\_rotation}!ttak\_epoch\_gc@{ttak\_epoch\_gc}}
+\doxysubsubsection{\texorpdfstring{manual\_rotation}{manual\_rotation}}
+{\footnotesize\ttfamily \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\+\_\+\+Atomic}} \+\_\+\+Bool ttak\+\_\+epoch\+\_\+gc\+::manual\+\_\+rotation}
+
+True when the user wants manual rotation mode. 
+
+Definition at line \mbox{\hyperlink{epoch__gc_8h_source_l00023}{23}} of file \mbox{\hyperlink{epoch__gc_8h_source}{epoch\+\_\+gc.\+h}}.
+
+\Hypertarget{structttak__epoch__gc_aefc5cb5c9e1ebbf9ed12216b7770c8ec}\label{structttak__epoch__gc_aefc5cb5c9e1ebbf9ed12216b7770c8ec} 
+\index{ttak\_epoch\_gc@{ttak\_epoch\_gc}!max\_rotate\_ns@{max\_rotate\_ns}}
+\index{max\_rotate\_ns@{max\_rotate\_ns}!ttak\_epoch\_gc@{ttak\_epoch\_gc}}
+\doxysubsubsection{\texorpdfstring{max\_rotate\_ns}{max\_rotate\_ns}}
+{\footnotesize\ttfamily \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\+\_\+\+Atomic}} uint64\+\_\+t ttak\+\_\+epoch\+\_\+gc\+::max\+\_\+rotate\+\_\+ns}
+
+Maximum backoff interval (ns) between auto rotations. 
+
+Definition at line \mbox{\hyperlink{epoch__gc_8h_source_l00025}{25}} of file \mbox{\hyperlink{epoch__gc_8h_source}{epoch\+\_\+gc.\+h}}.
+
+\Hypertarget{structttak__epoch__gc_a2838becb5e51dca930d461a0c5bde257}\label{structttak__epoch__gc_a2838becb5e51dca930d461a0c5bde257} 
+\index{ttak\_epoch\_gc@{ttak\_epoch\_gc}!min\_rotate\_ns@{min\_rotate\_ns}}
+\index{min\_rotate\_ns@{min\_rotate\_ns}!ttak\_epoch\_gc@{ttak\_epoch\_gc}}
+\doxysubsubsection{\texorpdfstring{min\_rotate\_ns}{min\_rotate\_ns}}
+{\footnotesize\ttfamily \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\+\_\+\+Atomic}} uint64\+\_\+t ttak\+\_\+epoch\+\_\+gc\+::min\+\_\+rotate\+\_\+ns}
+
+Minimum wait interval (ns) between auto rotations. 
+
+Definition at line \mbox{\hyperlink{epoch__gc_8h_source_l00024}{24}} of file \mbox{\hyperlink{epoch__gc_8h_source}{epoch\+\_\+gc.\+h}}.
+
+\Hypertarget{structttak__epoch__gc_a77f265d61c8cd33696655372a99073c9}\label{structttak__epoch__gc_a77f265d61c8cd33696655372a99073c9} 
+\index{ttak\_epoch\_gc@{ttak\_epoch\_gc}!rotate\_cond@{rotate\_cond}}
+\index{rotate\_cond@{rotate\_cond}!ttak\_epoch\_gc@{ttak\_epoch\_gc}}
+\doxysubsubsection{\texorpdfstring{rotate\_cond}{rotate\_cond}}
+{\footnotesize\ttfamily pthread\+\_\+cond\+\_\+t ttak\+\_\+epoch\+\_\+gc\+::rotate\+\_\+cond}
+
+Condition variable to nudge the rotate thread. 
+
+Definition at line \mbox{\hyperlink{epoch__gc_8h_source_l00021}{21}} of file \mbox{\hyperlink{epoch__gc_8h_source}{epoch\+\_\+gc.\+h}}.
+
+\Hypertarget{structttak__epoch__gc_a72607c3f140725ba5cf806c3854e482a}\label{structttak__epoch__gc_a72607c3f140725ba5cf806c3854e482a} 
+\index{ttak\_epoch\_gc@{ttak\_epoch\_gc}!rotate\_lock@{rotate\_lock}}
+\index{rotate\_lock@{rotate\_lock}!ttak\_epoch\_gc@{ttak\_epoch\_gc}}
+\doxysubsubsection{\texorpdfstring{rotate\_lock}{rotate\_lock}}
+{\footnotesize\ttfamily pthread\+\_\+mutex\+\_\+t ttak\+\_\+epoch\+\_\+gc\+::rotate\+\_\+lock}
+
+Synchronization primitive for thread wake/sleep. 
+
+Definition at line \mbox{\hyperlink{epoch__gc_8h_source_l00020}{20}} of file \mbox{\hyperlink{epoch__gc_8h_source}{epoch\+\_\+gc.\+h}}.
+
+\Hypertarget{structttak__epoch__gc_a5d10fc708c17218894d855c4c4014ebf}\label{structttak__epoch__gc_a5d10fc708c17218894d855c4c4014ebf} 
+\index{ttak\_epoch\_gc@{ttak\_epoch\_gc}!rotate\_thread@{rotate\_thread}}
+\index{rotate\_thread@{rotate\_thread}!ttak\_epoch\_gc@{ttak\_epoch\_gc}}
+\doxysubsubsection{\texorpdfstring{rotate\_thread}{rotate\_thread}}
+{\footnotesize\ttfamily pthread\+\_\+t ttak\+\_\+epoch\+\_\+gc\+::rotate\+\_\+thread}
+
+Background thread handling automatic epoch rotation. 
+
+Definition at line \mbox{\hyperlink{epoch__gc_8h_source_l00019}{19}} of file \mbox{\hyperlink{epoch__gc_8h_source}{epoch\+\_\+gc.\+h}}.
+
+\Hypertarget{structttak__epoch__gc_a947c87df0f376bc4feb53beef0fbec47}\label{structttak__epoch__gc_a947c87df0f376bc4feb53beef0fbec47} 
+\index{ttak\_epoch\_gc@{ttak\_epoch\_gc}!rotate\_thread\_started@{rotate\_thread\_started}}
+\index{rotate\_thread\_started@{rotate\_thread\_started}!ttak\_epoch\_gc@{ttak\_epoch\_gc}}
+\doxysubsubsection{\texorpdfstring{rotate\_thread\_started}{rotate\_thread\_started}}
+{\footnotesize\ttfamily \+\_\+\+Bool ttak\+\_\+epoch\+\_\+gc\+::rotate\+\_\+thread\+\_\+started}
+
+Tracks whether the rotate thread was launched. 
+
+Definition at line \mbox{\hyperlink{epoch__gc_8h_source_l00026}{26}} of file \mbox{\hyperlink{epoch__gc_8h_source}{epoch\+\_\+gc.\+h}}.
+
+\Hypertarget{structttak__epoch__gc_a9380d51b368eb4b578005c710d4b18b3}\label{structttak__epoch__gc_a9380d51b368eb4b578005c710d4b18b3} 
+\index{ttak\_epoch\_gc@{ttak\_epoch\_gc}!shutdown\_requested@{shutdown\_requested}}
+\index{shutdown\_requested@{shutdown\_requested}!ttak\_epoch\_gc@{ttak\_epoch\_gc}}
+\doxysubsubsection{\texorpdfstring{shutdown\_requested}{shutdown\_requested}}
+{\footnotesize\ttfamily \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\+\_\+\+Atomic}} \+\_\+\+Bool ttak\+\_\+epoch\+\_\+gc\+::shutdown\+\_\+requested}
+
+Signals rotate thread to exit. 
+
+Definition at line \mbox{\hyperlink{epoch__gc_8h_source_l00022}{22}} of file \mbox{\hyperlink{epoch__gc_8h_source}{epoch\+\_\+gc.\+h}}.
 
 \Hypertarget{structttak__epoch__gc_a9377dd939116b8afa03f01ba1691ee17}\label{structttak__epoch__gc_a9377dd939116b8afa03f01ba1691ee17} 
 \index{ttak\_epoch\_gc@{ttak\_epoch\_gc}!tree@{tree}}
@@ -67,7 +163,7 @@ Definition at line \mbox{\hyperlink{epoch__gc_8h_source_l00016}{16}} of file \mb
 
 Underlying memory tree tracking allocations. 
 
-Definition at line \mbox{\hyperlink{epoch__gc_8h_source_l00014}{14}} of file \mbox{\hyperlink{epoch__gc_8h_source}{epoch\+\_\+gc.\+h}}.
+Definition at line \mbox{\hyperlink{epoch__gc_8h_source_l00016}{16}} of file \mbox{\hyperlink{epoch__gc_8h_source}{epoch\+\_\+gc.\+h}}.
 
 
 

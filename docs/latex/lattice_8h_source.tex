@@ -1,0 +1,104 @@
+\doxysection{lattice.\+h}
+\hypertarget{lattice_8h_source}{}\label{lattice_8h_source}\index{include/ttak/net/lattice.h@{include/ttak/net/lattice.h}}
+\mbox{\hyperlink{lattice_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ TTAK\_NET\_LATTICE\_H}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ TTAK\_NET\_LATTICE\_H}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{mem_8h}{ttak/mem/mem.h}}>}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{sync_2sync_8h}{ttak/sync/sync.h}}>}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{atomic_8h}{ttak/atomic/atomic.h}}>}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00010}00010\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00011}00011\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00012}00012\ \textcolor{comment}{\ *\ @file\ lattice.h}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00013}00013\ \textcolor{comment}{\ *\ @brief\ Choi\ Seok-\/jeong's\ Lattice\ (Sanpan)\ for\ Lock-\/Free\ Parallel\ Ingress.}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00014}00014\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00016}\mbox{\hyperlink{lattice_8h_a55d733080fe1b18ca6182102984352a8}{00016}}\ \textcolor{preprocessor}{\#define\ TTAK\_LATTICE\_SLOT\_SIZE\ 2048}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00017}\mbox{\hyperlink{lattice_8h_af97afc326396ee21f8005d0ed7d2e2ea}{00017}}\ \textcolor{preprocessor}{\#define\ TTAK\_LATTICE\_MAX\_DIM\ 16}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00018}00018\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00019}00019\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00020}00020\ \textcolor{comment}{\ *\ @brief\ A\ single\ data\ slot\ in\ the\ lattice.}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00021}00021\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00022}\mbox{\hyperlink{structttak__net__lattice__slot}{00022}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__net__lattice__slot}{ttak\_net\_lattice\_slot}}\ \{}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00023}\mbox{\hyperlink{structttak__net__lattice__slot_aa0716803c57d2eb35c02522e7cf4e0db}{00023}}\ \ \ \ \ \mbox{\hyperlink{structttak__net__lattice__slot_aa0716803c57d2eb35c02522e7cf4e0db}{\_Alignas}}(64)\ uint8\_t\ \ data[\mbox{\hyperlink{lattice_8h_a55d733080fe1b18ca6182102984352a8}{TTAK\_LATTICE\_SLOT\_SIZE}}];}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00024}\mbox{\hyperlink{structttak__net__lattice__slot_ac64e3c3b7c9cf853060d4901349c49dc}{00024}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__net__lattice__slot_ac64e3c3b7c9cf853060d4901349c49dc}{timestamp}};}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00025}\mbox{\hyperlink{structttak__net__lattice__slot_a33a81a5d5fd40d116bbc15065649b6c3}{00025}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__net__lattice__slot_a33a81a5d5fd40d116bbc15065649b6c3}{len}};}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00026}\mbox{\hyperlink{structttak__net__lattice__slot_ad353214bd2a59d73663e9ac9cc09a38a}{00026}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__net__lattice__slot_ad353214bd2a59d73663e9ac9cc09a38a}{seq}};}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00027}\mbox{\hyperlink{structttak__net__lattice__slot_aaa60e8bbae35708511ae4325c9809e5a}{00027}}\ \ \ \ \ volatile\ uint64\_t\ \mbox{\hyperlink{structttak__net__lattice__slot_aaa60e8bbae35708511ae4325c9809e5a}{state}};}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00028}\mbox{\hyperlink{structttak__net__lattice__slot_a78324f932ced75aeed844d20072c9f76}{00028}}\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structttak__net__lattice__slot_a78324f932ced75aeed844d20072c9f76}{padding}}[32];\ \textcolor{comment}{/*\ Pad\ to\ ensure\ 64-\/byte\ multiple\ if\ needed\ */}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00029}\mbox{\hyperlink{lattice_8h_a66ecd7734451a2c81904dd69903e61b0}{00029}}\ \}\ \mbox{\hyperlink{structttak__net__lattice__slot}{ttak\_net\_lattice\_slot\_t}};}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00030}00030\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00031}00031\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00032}00032\ \textcolor{comment}{\ *\ @brief\ The\ Lattice\ (Sanpan)\ structure.}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00033}00033\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00034}\mbox{\hyperlink{structttak__net__lattice}{00034}}\ typedef\ struct\ \mbox{\hyperlink{structttak__net__lattice}{ttak\_net\_lattice}}\ \{}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00035}\mbox{\hyperlink{structttak__net__lattice_ab7b8a5de7145b8ec92bd14695ec7d950}{00035}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__net__lattice_ab7b8a5de7145b8ec92bd14695ec7d950}{dim}};\ \ \ \ \ \ \textcolor{comment}{/*\ Dimension\ of\ the\ square\ (must\ be\ power\ of\ 2)\ */}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00036}\mbox{\hyperlink{structttak__net__lattice_a4732285a865acf030dbe34855819e870}{00036}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__net__lattice_a4732285a865acf030dbe34855819e870}{mask}};\ \ \ \ \ \textcolor{comment}{/*\ dim\ -\/\ 1\ */}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00037}\mbox{\hyperlink{structttak__net__lattice_a29aa15c29a9b3035a86db889287ce236}{00037}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__net__lattice_a29aa15c29a9b3035a86db889287ce236}{capacity}};\ \textcolor{comment}{/*\ Total\ number\ of\ slots\ */}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00038}\mbox{\hyperlink{structttak__net__lattice_a535801341b5d5f391914d65f0b4f0ad0}{00038}}\ \ \ \ \ \mbox{\hyperlink{structttak__net__lattice__slot}{ttak\_net\_lattice\_slot\_t}}\ *\mbox{\hyperlink{structttak__net__lattice_a535801341b5d5f391914d65f0b4f0ad0}{slots}};\ \textcolor{comment}{/*\ dim\ *\ dim\ array\ */}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00039}\mbox{\hyperlink{structttak__net__lattice_a5ebe603a2fb87e2c85979624ffbecb1c}{00039}}\ \ \ \ \ \textcolor{keyword}{volatile}\ uint64\_t\ \mbox{\hyperlink{structttak__net__lattice_a5ebe603a2fb87e2c85979624ffbecb1c}{total\_ingress}};}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00040}\mbox{\hyperlink{structttak__net__lattice_ac8d1b41ef99dfd5baad66a7cdf7b0eb3}{00040}}\ \ \ \ \ \textcolor{keyword}{volatile}\ uint64\_t\ \mbox{\hyperlink{structttak__net__lattice_ac8d1b41ef99dfd5baad66a7cdf7b0eb3}{used\_slots}};}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00041}\mbox{\hyperlink{structttak__net__lattice_a9afbd44947b1a1b3ccfa6996a23d4fe1}{00041}}\ \ \ \ \ \_Bool\ \mbox{\hyperlink{structttak__net__lattice_a9afbd44947b1a1b3ccfa6996a23d4fe1}{is\_full}};}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00042}\mbox{\hyperlink{structttak__net__lattice_a358cb3cf400cc7f1fede78fba6385e8e}{00042}}\ \ \ \ \ \_Bool\ \mbox{\hyperlink{structttak__net__lattice_a358cb3cf400cc7f1fede78fba6385e8e}{is\_stub}};}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00043}\mbox{\hyperlink{structttak__net__lattice_a750527ee7cf297b1834dc5cdc01f8bca}{00043}}\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__net__lattice}{ttak\_net\_lattice}}\ *\mbox{\hyperlink{structttak__net__lattice_a750527ee7cf297b1834dc5cdc01f8bca}{prev}};}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00044}\mbox{\hyperlink{structttak__net__lattice_a032e2b38fb4c82c155dfcea77fb9c96b}{00044}}\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__net__lattice}{ttak\_net\_lattice}}\ *\mbox{\hyperlink{structttak__net__lattice_a032e2b38fb4c82c155dfcea77fb9c96b}{next}};\ \textcolor{comment}{/*\ Grows\ when\ the\ lattice\ saturates\ */}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00045}\mbox{\hyperlink{structttak__net__lattice_aa9dec0cfede463e45920179552098b0b}{00045}}\ \ \ \ \ \mbox{\hyperlink{sync_2sync_8h_a099d39f1f8999756bc828ad4b337d5b6}{ttak\_mutex\_t}}\ \mbox{\hyperlink{structttak__net__lattice_aa9dec0cfede463e45920179552098b0b}{expand\_lock}};}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00046}\mbox{\hyperlink{lattice_8h_af961e989c213033a7a2cf8a755297de9}{00046}}\ \}\ \mbox{\hyperlink{lattice_8h_af961e989c213033a7a2cf8a755297de9}{ttak\_net\_lattice\_t}};}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00047}00047\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00048}00048\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00049}00049\ \textcolor{comment}{\ *\ @brief\ Initializes\ a\ net\ lattice\ with\ given\ dimension.}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00050}00050\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00051}\mbox{\hyperlink{lattice_8h_a8f2c2019b1355372d01eb5b012cf7813}{00051}}\ \mbox{\hyperlink{structttak__net__lattice}{ttak\_net\_lattice\_t}}*\ \mbox{\hyperlink{lattice_8h_a8f2c2019b1355372d01eb5b012cf7813}{ttak\_net\_lattice\_create}}(uint32\_t\ dim,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00052}00052\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00053}00053\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00054}00054\ \textcolor{comment}{\ *\ @brief\ Destroys\ the\ lattice.}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00055}00055\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00056}\mbox{\hyperlink{lattice_8h_a36f5af36a2290901e95849ec07882968}{00056}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lattice_8h_a36f5af36a2290901e95849ec07882968}{ttak\_net\_lattice\_destroy}}(\mbox{\hyperlink{structttak__net__lattice}{ttak\_net\_lattice\_t}}\ *lat,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00057}00057\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00058}00058\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00059}00059\ \textcolor{comment}{\ *\ @brief\ Lock-\/free\ deterministic\ write\ inspired\ by\ Choi\ Seok-\/jeong's\ Lattice.}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00060}00060\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00061}\mbox{\hyperlink{lattice_8h_a4ae199b6c2aa0c066794e1e693f0f8b0}{00061}}\ \_Bool\ \mbox{\hyperlink{lattice_8h_a4ae199b6c2aa0c066794e1e693f0f8b0}{ttak\_net\_lattice\_write}}(\mbox{\hyperlink{structttak__net__lattice}{ttak\_net\_lattice\_t}}\ *lat,\ uint32\_t\ tid,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *data,\ uint32\_t\ \mbox{\hyperlink{structttak__net__lattice__slot_a33a81a5d5fd40d116bbc15065649b6c3}{len}},\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00062}00062\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00063}00063\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00064}00064\ \textcolor{comment}{\ *\ @brief\ Reads\ data\ from\ a\ designated\ slot\ in\ the\ lattice\ for\ a\ specific\ worker\ (tid).}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00065}00065\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00066}\mbox{\hyperlink{lattice_8h_a7a8d76fae63c7f543507ef1397a85b2f}{00066}}\ \_Bool\ \mbox{\hyperlink{lattice_8h_a7a8d76fae63c7f543507ef1397a85b2f}{ttak\_net\_lattice\_read}}(\mbox{\hyperlink{structttak__net__lattice}{ttak\_net\_lattice\_t}}\ *lat,\ uint32\_t\ tid,\ \textcolor{keywordtype}{void}\ *dst,\ uint32\_t\ *len\_out,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00067}00067\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00068}00068\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00069}00069\ \textcolor{comment}{\ *\ @brief\ Returns\ the\ global\ default\ lattice.}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00070}00070\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00071}\mbox{\hyperlink{lattice_8h_ad012111b9da5e6695858eadc3c7fe3be}{00071}}\ \mbox{\hyperlink{structttak__net__lattice}{ttak\_net\_lattice\_t}}*\ \mbox{\hyperlink{lattice_8h_ad012111b9da5e6695858eadc3c7fe3be}{ttak\_net\_lattice\_get\_default}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00072}00072\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00073}00073\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00074}00074\ \textcolor{comment}{\ *\ @brief\ Sets\ the\ worker\ ID\ for\ the\ current\ thread\ to\ be\ used\ in\ deterministic\ lattice\ selection.}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00075}00075\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00076}\mbox{\hyperlink{lattice_8h_a76be1c470b2788204b2d90a75909851d}{00076}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lattice_8h_a76be1c470b2788204b2d90a75909851d}{ttak\_net\_lattice\_set\_worker\_id}}(uint32\_t\ tid);}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00077}00077\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00078}00078\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00079}00079\ \textcolor{comment}{\ *\ @brief\ Gets\ the\ worker\ ID\ for\ the\ current\ thread.}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00080}00080\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00081}\mbox{\hyperlink{lattice_8h_a39f20a1d9173d57fdf029b8c9da8ea40}{00081}}\ uint32\_t\ \mbox{\hyperlink{lattice_8h_a39f20a1d9173d57fdf029b8c9da8ea40}{ttak\_net\_lattice\_get\_worker\_id}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00082}00082\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00083}00083\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00084}00084\ \textcolor{comment}{\ *\ @brief\ Ensures\ the\ current\ lattice\ has\ a\ successor\ allocated\ when\ needed.}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00085}00085\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00086}\mbox{\hyperlink{lattice_8h_a6642c9241195c863480af93470e35406}{00086}}\ \mbox{\hyperlink{structttak__net__lattice}{ttak\_net\_lattice\_t}}*\ \mbox{\hyperlink{lattice_8h_a6642c9241195c863480af93470e35406}{ttak\_net\_lattice\_ensure\_next}}(\mbox{\hyperlink{structttak__net__lattice}{ttak\_net\_lattice\_t}}\ *lat,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00087}00087\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00088}00088\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00089}00089\ \textcolor{comment}{\ *\ @brief\ Tracks\ that\ a\ slot\ has\ been\ acquired\ from\ @p\ lat\ and\ triggers\ prefetching.}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00090}00090\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00091}\mbox{\hyperlink{lattice_8h_a659a66abf2826bd810beef9d53c81bbd}{00091}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lattice_8h_a659a66abf2826bd810beef9d53c81bbd}{ttak\_net\_lattice\_mark\_slot\_acquired}}(\mbox{\hyperlink{structttak__net__lattice}{ttak\_net\_lattice\_t}}\ *lat,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00092}00092\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00093}00093\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00094}00094\ \textcolor{comment}{\ *\ @brief\ Tracks\ that\ a\ slot\ has\ been\ released\ back\ to\ @p\ lat.}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00095}00095\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00096}\mbox{\hyperlink{lattice_8h_a39a026d6963939725f3d24026faf0ca6}{00096}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lattice_8h_a39a026d6963939725f3d24026faf0ca6}{ttak\_net\_lattice\_mark\_slot\_released}}(\mbox{\hyperlink{structttak__net__lattice}{ttak\_net\_lattice\_t}}\ *lat);}
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00097}00097\ }
+\DoxyCodeLine{\Hypertarget{lattice_8h_source_l00098}00098\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ TTAK\_NET\_LATTICE\_H\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

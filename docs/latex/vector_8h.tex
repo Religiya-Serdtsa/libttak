@@ -3,6 +3,7 @@
 {\ttfamily \#include $<$ttak/math/bigreal.\+h$>$}\newline
 {\ttfamily \#include $<$ttak/shared/shared.\+h$>$}\newline
 {\ttfamily \#include $<$ttak/mem/owner.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
 Include dependency graph for vector.\+h\+:
 \nopagebreak
 \begin{figure}[H]
@@ -22,43 +23,45 @@ This graph shows which files directly or indirectly include this file\+:\nopageb
 \begin{DoxyCompactItemize}
 \item 
 struct \mbox{\hyperlink{structttak__vector}{ttak\+\_\+vector}}
-\begin{DoxyCompactList}\small\item\em Vector structure for 2D, 3D, and 4D. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Vector structure for 2D, 3D, and 4D. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structtt__shared__vector}{tt\+\_\+shared\+\_\+vector}}
+\end{DoxyCompactItemize}
 \doxysubsubsection*{Typedefs}
 \begin{DoxyCompactItemize}
 \item 
 typedef struct \mbox{\hyperlink{structttak__vector}{ttak\+\_\+vector}} \mbox{\hyperlink{vector_8h_afdad4416f1070c7b0bee06d72bf3ea17}{ttak\+\_\+vector\+\_\+t}}
 \begin{DoxyCompactList}\small\item\em Vector structure for 2D, 3D, and 4D. \end{DoxyCompactList}\item 
-typedef ttak\+\_\+shared\+\_\+vector\+\_\+t \mbox{\hyperlink{vector_8h_a369355c13a77e16de351f18e21606590}{tt\+\_\+shared\+\_\+vector\+\_\+t}}
+typedef struct \mbox{\hyperlink{structtt__shared__vector}{tt\+\_\+shared\+\_\+vector}} \mbox{\hyperlink{vector_8h_a883a6144e73d2afbbb167470ace3f65c}{tt\+\_\+shared\+\_\+vector\+\_\+t}}
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{vector_8h_a369355c13a77e16de351f18e21606590}{tt\+\_\+shared\+\_\+vector\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{vector_8h_a765041ba76f7928b75e757fc48310498}{ttak\+\_\+vector\+\_\+create}} (uint8\+\_\+t dim, \mbox{\hyperlink{owner_8h_a9b17ab97f490a6a7a1a4f90c2216186c}{tt\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}owner, uint64\+\_\+t now)
+\mbox{\hyperlink{vector_8h_a883a6144e73d2afbbb167470ace3f65c}{tt\+\_\+shared\+\_\+vector\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{vector_8h_a765041ba76f7928b75e757fc48310498}{ttak\+\_\+vector\+\_\+create}} (uint8\+\_\+t dim, \mbox{\hyperlink{owner_8h_a9b17ab97f490a6a7a1a4f90c2216186c}{tt\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}owner, uint64\+\_\+t now)
 \begin{DoxyCompactList}\small\item\em Creates a shared vector. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{vector_8h_a702b99d16bbcb734b1de8f8bfdcebdd1}{ttak\+\_\+vector\+\_\+destroy}} (\mbox{\hyperlink{vector_8h_a369355c13a77e16de351f18e21606590}{tt\+\_\+shared\+\_\+vector\+\_\+t}} \texorpdfstring{$\ast$}{*}sv, uint64\+\_\+t now)
+void \mbox{\hyperlink{vector_8h_a702b99d16bbcb734b1de8f8bfdcebdd1}{ttak\+\_\+vector\+\_\+destroy}} (\mbox{\hyperlink{vector_8h_a883a6144e73d2afbbb167470ace3f65c}{tt\+\_\+shared\+\_\+vector\+\_\+t}} \texorpdfstring{$\ast$}{*}sv, uint64\+\_\+t now)
 \begin{DoxyCompactList}\small\item\em Destroys a shared vector. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{vector_8h_a96a2a9d3ba497cb63ad637f3b75736d2}{ttak\+\_\+vector\+\_\+get}} (\mbox{\hyperlink{vector_8h_a369355c13a77e16de351f18e21606590}{tt\+\_\+shared\+\_\+vector\+\_\+t}} \texorpdfstring{$\ast$}{*}sv, \mbox{\hyperlink{owner_8h_a9b17ab97f490a6a7a1a4f90c2216186c}{tt\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}owner, uint8\+\_\+t index, uint64\+\_\+t now)
+\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{vector_8h_a96a2a9d3ba497cb63ad637f3b75736d2}{ttak\+\_\+vector\+\_\+get}} (\mbox{\hyperlink{vector_8h_a883a6144e73d2afbbb167470ace3f65c}{tt\+\_\+shared\+\_\+vector\+\_\+t}} \texorpdfstring{$\ast$}{*}sv, \mbox{\hyperlink{owner_8h_a9b17ab97f490a6a7a1a4f90c2216186c}{tt\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}owner, uint8\+\_\+t index, uint64\+\_\+t now)
 \begin{DoxyCompactList}\small\item\em Safe access to an element. Validates owner and bounds. \end{DoxyCompactList}\item 
-\+\_\+\+Bool \mbox{\hyperlink{vector_8h_a34f618fe9f9be6c07aa68351aacdcfd4}{ttak\+\_\+vector\+\_\+set}} (\mbox{\hyperlink{vector_8h_a369355c13a77e16de351f18e21606590}{tt\+\_\+shared\+\_\+vector\+\_\+t}} \texorpdfstring{$\ast$}{*}sv, \mbox{\hyperlink{owner_8h_a9b17ab97f490a6a7a1a4f90c2216186c}{tt\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}owner, uint8\+\_\+t index, const \mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}val, uint64\+\_\+t now)
+bool \mbox{\hyperlink{vector_8h_ad00d46a71034ebbdb69077c70dd75d37}{ttak\+\_\+vector\+\_\+set}} (\mbox{\hyperlink{vector_8h_a883a6144e73d2afbbb167470ace3f65c}{tt\+\_\+shared\+\_\+vector\+\_\+t}} \texorpdfstring{$\ast$}{*}sv, \mbox{\hyperlink{owner_8h_a9b17ab97f490a6a7a1a4f90c2216186c}{tt\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}owner, uint8\+\_\+t index, const \mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}val, uint64\+\_\+t now)
 \begin{DoxyCompactList}\small\item\em Sets an element value. \end{DoxyCompactList}\item 
-\+\_\+\+Bool \mbox{\hyperlink{vector_8h_a930369abe28ccf397719f2e7ff684f53}{ttak\+\_\+vector\+\_\+dot}} (\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}res, \mbox{\hyperlink{vector_8h_a369355c13a77e16de351f18e21606590}{tt\+\_\+shared\+\_\+vector\+\_\+t}} \texorpdfstring{$\ast$}{*}a, \mbox{\hyperlink{vector_8h_a369355c13a77e16de351f18e21606590}{tt\+\_\+shared\+\_\+vector\+\_\+t}} \texorpdfstring{$\ast$}{*}b, \mbox{\hyperlink{owner_8h_a9b17ab97f490a6a7a1a4f90c2216186c}{tt\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}owner, uint64\+\_\+t now)
+bool \mbox{\hyperlink{vector_8h_aff25f5c4ad56ab928a8c1eccb6e27fce}{ttak\+\_\+vector\+\_\+dot}} (\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}res, \mbox{\hyperlink{vector_8h_a883a6144e73d2afbbb167470ace3f65c}{tt\+\_\+shared\+\_\+vector\+\_\+t}} \texorpdfstring{$\ast$}{*}a, \mbox{\hyperlink{vector_8h_a883a6144e73d2afbbb167470ace3f65c}{tt\+\_\+shared\+\_\+vector\+\_\+t}} \texorpdfstring{$\ast$}{*}b, \mbox{\hyperlink{owner_8h_a9b17ab97f490a6a7a1a4f90c2216186c}{tt\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}owner, uint64\+\_\+t now)
 \begin{DoxyCompactList}\small\item\em Vector Dot Product. \end{DoxyCompactList}\item 
-\+\_\+\+Bool \mbox{\hyperlink{vector_8h_ab1b6402590d65531358adbe1b364f884}{ttak\+\_\+vector\+\_\+cross}} (\mbox{\hyperlink{vector_8h_a369355c13a77e16de351f18e21606590}{tt\+\_\+shared\+\_\+vector\+\_\+t}} \texorpdfstring{$\ast$}{*}res, \mbox{\hyperlink{vector_8h_a369355c13a77e16de351f18e21606590}{tt\+\_\+shared\+\_\+vector\+\_\+t}} \texorpdfstring{$\ast$}{*}a, \mbox{\hyperlink{vector_8h_a369355c13a77e16de351f18e21606590}{tt\+\_\+shared\+\_\+vector\+\_\+t}} \texorpdfstring{$\ast$}{*}b, \mbox{\hyperlink{owner_8h_a9b17ab97f490a6a7a1a4f90c2216186c}{tt\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}owner, uint64\+\_\+t now)
+bool \mbox{\hyperlink{vector_8h_a3706cdbd77c97faf19610bb8dc39727b}{ttak\+\_\+vector\+\_\+cross}} (\mbox{\hyperlink{vector_8h_a883a6144e73d2afbbb167470ace3f65c}{tt\+\_\+shared\+\_\+vector\+\_\+t}} \texorpdfstring{$\ast$}{*}res, \mbox{\hyperlink{vector_8h_a883a6144e73d2afbbb167470ace3f65c}{tt\+\_\+shared\+\_\+vector\+\_\+t}} \texorpdfstring{$\ast$}{*}a, \mbox{\hyperlink{vector_8h_a883a6144e73d2afbbb167470ace3f65c}{tt\+\_\+shared\+\_\+vector\+\_\+t}} \texorpdfstring{$\ast$}{*}b, \mbox{\hyperlink{owner_8h_a9b17ab97f490a6a7a1a4f90c2216186c}{tt\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}owner, uint64\+\_\+t now)
 \begin{DoxyCompactList}\small\item\em Vector Cross Product (3D only). \end{DoxyCompactList}\item 
-\+\_\+\+Bool \mbox{\hyperlink{vector_8h_a59ca6d0c2eb28d53776e65fa53610048}{ttak\+\_\+vector\+\_\+magnitude}} (\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}res, \mbox{\hyperlink{vector_8h_a369355c13a77e16de351f18e21606590}{tt\+\_\+shared\+\_\+vector\+\_\+t}} \texorpdfstring{$\ast$}{*}v, \mbox{\hyperlink{owner_8h_a9b17ab97f490a6a7a1a4f90c2216186c}{tt\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}owner, uint64\+\_\+t now)
-\begin{DoxyCompactList}\small\item\em Magnitude of the vector. \end{DoxyCompactList}\end{DoxyCompactItemize}
+bool \mbox{\hyperlink{vector_8h_a09dee645105174e27be82e8a0a7d98aa}{ttak\+\_\+vector\+\_\+magnitude}} (\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}res, \mbox{\hyperlink{vector_8h_a883a6144e73d2afbbb167470ace3f65c}{tt\+\_\+shared\+\_\+vector\+\_\+t}} \texorpdfstring{$\ast$}{*}v, \mbox{\hyperlink{owner_8h_a9b17ab97f490a6a7a1a4f90c2216186c}{tt\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}owner, uint64\+\_\+t now)
+\begin{DoxyCompactList}\small\item\em Magnitude of the vector. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{vector_8h_a14ea6da6f22b0a72daa1e77e8315b132}{ttak\+\_\+math\+\_\+approx\+\_\+sin}} (\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}res, const \mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}angle, uint64\+\_\+t now)
+\begin{DoxyCompactList}\small\item\em Approximate sine function using Yussigihae-\/inspired polynomial expansion. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{vector_8h_ab0dce8963cd0e7ae8469a4e95c21672a}{ttak\+\_\+math\+\_\+approx\+\_\+cos}} (\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}res, const \mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}angle, uint64\+\_\+t now)
+\begin{DoxyCompactList}\small\item\em Approximate cosine function using Yussigihae-\/inspired polynomial expansion. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Typedef Documentation}
-\Hypertarget{vector_8h_a369355c13a77e16de351f18e21606590}\label{vector_8h_a369355c13a77e16de351f18e21606590} 
+\Hypertarget{vector_8h_a883a6144e73d2afbbb167470ace3f65c}\label{vector_8h_a883a6144e73d2afbbb167470ace3f65c} 
 \index{vector.h@{vector.h}!tt\_shared\_vector\_t@{tt\_shared\_vector\_t}}
 \index{tt\_shared\_vector\_t@{tt\_shared\_vector\_t}!vector.h@{vector.h}}
 \doxysubsubsection{\texorpdfstring{tt\_shared\_vector\_t}{tt\_shared\_vector\_t}}
-{\footnotesize\ttfamily typedef ttak\+\_\+shared\+\_\+vector\+\_\+t \mbox{\hyperlink{vector_8h_a369355c13a77e16de351f18e21606590}{tt\+\_\+shared\+\_\+vector\+\_\+t}}}
-
-
-
-Definition at line \mbox{\hyperlink{vector_8h_source_l00017}{17}} of file \mbox{\hyperlink{vector_8h_source}{vector.\+h}}.
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structtt__shared__vector}{tt\+\_\+shared\+\_\+vector}} \mbox{\hyperlink{vector_8h_a883a6144e73d2afbbb167470ace3f65c}{tt\+\_\+shared\+\_\+vector\+\_\+t}}}
 
 \Hypertarget{vector_8h_afdad4416f1070c7b0bee06d72bf3ea17}\label{vector_8h_afdad4416f1070c7b0bee06d72bf3ea17} 
 \index{vector.h@{vector.h}!ttak\_vector\_t@{ttak\_vector\_t}}
@@ -73,21 +76,65 @@ Vector structure for 2D, 3D, and 4D.
 
 
 \doxysubsection{Function Documentation}
+\Hypertarget{vector_8h_ab0dce8963cd0e7ae8469a4e95c21672a}\label{vector_8h_ab0dce8963cd0e7ae8469a4e95c21672a} 
+\index{vector.h@{vector.h}!ttak\_math\_approx\_cos@{ttak\_math\_approx\_cos}}
+\index{ttak\_math\_approx\_cos@{ttak\_math\_approx\_cos}!vector.h@{vector.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_math\_approx\_cos()}{ttak\_math\_approx\_cos()}}
+{\footnotesize\ttfamily bool ttak\+\_\+math\+\_\+approx\+\_\+cos (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{res,  }\item[{const \mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{angle,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+
+
+Approximate cosine function using Yussigihae-\/inspired polynomial expansion. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em res} & Result bigreal. \\
+\hline
+{\em angle} & Angle in radians. \\
+\hline
+{\em now} & Timestamp. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success. 
+\end{DoxyReturn}
+\Hypertarget{vector_8h_a14ea6da6f22b0a72daa1e77e8315b132}\label{vector_8h_a14ea6da6f22b0a72daa1e77e8315b132} 
+\index{vector.h@{vector.h}!ttak\_math\_approx\_sin@{ttak\_math\_approx\_sin}}
+\index{ttak\_math\_approx\_sin@{ttak\_math\_approx\_sin}!vector.h@{vector.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_math\_approx\_sin()}{ttak\_math\_approx\_sin()}}
+{\footnotesize\ttfamily bool ttak\+\_\+math\+\_\+approx\+\_\+sin (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{res,  }\item[{const \mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{angle,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+
+
+
+Approximate sine function using Yussigihae-\/inspired polynomial expansion. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em res} & Result bigreal. \\
+\hline
+{\em angle} & Angle in radians. \\
+\hline
+{\em now} & Timestamp. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success. 
+\end{DoxyReturn}
 \Hypertarget{vector_8h_a765041ba76f7928b75e757fc48310498}\label{vector_8h_a765041ba76f7928b75e757fc48310498} 
 \index{vector.h@{vector.h}!ttak\_vector\_create@{ttak\_vector\_create}}
 \index{ttak\_vector\_create@{ttak\_vector\_create}!vector.h@{vector.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_vector\_create()}{ttak\_vector\_create()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{vector_8h_a369355c13a77e16de351f18e21606590}{tt\+\_\+shared\+\_\+vector\+\_\+t}} \texorpdfstring{$\ast$}{*} ttak\+\_\+vector\+\_\+create (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{dim,  }\item[{\mbox{\hyperlink{owner_8h_a9b17ab97f490a6a7a1a4f90c2216186c}{tt\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{owner,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \mbox{\hyperlink{vector_8h_a883a6144e73d2afbbb167470ace3f65c}{tt\+\_\+shared\+\_\+vector\+\_\+t}} \texorpdfstring{$\ast$}{*} ttak\+\_\+vector\+\_\+create (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{dim,  }\item[{\mbox{\hyperlink{owner_8h_a9b17ab97f490a6a7a1a4f90c2216186c}{tt\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{owner,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
 
 
 
 Creates a shared vector. 
 
-\Hypertarget{vector_8h_ab1b6402590d65531358adbe1b364f884}\label{vector_8h_ab1b6402590d65531358adbe1b364f884} 
+\Hypertarget{vector_8h_a3706cdbd77c97faf19610bb8dc39727b}\label{vector_8h_a3706cdbd77c97faf19610bb8dc39727b} 
 \index{vector.h@{vector.h}!ttak\_vector\_cross@{ttak\_vector\_cross}}
 \index{ttak\_vector\_cross@{ttak\_vector\_cross}!vector.h@{vector.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_vector\_cross()}{ttak\_vector\_cross()}}
-{\footnotesize\ttfamily \+\_\+\+Bool ttak\+\_\+vector\+\_\+cross (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{vector_8h_a369355c13a77e16de351f18e21606590}{tt\+\_\+shared\+\_\+vector\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{res,  }\item[{\mbox{\hyperlink{vector_8h_a369355c13a77e16de351f18e21606590}{tt\+\_\+shared\+\_\+vector\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{a,  }\item[{\mbox{\hyperlink{vector_8h_a369355c13a77e16de351f18e21606590}{tt\+\_\+shared\+\_\+vector\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{b,  }\item[{\mbox{\hyperlink{owner_8h_a9b17ab97f490a6a7a1a4f90c2216186c}{tt\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{owner,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily bool ttak\+\_\+vector\+\_\+cross (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{vector_8h_a883a6144e73d2afbbb167470ace3f65c}{tt\+\_\+shared\+\_\+vector\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{res,  }\item[{\mbox{\hyperlink{vector_8h_a883a6144e73d2afbbb167470ace3f65c}{tt\+\_\+shared\+\_\+vector\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{a,  }\item[{\mbox{\hyperlink{vector_8h_a883a6144e73d2afbbb167470ace3f65c}{tt\+\_\+shared\+\_\+vector\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{b,  }\item[{\mbox{\hyperlink{owner_8h_a9b17ab97f490a6a7a1a4f90c2216186c}{tt\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{owner,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
 
 
 
@@ -97,17 +144,17 @@ Vector Cross Product (3D only).
 \index{vector.h@{vector.h}!ttak\_vector\_destroy@{ttak\_vector\_destroy}}
 \index{ttak\_vector\_destroy@{ttak\_vector\_destroy}!vector.h@{vector.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_vector\_destroy()}{ttak\_vector\_destroy()}}
-{\footnotesize\ttfamily void ttak\+\_\+vector\+\_\+destroy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{vector_8h_a369355c13a77e16de351f18e21606590}{tt\+\_\+shared\+\_\+vector\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{sv,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void ttak\+\_\+vector\+\_\+destroy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{vector_8h_a883a6144e73d2afbbb167470ace3f65c}{tt\+\_\+shared\+\_\+vector\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{sv,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
 
 
 
 Destroys a shared vector. 
 
-\Hypertarget{vector_8h_a930369abe28ccf397719f2e7ff684f53}\label{vector_8h_a930369abe28ccf397719f2e7ff684f53} 
+\Hypertarget{vector_8h_aff25f5c4ad56ab928a8c1eccb6e27fce}\label{vector_8h_aff25f5c4ad56ab928a8c1eccb6e27fce} 
 \index{vector.h@{vector.h}!ttak\_vector\_dot@{ttak\_vector\_dot}}
 \index{ttak\_vector\_dot@{ttak\_vector\_dot}!vector.h@{vector.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_vector\_dot()}{ttak\_vector\_dot()}}
-{\footnotesize\ttfamily \+\_\+\+Bool ttak\+\_\+vector\+\_\+dot (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{res,  }\item[{\mbox{\hyperlink{vector_8h_a369355c13a77e16de351f18e21606590}{tt\+\_\+shared\+\_\+vector\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{a,  }\item[{\mbox{\hyperlink{vector_8h_a369355c13a77e16de351f18e21606590}{tt\+\_\+shared\+\_\+vector\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{b,  }\item[{\mbox{\hyperlink{owner_8h_a9b17ab97f490a6a7a1a4f90c2216186c}{tt\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{owner,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily bool ttak\+\_\+vector\+\_\+dot (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{res,  }\item[{\mbox{\hyperlink{vector_8h_a883a6144e73d2afbbb167470ace3f65c}{tt\+\_\+shared\+\_\+vector\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{a,  }\item[{\mbox{\hyperlink{vector_8h_a883a6144e73d2afbbb167470ace3f65c}{tt\+\_\+shared\+\_\+vector\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{b,  }\item[{\mbox{\hyperlink{owner_8h_a9b17ab97f490a6a7a1a4f90c2216186c}{tt\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{owner,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
 
 
 
@@ -117,27 +164,27 @@ Vector Dot Product.
 \index{vector.h@{vector.h}!ttak\_vector\_get@{ttak\_vector\_get}}
 \index{ttak\_vector\_get@{ttak\_vector\_get}!vector.h@{vector.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_vector\_get()}{ttak\_vector\_get()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*} ttak\+\_\+vector\+\_\+get (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{vector_8h_a369355c13a77e16de351f18e21606590}{tt\+\_\+shared\+\_\+vector\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{sv,  }\item[{\mbox{\hyperlink{owner_8h_a9b17ab97f490a6a7a1a4f90c2216186c}{tt\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{owner,  }\item[{uint8\+\_\+t}]{index,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*} ttak\+\_\+vector\+\_\+get (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{vector_8h_a883a6144e73d2afbbb167470ace3f65c}{tt\+\_\+shared\+\_\+vector\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{sv,  }\item[{\mbox{\hyperlink{owner_8h_a9b17ab97f490a6a7a1a4f90c2216186c}{tt\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{owner,  }\item[{uint8\+\_\+t}]{index,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
 
 
 
 Safe access to an element. Validates owner and bounds. 
 
-\Hypertarget{vector_8h_a59ca6d0c2eb28d53776e65fa53610048}\label{vector_8h_a59ca6d0c2eb28d53776e65fa53610048} 
+\Hypertarget{vector_8h_a09dee645105174e27be82e8a0a7d98aa}\label{vector_8h_a09dee645105174e27be82e8a0a7d98aa} 
 \index{vector.h@{vector.h}!ttak\_vector\_magnitude@{ttak\_vector\_magnitude}}
 \index{ttak\_vector\_magnitude@{ttak\_vector\_magnitude}!vector.h@{vector.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_vector\_magnitude()}{ttak\_vector\_magnitude()}}
-{\footnotesize\ttfamily \+\_\+\+Bool ttak\+\_\+vector\+\_\+magnitude (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{res,  }\item[{\mbox{\hyperlink{vector_8h_a369355c13a77e16de351f18e21606590}{tt\+\_\+shared\+\_\+vector\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{v,  }\item[{\mbox{\hyperlink{owner_8h_a9b17ab97f490a6a7a1a4f90c2216186c}{tt\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{owner,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily bool ttak\+\_\+vector\+\_\+magnitude (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{res,  }\item[{\mbox{\hyperlink{vector_8h_a883a6144e73d2afbbb167470ace3f65c}{tt\+\_\+shared\+\_\+vector\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{v,  }\item[{\mbox{\hyperlink{owner_8h_a9b17ab97f490a6a7a1a4f90c2216186c}{tt\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{owner,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
 
 
 
 Magnitude of the vector. 
 
-\Hypertarget{vector_8h_a34f618fe9f9be6c07aa68351aacdcfd4}\label{vector_8h_a34f618fe9f9be6c07aa68351aacdcfd4} 
+\Hypertarget{vector_8h_ad00d46a71034ebbdb69077c70dd75d37}\label{vector_8h_ad00d46a71034ebbdb69077c70dd75d37} 
 \index{vector.h@{vector.h}!ttak\_vector\_set@{ttak\_vector\_set}}
 \index{ttak\_vector\_set@{ttak\_vector\_set}!vector.h@{vector.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_vector\_set()}{ttak\_vector\_set()}}
-{\footnotesize\ttfamily \+\_\+\+Bool ttak\+\_\+vector\+\_\+set (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{vector_8h_a369355c13a77e16de351f18e21606590}{tt\+\_\+shared\+\_\+vector\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{sv,  }\item[{\mbox{\hyperlink{owner_8h_a9b17ab97f490a6a7a1a4f90c2216186c}{tt\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{owner,  }\item[{uint8\+\_\+t}]{index,  }\item[{const \mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{val,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily bool ttak\+\_\+vector\+\_\+set (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{vector_8h_a883a6144e73d2afbbb167470ace3f65c}{tt\+\_\+shared\+\_\+vector\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{sv,  }\item[{\mbox{\hyperlink{owner_8h_a9b17ab97f490a6a7a1a4f90c2216186c}{tt\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{owner,  }\item[{uint8\+\_\+t}]{index,  }\item[{const \mbox{\hyperlink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{val,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
 
 
 

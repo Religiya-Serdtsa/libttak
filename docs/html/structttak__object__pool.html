@@ -128,6 +128,18 @@ Public Attributes</h2></td></tr>
 <tr class="separator:ad6c6f8215988b972296cc49fee97d89d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a53077709490b4f7933fd2a6609d14e84" id="r_a53077709490b4f7933fd2a6609d14e84"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__object__pool.html#a53077709490b4f7933fd2a6609d14e84">used_count</a></td></tr>
 <tr class="separator:a53077709490b4f7933fd2a6609d14e84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafc723c0f55b9a51eed774931edfc897" id="r_aafc723c0f55b9a51eed774931edfc897"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__object__pool.html#aafc723c0f55b9a51eed774931edfc897">ols_chunk_count</a></td></tr>
+<tr class="separator:aafc723c0f55b9a51eed774931edfc897"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab56703e2886f72d1fb41a7bc2e4113bf" id="r_ab56703e2886f72d1fb41a7bc2e4113bf"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__object__pool.html#ab56703e2886f72d1fb41a7bc2e4113bf">ols_chunk_cursor</a></td></tr>
+<tr class="separator:ab56703e2886f72d1fb41a7bc2e4113bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a562c49dae52f1bdf34910047bb58d245" id="r_a562c49dae52f1bdf34910047bb58d245"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__object__pool.html#a562c49dae52f1bdf34910047bb58d245">ols_lane_seed</a></td></tr>
+<tr class="separator:a562c49dae52f1bdf34910047bb58d245"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af47611e66bb8945b0d064dd0b3bf81e3" id="r_af47611e66bb8945b0d064dd0b3bf81e3"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__object__pool.html#af47611e66bb8945b0d064dd0b3bf81e3">ols_lane_guard</a></td></tr>
+<tr class="separator:af47611e66bb8945b0d064dd0b3bf81e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99ed722dc1c32e7c10c190b0c88836c9" id="r_a99ed722dc1c32e7c10c190b0c88836c9"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__object__pool.html#a99ed722dc1c32e7c10c190b0c88836c9">ols_lane_stride</a></td></tr>
+<tr class="separator:a99ed722dc1c32e7c10c190b0c88836c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99b559fdee05b35fcb9faefdce869105" id="r_a99b559fdee05b35fcb9faefdce869105"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__object__pool.html#a99b559fdee05b35fcb9faefdce869105">last_recycled_index</a></td></tr>
+<tr class="separator:a99b559fdee05b35fcb9faefdce869105"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5c261e179030cdd19276708d98142e46" id="r_a5c261e179030cdd19276708d98142e46"><td class="memItemLeft" align="right" valign="top"><a class="el" href="spinlock_8h.html#a705f9b9b5f7cf440ded7db544f974487">ttak_spin_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__object__pool.html#a5c261e179030cdd19276708d98142e46">lock</a></td></tr>
 <tr class="separator:a5c261e179030cdd19276708d98142e46"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -205,6 +217,23 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a99b559fdee05b35fcb9faefdce869105" name="a99b559fdee05b35fcb9faefdce869105"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a99b559fdee05b35fcb9faefdce869105">&#9670;&#160;</a></span>last_recycled_index</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t ttak_object_pool::last_recycled_index</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Hot-slot recycled on the next allocation. </p>
+
+<p class="definition">Definition at line <a class="el" href="container_2pool_8h_source.html#l00028">28</a> of file <a class="el" href="container_2pool_8h_source.html">pool.h</a>.</p>
+
+</div>
+</div>
 <a id="a5c261e179030cdd19276708d98142e46" name="a5c261e179030cdd19276708d98142e46"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5c261e179030cdd19276708d98142e46">&#9670;&#160;</a></span>lock</h2>
 
@@ -218,7 +247,92 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Spinlock for protecting the bitmap. </p>
 
-<p class="definition">Definition at line <a class="el" href="container_2pool_8h_source.html#l00021">21</a> of file <a class="el" href="container_2pool_8h_source.html">pool.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="container_2pool_8h_source.html#l00030">30</a> of file <a class="el" href="container_2pool_8h_source.html">pool.h</a>.</p>
+
+</div>
+</div>
+<a id="aafc723c0f55b9a51eed774931edfc897" name="aafc723c0f55b9a51eed774931edfc897"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aafc723c0f55b9a51eed774931edfc897">&#9670;&#160;</a></span>ols_chunk_count</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t ttak_object_pool::ols_chunk_count</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Number of 8x8 tiles covering the capacity. </p>
+
+<p class="definition">Definition at line <a class="el" href="container_2pool_8h_source.html#l00023">23</a> of file <a class="el" href="container_2pool_8h_source.html">pool.h</a>.</p>
+
+</div>
+</div>
+<a id="ab56703e2886f72d1fb41a7bc2e4113bf" name="ab56703e2886f72d1fb41a7bc2e4113bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab56703e2886f72d1fb41a7bc2e4113bf">&#9670;&#160;</a></span>ols_chunk_cursor</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t ttak_object_pool::ols_chunk_cursor</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Current tile cursor. </p>
+
+<p class="definition">Definition at line <a class="el" href="container_2pool_8h_source.html#l00024">24</a> of file <a class="el" href="container_2pool_8h_source.html">pool.h</a>.</p>
+
+</div>
+</div>
+<a id="af47611e66bb8945b0d064dd0b3bf81e3" name="af47611e66bb8945b0d064dd0b3bf81e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af47611e66bb8945b0d064dd0b3bf81e3">&#9670;&#160;</a></span>ols_lane_guard</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ttak_object_pool::ols_lane_guard</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Cycle guard to detect when to advance tiles. </p>
+
+<p class="definition">Definition at line <a class="el" href="container_2pool_8h_source.html#l00026">26</a> of file <a class="el" href="container_2pool_8h_source.html">pool.h</a>.</p>
+
+</div>
+</div>
+<a id="a562c49dae52f1bdf34910047bb58d245" name="a562c49dae52f1bdf34910047bb58d245"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a562c49dae52f1bdf34910047bb58d245">&#9670;&#160;</a></span>ols_lane_seed</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ttak_object_pool::ols_lane_seed</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Current 6-bit lane seed within the tile. </p>
+
+<p class="definition">Definition at line <a class="el" href="container_2pool_8h_source.html#l00025">25</a> of file <a class="el" href="container_2pool_8h_source.html">pool.h</a>.</p>
+
+</div>
+</div>
+<a id="a99ed722dc1c32e7c10c190b0c88836c9" name="a99ed722dc1c32e7c10c190b0c88836c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a99ed722dc1c32e7c10c190b0c88836c9">&#9670;&#160;</a></span>ols_lane_stride</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ttak_object_pool::ols_lane_stride</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Coprime stride applied to the lane seed. </p>
+
+<p class="definition">Definition at line <a class="el" href="container_2pool_8h_source.html#l00027">27</a> of file <a class="el" href="container_2pool_8h_source.html">pool.h</a>.</p>
 
 </div>
 </div>

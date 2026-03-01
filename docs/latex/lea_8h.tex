@@ -1,0 +1,84 @@
+\doxysection{include/ttak/security/lea.h File Reference}
+\hypertarget{lea_8h}{}\label{lea_8h}\index{include/ttak/security/lea.h@{include/ttak/security/lea.h}}
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$ttak/security/security\+\_\+engine.\+h$>$}\newline
+Include dependency graph for lea.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lea_8h__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structttak__lea__schedule}{ttak\+\_\+lea\+\_\+schedule}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{lea_8h_a859f245ccebf4563383c8ef16aaeecda}{TTAK\+\_\+\+LEA\+\_\+\+BLOCK\+\_\+\+SIZE}}~16U
+\item 
+\#define \mbox{\hyperlink{lea_8h_ac987ec79e723d542935dbe6b45cd5f60}{TTAK\+\_\+\+LEA\+\_\+\+MAX\+\_\+\+ROUNDS}}~32U
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \mbox{\hyperlink{structttak__lea__schedule}{ttak\+\_\+lea\+\_\+schedule}} \mbox{\hyperlink{lea_8h_a032c0050375ccaa4e1227f36938eea85}{ttak\+\_\+lea\+\_\+schedule\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{lea_8h_a8eac1534454be6f33c3052964757b3fd}{ttak\+\_\+lea\+\_\+schedule\+\_\+init}} (\mbox{\hyperlink{lea_8h_a032c0050375ccaa4e1227f36938eea85}{ttak\+\_\+lea\+\_\+schedule\+\_\+t}} \texorpdfstring{$\ast$}{*}sched, const uint8\+\_\+t \texorpdfstring{$\ast$}{*}key, size\+\_\+t key\+\_\+len)
+\item 
+\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} \mbox{\hyperlink{lea_8h_a7dc70d595d9604dc663ef8a350c0014a}{ttak\+\_\+lea\+\_\+encrypt\+\_\+simd}} (const \mbox{\hyperlink{security__engine_8h_ab35679fcbd68d19ad05f01ff21fe7825}{ttak\+\_\+crypto\+\_\+ctx\+\_\+t}} \texorpdfstring{$\ast$}{*}ctx, const \mbox{\hyperlink{security__engine_8h_a0a2faa157fed8910f71a319d2ea04f4d}{ttak\+\_\+security\+\_\+driver\+\_\+t}} \texorpdfstring{$\ast$}{*}driver)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{lea_8h_a859f245ccebf4563383c8ef16aaeecda}\label{lea_8h_a859f245ccebf4563383c8ef16aaeecda} 
+\index{lea.h@{lea.h}!TTAK\_LEA\_BLOCK\_SIZE@{TTAK\_LEA\_BLOCK\_SIZE}}
+\index{TTAK\_LEA\_BLOCK\_SIZE@{TTAK\_LEA\_BLOCK\_SIZE}!lea.h@{lea.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_LEA\_BLOCK\_SIZE}{TTAK\_LEA\_BLOCK\_SIZE}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+LEA\+\_\+\+BLOCK\+\_\+\+SIZE~16U}
+
+
+
+Definition at line \mbox{\hyperlink{lea_8h_source_l00013}{13}} of file \mbox{\hyperlink{lea_8h_source}{lea.\+h}}.
+
+\Hypertarget{lea_8h_ac987ec79e723d542935dbe6b45cd5f60}\label{lea_8h_ac987ec79e723d542935dbe6b45cd5f60} 
+\index{lea.h@{lea.h}!TTAK\_LEA\_MAX\_ROUNDS@{TTAK\_LEA\_MAX\_ROUNDS}}
+\index{TTAK\_LEA\_MAX\_ROUNDS@{TTAK\_LEA\_MAX\_ROUNDS}!lea.h@{lea.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_LEA\_MAX\_ROUNDS}{TTAK\_LEA\_MAX\_ROUNDS}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+LEA\+\_\+\+MAX\+\_\+\+ROUNDS~32U}
+
+
+
+Definition at line \mbox{\hyperlink{lea_8h_source_l00014}{14}} of file \mbox{\hyperlink{lea_8h_source}{lea.\+h}}.
+
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{lea_8h_a032c0050375ccaa4e1227f36938eea85}\label{lea_8h_a032c0050375ccaa4e1227f36938eea85} 
+\index{lea.h@{lea.h}!ttak\_lea\_schedule\_t@{ttak\_lea\_schedule\_t}}
+\index{ttak\_lea\_schedule\_t@{ttak\_lea\_schedule\_t}!lea.h@{lea.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_lea\_schedule\_t}{ttak\_lea\_schedule\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__lea__schedule}{ttak\+\_\+lea\+\_\+schedule}} \mbox{\hyperlink{lea_8h_a032c0050375ccaa4e1227f36938eea85}{ttak\+\_\+lea\+\_\+schedule\+\_\+t}}}
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{lea_8h_a7dc70d595d9604dc663ef8a350c0014a}\label{lea_8h_a7dc70d595d9604dc663ef8a350c0014a} 
+\index{lea.h@{lea.h}!ttak\_lea\_encrypt\_simd@{ttak\_lea\_encrypt\_simd}}
+\index{ttak\_lea\_encrypt\_simd@{ttak\_lea\_encrypt\_simd}!lea.h@{lea.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_lea\_encrypt\_simd()}{ttak\_lea\_encrypt\_simd()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} ttak\+\_\+lea\+\_\+encrypt\+\_\+simd (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{security__engine_8h_ab35679fcbd68d19ad05f01ff21fe7825}{ttak\+\_\+crypto\+\_\+ctx\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{ctx,  }\item[{const \mbox{\hyperlink{security__engine_8h_a0a2faa157fed8910f71a319d2ea04f4d}{ttak\+\_\+security\+\_\+driver\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{driver }\end{DoxyParamCaption})}
+
+\Hypertarget{lea_8h_a8eac1534454be6f33c3052964757b3fd}\label{lea_8h_a8eac1534454be6f33c3052964757b3fd} 
+\index{lea.h@{lea.h}!ttak\_lea\_schedule\_init@{ttak\_lea\_schedule\_init}}
+\index{ttak\_lea\_schedule\_init@{ttak\_lea\_schedule\_init}!lea.h@{lea.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_lea\_schedule\_init()}{ttak\_lea\_schedule\_init()}}
+{\footnotesize\ttfamily void ttak\+\_\+lea\+\_\+schedule\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{lea_8h_a032c0050375ccaa4e1227f36938eea85}{ttak\+\_\+lea\+\_\+schedule\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{sched,  }\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{key,  }\item[{size\+\_\+t}]{key\+\_\+len }\end{DoxyParamCaption})}
+

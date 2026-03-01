@@ -12,6 +12,7 @@ Internal memory subsystem definitions and tiered allocator interfaces.
 {\ttfamily \#include $<$pthread.\+h$>$}\newline
 {\ttfamily \#include "{}../../internal/app\+\_\+types.\+h"{}}\newline
 {\ttfamily \#include $<$ttak/mem/mem.\+h$>$}\newline
+{\ttfamily \#include $<$ttak/types/ttak\+\_\+compiler.\+h$>$}\newline
 Include dependency graph for mem\+\_\+internal.\+h\+:
 \nopagebreak
 \begin{figure}[H]
@@ -33,8 +34,6 @@ struct \mbox{\hyperlink{structttak__slab__t}{ttak\+\_\+slab\+\_\+t}}
 \begin{DoxyCompactList}\small\item\em Metadata for Slab vanguard (64KB -\/ 512KB Dynamic Path). \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Macros}
 \begin{DoxyCompactItemize}
-\item 
-\#define \mbox{\hyperlink{mem__internal_8h_a79e6ab9372fcc255fb4075c4ed8857dd}{TTAK\+\_\+\+UNLIKELY}}(x)~\+\_\+\+\_\+builtin\+\_\+expect(!!(x), 0)
 \item 
 \#define \mbox{\hyperlink{mem__internal_8h_a2398e4bc6e13be162959e6418b48ad9b}{POCKET\+\_\+\+MAGIC}}~0x80\+C4\+E700
 \item 
@@ -74,14 +73,14 @@ typedef struct \mbox{\hyperlink{structttak__mem__vma__region}{ttak\+\_\+mem\+\_\
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{structttak__mem__header__t}{ttak\+\_\+mem\+\_\+header\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{mem__internal_8h_a9967ba62776d96bb9a96f0a376d704fe}{ttak\+\_\+mem\+\_\+pocket\+\_\+alloc\+\_\+internal}} (size\+\_\+t user\+\_\+requested\+\_\+size)
-\begin{DoxyCompactList}\small\item\em Allocates from the thread-\/local pocket tier. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structttak__mem__header__t}{ttak\+\_\+mem\+\_\+header\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{mem__internal_8h_a0685b9c215102d9177efbc20848d01dd}{ttak\+\_\+mem\+\_\+pocket\+\_\+alloc\+\_\+internal}} (size\+\_\+t size)
+\begin{DoxyCompactList}\small\item\em Allocates memory from the pocket (slab-\/like) tier. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structttak__mem__header__t}{ttak\+\_\+mem\+\_\+header\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{mem__internal_8h_a5e435171c1e6f2d7b9e093ace30c2453}{ttak\+\_\+mem\+\_\+vma\+\_\+alloc\+\_\+internal}} (size\+\_\+t size)
+\begin{DoxyCompactList}\small\item\em Allocates memory from the VMA (Virtual Mapping Area) tier. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{mem__internal_8h_a937a888cc086072386c71a0b33730cfa}{\+\_\+pocket\+\_\+free\+\_\+internal}} (\mbox{\hyperlink{structttak__mem__header__t}{ttak\+\_\+mem\+\_\+header\+\_\+t}} \texorpdfstring{$\ast$}{*}header)
-\begin{DoxyCompactList}\small\item\em Frees a header back to the thread-\/local pocket. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{structttak__mem__header__t}{ttak\+\_\+mem\+\_\+header\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{mem__internal_8h_a95874d8ac4b29ed22519a033552df2f6}{ttak\+\_\+mem\+\_\+vma\+\_\+alloc\+\_\+internal}} (size\+\_\+t user\+\_\+requested\+\_\+size)
-\begin{DoxyCompactList}\small\item\em Allocates from the lock-\/free VMA tier. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Releases a memory block back to the pocket tier. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{mem__internal_8h_a03b066948cc18c92697707a2d014eb0d}{\+\_\+vma\+\_\+free\+\_\+internal}} (\mbox{\hyperlink{structttak__mem__header__t}{ttak\+\_\+mem\+\_\+header\+\_\+t}} \texorpdfstring{$\ast$}{*}header)
-\begin{DoxyCompactList}\small\item\em Release VMA allocation (currently no-\/op for linear allocator). \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Releases a memory block back to the VMA tier. \end{DoxyCompactList}\item 
 void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{mem__internal_8h_a8abad2af668cdec241ddf164f6f2f152}{\+\_\+vma\+\_\+alloc\+\_\+linear}} (size\+\_\+t size)
 \begin{DoxyCompactList}\small\item\em Raw linear VMA allocator (internal use). \end{DoxyCompactList}\item 
 \mbox{\hyperlink{structttak__mem__header__t}{ttak\+\_\+mem\+\_\+header\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{mem__internal_8h_a777accb0ca5bba4e0291b1902778a095}{\+\_\+slab\+\_\+alloc\+\_\+rectified}} (size\+\_\+t user\+\_\+requested\+\_\+size)
@@ -123,7 +122,7 @@ Definition in file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\
 
 Base magic for 4KB pocket pages (Lower bits\+: freelist\+\_\+idx) 
 
-Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00025}{25}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00022}{22}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
 
 \Hypertarget{mem__internal_8h_a48534a142d77bccefdcd20ae71d4777e}\label{mem__internal_8h_a48534a142d77bccefdcd20ae71d4777e} 
 \index{mem\_internal.h@{mem\_internal.h}!SLAB\_MAGIC@{SLAB\_MAGIC}}
@@ -133,7 +132,7 @@ Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00025}{25}} of file
 
 Magic for Slab pages 
 
-Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00026}{26}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00023}{23}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
 
 \Hypertarget{mem__internal_8h_a8a9e97ecd3599442ae8c393732eec240}\label{mem__internal_8h_a8a9e97ecd3599442ae8c393732eec240} 
 \index{mem\_internal.h@{mem\_internal.h}!TTAK\_FP\_DIV@{TTAK\_FP\_DIV}}
@@ -143,7 +142,7 @@ Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00026}{26}} of file
 
 
 
-Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00044}{44}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00041}{41}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
 
 \Hypertarget{mem__internal_8h_a001ec8a1869c8ce91a283e742ff056a2}\label{mem__internal_8h_a001ec8a1869c8ce91a283e742ff056a2} 
 \index{mem\_internal.h@{mem\_internal.h}!TTAK\_FP\_FROM\_INT@{TTAK\_FP\_FROM\_INT}}
@@ -153,7 +152,7 @@ Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00044}{44}} of file
 
 
 
-Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00041}{41}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00038}{38}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
 
 \Hypertarget{mem__internal_8h_a8458ee8fa183292861fb996885599add}\label{mem__internal_8h_a8458ee8fa183292861fb996885599add} 
 \index{mem\_internal.h@{mem\_internal.h}!TTAK\_FP\_MUL@{TTAK\_FP\_MUL}}
@@ -163,7 +162,7 @@ Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00041}{41}} of file
 
 
 
-Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00043}{43}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00040}{40}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
 
 \Hypertarget{mem__internal_8h_ad923ad1117b87a296109d5ed8b2b0ecf}\label{mem__internal_8h_ad923ad1117b87a296109d5ed8b2b0ecf} 
 \index{mem\_internal.h@{mem\_internal.h}!TTAK\_FP\_ONE@{TTAK\_FP\_ONE}}
@@ -173,7 +172,7 @@ Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00043}{43}} of file
 
 
 
-Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00040}{40}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00037}{37}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
 
 \Hypertarget{mem__internal_8h_a69e122ba63345025fa7bd742fc502e22}\label{mem__internal_8h_a69e122ba63345025fa7bd742fc502e22} 
 \index{mem\_internal.h@{mem\_internal.h}!TTAK\_FP\_TO\_INT@{TTAK\_FP\_TO\_INT}}
@@ -183,7 +182,7 @@ Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00040}{40}} of file
 
 
 
-Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00042}{42}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00039}{39}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
 
 \Hypertarget{mem__internal_8h_a10254fab4ae3ccc752ddcf5ca91a9803}\label{mem__internal_8h_a10254fab4ae3ccc752ddcf5ca91a9803} 
 \index{mem\_internal.h@{mem\_internal.h}!TTAK\_NUM\_POCKET\_FREELISTS@{TTAK\_NUM\_POCKET\_FREELISTS}}
@@ -193,7 +192,7 @@ Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00042}{42}} of file
 
 
 
-Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00068}{68}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00065}{65}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
 
 \Hypertarget{mem__internal_8h_a453bdb33e06b4275bdc24e123cc01c0f}\label{mem__internal_8h_a453bdb33e06b4275bdc24e123cc01c0f} 
 \index{mem\_internal.h@{mem\_internal.h}!TTAK\_POCKET\_ALIGNMENT@{TTAK\_POCKET\_ALIGNMENT}}
@@ -203,7 +202,7 @@ Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00068}{68}} of file
 
 
 
-Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00067}{67}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00064}{64}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
 
 \Hypertarget{mem__internal_8h_a1d7f42e54833cbd413fa059f040e9455}\label{mem__internal_8h_a1d7f42e54833cbd413fa059f040e9455} 
 \index{mem\_internal.h@{mem\_internal.h}!TTAK\_POCKET\_PAGE\_SIZE@{TTAK\_POCKET\_PAGE\_SIZE}}
@@ -213,17 +212,7 @@ Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00067}{67}} of file
 
 
 
-Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00066}{66}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
-
-\Hypertarget{mem__internal_8h_a79e6ab9372fcc255fb4075c4ed8857dd}\label{mem__internal_8h_a79e6ab9372fcc255fb4075c4ed8857dd} 
-\index{mem\_internal.h@{mem\_internal.h}!TTAK\_UNLIKELY@{TTAK\_UNLIKELY}}
-\index{TTAK\_UNLIKELY@{TTAK\_UNLIKELY}!mem\_internal.h@{mem\_internal.h}}
-\doxysubsubsection{\texorpdfstring{TTAK\_UNLIKELY}{TTAK\_UNLIKELY}}
-{\footnotesize\ttfamily \#define TTAK\+\_\+\+UNLIKELY(\begin{DoxyParamCaption}\item[{}]{x }\end{DoxyParamCaption})~\+\_\+\+\_\+builtin\+\_\+expect(!!(x), 0)}
-
-
-
-Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00021}{21}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00063}{63}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
 
 \Hypertarget{mem__internal_8h_a2bb3ddaa78d345560fe8626105cf6084}\label{mem__internal_8h_a2bb3ddaa78d345560fe8626105cf6084} 
 \index{mem\_internal.h@{mem\_internal.h}!TTAK\_VMA\_ALIGNMENT@{TTAK\_VMA\_ALIGNMENT}}
@@ -233,7 +222,7 @@ Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00021}{21}} of file
 
 
 
-Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00086}{86}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00083}{83}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
 
 \Hypertarget{mem__internal_8h_a8ac651bb471a64ef8d6448811eb129ac}\label{mem__internal_8h_a8ac651bb471a64ef8d6448811eb129ac} 
 \index{mem\_internal.h@{mem\_internal.h}!TTAK\_VMA\_REGION\_SIZE@{TTAK\_VMA\_REGION\_SIZE}}
@@ -243,7 +232,7 @@ Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00086}{86}} of file
 
 
 
-Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00085}{85}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00082}{82}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
 
 
 
@@ -260,7 +249,7 @@ Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00085}{85}} of file
 
 
 
-Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00038}{38}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00035}{35}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
 
 \Hypertarget{mem__internal_8h_a574c320689c9aed0ca6559697013d05a}\label{mem__internal_8h_a574c320689c9aed0ca6559697013d05a} 
 \index{mem\_internal.h@{mem\_internal.h}!ttak\_mem\_header\_t@{ttak\_mem\_header\_t}}
@@ -270,7 +259,7 @@ Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00038}{38}} of file
 
 
 
-Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00063}{63}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00060}{60}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
 
 \Hypertarget{mem__internal_8h_af43b32a954757220aaa62ba3c6ecca77}\label{mem__internal_8h_af43b32a954757220aaa62ba3c6ecca77} 
 \index{mem\_internal.h@{mem\_internal.h}!ttak\_mem\_pocket\_freelist\_t@{ttak\_mem\_pocket\_freelist\_t}}
@@ -295,11 +284,11 @@ Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00063}{63}} of file
 
 
 
-Frees a header back to the thread-\/local pocket. 
+Releases a memory block back to the pocket tier. 
 
 
 \begin{DoxyParams}{Parameters}
-{\em header} & Header to return. \\
+{\em header} & Pointer to the memory header to be freed. \\
 \hline
 \end{DoxyParams}
 \Hypertarget{mem__internal_8h_a777accb0ca5bba4e0291b1902778a095}\label{mem__internal_8h_a777accb0ca5bba4e0291b1902778a095} 
@@ -348,11 +337,11 @@ Start pointer.
 
 
 
-Release VMA allocation (currently no-\/op for linear allocator). 
+Releases a memory block back to the VMA tier. 
 
 
 \begin{DoxyParams}{Parameters}
-{\em header} & Header to release. \\
+{\em header} & Pointer to the memory header to be freed. \\
 \hline
 \end{DoxyParams}
 \Hypertarget{mem__internal_8h_a412d07726f648de60cf44fc039dadb29}\label{mem__internal_8h_a412d07726f648de60cf44fc039dadb29} 
@@ -367,7 +356,7 @@ Maps a total block size to a pocket freelist index.
 
 
 
-Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00164}{164}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00161}{161}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
 
 \Hypertarget{mem__internal_8h_ae342f8cc558efdfaa89d03a462132edd}\label{mem__internal_8h_ae342f8cc558efdfaa89d03a462132edd} 
 \index{mem\_internal.h@{mem\_internal.h}!get\_total\_block\_size\_for\_freelist@{get\_total\_block\_size\_for\_freelist}}
@@ -381,43 +370,43 @@ Returns the total block size for a given pocket index.
 
 
 
-Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00173}{173}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
+Definition at line \mbox{\hyperlink{mem__internal_8h_source_l00170}{170}} of file \mbox{\hyperlink{mem__internal_8h_source}{mem\+\_\+internal.\+h}}.
 
-\Hypertarget{mem__internal_8h_a9967ba62776d96bb9a96f0a376d704fe}\label{mem__internal_8h_a9967ba62776d96bb9a96f0a376d704fe} 
+\Hypertarget{mem__internal_8h_a0685b9c215102d9177efbc20848d01dd}\label{mem__internal_8h_a0685b9c215102d9177efbc20848d01dd} 
 \index{mem\_internal.h@{mem\_internal.h}!ttak\_mem\_pocket\_alloc\_internal@{ttak\_mem\_pocket\_alloc\_internal}}
 \index{ttak\_mem\_pocket\_alloc\_internal@{ttak\_mem\_pocket\_alloc\_internal}!mem\_internal.h@{mem\_internal.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_mem\_pocket\_alloc\_internal()}{ttak\_mem\_pocket\_alloc\_internal()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{structttak__mem__header__t}{ttak\+\_\+mem\+\_\+header\+\_\+t}} \texorpdfstring{$\ast$}{*} ttak\+\_\+mem\+\_\+pocket\+\_\+alloc\+\_\+internal (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{user\+\_\+requested\+\_\+size }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \mbox{\hyperlink{structttak__mem__header__t}{ttak\+\_\+mem\+\_\+header\+\_\+t}} \texorpdfstring{$\ast$}{*} ttak\+\_\+mem\+\_\+pocket\+\_\+alloc\+\_\+internal (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{size }\end{DoxyParamCaption})}
 
 
 
-Allocates from the thread-\/local pocket tier. 
+Allocates memory from the pocket (slab-\/like) tier. 
 
 
 \begin{DoxyParams}{Parameters}
-{\em user\+\_\+requested\+\_\+size} & Size requested by user. \\
+{\em size} & Requested user memory size. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-Allocated header, or NULL. 
+Pointer to the \doxylink{structttak__mem__header__t}{ttak\+\_\+mem\+\_\+header\+\_\+t} of the allocated block, or NULL on failure. 
 \end{DoxyReturn}
-\Hypertarget{mem__internal_8h_a95874d8ac4b29ed22519a033552df2f6}\label{mem__internal_8h_a95874d8ac4b29ed22519a033552df2f6} 
+\Hypertarget{mem__internal_8h_a5e435171c1e6f2d7b9e093ace30c2453}\label{mem__internal_8h_a5e435171c1e6f2d7b9e093ace30c2453} 
 \index{mem\_internal.h@{mem\_internal.h}!ttak\_mem\_vma\_alloc\_internal@{ttak\_mem\_vma\_alloc\_internal}}
 \index{ttak\_mem\_vma\_alloc\_internal@{ttak\_mem\_vma\_alloc\_internal}!mem\_internal.h@{mem\_internal.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_mem\_vma\_alloc\_internal()}{ttak\_mem\_vma\_alloc\_internal()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{structttak__mem__header__t}{ttak\+\_\+mem\+\_\+header\+\_\+t}} \texorpdfstring{$\ast$}{*} ttak\+\_\+mem\+\_\+vma\+\_\+alloc\+\_\+internal (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{user\+\_\+requested\+\_\+size }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \mbox{\hyperlink{structttak__mem__header__t}{ttak\+\_\+mem\+\_\+header\+\_\+t}} \texorpdfstring{$\ast$}{*} ttak\+\_\+mem\+\_\+vma\+\_\+alloc\+\_\+internal (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{size }\end{DoxyParamCaption})}
 
 
 
-Allocates from the lock-\/free VMA tier. 
+Allocates memory from the VMA (Virtual Mapping Area) tier. 
 
 
 \begin{DoxyParams}{Parameters}
-{\em user\+\_\+requested\+\_\+size} & Size requested by user. \\
+{\em size} & Requested user memory size. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-Allocated header, or NULL. 
+Pointer to the \doxylink{structttak__mem__header__t}{ttak\+\_\+mem\+\_\+header\+\_\+t} of the allocated block, or NULL on failure. 
 \end{DoxyReturn}
 
 

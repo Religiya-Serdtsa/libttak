@@ -109,6 +109,7 @@ $(document).ready(function(){initNavTree('mem__internal_8h.html',''); initResiza
 <code>#include &lt;<a class="el" href="pthread_8h_source.html">pthread.h</a>&gt;</code><br />
 <code>#include &quot;<a class="el" href="app__types_8h_source.html">../../internal/app_types.h</a>&quot;</code><br />
 <code>#include &lt;<a class="el" href="mem_8h_source.html">ttak/mem/mem.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="ttak__compiler_8h_source.html">ttak/types/ttak_compiler.h</a>&gt;</code><br />
 </div><div class="textblock"><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Include dependency graph for mem_internal.h:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -116,34 +117,48 @@ $(document).ready(function(){initNavTree('mem__internal_8h.html',''); initResiza
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="mem__internal_8h__incl.png" border="0" usemap="#ainternal_2ttak_2mem__internal_8h" alt=""/></div>
 <map name="ainternal_2ttak_2mem__internal_8h" id="ainternal_2ttak_2mem__internal_8h">
-<area shape="rect" title="Internal memory subsystem definitions and tiered allocator interfaces." alt="" coords="245,5,454,31"/>
-<area shape="rect" title=" " alt="" coords="5,240,80,265"/>
-<area shape="poly" title=" " alt="" coords="256,33,198,51,170,64,144,81,111,115,85,154,66,194,53,228,48,226,61,192,80,152,107,111,141,77,167,59,196,46,255,28"/>
-<area shape="rect" title=" " alt="" coords="105,240,175,265"/>
-<area shape="poly" title=" " alt="" coords="255,33,209,51,189,64,171,80,151,115,141,154,138,193,139,226,134,226,133,193,136,154,146,113,167,77,186,60,207,46,253,28"/>
-<area shape="rect" title=" " alt="" coords="311,240,393,265"/>
-<area shape="poly" title=" " alt="" coords="360,29,397,85,417,124,432,166,435,180,432,193,413,217,390,235,387,231,410,214,427,191,430,180,427,167,412,126,393,88,356,32"/>
-<area shape="rect" title=" " alt="" coords="543,240,641,265"/>
-<area shape="poly" title=" " alt="" coords="374,28,411,49,450,77,489,115,526,156,579,227,574,230,521,159,486,119,446,81,408,54,372,33"/>
-<area shape="rect" href="pthread_8h.html" title="POSIX thread compatibility shim." alt="" coords="418,240,502,265"/>
-<area shape="poly" title=" " alt="" coords="370,29,397,49,422,77,441,115,453,155,462,226,457,226,448,156,437,117,418,80,393,53,366,33"/>
-<area shape="rect" href="app__types_8h.html" title=" " alt="" coords="182,79,306,119"/>
-<area shape="poly" title=" " alt="" coords="335,33,282,73,279,68,332,29"/>
-<area shape="rect" href="mem_8h.html" title="TTAK Unified Memory Subsystem with Lifecycle Management and Hardware Optimization." alt="" coords="281,167,417,192"/>
-<area shape="poly" title=" " alt="" coords="352,31,352,153,347,153,347,31"/>
-<area shape="poly" title=" " alt="" coords="221,121,71,234,68,229,217,117"/>
-<area shape="poly" title=" " alt="" coords="233,121,158,230,154,227,229,118"/>
-<area shape="poly" title=" " alt="" coords="248,118,255,154,272,191,293,213,317,231,314,235,289,217,267,193,250,155,243,119"/>
-<area shape="poly" title=" " alt="" coords="307,106,371,126,403,143,431,165,450,194,459,226,454,227,445,197,427,168,400,147,369,131,305,111"/>
-<area shape="rect" title=" " alt="" coords="199,240,286,265"/>
-<area shape="poly" title=" " alt="" coords="239,120,230,153,228,192,236,226,231,227,223,192,224,152,234,118"/>
-<area shape="poly" title=" " alt="" coords="271,117,324,156,321,160,268,121"/>
-<area shape="poly" title=" " alt="" coords="301,195,94,242,93,237,299,189"/>
-<area shape="poly" title=" " alt="" coords="317,195,188,238,186,233,315,189"/>
-<area shape="poly" title=" " alt="" coords="352,192,354,226,348,227,347,192"/>
-<area shape="poly" title=" " alt="" coords="389,189,541,234,539,239,388,195"/>
-<area shape="poly" title=" " alt="" coords="369,190,432,230,429,235,366,194"/>
-<area shape="poly" title=" " alt="" coords="334,194,273,235,270,230,331,190"/>
+<area shape="rect" title="Internal memory subsystem definitions and tiered allocator interfaces." alt="" coords="362,5,571,31"/>
+<area shape="rect" title=" " alt="" coords="44,387,119,412"/>
+<area shape="poly" title=" " alt="" coords="383,33,268,54,145,85,91,105,47,127,18,152,11,165,8,178,8,254,13,289,27,322,45,351,63,375,59,378,41,354,22,324,8,290,3,254,3,178,6,163,14,148,44,122,89,100,143,80,267,49,382,28"/>
+<area shape="rect" title=" " alt="" coords="223,387,294,412"/>
+<area shape="poly" title=" " alt="" coords="363,28,335,35,309,46,285,61,265,80,244,115,231,154,226,196,226,237,237,315,253,373,248,375,232,316,221,238,221,195,226,153,239,113,261,77,281,57,306,41,333,30,361,23"/>
+<area shape="rect" title=" " alt="" coords="344,387,427,412"/>
+<area shape="poly" title=" " alt="" coords="363,33,321,51,303,64,288,80,270,118,265,158,271,200,285,242,305,282,327,318,368,374,364,378,323,321,300,284,280,244,266,201,260,158,264,116,283,77,299,60,318,46,361,28"/>
+<area shape="rect" title=" " alt="" coords="867,387,965,412"/>
+<area shape="poly" title=" " alt="" coords="572,17,763,24,873,33,981,47,1079,67,1159,95,1190,112,1214,131,1229,153,1235,178,1235,254,1227,292,1207,324,1178,348,1141,367,1100,380,1058,390,979,399,979,394,1057,384,1099,375,1139,362,1175,344,1203,320,1222,290,1229,254,1229,178,1224,155,1210,135,1188,116,1157,100,1078,73,980,53,872,38,763,29,571,22"/>
+<area shape="rect" href="pthread_8h.html" title="POSIX thread compatibility shim." alt="" coords="697,387,781,412"/>
+<area shape="poly" title=" " alt="" coords="536,28,690,58,878,105,970,133,1051,165,1116,200,1140,219,1158,239,1163,252,1161,265,1152,277,1137,289,1095,311,1039,332,910,367,795,391,794,385,908,361,1038,327,1093,306,1134,284,1148,273,1156,263,1158,252,1154,241,1137,223,1113,205,1049,170,968,138,877,110,689,63,535,33"/>
+<area shape="rect" href="app__types_8h.html" title=" " alt="" coords="298,79,422,119"/>
+<area shape="poly" title=" " alt="" coords="453,33,398,73,395,68,449,29"/>
+<area shape="rect" href="mem_8h.html" title="TTAK Unified Memory Subsystem with Lifecycle Management and Hardware Optimization." alt="" coords="531,167,667,192"/>
+<area shape="poly" title=" " alt="" coords="478,29,582,154,578,158,474,32"/>
+<area shape="rect" href="ttak__compiler_8h.html" title="Compiler&#45;specific macros and compatibility layer." alt="" coords="950,240,1143,265"/>
+<area shape="poly" title=" " alt="" coords="496,28,1006,232,1004,237,494,33"/>
+<area shape="poly" title=" " alt="" coords="344,121,103,378,99,375,340,117"/>
+<area shape="poly" title=" " alt="" coords="354,120,336,168,269,374,263,373,331,166,349,118"/>
+<area shape="poly" title=" " alt="" coords="356,120,344,167,339,216,344,265,359,324,377,373,372,375,354,325,339,266,334,216,339,166,351,118"/>
+<area shape="poly" title=" " alt="" coords="359,119,356,151,357,190,366,230,375,248,387,263,419,288,451,299,483,301,515,297,550,292,586,290,624,295,664,311,700,340,726,373,722,377,696,344,661,316,622,300,585,296,550,298,516,303,483,306,450,305,417,293,383,267,370,250,361,231,352,190,351,151,354,119"/>
+<area shape="rect" title=" " alt="" coords="398,240,485,265"/>
+<area shape="poly" title=" " alt="" coords="373,118,431,226,426,229,368,120"/>
+<area shape="poly" title=" " alt="" coords="418,116,552,160,550,165,416,121"/>
+<area shape="poly" title=" " alt="" coords="590,194,551,230,497,268,348,318,132,385,130,380,346,312,495,263,548,226,586,190"/>
+<area shape="poly" title=" " alt="" coords="596,194,576,229,561,250,543,267,509,288,479,297,448,303,410,316,345,349,290,382,287,377,342,345,408,311,446,298,478,291,507,283,540,263,557,246,572,227,591,191"/>
+<area shape="poly" title=" " alt="" coords="604,192,607,228,604,248,594,267,576,284,557,293,519,296,478,298,458,303,438,315,413,344,396,375,392,373,408,341,434,311,456,298,478,292,518,291,556,288,573,280,590,264,599,247,602,228,599,193"/>
+<area shape="poly" title=" " alt="" coords="667,183,729,191,794,202,851,217,873,227,889,238,909,270,920,306,923,343,922,373,916,373,918,343,914,307,904,272,885,242,870,232,849,222,793,207,728,196,666,189"/>
+<area shape="poly" title=" " alt="" coords="612,190,658,241,685,275,709,312,724,343,734,373,729,374,719,345,704,315,680,278,654,244,608,194"/>
+<area shape="poly" title=" " alt="" coords="574,194,480,237,478,232,572,190"/>
+<area shape="rect" href="epoch__gc_8h.html" title=" " alt="" coords="712,240,875,265"/>
+<area shape="poly" title=" " alt="" coords="631,190,750,233,748,238,629,195"/>
+<area shape="poly" title=" " alt="" coords="667,189,962,235,961,241,666,194"/>
+<area shape="poly" title=" " alt="" coords="805,264,899,374,895,378,801,268"/>
+<area shape="poly" title=" " alt="" coords="791,267,750,375,745,373,786,265"/>
+<area shape="rect" href="mem__tree_8h.html" title=" " alt="" coords="448,313,651,339"/>
+<area shape="poly" title=" " alt="" coords="755,268,603,312,601,307,753,263"/>
+<area shape="poly" title=" " alt="" coords="475,341,133,393,132,388,474,336"/>
+<area shape="poly" title=" " alt="" coords="503,341,308,389,307,384,502,336"/>
+<area shape="poly" title=" " alt="" coords="524,341,426,384,423,379,522,336"/>
+<area shape="poly" title=" " alt="" coords="609,336,854,383,853,389,608,341"/>
+<area shape="poly" title=" " alt="" coords="581,336,696,379,694,384,579,341"/>
 </map>
 </div>
 </div>
@@ -166,8 +181,6 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a79e6ab9372fcc255fb4075c4ed8857dd" id="r_a79e6ab9372fcc255fb4075c4ed8857dd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem__internal_8h.html#a79e6ab9372fcc255fb4075c4ed8857dd">TTAK_UNLIKELY</a>(x)&#160;&#160;&#160;__builtin_expect(!!(x), 0)</td></tr>
-<tr class="separator:a79e6ab9372fcc255fb4075c4ed8857dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2398e4bc6e13be162959e6418b48ad9b" id="r_a2398e4bc6e13be162959e6418b48ad9b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem__internal_8h.html#a2398e4bc6e13be162959e6418b48ad9b">POCKET_MAGIC</a>&#160;&#160;&#160;0x80C4E700</td></tr>
 <tr class="separator:a2398e4bc6e13be162959e6418b48ad9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a48534a142d77bccefdcd20ae71d4777e" id="r_a48534a142d77bccefdcd20ae71d4777e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem__internal_8h.html#a48534a142d77bccefdcd20ae71d4777e">SLAB_MAGIC</a>&#160;&#160;&#160;0x51ABCA5E</td></tr>
@@ -207,17 +220,17 @@ Typedefs</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a9967ba62776d96bb9a96f0a376d704fe" id="r_a9967ba62776d96bb9a96f0a376d704fe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structttak__mem__header__t.html">ttak_mem_header_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem__internal_8h.html#a9967ba62776d96bb9a96f0a376d704fe">ttak_mem_pocket_alloc_internal</a> (size_t user_requested_size)</td></tr>
-<tr class="memdesc:a9967ba62776d96bb9a96f0a376d704fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates from the thread-local pocket tier.  <br /></td></tr>
-<tr class="separator:a9967ba62776d96bb9a96f0a376d704fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0685b9c215102d9177efbc20848d01dd" id="r_a0685b9c215102d9177efbc20848d01dd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structttak__mem__header__t.html">ttak_mem_header_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem__internal_8h.html#a0685b9c215102d9177efbc20848d01dd">ttak_mem_pocket_alloc_internal</a> (size_t size)</td></tr>
+<tr class="memdesc:a0685b9c215102d9177efbc20848d01dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates memory from the pocket (slab-like) tier.  <br /></td></tr>
+<tr class="separator:a0685b9c215102d9177efbc20848d01dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e435171c1e6f2d7b9e093ace30c2453" id="r_a5e435171c1e6f2d7b9e093ace30c2453"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structttak__mem__header__t.html">ttak_mem_header_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem__internal_8h.html#a5e435171c1e6f2d7b9e093ace30c2453">ttak_mem_vma_alloc_internal</a> (size_t size)</td></tr>
+<tr class="memdesc:a5e435171c1e6f2d7b9e093ace30c2453"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates memory from the VMA (Virtual Mapping Area) tier.  <br /></td></tr>
+<tr class="separator:a5e435171c1e6f2d7b9e093ace30c2453"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a937a888cc086072386c71a0b33730cfa" id="r_a937a888cc086072386c71a0b33730cfa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem__internal_8h.html#a937a888cc086072386c71a0b33730cfa">_pocket_free_internal</a> (<a class="el" href="structttak__mem__header__t.html">ttak_mem_header_t</a> *header)</td></tr>
-<tr class="memdesc:a937a888cc086072386c71a0b33730cfa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frees a header back to the thread-local pocket.  <br /></td></tr>
+<tr class="memdesc:a937a888cc086072386c71a0b33730cfa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Releases a memory block back to the pocket tier.  <br /></td></tr>
 <tr class="separator:a937a888cc086072386c71a0b33730cfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a95874d8ac4b29ed22519a033552df2f6" id="r_a95874d8ac4b29ed22519a033552df2f6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structttak__mem__header__t.html">ttak_mem_header_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem__internal_8h.html#a95874d8ac4b29ed22519a033552df2f6">ttak_mem_vma_alloc_internal</a> (size_t user_requested_size)</td></tr>
-<tr class="memdesc:a95874d8ac4b29ed22519a033552df2f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates from the lock-free VMA tier.  <br /></td></tr>
-<tr class="separator:a95874d8ac4b29ed22519a033552df2f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a03b066948cc18c92697707a2d014eb0d" id="r_a03b066948cc18c92697707a2d014eb0d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem__internal_8h.html#a03b066948cc18c92697707a2d014eb0d">_vma_free_internal</a> (<a class="el" href="structttak__mem__header__t.html">ttak_mem_header_t</a> *header)</td></tr>
-<tr class="memdesc:a03b066948cc18c92697707a2d014eb0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Release VMA allocation (currently no-op for linear allocator).  <br /></td></tr>
+<tr class="memdesc:a03b066948cc18c92697707a2d014eb0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Releases a memory block back to the VMA tier.  <br /></td></tr>
 <tr class="separator:a03b066948cc18c92697707a2d014eb0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8abad2af668cdec241ddf164f6f2f152" id="r_a8abad2af668cdec241ddf164f6f2f152"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem__internal_8h.html#a8abad2af668cdec241ddf164f6f2f152">_vma_alloc_linear</a> (size_t size)</td></tr>
 <tr class="memdesc:a8abad2af668cdec241ddf164f6f2f152"><td class="mdescLeft">&#160;</td><td class="mdescRight">Raw linear VMA allocator (internal use).  <br /></td></tr>
@@ -269,7 +282,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Base magic for 4KB pocket pages (Lower bits: freelist_idx) </p>
 
-<p class="definition">Definition at line <a class="el" href="mem__internal_8h_source.html#l00025">25</a> of file <a class="el" href="mem__internal_8h_source.html">mem_internal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mem__internal_8h_source.html#l00022">22</a> of file <a class="el" href="mem__internal_8h_source.html">mem_internal.h</a>.</p>
 
 </div>
 </div>
@@ -286,7 +299,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Magic for Slab pages </p>
 
-<p class="definition">Definition at line <a class="el" href="mem__internal_8h_source.html#l00026">26</a> of file <a class="el" href="mem__internal_8h_source.html">mem_internal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mem__internal_8h_source.html#l00023">23</a> of file <a class="el" href="mem__internal_8h_source.html">mem_internal.h</a>.</p>
 
 </div>
 </div>
@@ -316,7 +329,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mem__internal_8h_source.html#l00044">44</a> of file <a class="el" href="mem__internal_8h_source.html">mem_internal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mem__internal_8h_source.html#l00041">41</a> of file <a class="el" href="mem__internal_8h_source.html">mem_internal.h</a>.</p>
 
 </div>
 </div>
@@ -336,7 +349,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mem__internal_8h_source.html#l00041">41</a> of file <a class="el" href="mem__internal_8h_source.html">mem_internal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mem__internal_8h_source.html#l00038">38</a> of file <a class="el" href="mem__internal_8h_source.html">mem_internal.h</a>.</p>
 
 </div>
 </div>
@@ -366,7 +379,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mem__internal_8h_source.html#l00043">43</a> of file <a class="el" href="mem__internal_8h_source.html">mem_internal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mem__internal_8h_source.html#l00040">40</a> of file <a class="el" href="mem__internal_8h_source.html">mem_internal.h</a>.</p>
 
 </div>
 </div>
@@ -382,7 +395,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mem__internal_8h_source.html#l00040">40</a> of file <a class="el" href="mem__internal_8h_source.html">mem_internal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mem__internal_8h_source.html#l00037">37</a> of file <a class="el" href="mem__internal_8h_source.html">mem_internal.h</a>.</p>
 
 </div>
 </div>
@@ -402,7 +415,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mem__internal_8h_source.html#l00042">42</a> of file <a class="el" href="mem__internal_8h_source.html">mem_internal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mem__internal_8h_source.html#l00039">39</a> of file <a class="el" href="mem__internal_8h_source.html">mem_internal.h</a>.</p>
 
 </div>
 </div>
@@ -418,7 +431,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mem__internal_8h_source.html#l00068">68</a> of file <a class="el" href="mem__internal_8h_source.html">mem_internal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mem__internal_8h_source.html#l00065">65</a> of file <a class="el" href="mem__internal_8h_source.html">mem_internal.h</a>.</p>
 
 </div>
 </div>
@@ -434,7 +447,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mem__internal_8h_source.html#l00067">67</a> of file <a class="el" href="mem__internal_8h_source.html">mem_internal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mem__internal_8h_source.html#l00064">64</a> of file <a class="el" href="mem__internal_8h_source.html">mem_internal.h</a>.</p>
 
 </div>
 </div>
@@ -450,27 +463,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mem__internal_8h_source.html#l00066">66</a> of file <a class="el" href="mem__internal_8h_source.html">mem_internal.h</a>.</p>
-
-</div>
-</div>
-<a id="a79e6ab9372fcc255fb4075c4ed8857dd" name="a79e6ab9372fcc255fb4075c4ed8857dd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a79e6ab9372fcc255fb4075c4ed8857dd">&#9670;&#160;</a></span>TTAK_UNLIKELY</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define TTAK_UNLIKELY</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">x</td><td>)</td>
-          <td>&#160;&#160;&#160;__builtin_expect(!!(x), 0)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="mem__internal_8h_source.html#l00021">21</a> of file <a class="el" href="mem__internal_8h_source.html">mem_internal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mem__internal_8h_source.html#l00063">63</a> of file <a class="el" href="mem__internal_8h_source.html">mem_internal.h</a>.</p>
 
 </div>
 </div>
@@ -486,7 +479,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mem__internal_8h_source.html#l00086">86</a> of file <a class="el" href="mem__internal_8h_source.html">mem_internal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mem__internal_8h_source.html#l00083">83</a> of file <a class="el" href="mem__internal_8h_source.html">mem_internal.h</a>.</p>
 
 </div>
 </div>
@@ -502,7 +495,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mem__internal_8h_source.html#l00085">85</a> of file <a class="el" href="mem__internal_8h_source.html">mem_internal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mem__internal_8h_source.html#l00082">82</a> of file <a class="el" href="mem__internal_8h_source.html">mem_internal.h</a>.</p>
 
 </div>
 </div>
@@ -521,7 +514,7 @@ Variables</h2></td></tr>
 
 <p>16.16 Fixed-point type for friction calculation. </p>
 
-<p class="definition">Definition at line <a class="el" href="mem__internal_8h_source.html#l00038">38</a> of file <a class="el" href="mem__internal_8h_source.html">mem_internal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mem__internal_8h_source.html#l00035">35</a> of file <a class="el" href="mem__internal_8h_source.html">mem_internal.h</a>.</p>
 
 </div>
 </div>
@@ -537,7 +530,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mem__internal_8h_source.html#l00063">63</a> of file <a class="el" href="mem__internal_8h_source.html">mem_internal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mem__internal_8h_source.html#l00060">60</a> of file <a class="el" href="mem__internal_8h_source.html">mem_internal.h</a>.</p>
 
 </div>
 </div>
@@ -586,10 +579,10 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Frees a header back to the thread-local pocket. </p>
+<p>Releases a memory block back to the pocket tier. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">header</td><td>Header to return. </td></tr>
+    <tr><td class="paramname">header</td><td>Pointer to the memory header to be freed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -689,10 +682,10 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Release VMA allocation (currently no-op for linear allocator). </p>
+<p>Releases a memory block back to the VMA tier. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">header</td><td>Header to release. </td></tr>
+    <tr><td class="paramname">header</td><td>Pointer to the memory header to be freed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -725,7 +718,7 @@ Variables</h2></td></tr>
 
 <p>Maps a total block size to a pocket freelist index. </p>
 
-<p class="definition">Definition at line <a class="el" href="mem__internal_8h_source.html#l00164">164</a> of file <a class="el" href="mem__internal_8h_source.html">mem_internal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mem__internal_8h_source.html#l00161">161</a> of file <a class="el" href="mem__internal_8h_source.html">mem_internal.h</a>.</p>
 
 </div>
 </div>
@@ -755,12 +748,12 @@ Variables</h2></td></tr>
 
 <p>Returns the total block size for a given pocket index. </p>
 
-<p class="definition">Definition at line <a class="el" href="mem__internal_8h_source.html#l00173">173</a> of file <a class="el" href="mem__internal_8h_source.html">mem_internal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mem__internal_8h_source.html#l00170">170</a> of file <a class="el" href="mem__internal_8h_source.html">mem_internal.h</a>.</p>
 
 </div>
 </div>
-<a id="a9967ba62776d96bb9a96f0a376d704fe" name="a9967ba62776d96bb9a96f0a376d704fe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9967ba62776d96bb9a96f0a376d704fe">&#9670;&#160;</a></span>ttak_mem_pocket_alloc_internal()</h2>
+<a id="a0685b9c215102d9177efbc20848d01dd" name="a0685b9c215102d9177efbc20848d01dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0685b9c215102d9177efbc20848d01dd">&#9670;&#160;</a></span>ttak_mem_pocket_alloc_internal()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -769,25 +762,25 @@ Variables</h2></td></tr>
           <td class="memname"><a class="el" href="structttak__mem__header__t.html">ttak_mem_header_t</a> * ttak_mem_pocket_alloc_internal </td>
           <td>(</td>
           <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>user_requested_size</em></td><td>)</td>
+          <td class="paramname"><em>size</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Allocates from the thread-local pocket tier. </p>
+<p>Allocates memory from the pocket (slab-like) tier. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">user_requested_size</td><td>Size requested by user. </td></tr>
+    <tr><td class="paramname">size</td><td>Requested user memory size. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Allocated header, or NULL. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the <a class="el" href="structttak__mem__header__t.html" title="&quot;Fortress&quot; Memory Header stored before user data.">ttak_mem_header_t</a> of the allocated block, or NULL on failure. </dd></dl>
 
 </div>
 </div>
-<a id="a95874d8ac4b29ed22519a033552df2f6" name="a95874d8ac4b29ed22519a033552df2f6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a95874d8ac4b29ed22519a033552df2f6">&#9670;&#160;</a></span>ttak_mem_vma_alloc_internal()</h2>
+<a id="a5e435171c1e6f2d7b9e093ace30c2453" name="a5e435171c1e6f2d7b9e093ace30c2453"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e435171c1e6f2d7b9e093ace30c2453">&#9670;&#160;</a></span>ttak_mem_vma_alloc_internal()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -796,20 +789,20 @@ Variables</h2></td></tr>
           <td class="memname"><a class="el" href="structttak__mem__header__t.html">ttak_mem_header_t</a> * ttak_mem_vma_alloc_internal </td>
           <td>(</td>
           <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>user_requested_size</em></td><td>)</td>
+          <td class="paramname"><em>size</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Allocates from the lock-free VMA tier. </p>
+<p>Allocates memory from the VMA (Virtual Mapping Area) tier. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">user_requested_size</td><td>Size requested by user. </td></tr>
+    <tr><td class="paramname">size</td><td>Requested user memory size. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Allocated header, or NULL. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the <a class="el" href="structttak__mem__header__t.html" title="&quot;Fortress&quot; Memory Header stored before user data.">ttak_mem_header_t</a> of the allocated block, or NULL on failure. </dd></dl>
 
 </div>
 </div>

@@ -9,6 +9,7 @@ var matrix_8h =
     [ "ttak_matrix_multiply_vec", "matrix_8h.html#abb7d8a69dbd84d14ca207b96835d2949", null ],
     [ "ttak_matrix_set", "matrix_8h.html#a4b8dced7367a5f6acbd79046640b8f65", null ],
     [ "ttak_matrix_set_flip", "matrix_8h.html#a8a265301bb5d86634a21393882f1a2db", null ],
+    [ "ttak_matrix_set_gusuryak_4x4", "matrix_8h.html#afbc735acfd89d5c011a7707e59978dd4", null ],
     [ "ttak_matrix_set_rotation", "matrix_8h.html#a4131d1c6b6bd584432d43fca8fdee666", null ],
     [ "ttak_matrix_set_shearing", "matrix_8h.html#ad3736cabcbdf8195c9fc1ee628e9278a", null ]
 ];

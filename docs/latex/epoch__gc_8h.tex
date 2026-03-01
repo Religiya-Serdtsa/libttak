@@ -1,6 +1,8 @@
 \doxysection{include/ttak/mem/epoch\+\_\+gc.h File Reference}
 \hypertarget{epoch__gc_8h}{}\label{epoch__gc_8h}\index{include/ttak/mem/epoch\_gc.h@{include/ttak/mem/epoch\_gc.h}}
 {\ttfamily \#include $<$ttak/mem\+\_\+tree/mem\+\_\+tree.\+h$>$}\newline
+{\ttfamily \#include $<$pthread.\+h$>$}\newline
+{\ttfamily \#include $<$stdatomic.\+h$>$}\newline
 Include dependency graph for epoch\+\_\+gc.\+h\+:
 \nopagebreak
 \begin{figure}[H]
@@ -9,11 +11,12 @@ Include dependency graph for epoch\+\_\+gc.\+h\+:
 \includegraphics[width=350pt]{epoch__gc_8h__incl}
 \end{center}
 \end{figure}
-This graph shows which files directly or indirectly include this file\+:\nopagebreak
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=241pt]{epoch__gc_8h__dep__incl}
+\includegraphics[width=350pt]{epoch__gc_8h__dep__incl}
 \end{center}
 \end{figure}
 \doxysubsubsection*{Classes}
@@ -38,7 +41,9 @@ void \mbox{\hyperlink{epoch__gc_8h_af549ef9e0036830f203fa10a01c2d484}{ttak\+\_\+
 void \mbox{\hyperlink{epoch__gc_8h_a6bedbb1da48f451a81bac7e5cc47a50d}{ttak\+\_\+epoch\+\_\+gc\+\_\+register}} (\mbox{\hyperlink{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4}{ttak\+\_\+epoch\+\_\+gc\+\_\+t}} \texorpdfstring{$\ast$}{*}gc, void \texorpdfstring{$\ast$}{*}ptr, size\+\_\+t size)
 \begin{DoxyCompactList}\small\item\em Registers a pointer to be managed by the current epoch. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{epoch__gc_8h_a2c9fb90ed22fe61eea9bbcafddf53625}{ttak\+\_\+epoch\+\_\+gc\+\_\+rotate}} (\mbox{\hyperlink{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4}{ttak\+\_\+epoch\+\_\+gc\+\_\+t}} \texorpdfstring{$\ast$}{*}gc)
-\begin{DoxyCompactList}\small\item\em Advances the epoch and triggers a non-\/blocking cleanup pass. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Advances the epoch and triggers a non-\/blocking cleanup pass. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{epoch__gc_8h_a78ff9f44d1919ebb90542bfdd87f946e}{ttak\+\_\+epoch\+\_\+gc\+\_\+manual\+\_\+rotate}} (\mbox{\hyperlink{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4}{ttak\+\_\+epoch\+\_\+gc\+\_\+t}} \texorpdfstring{$\ast$}{*}gc, \+\_\+\+Bool manual\+\_\+mode)
+\begin{DoxyCompactList}\small\item\em Enables or disables the automatic rotation worker. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Typedef Documentation}
@@ -50,7 +55,7 @@ void \mbox{\hyperlink{epoch__gc_8h_a2c9fb90ed22fe61eea9bbcafddf53625}{ttak\+\_\+
 
 
 
-Definition at line \mbox{\hyperlink{epoch__gc_8h_source_l00019}{19}} of file \mbox{\hyperlink{epoch__gc_8h_source}{epoch\+\_\+gc.\+h}}.
+Definition at line \mbox{\hyperlink{epoch__gc_8h_source_l00029}{29}} of file \mbox{\hyperlink{epoch__gc_8h_source}{epoch\+\_\+gc.\+h}}.
 
 \Hypertarget{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4}\label{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4} 
 \index{epoch\_gc.h@{epoch\_gc.h}!ttak\_epoch\_gc\_t@{ttak\_epoch\_gc\_t}}
@@ -93,6 +98,25 @@ Initializes the Epoch GC.
 
 \begin{DoxyParams}{Parameters}
 {\em gc} & Pointer to the GC structure. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{epoch__gc_8h_a78ff9f44d1919ebb90542bfdd87f946e}\label{epoch__gc_8h_a78ff9f44d1919ebb90542bfdd87f946e} 
+\index{epoch\_gc.h@{epoch\_gc.h}!ttak\_epoch\_gc\_manual\_rotate@{ttak\_epoch\_gc\_manual\_rotate}}
+\index{ttak\_epoch\_gc\_manual\_rotate@{ttak\_epoch\_gc\_manual\_rotate}!epoch\_gc.h@{epoch\_gc.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_epoch\_gc\_manual\_rotate()}{ttak\_epoch\_gc\_manual\_rotate()}}
+{\footnotesize\ttfamily void ttak\+\_\+epoch\+\_\+gc\+\_\+manual\+\_\+rotate (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4}{ttak\+\_\+epoch\+\_\+gc\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{gc,  }\item[{\+\_\+\+Bool}]{manual\+\_\+mode }\end{DoxyParamCaption})}
+
+
+
+Enables or disables the automatic rotation worker. 
+
+When manual mode is enabled, callers are responsible for invoking \doxylink{epoch__gc_8h_a2c9fb90ed22fe61eea9bbcafddf53625}{ttak\+\_\+epoch\+\_\+gc\+\_\+rotate()} (and \doxylink{epoch_8h_aa6be6071c276481154cceb40f5720f32}{ttak\+\_\+epoch\+\_\+reclaim()}) explicitly.
+
+
+\begin{DoxyParams}{Parameters}
+{\em gc} & Pointer to the GC structure. \\
+\hline
+{\em manual\+\_\+mode} & True to disable the auto-\/rotator, false to re-\/enable it. \\
 \hline
 \end{DoxyParams}
 \Hypertarget{epoch__gc_8h_a6bedbb1da48f451a81bac7e5cc47a50d}\label{epoch__gc_8h_a6bedbb1da48f451a81bac7e5cc47a50d} 

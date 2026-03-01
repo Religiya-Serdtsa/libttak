@@ -1,0 +1,181 @@
+\doxysection{bigscript.\+h}
+\hypertarget{bigscript_8h_source}{}\label{bigscript_8h_source}\index{include/ttak/script/bigscript.h@{include/ttak/script/bigscript.h}}
+\mbox{\hyperlink{bigscript_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ TTAK\_SCRIPT\_BIGSCRIPT\_H}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ TTAK\_SCRIPT\_BIGSCRIPT\_H}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{bigint_8h}{ttak/math/bigint.h}}>}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{bigreal_8h}{ttak/math/bigreal.h}}>}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{bigcomplex_8h}{ttak/math/bigcomplex.h}}>}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00011}00011\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00012}00012\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00013}00013\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00014}00014\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00015}00015\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00016}00016\ \textcolor{comment}{\ *\ @brief\ Loader\ interface\ for\ resolving\ file\ paths\ to\ contents\ at\ compile\ time.}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00017}00017\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00018}\mbox{\hyperlink{structttak__bigscript__loader__t}{00018}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{\textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00019}00019\ \textcolor{comment}{\ \ \ \ /**\ }}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00020}00020\ \textcolor{comment}{\ \ \ \ \ *\ @brief\ Reads\ all\ bytes\ from\ a\ path.}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00021}00021\ \textcolor{comment}{\ \ \ \ \ *\ @param\ ctx\ User-\/provided\ context.}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00022}00022\ \textcolor{comment}{\ \ \ \ \ *\ @param\ path\ The\ path\ or\ module\ to\ resolve.}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00023}00023\ \textcolor{comment}{\ \ \ \ \ *\ @param\ out\_bytes\ Pointer\ to\ receive\ allocated\ bytes.}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00024}00024\ \textcolor{comment}{\ \ \ \ \ *\ @param\ out\_len\ Pointer\ to\ receive\ byte\ count.}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00025}00025\ \textcolor{comment}{\ \ \ \ \ *\ @return\ true\ on\ success,\ false\ on\ failure.}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00026}00026\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00027}\mbox{\hyperlink{structttak__bigscript__loader__t_a4746557d397442268d18d45660e03b5e}{00027}}\ \ \ \ \ bool\ (*read\_all)(\textcolor{keywordtype}{void}\ *ctx,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *path,\ uint8\_t\ **out\_bytes,\ \textcolor{keywordtype}{size\_t}\ *out\_len);\textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00028}00028\ \textcolor{comment}{\ \ \ \ /**}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00029}00029\ \textcolor{comment}{\ \ \ \ \ *\ @brief\ Frees\ bytes\ allocated\ by\ read\_all.}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00030}00030\ \textcolor{comment}{\ \ \ \ \ *\ @param\ ctx\ User-\/provided\ context.}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00031}00031\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00032}\mbox{\hyperlink{structttak__bigscript__loader__t_a17a664eb0d62382265ae7ae17da666d1}{00032}}\ \ \ \ \ void\ (*free\_bytes)(\textcolor{keywordtype}{void}\ *ctx,\ uint8\_t\ *bytes);}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00033}\mbox{\hyperlink{structttak__bigscript__loader__t_a86d991d855028ce6f068a3467fa24be7}{00033}}\ \ \ \ \ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{structttak__bigscript__loader__t_a86d991d855028ce6f068a3467fa24be7}{ctx}};}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00034}00034\ \}\ \mbox{\hyperlink{structttak__bigscript__loader__t}{ttak\_bigscript\_loader\_t}};}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00035}00035\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00036}00036\ \textcolor{comment}{/**\ @brief\ Opaque\ bigscript\ program\ object.\ */}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00037}\mbox{\hyperlink{bigscript_8h_ab1fc7a10576aa487f5f5749f55220fbf}{00037}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{bigscript_8h_ab1fc7a10576aa487f5f5749f55220fbf}{ttak\_bigscript\_program\_t}}\ \mbox{\hyperlink{bigscript_8h_ab1fc7a10576aa487f5f5749f55220fbf}{ttak\_bigscript\_program\_t}};}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00038}00038\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00039}00039\ \textcolor{comment}{/**\ @brief\ Opaque\ thread-\/local\ VM\ context.\ */}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00040}\mbox{\hyperlink{bigscript_8h_a6855f0bec6f8b2dcaf5eae39d887f379}{00040}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{bigscript_8h_a6855f0bec6f8b2dcaf5eae39d887f379}{ttak\_bigscript\_vm\_t}}\ \mbox{\hyperlink{bigscript_8h_a6855f0bec6f8b2dcaf5eae39d887f379}{ttak\_bigscript\_vm\_t}};}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00041}00041\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00042}00042\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00043}00043\ \textcolor{comment}{\ *\ @brief\ Limits\ applied\ to\ the\ script\ engine\ for\ safety\ and\ budget\ enforcement.}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00044}00044\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00045}\mbox{\hyperlink{structttak__bigscript__limits__t}{00045}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00046}\mbox{\hyperlink{structttak__bigscript__limits__t_a2d6d74ffa5bbe936bff3a36045d75e81}{00046}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__bigscript__limits__t_a2d6d74ffa5bbe936bff3a36045d75e81}{max\_tokens}};}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00047}\mbox{\hyperlink{structttak__bigscript__limits__t_ae1739a95e602bf880bd3e49ada3b1914}{00047}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__bigscript__limits__t_ae1739a95e602bf880bd3e49ada3b1914}{max\_ast\_nodes}};}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00048}\mbox{\hyperlink{structttak__bigscript__limits__t_ab8625d3ebec664f9419db6964edd56b8}{00048}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__bigscript__limits__t_ab8625d3ebec664f9419db6964edd56b8}{max\_macro\_expansions}};}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00049}\mbox{\hyperlink{structttak__bigscript__limits__t_a88f3ea89f62f8f2ff92daf601ee1fb3c}{00049}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__bigscript__limits__t_a88f3ea89f62f8f2ff92daf601ee1fb3c}{max\_call\_depth}};}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00050}\mbox{\hyperlink{structttak__bigscript__limits__t_a5e025fef06f43eafe0268962624f64ca}{00050}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__bigscript__limits__t_a5e025fef06f43eafe0268962624f64ca}{max\_steps\_per\_seed}};}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00051}\mbox{\hyperlink{structttak__bigscript__limits__t_ad7dfeefc99aa09a7387c5a08f8ed54f5}{00051}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__bigscript__limits__t_ad7dfeefc99aa09a7387c5a08f8ed54f5}{max\_stack\_words}};}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00052}\mbox{\hyperlink{structttak__bigscript__limits__t_a2808dba5bcb9453c966b552037af3936}{00052}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__bigscript__limits__t_a2808dba5bcb9453c966b552037af3936}{max\_bigint\_bits}};}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00053}00053\ \}\ \mbox{\hyperlink{structttak__bigscript__limits__t}{ttak\_bigscript\_limits\_t}};}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00054}00054\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00055}00055\ \textcolor{comment}{/**\ @brief\ Bigscript\ value\ types.\ */}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00056}\mbox{\hyperlink{bigscript_8h_a31a9453da779cb527438fabc056efeae}{00056}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \{}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00057}\mbox{\hyperlink{bigscript_8h_a31a9453da779cb527438fabc056efeaea960ca6bb4b3fc8b6e15324d5661e541e}{00057}}\ \ \ \ \ \mbox{\hyperlink{bigscript_8h_a31a9453da779cb527438fabc056efeaea960ca6bb4b3fc8b6e15324d5661e541e}{TTAK\_BIGSCRIPT\_VAL\_INT}}\ =\ 0,}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00058}\mbox{\hyperlink{bigscript_8h_a31a9453da779cb527438fabc056efeaea2c626ad312dd41dfe608dc23182ec528}{00058}}\ \ \ \ \ \mbox{\hyperlink{bigscript_8h_a31a9453da779cb527438fabc056efeaea2c626ad312dd41dfe608dc23182ec528}{TTAK\_BIGSCRIPT\_VAL\_REAL}},}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00059}00059\ \ \ \ \ \mbox{\hyperlink{bigscript_8h_a31a9453da779cb527438fabc056efeaea880d05619e8bfc83a7e4588a155e9e4b}{TTAK\_BIGSCRIPT\_VAL\_COMPLEX}}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00060}\mbox{\hyperlink{bigscript_8h_a31a9453da779cb527438fabc056efeaea880d05619e8bfc83a7e4588a155e9e4b}{00060}}\ \}\ \mbox{\hyperlink{bigscript_8h_a31a9453da779cb527438fabc056efeae}{ttak\_bigscript\_val\_type\_t}};}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00061}00061\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00062}00062\ \textcolor{comment}{/**\ @brief\ Variant\ type\ that\ can\ hold\ any\ bigscript\ value.\ */}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00063}\mbox{\hyperlink{structttak__bigscript__variant__t}{00063}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00064}\mbox{\hyperlink{structttak__bigscript__variant__t_aa00197eb280a08bf6406852506570698}{00064}}\ \ \ \ \ \mbox{\hyperlink{bigscript_8h_a31a9453da779cb527438fabc056efeae}{ttak\_bigscript\_val\_type\_t}}\ \mbox{\hyperlink{structttak__bigscript__variant__t_aa00197eb280a08bf6406852506570698}{type}};}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00065}00065\ \ \ \ \ \textcolor{keyword}{union\ }\{}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00066}\mbox{\hyperlink{structttak__bigscript__variant__t_a10dd65d93b738167268f4f2ac4dcff06}{00066}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structttak__bigint}{ttak\_bigint\_t}}\ \ \ \ \ \mbox{\hyperlink{structttak__bigscript__variant__t_a10dd65d93b738167268f4f2ac4dcff06}{i}};}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00067}\mbox{\hyperlink{structttak__bigscript__variant__t_a2e6d553ef644e9345c4a95463f5b1366}{00067}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structttak__bigreal}{ttak\_bigreal\_t}}\ \ \ \ \mbox{\hyperlink{structttak__bigscript__variant__t_a2e6d553ef644e9345c4a95463f5b1366}{r}};}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00068}\mbox{\hyperlink{structttak__bigscript__variant__t_afc0d4bf1517a0cbe693aa97dab6cc6ac}{00068}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structttak__bigcomplex}{ttak\_bigcomplex\_t}}\ \mbox{\hyperlink{structttak__bigscript__variant__t_afc0d4bf1517a0cbe693aa97dab6cc6ac}{c}};}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00069}\mbox{\hyperlink{structttak__bigscript__variant__t_a55630482be7c7c5420b894535cdf99f7}{00069}}\ \ \ \ \ \}\ v;}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00070}00070\ \}\ \mbox{\hyperlink{structttak__bigscript__variant__t}{ttak\_bigscript\_variant\_t}};}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00071}00071\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00072}00072\ \textcolor{comment}{/**\ @brief\ Error\ codes\ returned\ by\ compilation\ and\ execution.\ */}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00073}\mbox{\hyperlink{bigscript_8h_a51c5be730058409e5356a8bcef3f9828}{00073}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \{}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00074}\mbox{\hyperlink{bigscript_8h_a51c5be730058409e5356a8bcef3f9828a06af03d805c59eca6f024eebc1dc15bc}{00074}}\ \ \ \ \ \mbox{\hyperlink{bigscript_8h_a51c5be730058409e5356a8bcef3f9828a06af03d805c59eca6f024eebc1dc15bc}{TTAK\_BIGSCRIPT\_ERR\_NONE}}\ =\ 0,}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00075}\mbox{\hyperlink{bigscript_8h_a51c5be730058409e5356a8bcef3f9828a65b6eea221cf76113601bc3c7d1972fe}{00075}}\ \ \ \ \ \mbox{\hyperlink{bigscript_8h_a51c5be730058409e5356a8bcef3f9828a65b6eea221cf76113601bc3c7d1972fe}{TTAK\_BIGSCRIPT\_ERR\_SYNTAX}},}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00076}\mbox{\hyperlink{bigscript_8h_a51c5be730058409e5356a8bcef3f9828acf3a17d58ab14059ba43eededbbd72a5}{00076}}\ \ \ \ \ \mbox{\hyperlink{bigscript_8h_a51c5be730058409e5356a8bcef3f9828acf3a17d58ab14059ba43eededbbd72a5}{TTAK\_BIGSCRIPT\_ERR\_LIMIT}},}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00077}\mbox{\hyperlink{bigscript_8h_a51c5be730058409e5356a8bcef3f9828ae208cb3bce54ed9406f4ce600798d097}{00077}}\ \ \ \ \ \mbox{\hyperlink{bigscript_8h_a51c5be730058409e5356a8bcef3f9828ae208cb3bce54ed9406f4ce600798d097}{TTAK\_BIGSCRIPT\_ERR\_RUNTIME}},}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00078}\mbox{\hyperlink{bigscript_8h_a51c5be730058409e5356a8bcef3f9828ae7ed816d5c6add6472b4a43a5b6bbad3}{00078}}\ \ \ \ \ \mbox{\hyperlink{bigscript_8h_a51c5be730058409e5356a8bcef3f9828ae7ed816d5c6add6472b4a43a5b6bbad3}{TTAK\_BIGSCRIPT\_ERR\_OOM}},}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00079}00079\ \ \ \ \ \mbox{\hyperlink{bigscript_8h_a51c5be730058409e5356a8bcef3f9828ad5bb8a985349471e845a62d78b1b1741}{TTAK\_BIGSCRIPT\_ERR\_MATH}}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00080}\mbox{\hyperlink{bigscript_8h_a51c5be730058409e5356a8bcef3f9828ad5bb8a985349471e845a62d78b1b1741}{00080}}\ \}\ \mbox{\hyperlink{bigscript_8h_a51c5be730058409e5356a8bcef3f9828}{ttak\_bigscript\_error\_code\_t}};}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00081}00081\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00082}00082\ \textcolor{comment}{/**\ @brief\ Detailed\ error\ structure.\ */}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00083}\mbox{\hyperlink{structttak__bigscript__error__t}{00083}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00084}\mbox{\hyperlink{structttak__bigscript__error__t_a54b79ecc068bc1df6223acc41bc46299}{00084}}\ \ \ \ \ \mbox{\hyperlink{bigscript_8h_a51c5be730058409e5356a8bcef3f9828}{ttak\_bigscript\_error\_code\_t}}\ \mbox{\hyperlink{structttak__bigscript__error__t_a54b79ecc068bc1df6223acc41bc46299}{code}};}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00085}\mbox{\hyperlink{structttak__bigscript__error__t_ad08ebeebe6705ebaf577d721358d6847}{00085}}\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{structttak__bigscript__error__t_ad08ebeebe6705ebaf577d721358d6847}{message}};}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00086}00086\ \}\ \mbox{\hyperlink{structttak__bigscript__error__t}{ttak\_bigscript\_error\_t}};}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00087}00087\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00088}00088\ \textcolor{comment}{/**\ @brief\ Output\ value\ resulting\ from\ evaluating\ a\ seed.\ */}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00089}\mbox{\hyperlink{structttak__bigscript__value__t}{00089}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00090}\mbox{\hyperlink{structttak__bigscript__value__t_abfadd7d01775cbd661f00bdeb0f9c55a}{00090}}\ \ \ \ \ \mbox{\hyperlink{structttak__bigscript__variant__t}{ttak\_bigscript\_variant\_t}}\ \mbox{\hyperlink{structttak__bigscript__value__t_abfadd7d01775cbd661f00bdeb0f9c55a}{value}};}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00091}\mbox{\hyperlink{structttak__bigscript__value__t_afece5c511d6449807de73855b4cb6189}{00091}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structttak__bigscript__value__t_afece5c511d6449807de73855b4cb6189}{is\_found}};}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00092}00092\ \}\ \mbox{\hyperlink{structttak__bigscript__value__t}{ttak\_bigscript\_value\_t}};}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00093}00093\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00094}00094\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00095}00095\ \textcolor{comment}{\ *\ @brief\ Compiles\ source\ code\ into\ an\ immutable\ program.}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00096}00096\ \textcolor{comment}{\ *\ @param\ source\ Null-\/terminated\ source\ string.}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00097}00097\ \textcolor{comment}{\ *\ @param\ loader\ Optional\ loader\ for\ include/import.}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00098}00098\ \textcolor{comment}{\ *\ @param\ limits\ Safety\ limits\ to\ apply.}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00099}00099\ \textcolor{comment}{\ *\ @param\ err\ Error\ output\ structure.}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00100}00100\ \textcolor{comment}{\ *\ @param\ now\ Monotonic\ timestamp.}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00101}00101\ \textcolor{comment}{\ *\ @return\ Compiled\ program,\ or\ NULL\ on\ error.}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00102}00102\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00103}\mbox{\hyperlink{bigscript_8h_ab8d4d3bd74025ca2b55942c1a1019185}{00103}}\ \mbox{\hyperlink{bigscript_8h_ab1fc7a10576aa487f5f5749f55220fbf}{ttak\_bigscript\_program\_t}}\ *\mbox{\hyperlink{bigscript_8h_ab8d4d3bd74025ca2b55942c1a1019185}{ttak\_bigscript\_compile}}(}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00104}00104\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *source,}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00105}00105\ \ \ \ \ \mbox{\hyperlink{structttak__bigscript__loader__t}{ttak\_bigscript\_loader\_t}}\ *loader,}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00106}00106\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__bigscript__limits__t}{ttak\_bigscript\_limits\_t}}\ *limits,}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00107}00107\ \ \ \ \ \mbox{\hyperlink{structttak__bigscript__error__t}{ttak\_bigscript\_error\_t}}\ *err,}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00108}00108\ \ \ \ \ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00109}00109\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00110}00110\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00111}00111\ \textcolor{comment}{\ *\ @brief\ Frees\ a\ compiled\ program.}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00112}00112\ \textcolor{comment}{\ *\ @param\ prog\ Program\ to\ free.}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00113}00113\ \textcolor{comment}{\ *\ @param\ now\ Monotonic\ timestamp.}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00114}00114\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00115}\mbox{\hyperlink{bigscript_8h_a7c1a4eba8463264e803f9f65005f445d}{00115}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{bigscript_8h_a7c1a4eba8463264e803f9f65005f445d}{ttak\_bigscript\_program\_free}}(\mbox{\hyperlink{bigscript_8h_ab1fc7a10576aa487f5f5749f55220fbf}{ttak\_bigscript\_program\_t}}\ *prog,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00116}00116\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00117}00117\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00118}00118\ \textcolor{comment}{\ *\ @brief\ Creates\ a\ new\ thread-\/local\ VM\ for\ executing\ a\ program.}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00119}00119\ \textcolor{comment}{\ *\ @param\ limits\ Safety\ limits\ (mostly\ runtime\ limits).}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00120}00120\ \textcolor{comment}{\ *\ @param\ now\ Monotonic\ timestamp.}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00121}00121\ \textcolor{comment}{\ *\ @return\ Created\ VM\ context,\ or\ NULL\ on\ error.}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00122}00122\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00123}\mbox{\hyperlink{bigscript_8h_a922fb5d037c2b2fbb559ee9eaf352df1}{00123}}\ \mbox{\hyperlink{bigscript_8h_a6855f0bec6f8b2dcaf5eae39d887f379}{ttak\_bigscript\_vm\_t}}\ *\mbox{\hyperlink{bigscript_8h_a922fb5d037c2b2fbb559ee9eaf352df1}{ttak\_bigscript\_vm\_create}}(}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00124}00124\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__bigscript__limits__t}{ttak\_bigscript\_limits\_t}}\ *limits,}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00125}00125\ \ \ \ \ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00126}00126\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00127}00127\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00128}00128\ \textcolor{comment}{\ *\ @brief\ Frees\ a\ thread-\/local\ VM\ context.}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00129}00129\ \textcolor{comment}{\ *\ @param\ vm\ VM\ context\ to\ free.}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00130}00130\ \textcolor{comment}{\ *\ @param\ now\ Monotonic\ timestamp.}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00131}00131\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00132}\mbox{\hyperlink{bigscript_8h_a3cc458d490a5bcaddd3cb2a5c456a6d5}{00132}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{bigscript_8h_a3cc458d490a5bcaddd3cb2a5c456a6d5}{ttak\_bigscript\_vm\_free}}(\mbox{\hyperlink{bigscript_8h_a6855f0bec6f8b2dcaf5eae39d887f379}{ttak\_bigscript\_vm\_t}}\ *vm,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00133}00133\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00134}00134\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00135}00135\ \textcolor{comment}{\ *\ @brief\ Evaluates\ a\ script\ against\ a\ specific\ seed.}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00136}00136\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00137}00137\ \textcolor{comment}{\ *\ The\ worker\ must\ provide\ the\ pre-\/computed\ sum-\/of-\/proper-\/divisors\ (sn).}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00138}00138\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00139}00139\ \textcolor{comment}{\ *\ @param\ prog\ Compiled\ program.}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00140}00140\ \textcolor{comment}{\ *\ @param\ vm\ Thread-\/local\ VM.}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00141}00141\ \textcolor{comment}{\ *\ @param\ seed\ The\ target\ seed\ value.}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00142}00142\ \textcolor{comment}{\ *\ @param\ sn\ The\ pre-\/computed\ s(seed)\ value.}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00143}00143\ \textcolor{comment}{\ *\ @param\ out\ Evaluation\ result\ (is\_found\ flag\ and\ optional\ output\ value).}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00144}00144\ \textcolor{comment}{\ *\ @param\ err\ Output\ runtime\ error,\ if\ any.}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00145}00145\ \textcolor{comment}{\ *\ @param\ now\ Monotonic\ timestamp.}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00146}00146\ \textcolor{comment}{\ *\ @return\ true\ on\ success,\ false\ on\ runtime\ or\ budget\ error.}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00147}00147\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00148}\mbox{\hyperlink{bigscript_8h_adfdb337ebc3fab30ccf7ef0b5d2c0abf}{00148}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{bigscript_8h_adfdb337ebc3fab30ccf7ef0b5d2c0abf}{ttak\_bigscript\_eval\_seed}}(}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00149}00149\ \ \ \ \ \mbox{\hyperlink{bigscript_8h_ab1fc7a10576aa487f5f5749f55220fbf}{ttak\_bigscript\_program\_t}}\ *prog,}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00150}00150\ \ \ \ \ \mbox{\hyperlink{bigscript_8h_a6855f0bec6f8b2dcaf5eae39d887f379}{ttak\_bigscript\_vm\_t}}\ *vm,}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00151}00151\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__bigint}{ttak\_bigint\_t}}\ *seed,}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00152}00152\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__bigint}{ttak\_bigint\_t}}\ *sn,}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00153}00153\ \ \ \ \ \mbox{\hyperlink{structttak__bigscript__value__t}{ttak\_bigscript\_value\_t}}\ *out,}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00154}00154\ \ \ \ \ \mbox{\hyperlink{structttak__bigscript__error__t}{ttak\_bigscript\_error\_t}}\ *err,}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00155}00155\ \ \ \ \ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00156}00156\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00157}00157\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00158}00158\ \textcolor{comment}{\ *\ @brief\ Computes\ the\ SHA256\ identity\ hash\ of\ a\ compiled\ program.}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00159}00159\ \textcolor{comment}{\ *\ @param\ prog\ Compiled\ program.}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00160}00160\ \textcolor{comment}{\ *\ @param\ out\_hex\ 65-\/byte\ output\ buffer\ for\ hex\ string.}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00161}00161\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00162}\mbox{\hyperlink{bigscript_8h_aeb0b45abdd4829346feec23561d7a32d}{00162}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{bigscript_8h_aeb0b45abdd4829346feec23561d7a32d}{ttak\_bigscript\_hash\_program}}(\mbox{\hyperlink{bigscript_8h_ab1fc7a10576aa487f5f5749f55220fbf}{ttak\_bigscript\_program\_t}}\ *prog,\ \textcolor{keywordtype}{char}\ out\_hex[65]);}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00163}00163\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00164}00164\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00165}00165\ \textcolor{comment}{\ *\ @brief\ Frees\ resources\ held\ by\ a\ bigscript\ value.}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00166}00166\ \textcolor{comment}{\ *\ @param\ val\ Value\ to\ free.}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00167}00167\ \textcolor{comment}{\ *\ @param\ now\ Monotonic\ timestamp.}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00168}00168\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00169}\mbox{\hyperlink{bigscript_8h_ae6aee5e20c0b52b72793ed422dcc5b8e}{00169}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{bigscript_8h_ae6aee5e20c0b52b72793ed422dcc5b8e}{ttak\_bigscript\_value\_free}}(\mbox{\hyperlink{structttak__bigscript__value__t}{ttak\_bigscript\_value\_t}}\ *val,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00170}00170\ }
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00171}00171\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00172}00172\ \}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00173}00173\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00174}00174\ }
+\DoxyCodeLine{\Hypertarget{bigscript_8h_source_l00175}00175\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

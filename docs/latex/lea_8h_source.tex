@@ -1,0 +1,38 @@
+\doxysection{lea.\+h}
+\hypertarget{lea_8h_source}{}\label{lea_8h_source}\index{include/ttak/security/lea.h@{include/ttak/security/lea.h}}
+\mbox{\hyperlink{lea_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{lea_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ TTAK\_SECURITY\_LEA\_H}}
+\DoxyCodeLine{\Hypertarget{lea_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ TTAK\_SECURITY\_LEA\_H}}
+\DoxyCodeLine{\Hypertarget{lea_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{lea_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
+\DoxyCodeLine{\Hypertarget{lea_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{lea_8h_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{lea_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{security__engine_8h}{ttak/security/security\_engine.h}}>}}
+\DoxyCodeLine{\Hypertarget{lea_8h_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{lea_8h_source_l00009}00009\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{lea_8h_source_l00010}00010\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{}
+\DoxyCodeLine{\Hypertarget{lea_8h_source_l00011}00011\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{lea_8h_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{lea_8h_source_l00013}\mbox{\hyperlink{lea_8h_a859f245ccebf4563383c8ef16aaeecda}{00013}}\ \textcolor{preprocessor}{\#define\ TTAK\_LEA\_BLOCK\_SIZE\ 16U}}
+\DoxyCodeLine{\Hypertarget{lea_8h_source_l00014}\mbox{\hyperlink{lea_8h_ac987ec79e723d542935dbe6b45cd5f60}{00014}}\ \textcolor{preprocessor}{\#define\ TTAK\_LEA\_MAX\_ROUNDS\ 32U}}
+\DoxyCodeLine{\Hypertarget{lea_8h_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{lea_8h_source_l00016}\mbox{\hyperlink{structttak__lea__schedule}{00016}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__lea__schedule}{ttak\_lea\_schedule}}\ \{}
+\DoxyCodeLine{\Hypertarget{lea_8h_source_l00017}\mbox{\hyperlink{structttak__lea__schedule_a50e210e0c4f2d766dfb36ccc864dcab3}{00017}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__lea__schedule_a50e210e0c4f2d766dfb36ccc864dcab3}{round\_keys}}[\mbox{\hyperlink{lea_8h_ac987ec79e723d542935dbe6b45cd5f60}{TTAK\_LEA\_MAX\_ROUNDS}}\ *\ 6U];}
+\DoxyCodeLine{\Hypertarget{lea_8h_source_l00018}\mbox{\hyperlink{structttak__lea__schedule_af5fef00c15b34a5924052ea593b61284}{00018}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structttak__lea__schedule_af5fef00c15b34a5924052ea593b61284}{rounds}};}
+\DoxyCodeLine{\Hypertarget{lea_8h_source_l00019}\mbox{\hyperlink{lea_8h_a032c0050375ccaa4e1227f36938eea85}{00019}}\ \}\ \mbox{\hyperlink{lea_8h_a032c0050375ccaa4e1227f36938eea85}{ttak\_lea\_schedule\_t}};}
+\DoxyCodeLine{\Hypertarget{lea_8h_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{lea_8h_source_l00021}\mbox{\hyperlink{lea_8h_a8eac1534454be6f33c3052964757b3fd}{00021}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lea_8h_a8eac1534454be6f33c3052964757b3fd}{ttak\_lea\_schedule\_init}}(\mbox{\hyperlink{structttak__lea__schedule}{ttak\_lea\_schedule\_t}}\ *sched,}
+\DoxyCodeLine{\Hypertarget{lea_8h_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint8\_t\ *key,}
+\DoxyCodeLine{\Hypertarget{lea_8h_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ key\_len);}
+\DoxyCodeLine{\Hypertarget{lea_8h_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{lea_8h_source_l00025}\mbox{\hyperlink{lea_8h_a7dc70d595d9604dc663ef8a350c0014a}{00025}}\ \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\_io\_status\_t}}\ \mbox{\hyperlink{lea_8h_a7dc70d595d9604dc663ef8a350c0014a}{ttak\_lea\_encrypt\_simd}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__crypto__ctx}{ttak\_crypto\_ctx\_t}}\ *ctx,}
+\DoxyCodeLine{\Hypertarget{lea_8h_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__security__driver}{ttak\_security\_driver\_t}}\ *driver);}
+\DoxyCodeLine{\Hypertarget{lea_8h_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{lea_8h_source_l00028}00028\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{lea_8h_source_l00029}00029\ \}}
+\DoxyCodeLine{\Hypertarget{lea_8h_source_l00030}00030\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{lea_8h_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{lea_8h_source_l00032}00032\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ TTAK\_SECURITY\_LEA\_H\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

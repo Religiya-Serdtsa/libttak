@@ -1,0 +1,53 @@
+\doxysection{ttak\+\_\+shard\+\_\+table\+\_\+t Struct Reference}
+\hypertarget{structttak__shard__table__t}{}\label{structttak__shard__table__t}\index{ttak\_shard\_table\_t@{ttak\_shard\_table\_t}}
+
+
+Lock-\/free Segmented Shard Array (Page Table). Maps thread logical IDs to unique timestamp slots without locks or reallocations.  
+
+
+
+
+{\ttfamily \#include $<$shared.\+h$>$}
+
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{include_2stdatomic_8h_aa9d30dd336a44b1409370e6632a95b46}{atomic\+\_\+uint\+\_\+least64\+\_\+t}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\+\_\+\+Atomic}} \mbox{\hyperlink{structttak__shard__table__t_abfd8aed10069aa72096cd7a2a52e501e}{dir}} \mbox{[}\mbox{\hyperlink{shared_8h_a813722be96d4cafb20c1f1718da0cb4a}{TTAK\+\_\+\+SHARD\+\_\+\+DIR\+\_\+\+SIZE}}\mbox{]}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\+\_\+\+Atomic}} \mbox{\hyperlink{structttak__shard__table__t_a1e1c6452574070045a3686020620201b}{active\+\_\+pages}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Lock-\/free Segmented Shard Array (Page Table). Maps thread logical IDs to unique timestamp slots without locks or reallocations. 
+
+Definition at line \mbox{\hyperlink{shared_8h_source_l00030}{30}} of file \mbox{\hyperlink{shared_8h_source}{shared.\+h}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structttak__shard__table__t_a1e1c6452574070045a3686020620201b}\label{structttak__shard__table__t_a1e1c6452574070045a3686020620201b} 
+\index{ttak\_shard\_table\_t@{ttak\_shard\_table\_t}!active\_pages@{active\_pages}}
+\index{active\_pages@{active\_pages}!ttak\_shard\_table\_t@{ttak\_shard\_table\_t}}
+\doxysubsubsection{\texorpdfstring{active\_pages}{active\_pages}}
+{\footnotesize\ttfamily uint32\+\_\+t \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\+\_\+\+Atomic}} ttak\+\_\+shard\+\_\+table\+\_\+t\+::active\+\_\+pages}
+
+High-\/water mark of allocated pages for fast iteration 
+
+Definition at line \mbox{\hyperlink{shared_8h_source_l00032}{32}} of file \mbox{\hyperlink{shared_8h_source}{shared.\+h}}.
+
+\Hypertarget{structttak__shard__table__t_abfd8aed10069aa72096cd7a2a52e501e}\label{structttak__shard__table__t_abfd8aed10069aa72096cd7a2a52e501e} 
+\index{ttak\_shard\_table\_t@{ttak\_shard\_table\_t}!dir@{dir}}
+\index{dir@{dir}!ttak\_shard\_table\_t@{ttak\_shard\_table\_t}}
+\doxysubsubsection{\texorpdfstring{dir}{dir}}
+{\footnotesize\ttfamily \mbox{\hyperlink{include_2stdatomic_8h_aa9d30dd336a44b1409370e6632a95b46}{atomic\+\_\+uint\+\_\+least64\+\_\+t}}\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\+\_\+\+Atomic}} ttak\+\_\+shard\+\_\+table\+\_\+t\+::dir\mbox{[}\mbox{\hyperlink{shared_8h_a813722be96d4cafb20c1f1718da0cb4a}{TTAK\+\_\+\+SHARD\+\_\+\+DIR\+\_\+\+SIZE}}\mbox{]}}
+
+Array of atomic pointers to pages 
+
+Definition at line \mbox{\hyperlink{shared_8h_source_l00031}{31}} of file \mbox{\hyperlink{shared_8h_source}{shared.\+h}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/ttak/shared/\mbox{\hyperlink{shared_8h}{shared.\+h}}\end{DoxyCompactItemize}

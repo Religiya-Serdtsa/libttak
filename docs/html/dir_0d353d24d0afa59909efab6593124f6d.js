@@ -42,5 +42,6 @@ var dir_0d353d24d0afa59909efab6593124f6d =
     [ "40-arena-memory", "dir_c03a32ac37178602651a0810a724fdd6.html", null ],
     [ "41-io-network-stack", "dir_440562e819a7ecef357014e34fa97ab6.html", null ],
     [ "42-io-guarded-streams", "dir_74699fa1f55476b507556b4ed04e3463.html", null ],
+    [ "43-bigscript", "dir_1fa4d05fd89467237e65f36651efba33.html", "dir_1fa4d05fd89467237e65f36651efba33" ],
     [ "DANGEROUS", "dir_a7b74cb14d16019b23286ede1db62264.html", null ]
 ];

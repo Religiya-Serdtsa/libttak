@@ -1,52 +1,22 @@
-\chapter{Blueprints}
-\hypertarget{index}{}\label{index}\index{Blueprints@{Blueprints}}
-\label{index_md_blueprints_2README}%
-\Hypertarget{index_md_blueprints_2README}%
- This directory houses the Plant\+UML ({\ttfamily .puml}) blueprints for {\ttfamily libttak}. Each file now lives in a role-\/oriented folder so it is easier to navigate the architecture layers.\hypertarget{index_autotoc_md1}{}\doxysection{\texorpdfstring{Directory Structure}{Directory Structure}}\label{index_autotoc_md1}
+\chapter{Lib\+TTAK Benchmark Suite}
+\hypertarget{index}{}\label{index}\index{LibTTAK Benchmark Suite@{LibTTAK Benchmark Suite}}
+\label{index_md_bench_2README}%
+\Hypertarget{index_md_bench_2README}%
+ This directory contains performance testing utilities and stress tests for the Lib\+TTAK subsystems.\hypertarget{index_autotoc_md1}{}\doxysection{\texorpdfstring{Core Benchmarks}{Core Benchmarks}}\label{index_autotoc_md1}
+\hypertarget{index_autotoc_md2}{}\doxysubsection{\texorpdfstring{1. TTL Cache Multi-\/threaded Benchmark}{1. TTL Cache Multi-threaded Benchmark}}\label{index_autotoc_md2}
+Located in {\ttfamily ttl-\/cache-\/multithread-\/bench/}.
+\begin{DoxyItemize}
+\item {\bfseries{Focus\+:}} Lock-\/free shared memory throughput under heavy churn.
+\item {\bfseries{Strategy\+:}} Uses Choi Seok-\/jeong\textquotesingle{}s OLS principle to achieve extreme Ops/s by trading off RSS.
+\item {\bfseries{Peak Result\+:}} {\bfseries{29.\+2M Ops/s}} (Lock-\/\+Free Shards).
+\end{DoxyItemize}\hypertarget{index_autotoc_md3}{}\doxysubsection{\texorpdfstring{2. General Benchmark Hub ($<$tt$>$ttak\+\_\+bench.\+c$<$/tt$>$)}{2. General Benchmark Hub (<tt>ttak\_bench.c</tt>)}}\label{index_autotoc_md3}
 
 \begin{DoxyItemize}
-\item {\ttfamily application/}\+: Product-\/entry diagrams such as {\ttfamily \doxylink{00__overview_8puml}{00\+\_\+overview.\+puml}}.
-\item {\ttfamily logic/}\+: Specialized logic (math kernels, tree structures).
-\item {\ttfamily execution/}\+: Runtime and scheduling blueprints.
-\item {\ttfamily resource/}\+: Ownership, epoch GC, and detachable/arena allocators.
-\item {\ttfamily foundation/}\+: Threading, synchronization, and utility services.
-\item {\ttfamily io\+\_\+net/}\+: Guarded I/O, buffers, and network topology.
-\item {\ttfamily embedded/}\+: Bare-\/metal specific allocators and drivers.
-\item {\ttfamily integration/}\+: Cross-\/cutting diagrams like {\ttfamily \doxylink{all_8puml}{all.\+puml}}.
-\item {\ttfamily png/}\+: Rendered PNG files that mirror the same folder hierarchy.
-\item {\ttfamily scripts/}\+: Rendering helpers (currently {\ttfamily render\+\_\+blueprints.\+py}).
-\end{DoxyItemize}\hypertarget{index_autotoc_md2}{}\doxysubsection{\texorpdfstring{Notable Blueprints}{Notable Blueprints}}\label{index_autotoc_md2}
-
+\item {\bfseries{Focus\+:}} Micro-\/benchmarking core primitives (allocators, atomics, math).
+\end{DoxyItemize}\hypertarget{index_autotoc_md4}{}\doxysection{\texorpdfstring{Architectural Philosophy}{Architectural Philosophy}}\label{index_autotoc_md4}
+We prioritize {\bfseries{predictable latency}} and {\bfseries{massive throughput}} over minimal memory footprint.
 \begin{DoxyItemize}
-\item {\ttfamily \doxylink{09__epoch__reclamation_8puml}{resource/09\+\_\+epoch\+\_\+reclamation.\+puml}}\+: Shows how epoch registration, retirement queues, and shared-\/pointer integration cooperate (Scope \mbox{[}09\mbox{]}).
-\item {\ttfamily \doxylink{10__detachable__memory_8puml}{resource/10\+\_\+detachable\+\_\+memory.\+puml}}\+: Describes the detachable memory allocator, cache, signal hooks, and graceful termination path (Scope \mbox{[}10\mbox{]}).
-\item {\ttfamily \doxylink{11__arena__memory_8puml}{resource/11\+\_\+arena\+\_\+memory.\+puml}}\+: Captures the cache-\/aligned arena row lifecycle, mem-\/tree bookkeeping, and epoch GC flow referenced by Lesson 40 + the TTL cache bench (Scope \mbox{[}11\mbox{]}).
-\item {\ttfamily \doxylink{12__io__net_8puml}{io\+\_\+net/12\+\_\+io\+\_\+net.\+puml}}\+: Documents the guarded I/O layer (guards, zero-\/copy buffers, polling) and its integration with shared endpoints plus the session manager built on EBR + Epoch GC (Scope \mbox{[}12\mbox{]}).
-\item {\ttfamily \doxylink{13__embedded__baremetal_8puml}{embedded/13\+\_\+embedded\+\_\+baremetal.\+puml}}\+: Shows how the buddy allocator underpins embedded builds and how the net driver abstraction bridges POSIX/\+Windows/\+Baremetal targets (Scope \mbox{[}13\mbox{]}).
-\item {\ttfamily \doxylink{all_8puml}{integration/all.\+puml}}\+: Integrated architecture map that stitches the role folders into one overview.
-\end{DoxyItemize}\hypertarget{index_autotoc_md3}{}\doxysection{\texorpdfstring{Rendering Blueprints}{Rendering Blueprints}}\label{index_autotoc_md3}
-To update the PNG files from the {\ttfamily .puml} sources, run the following command from the project root\+:
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{make\ blueprints}
-
-\end{DoxyCode}
-
-
-Or run the script directly\+:
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{python3\ blueprints/scripts/render\_blueprints.py}
-
-\end{DoxyCode}
-
-
-The script will automatically check for changes and only re-\/render files that have been modified. It attempts to use a local {\ttfamily plantuml} installation first, and falls back to the Plant\+UML online server if necessary.\hypertarget{index_autotoc_md4}{}\doxysection{\texorpdfstring{Adding New Blueprints}{Adding New Blueprints}}\label{index_autotoc_md4}
-
-\begin{DoxyEnumerate}
-\item Create a new {\ttfamily .puml} file in the folder that matches the role (or create a new folder if a new role emerges).
-\item Run {\ttfamily make blueprints}.
-\item The resulting PNG will be stored in the mirrored path under {\ttfamily blueprints/png/}. 
-\end{DoxyEnumerate}
+\item Traditional C libraries often sacrifice Ops/s to save a few kilobytes of RAM.
+\item Lib\+TTAK reverses this\+: we use segmented memory structures and deterministic isolation to ensure that synchronization never becomes a CPU bottleneck.
+\end{DoxyItemize}\hypertarget{index_autotoc_md5}{}\doxysection{\texorpdfstring{Analysis Tools}{Analysis Tools}}\label{index_autotoc_md5}
+Use the {\ttfamily visualize\+\_\+memory\+\_\+calls.\+py} script in the root {\ttfamily scripts/} directory to analyze allocation patterns generated by these benchmarks. 

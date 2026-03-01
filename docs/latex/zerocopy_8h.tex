@@ -35,7 +35,11 @@ struct \mbox{\hyperlink{structttak__io__zerocopy__region}{ttak\+\_\+io\+\_\+zero
 \item 
 \#define \mbox{\hyperlink{zerocopy_8h_aacb73531e59262e89946734c19b9c46c}{TTAK\+\_\+\+IO\+\_\+\+ZC\+\_\+\+SEG\+\_\+\+MASK}}~(\mbox{\hyperlink{zerocopy_8h_ad8cc689de1802af2bd3be73ed44bd180}{TTAK\+\_\+\+IO\+\_\+\+ZC\+\_\+\+SEG\+\_\+\+BYTES}} -\/ 1U)
 \item 
-\#define \mbox{\hyperlink{zerocopy_8h_ad0359daf789a07df8e98dcb86bf5244b}{TTAK\+\_\+\+IO\+\_\+\+ZC\+\_\+\+MAX\+\_\+\+SEGMENTS}}~32U
+\#define \mbox{\hyperlink{zerocopy_8h_ad0359daf789a07df8e98dcb86bf5244b}{TTAK\+\_\+\+IO\+\_\+\+ZC\+\_\+\+MAX\+\_\+\+SEGMENTS}}~256U
+\item 
+\#define \mbox{\hyperlink{zerocopy_8h_a443b8e2313b6c0192feb143403e85ffa}{TTAK\+\_\+\+IO\+\_\+\+ZC\+\_\+\+SEGMENT\+\_\+\+WORD\+\_\+\+BITS}}~32U
+\item 
+\#define \mbox{\hyperlink{zerocopy_8h_a21ddff3c5ae247e5b7736b5f2ff20cda}{TTAK\+\_\+\+IO\+\_\+\+ZC\+\_\+\+SEGMENT\+\_\+\+WORD\+\_\+\+COUNT}}
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Typedefs}
 \begin{DoxyCompactItemize}
@@ -68,7 +72,7 @@ Definition at line \mbox{\hyperlink{zerocopy_8h_source_l00014}{14}} of file \mbo
 \index{zerocopy.h@{zerocopy.h}!TTAK\_IO\_ZC\_MAX\_SEGMENTS@{TTAK\_IO\_ZC\_MAX\_SEGMENTS}}
 \index{TTAK\_IO\_ZC\_MAX\_SEGMENTS@{TTAK\_IO\_ZC\_MAX\_SEGMENTS}!zerocopy.h@{zerocopy.h}}
 \doxysubsubsection{\texorpdfstring{TTAK\_IO\_ZC\_MAX\_SEGMENTS}{TTAK\_IO\_ZC\_MAX\_SEGMENTS}}
-{\footnotesize\ttfamily \#define TTAK\+\_\+\+IO\+\_\+\+ZC\+\_\+\+MAX\+\_\+\+SEGMENTS~32U}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+IO\+\_\+\+ZC\+\_\+\+MAX\+\_\+\+SEGMENTS~256U}
 
 
 
@@ -103,6 +107,32 @@ Definition at line \mbox{\hyperlink{zerocopy_8h_source_l00017}{17}} of file \mbo
 
 
 Definition at line \mbox{\hyperlink{zerocopy_8h_source_l00015}{15}} of file \mbox{\hyperlink{zerocopy_8h_source}{zerocopy.\+h}}.
+
+\Hypertarget{zerocopy_8h_a443b8e2313b6c0192feb143403e85ffa}\label{zerocopy_8h_a443b8e2313b6c0192feb143403e85ffa} 
+\index{zerocopy.h@{zerocopy.h}!TTAK\_IO\_ZC\_SEGMENT\_WORD\_BITS@{TTAK\_IO\_ZC\_SEGMENT\_WORD\_BITS}}
+\index{TTAK\_IO\_ZC\_SEGMENT\_WORD\_BITS@{TTAK\_IO\_ZC\_SEGMENT\_WORD\_BITS}!zerocopy.h@{zerocopy.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_IO\_ZC\_SEGMENT\_WORD\_BITS}{TTAK\_IO\_ZC\_SEGMENT\_WORD\_BITS}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+IO\+\_\+\+ZC\+\_\+\+SEGMENT\+\_\+\+WORD\+\_\+\+BITS~32U}
+
+
+
+Definition at line \mbox{\hyperlink{zerocopy_8h_source_l00019}{19}} of file \mbox{\hyperlink{zerocopy_8h_source}{zerocopy.\+h}}.
+
+\Hypertarget{zerocopy_8h_a21ddff3c5ae247e5b7736b5f2ff20cda}\label{zerocopy_8h_a21ddff3c5ae247e5b7736b5f2ff20cda} 
+\index{zerocopy.h@{zerocopy.h}!TTAK\_IO\_ZC\_SEGMENT\_WORD\_COUNT@{TTAK\_IO\_ZC\_SEGMENT\_WORD\_COUNT}}
+\index{TTAK\_IO\_ZC\_SEGMENT\_WORD\_COUNT@{TTAK\_IO\_ZC\_SEGMENT\_WORD\_COUNT}!zerocopy.h@{zerocopy.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_IO\_ZC\_SEGMENT\_WORD\_COUNT}{TTAK\_IO\_ZC\_SEGMENT\_WORD\_COUNT}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+IO\+\_\+\+ZC\+\_\+\+SEGMENT\+\_\+\+WORD\+\_\+\+COUNT}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ ((\mbox{\hyperlink{zerocopy_8h_ad0359daf789a07df8e98dcb86bf5244b}{TTAK\_IO\_ZC\_MAX\_SEGMENTS}}\ +\ \mbox{\hyperlink{zerocopy_8h_a443b8e2313b6c0192feb143403e85ffa}{TTAK\_IO\_ZC\_SEGMENT\_WORD\_BITS}}\ -\/\ 1U)\ /\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \mbox{\hyperlink{zerocopy_8h_a443b8e2313b6c0192feb143403e85ffa}{TTAK\_IO\_ZC\_SEGMENT\_WORD\_BITS}})}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{zerocopy_8h_source_l00020}{20}} of file \mbox{\hyperlink{zerocopy_8h_source}{zerocopy.\+h}}.
 
 
 

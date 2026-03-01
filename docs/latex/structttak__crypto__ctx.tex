@@ -1,0 +1,302 @@
+\doxysection{ttak\+\_\+crypto\+\_\+ctx Struct Reference}
+\hypertarget{structttak__crypto__ctx}{}\label{structttak__crypto__ctx}\index{ttak\_crypto\_ctx@{ttak\_crypto\_ctx}}
+
+
+{\ttfamily \#include $<$security\+\_\+engine.\+h$>$}
+
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const uint8\+\_\+t \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__crypto__ctx_af66b4372abbaa919f48ea0d962e6db90}{in}}
+\item 
+size\+\_\+t \mbox{\hyperlink{structttak__crypto__ctx_af16751cd04a3355af762a5ff27120d4c}{in\+\_\+len}}
+\item 
+uint8\+\_\+t \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__crypto__ctx_a17966209e766306c1c0b0820cdf4230e}{out}}
+\item 
+size\+\_\+t \mbox{\hyperlink{structttak__crypto__ctx_ac2fe43125b250b779df85f36009b85a9}{out\+\_\+len}}
+\item 
+const uint8\+\_\+t \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__crypto__ctx_a514f2b012f7b90077fb9ecfa26d2727f}{key}}
+\item 
+size\+\_\+t \mbox{\hyperlink{structttak__crypto__ctx_a77cedf35fba765ef0f0b61a79051447f}{key\+\_\+len}}
+\item 
+void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__crypto__ctx_a59765b24564ce21ab70ff2430674bea8}{scratch}}
+\item 
+size\+\_\+t \mbox{\hyperlink{structttak__crypto__ctx_a96238a69fce1dbf6ae19c9e0938bc9fd}{scratch\+\_\+len}}
+\item 
+const uint8\+\_\+t \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__crypto__ctx_add21e240461371bbda574b84229ee1ea}{aad}}
+\item 
+size\+\_\+t \mbox{\hyperlink{structttak__crypto__ctx_a2d3066e2e8432bb6e848d8412fba6b58}{aad\+\_\+len}}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{structttak__crypto__ctx_a2a1774d71d68d3b63af983adabbf3829}{iv}} \mbox{[}16\mbox{]}
+\item 
+size\+\_\+t \mbox{\hyperlink{structttak__crypto__ctx_aad6ada54ab0e3831657c44ad94d1d3d3}{iv\+\_\+len}}
+\item 
+uint8\+\_\+t \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__crypto__ctx_ad3bab64aa836f3abb0bfcfbea9d59e83}{tag}}
+\item 
+size\+\_\+t \mbox{\hyperlink{structttak__crypto__ctx_a5e652112e5014de7451b1bfa0ce2ff4e}{tag\+\_\+len}}
+\item 
+const uint8\+\_\+t \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__crypto__ctx_a0dfa578d5521ddd9fc4c09a34f773d39}{in\+\_\+blocks}}
+\item 
+uint8\+\_\+t \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__crypto__ctx_aa60a5324c0abebf8faa5605e6a387f38}{out\+\_\+blocks}}
+\item 
+size\+\_\+t \mbox{\hyperlink{structttak__crypto__ctx_a72762a06b1850b01223bb06c2f8b8581}{block\+\_\+count}}
+\item 
+size\+\_\+t \mbox{\hyperlink{structttak__crypto__ctx_a3e355e9c06fcf7fa6c772b63b6ec468a}{block\+\_\+size}}
+\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>uint8\_t \mbox{\hyperlink{structttak__crypto__ctx_a9fe251f970071757615793ecf9a568b1}{round\_keys}} \mbox{[}15\mbox{]}\mbox{[}16\mbox{]}\\
+\>\>size\_t \mbox{\hyperlink{structttak__crypto__ctx_a9b6a9a0aac75c0525008d337c7c74529}{rounds}}\\
+\>\} \mbox{\hyperlink{structttak__crypto__ctx_a82cc53df836329fc74e819c980d21f0d}{aes}}\\
+\>struct \{\\
+\>\>uint32\_t \mbox{\hyperlink{structttak__crypto__ctx_a07406aa1361b7db8b0edd99ba7e85d0f}{round\_keys}} \mbox{[}32\mbox{]}\\
+\>\>size\_t \mbox{\hyperlink{structttak__crypto__ctx_a9b6a9a0aac75c0525008d337c7c74529}{rounds}}\\
+\>\} \mbox{\hyperlink{structttak__crypto__ctx_aaa498706513ec8eca10d1fd1396a734e}{seed}}\\
+\} \mbox{\hyperlink{structttak__crypto__ctx_a8368381127429c06e5d1ad8c0059f4d2}{hw\_state}}\\
+
+\end{tabbing}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{security__engine_8h_source_l00036}{36}} of file \mbox{\hyperlink{security__engine_8h_source}{security\+\_\+engine.\+h}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structttak__crypto__ctx_add21e240461371bbda574b84229ee1ea}\label{structttak__crypto__ctx_add21e240461371bbda574b84229ee1ea} 
+\index{ttak\_crypto\_ctx@{ttak\_crypto\_ctx}!aad@{aad}}
+\index{aad@{aad}!ttak\_crypto\_ctx@{ttak\_crypto\_ctx}}
+\doxysubsubsection{\texorpdfstring{aad}{aad}}
+{\footnotesize\ttfamily const uint8\+\_\+t\texorpdfstring{$\ast$}{*} ttak\+\_\+crypto\+\_\+ctx\+::aad}
+
+
+
+Definition at line \mbox{\hyperlink{security__engine_8h_source_l00045}{45}} of file \mbox{\hyperlink{security__engine_8h_source}{security\+\_\+engine.\+h}}.
+
+\Hypertarget{structttak__crypto__ctx_a2d3066e2e8432bb6e848d8412fba6b58}\label{structttak__crypto__ctx_a2d3066e2e8432bb6e848d8412fba6b58} 
+\index{ttak\_crypto\_ctx@{ttak\_crypto\_ctx}!aad\_len@{aad\_len}}
+\index{aad\_len@{aad\_len}!ttak\_crypto\_ctx@{ttak\_crypto\_ctx}}
+\doxysubsubsection{\texorpdfstring{aad\_len}{aad\_len}}
+{\footnotesize\ttfamily size\+\_\+t ttak\+\_\+crypto\+\_\+ctx\+::aad\+\_\+len}
+
+
+
+Definition at line \mbox{\hyperlink{security__engine_8h_source_l00046}{46}} of file \mbox{\hyperlink{security__engine_8h_source}{security\+\_\+engine.\+h}}.
+
+\Hypertarget{structttak__crypto__ctx_a82cc53df836329fc74e819c980d21f0d}\label{structttak__crypto__ctx_a82cc53df836329fc74e819c980d21f0d} 
+\index{ttak\_crypto\_ctx@{ttak\_crypto\_ctx}!aes@{aes}}
+\index{aes@{aes}!ttak\_crypto\_ctx@{ttak\_crypto\_ctx}}
+\doxysubsubsection{\texorpdfstring{[struct]}{[struct]}}
+{\footnotesize\ttfamily struct  \{ ... \}  ttak\+\_\+crypto\+\_\+ctx\+::aes}
+
+\Hypertarget{structttak__crypto__ctx_a72762a06b1850b01223bb06c2f8b8581}\label{structttak__crypto__ctx_a72762a06b1850b01223bb06c2f8b8581} 
+\index{ttak\_crypto\_ctx@{ttak\_crypto\_ctx}!block\_count@{block\_count}}
+\index{block\_count@{block\_count}!ttak\_crypto\_ctx@{ttak\_crypto\_ctx}}
+\doxysubsubsection{\texorpdfstring{block\_count}{block\_count}}
+{\footnotesize\ttfamily size\+\_\+t ttak\+\_\+crypto\+\_\+ctx\+::block\+\_\+count}
+
+
+
+Definition at line \mbox{\hyperlink{security__engine_8h_source_l00053}{53}} of file \mbox{\hyperlink{security__engine_8h_source}{security\+\_\+engine.\+h}}.
+
+\Hypertarget{structttak__crypto__ctx_a3e355e9c06fcf7fa6c772b63b6ec468a}\label{structttak__crypto__ctx_a3e355e9c06fcf7fa6c772b63b6ec468a} 
+\index{ttak\_crypto\_ctx@{ttak\_crypto\_ctx}!block\_size@{block\_size}}
+\index{block\_size@{block\_size}!ttak\_crypto\_ctx@{ttak\_crypto\_ctx}}
+\doxysubsubsection{\texorpdfstring{block\_size}{block\_size}}
+{\footnotesize\ttfamily size\+\_\+t ttak\+\_\+crypto\+\_\+ctx\+::block\+\_\+size}
+
+
+
+Definition at line \mbox{\hyperlink{security__engine_8h_source_l00054}{54}} of file \mbox{\hyperlink{security__engine_8h_source}{security\+\_\+engine.\+h}}.
+
+\Hypertarget{structttak__crypto__ctx_a8368381127429c06e5d1ad8c0059f4d2}\label{structttak__crypto__ctx_a8368381127429c06e5d1ad8c0059f4d2} 
+\index{ttak\_crypto\_ctx@{ttak\_crypto\_ctx}!hw\_state@{hw\_state}}
+\index{hw\_state@{hw\_state}!ttak\_crypto\_ctx@{ttak\_crypto\_ctx}}
+\doxysubsubsection{\texorpdfstring{[union]}{[union]}}
+{\footnotesize\ttfamily union  \{ ... \}  ttak\+\_\+crypto\+\_\+ctx\+::hw\+\_\+state}
+
+\Hypertarget{structttak__crypto__ctx_af66b4372abbaa919f48ea0d962e6db90}\label{structttak__crypto__ctx_af66b4372abbaa919f48ea0d962e6db90} 
+\index{ttak\_crypto\_ctx@{ttak\_crypto\_ctx}!in@{in}}
+\index{in@{in}!ttak\_crypto\_ctx@{ttak\_crypto\_ctx}}
+\doxysubsubsection{\texorpdfstring{in}{in}}
+{\footnotesize\ttfamily const uint8\+\_\+t\texorpdfstring{$\ast$}{*} ttak\+\_\+crypto\+\_\+ctx\+::in}
+
+
+
+Definition at line \mbox{\hyperlink{security__engine_8h_source_l00037}{37}} of file \mbox{\hyperlink{security__engine_8h_source}{security\+\_\+engine.\+h}}.
+
+\Hypertarget{structttak__crypto__ctx_a0dfa578d5521ddd9fc4c09a34f773d39}\label{structttak__crypto__ctx_a0dfa578d5521ddd9fc4c09a34f773d39} 
+\index{ttak\_crypto\_ctx@{ttak\_crypto\_ctx}!in\_blocks@{in\_blocks}}
+\index{in\_blocks@{in\_blocks}!ttak\_crypto\_ctx@{ttak\_crypto\_ctx}}
+\doxysubsubsection{\texorpdfstring{in\_blocks}{in\_blocks}}
+{\footnotesize\ttfamily const uint8\+\_\+t\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} ttak\+\_\+crypto\+\_\+ctx\+::in\+\_\+blocks}
+
+
+
+Definition at line \mbox{\hyperlink{security__engine_8h_source_l00051}{51}} of file \mbox{\hyperlink{security__engine_8h_source}{security\+\_\+engine.\+h}}.
+
+\Hypertarget{structttak__crypto__ctx_af16751cd04a3355af762a5ff27120d4c}\label{structttak__crypto__ctx_af16751cd04a3355af762a5ff27120d4c} 
+\index{ttak\_crypto\_ctx@{ttak\_crypto\_ctx}!in\_len@{in\_len}}
+\index{in\_len@{in\_len}!ttak\_crypto\_ctx@{ttak\_crypto\_ctx}}
+\doxysubsubsection{\texorpdfstring{in\_len}{in\_len}}
+{\footnotesize\ttfamily size\+\_\+t ttak\+\_\+crypto\+\_\+ctx\+::in\+\_\+len}
+
+
+
+Definition at line \mbox{\hyperlink{security__engine_8h_source_l00038}{38}} of file \mbox{\hyperlink{security__engine_8h_source}{security\+\_\+engine.\+h}}.
+
+\Hypertarget{structttak__crypto__ctx_a2a1774d71d68d3b63af983adabbf3829}\label{structttak__crypto__ctx_a2a1774d71d68d3b63af983adabbf3829} 
+\index{ttak\_crypto\_ctx@{ttak\_crypto\_ctx}!iv@{iv}}
+\index{iv@{iv}!ttak\_crypto\_ctx@{ttak\_crypto\_ctx}}
+\doxysubsubsection{\texorpdfstring{iv}{iv}}
+{\footnotesize\ttfamily uint8\+\_\+t ttak\+\_\+crypto\+\_\+ctx\+::iv\mbox{[}16\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{security__engine_8h_source_l00047}{47}} of file \mbox{\hyperlink{security__engine_8h_source}{security\+\_\+engine.\+h}}.
+
+\Hypertarget{structttak__crypto__ctx_aad6ada54ab0e3831657c44ad94d1d3d3}\label{structttak__crypto__ctx_aad6ada54ab0e3831657c44ad94d1d3d3} 
+\index{ttak\_crypto\_ctx@{ttak\_crypto\_ctx}!iv\_len@{iv\_len}}
+\index{iv\_len@{iv\_len}!ttak\_crypto\_ctx@{ttak\_crypto\_ctx}}
+\doxysubsubsection{\texorpdfstring{iv\_len}{iv\_len}}
+{\footnotesize\ttfamily size\+\_\+t ttak\+\_\+crypto\+\_\+ctx\+::iv\+\_\+len}
+
+
+
+Definition at line \mbox{\hyperlink{security__engine_8h_source_l00048}{48}} of file \mbox{\hyperlink{security__engine_8h_source}{security\+\_\+engine.\+h}}.
+
+\Hypertarget{structttak__crypto__ctx_a514f2b012f7b90077fb9ecfa26d2727f}\label{structttak__crypto__ctx_a514f2b012f7b90077fb9ecfa26d2727f} 
+\index{ttak\_crypto\_ctx@{ttak\_crypto\_ctx}!key@{key}}
+\index{key@{key}!ttak\_crypto\_ctx@{ttak\_crypto\_ctx}}
+\doxysubsubsection{\texorpdfstring{key}{key}}
+{\footnotesize\ttfamily const uint8\+\_\+t\texorpdfstring{$\ast$}{*} ttak\+\_\+crypto\+\_\+ctx\+::key}
+
+
+
+Definition at line \mbox{\hyperlink{security__engine_8h_source_l00041}{41}} of file \mbox{\hyperlink{security__engine_8h_source}{security\+\_\+engine.\+h}}.
+
+\Hypertarget{structttak__crypto__ctx_a77cedf35fba765ef0f0b61a79051447f}\label{structttak__crypto__ctx_a77cedf35fba765ef0f0b61a79051447f} 
+\index{ttak\_crypto\_ctx@{ttak\_crypto\_ctx}!key\_len@{key\_len}}
+\index{key\_len@{key\_len}!ttak\_crypto\_ctx@{ttak\_crypto\_ctx}}
+\doxysubsubsection{\texorpdfstring{key\_len}{key\_len}}
+{\footnotesize\ttfamily size\+\_\+t ttak\+\_\+crypto\+\_\+ctx\+::key\+\_\+len}
+
+
+
+Definition at line \mbox{\hyperlink{security__engine_8h_source_l00042}{42}} of file \mbox{\hyperlink{security__engine_8h_source}{security\+\_\+engine.\+h}}.
+
+\Hypertarget{structttak__crypto__ctx_a17966209e766306c1c0b0820cdf4230e}\label{structttak__crypto__ctx_a17966209e766306c1c0b0820cdf4230e} 
+\index{ttak\_crypto\_ctx@{ttak\_crypto\_ctx}!out@{out}}
+\index{out@{out}!ttak\_crypto\_ctx@{ttak\_crypto\_ctx}}
+\doxysubsubsection{\texorpdfstring{out}{out}}
+{\footnotesize\ttfamily uint8\+\_\+t\texorpdfstring{$\ast$}{*} ttak\+\_\+crypto\+\_\+ctx\+::out}
+
+
+
+Definition at line \mbox{\hyperlink{security__engine_8h_source_l00039}{39}} of file \mbox{\hyperlink{security__engine_8h_source}{security\+\_\+engine.\+h}}.
+
+\Hypertarget{structttak__crypto__ctx_aa60a5324c0abebf8faa5605e6a387f38}\label{structttak__crypto__ctx_aa60a5324c0abebf8faa5605e6a387f38} 
+\index{ttak\_crypto\_ctx@{ttak\_crypto\_ctx}!out\_blocks@{out\_blocks}}
+\index{out\_blocks@{out\_blocks}!ttak\_crypto\_ctx@{ttak\_crypto\_ctx}}
+\doxysubsubsection{\texorpdfstring{out\_blocks}{out\_blocks}}
+{\footnotesize\ttfamily uint8\+\_\+t\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} ttak\+\_\+crypto\+\_\+ctx\+::out\+\_\+blocks}
+
+
+
+Definition at line \mbox{\hyperlink{security__engine_8h_source_l00052}{52}} of file \mbox{\hyperlink{security__engine_8h_source}{security\+\_\+engine.\+h}}.
+
+\Hypertarget{structttak__crypto__ctx_ac2fe43125b250b779df85f36009b85a9}\label{structttak__crypto__ctx_ac2fe43125b250b779df85f36009b85a9} 
+\index{ttak\_crypto\_ctx@{ttak\_crypto\_ctx}!out\_len@{out\_len}}
+\index{out\_len@{out\_len}!ttak\_crypto\_ctx@{ttak\_crypto\_ctx}}
+\doxysubsubsection{\texorpdfstring{out\_len}{out\_len}}
+{\footnotesize\ttfamily size\+\_\+t ttak\+\_\+crypto\+\_\+ctx\+::out\+\_\+len}
+
+
+
+Definition at line \mbox{\hyperlink{security__engine_8h_source_l00040}{40}} of file \mbox{\hyperlink{security__engine_8h_source}{security\+\_\+engine.\+h}}.
+
+\Hypertarget{structttak__crypto__ctx_a9fe251f970071757615793ecf9a568b1}\label{structttak__crypto__ctx_a9fe251f970071757615793ecf9a568b1} 
+\index{ttak\_crypto\_ctx@{ttak\_crypto\_ctx}!round\_keys@{round\_keys}}
+\index{round\_keys@{round\_keys}!ttak\_crypto\_ctx@{ttak\_crypto\_ctx}}
+\doxysubsubsection{\texorpdfstring{round\_keys}{round\_keys}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily uint8\+\_\+t ttak\+\_\+crypto\+\_\+ctx\+::round\+\_\+keys\mbox{[}15\mbox{]}\mbox{[}16\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{security__engine_8h_source_l00057}{57}} of file \mbox{\hyperlink{security__engine_8h_source}{security\+\_\+engine.\+h}}.
+
+\Hypertarget{structttak__crypto__ctx_a07406aa1361b7db8b0edd99ba7e85d0f}\label{structttak__crypto__ctx_a07406aa1361b7db8b0edd99ba7e85d0f} 
+\index{ttak\_crypto\_ctx@{ttak\_crypto\_ctx}!round\_keys@{round\_keys}}
+\index{round\_keys@{round\_keys}!ttak\_crypto\_ctx@{ttak\_crypto\_ctx}}
+\doxysubsubsection{\texorpdfstring{round\_keys}{round\_keys}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily uint32\+\_\+t ttak\+\_\+crypto\+\_\+ctx\+::round\+\_\+keys\mbox{[}32\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{security__engine_8h_source_l00061}{61}} of file \mbox{\hyperlink{security__engine_8h_source}{security\+\_\+engine.\+h}}.
+
+\Hypertarget{structttak__crypto__ctx_a9b6a9a0aac75c0525008d337c7c74529}\label{structttak__crypto__ctx_a9b6a9a0aac75c0525008d337c7c74529} 
+\index{ttak\_crypto\_ctx@{ttak\_crypto\_ctx}!rounds@{rounds}}
+\index{rounds@{rounds}!ttak\_crypto\_ctx@{ttak\_crypto\_ctx}}
+\doxysubsubsection{\texorpdfstring{rounds}{rounds}}
+{\footnotesize\ttfamily size\+\_\+t ttak\+\_\+crypto\+\_\+ctx\+::rounds}
+
+
+
+Definition at line \mbox{\hyperlink{security__engine_8h_source_l00058}{58}} of file \mbox{\hyperlink{security__engine_8h_source}{security\+\_\+engine.\+h}}.
+
+\Hypertarget{structttak__crypto__ctx_a59765b24564ce21ab70ff2430674bea8}\label{structttak__crypto__ctx_a59765b24564ce21ab70ff2430674bea8} 
+\index{ttak\_crypto\_ctx@{ttak\_crypto\_ctx}!scratch@{scratch}}
+\index{scratch@{scratch}!ttak\_crypto\_ctx@{ttak\_crypto\_ctx}}
+\doxysubsubsection{\texorpdfstring{scratch}{scratch}}
+{\footnotesize\ttfamily void\texorpdfstring{$\ast$}{*} ttak\+\_\+crypto\+\_\+ctx\+::scratch}
+
+
+
+Definition at line \mbox{\hyperlink{security__engine_8h_source_l00043}{43}} of file \mbox{\hyperlink{security__engine_8h_source}{security\+\_\+engine.\+h}}.
+
+\Hypertarget{structttak__crypto__ctx_a96238a69fce1dbf6ae19c9e0938bc9fd}\label{structttak__crypto__ctx_a96238a69fce1dbf6ae19c9e0938bc9fd} 
+\index{ttak\_crypto\_ctx@{ttak\_crypto\_ctx}!scratch\_len@{scratch\_len}}
+\index{scratch\_len@{scratch\_len}!ttak\_crypto\_ctx@{ttak\_crypto\_ctx}}
+\doxysubsubsection{\texorpdfstring{scratch\_len}{scratch\_len}}
+{\footnotesize\ttfamily size\+\_\+t ttak\+\_\+crypto\+\_\+ctx\+::scratch\+\_\+len}
+
+
+
+Definition at line \mbox{\hyperlink{security__engine_8h_source_l00044}{44}} of file \mbox{\hyperlink{security__engine_8h_source}{security\+\_\+engine.\+h}}.
+
+\Hypertarget{structttak__crypto__ctx_aaa498706513ec8eca10d1fd1396a734e}\label{structttak__crypto__ctx_aaa498706513ec8eca10d1fd1396a734e} 
+\index{ttak\_crypto\_ctx@{ttak\_crypto\_ctx}!seed@{seed}}
+\index{seed@{seed}!ttak\_crypto\_ctx@{ttak\_crypto\_ctx}}
+\doxysubsubsection{\texorpdfstring{[struct]}{[struct]}}
+{\footnotesize\ttfamily struct  \{ ... \}  ttak\+\_\+crypto\+\_\+ctx\+::seed}
+
+\Hypertarget{structttak__crypto__ctx_ad3bab64aa836f3abb0bfcfbea9d59e83}\label{structttak__crypto__ctx_ad3bab64aa836f3abb0bfcfbea9d59e83} 
+\index{ttak\_crypto\_ctx@{ttak\_crypto\_ctx}!tag@{tag}}
+\index{tag@{tag}!ttak\_crypto\_ctx@{ttak\_crypto\_ctx}}
+\doxysubsubsection{\texorpdfstring{tag}{tag}}
+{\footnotesize\ttfamily uint8\+\_\+t\texorpdfstring{$\ast$}{*} ttak\+\_\+crypto\+\_\+ctx\+::tag}
+
+
+
+Definition at line \mbox{\hyperlink{security__engine_8h_source_l00049}{49}} of file \mbox{\hyperlink{security__engine_8h_source}{security\+\_\+engine.\+h}}.
+
+\Hypertarget{structttak__crypto__ctx_a5e652112e5014de7451b1bfa0ce2ff4e}\label{structttak__crypto__ctx_a5e652112e5014de7451b1bfa0ce2ff4e} 
+\index{ttak\_crypto\_ctx@{ttak\_crypto\_ctx}!tag\_len@{tag\_len}}
+\index{tag\_len@{tag\_len}!ttak\_crypto\_ctx@{ttak\_crypto\_ctx}}
+\doxysubsubsection{\texorpdfstring{tag\_len}{tag\_len}}
+{\footnotesize\ttfamily size\+\_\+t ttak\+\_\+crypto\+\_\+ctx\+::tag\+\_\+len}
+
+
+
+Definition at line \mbox{\hyperlink{security__engine_8h_source_l00050}{50}} of file \mbox{\hyperlink{security__engine_8h_source}{security\+\_\+engine.\+h}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/ttak/security/\mbox{\hyperlink{security__engine_8h}{security\+\_\+engine.\+h}}\end{DoxyCompactItemize}

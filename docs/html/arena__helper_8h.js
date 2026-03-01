@@ -15,5 +15,6 @@ var arena__helper_8h =
     [ "ttak_arena_generation_claim", "arena__helper_8h.html#a8413879148e33cd64300c653d4e92fc4", null ],
     [ "ttak_arena_generation_for_each", "arena__helper_8h.html#ae43a5438402e6350c1d320c49009e3b9", null ],
     [ "ttak_arena_generation_remaining", "arena__helper_8h.html#ada6b26961ac63a95133472b4ab6ed81a", null ],
+    [ "ttak_arena_generation_reset", "arena__helper_8h.html#ae5bdd535c45774fd4603c51390a917d9", null ],
     [ "ttak_arena_generation_retire", "arena__helper_8h.html#a09d343e3cfe82d3307c88ec1b426eaf7", null ]
 ];

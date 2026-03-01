@@ -5,22 +5,17 @@
 <area shape="rect" id="Node000004" href="$internal_2queue_8h.html" title=" " alt="" coords="228,93,379,133"/>
 <area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="342,58,318,95,313,92,337,56"/>
 <area shape="rect" id="Node000006" href="$thread_2pool_8h.html" title=" " alt="" coords="287,269,432,309"/>
-<area shape="poly" id="edge13_Node000001_Node000006" title=" " alt="" coords="379,57,393,93,402,157,393,222,384,248,373,270,368,268,379,246,387,221,396,157,387,94,374,59"/>
-<area shape="rect" id="Node000009" href="$scheduler_8h.html" title=" " alt="" coords="483,93,633,133"/>
-<area shape="poly" id="edge10_Node000001_Node000009" title=" " alt="" coords="417,48,516,91,513,96,414,53"/>
+<area shape="poly" id="edge10_Node000001_Node000006" title=" " alt="" coords="379,57,393,93,402,157,393,222,384,248,373,270,368,268,379,246,387,221,396,157,387,94,374,59"/>
+<area shape="rect" id="Node000007" href="$scheduler_8h.html" title=" " alt="" coords="483,93,633,133"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="417,48,516,91,513,96,414,53"/>
 <area shape="poly" id="edge3_Node000002_Node000002" title=" " alt="" coords="193,99,201,104,205,114,197,126,179,132,178,127,194,122,199,113,197,108,190,103"/>
 <area shape="rect" id="Node000003" href="$thread__compat_8h.html" title=" " alt="" coords="5,181,204,221"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="109,147,108,181,103,181,104,147"/>
 <area shape="rect" id="Node000005" href="$queue_8h.html" title=" " alt="" coords="228,181,379,221"/>
 <area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="306,147,306,181,301,181,301,147"/>
 <area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="325,232,349,268,345,271,321,234"/>
-<area shape="rect" id="Node000007" href="$promise_8h.html" title=" " alt="" coords="235,357,377,397"/>
-<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="343,322,320,359,316,356,338,320"/>
-<area shape="rect" id="Node000008" href="$worker_8h.html" title=" " alt="" coords="287,445,432,485"/>
-<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="327,408,350,444,345,447,323,410"/>
-<area shape="poly" id="edge9_Node000008_Node000006" title=" " alt="" coords="374,432,386,397,389,377,386,358,378,333,368,311,373,309,383,331,391,357,394,377,391,398,379,433"/>
-<area shape="rect" id="Node000010" href="$calculus_8h.html" title=" " alt="" coords="455,189,661,214"/>
-<area shape="poly" id="edge11_Node000009_Node000010" title=" " alt="" coords="561,147,561,188,555,188,555,147"/>
-<area shape="rect" id="Node000011" href="$stats__ext_8h.html" title=" " alt="" coords="685,181,820,221"/>
-<area shape="poly" id="edge12_Node000009_Node000011" title=" " alt="" coords="614,136,711,179,709,184,612,141"/>
+<area shape="rect" id="Node000008" href="$calculus_8h.html" title=" " alt="" coords="455,189,661,214"/>
+<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="561,147,561,188,555,188,555,147"/>
+<area shape="rect" id="Node000009" href="$stats__ext_8h.html" title=" " alt="" coords="685,181,820,221"/>
+<area shape="poly" id="edge9_Node000007_Node000009" title=" " alt="" coords="614,136,711,179,709,184,612,141"/>
 </map>

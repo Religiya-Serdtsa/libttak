@@ -22,43 +22,52 @@
 \DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00018}\mbox{\hyperlink{structttak__object__pool_a2097794e192b7fa4813e4a98b5724637}{00018}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structttak__object__pool_a2097794e192b7fa4813e4a98b5724637}{item\_size}};\ \ \ \ \ \ \ \textcolor{comment}{/**<\ Size\ of\ a\ single\ item.\ */}}
 \DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00019}\mbox{\hyperlink{structttak__object__pool_ad6c6f8215988b972296cc49fee97d89d}{00019}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structttak__object__pool_ad6c6f8215988b972296cc49fee97d89d}{capacity}};\ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Total\ capacity\ of\ the\ pool.\ */}}
 \DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00020}\mbox{\hyperlink{structttak__object__pool_a53077709490b4f7933fd2a6609d14e84}{00020}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structttak__object__pool_a53077709490b4f7933fd2a6609d14e84}{used\_count}};\ \ \ \ \ \ \textcolor{comment}{/**<\ Number\ of\ currently\ allocated\ items.\ */}}
-\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00021}\mbox{\hyperlink{structttak__object__pool_a5c261e179030cdd19276708d98142e46}{00021}}\ \ \ \ \ \mbox{\hyperlink{structttak__spin}{ttak\_spin\_t}}\ \mbox{\hyperlink{structttak__object__pool_a5c261e179030cdd19276708d98142e46}{lock}};\ \ \ \ \ \ \ \textcolor{comment}{/**<\ Spinlock\ for\ protecting\ the\ bitmap.\ */}}
-\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00022}\mbox{\hyperlink{container_2pool_8h_aeadd65a89efc983ccbb49d5c943060b4}{00022}}\ \}\ \mbox{\hyperlink{container_2pool_8h_aeadd65a89efc983ccbb49d5c943060b4}{ttak\_object\_pool\_t}};}
-\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00023}00023\ }
-\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00024}\mbox{\hyperlink{container_2pool_8h_a23a4fa9c71c011f57ec588df18ca906b}{00024}}\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{structttak__object__pool}{ttak\_object\_pool\_t}}\ \mbox{\hyperlink{container_2pool_8h_a23a4fa9c71c011f57ec588df18ca906b}{tt\_object\_pool\_t}};}
-\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00025}00025\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00026}00026\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00027}00027\ \textcolor{comment}{\ *\ @brief\ Creates\ a\ new\ object\ pool.}}
-\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00028}00028\ \textcolor{comment}{\ *\ }}
-\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00029}00029\ \textcolor{comment}{\ *\ @param\ capacity\ Maximum\ number\ of\ items.}}
-\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00030}00030\ \textcolor{comment}{\ *\ @param\ item\_size\ Size\ of\ each\ item\ in\ bytes.}}
-\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00031}00031\ \textcolor{comment}{\ *\ @return\ Pointer\ to\ the\ new\ pool,\ or\ NULL\ on\ failure.}}
-\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00032}00032\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00033}\mbox{\hyperlink{container_2pool_8h_a1e735c3b58df81d4fe9eccd4bdb345cd}{00033}}\ \mbox{\hyperlink{structttak__object__pool}{ttak\_object\_pool\_t}}\ *\mbox{\hyperlink{container_2pool_8h_a1e735c3b58df81d4fe9eccd4bdb345cd}{ttak\_object\_pool\_create}}(\textcolor{keywordtype}{size\_t}\ capacity,\ \textcolor{keywordtype}{size\_t}\ item\_size);}
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00022}00022\ \ \ \ \ \textcolor{comment}{/*\ Orthogonal\ Latin\ Square\ traversal\ state\ (order\ 8,\ 64\ slots\ per\ lattice).\ */}}
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00023}\mbox{\hyperlink{structttak__object__pool_aafc723c0f55b9a51eed774931edfc897}{00023}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structttak__object__pool_aafc723c0f55b9a51eed774931edfc897}{ols\_chunk\_count}};\ \ \ \textcolor{comment}{/**<\ Number\ of\ 8x8\ tiles\ covering\ the\ capacity.\ */}}
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00024}\mbox{\hyperlink{structttak__object__pool_ab56703e2886f72d1fb41a7bc2e4113bf}{00024}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structttak__object__pool_ab56703e2886f72d1fb41a7bc2e4113bf}{ols\_chunk\_cursor}};\ \ \textcolor{comment}{/**<\ Current\ tile\ cursor.\ */}}
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00025}\mbox{\hyperlink{structttak__object__pool_a562c49dae52f1bdf34910047bb58d245}{00025}}\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structttak__object__pool_a562c49dae52f1bdf34910047bb58d245}{ols\_lane\_seed}};\ \ \ \ \textcolor{comment}{/**<\ Current\ 6-\/bit\ lane\ seed\ within\ the\ tile.\ */}}
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00026}\mbox{\hyperlink{structttak__object__pool_af47611e66bb8945b0d064dd0b3bf81e3}{00026}}\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structttak__object__pool_af47611e66bb8945b0d064dd0b3bf81e3}{ols\_lane\_guard}};\ \ \ \textcolor{comment}{/**<\ Cycle\ guard\ to\ detect\ when\ to\ advance\ tiles.\ */}}
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00027}\mbox{\hyperlink{structttak__object__pool_a99ed722dc1c32e7c10c190b0c88836c9}{00027}}\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structttak__object__pool_a99ed722dc1c32e7c10c190b0c88836c9}{ols\_lane\_stride}};\ \ \textcolor{comment}{/**<\ Coprime\ stride\ applied\ to\ the\ lane\ seed.\ */}}
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00028}\mbox{\hyperlink{structttak__object__pool_a99b559fdee05b35fcb9faefdce869105}{00028}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structttak__object__pool_a99b559fdee05b35fcb9faefdce869105}{last\_recycled\_index}};\ \textcolor{comment}{/**<\ Hot-\/slot\ recycled\ on\ the\ next\ allocation.\ */}}
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00030}\mbox{\hyperlink{structttak__object__pool_a5c261e179030cdd19276708d98142e46}{00030}}\ \ \ \ \ \mbox{\hyperlink{structttak__spin}{ttak\_spin\_t}}\ \mbox{\hyperlink{structttak__object__pool_a5c261e179030cdd19276708d98142e46}{lock}};\ \ \ \ \ \ \ \textcolor{comment}{/**<\ Spinlock\ for\ protecting\ the\ bitmap.\ */}}
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00031}\mbox{\hyperlink{container_2pool_8h_aeadd65a89efc983ccbb49d5c943060b4}{00031}}\ \}\ \mbox{\hyperlink{container_2pool_8h_aeadd65a89efc983ccbb49d5c943060b4}{ttak\_object\_pool\_t}};}
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00033}\mbox{\hyperlink{container_2pool_8h_a23a4fa9c71c011f57ec588df18ca906b}{00033}}\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{structttak__object__pool}{ttak\_object\_pool\_t}}\ \mbox{\hyperlink{container_2pool_8h_a23a4fa9c71c011f57ec588df18ca906b}{tt\_object\_pool\_t}};}
 \DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00034}00034\ \textcolor{comment}{}}
 \DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00035}00035\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00036}00036\ \textcolor{comment}{\ *\ @brief\ Destroys\ the\ object\ pool\ and\ frees\ memory.}}
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00036}00036\ \textcolor{comment}{\ *\ @brief\ Creates\ a\ new\ object\ pool.}}
 \DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00037}00037\ \textcolor{comment}{\ *\ }}
-\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00038}00038\ \textcolor{comment}{\ *\ @param\ pool\ Pointer\ to\ the\ pool.}}
-\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00039}00039\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00040}\mbox{\hyperlink{container_2pool_8h_a8ca91c2bfd5b3529f07cfcba28d44bc8}{00040}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{container_2pool_8h_a8ca91c2bfd5b3529f07cfcba28d44bc8}{ttak\_object\_pool\_destroy}}(\mbox{\hyperlink{structttak__object__pool}{ttak\_object\_pool\_t}}\ *pool);}
-\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00041}00041\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00042}00042\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00043}00043\ \textcolor{comment}{\ *\ @brief\ Allocates\ an\ object\ from\ the\ pool.}}
-\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00044}00044\ \textcolor{comment}{\ *\ }}
-\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00045}00045\ \textcolor{comment}{\ *\ @param\ pool\ Pointer\ to\ the\ pool.}}
-\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00046}00046\ \textcolor{comment}{\ *\ @return\ Pointer\ to\ the\ allocated\ object,\ or\ NULL\ if\ pool\ is\ full.}}
-\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00047}00047\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00048}\mbox{\hyperlink{container_2pool_8h_a220b1179fec38a46834a02ff45251daa}{00048}}\ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{container_2pool_8h_a220b1179fec38a46834a02ff45251daa}{ttak\_object\_pool\_alloc}}(\mbox{\hyperlink{structttak__object__pool}{ttak\_object\_pool\_t}}\ *pool);}
-\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00049}00049\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00050}00050\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00051}00051\ \textcolor{comment}{\ *\ @brief\ Returns\ an\ object\ to\ the\ pool\ (frees\ it).}}
-\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00052}00052\ \textcolor{comment}{\ *\ }}
-\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00053}00053\ \textcolor{comment}{\ *\ @param\ pool\ Pointer\ to\ the\ pool.}}
-\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00054}00054\ \textcolor{comment}{\ *\ @param\ ptr\ Pointer\ to\ the\ object\ to\ free.}}
-\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00055}00055\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00056}\mbox{\hyperlink{container_2pool_8h_aa76851f60ea6890bb00c8127cbe448dd}{00056}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{container_2pool_8h_aa76851f60ea6890bb00c8127cbe448dd}{ttak\_object\_pool\_free}}(\mbox{\hyperlink{structttak__object__pool}{ttak\_object\_pool\_t}}\ *pool,\ \textcolor{keywordtype}{void}\ *ptr);}
-\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00057}00057\ }
-\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00058}00058\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_CONTAINER\_POOL\_H}}
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00038}00038\ \textcolor{comment}{\ *\ @param\ capacity\ Maximum\ number\ of\ items.}}
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00039}00039\ \textcolor{comment}{\ *\ @param\ item\_size\ Size\ of\ each\ item\ in\ bytes.}}
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00040}00040\ \textcolor{comment}{\ *\ @return\ Pointer\ to\ the\ new\ pool,\ or\ NULL\ on\ failure.}}
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00041}00041\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00042}\mbox{\hyperlink{container_2pool_8h_a1e735c3b58df81d4fe9eccd4bdb345cd}{00042}}\ \mbox{\hyperlink{structttak__object__pool}{ttak\_object\_pool\_t}}\ *\mbox{\hyperlink{container_2pool_8h_a1e735c3b58df81d4fe9eccd4bdb345cd}{ttak\_object\_pool\_create}}(\textcolor{keywordtype}{size\_t}\ capacity,\ \textcolor{keywordtype}{size\_t}\ item\_size);}
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00043}00043\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00044}00044\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00045}00045\ \textcolor{comment}{\ *\ @brief\ Destroys\ the\ object\ pool\ and\ frees\ memory.}}
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00046}00046\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00047}00047\ \textcolor{comment}{\ *\ @param\ pool\ Pointer\ to\ the\ pool.}}
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00048}00048\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00049}\mbox{\hyperlink{container_2pool_8h_a8ca91c2bfd5b3529f07cfcba28d44bc8}{00049}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{container_2pool_8h_a8ca91c2bfd5b3529f07cfcba28d44bc8}{ttak\_object\_pool\_destroy}}(\mbox{\hyperlink{structttak__object__pool}{ttak\_object\_pool\_t}}\ *pool);}
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00050}00050\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00051}00051\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00052}00052\ \textcolor{comment}{\ *\ @brief\ Allocates\ an\ object\ from\ the\ pool.}}
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00053}00053\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00054}00054\ \textcolor{comment}{\ *\ @param\ pool\ Pointer\ to\ the\ pool.}}
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00055}00055\ \textcolor{comment}{\ *\ @return\ Pointer\ to\ the\ allocated\ object,\ or\ NULL\ if\ pool\ is\ full.}}
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00056}00056\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00057}\mbox{\hyperlink{container_2pool_8h_a220b1179fec38a46834a02ff45251daa}{00057}}\ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{container_2pool_8h_a220b1179fec38a46834a02ff45251daa}{ttak\_object\_pool\_alloc}}(\mbox{\hyperlink{structttak__object__pool}{ttak\_object\_pool\_t}}\ *pool);}
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00058}00058\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00059}00059\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00060}00060\ \textcolor{comment}{\ *\ @brief\ Returns\ an\ object\ to\ the\ pool\ (frees\ it).}}
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00061}00061\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00062}00062\ \textcolor{comment}{\ *\ @param\ pool\ Pointer\ to\ the\ pool.}}
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00063}00063\ \textcolor{comment}{\ *\ @param\ ptr\ Pointer\ to\ the\ object\ to\ free.}}
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00064}00064\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00065}\mbox{\hyperlink{container_2pool_8h_aa76851f60ea6890bb00c8127cbe448dd}{00065}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{container_2pool_8h_aa76851f60ea6890bb00c8127cbe448dd}{ttak\_object\_pool\_free}}(\mbox{\hyperlink{structttak__object__pool}{ttak\_object\_pool\_t}}\ *pool,\ \textcolor{keywordtype}{void}\ *ptr);}
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{container_2pool_8h_source_l00067}00067\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_CONTAINER\_POOL\_H}}
 
 \end{DoxyCode}
