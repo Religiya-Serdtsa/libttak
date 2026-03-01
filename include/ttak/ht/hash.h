@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdalign.h>
+#include <ttak/types/ttak_align.h>
 
 #define EMPTY    0x00
 #define DELETED  0xDE
@@ -17,7 +18,7 @@ typedef struct _node {
     size_t    value;
     uint8_t   ctrl;
 #ifndef _MSC_VER
-    alignas(max_align_t) char padding[0]; 
+    alignas(ttak_max_align_t) char padding[0];
 #endif
 } ttak_node_t;
 
@@ -28,7 +29,7 @@ typedef struct {
     size_t      cap;
     size_t      size;
 #ifndef _MSC_VER
-    alignas(max_align_t) char padding[0];
+    alignas(ttak_max_align_t) char padding[0];
 #endif
 } ttak_map_t;
 

@@ -5,6 +5,7 @@
 #include <stddef.h>
 #include <stdbool.h>
 #include <stdalign.h>
+#include <ttak/types/ttak_align.h>
 #include <ttak/types/fixed.h>
 
 /**
@@ -27,7 +28,7 @@ typedef struct ttak_bigint {
         limb_t sso_buf[TTAK_BIGINT_SSO_LIMIT];
     } data;
 #ifndef _MSC_VER
-    alignas(max_align_t) char padding[0];
+    alignas(ttak_max_align_t) char padding[0];
 #endif
 } ttak_bigint_t;
 
