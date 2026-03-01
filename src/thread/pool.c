@@ -36,19 +36,20 @@ static void pool_force_shutdown(ttak_thread_pool_t *pool) {
  * @return Pointer to the created pool or NULL on failure.
  */
 ttak_thread_pool_t *ttak_thread_pool_create(size_t num_threads, int default_nice, uint64_t now) {
-    // Initialize pthread attribute
+    // Initialize pthread attribute if available so Windows shim can shrink stacks
     pthread_attr_t attr;
-    pthread_attr_init(&attr);
-
-    // Ensure pthread's stack size is 512KB
-    pthread_attr_setstacksize(&attr, 1024 * 512);
+    const pthread_attr_t *attr_for_threads = NULL;
+    if (pthread_attr_init(&attr) == 0) {
+        pthread_attr_setstacksize(&attr, 1024 * 512);
+        attr_for_threads = &attr;
+    }
 
     // Ensure smart scheduler is ready
     ttak_scheduler_init();
 
     ttak_thread_pool_t *pool = (ttak_thread_pool_t *)ttak_mem_alloc(sizeof(ttak_thread_pool_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!pool) {
-        pthread_attr_destroy(&attr);
+        if (attr_for_threads) pthread_attr_destroy(&attr);
         return NULL;
     }
 
@@ -76,10 +77,10 @@ ttak_thread_pool_t *ttak_thread_pool_create(size_t num_threads, int default_nice
         pool->workers[i]->wrapper->jmp_magic = 0; 
         pool->workers[i]->wrapper->jmp_tid = 0;
 
-        pthread_create(&pool->workers[i]->thread, &attr, ttak_worker_routine, pool->workers[i]);
+        pthread_create(&pool->workers[i]->thread, attr_for_threads, ttak_worker_routine, pool->workers[i]);
     }
 
-    pthread_attr_destroy(&attr);
+    if (attr_for_threads) pthread_attr_destroy(&attr);
     return pool;
 }
 

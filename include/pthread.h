@@ -37,7 +37,8 @@
 #include <process.h>  /* _beginthreadex */
 #include <stdlib.h>   /* malloc / free  */
 #include <time.h>     /* struct timespec, timespec_get */
-#include <errno.h>    /* ETIMEDOUT */
+#include <errno.h>    /* ETIMEDOUT / EINVAL */
+#include <limits.h>   /* UINT_MAX */
 
 /* --- types --- */
 
@@ -45,6 +46,9 @@ typedef SRWLOCK             pthread_mutex_t;
 typedef CONDITION_VARIABLE  pthread_cond_t;
 typedef HANDLE              pthread_t;
 typedef volatile LONG       pthread_once_t;
+typedef struct {
+    size_t stack_size;
+} pthread_attr_t;
 
 /* pthread_rwlock_t: wrap SRWLOCK with a flag to distinguish shared vs
  * exclusive mode so that a single pthread_rwlock_unlock() can work.     */
@@ -85,6 +89,33 @@ static __inline int pthread_mutex_unlock(pthread_mutex_t *m) {
 }
 static __inline int pthread_mutex_destroy(pthread_mutex_t *m) {
     (void)m; /* SRWLOCK requires no cleanup */
+    return 0;
+}
+
+/* --- thread attributes --- */
+
+static __inline int pthread_attr_init(pthread_attr_t *attr) {
+    if (!attr) return EINVAL;
+    attr->stack_size = 0;
+    return 0;
+}
+
+static __inline int pthread_attr_destroy(pthread_attr_t *attr) {
+    (void)attr;
+    return 0;
+}
+
+static __inline int pthread_attr_setstacksize(pthread_attr_t *attr,
+                                              size_t stacksize) {
+    if (!attr) return EINVAL;
+    attr->stack_size = stacksize;
+    return 0;
+}
+
+static __inline int pthread_attr_getstacksize(const pthread_attr_t *attr,
+                                              size_t *stacksize) {
+    if (!attr || !stacksize) return EINVAL;
+    *stacksize = attr->stack_size;
     return 0;
 }
 
@@ -220,12 +251,21 @@ static __inline int pthread_create(pthread_t *thread,
                                     void *(*start_routine)(void *),
                                     void *arg) {
     __ttak_pthread_start_t *s;
-    (void)attr;
+    unsigned win_stack_sz = 0;
+    if (attr) {
+        const pthread_attr_t *a = (const pthread_attr_t *)attr;
+        if (a->stack_size > 0) {
+            win_stack_sz = (a->stack_size > (size_t)UINT_MAX)
+                               ? UINT_MAX
+                               : (unsigned)a->stack_size;
+        }
+    }
     s = ((__ttak_pthread_start_t *)malloc(sizeof(*s)));
     if (!s) return 12 /* ENOMEM */;
     s->func   = start_routine;
     s->arg    = arg;
-    *thread = (HANDLE)_beginthreadex(NULL, 0, __ttak_pthread_entry, s, 0, NULL);
+    *thread = (HANDLE)_beginthreadex(NULL, win_stack_sz,
+                                     __ttak_pthread_entry, s, 0, NULL);
     if (!*thread) { free(s); return (int)GetLastError(); }
     return 0;
 }
