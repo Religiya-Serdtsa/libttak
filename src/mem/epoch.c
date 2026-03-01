@@ -39,7 +39,7 @@
 
 /* --- Cross-compiler attributes and TLS --- */
 
-#if defined(_MSC_VER)
+#if defined(_MSC_VER) || defined(__TINYC__)
 #define TTAK_VIS_DEFAULT
 #define TTAK_CONSTRUCTOR(prio)
 #else
