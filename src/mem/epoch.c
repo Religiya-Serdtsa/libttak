@@ -39,9 +39,18 @@
 
 /* --- Cross-compiler attributes and TLS --- */
 
-#if defined(_MSC_VER) || defined(__TINYC__)
+#define TTAK_STRINGIFY_INNER(x) #x
+#define TTAK_STRINGIFY(x) TTAK_STRINGIFY_INNER(x)
+
+#if defined(_MSC_VER)
 #define TTAK_VIS_DEFAULT
 #define TTAK_CONSTRUCTOR(prio)
+#elif defined(__TINYC__)
+#define TTAK_VIS_DEFAULT __attribute__((visibility("default")))
+#define TTAK_CONSTRUCTOR(prio)                                                      \
+    __attribute__((constructor))                                                    \
+    __attribute__((used))                                                           \
+    __attribute__((section(".init_array.0" TTAK_STRINGIFY(prio))))
 #else
 #define TTAK_VIS_DEFAULT __attribute__((visibility("default")))
 #define TTAK_CONSTRUCTOR(prio) __attribute__((constructor(prio)))
