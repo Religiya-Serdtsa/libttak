@@ -268,6 +268,7 @@ static inline void ttak_aes_addroundkey(uint8_t s[16], const uint8_t rk[16]) {
     for (int i = 0; i < 16; i++) s[i] ^= rk[i];
 }
 
+#if !TTAK_USE_X86_AESNI && !TTAK_USE_ARM64_CRYPTO
 /**
  * @brief Encrypt one AES-256 block using portable software rounds.
  *
@@ -300,6 +301,7 @@ static void ttak_aes256_enc_block_soft(uint8_t out[16], const uint8_t in[16], co
 
     memcpy(out, s, 16);
 }
+#endif /* !TTAK_USE_X86_AESNI && !TTAK_USE_ARM64_CRYPTO */
 
 /* --- AES-256 block encryption dispatch --- */
 
@@ -350,7 +352,6 @@ static inline void ttak_aes256_enc_block(uint8_t out[16], const uint8_t in[16], 
     vst1q_u8(out, b);
 
 #else
-    (void)ctx;
     ttak_aes256_enc_block_soft(out, in, ctx);
 #endif
 }

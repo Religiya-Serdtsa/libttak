@@ -3,6 +3,7 @@
 #include <ttak/sync/sync.h>
 #include <ttak/async/promise.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <pthread.h>
 #include <signal.h>
 #include <errno.h>
@@ -77,7 +78,14 @@ ttak_thread_pool_t *ttak_thread_pool_create(size_t num_threads, int default_nice
         pool->workers[i]->wrapper->jmp_magic = 0; 
         pool->workers[i]->wrapper->jmp_tid = 0;
 
-        pthread_create(&pool->workers[i]->thread, attr_for_threads, ttak_worker_routine, pool->workers[i]);
+        int rc = pthread_create(&pool->workers[i]->thread, attr_for_threads, ttak_worker_routine, pool->workers[i]);
+        if (rc != 0) {
+            fprintf(stderr, "[FATAL] Failed to create worker thread %zu: %d\n", i, rc);
+            pool->num_threads = i;
+            pool_force_shutdown(pool);
+            if (attr_for_threads) pthread_attr_destroy(&attr);
+            return NULL;
+        }
     }
 
     if (attr_for_threads) pthread_attr_destroy(&attr);

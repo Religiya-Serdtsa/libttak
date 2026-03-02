@@ -15,12 +15,15 @@ typedef struct ttak_table_entry {
 } ttak_table_entry_t;
 
 /**
- * @brief Generic SipHash Table.
+ * @brief Generic SipHash Table (Refactored to Open Addressing SoA).
  */
 typedef struct ttak_table {
-    ttak_table_entry_t **buckets;
-    size_t capacity;
-    size_t size;
+    uint8_t  *ctrls;    /**< Control bytes */
+    void     **keys;    /**< Keys array */
+    size_t   *key_lens; /**< Key lengths array */
+    void     **values;  /**< Values array */
+    size_t   capacity;
+    size_t   size;
     uint64_t k0;
     uint64_t k1;
     

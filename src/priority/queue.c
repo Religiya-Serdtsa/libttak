@@ -11,8 +11,9 @@
  * @param now      Timestamp for allocations.
  */
 static void q_push(struct __internal_ttak_proc_priority_queue_t *q, ttak_task_t *task, int priority, uint64_t now) {
+    (void)now;
     if (!q) return;
-    struct __internal_ttak_qnode_t *node = (struct __internal_ttak_qnode_t *)ttak_mem_alloc(sizeof(struct __internal_ttak_qnode_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
+    struct __internal_ttak_qnode_t *node = (struct __internal_ttak_qnode_t *)ttak_dangerous_alloc(sizeof(struct __internal_ttak_qnode_t));
     if (!node) return;
     node->task = task;
     node->priority = priority;
@@ -39,14 +40,14 @@ static void q_push(struct __internal_ttak_proc_priority_queue_t *q, ttak_task_t 
  * @return Task pointer or NULL when empty.
  */
 static ttak_task_t *q_pop(struct __internal_ttak_proc_priority_queue_t *q, uint64_t now) {
+    (void)now;
     if (!q || !q->head) return NULL;
     struct __internal_ttak_qnode_t *node = q->head;
-    if (!ttak_mem_access(node, now)) return NULL;
     
     ttak_task_t *task = node->task;
     q->head = node->next;
     q->size--;
-    ttak_mem_free(node);
+    ttak_dangerous_free(node);
     return task;
 }
 

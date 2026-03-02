@@ -78,7 +78,7 @@ uint64_t ttak_task_get_start_ts(const ttak_task_t *task) {
  * @param task Pointer to the task.
  */
 void ttak_task_execute(ttak_task_t *task, uint64_t now) {
-    if (ttak_mem_access(task, now) && task->func) {
+    if (task && task->func) {
         void *res = task->func(task->arg);
         if (task->promise) {
             ttak_promise_set_value(task->promise, res, now);

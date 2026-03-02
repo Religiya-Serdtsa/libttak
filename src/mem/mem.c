@@ -273,20 +273,6 @@ static ttak_fixed_16_16_t ttak_mem_calculate_global_friction(void) {
 }
 
 /**
- * @brief Updates a friction value using Exponential Weighted Moving Average (EWMA).
- */
-static void ttak_mem_update_friction_value(int size_class_idx, bool waste_detected) {
-    if (size_class_idx < 0 || size_class_idx >= 4) return;
-    ttak_fixed_16_16_t alpha = TTAK_FP_FROM_INT(1) / 4;
-    ttak_fixed_16_16_t one_minus_alpha = TTAK_FP_FROM_INT(1) - alpha;
-    ttak_fixed_16_16_t old_value = atomic_load(&global_friction_matrix.values[size_class_idx]);
-    ttak_fixed_16_16_t new_target = waste_detected ? TTAK_FP_FROM_INT(2) : TTAK_FP_FROM_INT(1);
-    ttak_fixed_16_16_t new_value = TTAK_FP_MUL(old_value, one_minus_alpha) + TTAK_FP_MUL(new_target, alpha);
-    atomic_store(&global_friction_matrix.values[size_class_idx], new_value);
-    ttak_mem_calculate_global_friction();
-}
-
-/**
  * @brief Ensures the global pointer map and mem_tree are initialized.
  */
 static void ensure_global_map(uint64_t now) {
@@ -371,9 +357,8 @@ void TTAK_HOT_PATH *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, ui
             if (retrying_ptr && !*retrying_ptr) {
                 *retrying_ptr = 1; t_reentrancy_guard = false;
                 tt_autoclean_dirty_pointers(now);
-                t_reentrancy_guard = true;
                 void *res = ttak_mem_alloc_safe(size, lifetime_ticks, now, is_const, is_volatile, allow_direct, is_root, flags);
-                *retrying_ptr = 0; t_reentrancy_guard = false;
+                *retrying_ptr = 0;
                 return res;
             }
         }
@@ -547,6 +532,19 @@ void TTAK_HOT_PATH ttak_mem_free(void *ptr) {
     }
 }
 
+void *ttak_mem_access_bridge(void *ptr, uint64_t now_tick) {
+    if (!ptr) return NULL;
+    ttak_mem_header_t *header = (ttak_mem_header_t *)ptr - 1;
+
+    if (header->magic != TTAK_MAGIC_NUMBER) return NULL;
+    if (header->freed) return NULL;
+    if (header->expires_tick != __TTAK_UNSAFE_MEM_FOREVER__ && now_tick > header->expires_tick) return NULL;
+    if (!header->allow_direct_access) return NULL;
+
+    TTAK_ATOMIC_FETCH_ADD_U64(&header->access_count, 1ULL);
+    return ptr;
+}
+
 void ttak_mem_set_trace(int enable) {
     global_trace_enabled = enable;
     if (!global_init_done) return;
@@ -554,8 +552,8 @@ void ttak_mem_set_trace(int enable) {
     tt_map_t *map_handle = (tt_map_t *)global_ptr_map;
     if (map_handle) {
         for (size_t i = 0; i < map_handle->cap; i++) {
-            if (map_handle->tbl[i].ctrl == OCCUPIED) {
-                ttak_mem_header_t *h = (ttak_mem_header_t *)map_handle->tbl[i].value;
+            if (map_handle->ctrls[i] == OCCUPIED) {
+                ttak_mem_header_t *h = (ttak_mem_header_t *)map_handle->values[i];
                 pthread_mutex_lock(&h->lock);
                 if (enable && !h->tracking_log) {
                     h->tracking_log = malloc(1024);
@@ -592,10 +590,10 @@ void TTAK_COLD_PATH **tt_inspect_dirty_pointers(uint64_t now, size_t *count_out)
     if (!dirty) { pthread_mutex_unlock(&global_map_lock); return NULL; }
     size_t found = 0;
     for (size_t i = 0; i < map_handle->cap; i++) {
-        if (map_handle->tbl[i].ctrl == OCCUPIED) {
-            ttak_mem_header_t *h = (ttak_mem_header_t *)map_handle->tbl[i].value;
+        if (map_handle->ctrls[i] == OCCUPIED) {
+            ttak_mem_header_t *h = (ttak_mem_header_t *)map_handle->values[i];
             if ((h->expires_tick != (uint64_t)-1 && now > h->expires_tick) || ttak_atomic_read64(&h->access_count) > 1000000)
-                dirty[found++] = (void*)map_handle->tbl[i].key;
+                dirty[found++] = (void*)map_handle->keys[i];
         }
     }
     pthread_mutex_unlock(&global_map_lock); *count_out = found; return dirty;

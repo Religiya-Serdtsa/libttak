@@ -1,198 +1,128 @@
-/**
- * @file map.c
- * @brief Implementation of a hash map using open addressing and SipHash-2-4.
- */
-
 #include <ttak/ht/hash.h>
 #include <ttak/ht/map.h>
 #include <ttak/mem/mem.h>
 #include <stdlib.h>
 #include <string.h>
 
-/**
- * @brief Round up to the next power-of-two capacity.
- *
- * @param n Requested size.
- * @return The smallest power of two >= n.
- */
+#define MAX_PROBE 32
+
 static size_t next_pow2(size_t n) {
     if (n == 0) return 1;
     n--;
-    n |= n >> 1;
-    n |= n >> 2;
-    n |= n >> 4;
-    n |= n >> 8;
-    n |= n >> 16;
+    n |= n >> 1; n |= n >> 2; n |= n >> 4;
+    n |= n >> 8; n |= n >> 16;
 #if UINTPTR_MAX > 0xffffffff
     n |= n >> 32;
 #endif
-    n++;
-    return n;
+    return n + 1;
 }
 
-/**
- * @brief Allocate and initialize a hash map.
- *
- * @param init_cap Desired initial capacity.
- * @param now      Timestamp for memory tracker integration.
- * @return Newly created map or NULL on allocation failure.
- */
 tt_map_t *ttak_create_map(size_t init_cap, uint64_t now) {
     tt_map_t *map = ttak_mem_alloc(sizeof(tt_map_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!map) return NULL;
-    
+
     map->cap = next_pow2(init_cap);
     map->size = 0;
-    
-    map->tbl = ttak_mem_alloc(map->cap * sizeof(tt_nd_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
-    if (!map->tbl) {
+    map->seed = 0xa0761d6478bd642fULL;
+
+    // Allocate with padding to allow branchless linear probing
+    size_t padded_cap = map->cap + MAX_PROBE;
+    map->ctrls = ttak_mem_alloc(padded_cap * sizeof(uint8_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
+    map->keys = ttak_mem_alloc(padded_cap * sizeof(uintptr_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
+    map->values = ttak_mem_alloc(padded_cap * sizeof(size_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
+
+    if (!map->ctrls || !map->keys || !map->values) {
+        if (map->ctrls) ttak_mem_free(map->ctrls);
+        if (map->keys) ttak_mem_free(map->keys);
         ttak_mem_free(map);
         return NULL;
     }
-    memset(map->tbl, 0, map->cap * sizeof(tt_nd_t));
+
+    memset(map->ctrls, 0, padded_cap * sizeof(uint8_t));
     return map;
 }
 
-/**
- * @brief Grow the map when the load factor becomes high.
- *
- * @param map Map to resize.
- * @param now Timestamp required by the allocator.
- */
 static void ttak_resize_map(tt_map_t *map, uint64_t now) {
     size_t old_cap = map->cap;
-    size_t new_cap = old_cap * 2; // Always maintain power of 2
-    ttak_node_t *old_tbl = map->tbl;
-    
-    ttak_node_t *new_tbl = ttak_mem_alloc(new_cap * sizeof(tt_nd_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
-    if (!new_tbl) return;
-    memset(new_tbl, 0, new_cap * sizeof(tt_nd_t));
+    uint8_t *old_ctrls = map->ctrls;
+    uintptr_t *old_keys = map->keys;
+    size_t *old_vals = map->values;
 
-    map->tbl = new_tbl;
-    map->cap = new_cap;
-    map->size = 0; // Re-calculate size during insertions
+    size_t new_cap = old_cap * 2;
+    tt_map_t *new_m = ttak_create_map(new_cap, now);
+    if (!new_m) return;
 
     for (size_t i = 0; i < old_cap; i++) {
-        if (old_tbl[i].ctrl == OCCUPIED) {
-            ttak_insert_to_map(map, old_tbl[i].key, old_tbl[i].value, now);
+        if (old_ctrls[i] == OCCUPIED) {
+            ttak_insert_to_map(new_m, old_keys[i], old_vals[i], now);
         }
     }
-    
-    ttak_mem_free(old_tbl);
+
+    ttak_mem_free(old_ctrls);
+    ttak_mem_free(old_keys);
+    ttak_mem_free(old_vals);
+
+    uint64_t s = map->seed;
+    *map = *new_m;
+    map->seed = s;
+    ttak_mem_free(new_m);
 }
 
-/**
- * @brief Insert or update an entry in the map.
- *
- * @param map Map to mutate.
- * @param key Key to associate with the value.
- * @param val Stored payload.
- * @param now Timestamp for access validation.
- */
 void ttak_insert_to_map(tt_map_t *map, uintptr_t key, size_t val, uint64_t now) {
     if (!ttak_mem_access(map, now)) return;
-    if (map->size * 10 >= map->cap * 7) {
-        ttak_resize_map(map, now);
-    }
-    uint64_t h   = gen_hash_sip24(key, 0x0706050403020100ULL, 0x0f0e0d0c0b0a0908ULL);
-    size_t   idx = h & (map->cap - 1);
-    size_t s_idx = idx;
+    if (map->size * 10 >= map->cap * 7) ttak_resize_map(map, now);
 
-    while(map->tbl[idx].ctrl == OCCUPIED) {
-        if( map->tbl[idx].key == key) {
-            map->tbl[idx].value = val;
+    uint64_t h = gen_hash_wyhash(key, map->seed);
+    size_t idx = h & (map->cap - 1);
+
+    // Linear probing with padding - fewer branches
+    while (map->ctrls[idx] == OCCUPIED) {
+        if (map->keys[idx] == key) {
+            map->values[idx] = val;
             return;
         }
-        idx = (idx + 1) & (map->cap - 1);
-        if (idx == s_idx) return; // Table full
+        idx++;
+        // If we hit the padding limit, we must wrap. 
+        // But with MAX_PROBE and 70% load, this is rare.
+        if (idx >= map->cap + MAX_PROBE - 1) {
+            idx = 0;
+        }
     }
 
-    map->tbl[idx].key   = key;
-    map->tbl[idx].value = val;
-    map->tbl[idx].ctrl  = OCCUPIED;
+    map->ctrls[idx] = OCCUPIED;
+    map->keys[idx] = key;
+    map->values[idx] = val;
     map->size++;
 }
 
-/**
- * @brief Look up a key in the map.
- *
- * @param map Map instance to query.
- * @param key Key to search for.
- * @param out Optional pointer to receive the stored value.
- * @param now Timestamp for memory access validation.
- * @return true if the key exists, false otherwise.
- */
 _Bool ttak_map_get_key(tt_map_t *map, uintptr_t key, size_t *out, uint64_t now) {
-    if (!ttak_mem_access(map, now) || !map->tbl) return 0;
-    uint64_t h   = gen_hash_sip24(key, 0x0706050403020100ULL, 0x0f0e0d0c0b0a0908ULL);
-    size_t   idx = h & (map->cap - 1);
-    size_t s_idx = idx;
+    if (!ttak_mem_access(map, now)) return 0;
+    uint64_t h = gen_hash_wyhash(key, map->seed);
+    size_t idx = h & (map->cap - 1);
 
-    while (map->tbl[idx].ctrl != EMPTY) {
-        if(
-           (map->tbl[idx].ctrl == OCCUPIED) &&
-           (map->tbl[idx].key == key      ))
-        {
-            if (out) *out = map->tbl[idx].value;
-            return (_Bool)1;
+    while (map->ctrls[idx] != EMPTY) {
+        if (map->ctrls[idx] == OCCUPIED && map->keys[idx] == key) {
+            if (out) *out = map->values[idx];
+            return 1;
         }
-        idx = (idx + 1) & (map->cap - 1);
-        if(idx == s_idx) break;
+        idx++;
+        if (idx >= map->cap + MAX_PROBE - 1) idx = 0;
     }
-    return (_Bool)0;
+    return 0;
 }
 
-/**
- * @brief Remove an entry from the map and shrink when sparsity is high.
- *
- * @param map Map to update.
- * @param key Key to remove.
- * @param now Timestamp for memory tracking.
- */
 void ttak_delete_from_map(tt_map_t *map, uintptr_t key, uint64_t now) {
-    if (!ttak_mem_access(map, now) || !map->tbl) return;
-    uint64_t h   = gen_hash_sip24(key, 0x0706050403020100ULL, 0x0f0e0d0c0b0a0908ULL);
-    size_t   idx = h & (map->cap - 1);
-    size_t s_idx = idx;
-    _Bool  found = 0;
+    if (!ttak_mem_access(map, now)) return;
+    uint64_t h = gen_hash_wyhash(key, map->seed);
+    size_t idx = h & (map->cap - 1);
 
-    while (map->tbl[idx].ctrl != EMPTY) {
-        if(
-           (map->tbl[idx].ctrl == OCCUPIED) &&
-           (map->tbl[idx].key == key      ))
-        {
-            found = 1;
-            break;
+    while (map->ctrls[idx] != EMPTY) {
+        if (map->ctrls[idx] == OCCUPIED && map->keys[idx] == key) {
+            map->ctrls[idx] = DELETED;
+            map->size--;
+            return;
         }
-        idx = (idx + 1) & (map->cap - 1);
-        if(idx == s_idx) break;
-    }
-    if(!found) return;
-
-    map->tbl[idx].ctrl = DELETED;
-    map->size--;
-
-    if (map->size > 0) {
-        size_t diff = map->cap / map->size;
-        if(diff > 4 && map->cap > 1024) { // Only shrink if very sparse and large
-             size_t old_cap = map->cap;
-             size_t new_cap = old_cap / 2; 
-             if (new_cap >= 8192) {
-                 ttak_node_t *old_tbl = map->tbl;
-                 ttak_node_t *new_tbl = ttak_mem_alloc(new_cap * sizeof(tt_nd_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
-                 if (new_tbl) {
-                     memset(new_tbl, 0, new_cap * sizeof(tt_nd_t));
-                     map->tbl = new_tbl;
-                     map->cap = new_cap;
-                     map->size = 0;
-                     for (size_t i = 0; i < old_cap; i++) {
-                         if (old_tbl[i].ctrl == OCCUPIED) {
-                             ttak_insert_to_map(map, old_tbl[i].key, old_tbl[i].value, now);
-                         }
-                     }
-                     ttak_mem_free(old_tbl);
-                 }
-             }
-        }
+        idx++;
+        if (idx >= map->cap + MAX_PROBE - 1) idx = 0;
     }
 }

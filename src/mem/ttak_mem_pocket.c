@@ -98,12 +98,10 @@ static void* allocate_new_pocket_page(int freelist_idx) {
 ttak_mem_header_t* ttak_mem_pocket_alloc_internal(size_t user_requested_size) {
     if (user_requested_size == 0 || user_requested_size > 128) return NULL; 
 
-    t_reentrancy_guard = true;
-
+    // Determined size class index.
     size_t total_block_size = sizeof(ttak_mem_header_t) + user_requested_size;
     int idx = get_pocket_size_class_idx(total_block_size);
     if (idx == -1) {
-        t_reentrancy_guard = false;
         return NULL;
     }
 
@@ -112,25 +110,20 @@ ttak_mem_header_t* ttak_mem_pocket_alloc_internal(size_t user_requested_size) {
         ttak_pocket_freelists[idx].head = *(void**)header_block;
     } else {
         if (!allocate_new_pocket_page(idx)) {
-            t_reentrancy_guard = false;
             return NULL;
         }
         header_block = (ttak_mem_header_t*)ttak_pocket_freelists[idx].head;
         if (header_block) {
              ttak_pocket_freelists[idx].head = *(void**)header_block;
         } else {
-            t_reentrancy_guard = false;
             return NULL;
         }
     }
-    t_reentrancy_guard = false;
     return header_block;
 }
 
 void _pocket_free_internal(ttak_mem_header_t* header) {
     if (!header) return;
-
-    t_reentrancy_guard = true;
 
     // Determine the page start to extract the size class index.
     uintptr_t page_start_addr = (uintptr_t)header & ~((uintptr_t)TTAK_POCKET_PAGE_SIZE - 1);
@@ -138,20 +131,16 @@ void _pocket_free_internal(ttak_mem_header_t* header) {
 
     if ((page_magic_val & 0xFFFFFF00) != POCKET_MAGIC) {
         fprintf(stderr, "ttak_mem_pocket: Freeing non-pocket allocated header %p\n", (void*)header);
-        t_reentrancy_guard = false;
         return;
     }
 
     int idx = page_magic_val & 0xFF;
     if (idx < 0 || idx >= TTAK_NUM_POCKET_FREELISTS) {
         fprintf(stderr, "ttak_mem_pocket: Corrupted freelist index for header %p\n", (void*)header);
-        t_reentrancy_guard = false;
         return;
     }
 
     // Push back to the LIFO freelist.
     *(void**)header = ttak_pocket_freelists[idx].head;
     ttak_pocket_freelists[idx].head = header;
-
-    t_reentrancy_guard = false;
 }

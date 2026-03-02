@@ -5,18 +5,6 @@
 #include <stdio.h>
 #include <math.h>
 
-/**
- * Jeongseunggaebang (by Hong Jeong-ha et al.)
- * Logic: Linear accumulation to minimize latency and rounding errors.
- * Used for polynomial evaluation and iterative integration steps.
- * Reference: Hong Jeong-ha, "Guiljip (九一集)", 1660s.
- */
-static void ttak_math_jeungseung_accumulate(ttak_bigreal_t *res, const ttak_bigreal_t *x, const ttak_bigreal_t *a, uint64_t now) {
-    /* res = res * x + a */
-    ttak_bigreal_mul(res, res, x, now);
-    ttak_bigreal_add(res, res, a, now);
-}
-
 _Bool ttak_calculus_diff(ttak_bigreal_t *res, ttak_math_func_t f, const ttak_bigreal_t *x, void *ctx, uint64_t now) {
     if (!res || !f || !x) return false;
     

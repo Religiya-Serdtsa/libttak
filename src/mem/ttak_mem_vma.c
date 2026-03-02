@@ -67,8 +67,6 @@ ttak_mem_header_t* ttak_mem_vma_alloc_internal(size_t user_requested_size) {
         return NULL;
     }
 
-    t_reentrancy_guard = true;
-
     size_t total_alloc_size = sizeof(ttak_mem_header_t) + user_requested_size;
     // Align block to TTAK_VMA_ALIGNMENT (64-byte).
     size_t aligned_total_alloc_size = (total_alloc_size + TTAK_VMA_ALIGNMENT - 1) & ~((size_t)TTAK_VMA_ALIGNMENT - 1);
@@ -82,7 +80,6 @@ ttak_mem_header_t* ttak_mem_vma_alloc_internal(size_t user_requested_size) {
         new_cursor = current_aligned_start + aligned_total_alloc_size;
 
         if (new_cursor > (uintptr_t)global_vma_region.start_addr + TTAK_VMA_REGION_SIZE) {
-            t_reentrancy_guard = false;
             return NULL; 
         }
 
@@ -92,14 +89,12 @@ ttak_mem_header_t* ttak_mem_vma_alloc_internal(size_t user_requested_size) {
     ttak_mem_header_t* allocated_header = (ttak_mem_header_t*)((old_cursor + TTAK_VMA_ALIGNMENT - 1) & ~((uintptr_t)TTAK_VMA_ALIGNMENT - 1));
     memset(allocated_header, 0, aligned_total_alloc_size);
 
-    t_reentrancy_guard = false;
     return allocated_header;
 }
 
 void _vma_free_internal(ttak_mem_header_t* header) {
     // Bump allocator: individual frees are no-ops.
     (void)header;
-    t_reentrancy_guard = false;
 }
 
 /**

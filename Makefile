@@ -3,8 +3,8 @@ CXX ?= g++
 AR ?= ar
 NVCC ?= nvcc
 HIPCC ?= hipcc
-EMBEDDED ?= 1
-USE_CUDA ?= 1
+EMBEDDED ?= 0
+USE_CUDA ?= 0
 USE_OPENCL ?= 0
 USE_ROCM ?= 0
 
@@ -124,12 +124,12 @@ HIPCCFLAGS ?= -std=c++17 -Iinclude -DENABLE_ROCM
 endif
 
 C_SRCS_ALL = $(SRCS) $(C_OPTIONAL_SRCS)
-OBJS = $(patsubst src/%.c,obj/%.$(OBJEXT),$(SRCS))
-OBJS += $(patsubst src/%.c,obj/%.$(OBJEXT),$(C_OPTIONAL_SRCS))
-ASMS = $(patsubst src/%.c,obj/%.s,$(C_SRCS_ALL))
+OBJS = $(patsubst src/%.c,obj_yjlee/%.$(OBJEXT),$(SRCS))
+OBJS += $(patsubst src/%.c,obj_yjlee/%.$(OBJEXT),$(C_OPTIONAL_SRCS))
+ASMS = $(patsubst src/%.c,obj_yjlee/%.s,$(C_SRCS_ALL))
 
-CUDA_OBJS = $(patsubst src/%.cu,obj/%.$(OBJEXT),$(CUDA_SRCS))
-ROCM_OBJS = $(patsubst src/%.cpp,obj/%.$(OBJEXT),$(ROCM_SRCS))
+CUDA_OBJS = $(patsubst src/%.cu,obj_yjlee/%.$(OBJEXT),$(CUDA_SRCS))
+ROCM_OBJS = $(patsubst src/%.cpp,obj_yjlee/%.$(OBJEXT),$(ROCM_SRCS))
 OBJS += $(CUDA_OBJS) $(ROCM_OBJS)
 
 DEPS = $(patsubst %.$(OBJEXT),%.d,$(OBJS))
@@ -148,27 +148,27 @@ $(LIB): $(OBJS)
 asm: directories $(ASMS)
 
 # Default rule for all other directories
-obj/%.o: src/%.c
+obj_yjlee/%.o: src/%.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(DEPFLAGS) -c $< -o $@
 
-obj/%.obj: src/%.c
+obj_yjlee/%.obj: src/%.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) /c $< /Fo$@
 
-obj/%.o: src/%.cu
+obj_yjlee/%.o: src/%.cu
 	@mkdir -p $(dir $@)
 	$(NVCC) $(NVCCFLAGS) -c $< -o $@
 
-obj/%.obj: src/%.cu
+obj_yjlee/%.obj: src/%.cu
 	@mkdir -p $(dir $@)
-	$(NVCC) $(NVCCFLAGS) -c $< -o $@
+	$(NVCC) $(NVCCFLAGS) -c $< /Fo$@
 
-obj/%.o: src/%.cpp
+obj_yjlee/%.o: src/%.cpp
 	@mkdir -p $(dir $@)
 	$(HIPCC) $(HIPCCFLAGS) -c $< -o $@
 
-obj/%.s: obj/%.o
+obj_yjlee/%.s: obj_yjlee/%.o
 	@mkdir -p $(dir $@)
 	objdump -d $< > $@
 
@@ -190,7 +190,7 @@ tests/test_%: tests/test_%.c $(LIB)
 	$(CC) $(CFLAGS) $< -o $@ $(LIB) $(LDFLAGS)
 
 directories:
-	@mkdir -p $(foreach dir,$(SRC_DIRS),obj/$(patsubst src/%,%,$(dir))) obj/accel lib
+	@mkdir -p $(foreach dir,$(SRC_DIRS),obj_yjlee/$(patsubst src/%,%,$(dir))) obj_yjlee/accel lib
 
 clean:
 	rm -rf obj lib tests/*.d

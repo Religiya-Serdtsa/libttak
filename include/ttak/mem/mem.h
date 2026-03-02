@@ -187,11 +187,27 @@ void *ttak_mem_dup_safe(const void *src, size_t size, uint64_t lifetime_ticks, u
 void ttak_mem_free(void *ptr);
 
 /**
+ * @brief Safe accessor implemented in the library for ABI-stable builds.
+ *
+ * Consumers that define TTAK_MEM_FORCE_ACCESS_BRIDGE will call into this
+ * function instead of relying on the inline header logic. This is primarily
+ * intended for scenarios where the library was compiled with a different
+ * compiler (e.g., TinyCC) and the structure layout may not match the
+ * including translation unit.
+ */
+void *ttak_mem_access_bridge(void *ptr, uint64_t now_tick);
+
+/**
  * @brief Accesses a memory block, verifying its lifecycle and security.
  * @param ptr Pointer to user memory.
  * @param now_tick Current timestamp in ticks.
  * @return Validated pointer, or NULL if security check fails or block is expired.
  */
+#if defined(TTAK_MEM_FORCE_ACCESS_BRIDGE)
+static inline void *ttak_mem_access(void *ptr, uint64_t now_tick) {
+    return ttak_mem_access_bridge(ptr, now_tick);
+}
+#else
 static inline void *ttak_mem_access(void *ptr, uint64_t now_tick) {
     if (!ptr) return NULL;
     ttak_mem_header_t *header = (ttak_mem_header_t *)ptr - 1;
@@ -204,6 +220,7 @@ static inline void *ttak_mem_access(void *ptr, uint64_t now_tick) {
     TTAK_ATOMIC_FETCH_ADD_U64(&header->access_count, 1ULL);
     return ptr;
 }
+#endif
 
 /**
  * @brief Inspects for "dirty" pointers (expired or over-accessed).

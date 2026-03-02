@@ -20,20 +20,9 @@
 #if defined(__TINYC__)
 static pthread_once_t worker_tls_once = PTHREAD_ONCE_INIT;
 static pthread_key_t worker_tls_key;
-
-static void worker_tls_init(void) {
-    pthread_key_create(&worker_tls_key, NULL);
-}
-
-static ttak_worker_t *get_current_worker(void) {
-    pthread_once(&worker_tls_once, worker_tls_init);
-    return (ttak_worker_t *)pthread_getspecific(worker_tls_key);
-}
-
-static void set_current_worker(ttak_worker_t *worker) {
-    pthread_once(&worker_tls_once, worker_tls_init);
-    pthread_setspecific(worker_tls_key, worker);
-}
+static void worker_tls_init(void) { pthread_key_create(&worker_tls_key, NULL); }
+static ttak_worker_t *get_current_worker(void) { pthread_once(&worker_tls_once, worker_tls_init); return (ttak_worker_t *)pthread_getspecific(worker_tls_key); }
+static void set_current_worker(ttak_worker_t *worker) { pthread_once(&worker_tls_once, worker_tls_init); pthread_setspecific(worker_tls_key, worker); }
 #else
 static TTAK_THREAD_LOCAL ttak_worker_t *current_worker = NULL;
 static inline ttak_worker_t *get_current_worker(void) { return current_worker; }
@@ -43,63 +32,27 @@ static inline void set_current_worker(ttak_worker_t *worker) { current_worker = 
 void ttak_worker_abort(void) {
     ttak_worker_t *worker = get_current_worker();
     if (worker && worker->wrapper && worker->wrapper->jmp_magic == TT_JMP_MAGIC) {
-        tt_longjmp(worker->wrapper->env,
-                   &worker->wrapper->jmp_magic,
-                   &worker->wrapper->jmp_tid,
-                   1);
+        tt_longjmp(worker->wrapper->env, &worker->wrapper->jmp_magic, &worker->wrapper->jmp_tid, 1);
     }
 }
 
-/**
- * @brief Threaded function wrapper that validates memory every tick.
- */
 static void threaded_function_wrapper(ttak_worker_t *worker, ttak_task_t *task) {
-    uint64_t now = ttak_get_tick_count();
-    
-    // Validate all tracked pointers for this task (demonstration)
-    size_t count = 0;
-    void **dirty = tt_inspect_dirty_pointers(now, &count);
-    if (dirty && count > 0) {
-        // If critical memory for task is dirty, we trigger a longjmp to recover the worker thread
-        // This is a practical use of setjmp/longjmp for error recovery in a task execution context.
-        free(dirty);
-        if (worker->wrapper) {
-            tt_longjmp(worker->wrapper->env,
-                       &worker->wrapper->jmp_magic,
-                       &worker->wrapper->jmp_tid,
-                       1);
-        }
-    } else if (dirty) {
-        free(dirty);
-    }
-
+    (void)worker;
     if (task) {
         uint64_t start_time = ttak_get_tick_count();
         ttak_task_set_start_ts(task, start_time);
-        
-        ttak_task_execute(task, now);
-        
+        ttak_task_execute(task, start_time);
         uint64_t end_time = ttak_get_tick_count();
-        uint64_t duration = (end_time >= start_time) ? (end_time - start_time) : 0;
-        
-        ttak_scheduler_record_execution(task, duration);
+        ttak_scheduler_record_execution(task, (end_time >= start_time) ? (end_time - start_time) : 0);
     }
 }
 
-/**
- * @brief Worker thread entry point that drains the pool queue.
- *
- * @param arg Pointer to the worker structure.
- * @return Exit code cast to void*.
- */
 void *ttak_worker_routine(void *arg) {
     ttak_worker_t *self = (ttak_worker_t *)arg;
     ttak_thread_pool_t *pool = self->pool;
-
     set_current_worker(self);
     ttak_epoch_register_thread();
     ttak_epoch_exit();
-
     if (self->wrapper) {
 #ifdef _WIN32
         int p = THREAD_PRIORITY_NORMAL;
@@ -112,42 +65,23 @@ void *ttak_worker_routine(void *arg) {
         setpriority(PRIO_PROCESS, 0, self->wrapper->nice_val);
 #endif
     }
-
     while (!self->should_stop) {
         pthread_mutex_lock(&pool->pool_lock);
-        while (pool->task_queue.head == NULL && !self->should_stop && !pool->is_shutdown) {
-            pthread_cond_wait(&pool->task_cond, &pool->pool_lock);
-        }
-
-        if (self->should_stop || pool->is_shutdown) {
-            pthread_mutex_unlock(&pool->pool_lock);
-            break;
-        }
-
+        while (pool->task_queue.head == NULL && !self->should_stop && !pool->is_shutdown) pthread_cond_wait(&pool->task_cond, &pool->pool_lock);
+        if (self->should_stop || pool->is_shutdown) { pthread_mutex_unlock(&pool->pool_lock); break; }
         uint64_t now = ttak_get_tick_count();
         ttak_task_t *task = pool->task_queue.pop(&pool->task_queue, now);
         pthread_mutex_unlock(&pool->pool_lock);
-
         if (task) {
             volatile _Bool epoch_active = 0;
             if (tt_setjmp(self->wrapper->env, &self->wrapper->jmp_magic, &self->wrapper->jmp_tid) == 0) {
-                ttak_epoch_enter();
-                epoch_active = 1;
+                ttak_epoch_enter(); epoch_active = 1;
                 threaded_function_wrapper(self, task);
-                ttak_epoch_exit();
-                epoch_active = 0;
-            } else {
-                // Recovered from longjmp
-                if (epoch_active) {
-                    ttak_epoch_exit();
-                    epoch_active = 0;
-                }
-                self->exit_code = TTAK_ERR_FATAL_EXIT;
-            }
+                ttak_epoch_exit(); epoch_active = 0;
+            } else if (epoch_active) { ttak_epoch_exit(); epoch_active = 0; self->exit_code = TTAK_ERR_FATAL_EXIT; }
             ttak_task_destroy(task, now);
         }
     }
-
     ttak_epoch_deregister_thread();
     return (void *)(uintptr_t)self->exit_code;
 }

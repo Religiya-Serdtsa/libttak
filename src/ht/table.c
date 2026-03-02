@@ -1,108 +1,22 @@
 #include <ttak/ht/table.h>
+#include <ttak/ht/hash.h>
+#include <ttak/ht/wyhash.h>
 #include <ttak/mem/mem.h>
 #include <stdlib.h>
 #include <string.h>
 
-/* SipHash-2-4 implementation for byte arrays */
-#define ROTL(x, b) (uint64_t)(((x) << (b)) | ((x) >> (64 - (b))))
-
-#define U8TO64_LE(p) \
-    (((uint64_t)((p)[0])) | \
-    ((uint64_t)((p)[1]) << 8) | \
-    ((uint64_t)((p)[2]) << 16) | \
-    ((uint64_t)((p)[3]) << 24) | \
-    ((uint64_t)((p)[4]) << 32) | \
-    ((uint64_t)((p)[5]) << 40) | \
-    ((uint64_t)((p)[6]) << 48) | \
-    ((uint64_t)((p)[7]) << 56))
-
-#define SIPROUND \
-    do {                    \
-        v0 += v1;           \
-        v1 = ROTL(v1, 13);  \
-        v1 ^= v0;           \
-        v0 = ROTL(v0, 32);  \
-        v2 += v3;           \
-        v3 = ROTL(v3, 16);  \
-        v3 ^= v2;           \
-        v0 += v3;           \
-        v3 = ROTL(v3, 21);  \
-        v3 ^= v0;           \
-        v2 += v1;           \
-        v1 = ROTL(v1, 17);  \
-        v1 ^= v2;           \
-        v2 = ROTL(v2, 32);  \
-    } while (0)
+#define MAX_PROBE 32
 
 /**
- * @brief Default SipHash-2-4 implementation for arbitrary byte keys.
- *
- * @param key Key bytes.
- * @param len Number of bytes.
- * @param k0  First SipHash key.
- * @param k1  Second SipHash key.
- * @return 64-bit hash value.
+ * @brief Default wyhash implementation for arbitrary byte keys.
  */
-static uint64_t default_siphash(const void *key, size_t len, uint64_t k0, uint64_t k1) {
-    uint64_t v0 = 0x736f6d6570736575ULL ^ k0;
-    uint64_t v1 = 0x646f72616e646f6dULL ^ k1;
-    uint64_t v2 = 0x6c7967656e657261ULL ^ k0;
-    uint64_t v3 = 0x7465646279746573ULL ^ k1;
-    const uint8_t *data = (const uint8_t *)key;
-    const uint8_t *end = data + (len - (len % 8));
-    uint64_t m;
-
-    for (; data != end; data += 8) {
-        m = U8TO64_LE(data);
-        v3 ^= m;
-        SIPROUND;
-        SIPROUND;
-        v0 ^= m;
-    }
-
-    const uint8_t *left = data;
-    uint64_t b = ((uint64_t)len) << 56;
-    switch (len % 8) {
-        /* fall through */
-        case 7: b |= ((uint64_t)left[6]) << 48;
-        /* fall through */
-        case 6: b |= ((uint64_t)left[5]) << 40;
-        /* fall through */
-        case 5: b |= ((uint64_t)left[4]) << 32;
-        /* fall through */
-        case 4: b |= ((uint64_t)left[3]) << 24;
-        /* fall through */
-        case 3: b |= ((uint64_t)left[2]) << 16;
-        /* fall through */
-        case 2: b |= ((uint64_t)left[1]) << 8;
-        /* fall through */
-        case 1: b |= ((uint64_t)left[0]); break;
-        case 0: break;
-    }
-
-    v3 ^= b;
-    SIPROUND;
-    SIPROUND;
-    v0 ^= b;
-
-    v2 ^= 0xff;
-    SIPROUND;
-    SIPROUND;
-    SIPROUND;
-    SIPROUND;
-
-    return v0 ^ v1 ^ v2 ^ v3;
+static uint64_t default_wyhash(const void *key, size_t len, uint64_t k0, uint64_t k1) {
+    (void)k1;
+    return ttak_wyhash(key, len, k0);
 }
 
 /**
  * @brief Initialize a hash table with optional callbacks.
- *
- * @param table     Table to configure.
- * @param capacity  Initial bucket count.
- * @param hash_func Hashing routine (defaults to SipHash-2-4).
- * @param key_cmp   Comparator for keys.
- * @param key_free  Destructor for keys (optional).
- * @param val_free  Destructor for values (optional).
  */
 void ttak_table_init(ttak_table_t *table, size_t capacity,
                      uint64_t (*hash_func)(const void*, size_t, uint64_t, uint64_t),
@@ -110,154 +24,137 @@ void ttak_table_init(ttak_table_t *table, size_t capacity,
                      void (*key_free)(void*),
                      void (*val_free)(void*)) {
     if (!table) return;
-    table->capacity = capacity > 0 ? capacity : 16;
+    
+    // Round up capacity to power of 2
+    size_t cap = 16;
+    while (cap < capacity) cap <<= 1;
+    
+    table->capacity = cap;
     table->size = 0;
-    table->k0 = 0x0706050403020100ULL; // Default keys
-    table->k1 = 0x0F0E0D0C0B0A0908ULL;
-    table->hash_func = hash_func ? hash_func : default_siphash;
+    table->k0 = 0xa0761d6478bd642fULL;
+    table->k1 = 0xe7037ed1a0b428dbULL;
+    table->hash_func = hash_func ? hash_func : default_wyhash;
     table->key_cmp = key_cmp;
     table->key_free = key_free;
     table->val_free = val_free;
 
-    // Use huge pages for large tables if possible
-    ttak_mem_flags_t flags = (capacity * sizeof(ttak_table_entry_t *) >= 2 * 1024 * 1024) ? TTAK_MEM_HUGE_PAGES : TTAK_MEM_DEFAULT;
-    table->buckets = ttak_mem_alloc_safe(sizeof(ttak_table_entry_t *) * table->capacity, __TTAK_UNSAFE_MEM_FOREVER__, 0, false, false, true, true, flags);
+    size_t padded_cap = cap + MAX_PROBE;
+    ttak_mem_flags_t flags = (padded_cap * (sizeof(uint8_t) + sizeof(void*) * 3) >= 2 * 1024 * 1024) ? TTAK_MEM_HUGE_PAGES : TTAK_MEM_DEFAULT;
     
-    // Explicitly zero out buckets (though mem_alloc usually zeros, safe to ensure)
-    if (table->buckets) {
-        memset(table->buckets, 0, sizeof(ttak_table_entry_t *) * table->capacity);
-    }
+    table->ctrls = ttak_mem_alloc_safe(padded_cap * sizeof(uint8_t), __TTAK_UNSAFE_MEM_FOREVER__, 0, false, false, true, true, flags);
+    table->keys = ttak_mem_alloc_safe(padded_cap * sizeof(void*), __TTAK_UNSAFE_MEM_FOREVER__, 0, false, false, true, true, flags);
+    table->key_lens = ttak_mem_alloc_safe(padded_cap * sizeof(size_t), __TTAK_UNSAFE_MEM_FOREVER__, 0, false, false, true, true, flags);
+    table->values = ttak_mem_alloc_safe(padded_cap * sizeof(void*), __TTAK_UNSAFE_MEM_FOREVER__, 0, false, false, true, true, flags);
+
+    if (table->ctrls) memset(table->ctrls, 0, padded_cap * sizeof(uint8_t));
 }
 
-/**
- * @brief Insert or update a table entry.
- *
- * @param table   Table to mutate.
- * @param key     Key owned by the table.
- * @param key_len Length of the key.
- * @param value   Value pointer to store.
- * @param now     Timestamp for memory safety checks.
- */
-void ttak_table_put(ttak_table_t *table, void *key, size_t key_len, void *value, uint64_t now) {
-    if (!table || !table->buckets) return;
+static void ttak_table_resize(ttak_table_t *table, uint64_t now) {
+    size_t old_cap = table->capacity;
+    uint8_t *old_ctrls = table->ctrls;
+    void **old_keys = table->keys;
+    size_t *old_key_lens = table->key_lens;
+    void **old_vals = table->values;
 
-    uint64_t hash = table->hash_func(key, key_len, table->k0, table->k1);
-    size_t idx = hash % table->capacity;
+    ttak_table_t new_t;
+    ttak_table_init(&new_t, old_cap * 2, table->hash_func, table->key_cmp, NULL, NULL);
+    new_t.k0 = table->k0;
+    new_t.k1 = table->k1;
 
-    ttak_table_entry_t *entry = table->buckets[idx];
-    while (entry) {
-        if (!ttak_mem_access(entry, now)) {
-             // Corruption or stale pointer
-             return; 
+    for (size_t i = 0; i < old_cap + MAX_PROBE; i++) {
+        if (old_ctrls[i] == OCCUPIED) {
+            ttak_table_put(&new_t, old_keys[i], old_key_lens[i], old_vals[i], now); 
         }
-        if (table->key_cmp(entry->key, key) == 0) {
-            // Update value
-            if (table->val_free && entry->value) table->val_free(entry->value);
-            entry->value = value;
-            return;
-        }
-        entry = entry->next;
     }
 
-    // New entry
-    ttak_table_entry_t *new_entry = ttak_mem_alloc_safe(sizeof(ttak_table_entry_t), __TTAK_UNSAFE_MEM_FOREVER__, now, false, false, true, true, TTAK_MEM_DEFAULT);
-    if (!new_entry) return;
+    ttak_mem_free(old_ctrls);
+    ttak_mem_free(old_keys);
+    ttak_mem_free(old_key_lens);
+    ttak_mem_free(old_vals);
 
-    new_entry->key = key;
-    new_entry->value = value;
-    new_entry->next = table->buckets[idx];
-    table->buckets[idx] = new_entry;
+    table->ctrls = new_t.ctrls;
+    table->keys = new_t.keys;
+    table->key_lens = new_t.key_lens;
+    table->values = new_t.values;
+    table->capacity = new_t.capacity;
+}
+
+void ttak_table_put(ttak_table_t *table, void *key, size_t key_len, void *value, uint64_t now) {
+    if (!table || !table->ctrls) return;
+    if (table->size * 10 >= table->capacity * 7) ttak_table_resize(table, now);
+
+    uint64_t hash = table->hash_func(key, key_len, table->k0, table->k1);
+    size_t idx = hash & (table->capacity - 1);
+
+    while (table->ctrls[idx] == OCCUPIED) {
+        if (table->key_cmp(table->keys[idx], key) == 0) {
+            if (table->val_free && table->values[idx]) table->val_free(table->values[idx]);
+            table->values[idx] = value;
+            table->key_lens[idx] = key_len;
+            return;
+        }
+        idx++;
+        if (idx >= table->capacity + MAX_PROBE - 1) idx = 0;
+    }
+
+    table->ctrls[idx] = OCCUPIED;
+    table->keys[idx] = key;
+    table->key_lens[idx] = key_len;
+    table->values[idx] = value;
     table->size++;
 }
 
-/**
- * @brief Retrieve a value from the table.
- *
- * @param table   Table to inspect.
- * @param key     Key to locate.
- * @param key_len Key length in bytes.
- * @param now     Timestamp for memory validation.
- * @return Stored value pointer or NULL if absent.
- */
 void *ttak_table_get(ttak_table_t *table, const void *key, size_t key_len, uint64_t now) {
-    if (!table || !table->buckets) return NULL;
+    if (!table || !table->ctrls) return NULL;
+    (void)now;
 
     uint64_t hash = table->hash_func(key, key_len, table->k0, table->k1);
-    size_t idx = hash % table->capacity;
+    size_t idx = hash & (table->capacity - 1);
 
-    ttak_table_entry_t *entry = table->buckets[idx];
-    while (entry) {
-        if (!ttak_mem_access(entry, now)) return NULL;
-        if (table->key_cmp(entry->key, key) == 0) {
-            return entry->value;
+    while (table->ctrls[idx] != EMPTY) {
+        if (table->ctrls[idx] == OCCUPIED && table->key_cmp(table->keys[idx], key) == 0) {
+            return table->values[idx];
         }
-        entry = entry->next;
+        idx++;
+        if (idx >= table->capacity + MAX_PROBE - 1) idx = 0;
     }
     return NULL;
 }
 
-/**
- * @brief Remove an entry from the table.
- *
- * @param table   Table to mutate.
- * @param key     Key to delete.
- * @param key_len Key length in bytes.
- * @param now     Timestamp for memory validation.
- * @return true if removed, false if the key was missing.
- */
 bool ttak_table_remove(ttak_table_t *table, const void *key, size_t key_len, uint64_t now) {
-    if (!table || !table->buckets) return false;
+    if (!table || !table->ctrls) return false;
+    (void)now;
 
     uint64_t hash = table->hash_func(key, key_len, table->k0, table->k1);
-    size_t idx = hash % table->capacity;
+    size_t idx = hash & (table->capacity - 1);
 
-    ttak_table_entry_t *entry = table->buckets[idx];
-    ttak_table_entry_t *prev = NULL;
-
-    while (entry) {
-        if (!ttak_mem_access(entry, now)) return false;
-        
-        if (table->key_cmp(entry->key, key) == 0) {
-            if (prev) {
-                prev->next = entry->next;
-            } else {
-                table->buckets[idx] = entry->next;
-            }
-            
-            if (table->key_free && entry->key) table->key_free(entry->key);
-            if (table->val_free && entry->value) table->val_free(entry->value);
-            
-            ttak_mem_free(entry);
+    while (table->ctrls[idx] != EMPTY) {
+        if (table->ctrls[idx] == OCCUPIED && table->key_cmp(table->keys[idx], key) == 0) {
+            if (table->key_free && table->keys[idx]) table->key_free(table->keys[idx]);
+            if (table->val_free && table->values[idx]) table->val_free(table->values[idx]);
+            table->ctrls[idx] = DELETED;
             table->size--;
             return true;
         }
-        prev = entry;
-        entry = entry->next;
+        idx++;
+        if (idx >= table->capacity + MAX_PROBE - 1) idx = 0;
     }
     return false;
 }
 
-/**
- * @brief Destroy the hash table and free all entries.
- *
- * @param table Table to tear down.
- * @param now   Timestamp for allocator bookkeeping.
- */
 void ttak_table_destroy(ttak_table_t *table, uint64_t now) {
-    if (!table || !table->buckets) return;
+    if (!table || !table->ctrls) return;
+    (void)now;
 
-    for (size_t i = 0; i < table->capacity; i++) {
-        ttak_table_entry_t *entry = table->buckets[i];
-        while (entry) {
-            ttak_table_entry_t *next = entry->next;
-            if (ttak_mem_access(entry, now)) {
-                if (table->key_free && entry->key) table->key_free(entry->key);
-                if (table->val_free && entry->value) table->val_free(entry->value);
-                ttak_mem_free(entry);
-            }
-            entry = next;
+    for (size_t i = 0; i < table->capacity + MAX_PROBE; i++) {
+        if (table->ctrls[i] == OCCUPIED) {
+            if (table->key_free && table->keys[i]) table->key_free(table->keys[i]);
+            if (table->val_free && table->values[i]) table->val_free(table->values[i]);
         }
     }
-    ttak_mem_free(table->buckets);
+    ttak_mem_free(table->ctrls);
+    ttak_mem_free(table->keys);
+    ttak_mem_free(table->key_lens);
+    ttak_mem_free(table->values);
     table->size = 0;
 }

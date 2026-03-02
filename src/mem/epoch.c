@@ -215,9 +215,8 @@ typedef struct ttak_thread_node {
  * In non-TinyCC builds we use TLS storage. For TinyCC, a single global pointer is used.
  * That mode is not thread-safe but preserves buildability in constrained toolchains.
  */
-#if !defined(__TINYC__)
-TTAK_VIS_DEFAULT _Thread_local ttak_thread_state_t *t_local_state = NULL;
-#else
+/* Tiny C does not support _Thread_local */
+#if defined(__TINYC__)
 TTAK_VIS_DEFAULT ttak_thread_state_t *t_local_state_unused = NULL;
 static pthread_key_t g_tls_key;
 static pthread_once_t g_tls_once = PTHREAD_ONCE_INIT;
@@ -230,6 +229,8 @@ void ttak_set_t_local_state(ttak_thread_state_t *val) {
     pthread_once(&g_tls_once, _ttak_tls_init);
     pthread_setspecific(g_tls_key, val);
 }
+#else
+_Thread_local ttak_thread_state_t *t_local_state = NULL;
 #endif
 
 /**

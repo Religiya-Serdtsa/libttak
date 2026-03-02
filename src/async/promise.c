@@ -1,6 +1,7 @@
 #include <ttak/async/promise.h>
 #include <ttak/mem/mem.h>
 #include <stdlib.h>
+#include <string.h>
 /**
  * @brief Create a promise/future pair that lives for the process lifetime.
  *
@@ -12,19 +13,19 @@
  */
 
 ttak_promise_t *ttak_promise_create(uint64_t now) {
-    ttak_promise_t *promise = (ttak_promise_t *)ttak_mem_alloc(sizeof(ttak_promise_t), __TTAK_UNSAFE_MEM_FOREVER__, now); // A promise structure lives forever unless a developer cleans it.
-    if (!promise) return NULL; // must be handled using TTAK_STRUCT_IS_NULL(ptr);
+    ttak_promise_t *promise = (ttak_promise_t *)ttak_mem_alloc(sizeof(ttak_promise_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
+    if (!promise) return NULL;
+    memset(promise, 0, sizeof(*promise));
 
-    promise->future = (ttak_future_t *)ttak_mem_alloc(sizeof(ttak_future_t), __TTAK_UNSAFE_MEM_FOREVER__, now); // same for a future pointer.
+    promise->future = (ttak_future_t *)ttak_mem_alloc(sizeof(ttak_future_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!promise->future) {
         ttak_mem_free(promise);
-        return NULL; // must be handled using TTAK_STRUCT_IS_NULL(ptr);
+        return NULL;
     }
+    memset(promise->future, 0, sizeof(*promise->future));
 
-    promise->future->ready = false; // initialize future->ready to false
-    promise->future->result = NULL; // initialize future->result to NULL
-    pthread_mutex_init(&promise->future->mutex, NULL); // mutex to prevent concurrent memory access issues
-    pthread_cond_init(&promise->future->cond, NULL); // should conditionally sync
+    pthread_mutex_init(&promise->future->mutex, NULL);
+    pthread_cond_init(&promise->future->cond, NULL);
 
     return promise;
 }
@@ -40,12 +41,17 @@ ttak_promise_t *ttak_promise_create(uint64_t now) {
  */
 
 void ttak_promise_set_value(ttak_promise_t *promise, void *val, uint64_t now) {
-    if (!ttak_mem_access(promise, now) || !promise->future) return;
-    pthread_mutex_lock(&promise->future->mutex);
-    promise->future->result = val;
-    promise->future->ready = true;
-    pthread_cond_broadcast(&promise->future->cond);
-    pthread_mutex_unlock(&promise->future->mutex);
+    ttak_promise_t *safe_promise = (ttak_promise_t *)ttak_mem_access(promise, now);
+    if (!safe_promise) return;
+
+    ttak_future_t *future = (ttak_future_t *)ttak_mem_access(safe_promise->future, now);
+    if (!future) return;
+
+    pthread_mutex_lock(&future->mutex);
+    future->result = val;
+    future->ready = true;
+    pthread_cond_broadcast(&future->cond);
+    pthread_mutex_unlock(&future->mutex);
 }
 
 /**
