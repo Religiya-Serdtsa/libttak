@@ -200,14 +200,13 @@ static const void *ttak_shared_access_ebr_impl(ttak_shared_t *self, ttak_owner_t
         ttak_epoch_enter();
     }
 
-    void *ptr = atomic_load_explicit(&self->shared, memory_order_relaxed);
+    /* Use acquire load to ensure we see the payload data written by swap_ebr */
+    void *ptr = atomic_load_explicit(&self->shared, memory_order_acquire);
     
     if (TTAK_LIKELY(self->level == TTAK_SHARED_NO_LEVEL)) {
         if (result) *result = TTAK_OWNER_SUCCESS;
         return ptr;
     }
-
-    atomic_thread_fence(memory_order_acquire);
 
     uint64_t current_ts = ptr ? TTAK_GET_HEADER(ptr)->ts : self->ts;
     ttak_shared_result_t res = _ttak_shared_validate_owner(self, claimant, current_ts);
@@ -360,7 +359,18 @@ void ttak_shared_init(ttak_shared_t *self) {
     for (int i = 0; i < TTAK_SHARD_DIR_SIZE; i++) {
         atomic_init(&self->shards.dir[i], NULL);
     }
-    atomic_init(&self->shards.active_pages, 0);
+    
+    /* 
+     * PERFORMANCE OPTIMIZATION: Pre-allocate the first shard page.
+     * Prevents system call overhead during the initial burst of accesses.
+     */
+    atomic_uint_least64_t *first_page = (atomic_uint_least64_t *)ttak_dangerous_calloc(TTAK_SHARD_PAGE_SIZE, sizeof(atomic_uint_least64_t));
+    if (first_page) {
+        atomic_store_explicit(&self->shards.dir[0], first_page, memory_order_relaxed);
+        atomic_init(&self->shards.active_pages, 1);
+    } else {
+        atomic_init(&self->shards.active_pages, 0);
+    }
 }
 
 /**
@@ -393,31 +403,36 @@ void ttak_shared_destroy(ttak_shared_t *self) {
 ttak_shared_result_t ttak_shared_swap_ebr(ttak_shared_t *self, void *new_shared, size_t new_size) {
     if (!self || !new_shared) return TTAK_OWNER_INVALID;
 
-    /* 1. Create new implicit payload */
+    /* 1. Create new implicit payload (Skip if already prefixed, but benchmark sends raw) */
     size_t total_size = sizeof(ttak_payload_header_t) + new_size;
-    ttak_payload_header_t *header = ttak_mem_alloc(total_size, __TTAK_UNSAFE_MEM_FOREVER__, ttak_get_tick_count());
+    ttak_payload_header_t *header = (ttak_payload_header_t *)ttak_mem_alloc(total_size, __TTAK_UNSAFE_MEM_FOREVER__, ttak_get_tick_count());
     if (!header) return TTAK_OWNER_SHARE_DENIED;
 
     header->size = new_size;
     header->ts = ttak_get_tick_count_ns();
-    
-    /* Copy from raw buffer to payload */
     memcpy(header->data, new_shared, new_size);
 
+    /* OPTIMIZATION: Lock-free path for NO_LEVEL */
+    if (TTAK_LIKELY(self->level == TTAK_SHARED_NO_LEVEL)) {
+        void *old_ptr = atomic_exchange_explicit(&self->shared, header->data, memory_order_acq_rel);
+        
+        self->size = new_size;
+        self->ts = header->ts;
+        self->cleanup = _ttak_shared_payload_free;
+
+        if (old_ptr) {
+            ttak_epoch_retire(old_ptr, self->cleanup);
+        }
+        return TTAK_OWNER_SUCCESS;
+    }
+
+    /* Fallback for strict levels */
     ttak_rwlock_wrlock(&self->rwlock);
     self->status |= TTAK_SHARED_SWAPPING;
 
-    /* 2. Move existing shared pointer (with its header) to retirement queue */
-    void *old_ptr = atomic_load(&self->shared);
-    if (old_ptr) {
-        /* self->cleanup is expected to be _ttak_shared_payload_free */
-        ttak_epoch_retire(old_ptr, self->cleanup ? self->cleanup : ttak_mem_free);
-    }
-
-    /* 3. Atomic pointer swap (Release barrier ensures header content is visible) */
+    void *old_ptr = atomic_load_explicit(&self->shared, memory_order_relaxed);
     atomic_store_explicit(&self->shared, header->data, memory_order_release);
     
-    /* 4. Update shadow members for rough access */
     self->size = new_size;
     self->ts = header->ts;
     self->cleanup = _ttak_shared_payload_free;
@@ -425,6 +440,10 @@ ttak_shared_result_t ttak_shared_swap_ebr(ttak_shared_t *self, void *new_shared,
     self->status &= ~TTAK_SHARED_SWAPPING;
     self->status |= TTAK_SHARED_DIRTY;
     ttak_rwlock_unlock(&self->rwlock);
+
+    if (old_ptr) {
+        ttak_epoch_retire(old_ptr, self->cleanup);
+    }
 
     return TTAK_OWNER_SUCCESS;
 }

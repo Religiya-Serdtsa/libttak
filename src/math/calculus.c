@@ -6,9 +6,10 @@
 #include <math.h>
 
 /**
- * Jeongseunggaebang(by Hong Jungha et al.)
+ * Jeongseunggaebang (by Hong Jeong-ha et al.)
  * Logic: Linear accumulation to minimize latency and rounding errors.
  * Used for polynomial evaluation and iterative integration steps.
+ * Reference: Hong Jeong-ha, "Guiljip (九一集)", 1660s.
  */
 static void ttak_math_jeungseung_accumulate(ttak_bigreal_t *res, const ttak_bigreal_t *x, const ttak_bigreal_t *a, uint64_t now) {
     /* res = res * x + a */

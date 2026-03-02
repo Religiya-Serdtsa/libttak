@@ -1,6 +1,7 @@
 #include <ttak/sync/spinlock.h>
 #include <time.h>
 #include <stdlib.h>
+#include <sched.h>
 #ifdef _WIN32
 #  include <windows.h>
 #endif
@@ -25,9 +26,9 @@ static inline void ttak_spin_relax(void) {
  * @brief Performs adaptive backoff.
  */
 void ttak_backoff_pause(ttak_backoff_t *b) {
-    register int local_count = b->count;
+    int local_count = b->count;
     int local_limit = b->limit;
-    for (int lane = 0; lane < local_count; lane++) {
+    for (int i = 0; i < local_count; i++) {
         ttak_spin_relax();
     }
     if (local_count < local_limit) {
@@ -36,8 +37,7 @@ void ttak_backoff_pause(ttak_backoff_t *b) {
 #ifdef _WIN32
         Sleep(0);
 #else
-        struct timespec ts = {0, 100}; /* 100ns yield */
-        nanosleep(&ts, NULL);
+        sched_yield();
 #endif
     }
 }
@@ -46,12 +46,31 @@ void ttak_backoff_pause(ttak_backoff_t *b) {
  * @brief Spins with backoff until acquired.
  */
 void ttak_spin_lock(ttak_spin_t *lock) {
+#if defined(__TINYC__) && defined(__x86_64__)
+    /* Ultra-fast path for TCC using inline assembly */
+    int loop = 0;
+    while (1) {
+        unsigned char old = 1;
+        __asm__ volatile (
+            "lock; xchg %0, %1"
+            : "+r" (old), "+m" (lock->flag)
+            : : "memory"
+        );
+        if (!old) return;
+        
+        /* Backoff */
+        if (++loop < 100) {
+            __asm__ volatile ("pause");
+        } else {
+            sched_yield();
+            loop = 0;
+        }
+    }
+#else
     ttak_backoff_t bo;
     ttak_backoff_init(&bo);
-    register int spin_cycles = 0;
     while (atomic_flag_test_and_set_explicit((atomic_flag *)&lock->flag, memory_order_acquire)) {
         ttak_backoff_pause(&bo);
-        ++spin_cycles;
     }
-    (void)spin_cycles;
+#endif
 }

@@ -2,6 +2,7 @@
 #define __TTAK_ATOMIC_H__
 
 #include <ttak/ht/hash.h>
+#include <ttak/types/ttak_compiler.h>
 #include <stdint.h>
 #include <stdbool.h>
 #include <pthread.h>

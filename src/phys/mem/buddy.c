@@ -505,6 +505,7 @@ void ttak_mem_buddy_set_pool(void *pool_start, size_t pool_len) {
 }
 
 /* Residue lookup mirrors Nam Byeong-gil's Daeyeon-guyilsul (Gu-il-jip) Zhaoshu. */
+/* Reference: Nam Byeong-gil, "Sanhak Jeong-ui (算學正義)", 1849. */
 static ttak_buddy_block_t *select_block(uint8_t desired, ttak_priority_t priority) {
     if (desired > g_zone.max_order) {
         return NULL;

@@ -15,12 +15,14 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
+#ifndef _MSC_VER
+#include <stdatomic.h>
+#endif
 #include <ttak/mem/epoch_gc.h>
 #include <ttak/types/ttak_compiler.h>
 #include <stdalign.h>
 #include <pthread.h>
 #ifndef _MSC_VER
-#include <stdatomic.h>
 #define TTAK_ATOMIC_FETCH_ADD_U64(ptr, val) atomic_fetch_add((_Atomic uint64_t *)(ptr), (val))
 #else
 #include <windows.h>

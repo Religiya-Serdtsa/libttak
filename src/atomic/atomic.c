@@ -10,6 +10,30 @@
 
 pthread_mutex_t __ttak_atomic_global_lock = PTHREAD_MUTEX_INITIALIZER;
 
+#if defined(__TINYC__) && defined(__x86_64__)
+/* 
+ * Provide standard GCC-style atomic symbols for TCC. 
+ * Enables proper linking when macros are not directly expanded.
+ */
+uint64_t __atomic_load_8(volatile void *ptr, int mo) {
+    uint64_t v;
+    __asm__ volatile ("movq %1, %0" : "=r"(v) : "m"(*(volatile uint64_t*)ptr) : "memory");
+    return v;
+}
+void __atomic_store_8(volatile void *ptr, uint64_t val, int mo) {
+    __asm__ volatile ("lock; xchgq %0, %1" : "+r"(val), "+m"(*(volatile uint64_t*)ptr) : : "memory");
+}
+uint64_t __atomic_fetch_add_8(volatile void *ptr, uint64_t val, int mo) {
+    __asm__ volatile ("lock; xaddq %0, %1" : "+r"(val), "+m"(*(volatile uint64_t*)ptr) : : "memory");
+    return val;
+}
+uint64_t __atomic_fetch_sub_8(volatile void *ptr, uint64_t val, int mo) {
+    uint64_t neg_val = -val;
+    __asm__ volatile ("lock; xaddq %0, %1" : "+r"(neg_val), "+m"(*(volatile uint64_t*)ptr) : : "memory");
+    return neg_val;
+}
+#endif
+
 /**
  * @brief Atomic operations for uint64_t using GCC builtins.
  */

@@ -115,19 +115,10 @@ static _Thread_local uint32_t tls_worker_id = 0;
 #define TTAK_LATTICE_COMPACT_MIN_FREE_PCT 65U
 #define TTAK_LATTICE_COMPACT_THROTTLE_MASK 0x3FU
 #define TTAK_LATTICE_COMPACT_TOKEN 0x1U
-#if defined(__TINYC__)
-#define TTAK_LATTICE_NODE_IS_BUSY(node) (false)
-#else
 #define TTAK_LATTICE_NODE_IS_BUSY(node) \
     (atomic_load_explicit(&(node)->compact_state, memory_order_acquire) != 0U)
-#endif
 
 static _Atomic uint32_t g_lattice_compact_counter = 0;
-#if defined(__TINYC__)
-static pthread_mutex_t g_lattice_compact_lock = PTHREAD_MUTEX_INITIALIZER;
-#else
-static atomic_flag g_lattice_compact_guard = ATOMIC_FLAG_INIT;
-#endif
 
 static ttak_net_lattice_t *global_default_lattice = NULL;
 static pthread_once_t lattice_once = PTHREAD_ONCE_INIT;
@@ -149,7 +140,6 @@ static inline _Bool ttak_net_lattice_is_real(const ttak_net_lattice_t *lat) {
     return lat && !lat->is_stub && lat->dim != 0 && lat->slots;
 }
 
-#if !defined(__TINYC__)
 static inline _Bool ttak_net_lattice_claim_compaction(ttak_net_lattice_t *lat) {
     if (!lat) {
         return false;
@@ -169,7 +159,6 @@ static inline void ttak_net_lattice_release_compaction(ttak_net_lattice_t *lat) 
         atomic_store_explicit(&lat->compact_state, 0U, memory_order_release);
     }
 }
-#endif
 
 static _Bool ttak_net_lattice_slots_idle(const ttak_net_lattice_t *lat) {
     if (!ttak_net_lattice_is_real(lat)) {
@@ -291,46 +280,22 @@ static void ttak_net_lattice_try_compact(ttak_net_lattice_t *lat) {
         return;
     }
 
-#if defined(__TINYC__)
-    pthread_mutex_lock(&g_lattice_compact_lock);
-    if (!ttak_net_lattice_is_real(first) || !ttak_net_lattice_is_real(second) ||
-        ttak_atomic_read64(&first->used_slots) != 0 ||
-        ttak_atomic_read64(&second->used_slots) != 0 ||
-        first->dim != second->dim) {
-        pthread_mutex_unlock(&g_lattice_compact_lock);
+    _Bool claimed_first = ttak_net_lattice_claim_compaction(first);
+    if (!claimed_first) {
         return;
     }
-    if (!ttak_net_lattice_slots_idle(first) || !ttak_net_lattice_slots_idle(second)) {
-        pthread_mutex_unlock(&g_lattice_compact_lock);
+
+    _Bool claimed_second = ttak_net_lattice_claim_compaction(second);
+    if (!claimed_second) {
+        ttak_net_lattice_release_compaction(first);
         return;
     }
-    size_t slots_bytes = (size_t)first->capacity * sizeof(ttak_net_lattice_slot_t);
-    memset(first->slots, 0, slots_bytes);
-    ttak_net_lattice_mark_stub(second);
-    pthread_mutex_unlock(&g_lattice_compact_lock);
-    return;
-#else
-    if (atomic_flag_test_and_set_explicit(&g_lattice_compact_guard, memory_order_acquire)) {
-        return;
-    }
-    _Bool claimed_first = false;
-    _Bool claimed_second = false;
 
     do {
         if (!ttak_net_lattice_is_real(first) || !ttak_net_lattice_is_real(second) ||
             ttak_atomic_read64(&first->used_slots) != 0 ||
             ttak_atomic_read64(&second->used_slots) != 0 ||
             first->dim != second->dim) {
-            break;
-        }
-
-        claimed_first = ttak_net_lattice_claim_compaction(first);
-        if (!claimed_first) {
-            break;
-        }
-
-        claimed_second = ttak_net_lattice_claim_compaction(second);
-        if (!claimed_second) {
             break;
         }
 
@@ -343,14 +308,8 @@ static void ttak_net_lattice_try_compact(ttak_net_lattice_t *lat) {
         ttak_net_lattice_mark_stub(second);
     } while (0);
 
-    if (claimed_first) {
-        ttak_net_lattice_release_compaction(first);
-    }
-    if (claimed_second) {
-        ttak_net_lattice_release_compaction(second);
-    }
-    atomic_flag_clear_explicit(&g_lattice_compact_guard, memory_order_release);
-#endif
+    ttak_net_lattice_release_compaction(second);
+    ttak_net_lattice_release_compaction(first);
 }
 
 ttak_net_lattice_t* ttak_net_lattice_get_default(void) {
@@ -416,6 +375,7 @@ void ttak_net_lattice_destroy(ttak_net_lattice_t *lat, uint64_t now) {
 
 /**
  * @brief Lock-free deterministic write inspired by Choi Seok-jeong's Lattice.
+ * Reference: Choi Seok-jeong, "Gusuryak (九數略)", 1700.
  */
 _Bool ttak_net_lattice_write(ttak_net_lattice_t *lat, uint32_t tid, const void *data, uint32_t len, uint64_t now) {
     if (!lat || !data || len > TTAK_LATTICE_SLOT_SIZE) return false;
@@ -439,6 +399,7 @@ _Bool ttak_net_lattice_write(ttak_net_lattice_t *lat, uint32_t tid, const void *
         }
 
         uint32_t dim = node->dim;
+        /* Reference: Yi Sang-hyeok, "Suri (數理)", 1890s, for high-dimensional co-ordinate sweeps. */
         /* Iterate through the Sanpan (Counting Board) lattice */
         for (uint32_t r = 0; r < dim; r++) {
             for (uint32_t c = 0; c < dim; c++) {
@@ -495,6 +456,7 @@ _Bool ttak_net_lattice_read(ttak_net_lattice_t *lat, uint32_t tid, void *dst, ui
         }
 
         uint32_t dim = node->dim;
+        /* Reference: Yi Sang-hyeok, "Suri (數理)", 1890s, for high-dimensional co-ordinate sweeps. */
         for (uint32_t r = 0; r < dim; r++) {
             for (uint32_t c = 0; c < dim; c++) {
                 if (((r + c) & mask) == my_tid) {

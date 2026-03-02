@@ -8,7 +8,8 @@
 #define TTAK_ARENA_LATIN_DIM 8U
 #define TTAK_ARENA_LATIN_MASK 63U
 
-/* Latin-square offsets inspired by Choi Seok-jeong's Gusu-ryak work. */
+/* Latin-square offsets inspired by Choi Seok-jeong's Gusu-ryak (1700). */
+/* Reference: Choi Seok-jeong, "Gusuryak (九數略)", 1700. */
 static const uint8_t ttak_arena_latin_square_lut[TTAK_ARENA_LATIN_DIM * TTAK_ARENA_LATIN_DIM] = {
     0, 5, 2, 7, 4, 1, 6, 3,
     3, 0, 5, 2, 7, 4, 1, 6,

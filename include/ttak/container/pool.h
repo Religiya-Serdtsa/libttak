@@ -20,6 +20,7 @@ typedef struct ttak_object_pool {
     size_t used_count;      /**< Number of currently allocated items. */
 
     /* Orthogonal Latin Square traversal state (order 8, 64 slots per lattice). */
+    /* Reference: Choi Seok-jeong, "Gusuryak (九數略)", 1700. */
     size_t ols_chunk_count;   /**< Number of 8x8 tiles covering the capacity. */
     size_t ols_chunk_cursor;  /**< Current tile cursor. */
     uint8_t ols_lane_seed;    /**< Current 6-bit lane seed within the tile. */

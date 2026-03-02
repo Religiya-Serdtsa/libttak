@@ -218,7 +218,18 @@ typedef struct ttak_thread_node {
 #if !defined(__TINYC__)
 TTAK_VIS_DEFAULT _Thread_local ttak_thread_state_t *t_local_state = NULL;
 #else
-TTAK_VIS_DEFAULT ttak_thread_state_t *t_local_state = NULL;
+TTAK_VIS_DEFAULT ttak_thread_state_t *t_local_state_unused = NULL;
+static pthread_key_t g_tls_key;
+static pthread_once_t g_tls_once = PTHREAD_ONCE_INIT;
+static void _ttak_tls_init(void) { pthread_key_create(&g_tls_key, NULL); }
+ttak_thread_state_t *ttak_get_t_local_state(void) {
+    pthread_once(&g_tls_once, _ttak_tls_init);
+    return (ttak_thread_state_t *)pthread_getspecific(g_tls_key);
+}
+void ttak_set_t_local_state(ttak_thread_state_t *val) {
+    pthread_once(&g_tls_once, _ttak_tls_init);
+    pthread_setspecific(g_tls_key, val);
+}
 #endif
 
 /**
@@ -287,36 +298,49 @@ void ttak_epoch_subsystem_init(void) {
  * This function is idempotent for the current thread.
  */
 void ttak_epoch_register_thread(void) {
-    if (t_local_state) {
-        return;
-    }
+#if defined(__TINYC__)
+    ttak_thread_state_t *st = ttak_get_t_local_state();
+    if (st) return;
+#else
+    if (t_local_state) return;
+#endif
 
     if (!TT_ATOMIC_LOAD_BOOL(&g_epoch_init_ready, memory_order_seq_cst)) {
         ttak_epoch_subsystem_init();
     }
 
-    t_local_state = (ttak_thread_state_t *)ttak_dangerous_calloc(1, sizeof(ttak_thread_state_t));
-    if (!t_local_state) {
+    ttak_thread_state_t *new_st = (ttak_thread_state_t *)ttak_dangerous_calloc(1, sizeof(ttak_thread_state_t));
+    if (!new_st) {
         return;
     }
 
-#if defined(_MSC_VER)
-    t_local_state->local_epoch = 0;
-    t_local_state->active = false;
+#if defined(__TINYC__)
+    ttak_set_t_local_state(new_st);
 #else
-    atomic_init(&t_local_state->local_epoch, 0);
-    atomic_init(&t_local_state->active, false);
+    t_local_state = new_st;
+#endif
+
+#if defined(_MSC_VER)
+    new_st->local_epoch = 0;
+    new_st->active = false;
+#else
+    atomic_init(&new_st->local_epoch, 0);
+    atomic_init(&new_st->active, false);
 #endif
 
     ttak_thread_node_t *node = (ttak_thread_node_t *)ttak_dangerous_calloc(1, sizeof(ttak_thread_node_t));
     if (!node) {
+#if defined(__TINYC__)
+        ttak_set_t_local_state(NULL);
+#else
         t_local_state = NULL;
+#endif
         return;
     }
 
-    node->state = t_local_state;
+    node->state = new_st;
     node->logical_tid = TT_ATOMIC_FETCH_ADD_U32(&g_tid_counter, 1, memory_order_relaxed);
-    t_local_state->logical_tid = node->logical_tid;
+    new_st->logical_tid = node->logical_tid;
 
     ttak_thread_node_t *old_head;
     do {
@@ -338,6 +362,12 @@ void ttak_epoch_register_thread(void) {
  * intentionally not freed to avoid races with concurrent reclaim operations.
  */
 void ttak_epoch_deregister_thread(void) {
+#if defined(__TINYC__)
+    ttak_thread_state_t *st = ttak_get_t_local_state();
+    if (!st) return;
+    atomic_store_explicit(&st->active, false, memory_order_seq_cst);
+    ttak_set_t_local_state(NULL);
+#else
     if (!t_local_state) {
         return;
     }
@@ -349,52 +379,10 @@ void ttak_epoch_deregister_thread(void) {
 #endif
 
     t_local_state = NULL;
-}
-
-/* --- Epoch enter/exit --- */
-
-/**
- * @brief Enter an epoch-protected critical region.
- *
- * Records the current global epoch into the thread-local state and marks the thread active.
- */
-void ttak_epoch_enter(void) {
-    if (!t_local_state) {
-        ttak_epoch_register_thread();
-    }
-    if (!t_local_state) {
-        return;
-    }
-
-    uint32_t current = TT_ATOMIC_LOAD_U32(&g_epoch_mgr.global_epoch, memory_order_acquire);
-
-#if defined(_MSC_VER)
-    t_local_state->local_epoch = current;
-    t_local_state->active = true;
-#else
-    atomic_store_explicit(&t_local_state->local_epoch, current, memory_order_release);
-    atomic_store_explicit(&t_local_state->active, true, memory_order_release);
-#endif
-
-    TT_ATOMIC_FENCE(memory_order_seq_cst);
-}
-
-/**
- * @brief Exit an epoch-protected critical region.
- *
- * Marks the thread inactive.
- */
-void ttak_epoch_exit(void) {
-    if (!t_local_state) {
-        return;
-    }
-
-#if defined(_MSC_VER)
-    t_local_state->active = false;
-#else
-    atomic_store_explicit(&t_local_state->active, false, memory_order_release);
 #endif
 }
+
+/* --- Epoch enter/exit is now inlined in include/ttak/mem/epoch.h --- */
 
 /* --- Retirement --- */
 

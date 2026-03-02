@@ -197,6 +197,7 @@ bool ttak_vector_magnitude(ttak_bigreal_t *res, tt_shared_vector_t *v, tt_owner_
 
 /**
  * @brief Approximate sine using Yussigihae (Nam Byeong-gil) logic.
+ * Reference: Nam Byeong-gil, "Sanhak Jeong-ui (算學正義)", 1849.
  */
 bool ttak_math_approx_sin(ttak_bigreal_t *res, const ttak_bigreal_t *x, uint64_t now) {
     ttak_bigreal_t x2, term, tmp, denom;
@@ -243,6 +244,7 @@ bool ttak_math_approx_sin(ttak_bigreal_t *res, const ttak_bigreal_t *x, uint64_t
 
 /**
  * @brief Approximate cosine using Yussigihae (Nam Byeong-gil) logic.
+ * Reference: Nam Byeong-gil, "Sanhak Jeong-ui (算學正義)", 1849.
  */
 bool ttak_math_approx_cos(ttak_bigreal_t *res, const ttak_bigreal_t *x, uint64_t now) {
     ttak_bigreal_t x2, term, tmp, denom;

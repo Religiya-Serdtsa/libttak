@@ -5,9 +5,10 @@
 #include <math.h>
 
 /**
- * Multivariate System: Dawonsul(Hong Jungha et al.)
+ * Multivariate System: Dawonsul (Hong Jeong-ha et al.)
  * Logic: Independent lane processing for multivariate linear systems.
  * Uses hardware-accelerated FMA for each lane to maximize throughput.
+ * Reference: Hong Jeong-ha, "Guiljip (九一集)", 1660s.
  */
 static void ttak_math_dawonsul_lane_mul(ttak_bigreal_t *res, const ttak_bigreal_t *mat_elements, const ttak_vector_t *vec, uint8_t cols, uint64_t now) {
     ttak_bigreal_t sum, prod;

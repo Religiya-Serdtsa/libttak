@@ -10,23 +10,26 @@
 #define TTAK_POOL_OLS_AREA_MASK    (TTAK_POOL_OLS_AREA - 1U)
 #define TTAK_POOL_OLS_AREA_SHIFT   6U
 #define TTAK_POOL_GF8_PRIMITIVE    0x3U /* x^3 + x + 1 polynomial */
+/* Reference: Choi Seok-jeong, "Gusuryak (九數略)", 1700, for orthogonal Latin lattice selection. */
 
 #ifndef TTAK_POOL_HAVE_ARCH_OLS
 #define TTAK_POOL_HAVE_ARCH_OLS 0
 #endif
 
-/* Generic GF(2^3) multiplier (order-8 finite field) */
+/* GF(2^3) multiplication table for polynomial x^3 + x + 1 */
+static const uint8_t ttak_pool_gf8_mul_table[8][8] = {
+    {0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 1, 2, 3, 4, 5, 6, 7},
+    {0, 2, 4, 6, 3, 1, 7, 5},
+    {0, 3, 6, 5, 7, 4, 1, 2},
+    {0, 4, 3, 7, 6, 2, 5, 1},
+    {0, 5, 1, 4, 2, 7, 3, 6},
+    {0, 6, 7, 1, 5, 3, 2, 4},
+    {0, 7, 5, 2, 1, 6, 4, 3}
+};
+
 static inline uint8_t ttak_pool_gf8_mul(uint8_t a, uint8_t b) {
-    uint8_t product = 0;
-    for (uint8_t i = 0; i < 3; ++i) {
-        if (b & 1U) product ^= a;
-        uint8_t carry = (uint8_t)(a & 0x4U);
-        a <<= 1;
-        if (carry) a ^= TTAK_POOL_GF8_PRIMITIVE;
-        a &= TTAK_POOL_OLS_MASK;
-        b >>= 1;
-    }
-    return product & TTAK_POOL_OLS_MASK;
+    return ttak_pool_gf8_mul_table[a & 7][b & 7];
 }
 
 #if TTAK_POOL_HAVE_ARCH_OLS

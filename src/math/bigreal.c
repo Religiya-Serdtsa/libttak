@@ -4,8 +4,9 @@
 #include <stdalign.h>
 
 /**
- * Cheonwonsul(revised version of Chinese math Tian Yuan Shu by Hong Jungha et al.)
+ * Cheonwonsul (reinterpreting Tian Yuan Shu per Hong Jeong-ha et al.)
  * Logic: Aligned limb processing to map to cache lines.
+ * Reference: Hong Jeong-ha, "Guiljip (九一集)", 1660s.
  */
 static _Bool ttak_bigreal_op_cheonwonsul(ttak_bigreal_t *dst, const ttak_bigreal_t *lhs, const ttak_bigreal_t *rhs, _Bool is_sub, uint64_t now) {
     if (is_sub) {

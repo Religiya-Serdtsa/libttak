@@ -3,8 +3,8 @@ CXX ?= g++
 AR ?= ar
 NVCC ?= nvcc
 HIPCC ?= hipcc
-EMBEDDED ?= 0
-USE_CUDA ?= 0
+EMBEDDED ?= 1
+USE_CUDA ?= 1
 USE_OPENCL ?= 0
 USE_ROCM ?= 0
 
