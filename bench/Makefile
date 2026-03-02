@@ -3,8 +3,26 @@ USE_CUDA ?= 1
 USE_OPENCL ?= 1
 USE_ROCM ?= 0
 
-CFLAGS = -Wall -std=c17 -pthread -I../include -O3 -march=native -flto -D_GNU_SOURCE
-LDFLAGS = -L../lib -lttak -lm -pthread -flto
+TTAK_ROOT ?= ..
+TTAK_INCLUDEDIR ?= $(TTAK_ROOT)/include
+TTAK_LIBDIR ?= $(TTAK_ROOT)/lib
+TTAK_STATIC_LIB ?= $(TTAK_LIBDIR)/libttak.a
+
+ifneq ($(wildcard $(TTAK_STATIC_LIB)),)
+FIRST_TTAK_OBJ := $(shell ar t $(TTAK_STATIC_LIB) 2>/dev/null | head -n 1)
+ifneq ($(FIRST_TTAK_OBJ),)
+LIBTTK_MAGIC := $(shell ar p $(TTAK_STATIC_LIB) $(FIRST_TTAK_OBJ) 2>/dev/null | head -c 4 | od -An -t x1 | tr -d ' \n')
+ifeq ($(LIBTTK_MAGIC),4243c0de)
+CLANG_BIN := $(shell command -v clang 2>/dev/null)
+ifneq ($(CLANG_BIN),)
+CC := $(CLANG_BIN)
+endif
+endif
+endif
+endif
+
+CFLAGS = -Wall -std=c17 -pthread -I$(TTAK_INCLUDEDIR) -O3 -march=native -flto -D_GNU_SOURCE
+LDFLAGS = -L$(TTAK_LIBDIR) -lttak -lm -pthread -flto
 
 OPENCL_LIBS ?= -lOpenCL
 CUDA_HOME ?= /usr/local/cuda
