@@ -89,6 +89,28 @@ static uint64_t g_running = 1;
 static uint64_t g_start_signal = 0;
 static uint64_t g_threads_ready = 0;
 
+#define LOCAL_STATS_FLUSH 256
+
+static inline void flush_local_stats(uint64_t *ops, uint64_t *hits,
+                                     uint64_t *swaps, uint64_t *ticks) {
+    if (*ops) {
+        TTAK_FAST_ATOMIC_ADD_U64(&stats.ops, *ops);
+        *ops = 0;
+    }
+    if (*hits) {
+        TTAK_FAST_ATOMIC_ADD_U64(&stats.hits, *hits);
+        *hits = 0;
+    }
+    if (*swaps) {
+        TTAK_FAST_ATOMIC_ADD_U64(&stats.swaps, *swaps);
+        *swaps = 0;
+    }
+    if (*ticks) {
+        TTAK_FAST_ATOMIC_ADD_U64(&stats.total_ticks, *ticks);
+        *ticks = 0;
+    }
+}
+
 typedef struct { char data[256]; } cache_payload_t;
 
 static ttak_shared_t *g_cache;
@@ -131,6 +153,7 @@ static void *worker_func(void *arg) {
     ttak_epoch_register_thread();
     
     uint64_t seed = (uint64_t)(uintptr_t)arg ^ ttak_get_tick_count_ns();
+    uint64_t local_ops = 0, local_hits = 0, local_swaps = 0, local_ticks = 0;
     if (seed == 0) seed = 1;
 
     /* 
@@ -168,7 +191,7 @@ static void *worker_func(void *arg) {
 
         if (TTAK_LIKELY(val)) {
             volatile char c = val->data[0]; (void)c;
-            TTAK_FAST_ATOMIC_ADD_U64(&stats.hits, 1);
+            local_hits++;
         }
 
         /* UPDATE: Generational swap */
@@ -184,20 +207,25 @@ static void *worker_func(void *arg) {
                 
                 /* Perform lock-free pointer exchange */
                 void *old_ptr = atomic_exchange_explicit(&g_cache->shared, (void *)payload_ptr, memory_order_acq_rel);
-                TTAK_FAST_ATOMIC_ADD_U64(&stats.swaps, 1);
+                local_swaps++;
                 if (old_ptr) ttak_epoch_retire(old_ptr, NULL); 
             }
         }
         
-        TTAK_FAST_ATOMIC_ADD_U64(&stats.ops, 1);
+        local_ops++;
         
         uint64_t ns = end - start;
 #if defined(__TINYC__) && defined(__x86_64__)
         ns = (ns * g_tsc_scale) >> 32;
 #endif
-        TTAK_FAST_ATOMIC_ADD_U64(&stats.total_ticks, ns);
+        local_ticks += ns;
+
+        if (TTAK_UNLIKELY(local_ops >= LOCAL_STATS_FLUSH)) {
+            flush_local_stats(&local_ops, &local_hits, &local_swaps, &local_ticks);
+        }
     }
 
+    flush_local_stats(&local_ops, &local_hits, &local_swaps, &local_ticks);
     ttak_epoch_deregister_thread();
     return NULL;
 }
