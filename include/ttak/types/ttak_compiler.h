@@ -15,11 +15,11 @@
 #endif
 
 #if defined(__GNUC__) || defined(__clang__)
-#  define TTAK_FORCE_INLINE __attribute__((always_inline)) inline
+#  define TTAK_FORCE_INLINE static inline __attribute__((always_inline))
 #elif defined(_MSC_VER)
-#  define TTAK_FORCE_INLINE __forceinline
+#  define TTAK_FORCE_INLINE static __forceinline
 #else
-#  define TTAK_FORCE_INLINE inline
+#  define TTAK_FORCE_INLINE static inline
 #endif
 
 #if !defined(__GNUC__) && !defined(__clang__)
