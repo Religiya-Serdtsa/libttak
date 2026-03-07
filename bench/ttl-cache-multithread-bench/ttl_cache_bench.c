@@ -372,6 +372,8 @@ void print_stats(void) {
     static uint64_t last_rotations = 0;
     static uint64_t last_cleanup_ns = 0;
     static uint64_t last_tick = 0;
+    static uint64_t displayed_sec = 0;
+    static bool sec_initialized = false;
 
     uint64_t now = now_ns();
     if (last_tick == 0) {
@@ -383,8 +385,13 @@ void print_stats(void) {
         return;
     }
 
+    if (now <= last_tick) {
+        // Monotonic clock glitches; skip this sample rather than report junk.
+        last_tick = now;
+        return;
+    }
+
     uint64_t dt_ns = now - last_tick;
-    if (dt_ns == 0) dt_ns = 1;
 
     uint64_t ops = atomic_load(&stats.ops);
     uint64_t hits = atomic_load(&stats.hits);
@@ -415,10 +422,20 @@ void print_stats(void) {
         ttak_rwlock_unlock(&s->lock);
     }
 
-    uint64_t elapsed_sec = (now - start_time_ns) / 1000000000ULL;
+    uint64_t elapsed_ns = (now >= start_time_ns) ? (now - start_time_ns) : 0;
+    uint64_t elapsed_sec = elapsed_ns / 1000000000ULL;
+
+    if (!sec_initialized) {
+        displayed_sec = elapsed_sec;
+        sec_initialized = true;
+    } else if (elapsed_sec <= displayed_sec) {
+        displayed_sec += 1; // Keep reporting monotonic seconds despite glitches.
+    } else {
+        displayed_sec = elapsed_sec;
+    }
 
     printf("STATS: %" PRIu64 " sec | Ops: %" PRIu64 "/s | HitRate: %.2f%% | Epochs: %" PRIu64 " | RSS: %ld KB | Items: %" PRIu64 " | Retired: %" PRIu64 " | CleanNsAvg: %" PRIu64 "\n",
-           elapsed_sec,
+           displayed_sec,
            ops_per_sec,
            hit_rate,
            rotations,
