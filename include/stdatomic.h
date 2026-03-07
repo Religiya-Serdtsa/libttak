@@ -391,7 +391,7 @@ static inline void atomic_flag_clear_explicit(volatile atomic_flag *obj, memory_
        if (!__ret) *(expected) = __exp; \
        __ret; })
 
-#elif defined(__aarch64__)
+#elif defined(__aarch64__) && !defined(__TINYC__)
 #define atomic_thread_fence(order) __asm__ __volatile__ ("dmb ish" ::: "memory")
 #define atomic_init(obj, value) do { *(obj) = (value); } while (0)
 #define atomic_store_explicit(obj, desired, order) \
@@ -508,24 +508,84 @@ static inline void atomic_flag_clear_explicit(volatile atomic_flag *obj, memory_
        __ret; })
 
 #else
-/* Fallback to global locks for unsupported architectures or if we need a catch-all */
-extern pthread_mutex_t __ttak_atomic_global_lock;
-#define __TT_ATOMIC_LOCK() pthread_mutex_lock(&__ttak_atomic_global_lock)
-#define __TT_ATOMIC_UNLOCK() pthread_mutex_unlock(&__ttak_atomic_global_lock)
+/* Fallback to sharded locks for unsupported architectures */
+#include <pthread.h>
+#include <stdint.h>
 
-#define atomic_thread_fence(order) do { (void)(order); __TT_ATOMIC_LOCK(); __TT_ATOMIC_UNLOCK(); } while (0)
-#define atomic_init(obj, value) do { *(obj) = (value); } while (0)
-#define atomic_store_explicit(obj, desired, order) do { (void)(order); __TT_ATOMIC_LOCK(); *(obj) = (desired); __TT_ATOMIC_UNLOCK(); } while (0)
+extern pthread_mutex_t __ttak_atomic_global_lock;
+#define __TT_ATOMIC_FALLBACK_SHARDS 64
+extern pthread_mutex_t __ttak_atomic_fallback_locks[__TT_ATOMIC_FALLBACK_SHARDS];
+extern pthread_once_t __ttak_atomic_fallback_once;
+void __ttak_atomic_fallback_init(void);
+void __ttak_atomic_fallback_thread_fence(void);
+
+static inline pthread_mutex_t *__ttak_atomic_lock_for_ptr(const volatile void *ptr) {
+    pthread_once(&__ttak_atomic_fallback_once, __ttak_atomic_fallback_init);
+    size_t idx = (((uintptr_t)ptr) >> 4) & (__TT_ATOMIC_FALLBACK_SHARDS - 1);
+    return &__ttak_atomic_fallback_locks[idx];
+}
+
+#define __TT_ATOMIC_IGNORE_ORDER(order) ((void)(order))
+#define __TT_ATOMIC_RUN(obj_expr, code) \
+    do { __typeof__(obj_expr) __ttak_atomic_ptr = (obj_expr); \
+         pthread_mutex_t *__ttak_atomic_mutex = __ttak_atomic_lock_for_ptr(__ttak_atomic_ptr); \
+         pthread_mutex_lock(__ttak_atomic_mutex); \
+         code; \
+         pthread_mutex_unlock(__ttak_atomic_mutex); \
+    } while (0)
+
+#define __TT_ATOMIC_RUN_RET(obj_expr, expr) \
+    (__extension__ ({ __typeof__(obj_expr) __ttak_atomic_ptr = (obj_expr); \
+                      pthread_mutex_t *__ttak_atomic_mutex = __ttak_atomic_lock_for_ptr(__ttak_atomic_ptr); \
+                      pthread_mutex_lock(__ttak_atomic_mutex); \
+                      __typeof__(expr) __ttak_atomic_result = (expr); \
+                      pthread_mutex_unlock(__ttak_atomic_mutex); \
+                      __ttak_atomic_result; }))
+
+#define __TT_ATOMIC_FETCH_BINOP(obj_expr, operand, OP) \
+    (__TT_ATOMIC_RUN_RET((obj_expr), ({ \
+        __typeof__(*__ttak_atomic_ptr) __old = *__ttak_atomic_ptr; \
+        *__ttak_atomic_ptr = __old OP (__typeof__(*__ttak_atomic_ptr))(operand); \
+        __old; })))
+
+#define atomic_thread_fence(order) do { __TT_ATOMIC_IGNORE_ORDER(order); __ttak_atomic_fallback_thread_fence(); } while (0)
+#define atomic_init(obj, value) __TT_ATOMIC_RUN((obj), (*__ttak_atomic_ptr = (value)))
+#define atomic_store_explicit(obj, desired, order) \
+    do { __TT_ATOMIC_IGNORE_ORDER(order); __TT_ATOMIC_RUN((obj), (*__ttak_atomic_ptr = (desired))); } while (0)
 #define atomic_store(obj, desired) atomic_store_explicit((obj), (desired), memory_order_seq_cst)
-#define atomic_load_explicit(obj, order) ({ __TT_ATOMIC_LOCK(); __typeof__(*(obj)) __val = *(obj); (void)(order); __TT_ATOMIC_UNLOCK(); __val; })
-#define atomic_load(obj) atomic_load_explicit((obj) , memory_order_seq_cst)
-#define atomic_fetch_add_explicit(obj, operand, order) ({ __TT_ATOMIC_LOCK(); __typeof__(*(obj)) __old = *(obj); *(obj) = __old + (operand); (void)(order); __TT_ATOMIC_UNLOCK(); __old; })
+#define atomic_load_explicit(obj, order) \
+    (__TT_ATOMIC_IGNORE_ORDER(order), __TT_ATOMIC_RUN_RET((obj), *__ttak_atomic_ptr))
+#define atomic_load(obj) atomic_load_explicit((obj), memory_order_seq_cst)
+#define atomic_fetch_add_explicit(obj, operand, order) \
+    (__TT_ATOMIC_IGNORE_ORDER(order), __TT_ATOMIC_FETCH_BINOP((obj), (operand), +))
 #define atomic_fetch_add(obj, operand) atomic_fetch_add_explicit((obj), (operand), memory_order_seq_cst)
+#define atomic_fetch_sub_explicit(obj, operand, order) \
+    (__TT_ATOMIC_IGNORE_ORDER(order), __TT_ATOMIC_FETCH_BINOP((obj), (operand), -))
+#define atomic_fetch_sub(obj, operand) atomic_fetch_sub_explicit((obj), (operand), memory_order_seq_cst)
+#define atomic_fetch_or_explicit(obj, operand, order) \
+    (__TT_ATOMIC_IGNORE_ORDER(order), __TT_ATOMIC_FETCH_BINOP((obj), (operand), |))
+#define atomic_fetch_or(obj, operand) atomic_fetch_or_explicit((obj), (operand), memory_order_seq_cst)
+#define atomic_fetch_and_explicit(obj, operand, order) \
+    (__TT_ATOMIC_IGNORE_ORDER(order), __TT_ATOMIC_FETCH_BINOP((obj), (operand), &))
+#define atomic_fetch_and(obj, operand) atomic_fetch_and_explicit((obj), (operand), memory_order_seq_cst)
+#define atomic_exchange_explicit(obj, desired, order) \
+    (__TT_ATOMIC_IGNORE_ORDER(order), \
+     __TT_ATOMIC_RUN_RET((obj), ({ \
+         __typeof__(*__ttak_atomic_ptr) __old = *__ttak_atomic_ptr; \
+         *__ttak_atomic_ptr = (__typeof__(*__ttak_atomic_ptr))(desired); \
+         __old; })))
+#define atomic_exchange(obj, desired) atomic_exchange_explicit((obj), (desired), memory_order_seq_cst)
 #define atomic_compare_exchange_weak_explicit(obj, expected, desired, success, failure) \
-    ({ bool __ok; (void)(success); (void)(failure); __TT_ATOMIC_LOCK(); \
-       if (*(obj) == *(expected)) { *(obj) = (desired); __ok = true; } \
-       else { *(expected) = *(obj); __ok = false; } \
-       __TT_ATOMIC_UNLOCK(); __ok; })
+    (__TT_ATOMIC_IGNORE_ORDER(success), __TT_ATOMIC_IGNORE_ORDER(failure), \
+     __TT_ATOMIC_RUN_RET((obj), ({ \
+         __typeof__(*__ttak_atomic_ptr) __old = *__ttak_atomic_ptr; \
+         bool __match = (__old == *(expected)); \
+         if (__match) { \
+             *__ttak_atomic_ptr = (__typeof__(*__ttak_atomic_ptr))(desired); \
+         } else { \
+             *(expected) = __old; \
+         } \
+         __match; })))
 #endif
 
 /* Fallback macros for missing explicit variants */

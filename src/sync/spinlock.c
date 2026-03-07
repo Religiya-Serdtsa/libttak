@@ -1,4 +1,5 @@
 #include <ttak/sync/spinlock.h>
+#include <ttak/types/ttak_compiler.h>
 #include <time.h>
 #include <stdlib.h>
 #include <sched.h>
@@ -9,13 +10,15 @@
 static inline void ttak_spin_relax(void) {
 #ifdef _WIN32
     YieldProcessor();
+#elif defined(__TINYC__) && TTAK_TINYCC_NEEDS_PORTABLE_FALLBACK
+    sched_yield();
 #elif defined(__x86_64__) || defined(__i386__)
 #if defined(__TINYC__)
     __asm__ __volatile__("pause");
 #else
     __builtin_ia32_pause();
 #endif
-#elif defined(__aarch64__)
+#elif defined(__aarch64__) && !defined(__TINYC__)
     __asm__ __volatile__("yield");
 #else
     (void)0;

@@ -2,12 +2,13 @@
 #include <ttak/mem/mem.h>
 #include <ttak/atomic/atomic.h>
 #include <ttak/timing/timing.h>
+#include <ttak/types/ttak_compiler.h>
 #include <string.h>
 #include <stdlib.h>
 #include <pthread.h>
 #include <stdatomic.h>
 
-#if defined(__TINYC__)
+#if defined(__TINYC__) && !TTAK_TINYCC_NEEDS_PORTABLE_FALLBACK
 static inline void ttak_net_lattice_copy_bytes(uint8_t *dst, const uint8_t *src, uint32_t len) {
     if (!dst || !src || len == 0) {
         return;
@@ -97,6 +98,13 @@ static inline void ttak_net_lattice_copy_bytes(uint8_t *dst, const uint8_t *src,
     }
 #endif
 }
+#elif defined(__TINYC__) && TTAK_TINYCC_NEEDS_PORTABLE_FALLBACK
+static inline void ttak_net_lattice_copy_bytes(uint8_t *dst, const uint8_t *src, uint32_t len) {
+    if (!dst || !src || len == 0) {
+        return;
+    }
+    memcpy(dst, src, len);
+}
 #else
 static inline void ttak_net_lattice_copy_bytes(uint8_t *dst, const uint8_t *src, uint32_t len) {
     if (!dst || !src || len == 0) {
@@ -112,8 +120,8 @@ static uint32_t tls_worker_id = 0;
 static _Thread_local uint32_t tls_worker_id = 0;
 #endif
 
-#define TTAK_LATTICE_COMPACT_MIN_FREE_PCT 65U
-#define TTAK_LATTICE_COMPACT_THROTTLE_MASK 0x3FU
+#define TTAK_LATTICE_COMPACT_MIN_FREE_PCT 80U
+#define TTAK_LATTICE_COMPACT_THROTTLE_MASK 0xFFU
 #define TTAK_LATTICE_COMPACT_TOKEN 0x1U
 #define TTAK_LATTICE_NODE_IS_BUSY(node) \
     (atomic_load_explicit(&(node)->compact_state, memory_order_acquire) != 0U)
@@ -230,14 +238,29 @@ static void ttak_net_lattice_try_compact(ttak_net_lattice_t *lat) {
     uint64_t total_capacity = 0;
     uint64_t total_used = 0;
     size_t real_nodes = 0;
+    ttak_net_lattice_t *prev_empty = NULL;
+    ttak_net_lattice_t *first = NULL;
+    ttak_net_lattice_t *second = NULL;
 
     for (ttak_net_lattice_t *node = head; node; node = node->next) {
         if (!ttak_net_lattice_is_real(node)) {
             continue;
         }
+
         real_nodes++;
         total_capacity += node->capacity;
-        total_used += ttak_atomic_read64(&node->used_slots);
+        uint64_t used = ttak_atomic_read64(&node->used_slots);
+        total_used += used;
+
+        if (used == 0) {
+            if (prev_empty) {
+                first = prev_empty;
+                second = node;
+            }
+            prev_empty = node;
+        } else {
+            prev_empty = NULL;
+        }
     }
 
     if (real_nodes < 2 || total_capacity == 0) {
@@ -245,38 +268,7 @@ static void ttak_net_lattice_try_compact(ttak_net_lattice_t *lat) {
     }
 
     uint64_t free_pct = ((total_capacity - total_used) * 100ULL) / total_capacity;
-    if (free_pct < TTAK_LATTICE_COMPACT_MIN_FREE_PCT) {
-        return;
-    }
-
-    ttak_net_lattice_t *cursor = head;
-    while (cursor && cursor->next) {
-        cursor = cursor->next;
-    }
-
-    ttak_net_lattice_t *first = NULL;
-    ttak_net_lattice_t *second = NULL;
-
-    for (; cursor; cursor = cursor->prev) {
-        if (!ttak_net_lattice_is_real(cursor) || ttak_atomic_read64(&cursor->used_slots) != 0) {
-            continue;
-        }
-        ttak_net_lattice_t *prev = cursor->prev;
-        while (prev && !ttak_net_lattice_is_real(prev)) {
-            prev = prev->prev;
-        }
-        if (!prev) {
-            break;
-        }
-        if (ttak_atomic_read64(&prev->used_slots) != 0) {
-            continue;
-        }
-        first = prev;
-        second = cursor;
-        break;
-    }
-
-    if (!first || !second) {
+    if (free_pct < TTAK_LATTICE_COMPACT_MIN_FREE_PCT || !first || !second) {
         return;
     }
 

@@ -15,18 +15,23 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
-#ifndef _MSC_VER
+#if defined(_MSC_VER)
+#include <windows.h>
+#elif !defined(__TINYC__) && !defined(__STDC_NO_ATOMICS__)
 #include <stdatomic.h>
 #endif
 #include <ttak/mem/epoch_gc.h>
 #include <ttak/types/ttak_compiler.h>
 #include <stdalign.h>
 #include <pthread.h>
-#ifndef _MSC_VER
-#define TTAK_ATOMIC_FETCH_ADD_U64(ptr, val) atomic_fetch_add((_Atomic uint64_t *)(ptr), (val))
-#else
-#include <windows.h>
+
+#if defined(_MSC_VER)
 #define TTAK_ATOMIC_FETCH_ADD_U64(ptr, val) InterlockedExchangeAdd64((volatile LONG64 *)(ptr), (LONG64)(val))
+#elif defined(__TINYC__) || defined(__STDC_NO_ATOMICS__)
+uint64_t ttak_atomic_fetch_add_u64_fallback(uint64_t *ptr, uint64_t val);
+#define TTAK_ATOMIC_FETCH_ADD_U64(ptr, val) ttak_atomic_fetch_add_u64_fallback((uint64_t *)(ptr), (uint64_t)(val))
+#else
+#define TTAK_ATOMIC_FETCH_ADD_U64(ptr, val) atomic_fetch_add((_Atomic uint64_t *)(ptr), (val))
 #endif
 
 /**

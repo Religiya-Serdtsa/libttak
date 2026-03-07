@@ -31,13 +31,31 @@
 #define TT_HOUR(n)          ((uint64_t)(n) * 60ULL * 60ULL * 1000ULL * 1000ULL * 1000ULL)
 
 #if defined(__TINYC__)
-#define ttak_get_tick_count_ns() ({ \
-    uint64_t __scale = g_tsc_scale; \
-    if (TTAK_UNLIKELY(__scale == 0)) { calibrate_tsc(); __scale = g_tsc_scale; if (__scale == 0) __scale = (1ULL << 32) / 2; } \
-    (__rdtsc() * __scale) >> 32; \
-})
+#  if defined(__x86_64__) || defined(_M_X64)
+#    define ttak_get_tick_count_ns() ({ \
+        uint64_t __scale = g_tsc_scale; \
+        if (TTAK_UNLIKELY(__scale == 0)) { calibrate_tsc(); __scale = g_tsc_scale; if (__scale == 0) __scale = (1ULL << 32) / 2; } \
+        (__rdtsc() * __scale) >> 32; \
+    })
 
-#define ttak_get_tick_count() (ttak_get_tick_count_ns() / 1000000ULL)
+#    define ttak_get_tick_count() (ttak_get_tick_count_ns() / 1000000ULL)
+#  elif defined(_WIN32)
+extern uint64_t ttak_get_tick_count_ns_win32(void);
+static inline uint64_t ttak_get_tick_count_ns(void) { return ttak_get_tick_count_ns_win32(); }
+static inline uint64_t ttak_get_tick_count(void) { return ttak_get_tick_count_ns() / 1000000ULL; }
+#  else
+static inline uint64_t ttak_get_tick_count_ns(void) {
+    struct timespec ts;
+    clock_gettime(CLOCK_MONOTONIC, &ts);
+    return ((uint64_t)ts.tv_sec * 1000000000ULL) + (uint64_t)ts.tv_nsec;
+}
+
+static inline uint64_t ttak_get_tick_count(void) {
+    struct timespec ts;
+    clock_gettime(CLOCK_MONOTONIC, &ts);
+    return ((uint64_t)ts.tv_sec * 1000ULL) + ((uint64_t)ts.tv_nsec / 1000000ULL);
+}
+#  endif
 #else
 /**
  * @brief Returns the current tick count in nanoseconds.

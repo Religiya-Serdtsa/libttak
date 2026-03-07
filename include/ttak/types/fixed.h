@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include <ttak/types/ttak_compiler.h>
 
 typedef struct {
     uint64_t lo;
@@ -128,7 +129,7 @@ static inline uint64_t ttak_u128_bit(ttak_u128_t v, unsigned bit) {
 
 static inline void ttak_mul_64(uint64_t a, uint64_t b, uint64_t *hi, uint64_t *lo) {
     /* Inline ISA primitives keep TinyCC builds fast without optimizer help. */
-#if defined(__x86_64__)
+#if defined(__x86_64__) && !TTAK_TINYCC_NEEDS_PORTABLE_FALLBACK
     uint64_t lo_tmp, hi_tmp;
     __asm__ __volatile__("mulq %[rhs]"
                          : "=a"(lo_tmp), "=d"(hi_tmp)
@@ -137,7 +138,7 @@ static inline void ttak_mul_64(uint64_t a, uint64_t b, uint64_t *hi, uint64_t *l
     *lo = lo_tmp;
     *hi = hi_tmp;
     return;
-#elif defined(__aarch64__)
+#elif defined(__aarch64__) && !TTAK_TINYCC_NEEDS_PORTABLE_FALLBACK
     uint64_t lo_tmp, hi_tmp;
     __asm__ __volatile__(
         "mul %0, %2, %3\n"
@@ -147,7 +148,7 @@ static inline void ttak_mul_64(uint64_t a, uint64_t b, uint64_t *hi, uint64_t *l
     *lo = lo_tmp;
     *hi = hi_tmp;
     return;
-#elif defined(__riscv_xlen) && (__riscv_xlen == 64)
+#elif defined(__riscv_xlen) && (__riscv_xlen == 64) && !TTAK_TINYCC_NEEDS_PORTABLE_FALLBACK
     uint64_t lo_tmp, hi_tmp;
     __asm__ __volatile__(
         "mul %0, %2, %3\n"

@@ -87,6 +87,18 @@ ttak_mem_friction_matrix_t global_friction_matrix = {
     .pressure_threshold = TTAK_FP_FROM_INT(1)
 };
 
+#if defined(__TINYC__) || defined(__STDC_NO_ATOMICS__)
+static pthread_mutex_t g_ttak_atomic_fallback_lock = PTHREAD_MUTEX_INITIALIZER;
+
+uint64_t ttak_atomic_fetch_add_u64_fallback(uint64_t *ptr, uint64_t val) {
+    pthread_mutex_lock(&g_ttak_atomic_fallback_lock);
+    uint64_t previous = *ptr;
+    *ptr += val;
+    pthread_mutex_unlock(&g_ttak_atomic_fallback_lock);
+    return previous;
+}
+#endif
+
 /**
  * @brief Internal validation macro for header integrity and canaries.
  */

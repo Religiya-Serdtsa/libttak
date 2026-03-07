@@ -10,6 +10,28 @@
 
 pthread_mutex_t __ttak_atomic_global_lock = PTHREAD_MUTEX_INITIALIZER;
 
+#ifndef __TT_ATOMIC_FALLBACK_SHARDS
+#define __TT_ATOMIC_FALLBACK_SHARDS 64
+#endif
+
+pthread_mutex_t __ttak_atomic_fallback_locks[__TT_ATOMIC_FALLBACK_SHARDS];
+pthread_once_t __ttak_atomic_fallback_once = PTHREAD_ONCE_INIT;
+
+static void __ttak_atomic_fallback_setup(void) {
+    for (size_t i = 0; i < __TT_ATOMIC_FALLBACK_SHARDS; ++i) {
+        pthread_mutex_init(&__ttak_atomic_fallback_locks[i], NULL);
+    }
+}
+
+void __ttak_atomic_fallback_init(void) {
+    __ttak_atomic_fallback_setup();
+}
+
+void __ttak_atomic_fallback_thread_fence(void) {
+    pthread_mutex_lock(&__ttak_atomic_global_lock);
+    pthread_mutex_unlock(&__ttak_atomic_global_lock);
+}
+
 #if defined(__TINYC__) && defined(__x86_64__)
 /* 
  * Provide standard GCC-style atomic symbols for TCC. 

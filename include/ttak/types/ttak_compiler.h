@@ -6,6 +6,14 @@
 #ifndef TTAK_COMPILER_H
 #define TTAK_COMPILER_H
 
+#if !defined(TTAK_TINYCC_NEEDS_PORTABLE_FALLBACK)
+#  if defined(__TINYC__) && !defined(__x86_64__) && !defined(__i386__)
+#    define TTAK_TINYCC_NEEDS_PORTABLE_FALLBACK 1
+#  else
+#    define TTAK_TINYCC_NEEDS_PORTABLE_FALLBACK 0
+#  endif
+#endif
+
 #if defined(__GNUC__) || defined(__clang__)
 #  define TTAK_LIKELY(x)   __builtin_expect(!!(x), 1)
 #  define TTAK_UNLIKELY(x) __builtin_expect(!!(x), 0)
@@ -88,6 +96,21 @@ static inline int __ttak_clzll(unsigned long long v) {
         __asm__ volatile ("lock; xchgq %0, %1" : "+r"(__v), "+m"(*(volatile uint64_t *)(ptr)) : : "memory"); \
         __v; \
     })
+
+#elif defined(__TINYC__)
+#include <stdatomic.h>
+#define TTAK_FAST_ATOMIC_ADD_U64(ptr, val) \
+    atomic_fetch_add_explicit((_Atomic uint64_t *)(ptr), (uint64_t)(val), memory_order_relaxed)
+#define TTAK_FAST_ATOMIC_ADD_U32(ptr, val) \
+    atomic_fetch_add_explicit((_Atomic uint32_t *)(ptr), (uint32_t)(val), memory_order_relaxed)
+#define TTAK_FAST_ATOMIC_LOAD_U64(ptr) \
+    atomic_load_explicit((_Atomic uint64_t *)(ptr), memory_order_relaxed)
+#define TTAK_FAST_ATOMIC_STORE_U32(ptr, val) \
+    atomic_store_explicit((_Atomic uint32_t *)(ptr), (uint32_t)(val), memory_order_relaxed)
+#define TTAK_FAST_ATOMIC_STORE_BOOL(ptr, val) \
+    atomic_store_explicit((_Atomic uint64_t *)(ptr), (uint64_t)((val) ? 1 : 0), memory_order_relaxed)
+#define TTAK_FAST_ATOMIC_XCHG_U64(ptr, val) \
+    atomic_exchange_explicit((_Atomic uint64_t *)(ptr), (uint64_t)(val), memory_order_relaxed)
 
 #else
 #include <stdatomic.h>
