@@ -15,6 +15,9 @@ jobs:
     container:
       image: debian:trixie-slim
     steps:
+      - name: Install Git for Checkout
+        run: |
+          apt-get update && apt-get install -y git
       - uses: actions/checkout@v4
       - name: Install Toolchains
         run: |
@@ -53,6 +56,9 @@ jobs:
     container:
       image: ${{ matrix.image }}
     steps:
+      - name: Install Git for Checkout
+        run: |
+          apt-get update && apt-get install -y git
       - uses: actions/checkout@v4
       - name: Install Build Tools
         run: |
@@ -243,6 +249,9 @@ jobs:
     container:
       image: dockcross/windows-arm64:latest
     steps:
+      - name: Install Git for Checkout
+        run: |
+          apt-get update && apt-get install -y git
       - uses: actions/checkout@v4
       - name: Manual Build and Package
         run: |
