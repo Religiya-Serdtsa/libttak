@@ -194,13 +194,20 @@ jobs:
           static inline hipError_t hipMemcpy(void* dst, const void* src, size_t size, int kind) {
               (void)kind; memcpy(dst, src, size); return hipSuccess;
           }
-          static inline hipError_t hipMemset(void* ptr, int value, size_t size) {
-              memset(ptr, value, size); return hipSuccess;
-          }
-          static inline hipError_t hipDeviceSynchronize(void) { return hipSuccess; }
-          #define hipLaunchKernelGGL(kernel, grid, block, sharedMem, stream, ...) \
-              kernel(__VA_ARGS__)
-          HIPSTUB
+           static inline hipError_t hipMemset(void* ptr, int value, size_t size) {
+               memset(ptr, value, size); return hipSuccess;
+           }
+           static inline hipError_t hipInit(unsigned int flags) {
+               (void)flags; return hipSuccess;
+           }
+           static inline hipError_t hipGetDeviceCount(int* count) {
+               if (count) *count = 0;
+               return hipSuccess;
+           }
+           static inline hipError_t hipDeviceSynchronize(void) { return hipSuccess; }
+           #define hipLaunchKernelGGL(kernel, grid, block, sharedMem, stream, ...) \
+               kernel(__VA_ARGS__)
+           HIPSTUB
           echo "HIPCC=g++" >> "$GITHUB_ENV"
           echo "HIPCCFLAGS=-std=c++17 -Iinclude -DENABLE_ROCM -Ihip-stub" >> "$GITHUB_ENV"
           echo "ROCM_PATH=$(pwd)/hip-stub" >> "$GITHUB_ENV"
