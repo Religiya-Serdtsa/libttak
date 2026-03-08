@@ -16,3 +16,4 @@ bench/vgcore.*
 bench/*.core
 core.*
 vgcore.*
+a.out
