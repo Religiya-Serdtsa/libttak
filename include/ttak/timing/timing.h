@@ -13,7 +13,11 @@
          return ((uint64_t)high << 32) | low;
      }
 #  else
-#    include <x86intrin.h>
+#    if defined(_MSC_VER)
+#      include <immintrin.h>
+#    else
+#      include <x86intrin.h>
+#    endif
 #  endif
    extern uint64_t g_tsc_freq_ghz;
    extern uint64_t g_tsc_scale;
