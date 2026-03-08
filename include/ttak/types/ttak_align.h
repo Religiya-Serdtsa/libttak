@@ -14,7 +14,7 @@
  * TinyCC does not ship a definition for max_align_t, so we provide a struct
  * that matches the requirements for the other supported compilers.
  */
-#if defined(__TINYC__)
+#if defined(__TINYC__) || (defined(_MSC_VER) && !defined(__clang__))
 typedef struct {
     long long   __ttak_max_align_ll;
     long double __ttak_max_align_ld;
