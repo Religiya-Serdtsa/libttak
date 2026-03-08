@@ -177,6 +177,12 @@ typedef struct {
 } ttak_opencl_context_t;
 
 static ttak_opencl_context_t g_ocl = {0};
+static bool g_ocl_probe_failed = false;
+
+static bool ttak_opencl_mark_failed(void) {
+    g_ocl_probe_failed = true;
+    return false;
+}
 
 static void ttak_opencl_release(void) {
     if (g_ocl.kernel) {
@@ -200,16 +206,17 @@ static void ttak_opencl_release(void) {
 
 static bool ttak_opencl_build(void) {
     if (g_ocl.ready) return true;
+    if (g_ocl_probe_failed) return false;
 
     cl_int err = CL_SUCCESS;
     cl_uint platform_count = 0;
     if (clGetPlatformIDs(0, NULL, &platform_count) != CL_SUCCESS || platform_count == 0) {
-        return false;
+        return ttak_opencl_mark_failed();
     }
 
     cl_platform_id platform = NULL;
     if (clGetPlatformIDs(1, &platform, NULL) != CL_SUCCESS) {
-        return false;
+        return ttak_opencl_mark_failed();
     }
 
     cl_uint device_count = 0;
@@ -217,14 +224,14 @@ static bool ttak_opencl_build(void) {
     if (err != CL_SUCCESS) {
         err = clGetDeviceIDs(platform, CL_DEVICE_TYPE_CPU, 1, &g_ocl.device, &device_count);
         if (err != CL_SUCCESS) {
-            return false;
+            return ttak_opencl_mark_failed();
         }
     }
 
     g_ocl.context = clCreateContext(NULL, 1, &g_ocl.device, NULL, NULL, &err);
     if (err != CL_SUCCESS || g_ocl.context == NULL) {
         ttak_opencl_release();
-        return false;
+        return ttak_opencl_mark_failed();
     }
 
 #if defined(CL_TARGET_OPENCL_VERSION) && (CL_TARGET_OPENCL_VERSION >= 200)
@@ -234,7 +241,7 @@ static bool ttak_opencl_build(void) {
 #endif
     if (err != CL_SUCCESS || g_ocl.queue == NULL) {
         ttak_opencl_release();
-        return false;
+        return ttak_opencl_mark_failed();
     }
 
     const char *src = kFactorKernelSrc;
@@ -242,19 +249,19 @@ static bool ttak_opencl_build(void) {
     g_ocl.program = clCreateProgramWithSource(g_ocl.context, 1, &src, &len, &err);
     if (err != CL_SUCCESS || g_ocl.program == NULL) {
         ttak_opencl_release();
-        return false;
+        return ttak_opencl_mark_failed();
     }
 
     err = clBuildProgram(g_ocl.program, 1, &g_ocl.device, NULL, NULL, NULL);
     if (err != CL_SUCCESS) {
         ttak_opencl_release();
-        return false;
+        return ttak_opencl_mark_failed();
     }
 
     g_ocl.kernel = clCreateKernel(g_ocl.program, "factor_kernel", &err);
     if (err != CL_SUCCESS || g_ocl.kernel == NULL) {
         ttak_opencl_release();
-        return false;
+        return ttak_opencl_mark_failed();
     }
 
     g_ocl.ready = true;

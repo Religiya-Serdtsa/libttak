@@ -45,6 +45,17 @@ Inline assembly is kept ISA-neutral by guarding each block with architecture
 checks and providing a pure-C fallback. Most math code now relies on the limb
 helpers instead, keeping the exported APIs ISA-neutral even on TinyCC builds.
 
+## TinyCC Streaming Fast Paths
+
+To keep allocator-heavy codepaths fast under TinyCC, the library now exposes
+`ttak_mem_stream_zero` / `ttak_mem_stream_copy`. These helpers are implemented
+with hand-written assembly for amd64 (REP MOV/STOS), arm64 (paired `ldp/stp`),
+riscv64 (`ld`/`sd` pairs), mips64el (`ld`/`sd` loops), and ppc64le (`mtctr` +
+`ld`/`std` bursts). When libttak is compiled with TinyCC on any of those ISAs,
+every arena/pocket/VMA zero or duplication funnels through the tuned paths,
+sidestepping TinyCC’s -O0 codegen limits. If the target ISA is not covered,
+the helpers fall back to cache-friendly C loops so behavior stays portable.
+
 ## Applying the Tricks Elsewhere
 
 * Use `ttak_branchless_select_*` instead of `if/else` whenever the predicate

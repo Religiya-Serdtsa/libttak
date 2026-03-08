@@ -1,6 +1,7 @@
 #include <ttak/mem/arena_helper.h>
 #include <ttak/mem_tree/mem_tree.h>
 #include <ttak/timing/timing.h>
+#include <ttak/mem/fastpath.h>
 
 #include <string.h>
 #include <stdint.h>
@@ -82,7 +83,7 @@ bool ttak_arena_env_init(ttak_arena_env_t *env, const ttak_arena_env_config_t *c
     env->config = local_cfg;
     env->gc = env->config.gc;
     env->owns_gc = false;
-    memset(&env->local_gc, 0, sizeof(env->local_gc));
+    ttak_mem_stream_zero(&env->local_gc, sizeof(env->local_gc));
 
     if (!env->gc) {
         env->gc = &env->local_gc;
@@ -104,7 +105,7 @@ void ttak_arena_env_destroy(ttak_arena_env_t *env) {
 
     env->gc = NULL;
     env->owns_gc = false;
-    memset(&env->local_gc, 0, sizeof(env->local_gc));
+    ttak_mem_stream_zero(&env->local_gc, sizeof(env->local_gc));
 }
 
 bool ttak_arena_generation_begin(ttak_arena_env_t *env, ttak_arena_generation_t *generation, uint32_t epoch_id) {

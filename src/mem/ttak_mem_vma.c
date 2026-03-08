@@ -31,6 +31,7 @@
 
 #include "../../internal/ttak/mem_internal.h"
 #include "../../include/ttak/mem/mem.h"
+#include <ttak/mem/fastpath.h>
 
 /**
  * @brief Global VMA region instance.
@@ -87,7 +88,7 @@ ttak_mem_header_t* ttak_mem_vma_alloc_internal(size_t user_requested_size) {
     } while (!atomic_compare_exchange_weak(&global_vma_region.current_cursor, &old_cursor, new_cursor));
 
     ttak_mem_header_t* allocated_header = (ttak_mem_header_t*)((old_cursor + TTAK_VMA_ALIGNMENT - 1) & ~((uintptr_t)TTAK_VMA_ALIGNMENT - 1));
-    memset(allocated_header, 0, aligned_total_alloc_size);
+    ttak_mem_stream_zero(allocated_header, aligned_total_alloc_size);
 
     return allocated_header;
 }

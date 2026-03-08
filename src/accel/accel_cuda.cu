@@ -77,6 +77,30 @@ static inline uint32_t ttak_checksum_seed(const ttak_accel_batch_item_t *item) {
     return (item->checksum_salt == 0u) ? 2166136261u : item->checksum_salt;
 }
 
+static bool ttak_cuda_context_ready(void) {
+    static bool checked = false;
+    static bool ready = false;
+    if (checked) {
+        return ready;
+    }
+
+    int device_count = 0;
+    cudaError_t err = cudaGetDeviceCount(&device_count);
+    if (err == cudaSuccess && device_count > 0) {
+        err = cudaSetDevice(0);
+        if (err == cudaSuccess) {
+            ready = true;
+        } else {
+            (void)cudaGetLastError();
+        }
+    } else if (err != cudaSuccess) {
+        (void)cudaGetLastError();
+    }
+
+    checked = true;
+    return ready;
+}
+
 static inline uint32_t ttak_fnv1a32(const void *data, size_t len, uint32_t seed) {
     const uint8_t *ptr = (const uint8_t *)data;
     uint32_t hash = (seed == 0u) ? 2166136261u : seed;
@@ -533,6 +557,10 @@ extern "C" ttak_result_t ttak_accel_run_cuda(
     const ttak_accel_config_t *config) {
     if (items == NULL || config == NULL) {
         return TTAK_RESULT_ERR_ARGUMENT;
+    }
+
+    if (!ttak_cuda_context_ready()) {
+        return ttak_accel_run_cpu(items, item_count, config);
     }
 
     for (size_t idx = 0; idx < item_count; ++idx) {

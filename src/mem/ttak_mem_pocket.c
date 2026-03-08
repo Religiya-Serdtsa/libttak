@@ -28,6 +28,7 @@
 
 #include "../../internal/ttak/mem_internal.h"
 #include "../../include/ttak/mem/mem.h"
+#include <ttak/mem/fastpath.h>
 
 /**
  * @brief Thread-local freelists for each pocket size class.
@@ -73,7 +74,7 @@ static void* allocate_new_pocket_page(int freelist_idx) {
         fprintf(stderr, "ttak_mem_pocket: Failed to allocate new page\n");
         return NULL;
     }
-    memset(page, 0, TTAK_POCKET_PAGE_SIZE);
+    ttak_mem_stream_zero(page, TTAK_POCKET_PAGE_SIZE);
 
     // Stamp the page-level magic with size class index.
     ((uint32_t*)page)[0] = POCKET_MAGIC | (freelist_idx & 0xFF); 

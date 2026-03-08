@@ -62,6 +62,7 @@ static int posix_memalign(void **memptr, size_t alignment, size_t size) {
 #define posix_memfree(ptr) free(ptr)
 #endif
 
+#include <ttak/mem/fastpath.h>
 #include <stdalign.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -243,10 +244,10 @@ void *ttak_dangerous_alloc(size_t size) {
     pthread_once(&buddy_once, buddy_bootstrap);
     ttak_mem_req_t req = { .size_bytes = size, .priority = 0, .owner_tag = 0, .call_safety = 0, .flags = 0 };
     ptr = ttak_mem_buddy_alloc(&req);
-    if (ptr) memset(ptr, 0, size);
+    if (ptr) ttak_mem_stream_zero(ptr, size);
 #else
     if (posix_memalign(&ptr, 64, size) != 0) return NULL;
-    memset(ptr, 0, size);
+    ttak_mem_stream_zero(ptr, size);
 #endif
     return ptr;
 }
@@ -275,6 +276,7 @@ void ttak_dangerous_free(void *ptr) {
 /**
  * @brief Recalculates the global friction as the product of all class values.
  */
+static ttak_fixed_16_16_t ttak_mem_calculate_global_friction(void) __attribute__((unused));
 static ttak_fixed_16_16_t ttak_mem_calculate_global_friction(void) {
     ttak_fixed_16_16_t friction_product = TTAK_FP_ONE;
     for (int i = 0; i < 4; ++i) {
@@ -311,7 +313,7 @@ void TTAK_HOT_PATH *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, ui
 
     if (t_reentrancy_guard) {
         void* fallback_ptr = malloc(size);
-        if (fallback_ptr) memset(fallback_ptr, 0, size);
+        if (fallback_ptr) ttak_mem_stream_zero(fallback_ptr, size);
         return fallback_ptr;
     }
     t_reentrancy_guard = true;
@@ -406,7 +408,7 @@ void TTAK_HOT_PATH *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, ui
 
     ttak_atomic_add64(&global_mem_usage, actual_total_alloc_size);
     user_ptr = (char *)header + header_size;
-    memset(user_ptr, 0, size);
+    ttak_mem_stream_zero(user_ptr, size);
     if (strict_check_enabled) *((uint64_t *)((char *)user_ptr + size)) = TTAK_CANARY_END_MAGIC;
 
     if (global_trace_enabled) {
@@ -453,7 +455,7 @@ void TTAK_HOT_PATH *ttak_mem_realloc_safe(void *ptr, size_t new_size, uint64_t l
 
     void *new_ptr = ttak_mem_alloc_safe(new_size, lifetime_ticks, now, is_const, is_volatile, allow_direct, is_root, new_flags);
     if (!new_ptr) return NULL;
-    memcpy(new_ptr, ptr, (old_size < new_size) ? old_size : new_size);
+    ttak_mem_stream_copy(new_ptr, ptr, (old_size < new_size) ? old_size : new_size);
     ttak_mem_free(ptr);
     return new_ptr;
 }
@@ -469,7 +471,7 @@ void TTAK_HOT_PATH *ttak_mem_dup_safe(const void *src, size_t size, uint64_t lif
     }
     void *new_ptr = ttak_mem_alloc_safe(size, lifetime_ticks, now, is_const, is_volatile, allow_direct, is_root, final_flags);
     if (!new_ptr) return NULL;
-    memcpy(new_ptr, src, size);
+    ttak_mem_stream_copy(new_ptr, src, size);
     return new_ptr;
 }
 

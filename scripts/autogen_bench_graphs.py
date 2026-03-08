@@ -7,7 +7,7 @@ import time
 
 BENCH_DIR = "bench/ttl-cache-multithread-bench"
 COMPILERS = ["gcc", "tcc", "clang"]
-RUN_SECONDS = 10
+RUN_SECONDS = 300
 
 def _parse_elapsed_seconds(label):
     digits = "".join(ch for ch in label if ch.isdigit())
@@ -31,11 +31,11 @@ def run_bench(compiler):
         if compiler == "tcc":
             run_env.setdefault("MALLOC_CHECK_", "2")
 
-        results = []
+        series = []
         for attempt in range(3):
             proc = subprocess.Popen([f"./{BENCH_DIR}/ttl_cache_bench_lockfree"], 
                                     stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, env=run_env)
-            results = []
+            series = []
             while True:
                 line = proc.stdout.readline()
                 if not line:
@@ -49,8 +49,10 @@ def run_bench(compiler):
                         ops = int(parts[1])
                         rss = int(parts[-1])
                         elapsed = _parse_elapsed_seconds(parts[0])
-                        results.append((ops, rss, elapsed))
-                        elapsed_txt = f"{elapsed}s" if elapsed is not None else "?"
+                        if elapsed is None:
+                            continue
+                        series.append({"ops": ops, "rss": rss, "elapsed": elapsed})
+                        elapsed_txt = f"{elapsed}s"
                         print(f"  {compiler}: t={elapsed_txt} {ops} Ops/s, {rss} KB")
                         if elapsed is not None and elapsed >= RUN_SECONDS:
                             break
@@ -62,51 +64,68 @@ def run_bench(compiler):
             except subprocess.TimeoutExpired:
                 proc.kill()
 
-            if results or compiler != "tcc":
+            if series or compiler != "tcc":
                 break
             print(f"  {compiler}: no samples collected (attempt {attempt + 1}), retrying...")
             time.sleep(1)
         
-        if not results:
+        if not series:
             return None
             
-        avg_ops = sum(r[0] for r in results) / len(results)
-        peak_ops = max(r[0] for r in results)
-        final_rss = results[-1][1]
+        avg_ops = sum(p["ops"] for p in series) / len(series)
+        peak_ops = max(p["ops"] for p in series)
+        final_rss = series[-1]["rss"]
         
-        return {"avg_ops": avg_ops, "peak_ops": peak_ops, "rss": final_rss}
+        return {"avg_ops": avg_ops, "peak_ops": peak_ops, "rss": final_rss, "series": series}
         
     except Exception as e:
         print(f"Failed to benchmark {compiler}: {e}")
         return None
 
 def generate_graphs(data):
-    names = list(data.keys())
-    peaks = [d["peak_ops"] / 1e6 for d in data.values()]
-    rss = [d["rss"] for d in data.values()]
+    if not data:
+        return
 
-    # Throughput Graph
-    plt.figure(figsize=(10, 6))
-    bars = plt.bar(names, peaks, color=['#4c72b0', '#55a868', '#c44e52'])
-    plt.ylabel('Peak Throughput (Million Ops/s)')
-    plt.title('Lock-Free TTL Cache Peak Throughput by Compiler')
-    plt.ylim(0, max(peaks) * 1.2)
-    for bar in bars:
-        height = bar.get_height()
-        plt.text(bar.get_x() + bar.get_width()/2., height + 0.5, f'{height:.1f}M', ha='center', va='bottom', fontweight='bold')
+    palette = {
+        "gcc": "#4c72b0",
+        "tcc": "#55a868",
+        "clang": "#c44e52",
+    }
+
+    # Throughput Trend
+    plt.figure(figsize=(12, 6))
+    for compiler, payload in data.items():
+        series = payload.get("series", [])
+        if not series:
+            continue
+        times = [pt["elapsed"] for pt in series]
+        throughput = [pt["ops"] / 1e6 for pt in series]
+        color = palette.get(compiler, None)
+        plt.plot(times, throughput, label=f"{compiler} (peak {payload['peak_ops']/1e6:.1f}M)", color=color, linewidth=2)
+    plt.xlabel("Elapsed Time (s)")
+    plt.ylabel("Throughput (Million Ops/s)")
+    plt.title("Lock-Free TTL Cache Throughput Convergence")
+    plt.grid(True, linestyle="--", alpha=0.3)
+    plt.legend()
     plt.tight_layout()
     plt.savefig(os.path.join(BENCH_DIR, "throughput_comparison.png"))
     print("Generated throughput_comparison.png")
 
-    # RSS Graph
-    plt.figure(figsize=(10, 6))
-    bars = plt.bar(names, rss, color=['#4c72b0', '#55a868', '#c44e52'])
-    plt.ylabel('Final RSS (KB)')
-    plt.title('Memory Footprint (RSS) by Compiler')
-    plt.ylim(0, max(rss) * 1.2)
-    for bar in bars:
-        height = bar.get_height()
-        plt.text(bar.get_x() + bar.get_width()/2., height + 100, f'{height:,} KB', ha='center', va='bottom', fontweight='bold')
+    # RSS Trend
+    plt.figure(figsize=(12, 6))
+    for compiler, payload in data.items():
+        series = payload.get("series", [])
+        if not series:
+            continue
+        times = [pt["elapsed"] for pt in series]
+        rss_values = [pt["rss"] for pt in series]
+        color = palette.get(compiler, None)
+        plt.plot(times, rss_values, label=f"{compiler} (final {payload['rss']:,} KB)", color=color, linewidth=2)
+    plt.xlabel("Elapsed Time (s)")
+    plt.ylabel("RSS (KB)")
+    plt.title("Lock-Free TTL Cache RSS Trend")
+    plt.grid(True, linestyle="--", alpha=0.3)
+    plt.legend()
     plt.tight_layout()
     plt.savefig(os.path.join(BENCH_DIR, "rss_comparison.png"))
     print("Generated rss_comparison.png")

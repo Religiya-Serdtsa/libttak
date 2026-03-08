@@ -1,4 +1,5 @@
 #include <ttak/mem/detachable.h>
+#include <ttak/mem/fastpath.h>
 
 #include <stdatomic.h>
 #include <stdlib.h>
@@ -90,7 +91,7 @@ ttak_detachable_context_t *ttak_detachable_context_default(void) {
 void ttak_detachable_context_init(ttak_detachable_context_t *ctx, uint32_t flags) {
     if (!ctx) return;
 
-    memset(ctx, 0, sizeof(*ctx));
+    ttak_mem_stream_zero(ctx, sizeof(*ctx));
     ctx->flags = flags;
     ctx->matrix_rows = TTAK_DETACHABLE_MATRIX_ROWS;
     ctx->active_row = 0;
@@ -137,7 +138,7 @@ void ttak_detachable_context_destroy(ttak_detachable_context_t *ctx) {
 void ttak_detachable_cache_init(ttak_detachable_cache_t *cache, size_t chunk_size, size_t capacity) {
     if (!cache) return;
 
-    memset(cache, 0, sizeof(*cache));
+    ttak_mem_stream_zero(cache, sizeof(*cache));
     cache->chunk_size = (chunk_size == 0 || chunk_size > TTAK_DETACHABLE_CACHE_MAX_BYTES)
                             ? TTAK_DETACHABLE_CACHE_MAX_BYTES
                             : chunk_size;
@@ -392,7 +393,7 @@ static void *ttak_detachable_cache_take(ttak_detachable_cache_t *cache, size_t r
     pthread_mutex_unlock(&cache->lock);
 
     if (ptr) {
-        memset(ptr, 0, cache->chunk_size);
+        ttak_mem_stream_zero(ptr, cache->chunk_size);
     }
     return ptr;
 }
@@ -464,7 +465,7 @@ static int ttak_hard_kill_configure(sigset_t signals, int *ret, _Bool graceful) 
     atomic_store(&g_signal_guard.triggered, false);
 
     struct sigaction sa;
-    memset(&sa, 0, sizeof(sa));
+    ttak_mem_stream_zero(&sa, sizeof(sa));
     sa.sa_handler = ttak_detachable_signal_handler;
     sigemptyset(&sa.sa_mask);
 #ifdef SA_RESTART
