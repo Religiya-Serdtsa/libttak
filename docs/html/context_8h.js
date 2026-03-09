@@ -9,8 +9,8 @@ var context_8h =
     [ "ttak_context_active", "context_8h.html#a2821cd899c198409e01e84b4456dca17", null ],
     [ "ttak_context_destroy", "context_8h.html#abdd683774b7624bca4cc13b021de2dc7", null ],
     [ "ttak_context_init", "context_8h.html#a5f5a054c7cb2f72194dbb187bc730fa0", null ],
-    [ "ttak_context_owner", "context_8h.html#a618abd10cb1b5d0eaf3203a06a403665", null ],
+    [ "ttak_context_owner", "context_8h.html#a3ce5ce1f27b068f718459c1316c97bc9", null ],
     [ "ttak_context_reassign", "context_8h.html#ab825aa0d043bbb76f8de80c6f5da5594", null ],
     [ "ttak_context_run", "context_8h.html#a50c6b1c90b40b23d2fd1b715271a3d83", null ],
-    [ "ttak_context_shared", "context_8h.html#a9f0b8427353b487b5d6cd8233a42b707", null ]
+    [ "ttak_context_shared", "context_8h.html#a46008e5e79b20072576b51266c268947", null ]
 ];

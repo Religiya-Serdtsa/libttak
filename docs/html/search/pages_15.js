@@ -1,0 +1,26 @@
+var searchData=
+[
+  ['language_20course_0',['BigScript Language Course',['..//home/yjlee/libttak/tutorials/43-bigscript/README.md#autotoc_md179',1,'']]],
+  ['layer_1',['Stage 8 – Application Layer',['../md_tutorials_2CLONE__PATH.html#autotoc_md191',1,'']]],
+  ['lesson_2036_3a_20memory_20tracing_20lru_20caching_2',['Lesson 36: Memory Tracing &amp;amp; LRU Caching',['..//home/yjlee/libttak/tutorials/36-trace-memory/README.md#autotoc_md119',1,'']]],
+  ['lesson_2037_3a_20shared_20memory_20with_20bitmap_20ownership_3',['Lesson 37: Shared Memory with Bitmap Ownership',['..//home/yjlee/libttak/tutorials/37-shared-memory-ownership/README.md#autotoc_md125',1,'']]],
+  ['lesson_2039_3a_20detachable_20memory_20signal_20guards_4',['Lesson 39: Detachable Memory &amp;amp; Signal Guards',['..//home/yjlee/libttak/tutorials/39-detachable-memory/README.md#autotoc_md140',1,'']]],
+  ['lesson_2040_3a_20arena_20memory_20orchestration_5',['Lesson 40: Arena Memory Orchestration',['..//home/yjlee/libttak/tutorials/40-arena-memory/README.md#autotoc_md145',1,'']]],
+  ['lesson_2041_20–_20guarded_20io_20network_20sessions_6',['Lesson 41 – Guarded IO &amp;amp; Network Sessions',['..//home/yjlee/libttak/tutorials/41-io-network-stack/README.md#autotoc_md150',1,'']]],
+  ['lesson_2042_20–_20guarded_20io_20streams_7',['Lesson 42 – Guarded IO Streams',['..//home/yjlee/libttak/tutorials/42-io-guarded-streams/README.md#autotoc_md153',1,'']]],
+  ['lesson_20folders_8',['Per-lesson folders',['..//home/yjlee/libttak/tutorials/README.md#autotoc_md203',1,'']]],
+  ['lesson_20groups_9',['Lesson Groups',['..//home/yjlee/libttak/tutorials/README.md#autotoc_md200',1,'']]],
+  ['libttak_10',['LibTTAK',['../index.html#autotoc_md26',1,'LibTTAK'],['../index.html#autotoc_md32',1,'Why LibTTAK?']]],
+  ['libttak_11',['libttak',['../index.html',1,'']]],
+  ['libttak_20benchmark_20suite_12',['LibTTAK Benchmark Suite',['..//home/yjlee/libttak/bench/README.md#autotoc_md0',1,'']]],
+  ['libttak_20rust_20and_20c_13',['Comparison: LibTTAK, Rust, and C++',['../index.html#autotoc_md37',1,'']]],
+  ['libttak_20tutorials_14',['LibTTAK Tutorials',['..//home/yjlee/libttak/tutorials/README.md#autotoc_md199',1,'']]],
+  ['lifetime_20as_20data_15',['Deterministic Lifetime-as-Data',['../index.html#autotoc_md34',1,'']]],
+  ['limiters_16',['Tutorial 18 – Rate Limiters',['..//home/yjlee/libttak/tutorials/18-rate-limiters/README.md#autotoc_md82',1,'']]],
+  ['limiters_20stats_17',['Stage 4 – Timing + Limiters + Stats',['../md_tutorials_2CLONE__PATH.html#autotoc_md187',1,'']]],
+  ['lock_20free_20baseline_18',['High-Performance Lock-Free Baseline',['../index.html#autotoc_md42',1,'']]],
+  ['logger_20basics_19',['Tutorial 08 – Logger Basics',['..//home/yjlee/libttak/tutorials/08-logger-basics/README.md#autotoc_md62',1,'']]],
+  ['logging_20',['Stage 1 – Core Data + Logging',['../md_tutorials_2CLONE__PATH.html#autotoc_md184',1,'']]],
+  ['lru_20caching_21',['Lesson 36: Memory Tracing &amp;amp; LRU Caching',['..//home/yjlee/libttak/tutorials/36-trace-memory/README.md#autotoc_md119',1,'']]],
+  ['lru_20synchronous_20eviction_22',['The Deterministic LRU &amp;amp; Synchronous Eviction',['..//home/yjlee/libttak/tutorials/36-trace-memory/README.md#autotoc_md121',1,'']]]
+];

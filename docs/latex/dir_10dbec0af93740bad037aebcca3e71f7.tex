@@ -1,6 +1,6 @@
-\hypertarget{dir_10dbec0af93740bad037aebcca3e71f7}{}\doxysection{blueprints Directory Reference}
-\label{dir_10dbec0af93740bad037aebcca3e71f7}\index{blueprints Directory Reference@{blueprints Directory Reference}}
-\doxysubsection*{Directories}
+\doxysection{blueprints Directory Reference}
+\hypertarget{dir_10dbec0af93740bad037aebcca3e71f7}{}\label{dir_10dbec0af93740bad037aebcca3e71f7}\index{blueprints Directory Reference@{blueprints Directory Reference}}
+\doxysubsubsection*{Directories}
 \begin{DoxyCompactItemize}
 \item 
 directory \mbox{\hyperlink{dir_03c266dc1305a56aef526bc505765a8f}{application}}
@@ -19,3 +19,55 @@ directory \mbox{\hyperlink{dir_98466792bbb25d87fc78e00ec697a8a1}{logic}}
 \item 
 directory \mbox{\hyperlink{dir_06f812a3ad02a54f5676cf633579cb1b}{resource}}
 \end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\hypertarget{README.md_autotoc_md11}{}\doxysubsection{\texorpdfstring{Blueprints}{Blueprints}}\label{README.md_autotoc_md11}
+This directory houses the Plant\+UML ({\ttfamily .puml}) blueprints for {\ttfamily libttak}. Each file now lives in a role-\/oriented folder so it is easier to navigate the architecture layers.\hypertarget{README.md_autotoc_md12}{}\doxysubsection{\texorpdfstring{Directory Structure}{Directory Structure}}\label{README.md_autotoc_md12}
+
+\begin{DoxyItemize}
+\item {\ttfamily application/}\+: Product-\/entry diagrams such as {\ttfamily \doxylink{00__overview_8puml}{00\+\_\+overview.\+puml}}.
+\item {\ttfamily logic/}\+: Specialized logic (math kernels, tree structures).
+\item {\ttfamily execution/}\+: Runtime and scheduling blueprints.
+\item {\ttfamily resource/}\+: Ownership, epoch GC, and detachable/arena allocators.
+\item {\ttfamily foundation/}\+: Threading, synchronization, and utility services.
+\item {\ttfamily io\+\_\+net/}\+: Guarded I/O, buffers, and network topology.
+\item {\ttfamily embedded/}\+: Bare-\/metal specific allocators and drivers.
+\item {\ttfamily integration/}\+: Cross-\/cutting diagrams like {\ttfamily \doxylink{all_8puml}{all.\+puml}}.
+\item {\ttfamily png/}\+: Rendered PNG files that mirror the same folder hierarchy.
+\item {\ttfamily scripts/}\+: Rendering helpers (currently {\ttfamily render\+\_\+blueprints.\+py}).
+\end{DoxyItemize}\hypertarget{README.md_autotoc_md13}{}\doxysubsubsection{\texorpdfstring{Notable Blueprints}{Notable Blueprints}}\label{README.md_autotoc_md13}
+
+\begin{DoxyItemize}
+\item {\ttfamily \doxylink{09__epoch__reclamation_8puml}{resource/09\+\_\+epoch\+\_\+reclamation.\+puml}}\+: Shows how epoch registration, retirement queues, and shared-\/pointer integration cooperate (Scope \mbox{[}09\mbox{]}).
+\item {\ttfamily \doxylink{10__detachable__memory_8puml}{resource/10\+\_\+detachable\+\_\+memory.\+puml}}\+: Describes the detachable memory allocator, cache, signal hooks, and graceful termination path (Scope \mbox{[}10\mbox{]}).
+\item {\ttfamily \doxylink{11__arena__memory_8puml}{resource/11\+\_\+arena\+\_\+memory.\+puml}}\+: Captures the cache-\/aligned arena row lifecycle, mem-\/tree bookkeeping, and epoch GC flow referenced by Lesson 40 + the TTL cache bench (Scope \mbox{[}11\mbox{]}).
+\item {\ttfamily \doxylink{12__io__net_8puml}{io\+\_\+net/12\+\_\+io\+\_\+net.\+puml}}\+: Documents the guarded I/O layer (guards, zero-\/copy buffers, polling) and its integration with shared endpoints plus the session manager built on EBR + Epoch GC (Scope \mbox{[}12\mbox{]}).
+\item {\ttfamily \doxylink{13__embedded__baremetal_8puml}{embedded/13\+\_\+embedded\+\_\+baremetal.\+puml}}\+: Shows how the buddy allocator underpins embedded builds and how the net driver abstraction bridges POSIX/\+Windows/\+Baremetal targets (Scope \mbox{[}13\mbox{]}).
+\item {\ttfamily \doxylink{all_8puml}{integration/all.\+puml}}\+: Integrated architecture map that stitches the role folders into one overview.
+\end{DoxyItemize}\hypertarget{README.md_autotoc_md14}{}\doxysubsection{\texorpdfstring{Rendering Blueprints}{Rendering Blueprints}}\label{README.md_autotoc_md14}
+To update the PNG files from the {\ttfamily .puml} sources, run the following command from the project root\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{make\ blueprints}
+
+\end{DoxyCode}
+
+
+Or run the script directly\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{python3\ blueprints/scripts/render\_blueprints.py}
+
+\end{DoxyCode}
+
+
+The script will automatically check for changes and only re-\/render files that have been modified. It attempts to use a local {\ttfamily plantuml} installation first, and falls back to the Plant\+UML online server if necessary.\hypertarget{README.md_autotoc_md15}{}\doxysubsection{\texorpdfstring{Adding New Blueprints}{Adding New Blueprints}}\label{README.md_autotoc_md15}
+
+\begin{DoxyEnumerate}
+\item Create a new {\ttfamily .puml} file in the folder that matches the role (or create a new folder if a new role emerges).
+\item Run {\ttfamily make blueprints}.
+\item The resulting PNG will be stored in the mirrored path under {\ttfamily blueprints/png/}. 
+\end{DoxyEnumerate}

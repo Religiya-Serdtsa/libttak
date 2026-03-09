@@ -1,2 +1,89 @@
-\hypertarget{dir_74699fa1f55476b507556b4ed04e3463}{}\doxysection{tutorials/42-\/io-\/guarded-\/streams Directory Reference}
-\label{dir_74699fa1f55476b507556b4ed04e3463}\index{tutorials/42-\/io-\/guarded-\/streams Directory Reference@{tutorials/42-\/io-\/guarded-\/streams Directory Reference}}
+\doxysection{tutorials/42-\/io-\/guarded-\/streams Directory Reference}
+\hypertarget{dir_74699fa1f55476b507556b4ed04e3463}{}\label{dir_74699fa1f55476b507556b4ed04e3463}\index{tutorials/42-\/io-\/guarded-\/streams Directory Reference@{tutorials/42-\/io-\/guarded-\/streams Directory Reference}}
+Directory dependency graph for 42-\/io-\/guarded-\/streams\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=240pt]{dir_74699fa1f55476b507556b4ed04e3463_dep}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Detailed Description}
+\hypertarget{README.md_autotoc_md153}{}\doxysubsection{\texorpdfstring{Lesson 42 – Guarded IO Streams}{Lesson 42 – Guarded IO Streams}}\label{README.md_autotoc_md153}
+Lesson 41 shipped the network stack on top of detachable arenas. This follow-\/up focuses purely on the IO half\+: {\ttfamily \doxylink{io_8h_aca20f4767510d423ee88de501eb72575}{ttak\+\_\+io\+\_\+guard\+\_\+t}}, the synchronous read/write helpers, staged buffers, and the polling shim that lets you safely wait on descriptors while TTL + ownership rules stay enforced.\hypertarget{README.md_autotoc_md154}{}\doxysubsection{\texorpdfstring{Objectives}{Objectives}}\label{README.md_autotoc_md154}
+
+\begin{DoxyEnumerate}
+\item Wrap raw descriptors with {\ttfamily \doxylink{io_8h_aca20f4767510d423ee88de501eb72575}{ttak\+\_\+io\+\_\+guard\+\_\+t}} and observe when guards refresh/expire.
+\item Copy user buffers through {\ttfamily \doxylink{io_8h_a13577555a348473d37e420b72805a261}{ttak\+\_\+io\+\_\+buffer\+\_\+t}} by calling {\ttfamily ttak\+\_\+io\+\_\+sync\+\_\+write} / {\ttfamily ttak\+\_\+io\+\_\+sync\+\_\+read}.
+\item Wait for readiness with {\ttfamily ttak\+\_\+io\+\_\+poll\+\_\+wait}, then manually extend the TTL via {\ttfamily ttak\+\_\+io\+\_\+guard\+\_\+refresh} so long-\/lived streams stay valid.
+\end{DoxyEnumerate}\hypertarget{README.md_autotoc_md155}{}\doxysubsection{\texorpdfstring{Repo Workspace}{Repo Workspace}}\label{README.md_autotoc_md155}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{tutorials/42-\/io-\/guarded-\/streams/}
+\DoxyCodeLine{├──\ Makefile}
+\DoxyCodeLine{├──\ README.md\ \ ←\ you\ are\ here}
+\DoxyCodeLine{└──\ lesson42\_io\_guarded\_streams.c}
+
+\end{DoxyCode}
+
+
+{\ttfamily lesson42\+\_\+io\+\_\+guarded\+\_\+streams.\+c} creates a POSIX pipe, duplicates each end, and uses the duplicates as guarded descriptors. The sample\+:
+
+
+\begin{DoxyEnumerate}
+\item Writes a payload with {\ttfamily ttak\+\_\+io\+\_\+sync\+\_\+write}, waits for {\ttfamily POLLIN}, and reads it via {\ttfamily ttak\+\_\+io\+\_\+sync\+\_\+read}.
+\item Sleeps past the guard TTL to demonstrate how {\ttfamily ttak\+\_\+io\+\_\+sync\+\_\+read} returns {\ttfamily TTAK\+\_\+\+IO\+\_\+\+ERR\+\_\+\+EXPIRED\+\_\+\+GUARD} and automatically closes the stale descriptor.
+\item Rehydrates the guard by duplicating the original pipe endpoint, refreshes TTLs, and shows how {\ttfamily ttak\+\_\+io\+\_\+guard\+\_\+refresh} keeps the descriptor alive while waiting for the next chunk.
+\item Initializes the async scheduler, calls {\ttfamily ttak\+\_\+io\+\_\+async\+\_\+read}, and writes the final payload so you can watch the callback fire once the poll worker drains {\ttfamily POLLIN}.
+\end{DoxyEnumerate}
+
+\begin{quote}
+{\ttfamily \doxylink{timing_8h_ab89967dd277adc228208b2efe487215c}{ttak\+\_\+get\+\_\+tick\+\_\+count()}} returns milliseconds, so the TTL values in the sample are expressed directly in milliseconds ({\ttfamily 300} → 300 ms, {\ttfamily 2000} → 2 s). \end{quote}
+\hypertarget{README.md_autotoc_md156}{}\doxysubsection{\texorpdfstring{Build \& Run}{Build \& Run}}\label{README.md_autotoc_md156}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{make}
+\DoxyCodeLine{./lesson42\_io\_guarded\_streams}
+
+\end{DoxyCode}
+
+
+Expected log excerpt (trimmed)\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{[lesson42]\ booting\ lesson42\_io\_guarded\_streams}
+\DoxyCodeLine{[lesson42]\ allocated\ 256-\/byte\ IO\ staging\ buffers}
+\DoxyCodeLine{[lesson42]\ pipe\ +\ guard\ setup\ complete}
+\DoxyCodeLine{[lesson42]\ sending\ first\ payload\ via\ ttak\_io\_sync\_write}
+\DoxyCodeLine{[lesson42]\ poll(chunk1)\ fd=5\ events=0x1}
+\DoxyCodeLine{[lesson42]\ read\ 19\ bytes:\ "{}guarded\ io\ chunk\ \#1"{}}
+\DoxyCodeLine{[lesson42]\ sleeping\ 350ms\ to\ force\ guard\ expiry}
+\DoxyCodeLine{[lesson42]\ guard\ expired\ as\ expected\ (status=2)}
+\DoxyCodeLine{[lesson42]\ read\ 19\ bytes\ after\ rehydrating\ guard:\ "{}guarded\ io\ chunk\ \#2"{}}
+\DoxyCodeLine{[lesson42]\ guard\ TTL\ manually\ extended}
+\DoxyCodeLine{[lesson42]\ manual\ refresh\ kept\ guard\ alive\ long\ enough\ for:\ "{}chunk\ \#3\ after\ refresh"{}}
+\DoxyCodeLine{[lesson42]\ starting\ async\ read\ demo\ via\ ttak\_io\_async\_read}
+\DoxyCodeLine{[lesson42]\ async\ read\ completed\ with\ 24\ bytes:\ "{}chunk\ \#4\ via\ async\ read"{}}
+
+\end{DoxyCode}
+
+
+Exact wording may differ, but you should see at least one guard expiry, a re-\/initialisation using {\ttfamily dup(2)}, and a manual refresh prolonging the guard TTL before the third read.\hypertarget{README.md_autotoc_md157}{}\doxysubsection{\texorpdfstring{Verification Checklist}{Verification Checklist}}\label{README.md_autotoc_md157}
+
+\begin{DoxyItemize}
+\item[\DoxyUnchecked] {\ttfamily ttak\+\_\+io\+\_\+guard\+\_\+init} registers the descriptor with an owner (watch the resource tag logs or breakpoints).
+\end{DoxyItemize}
+\begin{DoxyItemize}
+\item[\DoxyUnchecked] {\ttfamily ttak\+\_\+io\+\_\+sync\+\_\+write} and {\ttfamily ttak\+\_\+io\+\_\+sync\+\_\+read} both stage memory via {\ttfamily \doxylink{io_8h_a13577555a348473d37e420b72805a261}{ttak\+\_\+io\+\_\+buffer\+\_\+t}} (step through the code to see sync-\/in/out).
+\end{DoxyItemize}
+\begin{DoxyItemize}
+\item[\DoxyUnchecked] Allowing the TTL to pass triggers {\ttfamily TTAK\+\_\+\+IO\+\_\+\+ERR\+\_\+\+EXPIRED\+\_\+\+GUARD} and closes the duplicated descriptor.
+\end{DoxyItemize}
+\begin{DoxyItemize}
+\item[\DoxyUnchecked] Calling {\ttfamily ttak\+\_\+io\+\_\+guard\+\_\+refresh} before the TTL elapses extends the lifetime so another poll + read succeed without re-\/duplication.
+\end{DoxyItemize}
+\begin{DoxyItemize}
+\item[\DoxyUnchecked] {\ttfamily ttak\+\_\+io\+\_\+async\+\_\+read} + {\ttfamily ttak\+\_\+async\+\_\+init} show how poll workers trigger callbacks without blocking the main thread (watch for the async completion log). 
+\end{DoxyItemize}

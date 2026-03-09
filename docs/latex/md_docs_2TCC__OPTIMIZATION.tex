@@ -1,8 +1,10 @@
-\chapter{TCC-\/\+Oriented Build and Math Tuning}
+\chapter{TCC-\/\+Oriented Build and Math Tuning }
 \hypertarget{md_docs_2TCC__OPTIMIZATION}{}\label{md_docs_2TCC__OPTIMIZATION}\index{TCC-\/Oriented Build and Math Tuning@{TCC-\/Oriented Build and Math Tuning}}
 \label{md_docs_2TCC__OPTIMIZATION_autotoc_md16}%
 \Hypertarget{md_docs_2TCC__OPTIMIZATION_autotoc_md16}%
- {\ttfamily libttak} can now be compiled entirely with {\bfseries{Tiny C Compiler (TCC)}} at {\ttfamily -\/O0}. The project builds without relying on compiler-\/driven vectorization or loop transformations, so correctness is identical between development and production. High throughput is recovered through carefully scheduled C and portable-\/inline-\/assembly idioms that map cleanly to every major 64-\/bit ISA.\hypertarget{md_docs_2TCC__OPTIMIZATION_autotoc_md17}{}\doxysection{\texorpdfstring{Build Expectations}{Build Expectations}}\label{md_docs_2TCC__OPTIMIZATION_autotoc_md17}
+
+
+{\ttfamily libttak} can now be compiled entirely with {\bfseries{Tiny C Compiler (TCC)}} at {\ttfamily -\/O0}. The project builds without relying on compiler-\/driven vectorization or loop transformations, so correctness is identical between development and production. High throughput is recovered through carefully scheduled C and portable-\/inline-\/assembly idioms that map cleanly to every major 64-\/bit ISA.\hypertarget{md_docs_2TCC__OPTIMIZATION_autotoc_md17}{}\doxysection{\texorpdfstring{Build Expectations}{Build Expectations}}\label{md_docs_2TCC__OPTIMIZATION_autotoc_md17}
 
 \begin{DoxyItemize}
 \item {\ttfamily make} defaults to {\ttfamily tcc} for every object in the library.
@@ -26,7 +28,8 @@ The guiding rules stay intact\+:
 \item Keep independent data streams alive so MUL latency is hidden explicitly by the call sequence (even though TCC preserves source order).
 \item Cache pointer dereferences into locals before entering tight loops; the new helpers follow the same pattern so the compiler has predictable access paths.
 \end{DoxyItemize}\hypertarget{md_docs_2TCC__OPTIMIZATION_autotoc_md19}{}\doxysection{\texorpdfstring{Portable Assembly Strategy}{Portable Assembly Strategy}}\label{md_docs_2TCC__OPTIMIZATION_autotoc_md19}
-Inline assembly is kept ISA-\/neutral by guarding each block with architecture checks and providing a pure-\/C fallback. Most math code now relies on the limb helpers instead, keeping the exported APIs ISA-\/neutral even on Tiny\+CC builds.\hypertarget{md_docs_2TCC__OPTIMIZATION_autotoc_md20}{}\doxysection{\texorpdfstring{Applying the Tricks Elsewhere}{Applying the Tricks Elsewhere}}\label{md_docs_2TCC__OPTIMIZATION_autotoc_md20}
+Inline assembly is kept ISA-\/neutral by guarding each block with architecture checks and providing a pure-\/C fallback. Most math code now relies on the limb helpers instead, keeping the exported APIs ISA-\/neutral even on Tiny\+CC builds.\hypertarget{md_docs_2TCC__OPTIMIZATION_autotoc_md20}{}\doxysection{\texorpdfstring{Tiny\+CC Streaming Fast Paths}{Tiny\+CC Streaming Fast Paths}}\label{md_docs_2TCC__OPTIMIZATION_autotoc_md20}
+To keep allocator-\/heavy codepaths fast under Tiny\+CC, the library now exposes {\ttfamily ttak\+\_\+mem\+\_\+stream\+\_\+zero} / {\ttfamily ttak\+\_\+mem\+\_\+stream\+\_\+copy}. These helpers are implemented with hand-\/written assembly for amd64 (REP MOV/\+STOS), arm64 (paired {\ttfamily ldp/stp}), riscv64 ({\ttfamily ld}/{\ttfamily sd} pairs), mips64el ({\ttfamily ld}/{\ttfamily sd} loops), and ppc64le ({\ttfamily mtctr} + {\ttfamily ld}/{\ttfamily std} bursts). When libttak is compiled with Tiny\+CC on any of those ISAs, every arena/pocket/\+VMA zero or duplication funnels through the tuned paths, sidestepping Tiny\+CC’s -\/O0 codegen limits. If the target ISA is not covered, the helpers fall back to cache-\/friendly C loops so behavior stays portable.\hypertarget{md_docs_2TCC__OPTIMIZATION_autotoc_md21}{}\doxysection{\texorpdfstring{Applying the Tricks Elsewhere}{Applying the Tricks Elsewhere}}\label{md_docs_2TCC__OPTIMIZATION_autotoc_md21}
 
 \begin{DoxyItemize}
 \item Use {\ttfamily ttak\+\_\+branchless\+\_\+select\+\_\+\texorpdfstring{$\ast$}{*}} instead of {\ttfamily if/else} whenever the predicate is derived from a simple comparison. This keeps pipelines warm and side-\/steps branch predictors that TCC never learns to micro-\/optimize for us.

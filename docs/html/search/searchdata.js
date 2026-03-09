@@ -1,6 +1,6 @@
 var indexSectionsWithContent =
 {
-  0: "01_abcdefghijklmnopqrstuvwz",
+  0: "$0123456789_abcdefghijklmnopqrstuvwyz–",
   1: "_ast",
   2: "01abcdefhilmnopqrstvwz",
   3: "_afgst",
@@ -9,7 +9,7 @@ var indexSectionsWithContent =
   6: "mt",
   7: "mt",
   8: "_adeopst",
-  9: "cdlt"
+  9: "$0123456789abcdefghiklmnopqrstuvwy–"
 };
 
 var indexSectionNames =

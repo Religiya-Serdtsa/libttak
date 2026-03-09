@@ -1,2 +1,35 @@
-\hypertarget{dir_a7b74cb14d16019b23286ede1db62264}{}\doxysection{tutorials/\+DANGEROUS Directory Reference}
-\label{dir_a7b74cb14d16019b23286ede1db62264}\index{tutorials/DANGEROUS Directory Reference@{tutorials/DANGEROUS Directory Reference}}
+\doxysection{tutorials/\+DANGEROUS Directory Reference}
+\hypertarget{dir_a7b74cb14d16019b23286ede1db62264}{}\label{dir_a7b74cb14d16019b23286ede1db62264}\index{tutorials/DANGEROUS Directory Reference@{tutorials/DANGEROUS Directory Reference}}
+Directory dependency graph for DANGEROUS\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=192pt]{dir_a7b74cb14d16019b23286ede1db62264_dep}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Detailed Description}
+\hypertarget{README.md_autotoc_md195}{}\doxysubsection{\texorpdfstring{DANGEROUS Tutorials}{DANGEROUS Tutorials}}\label{README.md_autotoc_md195}
+Unsafe components live here. Complete these after mastering the safe stages.\hypertarget{README.md_autotoc_md196}{}\doxysubsection{\texorpdfstring{Scope}{Scope}}\label{README.md_autotoc_md196}
+
+\begin{DoxyItemize}
+\item {\ttfamily \doxylink{context_8h_af1e1e607d4d863dfe439e9e537e9d6e0}{ttak\+\_\+context\+\_\+t}} shared-\/memory bridge ({\ttfamily \doxylink{context_8h}{include/ttak/unsafe/context.\+h}}, {\ttfamily src/unsafe/context.\+c})
+\item Portable stdatomic fallback ({\ttfamily include/stdatomic.\+h}, {\ttfamily \doxylink{temp__include_2stdatomic_8h}{temp\+\_\+include/stdatomic.\+h}})
+\item Any code compiled with {\ttfamily \+\_\+\+\_\+\+TTAK\+\_\+\+UNSAFE\+\_\+\texorpdfstring{$\ast$}{*}\+\_\+\+\_\+} flags or macros
+\end{DoxyItemize}\hypertarget{README.md_autotoc_md197}{}\doxysubsection{\texorpdfstring{Why it is dangerous}{Why it is dangerous}}\label{README.md_autotoc_md197}
+
+\begin{DoxyEnumerate}
+\item {\bfseries{Ownership inheritance\+:}} only one side may own locks or free memory at a time. If you skip the lock discipline, shared memory corrupts instantly.
+\item {\bfseries{Macro contracts\+:}} macros prefixed with {\ttfamily \+\_\+\+\_\+\+TTAK\+\_\+\texorpdfstring{$\ast$}{*}\+\_\+\+\_\+} flip behavior globally. Failing to reset them can break every module.
+\item {\bfseries{Bridge lock\+:}} the context bridge forces all calls through a single mutex so the wrong owner never runs {\ttfamily free}. Modifying it casually defeats the safety guarantee.
+\end{DoxyEnumerate}\hypertarget{README.md_autotoc_md198}{}\doxysubsection{\texorpdfstring{Tutorial Outline}{Tutorial Outline}}\label{README.md_autotoc_md198}
+
+\begin{DoxyEnumerate}
+\item Study {\ttfamily libttak\+\_\+unsafe.\+hlp} with the helper ({\ttfamily ./helper ../\+DANGEROUS/libttak\+\_\+unsafe.hlp}).
+\item Clone {\ttfamily src/unsafe/context.\+c} and {\ttfamily src/unsafe/region.\+c}, focusing on lock ordering and the three region move patterns (destructive move, adopt, steal).
+\item Re-\/run the helper and mark any confusing paragraphs; review the output in {\ttfamily marked\+\_\+explanations.\+txt}.
+\item Write a short note about what actions remain forbidden (e.\+g., “second owner may not release memory while first owns the lock”).
+\end{DoxyEnumerate}
+
+Once you demonstrate that you can follow the lock/ownership rules, you can continue to contribute to unsafe modules. 

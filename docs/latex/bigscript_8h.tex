@@ -1,5 +1,5 @@
-\hypertarget{bigscript_8h}{}\doxysection{include/ttak/script/bigscript.h File Reference}
-\label{bigscript_8h}\index{include/ttak/script/bigscript.h@{include/ttak/script/bigscript.h}}
+\doxysection{include/ttak/script/bigscript.h File Reference}
+\hypertarget{bigscript_8h}{}\label{bigscript_8h}\index{include/ttak/script/bigscript.h@{include/ttak/script/bigscript.h}}
 {\ttfamily \#include $<$stdbool.\+h$>$}\newline
 {\ttfamily \#include $<$stdint.\+h$>$}\newline
 {\ttfamily \#include $<$stddef.\+h$>$}\newline
@@ -14,7 +14,7 @@ Include dependency graph for bigscript.\+h\+:
 \includegraphics[width=350pt]{bigscript_8h__incl}
 \end{center}
 \end{figure}
-\doxysubsection*{Classes}
+\doxysubsubsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
 struct \mbox{\hyperlink{structttak__bigscript__loader__t}{ttak\+\_\+bigscript\+\_\+loader\+\_\+t}}
@@ -27,14 +27,14 @@ struct \mbox{\hyperlink{structttak__bigscript__error__t}{ttak\+\_\+bigscript\+\_
 \begin{DoxyCompactList}\small\item\em Detailed error structure. \end{DoxyCompactList}\item 
 struct \mbox{\hyperlink{structttak__bigscript__value__t}{ttak\+\_\+bigscript\+\_\+value\+\_\+t}}
 \begin{DoxyCompactList}\small\item\em Output value resulting from evaluating a seed. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\doxysubsection*{Typedefs}
+\doxysubsubsection*{Typedefs}
 \begin{DoxyCompactItemize}
 \item 
 typedef struct \mbox{\hyperlink{bigscript_8h_ab1fc7a10576aa487f5f5749f55220fbf}{ttak\+\_\+bigscript\+\_\+program\+\_\+t}} \mbox{\hyperlink{bigscript_8h_ab1fc7a10576aa487f5f5749f55220fbf}{ttak\+\_\+bigscript\+\_\+program\+\_\+t}}
 \begin{DoxyCompactList}\small\item\em Opaque bigscript program object. \end{DoxyCompactList}\item 
 typedef struct \mbox{\hyperlink{bigscript_8h_a6855f0bec6f8b2dcaf5eae39d887f379}{ttak\+\_\+bigscript\+\_\+vm\+\_\+t}} \mbox{\hyperlink{bigscript_8h_a6855f0bec6f8b2dcaf5eae39d887f379}{ttak\+\_\+bigscript\+\_\+vm\+\_\+t}}
 \begin{DoxyCompactList}\small\item\em Opaque thread-\/local VM context. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\doxysubsection*{Enumerations}
+\doxysubsubsection*{Enumerations}
 \begin{DoxyCompactItemize}
 \item 
 enum \mbox{\hyperlink{bigscript_8h_a31a9453da779cb527438fabc056efeae}{ttak\+\_\+bigscript\+\_\+val\+\_\+type\+\_\+t}} \{ \mbox{\hyperlink{bigscript_8h_a31a9453da779cb527438fabc056efeaea960ca6bb4b3fc8b6e15324d5661e541e}{TTAK\+\_\+\+BIGSCRIPT\+\_\+\+VAL\+\_\+\+INT}} = 0
@@ -52,31 +52,33 @@ enum \mbox{\hyperlink{bigscript_8h_a51c5be730058409e5356a8bcef3f9828}{ttak\+\_\+
 , \mbox{\hyperlink{bigscript_8h_a51c5be730058409e5356a8bcef3f9828ad5bb8a985349471e845a62d78b1b1741}{TTAK\+\_\+\+BIGSCRIPT\+\_\+\+ERR\+\_\+\+MATH}}
  \}
 \begin{DoxyCompactList}\small\item\em Error codes returned by compilation and execution. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\doxysubsection*{Functions}
+\doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{bigscript_8h_ab1fc7a10576aa487f5f5749f55220fbf}{ttak\+\_\+bigscript\+\_\+program\+\_\+t}} $\ast$ \mbox{\hyperlink{bigscript_8h_a2be83f4306ff2eab2c5dbc78315c79b3}{ttak\+\_\+bigscript\+\_\+compile}} (const char $\ast$source, \mbox{\hyperlink{structttak__bigscript__loader__t}{ttak\+\_\+bigscript\+\_\+loader\+\_\+t}} $\ast$loader, const \mbox{\hyperlink{structttak__bigscript__limits__t}{ttak\+\_\+bigscript\+\_\+limits\+\_\+t}} $\ast$limits, \mbox{\hyperlink{structttak__bigscript__error__t}{ttak\+\_\+bigscript\+\_\+error\+\_\+t}} $\ast$err, uint64\+\_\+t now)
+\mbox{\hyperlink{bigscript_8h_ab1fc7a10576aa487f5f5749f55220fbf}{ttak\+\_\+bigscript\+\_\+program\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{bigscript_8h_ab8d4d3bd74025ca2b55942c1a1019185}{ttak\+\_\+bigscript\+\_\+compile}} (const char \texorpdfstring{$\ast$}{*}source, \mbox{\hyperlink{structttak__bigscript__loader__t}{ttak\+\_\+bigscript\+\_\+loader\+\_\+t}} \texorpdfstring{$\ast$}{*}loader, const \mbox{\hyperlink{structttak__bigscript__limits__t}{ttak\+\_\+bigscript\+\_\+limits\+\_\+t}} \texorpdfstring{$\ast$}{*}limits, \mbox{\hyperlink{structttak__bigscript__error__t}{ttak\+\_\+bigscript\+\_\+error\+\_\+t}} \texorpdfstring{$\ast$}{*}err, uint64\+\_\+t now)
 \begin{DoxyCompactList}\small\item\em Compiles source code into an immutable program. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{bigscript_8h_a7c1a4eba8463264e803f9f65005f445d}{ttak\+\_\+bigscript\+\_\+program\+\_\+free}} (\mbox{\hyperlink{bigscript_8h_ab1fc7a10576aa487f5f5749f55220fbf}{ttak\+\_\+bigscript\+\_\+program\+\_\+t}} $\ast$prog, uint64\+\_\+t now)
+void \mbox{\hyperlink{bigscript_8h_a7c1a4eba8463264e803f9f65005f445d}{ttak\+\_\+bigscript\+\_\+program\+\_\+free}} (\mbox{\hyperlink{bigscript_8h_ab1fc7a10576aa487f5f5749f55220fbf}{ttak\+\_\+bigscript\+\_\+program\+\_\+t}} \texorpdfstring{$\ast$}{*}prog, uint64\+\_\+t now)
 \begin{DoxyCompactList}\small\item\em Frees a compiled program. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{bigscript_8h_a6855f0bec6f8b2dcaf5eae39d887f379}{ttak\+\_\+bigscript\+\_\+vm\+\_\+t}} $\ast$ \mbox{\hyperlink{bigscript_8h_a8b40669b3f850df39e6f8bf2c5d104f3}{ttak\+\_\+bigscript\+\_\+vm\+\_\+create}} (const \mbox{\hyperlink{structttak__bigscript__limits__t}{ttak\+\_\+bigscript\+\_\+limits\+\_\+t}} $\ast$limits, uint64\+\_\+t now)
+\mbox{\hyperlink{bigscript_8h_a6855f0bec6f8b2dcaf5eae39d887f379}{ttak\+\_\+bigscript\+\_\+vm\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{bigscript_8h_a922fb5d037c2b2fbb559ee9eaf352df1}{ttak\+\_\+bigscript\+\_\+vm\+\_\+create}} (const \mbox{\hyperlink{structttak__bigscript__limits__t}{ttak\+\_\+bigscript\+\_\+limits\+\_\+t}} \texorpdfstring{$\ast$}{*}limits, uint64\+\_\+t now)
 \begin{DoxyCompactList}\small\item\em Creates a new thread-\/local VM for executing a program. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{bigscript_8h_a3cc458d490a5bcaddd3cb2a5c456a6d5}{ttak\+\_\+bigscript\+\_\+vm\+\_\+free}} (\mbox{\hyperlink{bigscript_8h_a6855f0bec6f8b2dcaf5eae39d887f379}{ttak\+\_\+bigscript\+\_\+vm\+\_\+t}} $\ast$vm, uint64\+\_\+t now)
+void \mbox{\hyperlink{bigscript_8h_a3cc458d490a5bcaddd3cb2a5c456a6d5}{ttak\+\_\+bigscript\+\_\+vm\+\_\+free}} (\mbox{\hyperlink{bigscript_8h_a6855f0bec6f8b2dcaf5eae39d887f379}{ttak\+\_\+bigscript\+\_\+vm\+\_\+t}} \texorpdfstring{$\ast$}{*}vm, uint64\+\_\+t now)
 \begin{DoxyCompactList}\small\item\em Frees a thread-\/local VM context. \end{DoxyCompactList}\item 
-bool \mbox{\hyperlink{bigscript_8h_adfdb337ebc3fab30ccf7ef0b5d2c0abf}{ttak\+\_\+bigscript\+\_\+eval\+\_\+seed}} (\mbox{\hyperlink{bigscript_8h_ab1fc7a10576aa487f5f5749f55220fbf}{ttak\+\_\+bigscript\+\_\+program\+\_\+t}} $\ast$prog, \mbox{\hyperlink{bigscript_8h_a6855f0bec6f8b2dcaf5eae39d887f379}{ttak\+\_\+bigscript\+\_\+vm\+\_\+t}} $\ast$vm, const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$seed, const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$sn, \mbox{\hyperlink{structttak__bigscript__value__t}{ttak\+\_\+bigscript\+\_\+value\+\_\+t}} $\ast$out, \mbox{\hyperlink{structttak__bigscript__error__t}{ttak\+\_\+bigscript\+\_\+error\+\_\+t}} $\ast$err, uint64\+\_\+t now)
+bool \mbox{\hyperlink{bigscript_8h_adfdb337ebc3fab30ccf7ef0b5d2c0abf}{ttak\+\_\+bigscript\+\_\+eval\+\_\+seed}} (\mbox{\hyperlink{bigscript_8h_ab1fc7a10576aa487f5f5749f55220fbf}{ttak\+\_\+bigscript\+\_\+program\+\_\+t}} \texorpdfstring{$\ast$}{*}prog, \mbox{\hyperlink{bigscript_8h_a6855f0bec6f8b2dcaf5eae39d887f379}{ttak\+\_\+bigscript\+\_\+vm\+\_\+t}} \texorpdfstring{$\ast$}{*}vm, const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}seed, const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}sn, \mbox{\hyperlink{structttak__bigscript__value__t}{ttak\+\_\+bigscript\+\_\+value\+\_\+t}} \texorpdfstring{$\ast$}{*}out, \mbox{\hyperlink{structttak__bigscript__error__t}{ttak\+\_\+bigscript\+\_\+error\+\_\+t}} \texorpdfstring{$\ast$}{*}err, uint64\+\_\+t now)
 \begin{DoxyCompactList}\small\item\em Evaluates a script against a specific seed. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{bigscript_8h_aeb0b45abdd4829346feec23561d7a32d}{ttak\+\_\+bigscript\+\_\+hash\+\_\+program}} (\mbox{\hyperlink{bigscript_8h_ab1fc7a10576aa487f5f5749f55220fbf}{ttak\+\_\+bigscript\+\_\+program\+\_\+t}} $\ast$prog, char out\+\_\+hex\mbox{[}65\mbox{]})
+void \mbox{\hyperlink{bigscript_8h_aeb0b45abdd4829346feec23561d7a32d}{ttak\+\_\+bigscript\+\_\+hash\+\_\+program}} (\mbox{\hyperlink{bigscript_8h_ab1fc7a10576aa487f5f5749f55220fbf}{ttak\+\_\+bigscript\+\_\+program\+\_\+t}} \texorpdfstring{$\ast$}{*}prog, char out\+\_\+hex\mbox{[}65\mbox{]})
 \begin{DoxyCompactList}\small\item\em Computes the SHA256 identity hash of a compiled program. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{bigscript_8h_ae6aee5e20c0b52b72793ed422dcc5b8e}{ttak\+\_\+bigscript\+\_\+value\+\_\+free}} (\mbox{\hyperlink{structttak__bigscript__value__t}{ttak\+\_\+bigscript\+\_\+value\+\_\+t}} $\ast$val, uint64\+\_\+t now)
+void \mbox{\hyperlink{bigscript_8h_ae6aee5e20c0b52b72793ed422dcc5b8e}{ttak\+\_\+bigscript\+\_\+value\+\_\+free}} (\mbox{\hyperlink{structttak__bigscript__value__t}{ttak\+\_\+bigscript\+\_\+value\+\_\+t}} \texorpdfstring{$\ast$}{*}val, uint64\+\_\+t now)
 \begin{DoxyCompactList}\small\item\em Frees resources held by a bigscript value. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
+\label{doc-typedef-members}
+\Hypertarget{bigscript_8h_doc-typedef-members}
 \doxysubsection{Typedef Documentation}
-\mbox{\Hypertarget{bigscript_8h_ab1fc7a10576aa487f5f5749f55220fbf}\label{bigscript_8h_ab1fc7a10576aa487f5f5749f55220fbf}} 
-\index{bigscript.h@{bigscript.h}!ttak\_bigscript\_program\_t@{ttak\_bigscript\_program\_t}}
+\Hypertarget{bigscript_8h_ab1fc7a10576aa487f5f5749f55220fbf}\index{bigscript.h@{bigscript.h}!ttak\_bigscript\_program\_t@{ttak\_bigscript\_program\_t}}
 \index{ttak\_bigscript\_program\_t@{ttak\_bigscript\_program\_t}!bigscript.h@{bigscript.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigscript\_program\_t}{ttak\_bigscript\_program\_t}}
-{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{bigscript_8h_ab1fc7a10576aa487f5f5749f55220fbf}{ttak\+\_\+bigscript\+\_\+program\+\_\+t}} \mbox{\hyperlink{bigscript_8h_ab1fc7a10576aa487f5f5749f55220fbf}{ttak\+\_\+bigscript\+\_\+program\+\_\+t}}}
+{\footnotesize\ttfamily \label{bigscript_8h_ab1fc7a10576aa487f5f5749f55220fbf} 
+typedef struct \mbox{\hyperlink{bigscript_8h_ab1fc7a10576aa487f5f5749f55220fbf}{ttak\+\_\+bigscript\+\_\+program\+\_\+t}} \mbox{\hyperlink{bigscript_8h_ab1fc7a10576aa487f5f5749f55220fbf}{ttak\+\_\+bigscript\+\_\+program\+\_\+t}}}
 
 
 
@@ -84,13 +86,13 @@ Opaque bigscript program object.
 
 
 
-Definition at line 1 of file bigscript.\+h.
+Definition at line \mbox{\hyperlink{bigscript_8h_source_l00037}{37}} of file \mbox{\hyperlink{bigscript_8h_source}{bigscript.\+h}}.
 
-\mbox{\Hypertarget{bigscript_8h_a6855f0bec6f8b2dcaf5eae39d887f379}\label{bigscript_8h_a6855f0bec6f8b2dcaf5eae39d887f379}} 
-\index{bigscript.h@{bigscript.h}!ttak\_bigscript\_vm\_t@{ttak\_bigscript\_vm\_t}}
+\Hypertarget{bigscript_8h_a6855f0bec6f8b2dcaf5eae39d887f379}\index{bigscript.h@{bigscript.h}!ttak\_bigscript\_vm\_t@{ttak\_bigscript\_vm\_t}}
 \index{ttak\_bigscript\_vm\_t@{ttak\_bigscript\_vm\_t}!bigscript.h@{bigscript.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigscript\_vm\_t}{ttak\_bigscript\_vm\_t}}
-{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{bigscript_8h_a6855f0bec6f8b2dcaf5eae39d887f379}{ttak\+\_\+bigscript\+\_\+vm\+\_\+t}} \mbox{\hyperlink{bigscript_8h_a6855f0bec6f8b2dcaf5eae39d887f379}{ttak\+\_\+bigscript\+\_\+vm\+\_\+t}}}
+{\footnotesize\ttfamily \label{bigscript_8h_a6855f0bec6f8b2dcaf5eae39d887f379} 
+typedef struct \mbox{\hyperlink{bigscript_8h_a6855f0bec6f8b2dcaf5eae39d887f379}{ttak\+\_\+bigscript\+\_\+vm\+\_\+t}} \mbox{\hyperlink{bigscript_8h_a6855f0bec6f8b2dcaf5eae39d887f379}{ttak\+\_\+bigscript\+\_\+vm\+\_\+t}}}
 
 
 
@@ -98,87 +100,91 @@ Opaque thread-\/local VM context.
 
 
 
-Definition at line 1 of file bigscript.\+h.
+Definition at line \mbox{\hyperlink{bigscript_8h_source_l00040}{40}} of file \mbox{\hyperlink{bigscript_8h_source}{bigscript.\+h}}.
 
 
 
+\label{doc-enum-members}
+\Hypertarget{bigscript_8h_doc-enum-members}
 \doxysubsection{Enumeration Type Documentation}
-\mbox{\Hypertarget{bigscript_8h_a51c5be730058409e5356a8bcef3f9828}\label{bigscript_8h_a51c5be730058409e5356a8bcef3f9828}} 
-\index{bigscript.h@{bigscript.h}!ttak\_bigscript\_error\_code\_t@{ttak\_bigscript\_error\_code\_t}}
+\Hypertarget{bigscript_8h_a51c5be730058409e5356a8bcef3f9828}\index{bigscript.h@{bigscript.h}!ttak\_bigscript\_error\_code\_t@{ttak\_bigscript\_error\_code\_t}}
 \index{ttak\_bigscript\_error\_code\_t@{ttak\_bigscript\_error\_code\_t}!bigscript.h@{bigscript.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigscript\_error\_code\_t}{ttak\_bigscript\_error\_code\_t}}
-{\footnotesize\ttfamily enum \mbox{\hyperlink{bigscript_8h_a51c5be730058409e5356a8bcef3f9828}{ttak\+\_\+bigscript\+\_\+error\+\_\+code\+\_\+t}}}
+{\footnotesize\ttfamily \label{bigscript_8h_a51c5be730058409e5356a8bcef3f9828} 
+enum \mbox{\hyperlink{bigscript_8h_a51c5be730058409e5356a8bcef3f9828}{ttak\+\_\+bigscript\+\_\+error\+\_\+code\+\_\+t}}}
 
 
 
 Error codes returned by compilation and execution. 
 
-\begin{DoxyEnumFields}{Enumerator}
-\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_BIGSCRIPT\_ERR\_NONE@{TTAK\_BIGSCRIPT\_ERR\_NONE}!bigscript.h@{bigscript.h}}\index{bigscript.h@{bigscript.h}!TTAK\_BIGSCRIPT\_ERR\_NONE@{TTAK\_BIGSCRIPT\_ERR\_NONE}}}\mbox{\Hypertarget{bigscript_8h_a51c5be730058409e5356a8bcef3f9828a06af03d805c59eca6f024eebc1dc15bc}\label{bigscript_8h_a51c5be730058409e5356a8bcef3f9828a06af03d805c59eca6f024eebc1dc15bc}} 
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_BIGSCRIPT\_ERR\_NONE@{TTAK\_BIGSCRIPT\_ERR\_NONE}!bigscript.h@{bigscript.h}}\index{bigscript.h@{bigscript.h}!TTAK\_BIGSCRIPT\_ERR\_NONE@{TTAK\_BIGSCRIPT\_ERR\_NONE}}}\Hypertarget{bigscript_8h_a51c5be730058409e5356a8bcef3f9828a06af03d805c59eca6f024eebc1dc15bc}\label{bigscript_8h_a51c5be730058409e5356a8bcef3f9828a06af03d805c59eca6f024eebc1dc15bc} 
 TTAK\+\_\+\+BIGSCRIPT\+\_\+\+ERR\+\_\+\+NONE&\\
 \hline
 
-\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_BIGSCRIPT\_ERR\_SYNTAX@{TTAK\_BIGSCRIPT\_ERR\_SYNTAX}!bigscript.h@{bigscript.h}}\index{bigscript.h@{bigscript.h}!TTAK\_BIGSCRIPT\_ERR\_SYNTAX@{TTAK\_BIGSCRIPT\_ERR\_SYNTAX}}}\mbox{\Hypertarget{bigscript_8h_a51c5be730058409e5356a8bcef3f9828a65b6eea221cf76113601bc3c7d1972fe}\label{bigscript_8h_a51c5be730058409e5356a8bcef3f9828a65b6eea221cf76113601bc3c7d1972fe}} 
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_BIGSCRIPT\_ERR\_SYNTAX@{TTAK\_BIGSCRIPT\_ERR\_SYNTAX}!bigscript.h@{bigscript.h}}\index{bigscript.h@{bigscript.h}!TTAK\_BIGSCRIPT\_ERR\_SYNTAX@{TTAK\_BIGSCRIPT\_ERR\_SYNTAX}}}\Hypertarget{bigscript_8h_a51c5be730058409e5356a8bcef3f9828a65b6eea221cf76113601bc3c7d1972fe}\label{bigscript_8h_a51c5be730058409e5356a8bcef3f9828a65b6eea221cf76113601bc3c7d1972fe} 
 TTAK\+\_\+\+BIGSCRIPT\+\_\+\+ERR\+\_\+\+SYNTAX&\\
 \hline
 
-\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_BIGSCRIPT\_ERR\_LIMIT@{TTAK\_BIGSCRIPT\_ERR\_LIMIT}!bigscript.h@{bigscript.h}}\index{bigscript.h@{bigscript.h}!TTAK\_BIGSCRIPT\_ERR\_LIMIT@{TTAK\_BIGSCRIPT\_ERR\_LIMIT}}}\mbox{\Hypertarget{bigscript_8h_a51c5be730058409e5356a8bcef3f9828acf3a17d58ab14059ba43eededbbd72a5}\label{bigscript_8h_a51c5be730058409e5356a8bcef3f9828acf3a17d58ab14059ba43eededbbd72a5}} 
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_BIGSCRIPT\_ERR\_LIMIT@{TTAK\_BIGSCRIPT\_ERR\_LIMIT}!bigscript.h@{bigscript.h}}\index{bigscript.h@{bigscript.h}!TTAK\_BIGSCRIPT\_ERR\_LIMIT@{TTAK\_BIGSCRIPT\_ERR\_LIMIT}}}\Hypertarget{bigscript_8h_a51c5be730058409e5356a8bcef3f9828acf3a17d58ab14059ba43eededbbd72a5}\label{bigscript_8h_a51c5be730058409e5356a8bcef3f9828acf3a17d58ab14059ba43eededbbd72a5} 
 TTAK\+\_\+\+BIGSCRIPT\+\_\+\+ERR\+\_\+\+LIMIT&\\
 \hline
 
-\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_BIGSCRIPT\_ERR\_RUNTIME@{TTAK\_BIGSCRIPT\_ERR\_RUNTIME}!bigscript.h@{bigscript.h}}\index{bigscript.h@{bigscript.h}!TTAK\_BIGSCRIPT\_ERR\_RUNTIME@{TTAK\_BIGSCRIPT\_ERR\_RUNTIME}}}\mbox{\Hypertarget{bigscript_8h_a51c5be730058409e5356a8bcef3f9828ae208cb3bce54ed9406f4ce600798d097}\label{bigscript_8h_a51c5be730058409e5356a8bcef3f9828ae208cb3bce54ed9406f4ce600798d097}} 
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_BIGSCRIPT\_ERR\_RUNTIME@{TTAK\_BIGSCRIPT\_ERR\_RUNTIME}!bigscript.h@{bigscript.h}}\index{bigscript.h@{bigscript.h}!TTAK\_BIGSCRIPT\_ERR\_RUNTIME@{TTAK\_BIGSCRIPT\_ERR\_RUNTIME}}}\Hypertarget{bigscript_8h_a51c5be730058409e5356a8bcef3f9828ae208cb3bce54ed9406f4ce600798d097}\label{bigscript_8h_a51c5be730058409e5356a8bcef3f9828ae208cb3bce54ed9406f4ce600798d097} 
 TTAK\+\_\+\+BIGSCRIPT\+\_\+\+ERR\+\_\+\+RUNTIME&\\
 \hline
 
-\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_BIGSCRIPT\_ERR\_OOM@{TTAK\_BIGSCRIPT\_ERR\_OOM}!bigscript.h@{bigscript.h}}\index{bigscript.h@{bigscript.h}!TTAK\_BIGSCRIPT\_ERR\_OOM@{TTAK\_BIGSCRIPT\_ERR\_OOM}}}\mbox{\Hypertarget{bigscript_8h_a51c5be730058409e5356a8bcef3f9828ae7ed816d5c6add6472b4a43a5b6bbad3}\label{bigscript_8h_a51c5be730058409e5356a8bcef3f9828ae7ed816d5c6add6472b4a43a5b6bbad3}} 
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_BIGSCRIPT\_ERR\_OOM@{TTAK\_BIGSCRIPT\_ERR\_OOM}!bigscript.h@{bigscript.h}}\index{bigscript.h@{bigscript.h}!TTAK\_BIGSCRIPT\_ERR\_OOM@{TTAK\_BIGSCRIPT\_ERR\_OOM}}}\Hypertarget{bigscript_8h_a51c5be730058409e5356a8bcef3f9828ae7ed816d5c6add6472b4a43a5b6bbad3}\label{bigscript_8h_a51c5be730058409e5356a8bcef3f9828ae7ed816d5c6add6472b4a43a5b6bbad3} 
 TTAK\+\_\+\+BIGSCRIPT\+\_\+\+ERR\+\_\+\+OOM&\\
 \hline
 
-\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_BIGSCRIPT\_ERR\_MATH@{TTAK\_BIGSCRIPT\_ERR\_MATH}!bigscript.h@{bigscript.h}}\index{bigscript.h@{bigscript.h}!TTAK\_BIGSCRIPT\_ERR\_MATH@{TTAK\_BIGSCRIPT\_ERR\_MATH}}}\mbox{\Hypertarget{bigscript_8h_a51c5be730058409e5356a8bcef3f9828ad5bb8a985349471e845a62d78b1b1741}\label{bigscript_8h_a51c5be730058409e5356a8bcef3f9828ad5bb8a985349471e845a62d78b1b1741}} 
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_BIGSCRIPT\_ERR\_MATH@{TTAK\_BIGSCRIPT\_ERR\_MATH}!bigscript.h@{bigscript.h}}\index{bigscript.h@{bigscript.h}!TTAK\_BIGSCRIPT\_ERR\_MATH@{TTAK\_BIGSCRIPT\_ERR\_MATH}}}\Hypertarget{bigscript_8h_a51c5be730058409e5356a8bcef3f9828ad5bb8a985349471e845a62d78b1b1741}\label{bigscript_8h_a51c5be730058409e5356a8bcef3f9828ad5bb8a985349471e845a62d78b1b1741} 
 TTAK\+\_\+\+BIGSCRIPT\+\_\+\+ERR\+\_\+\+MATH&\\
 \hline
 
 \end{DoxyEnumFields}
 
 
-Definition at line 73 of file bigscript.\+h.
+Definition at line \mbox{\hyperlink{bigscript_8h_source_l00073}{73}} of file \mbox{\hyperlink{bigscript_8h_source}{bigscript.\+h}}.
 
-\mbox{\Hypertarget{bigscript_8h_a31a9453da779cb527438fabc056efeae}\label{bigscript_8h_a31a9453da779cb527438fabc056efeae}} 
-\index{bigscript.h@{bigscript.h}!ttak\_bigscript\_val\_type\_t@{ttak\_bigscript\_val\_type\_t}}
+\Hypertarget{bigscript_8h_a31a9453da779cb527438fabc056efeae}\index{bigscript.h@{bigscript.h}!ttak\_bigscript\_val\_type\_t@{ttak\_bigscript\_val\_type\_t}}
 \index{ttak\_bigscript\_val\_type\_t@{ttak\_bigscript\_val\_type\_t}!bigscript.h@{bigscript.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigscript\_val\_type\_t}{ttak\_bigscript\_val\_type\_t}}
-{\footnotesize\ttfamily enum \mbox{\hyperlink{bigscript_8h_a31a9453da779cb527438fabc056efeae}{ttak\+\_\+bigscript\+\_\+val\+\_\+type\+\_\+t}}}
+{\footnotesize\ttfamily \label{bigscript_8h_a31a9453da779cb527438fabc056efeae} 
+enum \mbox{\hyperlink{bigscript_8h_a31a9453da779cb527438fabc056efeae}{ttak\+\_\+bigscript\+\_\+val\+\_\+type\+\_\+t}}}
 
 
 
 Bigscript value types. 
 
-\begin{DoxyEnumFields}{Enumerator}
-\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_BIGSCRIPT\_VAL\_INT@{TTAK\_BIGSCRIPT\_VAL\_INT}!bigscript.h@{bigscript.h}}\index{bigscript.h@{bigscript.h}!TTAK\_BIGSCRIPT\_VAL\_INT@{TTAK\_BIGSCRIPT\_VAL\_INT}}}\mbox{\Hypertarget{bigscript_8h_a31a9453da779cb527438fabc056efeaea960ca6bb4b3fc8b6e15324d5661e541e}\label{bigscript_8h_a31a9453da779cb527438fabc056efeaea960ca6bb4b3fc8b6e15324d5661e541e}} 
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_BIGSCRIPT\_VAL\_INT@{TTAK\_BIGSCRIPT\_VAL\_INT}!bigscript.h@{bigscript.h}}\index{bigscript.h@{bigscript.h}!TTAK\_BIGSCRIPT\_VAL\_INT@{TTAK\_BIGSCRIPT\_VAL\_INT}}}\Hypertarget{bigscript_8h_a31a9453da779cb527438fabc056efeaea960ca6bb4b3fc8b6e15324d5661e541e}\label{bigscript_8h_a31a9453da779cb527438fabc056efeaea960ca6bb4b3fc8b6e15324d5661e541e} 
 TTAK\+\_\+\+BIGSCRIPT\+\_\+\+VAL\+\_\+\+INT&\\
 \hline
 
-\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_BIGSCRIPT\_VAL\_REAL@{TTAK\_BIGSCRIPT\_VAL\_REAL}!bigscript.h@{bigscript.h}}\index{bigscript.h@{bigscript.h}!TTAK\_BIGSCRIPT\_VAL\_REAL@{TTAK\_BIGSCRIPT\_VAL\_REAL}}}\mbox{\Hypertarget{bigscript_8h_a31a9453da779cb527438fabc056efeaea2c626ad312dd41dfe608dc23182ec528}\label{bigscript_8h_a31a9453da779cb527438fabc056efeaea2c626ad312dd41dfe608dc23182ec528}} 
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_BIGSCRIPT\_VAL\_REAL@{TTAK\_BIGSCRIPT\_VAL\_REAL}!bigscript.h@{bigscript.h}}\index{bigscript.h@{bigscript.h}!TTAK\_BIGSCRIPT\_VAL\_REAL@{TTAK\_BIGSCRIPT\_VAL\_REAL}}}\Hypertarget{bigscript_8h_a31a9453da779cb527438fabc056efeaea2c626ad312dd41dfe608dc23182ec528}\label{bigscript_8h_a31a9453da779cb527438fabc056efeaea2c626ad312dd41dfe608dc23182ec528} 
 TTAK\+\_\+\+BIGSCRIPT\+\_\+\+VAL\+\_\+\+REAL&\\
 \hline
 
-\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_BIGSCRIPT\_VAL\_COMPLEX@{TTAK\_BIGSCRIPT\_VAL\_COMPLEX}!bigscript.h@{bigscript.h}}\index{bigscript.h@{bigscript.h}!TTAK\_BIGSCRIPT\_VAL\_COMPLEX@{TTAK\_BIGSCRIPT\_VAL\_COMPLEX}}}\mbox{\Hypertarget{bigscript_8h_a31a9453da779cb527438fabc056efeaea880d05619e8bfc83a7e4588a155e9e4b}\label{bigscript_8h_a31a9453da779cb527438fabc056efeaea880d05619e8bfc83a7e4588a155e9e4b}} 
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_BIGSCRIPT\_VAL\_COMPLEX@{TTAK\_BIGSCRIPT\_VAL\_COMPLEX}!bigscript.h@{bigscript.h}}\index{bigscript.h@{bigscript.h}!TTAK\_BIGSCRIPT\_VAL\_COMPLEX@{TTAK\_BIGSCRIPT\_VAL\_COMPLEX}}}\Hypertarget{bigscript_8h_a31a9453da779cb527438fabc056efeaea880d05619e8bfc83a7e4588a155e9e4b}\label{bigscript_8h_a31a9453da779cb527438fabc056efeaea880d05619e8bfc83a7e4588a155e9e4b} 
 TTAK\+\_\+\+BIGSCRIPT\+\_\+\+VAL\+\_\+\+COMPLEX&\\
 \hline
 
 \end{DoxyEnumFields}
 
 
-Definition at line 56 of file bigscript.\+h.
+Definition at line \mbox{\hyperlink{bigscript_8h_source_l00056}{56}} of file \mbox{\hyperlink{bigscript_8h_source}{bigscript.\+h}}.
 
 
 
+\label{doc-func-members}
+\Hypertarget{bigscript_8h_doc-func-members}
 \doxysubsection{Function Documentation}
-\mbox{\Hypertarget{bigscript_8h_a2be83f4306ff2eab2c5dbc78315c79b3}\label{bigscript_8h_a2be83f4306ff2eab2c5dbc78315c79b3}} 
-\index{bigscript.h@{bigscript.h}!ttak\_bigscript\_compile@{ttak\_bigscript\_compile}}
+\Hypertarget{bigscript_8h_ab8d4d3bd74025ca2b55942c1a1019185}\index{bigscript.h@{bigscript.h}!ttak\_bigscript\_compile@{ttak\_bigscript\_compile}}
 \index{ttak\_bigscript\_compile@{ttak\_bigscript\_compile}!bigscript.h@{bigscript.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigscript\_compile()}{ttak\_bigscript\_compile()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{bigscript_8h_ab1fc7a10576aa487f5f5749f55220fbf}{ttak\+\_\+bigscript\+\_\+program\+\_\+t}}$\ast$ ttak\+\_\+bigscript\+\_\+compile (\begin{DoxyParamCaption}\item[{const char $\ast$}]{source,  }\item[{\mbox{\hyperlink{structttak__bigscript__loader__t}{ttak\+\_\+bigscript\+\_\+loader\+\_\+t}} $\ast$}]{loader,  }\item[{const \mbox{\hyperlink{structttak__bigscript__limits__t}{ttak\+\_\+bigscript\+\_\+limits\+\_\+t}} $\ast$}]{limits,  }\item[{\mbox{\hyperlink{structttak__bigscript__error__t}{ttak\+\_\+bigscript\+\_\+error\+\_\+t}} $\ast$}]{err,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{bigscript_8h_ab8d4d3bd74025ca2b55942c1a1019185} 
+\mbox{\hyperlink{bigscript_8h_ab1fc7a10576aa487f5f5749f55220fbf}{ttak\+\_\+bigscript\+\_\+program\+\_\+t}} \texorpdfstring{$\ast$}{*} ttak\+\_\+bigscript\+\_\+compile (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{source}{, }\item[{\mbox{\hyperlink{structttak__bigscript__loader__t}{ttak\+\_\+bigscript\+\_\+loader\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{loader}{, }\item[{const \mbox{\hyperlink{structttak__bigscript__limits__t}{ttak\+\_\+bigscript\+\_\+limits\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{limits}{, }\item[{\mbox{\hyperlink{structttak__bigscript__error__t}{ttak\+\_\+bigscript\+\_\+error\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{err}{, }\item[{uint64\+\_\+t}]{now}{}\end{DoxyParamCaption})}
 
 
 
@@ -200,11 +206,11 @@ Compiles source code into an immutable program.
 \begin{DoxyReturn}{Returns}
 Compiled program, or NULL on error. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{bigscript_8h_adfdb337ebc3fab30ccf7ef0b5d2c0abf}\label{bigscript_8h_adfdb337ebc3fab30ccf7ef0b5d2c0abf}} 
-\index{bigscript.h@{bigscript.h}!ttak\_bigscript\_eval\_seed@{ttak\_bigscript\_eval\_seed}}
+\Hypertarget{bigscript_8h_adfdb337ebc3fab30ccf7ef0b5d2c0abf}\index{bigscript.h@{bigscript.h}!ttak\_bigscript\_eval\_seed@{ttak\_bigscript\_eval\_seed}}
 \index{ttak\_bigscript\_eval\_seed@{ttak\_bigscript\_eval\_seed}!bigscript.h@{bigscript.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigscript\_eval\_seed()}{ttak\_bigscript\_eval\_seed()}}
-{\footnotesize\ttfamily bool ttak\+\_\+bigscript\+\_\+eval\+\_\+seed (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigscript_8h_ab1fc7a10576aa487f5f5749f55220fbf}{ttak\+\_\+bigscript\+\_\+program\+\_\+t}} $\ast$}]{prog,  }\item[{\mbox{\hyperlink{bigscript_8h_a6855f0bec6f8b2dcaf5eae39d887f379}{ttak\+\_\+bigscript\+\_\+vm\+\_\+t}} $\ast$}]{vm,  }\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{seed,  }\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{sn,  }\item[{\mbox{\hyperlink{structttak__bigscript__value__t}{ttak\+\_\+bigscript\+\_\+value\+\_\+t}} $\ast$}]{out,  }\item[{\mbox{\hyperlink{structttak__bigscript__error__t}{ttak\+\_\+bigscript\+\_\+error\+\_\+t}} $\ast$}]{err,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{bigscript_8h_adfdb337ebc3fab30ccf7ef0b5d2c0abf} 
+bool ttak\+\_\+bigscript\+\_\+eval\+\_\+seed (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigscript_8h_ab1fc7a10576aa487f5f5749f55220fbf}{ttak\+\_\+bigscript\+\_\+program\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{prog}{, }\item[{\mbox{\hyperlink{bigscript_8h_a6855f0bec6f8b2dcaf5eae39d887f379}{ttak\+\_\+bigscript\+\_\+vm\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{vm}{, }\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{seed}{, }\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{sn}{, }\item[{\mbox{\hyperlink{structttak__bigscript__value__t}{ttak\+\_\+bigscript\+\_\+value\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{out}{, }\item[{\mbox{\hyperlink{structttak__bigscript__error__t}{ttak\+\_\+bigscript\+\_\+error\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{err}{, }\item[{uint64\+\_\+t}]{now}{}\end{DoxyParamCaption})}
 
 
 
@@ -232,11 +238,11 @@ The worker must provide the pre-\/computed sum-\/of-\/proper-\/divisors (sn).
 \begin{DoxyReturn}{Returns}
 true on success, false on runtime or budget error. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{bigscript_8h_aeb0b45abdd4829346feec23561d7a32d}\label{bigscript_8h_aeb0b45abdd4829346feec23561d7a32d}} 
-\index{bigscript.h@{bigscript.h}!ttak\_bigscript\_hash\_program@{ttak\_bigscript\_hash\_program}}
+\Hypertarget{bigscript_8h_aeb0b45abdd4829346feec23561d7a32d}\index{bigscript.h@{bigscript.h}!ttak\_bigscript\_hash\_program@{ttak\_bigscript\_hash\_program}}
 \index{ttak\_bigscript\_hash\_program@{ttak\_bigscript\_hash\_program}!bigscript.h@{bigscript.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigscript\_hash\_program()}{ttak\_bigscript\_hash\_program()}}
-{\footnotesize\ttfamily void ttak\+\_\+bigscript\+\_\+hash\+\_\+program (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigscript_8h_ab1fc7a10576aa487f5f5749f55220fbf}{ttak\+\_\+bigscript\+\_\+program\+\_\+t}} $\ast$}]{prog,  }\item[{char}]{out\+\_\+hex\mbox{[}65\mbox{]} }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{bigscript_8h_aeb0b45abdd4829346feec23561d7a32d} 
+void ttak\+\_\+bigscript\+\_\+hash\+\_\+program (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigscript_8h_ab1fc7a10576aa487f5f5749f55220fbf}{ttak\+\_\+bigscript\+\_\+program\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{prog}{, }\item[{char}]{out\+\_\+hex}{\mbox{[}65\mbox{]}}\end{DoxyParamCaption})}
 
 
 
@@ -249,11 +255,11 @@ Computes the SHA256 identity hash of a compiled program.
 {\em out\+\_\+hex} & 65-\/byte output buffer for hex string. \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{bigscript_8h_a7c1a4eba8463264e803f9f65005f445d}\label{bigscript_8h_a7c1a4eba8463264e803f9f65005f445d}} 
-\index{bigscript.h@{bigscript.h}!ttak\_bigscript\_program\_free@{ttak\_bigscript\_program\_free}}
+\Hypertarget{bigscript_8h_a7c1a4eba8463264e803f9f65005f445d}\index{bigscript.h@{bigscript.h}!ttak\_bigscript\_program\_free@{ttak\_bigscript\_program\_free}}
 \index{ttak\_bigscript\_program\_free@{ttak\_bigscript\_program\_free}!bigscript.h@{bigscript.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigscript\_program\_free()}{ttak\_bigscript\_program\_free()}}
-{\footnotesize\ttfamily void ttak\+\_\+bigscript\+\_\+program\+\_\+free (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigscript_8h_ab1fc7a10576aa487f5f5749f55220fbf}{ttak\+\_\+bigscript\+\_\+program\+\_\+t}} $\ast$}]{prog,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{bigscript_8h_a7c1a4eba8463264e803f9f65005f445d} 
+void ttak\+\_\+bigscript\+\_\+program\+\_\+free (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigscript_8h_ab1fc7a10576aa487f5f5749f55220fbf}{ttak\+\_\+bigscript\+\_\+program\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{prog}{, }\item[{uint64\+\_\+t}]{now}{}\end{DoxyParamCaption})}
 
 
 
@@ -266,11 +272,11 @@ Frees a compiled program.
 {\em now} & Monotonic timestamp. \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{bigscript_8h_ae6aee5e20c0b52b72793ed422dcc5b8e}\label{bigscript_8h_ae6aee5e20c0b52b72793ed422dcc5b8e}} 
-\index{bigscript.h@{bigscript.h}!ttak\_bigscript\_value\_free@{ttak\_bigscript\_value\_free}}
+\Hypertarget{bigscript_8h_ae6aee5e20c0b52b72793ed422dcc5b8e}\index{bigscript.h@{bigscript.h}!ttak\_bigscript\_value\_free@{ttak\_bigscript\_value\_free}}
 \index{ttak\_bigscript\_value\_free@{ttak\_bigscript\_value\_free}!bigscript.h@{bigscript.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigscript\_value\_free()}{ttak\_bigscript\_value\_free()}}
-{\footnotesize\ttfamily void ttak\+\_\+bigscript\+\_\+value\+\_\+free (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structttak__bigscript__value__t}{ttak\+\_\+bigscript\+\_\+value\+\_\+t}} $\ast$}]{val,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{bigscript_8h_ae6aee5e20c0b52b72793ed422dcc5b8e} 
+void ttak\+\_\+bigscript\+\_\+value\+\_\+free (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structttak__bigscript__value__t}{ttak\+\_\+bigscript\+\_\+value\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{val}{, }\item[{uint64\+\_\+t}]{now}{}\end{DoxyParamCaption})}
 
 
 
@@ -283,11 +289,11 @@ Frees resources held by a bigscript value.
 {\em now} & Monotonic timestamp. \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{bigscript_8h_a8b40669b3f850df39e6f8bf2c5d104f3}\label{bigscript_8h_a8b40669b3f850df39e6f8bf2c5d104f3}} 
-\index{bigscript.h@{bigscript.h}!ttak\_bigscript\_vm\_create@{ttak\_bigscript\_vm\_create}}
+\Hypertarget{bigscript_8h_a922fb5d037c2b2fbb559ee9eaf352df1}\index{bigscript.h@{bigscript.h}!ttak\_bigscript\_vm\_create@{ttak\_bigscript\_vm\_create}}
 \index{ttak\_bigscript\_vm\_create@{ttak\_bigscript\_vm\_create}!bigscript.h@{bigscript.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigscript\_vm\_create()}{ttak\_bigscript\_vm\_create()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{bigscript_8h_a6855f0bec6f8b2dcaf5eae39d887f379}{ttak\+\_\+bigscript\+\_\+vm\+\_\+t}}$\ast$ ttak\+\_\+bigscript\+\_\+vm\+\_\+create (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structttak__bigscript__limits__t}{ttak\+\_\+bigscript\+\_\+limits\+\_\+t}} $\ast$}]{limits,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{bigscript_8h_a922fb5d037c2b2fbb559ee9eaf352df1} 
+\mbox{\hyperlink{bigscript_8h_a6855f0bec6f8b2dcaf5eae39d887f379}{ttak\+\_\+bigscript\+\_\+vm\+\_\+t}} \texorpdfstring{$\ast$}{*} ttak\+\_\+bigscript\+\_\+vm\+\_\+create (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structttak__bigscript__limits__t}{ttak\+\_\+bigscript\+\_\+limits\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{limits}{, }\item[{uint64\+\_\+t}]{now}{}\end{DoxyParamCaption})}
 
 
 
@@ -303,11 +309,11 @@ Creates a new thread-\/local VM for executing a program.
 \begin{DoxyReturn}{Returns}
 Created VM context, or NULL on error. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{bigscript_8h_a3cc458d490a5bcaddd3cb2a5c456a6d5}\label{bigscript_8h_a3cc458d490a5bcaddd3cb2a5c456a6d5}} 
-\index{bigscript.h@{bigscript.h}!ttak\_bigscript\_vm\_free@{ttak\_bigscript\_vm\_free}}
+\Hypertarget{bigscript_8h_a3cc458d490a5bcaddd3cb2a5c456a6d5}\index{bigscript.h@{bigscript.h}!ttak\_bigscript\_vm\_free@{ttak\_bigscript\_vm\_free}}
 \index{ttak\_bigscript\_vm\_free@{ttak\_bigscript\_vm\_free}!bigscript.h@{bigscript.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigscript\_vm\_free()}{ttak\_bigscript\_vm\_free()}}
-{\footnotesize\ttfamily void ttak\+\_\+bigscript\+\_\+vm\+\_\+free (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigscript_8h_a6855f0bec6f8b2dcaf5eae39d887f379}{ttak\+\_\+bigscript\+\_\+vm\+\_\+t}} $\ast$}]{vm,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{bigscript_8h_a3cc458d490a5bcaddd3cb2a5c456a6d5} 
+void ttak\+\_\+bigscript\+\_\+vm\+\_\+free (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigscript_8h_a6855f0bec6f8b2dcaf5eae39d887f379}{ttak\+\_\+bigscript\+\_\+vm\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{vm}{, }\item[{uint64\+\_\+t}]{now}{}\end{DoxyParamCaption})}
 
 
 

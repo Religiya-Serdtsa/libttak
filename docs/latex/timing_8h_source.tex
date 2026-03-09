@@ -6,35 +6,103 @@
 \DoxyCodeLine{\Hypertarget{timing_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ TTAK\_TIMING\_H}}
 \DoxyCodeLine{\Hypertarget{timing_8h_source_l00003}00003\ }
 \DoxyCodeLine{\Hypertarget{timing_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
-\DoxyCodeLine{\Hypertarget{timing_8h_source_l00005}00005\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{timing_8h_source_l00006}00006\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{timing_8h_source_l00007}00007\ \textcolor{comment}{\ *\ @brief\ Time\ unit\ macros\ for\ converting\ to\ nanoseconds.}}
-\DoxyCodeLine{\Hypertarget{timing_8h_source_l00008}00008\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{timing_8h_source_l00009}\mbox{\hyperlink{timing_8h_a8f73ed891f186c57f1a72da390592879}{00009}}\ \textcolor{preprocessor}{\#define\ TT\_NANO\_SECOND(n)\ \ \ ((uint64\_t)(n))}}
-\DoxyCodeLine{\Hypertarget{timing_8h_source_l00010}\mbox{\hyperlink{timing_8h_ac02e371a9ce7c79927fcd1250ad5f082}{00010}}\ \textcolor{preprocessor}{\#define\ TT\_MICRO\_SECOND(n)\ \ ((uint64\_t)(n)\ *\ 1000ULL)}}
-\DoxyCodeLine{\Hypertarget{timing_8h_source_l00011}\mbox{\hyperlink{timing_8h_a706d706dd7fd86c64eca603344ecd44d}{00011}}\ \textcolor{preprocessor}{\#define\ TT\_MILLI\_SECOND(n)\ \ ((uint64\_t)(n)\ *\ 1000ULL\ *\ 1000ULL)}}
-\DoxyCodeLine{\Hypertarget{timing_8h_source_l00012}\mbox{\hyperlink{timing_8h_a751dbf1f1d796405a9b2fe2f7ffa945e}{00012}}\ \textcolor{preprocessor}{\#define\ TT\_SECOND(n)\ \ \ \ \ \ \ \ ((uint64\_t)(n)\ *\ 1000ULL\ *\ 1000ULL\ *\ 1000ULL)}}
-\DoxyCodeLine{\Hypertarget{timing_8h_source_l00013}\mbox{\hyperlink{timing_8h_a3209654bf799b3cadd064970c008a32a}{00013}}\ \textcolor{preprocessor}{\#define\ TT\_MINUTE(n)\ \ \ \ \ \ \ \ ((uint64\_t)(n)\ *\ 60ULL\ *\ 1000ULL\ *\ 1000ULL\ *\ 1000ULL)}}
-\DoxyCodeLine{\Hypertarget{timing_8h_source_l00014}\mbox{\hyperlink{timing_8h_a19035333be330bdd7cb30b014a4075fe}{00014}}\ \textcolor{preprocessor}{\#define\ TT\_HOUR(n)\ \ \ \ \ \ \ \ \ \ ((uint64\_t)(n)\ *\ 60ULL\ *\ 60ULL\ *\ 1000ULL\ *\ 1000ULL\ *\ 1000ULL)}}
-\DoxyCodeLine{\Hypertarget{timing_8h_source_l00015}00015\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{timing_8h_source_l00016}00016\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{timing_8h_source_l00017}00017\ \textcolor{comment}{\ *\ @brief\ Returns\ the\ current\ tick\ count\ in\ milliseconds.}}
-\DoxyCodeLine{\Hypertarget{timing_8h_source_l00018}00018\ \textcolor{comment}{\ *\ }}
-\DoxyCodeLine{\Hypertarget{timing_8h_source_l00019}00019\ \textcolor{comment}{\ *\ Used\ for\ unified\ lifecycle\ management\ across\ the\ library.}}
-\DoxyCodeLine{\Hypertarget{timing_8h_source_l00020}00020\ \textcolor{comment}{\ *\ }}
-\DoxyCodeLine{\Hypertarget{timing_8h_source_l00021}00021\ \textcolor{comment}{\ *\ @return\ Current\ tick\ count\ (ms).}}
-\DoxyCodeLine{\Hypertarget{timing_8h_source_l00022}00022\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{timing_8h_source_l00023}\mbox{\hyperlink{timing_8h_ada5bc2c64ded59838280a07e7cadfbf9}{00023}}\ uint64\_t\ \mbox{\hyperlink{timing_8h_ada5bc2c64ded59838280a07e7cadfbf9}{ttak\_get\_tick\_count}}(\textcolor{keywordtype}{void});}
-\DoxyCodeLine{\Hypertarget{timing_8h_source_l00024}00024\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{timing_8h_source_l00025}00025\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{timing_8h_source_l00026}00026\ \textcolor{comment}{\ *\ @brief\ Returns\ the\ current\ tick\ count\ in\ nanoseconds.}}
-\DoxyCodeLine{\Hypertarget{timing_8h_source_l00027}00027\ \textcolor{comment}{\ *\ }}
-\DoxyCodeLine{\Hypertarget{timing_8h_source_l00028}00028\ \textcolor{comment}{\ *\ Used\ for\ high-\/precision\ measurements.}}
-\DoxyCodeLine{\Hypertarget{timing_8h_source_l00029}00029\ \textcolor{comment}{\ *\ }}
-\DoxyCodeLine{\Hypertarget{timing_8h_source_l00030}00030\ \textcolor{comment}{\ *\ @return\ Current\ tick\ count\ (ns).}}
-\DoxyCodeLine{\Hypertarget{timing_8h_source_l00031}00031\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{timing_8h_source_l00032}\mbox{\hyperlink{timing_8h_a804f49096c6f68d22be9d271168e1619}{00032}}\ uint64\_t\ \mbox{\hyperlink{timing_8h_a804f49096c6f68d22be9d271168e1619}{ttak\_get\_tick\_count\_ns}}(\textcolor{keywordtype}{void});}
-\DoxyCodeLine{\Hypertarget{timing_8h_source_l00033}00033\ }
-\DoxyCodeLine{\Hypertarget{timing_8h_source_l00034}00034\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_TIMING\_H}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <time.h>}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{ttak__compiler_8h}{ttak/types/ttak\_compiler.h}}>}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00008}00008\ \textcolor{preprocessor}{\#if\ defined(\_\_x86\_64\_\_)\ ||\ defined(\_M\_X64)}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00009}00009\ \textcolor{preprocessor}{\#\ \ if\ defined(\_\_TINYC\_\_)}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00010}00010\ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ uint64\_t\ \_\_rdtsc(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00011}00011\ \ \ \ \ \ \ \ \ \ uint32\_t\ low,\ high;}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00012}00012\ \ \ \ \ \ \ \ \ \ \_\_asm\_\_\ \textcolor{keyword}{volatile}\ (\textcolor{stringliteral}{"{}rdtsc"{}}\ :\ \textcolor{stringliteral}{"{}=a"{}}\ (low),\ \textcolor{stringliteral}{"{}=d"{}}\ (high));}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00013}00013\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ((uint64\_t)high\ <<\ 32)\ |\ low;}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00014}00014\ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00015}00015\ \textcolor{preprocessor}{\#\ \ else}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00016}00016\ \textcolor{preprocessor}{\#\ \ \ \ if\ defined(\_MSC\_VER)}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00017}00017\ \textcolor{preprocessor}{\#\ \ \ \ \ \ include\ <immintrin.h>}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00018}00018\ \textcolor{preprocessor}{\#\ \ \ \ else}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00019}00019\ \textcolor{preprocessor}{\#\ \ \ \ \ \ include\ <x86intrin.h>}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00020}00020\ \textcolor{preprocessor}{\#\ \ \ \ endif}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00021}00021\ \textcolor{preprocessor}{\#\ \ endif}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00022}00022\ \ \ \ \textcolor{keyword}{extern}\ uint64\_t\ g\_tsc\_freq\_ghz;}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00023}00023\ \ \ \ \textcolor{keyword}{extern}\ uint64\_t\ g\_tsc\_scale;}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00024}00024\ \ \ \ \textcolor{keywordtype}{void}\ calibrate\_tsc(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00025}00025\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00026}00026\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00027}00027\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00028}00028\ \textcolor{comment}{\ *\ @brief\ Time\ unit\ macros\ for\ converting\ to\ nanoseconds.}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00029}00029\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00030}\mbox{\hyperlink{timing_8h_a8f73ed891f186c57f1a72da390592879}{00030}}\ \textcolor{preprocessor}{\#define\ TT\_NANO\_SECOND(n)\ \ \ ((uint64\_t)(n))}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00031}\mbox{\hyperlink{timing_8h_ac02e371a9ce7c79927fcd1250ad5f082}{00031}}\ \textcolor{preprocessor}{\#define\ TT\_MICRO\_SECOND(n)\ \ ((uint64\_t)(n)\ *\ 1000ULL)}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00032}\mbox{\hyperlink{timing_8h_a706d706dd7fd86c64eca603344ecd44d}{00032}}\ \textcolor{preprocessor}{\#define\ TT\_MILLI\_SECOND(n)\ \ ((uint64\_t)(n)\ *\ 1000ULL\ *\ 1000ULL)}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00033}\mbox{\hyperlink{timing_8h_a751dbf1f1d796405a9b2fe2f7ffa945e}{00033}}\ \textcolor{preprocessor}{\#define\ TT\_SECOND(n)\ \ \ \ \ \ \ \ ((uint64\_t)(n)\ *\ 1000ULL\ *\ 1000ULL\ *\ 1000ULL)}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00034}\mbox{\hyperlink{timing_8h_a3209654bf799b3cadd064970c008a32a}{00034}}\ \textcolor{preprocessor}{\#define\ TT\_MINUTE(n)\ \ \ \ \ \ \ \ ((uint64\_t)(n)\ *\ 60ULL\ *\ 1000ULL\ *\ 1000ULL\ *\ 1000ULL)}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00035}\mbox{\hyperlink{timing_8h_a19035333be330bdd7cb30b014a4075fe}{00035}}\ \textcolor{preprocessor}{\#define\ TT\_HOUR(n)\ \ \ \ \ \ \ \ \ \ ((uint64\_t)(n)\ *\ 60ULL\ *\ 60ULL\ *\ 1000ULL\ *\ 1000ULL\ *\ 1000ULL)}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00037}00037\ \textcolor{preprocessor}{\#if\ defined(\_\_TINYC\_\_)}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00038}00038\ \textcolor{preprocessor}{\#\ \ if\ defined(\_\_x86\_64\_\_)\ ||\ defined(\_M\_X64)}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00039}00039\ \textcolor{preprocessor}{\#\ \ \ \ define\ ttak\_get\_tick\_count\_ns()\ (\{\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00040}00040\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ uint64\_t\ \_\_scale\ =\ g\_tsc\_scale;\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00041}00041\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ if\ (TTAK\_UNLIKELY(\_\_scale\ ==\ 0))\ \{\ calibrate\_tsc();\ \_\_scale\ =\ g\_tsc\_scale;\ if\ (\_\_scale\ ==\ 0)\ \_\_scale\ =\ (1ULL\ <<\ 32)\ /\ 2;\ \}\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00042}00042\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ (\_\_rdtsc()\ *\ \_\_scale)\ >>\ 32;\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00043}00043\ \textcolor{preprocessor}{\ \ \ \ \})}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00045}00045\ \textcolor{preprocessor}{\#\ \ \ \ define\ ttak\_get\_tick\_count()\ (ttak\_get\_tick\_count\_ns()\ /\ 1000000ULL)}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00046}00046\ \textcolor{preprocessor}{\#\ \ elif\ defined(\_WIN32)}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00047}00047\ \textcolor{keyword}{extern}\ uint64\_t\ ttak\_get\_tick\_count\_ns\_win32(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00048}00048\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ uint64\_t\ \mbox{\hyperlink{timing_8h_a7c8ce36764d5190e6d54d194108eaf78}{ttak\_get\_tick\_count\_ns}}(\textcolor{keywordtype}{void})\ \{\ \textcolor{keywordflow}{return}\ ttak\_get\_tick\_count\_ns\_win32();\ \}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00049}00049\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ uint64\_t\ \mbox{\hyperlink{timing_8h_ab89967dd277adc228208b2efe487215c}{ttak\_get\_tick\_count}}(\textcolor{keywordtype}{void})\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{timing_8h_a7c8ce36764d5190e6d54d194108eaf78}{ttak\_get\_tick\_count\_ns}}()\ /\ 1000000ULL;\ \}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00050}00050\ \textcolor{preprocessor}{\#\ \ else}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00051}00051\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ uint64\_t\ \mbox{\hyperlink{timing_8h_a7c8ce36764d5190e6d54d194108eaf78}{ttak\_get\_tick\_count\_ns}}(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00052}00052\ \ \ \ \ \textcolor{keyword}{struct\ }timespec\ ts;}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00053}00053\ \ \ \ \ clock\_gettime(CLOCK\_MONOTONIC,\ \&ts);}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00054}00054\ \ \ \ \ \textcolor{keywordflow}{return}\ ((uint64\_t)ts.tv\_sec\ *\ 1000000000ULL)\ +\ (uint64\_t)ts.tv\_nsec;}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00055}00055\ \}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00057}00057\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ uint64\_t\ \mbox{\hyperlink{timing_8h_ab89967dd277adc228208b2efe487215c}{ttak\_get\_tick\_count}}(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00058}00058\ \ \ \ \ \textcolor{keyword}{struct\ }timespec\ ts;}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00059}00059\ \ \ \ \ clock\_gettime(CLOCK\_MONOTONIC,\ \&ts);}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00060}00060\ \ \ \ \ \textcolor{keywordflow}{return}\ ((uint64\_t)ts.tv\_sec\ *\ 1000ULL)\ +\ ((uint64\_t)ts.tv\_nsec\ /\ 1000000ULL);}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00061}00061\ \}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00062}00062\ \textcolor{preprocessor}{\#\ \ endif}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00063}00063\ \textcolor{preprocessor}{\#else}\textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00064}00064\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00065}00065\ \textcolor{comment}{\ *\ @brief\ Returns\ the\ current\ tick\ count\ in\ nanoseconds.}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00066}00066\ \textcolor{comment}{\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00067}\mbox{\hyperlink{timing_8h_a7c8ce36764d5190e6d54d194108eaf78}{00067}}\ \mbox{\hyperlink{ttak__compiler_8h_a7759c1f89dd694da3576024767572ddc}{TTAK\_FORCE\_INLINE}}\ uint64\_t\ \mbox{\hyperlink{timing_8h_a7c8ce36764d5190e6d54d194108eaf78}{ttak\_get\_tick\_count\_ns}}(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00068}00068\ \textcolor{preprocessor}{\#if\ defined(\_\_x86\_64\_\_)\ ||\ defined(\_M\_X64)}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00069}00069\ \ \ \ \ uint64\_t\ scale\ =\ g\_tsc\_scale;}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00070}00070\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{ttak__compiler_8h_a79e6ab9372fcc255fb4075c4ed8857dd}{TTAK\_UNLIKELY}}(scale\ ==\ 0))\ \{}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00071}00071\ \ \ \ \ \ \ \ \ calibrate\_tsc();}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00072}00072\ \ \ \ \ \ \ \ \ scale\ =\ g\_tsc\_scale;}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00073}00073\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (scale\ ==\ 0)\ scale\ =\ (1ULL\ <<\ 32)\ /\ 2;\ }
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00074}00074\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00075}00075\ \ \ \ \ \textcolor{keywordflow}{return}\ (\_\_rdtsc()\ *\ scale)\ >>\ 32;}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00076}00076\ \textcolor{preprocessor}{\#elif\ defined(\_WIN32)}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00077}00077\ \ \ \ \ \textcolor{keyword}{extern}\ uint64\_t\ ttak\_get\_tick\_count\_ns\_win32(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00078}00078\ \ \ \ \ \textcolor{keywordflow}{return}\ ttak\_get\_tick\_count\_ns\_win32();}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00079}00079\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00080}00080\ \ \ \ \ \textcolor{keyword}{struct\ }timespec\ ts;}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00081}00081\ \ \ \ \ clock\_gettime(CLOCK\_MONOTONIC,\ \&ts);}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00082}00082\ \ \ \ \ \textcolor{keywordflow}{return}\ ((uint64\_t)ts.tv\_sec\ *\ 1000000000ULL)\ +\ (uint64\_t)ts.tv\_nsec;}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00083}00083\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00084}00084\ \}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00085}00085\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00086}00086\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00087}00087\ \textcolor{comment}{\ *\ @brief\ Returns\ the\ current\ tick\ count\ in\ milliseconds.}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00088}00088\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00089}\mbox{\hyperlink{timing_8h_ab89967dd277adc228208b2efe487215c}{00089}}\ \mbox{\hyperlink{ttak__compiler_8h_a7759c1f89dd694da3576024767572ddc}{TTAK\_FORCE\_INLINE}}\ uint64\_t\ \mbox{\hyperlink{timing_8h_ab89967dd277adc228208b2efe487215c}{ttak\_get\_tick\_count}}(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00090}00090\ \textcolor{preprocessor}{\#if\ defined(\_\_x86\_64\_\_)\ ||\ defined(\_M\_X64)}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00091}00091\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{timing_8h_a7c8ce36764d5190e6d54d194108eaf78}{ttak\_get\_tick\_count\_ns}}()\ /\ 1000000ULL;}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00092}00092\ \textcolor{preprocessor}{\#elif\ defined(\_WIN32)}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00093}00093\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{timing_8h_a7c8ce36764d5190e6d54d194108eaf78}{ttak\_get\_tick\_count\_ns}}()\ /\ 1000000ULL;}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00094}00094\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00095}00095\ \ \ \ \ \textcolor{keyword}{struct\ }timespec\ ts;}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00096}00096\ \ \ \ \ clock\_gettime(CLOCK\_MONOTONIC,\ \&ts);}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00097}00097\ \ \ \ \ \textcolor{keywordflow}{return}\ ((uint64\_t)ts.tv\_sec\ *\ 1000ULL)\ +\ ((uint64\_t)ts.tv\_nsec\ /\ 1000000ULL);}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00098}00098\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00099}00099\ \}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00100}00100\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00101}00101\ }
+\DoxyCodeLine{\Hypertarget{timing_8h_source_l00102}00102\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_TIMING\_H}}
 
 \end{DoxyCode}

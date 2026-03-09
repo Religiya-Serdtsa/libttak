@@ -1,4 +1,5 @@
 <map id="__ttak_atomic_fallback_init" name="__ttak_atomic_fallback_init">
-<area shape="rect" id="node1" title=" " alt="" coords="188,13,368,39"/>
-<area shape="rect" id="node2" href="$include_2stdatomic_8h.html#ad4c0e9a11c3a43524825fd47bbf86bcc" title=" " alt="" coords="5,5,140,47"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="201,14,401,42"/>
+<area shape="rect" id="Node000002" href="$include_2stdatomic_8h.html#a248c1ffe22b3fffab171883328c44fb6" title=" " alt="" coords="5,5,153,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="185,30,153,30,153,25,185,25"/>
 </map>

@@ -25,28 +25,37 @@
 var NAVTREE =
 [
   [ "libttak", "index.html", [
-    [ "LibTTAK Benchmark Suite", "index.html", [
-      [ "Core Benchmarks", "index.html#autotoc_md1", [
-        [ "1. TTL Cache Multi-threaded Benchmark", "index.html#autotoc_md2", null ],
-        [ "2. General Benchmark Hub (<tt>ttak_bench.c</tt>)", "index.html#autotoc_md3", null ]
+    [ "LibTTAK", "index.html#autotoc_md26", [
+      [ "Mathematical Foundation: The OLS Principle", "index.html#autotoc_md28", null ],
+      [ "Integrated Architectural Map", "index.html#autotoc_md30", null ],
+      [ "Why LibTTAK?", "index.html#autotoc_md32", [
+        [ "Practical Utility for AI-Assisted Development", "index.html#autotoc_md33", null ],
+        [ "Deterministic Lifetime-as-Data", "index.html#autotoc_md34", null ],
+        [ "Predictable Resource Discipline", "index.html#autotoc_md35", null ]
       ] ],
-      [ "Architectural Philosophy", "index.html#autotoc_md4", null ],
-      [ "Analysis Tools", "index.html#autotoc_md5", null ]
+      [ "Comparison: LibTTAK, Rust, and C++", "index.html#autotoc_md37", null ],
+      [ "Core Components", "index.html#autotoc_md39", null ],
+      [ "Benchmarks", "index.html#autotoc_md41", [
+        [ "High-Performance Lock-Free Baseline", "index.html#autotoc_md42", null ],
+        [ "TTL Cache Benchmarks (Compiler Sweep)", "index.html#autotoc_md43", null ],
+        [ "Benchmark Environment", "index.html#autotoc_md44", null ]
+      ] ],
+      [ "Documentation", "index.html#autotoc_md46", null ]
     ] ],
-    [ "TCC-Oriented Build and Math Tuning", "md_docs_TCC_OPTIMIZATION.html", [
-      [ "Build Expectations", "md_docs_TCC_OPTIMIZATION.html#autotoc_md17", null ],
-      [ "Hardcore C Tricks", "md_docs_TCC_OPTIMIZATION.html#autotoc_md18", null ],
-      [ "Portable Assembly Strategy", "md_docs_TCC_OPTIMIZATION.html#autotoc_md19", null ],
-      [ "TinyCC Streaming Fast Paths", "md_docs_TCC_OPTIMIZATION.html#autotoc_md20", null ],
-      [ "Applying the Tricks Elsewhere", "md_docs_TCC_OPTIMIZATION.html#autotoc_md21", null ]
+    [ "TCC-Oriented Build and Math Tuning", "md_docs_2TCC__OPTIMIZATION.html", [
+      [ "Build Expectations", "md_docs_2TCC__OPTIMIZATION.html#autotoc_md17", null ],
+      [ "Hardcore C Tricks", "md_docs_2TCC__OPTIMIZATION.html#autotoc_md18", null ],
+      [ "Portable Assembly Strategy", "md_docs_2TCC__OPTIMIZATION.html#autotoc_md19", null ],
+      [ "TinyCC Streaming Fast Paths", "md_docs_2TCC__OPTIMIZATION.html#autotoc_md20", null ],
+      [ "Applying the Tricks Elsewhere", "md_docs_2TCC__OPTIMIZATION.html#autotoc_md21", null ]
     ] ],
     [ "Development History", "md_HISTORY.html", [
       [ "2026-01-30", "md_HISTORY.html#autotoc_md23", [
-        [ "Initial Skeleton Creation & Build Stabilization", "md_HISTORY.html#autotoc_md24", null ],
+        [ "Initial Skeleton Creation &amp; Build Stabilization", "md_HISTORY.html#autotoc_md24", null ],
         [ "Key Diffs Overview", "md_HISTORY.html#autotoc_md25", null ]
       ] ]
     ] ],
-    [ "Clone Coding Path", "md_tutorials_CLONE_PATH.html", null ],
+    [ "Clone Coding Path", "md_tutorials_2CLONE__PATH.html", null ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
@@ -74,15 +83,16 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "00__overview_8puml.html",
-"context_8h.html#a50c6b1c90b40b23d2fd1b715271a3d83",
+"context_8h.html#a3ce5ce1f27b068f718459c1316c97bc9",
 "fixed_8h.html#a8efab2f600f17fcb131ed9c647277c81",
-"io_8h.html#a4c5731f8c7bf69338c8fba54e58f3109a4daa069a8f600416376c6ced88c18b23",
-"port_8h.html#a9c772162be718df750f452ed87452d80a19b0baaa8e6569bfff4c88757aace0d9",
-"structttak__accel__batch__item.html#ab55dab014cfce96fe3e5c9938bcbb1c3",
-"structttak__logger.html#a8489256cafc9961e644cd68e83e86a5f",
-"structttak__shared__s.html#aa3ed576e6146a3d1f6d1a22d19d5d5cb",
-"ttak__accelerator_8h_source.html"
+"io_8h.html#a37257227b6a468f1d428d3cf15d0b6a5",
+"promise_8h.html",
+"structttak__accel__config.html#aa9ecfac5504e63246c81bb5b8f1e7990",
+"structttak__map__t.html#a8c1be4e04db13c3236fc25ac26d95821",
+"structttak__shared__s.html#ac24a590b08d7cb645c41d6676a50ce82",
+"ttak__compiler_8h.html#a326daeea4d60d85414964232a072e4a2"
 ];
 
-var SYNCONMSG = 'click to disable panel synchronisation';
-var SYNCOFFMSG = 'click to enable panel synchronisation';
+var SYNCONMSG = 'click to disable panel synchronization';
+var SYNCOFFMSG = 'click to enable panel synchronization';
+var LISTOFALLMEMBERS = 'List of all members';

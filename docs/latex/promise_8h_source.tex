@@ -2,20 +2,53 @@
 \hypertarget{promise_8h_source}{}\label{promise_8h_source}\index{include/ttak/async/promise.h@{include/ttak/async/promise.h}}
 \mbox{\hyperlink{promise_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\Hypertarget{promise_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ TTAK\_ASYNC\_PROMISE\_H}}
-\DoxyCodeLine{\Hypertarget{promise_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ TTAK\_ASYNC\_PROMISE\_H}}
-\DoxyCodeLine{\Hypertarget{promise_8h_source_l00003}00003\ }
-\DoxyCodeLine{\Hypertarget{promise_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
-\DoxyCodeLine{\Hypertarget{promise_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{future_8h}{ttak/async/future.h}}>}}
-\DoxyCodeLine{\Hypertarget{promise_8h_source_l00006}00006\ }
-\DoxyCodeLine{\Hypertarget{promise_8h_source_l00007}\mbox{\hyperlink{structttak__promise}{00007}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__promise}{ttak\_promise}}\ \{}
-\DoxyCodeLine{\Hypertarget{promise_8h_source_l00008}\mbox{\hyperlink{structttak__promise_a928b75ed6117e337fc20745814f5a024}{00008}}\ \ \ \ \ \mbox{\hyperlink{structttak__future}{ttak\_future\_t}}\ *\mbox{\hyperlink{structttak__promise_a928b75ed6117e337fc20745814f5a024}{future}};}
-\DoxyCodeLine{\Hypertarget{promise_8h_source_l00009}\mbox{\hyperlink{promise_8h_aa604edbaa7c611ec386757f8db43d1e3}{00009}}\ \}\ \mbox{\hyperlink{promise_8h_aa604edbaa7c611ec386757f8db43d1e3}{ttak\_promise\_t}};}
-\DoxyCodeLine{\Hypertarget{promise_8h_source_l00010}00010\ }
-\DoxyCodeLine{\Hypertarget{promise_8h_source_l00011}\mbox{\hyperlink{promise_8h_aeb1b9a9332785b2e897acf0a04bf4033}{00011}}\ \mbox{\hyperlink{structttak__promise}{ttak\_promise\_t}}\ *\mbox{\hyperlink{promise_8h_aeb1b9a9332785b2e897acf0a04bf4033}{ttak\_promise\_create}}(uint64\_t\ now);}
-\DoxyCodeLine{\Hypertarget{promise_8h_source_l00012}\mbox{\hyperlink{promise_8h_ae4d7300d418736b6deb56f8c19d8b52f}{00012}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{promise_8h_ae4d7300d418736b6deb56f8c19d8b52f}{ttak\_promise\_set\_value}}(\mbox{\hyperlink{structttak__promise}{ttak\_promise\_t}}\ *promise,\ \textcolor{keywordtype}{void}\ *val,\ uint64\_t\ now);}
-\DoxyCodeLine{\Hypertarget{promise_8h_source_l00013}\mbox{\hyperlink{promise_8h_a44baea2754e16f9017be08a8e94654b2}{00013}}\ \mbox{\hyperlink{structttak__future}{ttak\_future\_t}}\ *\mbox{\hyperlink{promise_8h_a44baea2754e16f9017be08a8e94654b2}{ttak\_promise\_get\_future}}(\mbox{\hyperlink{structttak__promise}{ttak\_promise\_t}}\ *promise);}
-\DoxyCodeLine{\Hypertarget{promise_8h_source_l00014}00014\ }
-\DoxyCodeLine{\Hypertarget{promise_8h_source_l00015}00015\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_ASYNC\_PROMISE\_H}}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00001}00001\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00002}00002\ \textcolor{comment}{\ *\ @file\ promise.h}}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00003}00003\ \textcolor{comment}{\ *\ @brief\ One-\/shot\ promise\ for\ fulfilling\ a\ ttak\_future\_t\ from\ a\ worker\ thread.}}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00004}00004\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00005}00005\ \textcolor{comment}{\ *\ Create\ a\ promise\ with\ ttak\_promise\_create(),\ obtain\ its\ future\ with}}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00006}00006\ \textcolor{comment}{\ *\ ttak\_promise\_get\_future(),\ and\ fulfil\ it\ from\ the\ worker\ thread\ via}}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00007}00007\ \textcolor{comment}{\ *\ ttak\_promise\_set\_value().}}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00008}00008\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00010}00010\ \textcolor{preprocessor}{\#ifndef\ TTAK\_ASYNC\_PROMISE\_H}}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00011}00011\ \textcolor{preprocessor}{\#define\ TTAK\_ASYNC\_PROMISE\_H}}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00014}00014\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{future_8h}{ttak/async/future.h}}>}}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00015}00015\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00016}00016\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00017}00017\ \textcolor{comment}{\ *\ @brief\ Promise\ handle\ that\ pairs\ with\ exactly\ one\ ttak\_future\_t.}}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00018}00018\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00019}\mbox{\hyperlink{structttak__promise}{00019}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__promise}{ttak\_promise}}\ \{}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00020}\mbox{\hyperlink{structttak__promise_a928b75ed6117e337fc20745814f5a024}{00020}}\ \ \ \ \ \mbox{\hyperlink{future_8h_a56ca146ef4be9bd1d67a1250de2ce2c2}{ttak\_future\_t}}\ *\mbox{\hyperlink{structttak__promise_a928b75ed6117e337fc20745814f5a024}{future}};\ \textcolor{comment}{/**<\ The\ future\ this\ promise\ will\ fulfil.\ */}}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00021}\mbox{\hyperlink{promise_8h_aa604edbaa7c611ec386757f8db43d1e3}{00021}}\ \}\ \mbox{\hyperlink{promise_8h_aa604edbaa7c611ec386757f8db43d1e3}{ttak\_promise\_t}};}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00022}00022\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00023}00023\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00024}00024\ \textcolor{comment}{\ *\ @brief\ Allocates\ and\ initialises\ a\ new\ promise/future\ pair.}}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00025}00025\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00026}00026\ \textcolor{comment}{\ *\ @param\ now\ Current\ monotonic\ timestamp\ in\ nanoseconds.}}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00027}00027\ \textcolor{comment}{\ *\ @return\ \ \ \ Pointer\ to\ the\ new\ promise,\ or\ NULL\ on\ allocation\ failure.}}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00028}00028\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00029}\mbox{\hyperlink{promise_8h_aeb1b9a9332785b2e897acf0a04bf4033}{00029}}\ \mbox{\hyperlink{promise_8h_aa604edbaa7c611ec386757f8db43d1e3}{ttak\_promise\_t}}\ *\mbox{\hyperlink{promise_8h_aeb1b9a9332785b2e897acf0a04bf4033}{ttak\_promise\_create}}(uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00030}00030\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00031}00031\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00032}00032\ \textcolor{comment}{\ *\ @brief\ Fulfils\ the\ promise\ with\ a\ result\ value,\ unblocking\ any\ waiter.}}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00033}00033\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00034}00034\ \textcolor{comment}{\ *\ @param\ promise\ Promise\ to\ fulfil.}}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00035}00035\ \textcolor{comment}{\ *\ @param\ val\ \ \ \ \ Result\ pointer\ to\ store\ in\ the\ paired\ future.}}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00036}00036\ \textcolor{comment}{\ *\ @param\ now\ \ \ \ \ Current\ monotonic\ timestamp\ in\ nanoseconds.}}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00037}00037\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00038}\mbox{\hyperlink{promise_8h_ae4d7300d418736b6deb56f8c19d8b52f}{00038}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{promise_8h_ae4d7300d418736b6deb56f8c19d8b52f}{ttak\_promise\_set\_value}}(\mbox{\hyperlink{promise_8h_aa604edbaa7c611ec386757f8db43d1e3}{ttak\_promise\_t}}\ *promise,\ \textcolor{keywordtype}{void}\ *val,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00039}00039\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00040}00040\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00041}00041\ \textcolor{comment}{\ *\ @brief\ Returns\ the\ future\ associated\ with\ this\ promise.}}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00042}00042\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00043}00043\ \textcolor{comment}{\ *\ @param\ promise\ Source\ promise.}}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00044}00044\ \textcolor{comment}{\ *\ @return\ \ \ \ \ \ \ \ Pointer\ to\ the\ paired\ future.}}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00045}00045\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00046}\mbox{\hyperlink{promise_8h_a44baea2754e16f9017be08a8e94654b2}{00046}}\ \mbox{\hyperlink{future_8h_a56ca146ef4be9bd1d67a1250de2ce2c2}{ttak\_future\_t}}\ *\mbox{\hyperlink{promise_8h_a44baea2754e16f9017be08a8e94654b2}{ttak\_promise\_get\_future}}(\mbox{\hyperlink{promise_8h_aa604edbaa7c611ec386757f8db43d1e3}{ttak\_promise\_t}}\ *promise);}
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{promise_8h_source_l00048}00048\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_ASYNC\_PROMISE\_H}}
 
 \end{DoxyCode}

@@ -1,7 +1,12 @@
 <map id="ttak_net_session_mgr" name="ttak_net_session_mgr">
-<area shape="rect" id="node1" title=" " alt="" coords="55,379,205,405"/>
-<area shape="rect" id="node2" href="$structttak__net__driver__ops.html" title="Vtable of platform socket primitives." alt="" coords="5,229,140,256"/>
-<area shape="rect" id="node3" href="$structttak__net__session.html" title="Logical connection wrapper that ties an endpoint to parent/child relationships." alt="" coords="164,229,285,256"/>
-<area shape="rect" id="node4" href="$structttak__owner.html" title="The Owner structure." alt="" coords="181,109,268,136"/>
-<area shape="rect" id="node5" href="$structttak__map__t.html" title="Map structure using Structure of Arrays (SoA) for cache efficiency." alt="" coords="181,5,268,32"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="126,483,290,511"/>
+<area shape="rect" id="Node000002" href="$structttak__net__session.html" title="Logical connection wrapper that ties an endpoint to parent/child relationships." alt="" coords="5,284,137,311"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="91,322,202,482,197,485,86,325"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="111,276,130,275,146,278,159,285,163,297,157,311,140,318,119,319,96,314,97,309,119,314,139,313,153,307,158,297,154,289,145,283,130,280,112,282"/>
+<area shape="rect" id="Node000003" href="$structttak__owner.html" title="The Owner structure." alt="" coords="24,128,118,156"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="74,172,74,283,68,283,68,172"/>
+<area shape="rect" id="Node000004" href="$structttak__map__t.html" title="Map structure using Structure of Arrays (SoA) for cache efficiency." alt="" coords="23,5,119,33"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="74,49,74,128,68,128,68,49"/>
+<area shape="rect" id="Node000005" href="$structttak__net__driver__ops.html" title="Vtable of platform socket primitives." alt="" coords="272,284,422,311"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="342,327,316,392,296,428,272,461,239,485,236,481,268,457,292,425,311,390,337,325"/>
 </map>

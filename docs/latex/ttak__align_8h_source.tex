@@ -1,0 +1,32 @@
+\doxysection{ttak\+\_\+align.\+h}
+\hypertarget{ttak__align_8h_source}{}\label{ttak__align_8h_source}\index{include/ttak/types/ttak\_align.h@{include/ttak/types/ttak\_align.h}}
+\mbox{\hyperlink{ttak__align_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{ttak__align_8h_source_l00001}00001\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{ttak__align_8h_source_l00002}00002\ \textcolor{comment}{\ *\ @file\ ttak\_align.h}}
+\DoxyCodeLine{\Hypertarget{ttak__align_8h_source_l00003}00003\ \textcolor{comment}{\ *\ @brief\ Alignment\ utilities\ and\ compatibility\ helpers.}}
+\DoxyCodeLine{\Hypertarget{ttak__align_8h_source_l00004}00004\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{ttak__align_8h_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{ttak__align_8h_source_l00006}00006\ \textcolor{preprocessor}{\#ifndef\ TTAK\_ALIGN\_H}}
+\DoxyCodeLine{\Hypertarget{ttak__align_8h_source_l00007}00007\ \textcolor{preprocessor}{\#define\ TTAK\_ALIGN\_H}}
+\DoxyCodeLine{\Hypertarget{ttak__align_8h_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{ttak__align_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
+\DoxyCodeLine{\Hypertarget{ttak__align_8h_source_l00010}00010\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{ttak__align_8h_source_l00011}00011\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{ttak__align_8h_source_l00012}00012\ \textcolor{comment}{\ *\ @brief\ Alias\ for\ the\ widest\ alignment\ supported\ by\ the\ compiler.}}
+\DoxyCodeLine{\Hypertarget{ttak__align_8h_source_l00013}00013\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{ttak__align_8h_source_l00014}00014\ \textcolor{comment}{\ *\ TinyCC\ does\ not\ ship\ a\ definition\ for\ max\_align\_t,\ so\ we\ provide\ a\ struct}}
+\DoxyCodeLine{\Hypertarget{ttak__align_8h_source_l00015}00015\ \textcolor{comment}{\ *\ that\ matches\ the\ requirements\ for\ the\ other\ supported\ compilers.}}
+\DoxyCodeLine{\Hypertarget{ttak__align_8h_source_l00016}00016\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{ttak__align_8h_source_l00017}00017\ \textcolor{preprocessor}{\#if\ defined(\_\_TINYC\_\_)\ ||\ defined(\_\_NVCC\_\_)\ ||\ (defined(\_MSC\_VER)\ \&\&\ !defined(\_\_clang\_\_))}}
+\DoxyCodeLine{\Hypertarget{ttak__align_8h_source_l00018}00018\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{\Hypertarget{ttak__align_8h_source_l00019}00019\ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ \ \ \_\_ttak\_max\_align\_ll;}
+\DoxyCodeLine{\Hypertarget{ttak__align_8h_source_l00020}00020\ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ \_\_ttak\_max\_align\_ld;}
+\DoxyCodeLine{\Hypertarget{ttak__align_8h_source_l00021}00021\ \}\ \mbox{\hyperlink{ttak__align_8h_a57fbdeca2fdfd0ec356c5d1fa8aba7e3}{ttak\_max\_align\_t}};}
+\DoxyCodeLine{\Hypertarget{ttak__align_8h_source_l00022}00022\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{ttak__align_8h_source_l00023}\mbox{\hyperlink{ttak__align_8h_a57fbdeca2fdfd0ec356c5d1fa8aba7e3}{00023}}\ \textcolor{keyword}{typedef}\ max\_align\_t\ \mbox{\hyperlink{ttak__align_8h_a57fbdeca2fdfd0ec356c5d1fa8aba7e3}{ttak\_max\_align\_t}};}
+\DoxyCodeLine{\Hypertarget{ttak__align_8h_source_l00024}00024\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{ttak__align_8h_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{ttak__align_8h_source_l00026}00026\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ TTAK\_ALIGN\_H\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

@@ -1,5 +1,5 @@
-\hypertarget{bigint_8h}{}\doxysection{include/ttak/math/bigint.h File Reference}
-\label{bigint_8h}\index{include/ttak/math/bigint.h@{include/ttak/math/bigint.h}}
+\doxysection{include/ttak/math/bigint.h File Reference}
+\hypertarget{bigint_8h}{}\label{bigint_8h}\index{include/ttak/math/bigint.h@{include/ttak/math/bigint.h}}
 {\ttfamily \#include $<$stdint.\+h$>$}\newline
 {\ttfamily \#include $<$stddef.\+h$>$}\newline
 {\ttfamily \#include $<$stdbool.\+h$>$}\newline
@@ -22,17 +22,17 @@ This graph shows which files directly or indirectly include this file\+:
 \includegraphics[width=350pt]{bigint_8h__dep__incl}
 \end{center}
 \end{figure}
-\doxysubsection*{Classes}
+\doxysubsubsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
 struct \mbox{\hyperlink{structttak__bigint}{ttak\+\_\+bigint}}
 \begin{DoxyCompactList}\small\item\em Arbitrary-\/precision integer engine with Small Stack Optimization (SSO). \end{DoxyCompactList}\end{DoxyCompactItemize}
-\doxysubsection*{Macros}
+\doxysubsubsection*{Macros}
 \begin{DoxyCompactItemize}
 \item 
 \#define \mbox{\hyperlink{bigint_8h_a0e2f0eb2f43ff9d8dd473fac7b29e498}{TTAK\+\_\+\+BIGINT\+\_\+\+SSO\+\_\+\+LIMIT}}~4
 \end{DoxyCompactItemize}
-\doxysubsection*{Typedefs}
+\doxysubsubsection*{Typedefs}
 \begin{DoxyCompactItemize}
 \item 
 typedef uint32\+\_\+t \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}}
@@ -41,100 +41,104 @@ typedef struct \mbox{\hyperlink{structttak__bigint}{ttak\+\_\+bigint}} \mbox{\hy
 \begin{DoxyCompactList}\small\item\em Arbitrary-\/precision integer engine with Small Stack Optimization (SSO). \end{DoxyCompactList}\item 
 typedef \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \mbox{\hyperlink{bigint_8h_a4ec31217a53ed725cf7f78087dbeda49}{\+\_\+\+\_\+tt\+\_\+big\+\_\+i\+\_\+t}}
 \end{DoxyCompactItemize}
-\doxysubsection*{Functions}
+\doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \mbox{\hyperlink{bigint_8h_a044899394d6d5d6c87ddf6e57d013066}{ttak\+\_\+bigint\+\_\+init}} (\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$bi, uint64\+\_\+t now)
+void \mbox{\hyperlink{bigint_8h_a044899394d6d5d6c87ddf6e57d013066}{ttak\+\_\+bigint\+\_\+init}} (\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}bi, uint64\+\_\+t now)
 \begin{DoxyCompactList}\small\item\em Initializes a bigint. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{bigint_8h_ae908f38e4e03edcf27f93939273fbeff}{ttak\+\_\+bigint\+\_\+init\+\_\+u64}} (\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$bi, uint64\+\_\+t value, uint64\+\_\+t now)
+void \mbox{\hyperlink{bigint_8h_ae908f38e4e03edcf27f93939273fbeff}{ttak\+\_\+bigint\+\_\+init\+\_\+u64}} (\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}bi, uint64\+\_\+t value, uint64\+\_\+t now)
 \item 
-void \mbox{\hyperlink{bigint_8h_a59a4dd557d7607b92d689b5f233b60ad}{ttak\+\_\+bigint\+\_\+init\+\_\+copy}} (\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$dst, const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$src, uint64\+\_\+t now)
+void \mbox{\hyperlink{bigint_8h_a59a4dd557d7607b92d689b5f233b60ad}{ttak\+\_\+bigint\+\_\+init\+\_\+copy}} (\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}dst, const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}src, uint64\+\_\+t now)
 \item 
-void \mbox{\hyperlink{bigint_8h_a005623b344de5f34c0d37eb9b62c9b2f}{ttak\+\_\+bigint\+\_\+mersenne\+\_\+mod}} (\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$bi, int p, uint64\+\_\+t now)
-\begin{DoxyCompactList}\small\item\em Performs modulo operation optimized for Mersenne primes (2$^\wedge$p -\/ 1). \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{bigint_8h_a9ced4cc74432ad65092a8e4855639a9c}{ttak\+\_\+bigint\+\_\+free}} (\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$bi, uint64\+\_\+t now)
+void \mbox{\hyperlink{bigint_8h_a005623b344de5f34c0d37eb9b62c9b2f}{ttak\+\_\+bigint\+\_\+mersenne\+\_\+mod}} (\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}bi, int p, uint64\+\_\+t now)
+\begin{DoxyCompactList}\small\item\em Performs modulo operation optimized for Mersenne primes (2\texorpdfstring{$^\wedge$}{\string^}p -\/ 1). \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{bigint_8h_a9ced4cc74432ad65092a8e4855639a9c}{ttak\+\_\+bigint\+\_\+free}} (\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}bi, uint64\+\_\+t now)
 \begin{DoxyCompactList}\small\item\em Frees the bigint resources. \end{DoxyCompactList}\item 
-bool \mbox{\hyperlink{bigint_8h_a000ba64ec10406a3a470b572dee91602}{ttak\+\_\+bigint\+\_\+set\+\_\+u64}} (\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$bi, uint64\+\_\+t value, uint64\+\_\+t now)
+bool \mbox{\hyperlink{bigint_8h_a000ba64ec10406a3a470b572dee91602}{ttak\+\_\+bigint\+\_\+set\+\_\+u64}} (\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}bi, uint64\+\_\+t value, uint64\+\_\+t now)
 \begin{DoxyCompactList}\small\item\em Assigns an unsigned 64-\/bit value to the bigint. \end{DoxyCompactList}\item 
-bool \mbox{\hyperlink{bigint_8h_aa35591bd7c10636225750d9372737831}{ttak\+\_\+bigint\+\_\+set\+\_\+u128}} (\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$bi, \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} value, uint64\+\_\+t now)
+bool \mbox{\hyperlink{bigint_8h_aa35591bd7c10636225750d9372737831}{ttak\+\_\+bigint\+\_\+set\+\_\+u128}} (\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}bi, \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} value, uint64\+\_\+t now)
 \item 
-bool \mbox{\hyperlink{bigint_8h_af55c0c937ae4d6005b92aa49c13ff9f2}{ttak\+\_\+bigint\+\_\+set\+\_\+u256}} (\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$bi, \mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}} value, uint64\+\_\+t now)
+bool \mbox{\hyperlink{bigint_8h_af55c0c937ae4d6005b92aa49c13ff9f2}{ttak\+\_\+bigint\+\_\+set\+\_\+u256}} (\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}bi, \mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}} value, uint64\+\_\+t now)
 \item 
-bool \mbox{\hyperlink{bigint_8h_a2322ac748a099de8e8a0642ccd0c6ab4}{ttak\+\_\+bigint\+\_\+copy}} (\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$dst, const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$src, uint64\+\_\+t now)
+bool \mbox{\hyperlink{bigint_8h_a2322ac748a099de8e8a0642ccd0c6ab4}{ttak\+\_\+bigint\+\_\+copy}} (\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}dst, const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}src, uint64\+\_\+t now)
 \item 
-int \mbox{\hyperlink{bigint_8h_a49487c985999445bea59fc58526bb6fa}{ttak\+\_\+bigint\+\_\+cmp}} (const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$lhs, const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$rhs)
+int \mbox{\hyperlink{bigint_8h_a49487c985999445bea59fc58526bb6fa}{ttak\+\_\+bigint\+\_\+cmp}} (const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}lhs, const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}rhs)
 \item 
-int \mbox{\hyperlink{bigint_8h_a8afd4f59424ac4010f0394095e005226}{ttak\+\_\+bigint\+\_\+cmp\+\_\+u64}} (const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$lhs, uint64\+\_\+t rhs)
+int \mbox{\hyperlink{bigint_8h_a8afd4f59424ac4010f0394095e005226}{ttak\+\_\+bigint\+\_\+cmp\+\_\+u64}} (const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}lhs, uint64\+\_\+t rhs)
 \item 
-bool \mbox{\hyperlink{bigint_8h_afee4d9753ed929882e1002fed64a38e6}{ttak\+\_\+bigint\+\_\+is\+\_\+zero}} (const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$bi)
+bool \mbox{\hyperlink{bigint_8h_afee4d9753ed929882e1002fed64a38e6}{ttak\+\_\+bigint\+\_\+is\+\_\+zero}} (const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}bi)
 \item 
-\mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \mbox{\hyperlink{bigint_8h_ac83ff9674a52e412fc22f4601c725021}{sub\+\_\+limbs}} (\mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} $\ast$u, const \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} $\ast$v, size\+\_\+t n)
+\mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \mbox{\hyperlink{bigint_8h_ac83ff9674a52e412fc22f4601c725021}{sub\+\_\+limbs}} (\mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}u, const \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}v, size\+\_\+t n)
 \item 
-bool \mbox{\hyperlink{bigint_8h_a56cd0d6d98a2ab19a5c2103b68e1c7a7}{ttak\+\_\+bigint\+\_\+add}} (\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$dst, const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$lhs, const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$rhs, uint64\+\_\+t now)
+bool \mbox{\hyperlink{bigint_8h_a56cd0d6d98a2ab19a5c2103b68e1c7a7}{ttak\+\_\+bigint\+\_\+add}} (\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}dst, const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}lhs, const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}rhs, uint64\+\_\+t now)
 \begin{DoxyCompactList}\small\item\em Adds two non-\/negative bigints\+: dst = lhs + rhs. \end{DoxyCompactList}\item 
-bool \mbox{\hyperlink{bigint_8h_a3ac7f3d32d0627dcf9133a47368eb3f8}{ttak\+\_\+bigint\+\_\+sub}} (\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$dst, const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$lhs, const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$rhs, uint64\+\_\+t now)
+bool \mbox{\hyperlink{bigint_8h_a3ac7f3d32d0627dcf9133a47368eb3f8}{ttak\+\_\+bigint\+\_\+sub}} (\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}dst, const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}lhs, const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}rhs, uint64\+\_\+t now)
 \item 
-bool \mbox{\hyperlink{bigint_8h_aadcffcd2cf088d20b7c941312fc9cc7a}{ttak\+\_\+bigint\+\_\+mul}} (\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$dst, const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$lhs, const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$rhs, uint64\+\_\+t now)
+bool \mbox{\hyperlink{bigint_8h_aadcffcd2cf088d20b7c941312fc9cc7a}{ttak\+\_\+bigint\+\_\+mul}} (\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}dst, const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}lhs, const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}rhs, uint64\+\_\+t now)
 \item 
-bool \mbox{\hyperlink{bigint_8h_a935c0fcd184a53cf55d116d524b5c029}{ttak\+\_\+bigint\+\_\+div}} (\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$q, \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$r, const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$n, const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$d, uint64\+\_\+t now)
+bool \mbox{\hyperlink{bigint_8h_a935c0fcd184a53cf55d116d524b5c029}{ttak\+\_\+bigint\+\_\+div}} (\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}q, \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}r, const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}n, const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}d, uint64\+\_\+t now)
 \item 
-bool \mbox{\hyperlink{bigint_8h_a9e4050346a4d61e6360d0cd80e134b49}{ttak\+\_\+bigint\+\_\+mod}} (\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$r, const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$n, const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$d, uint64\+\_\+t now)
+bool \mbox{\hyperlink{bigint_8h_a9e4050346a4d61e6360d0cd80e134b49}{ttak\+\_\+bigint\+\_\+mod}} (\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}r, const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}n, const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}d, uint64\+\_\+t now)
 \item 
-bool \mbox{\hyperlink{bigint_8h_afa7455177de5ae9ae6de1f1a3664e426}{ttak\+\_\+bigint\+\_\+add\+\_\+u64}} (\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$dst, const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$lhs, uint64\+\_\+t rhs, uint64\+\_\+t now)
+bool \mbox{\hyperlink{bigint_8h_afa7455177de5ae9ae6de1f1a3664e426}{ttak\+\_\+bigint\+\_\+add\+\_\+u64}} (\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}dst, const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}lhs, uint64\+\_\+t rhs, uint64\+\_\+t now)
 \item 
-bool \mbox{\hyperlink{bigint_8h_ae85ebb0075a9eff3cb0ad40a1ba6dcd1}{ttak\+\_\+bigint\+\_\+mul\+\_\+u64}} (\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$dst, const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$lhs, uint64\+\_\+t rhs, uint64\+\_\+t now)
+bool \mbox{\hyperlink{bigint_8h_ae85ebb0075a9eff3cb0ad40a1ba6dcd1}{ttak\+\_\+bigint\+\_\+mul\+\_\+u64}} (\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}dst, const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}lhs, uint64\+\_\+t rhs, uint64\+\_\+t now)
 \item 
-bool \mbox{\hyperlink{bigint_8h_af4e24a7f93c5a378dc63340a97c13368}{ttak\+\_\+bigint\+\_\+div\+\_\+u64}} (\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$q, \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$r, const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$n, uint64\+\_\+t d, uint64\+\_\+t now)
+bool \mbox{\hyperlink{bigint_8h_af4e24a7f93c5a378dc63340a97c13368}{ttak\+\_\+bigint\+\_\+div\+\_\+u64}} (\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}q, \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}r, const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}n, uint64\+\_\+t d, uint64\+\_\+t now)
 \item 
-bool \mbox{\hyperlink{bigint_8h_ad6830ee051439158db5191fc47935f1b}{ttak\+\_\+bigint\+\_\+mod\+\_\+u64}} (\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$r, const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$n, uint64\+\_\+t d, uint64\+\_\+t now)
+bool \mbox{\hyperlink{bigint_8h_ad6830ee051439158db5191fc47935f1b}{ttak\+\_\+bigint\+\_\+mod\+\_\+u64}} (\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}r, const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}n, uint64\+\_\+t d, uint64\+\_\+t now)
 \item 
-size\+\_\+t \mbox{\hyperlink{bigint_8h_a40fa0918ef44340b78996a1150346406}{ttak\+\_\+bigint\+\_\+get\+\_\+bit\+\_\+length}} (const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$bi)
+size\+\_\+t \mbox{\hyperlink{bigint_8h_a40fa0918ef44340b78996a1150346406}{ttak\+\_\+bigint\+\_\+get\+\_\+bit\+\_\+length}} (const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}bi)
 \item 
-char $\ast$ \mbox{\hyperlink{bigint_8h_a1f30d9508ff74d0eeedcd22ec9f0ae09}{ttak\+\_\+bigint\+\_\+to\+\_\+string}} (const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$bi, uint64\+\_\+t now)
+char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{bigint_8h_a27bb46730e0d7dfe78c9db77022d9645}{ttak\+\_\+bigint\+\_\+to\+\_\+string}} (const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}bi, uint64\+\_\+t now)
 \item 
-bool \mbox{\hyperlink{bigint_8h_a50c53fbcb72a68c5dd13d5b431da687d}{ttak\+\_\+bigint\+\_\+export\+\_\+u64}} (const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$bi, uint64\+\_\+t $\ast$value\+\_\+out)
+bool \mbox{\hyperlink{bigint_8h_a50c53fbcb72a68c5dd13d5b431da687d}{ttak\+\_\+bigint\+\_\+export\+\_\+u64}} (const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}bi, uint64\+\_\+t \texorpdfstring{$\ast$}{*}value\+\_\+out)
 \item 
-bool \mbox{\hyperlink{bigint_8h_a4f0f64bcda595609b8636f26f6ba0270}{ttak\+\_\+bigint\+\_\+export\+\_\+u128}} (const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$bi, \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} $\ast$value\+\_\+out)
+bool \mbox{\hyperlink{bigint_8h_a4f0f64bcda595609b8636f26f6ba0270}{ttak\+\_\+bigint\+\_\+export\+\_\+u128}} (const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}bi, \mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} \texorpdfstring{$\ast$}{*}value\+\_\+out)
 \item 
-bool \mbox{\hyperlink{bigint_8h_a00a446d5050ce99eed0d74e3b06c1423}{ttak\+\_\+bigint\+\_\+export\+\_\+u256}} (const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$bi, \mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}} $\ast$value\+\_\+out)
+bool \mbox{\hyperlink{bigint_8h_a00a446d5050ce99eed0d74e3b06c1423}{ttak\+\_\+bigint\+\_\+export\+\_\+u256}} (const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}bi, \mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}} \texorpdfstring{$\ast$}{*}value\+\_\+out)
 \item 
-void \mbox{\hyperlink{bigint_8h_ac4659c21c5e59a5e28e324a515adc9a0}{ttak\+\_\+bigint\+\_\+to\+\_\+hex\+\_\+hash}} (const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$bi, char out\mbox{[}65\mbox{]})
+void \mbox{\hyperlink{bigint_8h_ac4659c21c5e59a5e28e324a515adc9a0}{ttak\+\_\+bigint\+\_\+to\+\_\+hex\+\_\+hash}} (const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}bi, char out\mbox{[}65\mbox{]})
 \item 
-void \mbox{\hyperlink{bigint_8h_ae2268b4f3ec8fc8539668d446a2d058e}{ttak\+\_\+bigint\+\_\+format\+\_\+prefix}} (const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$bi, char $\ast$dest, size\+\_\+t dest\+\_\+cap)
+void \mbox{\hyperlink{bigint_8h_ae2268b4f3ec8fc8539668d446a2d058e}{ttak\+\_\+bigint\+\_\+format\+\_\+prefix}} (const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}bi, char \texorpdfstring{$\ast$}{*}dest, size\+\_\+t dest\+\_\+cap)
 \item 
-void \mbox{\hyperlink{bigint_8h_aab31490feba3f34a36ad76e549c5c5b1}{ttak\+\_\+bigint\+\_\+hash}} (const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$bi, uint8\+\_\+t out\mbox{[}32\mbox{]})
+void \mbox{\hyperlink{bigint_8h_aab31490feba3f34a36ad76e549c5c5b1}{ttak\+\_\+bigint\+\_\+hash}} (const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}bi, uint8\+\_\+t out\mbox{[}32\mbox{]})
 \end{DoxyCompactItemize}
 
 
+\label{doc-define-members}
+\Hypertarget{bigint_8h_doc-define-members}
 \doxysubsection{Macro Definition Documentation}
-\mbox{\Hypertarget{bigint_8h_a0e2f0eb2f43ff9d8dd473fac7b29e498}\label{bigint_8h_a0e2f0eb2f43ff9d8dd473fac7b29e498}} 
-\index{bigint.h@{bigint.h}!TTAK\_BIGINT\_SSO\_LIMIT@{TTAK\_BIGINT\_SSO\_LIMIT}}
+\Hypertarget{bigint_8h_a0e2f0eb2f43ff9d8dd473fac7b29e498}\index{bigint.h@{bigint.h}!TTAK\_BIGINT\_SSO\_LIMIT@{TTAK\_BIGINT\_SSO\_LIMIT}}
 \index{TTAK\_BIGINT\_SSO\_LIMIT@{TTAK\_BIGINT\_SSO\_LIMIT}!bigint.h@{bigint.h}}
 \doxysubsubsection{\texorpdfstring{TTAK\_BIGINT\_SSO\_LIMIT}{TTAK\_BIGINT\_SSO\_LIMIT}}
-{\footnotesize\ttfamily \#define TTAK\+\_\+\+BIGINT\+\_\+\+SSO\+\_\+\+LIMIT~4}
+{\footnotesize\ttfamily \label{bigint_8h_a0e2f0eb2f43ff9d8dd473fac7b29e498} 
+\#define TTAK\+\_\+\+BIGINT\+\_\+\+SSO\+\_\+\+LIMIT~4}
 
 
 
-Definition at line 16 of file bigint.\+h.
+Definition at line \mbox{\hyperlink{bigint_8h_source_l00016}{16}} of file \mbox{\hyperlink{bigint_8h_source}{bigint.\+h}}.
 
 
 
+\label{doc-typedef-members}
+\Hypertarget{bigint_8h_doc-typedef-members}
 \doxysubsection{Typedef Documentation}
-\mbox{\Hypertarget{bigint_8h_a4ec31217a53ed725cf7f78087dbeda49}\label{bigint_8h_a4ec31217a53ed725cf7f78087dbeda49}} 
-\index{bigint.h@{bigint.h}!\_\_tt\_big\_i\_t@{\_\_tt\_big\_i\_t}}
+\Hypertarget{bigint_8h_a4ec31217a53ed725cf7f78087dbeda49}\index{bigint.h@{bigint.h}!\_\_tt\_big\_i\_t@{\_\_tt\_big\_i\_t}}
 \index{\_\_tt\_big\_i\_t@{\_\_tt\_big\_i\_t}!bigint.h@{bigint.h}}
 \doxysubsubsection{\texorpdfstring{\_\_tt\_big\_i\_t}{\_\_tt\_big\_i\_t}}
-{\footnotesize\ttfamily typedef \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \mbox{\hyperlink{bigint_8h_a4ec31217a53ed725cf7f78087dbeda49}{\+\_\+\+\_\+tt\+\_\+big\+\_\+i\+\_\+t}}}
+{\footnotesize\ttfamily \label{bigint_8h_a4ec31217a53ed725cf7f78087dbeda49} 
+typedef \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \mbox{\hyperlink{bigint_8h_a4ec31217a53ed725cf7f78087dbeda49}{\+\_\+\+\_\+tt\+\_\+big\+\_\+i\+\_\+t}}}
 
 
 
-Definition at line 35 of file bigint.\+h.
+Definition at line \mbox{\hyperlink{bigint_8h_source_l00035}{35}} of file \mbox{\hyperlink{bigint_8h_source}{bigint.\+h}}.
 
-\mbox{\Hypertarget{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}\label{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}} 
-\index{bigint.h@{bigint.h}!limb\_t@{limb\_t}}
+\Hypertarget{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}\index{bigint.h@{bigint.h}!limb\_t@{limb\_t}}
 \index{limb\_t@{limb\_t}!bigint.h@{bigint.h}}
 \doxysubsubsection{\texorpdfstring{limb\_t}{limb\_t}}
-{\footnotesize\ttfamily typedef uint32\+\_\+t \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}}}
+{\footnotesize\ttfamily \label{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870} 
+typedef uint32\+\_\+t \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}}}
 
 
 
@@ -142,13 +146,13 @@ Platform-\/optimized word type for Raspberry Pi (ARMv7/v8).
 
 
 
-Definition at line 14 of file bigint.\+h.
+Definition at line \mbox{\hyperlink{bigint_8h_source_l00014}{14}} of file \mbox{\hyperlink{bigint_8h_source}{bigint.\+h}}.
 
-\mbox{\Hypertarget{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}\label{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}} 
-\index{bigint.h@{bigint.h}!ttak\_bigint\_t@{ttak\_bigint\_t}}
+\Hypertarget{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}\index{bigint.h@{bigint.h}!ttak\_bigint\_t@{ttak\_bigint\_t}}
 \index{ttak\_bigint\_t@{ttak\_bigint\_t}!bigint.h@{bigint.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigint\_t}{ttak\_bigint\_t}}
-{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__bigint}{ttak\+\_\+bigint}} \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}}}
+{\footnotesize\ttfamily \label{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa} 
+typedef struct \mbox{\hyperlink{structttak__bigint}{ttak\+\_\+bigint}} \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}}}
 
 
 
@@ -156,18 +160,20 @@ Arbitrary-\/precision integer engine with Small Stack Optimization (SSO).
 
 
 
+\label{doc-func-members}
+\Hypertarget{bigint_8h_doc-func-members}
 \doxysubsection{Function Documentation}
-\mbox{\Hypertarget{bigint_8h_ac83ff9674a52e412fc22f4601c725021}\label{bigint_8h_ac83ff9674a52e412fc22f4601c725021}} 
-\index{bigint.h@{bigint.h}!sub\_limbs@{sub\_limbs}}
+\Hypertarget{bigint_8h_ac83ff9674a52e412fc22f4601c725021}\index{bigint.h@{bigint.h}!sub\_limbs@{sub\_limbs}}
 \index{sub\_limbs@{sub\_limbs}!bigint.h@{bigint.h}}
 \doxysubsubsection{\texorpdfstring{sub\_limbs()}{sub\_limbs()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} sub\+\_\+limbs (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} $\ast$}]{u,  }\item[{const \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} $\ast$}]{v,  }\item[{size\+\_\+t}]{n }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{bigint_8h_ac83ff9674a52e412fc22f4601c725021} 
+\mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} sub\+\_\+limbs (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{u}{, }\item[{const \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{v}{, }\item[{size\+\_\+t}]{n}{}\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{bigint_8h_a56cd0d6d98a2ab19a5c2103b68e1c7a7}\label{bigint_8h_a56cd0d6d98a2ab19a5c2103b68e1c7a7}} 
-\index{bigint.h@{bigint.h}!ttak\_bigint\_add@{ttak\_bigint\_add}}
+\Hypertarget{bigint_8h_a56cd0d6d98a2ab19a5c2103b68e1c7a7}\index{bigint.h@{bigint.h}!ttak\_bigint\_add@{ttak\_bigint\_add}}
 \index{ttak\_bigint\_add@{ttak\_bigint\_add}!bigint.h@{bigint.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigint\_add()}{ttak\_bigint\_add()}}
-{\footnotesize\ttfamily bool ttak\+\_\+bigint\+\_\+add (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{dst,  }\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{lhs,  }\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{rhs,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{bigint_8h_a56cd0d6d98a2ab19a5c2103b68e1c7a7} 
+bool ttak\+\_\+bigint\+\_\+add (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{dst}{, }\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{lhs}{, }\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{rhs}{, }\item[{uint64\+\_\+t}]{now}{}\end{DoxyParamCaption})}
 
 
 
@@ -178,167 +184,167 @@ The destination must be initialized. Sign handling is limited to positive inputs
 \begin{DoxyReturn}{Returns}
 true on success, false on allocation failure. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{bigint_8h_afa7455177de5ae9ae6de1f1a3664e426}\label{bigint_8h_afa7455177de5ae9ae6de1f1a3664e426}} 
-\index{bigint.h@{bigint.h}!ttak\_bigint\_add\_u64@{ttak\_bigint\_add\_u64}}
+\Hypertarget{bigint_8h_afa7455177de5ae9ae6de1f1a3664e426}\index{bigint.h@{bigint.h}!ttak\_bigint\_add\_u64@{ttak\_bigint\_add\_u64}}
 \index{ttak\_bigint\_add\_u64@{ttak\_bigint\_add\_u64}!bigint.h@{bigint.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigint\_add\_u64()}{ttak\_bigint\_add\_u64()}}
-{\footnotesize\ttfamily bool ttak\+\_\+bigint\+\_\+add\+\_\+u64 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{dst,  }\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{lhs,  }\item[{uint64\+\_\+t}]{rhs,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{bigint_8h_afa7455177de5ae9ae6de1f1a3664e426} 
+bool ttak\+\_\+bigint\+\_\+add\+\_\+u64 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{dst}{, }\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{lhs}{, }\item[{uint64\+\_\+t}]{rhs}{, }\item[{uint64\+\_\+t}]{now}{}\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{bigint_8h_a49487c985999445bea59fc58526bb6fa}\label{bigint_8h_a49487c985999445bea59fc58526bb6fa}} 
-\index{bigint.h@{bigint.h}!ttak\_bigint\_cmp@{ttak\_bigint\_cmp}}
+\Hypertarget{bigint_8h_a49487c985999445bea59fc58526bb6fa}\index{bigint.h@{bigint.h}!ttak\_bigint\_cmp@{ttak\_bigint\_cmp}}
 \index{ttak\_bigint\_cmp@{ttak\_bigint\_cmp}!bigint.h@{bigint.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigint\_cmp()}{ttak\_bigint\_cmp()}}
-{\footnotesize\ttfamily int ttak\+\_\+bigint\+\_\+cmp (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{lhs,  }\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{rhs }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{bigint_8h_a49487c985999445bea59fc58526bb6fa} 
+int ttak\+\_\+bigint\+\_\+cmp (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{lhs}{, }\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{rhs}{}\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{bigint_8h_a8afd4f59424ac4010f0394095e005226}\label{bigint_8h_a8afd4f59424ac4010f0394095e005226}} 
-\index{bigint.h@{bigint.h}!ttak\_bigint\_cmp\_u64@{ttak\_bigint\_cmp\_u64}}
+\Hypertarget{bigint_8h_a8afd4f59424ac4010f0394095e005226}\index{bigint.h@{bigint.h}!ttak\_bigint\_cmp\_u64@{ttak\_bigint\_cmp\_u64}}
 \index{ttak\_bigint\_cmp\_u64@{ttak\_bigint\_cmp\_u64}!bigint.h@{bigint.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigint\_cmp\_u64()}{ttak\_bigint\_cmp\_u64()}}
-{\footnotesize\ttfamily int ttak\+\_\+bigint\+\_\+cmp\+\_\+u64 (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{lhs,  }\item[{uint64\+\_\+t}]{rhs }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{bigint_8h_a8afd4f59424ac4010f0394095e005226} 
+int ttak\+\_\+bigint\+\_\+cmp\+\_\+u64 (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{lhs}{, }\item[{uint64\+\_\+t}]{rhs}{}\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{bigint_8h_a2322ac748a099de8e8a0642ccd0c6ab4}\label{bigint_8h_a2322ac748a099de8e8a0642ccd0c6ab4}} 
-\index{bigint.h@{bigint.h}!ttak\_bigint\_copy@{ttak\_bigint\_copy}}
+\Hypertarget{bigint_8h_a2322ac748a099de8e8a0642ccd0c6ab4}\index{bigint.h@{bigint.h}!ttak\_bigint\_copy@{ttak\_bigint\_copy}}
 \index{ttak\_bigint\_copy@{ttak\_bigint\_copy}!bigint.h@{bigint.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigint\_copy()}{ttak\_bigint\_copy()}}
-{\footnotesize\ttfamily bool ttak\+\_\+bigint\+\_\+copy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{dst,  }\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{src,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{bigint_8h_a2322ac748a099de8e8a0642ccd0c6ab4} 
+bool ttak\+\_\+bigint\+\_\+copy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{dst}{, }\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{src}{, }\item[{uint64\+\_\+t}]{now}{}\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{bigint_8h_a935c0fcd184a53cf55d116d524b5c029}\label{bigint_8h_a935c0fcd184a53cf55d116d524b5c029}} 
-\index{bigint.h@{bigint.h}!ttak\_bigint\_div@{ttak\_bigint\_div}}
+\Hypertarget{bigint_8h_a935c0fcd184a53cf55d116d524b5c029}\index{bigint.h@{bigint.h}!ttak\_bigint\_div@{ttak\_bigint\_div}}
 \index{ttak\_bigint\_div@{ttak\_bigint\_div}!bigint.h@{bigint.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigint\_div()}{ttak\_bigint\_div()}}
-{\footnotesize\ttfamily bool ttak\+\_\+bigint\+\_\+div (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{q,  }\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{r,  }\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{n,  }\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{d,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{bigint_8h_a935c0fcd184a53cf55d116d524b5c029} 
+bool ttak\+\_\+bigint\+\_\+div (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{q}{, }\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{r}{, }\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{n}{, }\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{d}{, }\item[{uint64\+\_\+t}]{now}{}\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{bigint_8h_af4e24a7f93c5a378dc63340a97c13368}\label{bigint_8h_af4e24a7f93c5a378dc63340a97c13368}} 
-\index{bigint.h@{bigint.h}!ttak\_bigint\_div\_u64@{ttak\_bigint\_div\_u64}}
+\Hypertarget{bigint_8h_af4e24a7f93c5a378dc63340a97c13368}\index{bigint.h@{bigint.h}!ttak\_bigint\_div\_u64@{ttak\_bigint\_div\_u64}}
 \index{ttak\_bigint\_div\_u64@{ttak\_bigint\_div\_u64}!bigint.h@{bigint.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigint\_div\_u64()}{ttak\_bigint\_div\_u64()}}
-{\footnotesize\ttfamily bool ttak\+\_\+bigint\+\_\+div\+\_\+u64 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{q,  }\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{r,  }\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{n,  }\item[{uint64\+\_\+t}]{d,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{bigint_8h_af4e24a7f93c5a378dc63340a97c13368} 
+bool ttak\+\_\+bigint\+\_\+div\+\_\+u64 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{q}{, }\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{r}{, }\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{n}{, }\item[{uint64\+\_\+t}]{d}{, }\item[{uint64\+\_\+t}]{now}{}\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{bigint_8h_a4f0f64bcda595609b8636f26f6ba0270}\label{bigint_8h_a4f0f64bcda595609b8636f26f6ba0270}} 
-\index{bigint.h@{bigint.h}!ttak\_bigint\_export\_u128@{ttak\_bigint\_export\_u128}}
+\Hypertarget{bigint_8h_a4f0f64bcda595609b8636f26f6ba0270}\index{bigint.h@{bigint.h}!ttak\_bigint\_export\_u128@{ttak\_bigint\_export\_u128}}
 \index{ttak\_bigint\_export\_u128@{ttak\_bigint\_export\_u128}!bigint.h@{bigint.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigint\_export\_u128()}{ttak\_bigint\_export\_u128()}}
-{\footnotesize\ttfamily bool ttak\+\_\+bigint\+\_\+export\+\_\+u128 (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{bi,  }\item[{\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} $\ast$}]{value\+\_\+out }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{bigint_8h_a4f0f64bcda595609b8636f26f6ba0270} 
+bool ttak\+\_\+bigint\+\_\+export\+\_\+u128 (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{bi}{, }\item[{\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{value\+\_\+out}{}\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{bigint_8h_a00a446d5050ce99eed0d74e3b06c1423}\label{bigint_8h_a00a446d5050ce99eed0d74e3b06c1423}} 
-\index{bigint.h@{bigint.h}!ttak\_bigint\_export\_u256@{ttak\_bigint\_export\_u256}}
+\Hypertarget{bigint_8h_a00a446d5050ce99eed0d74e3b06c1423}\index{bigint.h@{bigint.h}!ttak\_bigint\_export\_u256@{ttak\_bigint\_export\_u256}}
 \index{ttak\_bigint\_export\_u256@{ttak\_bigint\_export\_u256}!bigint.h@{bigint.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigint\_export\_u256()}{ttak\_bigint\_export\_u256()}}
-{\footnotesize\ttfamily bool ttak\+\_\+bigint\+\_\+export\+\_\+u256 (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{bi,  }\item[{\mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}} $\ast$}]{value\+\_\+out }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{bigint_8h_a00a446d5050ce99eed0d74e3b06c1423} 
+bool ttak\+\_\+bigint\+\_\+export\+\_\+u256 (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{bi}{, }\item[{\mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{value\+\_\+out}{}\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{bigint_8h_a50c53fbcb72a68c5dd13d5b431da687d}\label{bigint_8h_a50c53fbcb72a68c5dd13d5b431da687d}} 
-\index{bigint.h@{bigint.h}!ttak\_bigint\_export\_u64@{ttak\_bigint\_export\_u64}}
+\Hypertarget{bigint_8h_a50c53fbcb72a68c5dd13d5b431da687d}\index{bigint.h@{bigint.h}!ttak\_bigint\_export\_u64@{ttak\_bigint\_export\_u64}}
 \index{ttak\_bigint\_export\_u64@{ttak\_bigint\_export\_u64}!bigint.h@{bigint.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigint\_export\_u64()}{ttak\_bigint\_export\_u64()}}
-{\footnotesize\ttfamily bool ttak\+\_\+bigint\+\_\+export\+\_\+u64 (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{bi,  }\item[{uint64\+\_\+t $\ast$}]{value\+\_\+out }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{bigint_8h_a50c53fbcb72a68c5dd13d5b431da687d} 
+bool ttak\+\_\+bigint\+\_\+export\+\_\+u64 (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{bi}{, }\item[{uint64\+\_\+t \texorpdfstring{$\ast$}{*}}]{value\+\_\+out}{}\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{bigint_8h_ae2268b4f3ec8fc8539668d446a2d058e}\label{bigint_8h_ae2268b4f3ec8fc8539668d446a2d058e}} 
-\index{bigint.h@{bigint.h}!ttak\_bigint\_format\_prefix@{ttak\_bigint\_format\_prefix}}
+\Hypertarget{bigint_8h_ae2268b4f3ec8fc8539668d446a2d058e}\index{bigint.h@{bigint.h}!ttak\_bigint\_format\_prefix@{ttak\_bigint\_format\_prefix}}
 \index{ttak\_bigint\_format\_prefix@{ttak\_bigint\_format\_prefix}!bigint.h@{bigint.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigint\_format\_prefix()}{ttak\_bigint\_format\_prefix()}}
-{\footnotesize\ttfamily void ttak\+\_\+bigint\+\_\+format\+\_\+prefix (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{bi,  }\item[{char $\ast$}]{dest,  }\item[{size\+\_\+t}]{dest\+\_\+cap }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{bigint_8h_ae2268b4f3ec8fc8539668d446a2d058e} 
+void ttak\+\_\+bigint\+\_\+format\+\_\+prefix (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{bi}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{dest}{, }\item[{size\+\_\+t}]{dest\+\_\+cap}{}\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{bigint_8h_a9ced4cc74432ad65092a8e4855639a9c}\label{bigint_8h_a9ced4cc74432ad65092a8e4855639a9c}} 
-\index{bigint.h@{bigint.h}!ttak\_bigint\_free@{ttak\_bigint\_free}}
+\Hypertarget{bigint_8h_a9ced4cc74432ad65092a8e4855639a9c}\index{bigint.h@{bigint.h}!ttak\_bigint\_free@{ttak\_bigint\_free}}
 \index{ttak\_bigint\_free@{ttak\_bigint\_free}!bigint.h@{bigint.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigint\_free()}{ttak\_bigint\_free()}}
-{\footnotesize\ttfamily void ttak\+\_\+bigint\+\_\+free (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{bi,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{bigint_8h_a9ced4cc74432ad65092a8e4855639a9c} 
+void ttak\+\_\+bigint\+\_\+free (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{bi}{, }\item[{uint64\+\_\+t}]{now}{}\end{DoxyParamCaption})}
 
 
 
 Frees the bigint resources. 
 
-\mbox{\Hypertarget{bigint_8h_a40fa0918ef44340b78996a1150346406}\label{bigint_8h_a40fa0918ef44340b78996a1150346406}} 
-\index{bigint.h@{bigint.h}!ttak\_bigint\_get\_bit\_length@{ttak\_bigint\_get\_bit\_length}}
+\Hypertarget{bigint_8h_a40fa0918ef44340b78996a1150346406}\index{bigint.h@{bigint.h}!ttak\_bigint\_get\_bit\_length@{ttak\_bigint\_get\_bit\_length}}
 \index{ttak\_bigint\_get\_bit\_length@{ttak\_bigint\_get\_bit\_length}!bigint.h@{bigint.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigint\_get\_bit\_length()}{ttak\_bigint\_get\_bit\_length()}}
-{\footnotesize\ttfamily size\+\_\+t ttak\+\_\+bigint\+\_\+get\+\_\+bit\+\_\+length (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{bi }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{bigint_8h_a40fa0918ef44340b78996a1150346406} 
+size\+\_\+t ttak\+\_\+bigint\+\_\+get\+\_\+bit\+\_\+length (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{bi}{}\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{bigint_8h_aab31490feba3f34a36ad76e549c5c5b1}\label{bigint_8h_aab31490feba3f34a36ad76e549c5c5b1}} 
-\index{bigint.h@{bigint.h}!ttak\_bigint\_hash@{ttak\_bigint\_hash}}
+\Hypertarget{bigint_8h_aab31490feba3f34a36ad76e549c5c5b1}\index{bigint.h@{bigint.h}!ttak\_bigint\_hash@{ttak\_bigint\_hash}}
 \index{ttak\_bigint\_hash@{ttak\_bigint\_hash}!bigint.h@{bigint.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigint\_hash()}{ttak\_bigint\_hash()}}
-{\footnotesize\ttfamily void ttak\+\_\+bigint\+\_\+hash (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{bi,  }\item[{uint8\+\_\+t}]{out\mbox{[}32\mbox{]} }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{bigint_8h_aab31490feba3f34a36ad76e549c5c5b1} 
+void ttak\+\_\+bigint\+\_\+hash (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{bi}{, }\item[{uint8\+\_\+t}]{out}{\mbox{[}32\mbox{]}}\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{bigint_8h_a044899394d6d5d6c87ddf6e57d013066}\label{bigint_8h_a044899394d6d5d6c87ddf6e57d013066}} 
-\index{bigint.h@{bigint.h}!ttak\_bigint\_init@{ttak\_bigint\_init}}
+\Hypertarget{bigint_8h_a044899394d6d5d6c87ddf6e57d013066}\index{bigint.h@{bigint.h}!ttak\_bigint\_init@{ttak\_bigint\_init}}
 \index{ttak\_bigint\_init@{ttak\_bigint\_init}!bigint.h@{bigint.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigint\_init()}{ttak\_bigint\_init()}}
-{\footnotesize\ttfamily void ttak\+\_\+bigint\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{bi,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{bigint_8h_a044899394d6d5d6c87ddf6e57d013066} 
+void ttak\+\_\+bigint\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{bi}{, }\item[{uint64\+\_\+t}]{now}{}\end{DoxyParamCaption})}
 
 
 
 Initializes a bigint. 
 
-\mbox{\Hypertarget{bigint_8h_a59a4dd557d7607b92d689b5f233b60ad}\label{bigint_8h_a59a4dd557d7607b92d689b5f233b60ad}} 
-\index{bigint.h@{bigint.h}!ttak\_bigint\_init\_copy@{ttak\_bigint\_init\_copy}}
+\Hypertarget{bigint_8h_a59a4dd557d7607b92d689b5f233b60ad}\index{bigint.h@{bigint.h}!ttak\_bigint\_init\_copy@{ttak\_bigint\_init\_copy}}
 \index{ttak\_bigint\_init\_copy@{ttak\_bigint\_init\_copy}!bigint.h@{bigint.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigint\_init\_copy()}{ttak\_bigint\_init\_copy()}}
-{\footnotesize\ttfamily void ttak\+\_\+bigint\+\_\+init\+\_\+copy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{dst,  }\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{src,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{bigint_8h_a59a4dd557d7607b92d689b5f233b60ad} 
+void ttak\+\_\+bigint\+\_\+init\+\_\+copy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{dst}{, }\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{src}{, }\item[{uint64\+\_\+t}]{now}{}\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{bigint_8h_ae908f38e4e03edcf27f93939273fbeff}\label{bigint_8h_ae908f38e4e03edcf27f93939273fbeff}} 
-\index{bigint.h@{bigint.h}!ttak\_bigint\_init\_u64@{ttak\_bigint\_init\_u64}}
+\Hypertarget{bigint_8h_ae908f38e4e03edcf27f93939273fbeff}\index{bigint.h@{bigint.h}!ttak\_bigint\_init\_u64@{ttak\_bigint\_init\_u64}}
 \index{ttak\_bigint\_init\_u64@{ttak\_bigint\_init\_u64}!bigint.h@{bigint.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigint\_init\_u64()}{ttak\_bigint\_init\_u64()}}
-{\footnotesize\ttfamily void ttak\+\_\+bigint\+\_\+init\+\_\+u64 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{bi,  }\item[{uint64\+\_\+t}]{value,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{bigint_8h_ae908f38e4e03edcf27f93939273fbeff} 
+void ttak\+\_\+bigint\+\_\+init\+\_\+u64 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{bi}{, }\item[{uint64\+\_\+t}]{value}{, }\item[{uint64\+\_\+t}]{now}{}\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{bigint_8h_afee4d9753ed929882e1002fed64a38e6}\label{bigint_8h_afee4d9753ed929882e1002fed64a38e6}} 
-\index{bigint.h@{bigint.h}!ttak\_bigint\_is\_zero@{ttak\_bigint\_is\_zero}}
+\Hypertarget{bigint_8h_afee4d9753ed929882e1002fed64a38e6}\index{bigint.h@{bigint.h}!ttak\_bigint\_is\_zero@{ttak\_bigint\_is\_zero}}
 \index{ttak\_bigint\_is\_zero@{ttak\_bigint\_is\_zero}!bigint.h@{bigint.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigint\_is\_zero()}{ttak\_bigint\_is\_zero()}}
-{\footnotesize\ttfamily bool ttak\+\_\+bigint\+\_\+is\+\_\+zero (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{bi }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{bigint_8h_afee4d9753ed929882e1002fed64a38e6} 
+bool ttak\+\_\+bigint\+\_\+is\+\_\+zero (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{bi}{}\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{bigint_8h_a005623b344de5f34c0d37eb9b62c9b2f}\label{bigint_8h_a005623b344de5f34c0d37eb9b62c9b2f}} 
-\index{bigint.h@{bigint.h}!ttak\_bigint\_mersenne\_mod@{ttak\_bigint\_mersenne\_mod}}
+\Hypertarget{bigint_8h_a005623b344de5f34c0d37eb9b62c9b2f}\index{bigint.h@{bigint.h}!ttak\_bigint\_mersenne\_mod@{ttak\_bigint\_mersenne\_mod}}
 \index{ttak\_bigint\_mersenne\_mod@{ttak\_bigint\_mersenne\_mod}!bigint.h@{bigint.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigint\_mersenne\_mod()}{ttak\_bigint\_mersenne\_mod()}}
-{\footnotesize\ttfamily void ttak\+\_\+bigint\+\_\+mersenne\+\_\+mod (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{bi,  }\item[{int}]{p,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{bigint_8h_a005623b344de5f34c0d37eb9b62c9b2f} 
+void ttak\+\_\+bigint\+\_\+mersenne\+\_\+mod (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{bi}{, }\item[{int}]{p}{, }\item[{uint64\+\_\+t}]{now}{}\end{DoxyParamCaption})}
 
 
 
-Performs modulo operation optimized for Mersenne primes (2$^\wedge$p -\/ 1). 
+Performs modulo operation optimized for Mersenne primes (2\texorpdfstring{$^\wedge$}{\string^}p -\/ 1). 
 
-\mbox{\Hypertarget{bigint_8h_a9e4050346a4d61e6360d0cd80e134b49}\label{bigint_8h_a9e4050346a4d61e6360d0cd80e134b49}} 
-\index{bigint.h@{bigint.h}!ttak\_bigint\_mod@{ttak\_bigint\_mod}}
+\Hypertarget{bigint_8h_a9e4050346a4d61e6360d0cd80e134b49}\index{bigint.h@{bigint.h}!ttak\_bigint\_mod@{ttak\_bigint\_mod}}
 \index{ttak\_bigint\_mod@{ttak\_bigint\_mod}!bigint.h@{bigint.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigint\_mod()}{ttak\_bigint\_mod()}}
-{\footnotesize\ttfamily bool ttak\+\_\+bigint\+\_\+mod (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{r,  }\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{n,  }\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{d,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{bigint_8h_a9e4050346a4d61e6360d0cd80e134b49} 
+bool ttak\+\_\+bigint\+\_\+mod (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{r}{, }\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{n}{, }\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{d}{, }\item[{uint64\+\_\+t}]{now}{}\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{bigint_8h_ad6830ee051439158db5191fc47935f1b}\label{bigint_8h_ad6830ee051439158db5191fc47935f1b}} 
-\index{bigint.h@{bigint.h}!ttak\_bigint\_mod\_u64@{ttak\_bigint\_mod\_u64}}
+\Hypertarget{bigint_8h_ad6830ee051439158db5191fc47935f1b}\index{bigint.h@{bigint.h}!ttak\_bigint\_mod\_u64@{ttak\_bigint\_mod\_u64}}
 \index{ttak\_bigint\_mod\_u64@{ttak\_bigint\_mod\_u64}!bigint.h@{bigint.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigint\_mod\_u64()}{ttak\_bigint\_mod\_u64()}}
-{\footnotesize\ttfamily bool ttak\+\_\+bigint\+\_\+mod\+\_\+u64 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{r,  }\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{n,  }\item[{uint64\+\_\+t}]{d,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{bigint_8h_ad6830ee051439158db5191fc47935f1b} 
+bool ttak\+\_\+bigint\+\_\+mod\+\_\+u64 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{r}{, }\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{n}{, }\item[{uint64\+\_\+t}]{d}{, }\item[{uint64\+\_\+t}]{now}{}\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{bigint_8h_aadcffcd2cf088d20b7c941312fc9cc7a}\label{bigint_8h_aadcffcd2cf088d20b7c941312fc9cc7a}} 
-\index{bigint.h@{bigint.h}!ttak\_bigint\_mul@{ttak\_bigint\_mul}}
+\Hypertarget{bigint_8h_aadcffcd2cf088d20b7c941312fc9cc7a}\index{bigint.h@{bigint.h}!ttak\_bigint\_mul@{ttak\_bigint\_mul}}
 \index{ttak\_bigint\_mul@{ttak\_bigint\_mul}!bigint.h@{bigint.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigint\_mul()}{ttak\_bigint\_mul()}}
-{\footnotesize\ttfamily bool ttak\+\_\+bigint\+\_\+mul (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{dst,  }\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{lhs,  }\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{rhs,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{bigint_8h_aadcffcd2cf088d20b7c941312fc9cc7a} 
+bool ttak\+\_\+bigint\+\_\+mul (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{dst}{, }\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{lhs}{, }\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{rhs}{, }\item[{uint64\+\_\+t}]{now}{}\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{bigint_8h_ae85ebb0075a9eff3cb0ad40a1ba6dcd1}\label{bigint_8h_ae85ebb0075a9eff3cb0ad40a1ba6dcd1}} 
-\index{bigint.h@{bigint.h}!ttak\_bigint\_mul\_u64@{ttak\_bigint\_mul\_u64}}
+\Hypertarget{bigint_8h_ae85ebb0075a9eff3cb0ad40a1ba6dcd1}\index{bigint.h@{bigint.h}!ttak\_bigint\_mul\_u64@{ttak\_bigint\_mul\_u64}}
 \index{ttak\_bigint\_mul\_u64@{ttak\_bigint\_mul\_u64}!bigint.h@{bigint.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigint\_mul\_u64()}{ttak\_bigint\_mul\_u64()}}
-{\footnotesize\ttfamily bool ttak\+\_\+bigint\+\_\+mul\+\_\+u64 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{dst,  }\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{lhs,  }\item[{uint64\+\_\+t}]{rhs,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{bigint_8h_ae85ebb0075a9eff3cb0ad40a1ba6dcd1} 
+bool ttak\+\_\+bigint\+\_\+mul\+\_\+u64 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{dst}{, }\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{lhs}{, }\item[{uint64\+\_\+t}]{rhs}{, }\item[{uint64\+\_\+t}]{now}{}\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{bigint_8h_aa35591bd7c10636225750d9372737831}\label{bigint_8h_aa35591bd7c10636225750d9372737831}} 
-\index{bigint.h@{bigint.h}!ttak\_bigint\_set\_u128@{ttak\_bigint\_set\_u128}}
+\Hypertarget{bigint_8h_aa35591bd7c10636225750d9372737831}\index{bigint.h@{bigint.h}!ttak\_bigint\_set\_u128@{ttak\_bigint\_set\_u128}}
 \index{ttak\_bigint\_set\_u128@{ttak\_bigint\_set\_u128}!bigint.h@{bigint.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigint\_set\_u128()}{ttak\_bigint\_set\_u128()}}
-{\footnotesize\ttfamily bool ttak\+\_\+bigint\+\_\+set\+\_\+u128 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{bi,  }\item[{\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}}}]{value,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{bigint_8h_aa35591bd7c10636225750d9372737831} 
+bool ttak\+\_\+bigint\+\_\+set\+\_\+u128 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{bi}{, }\item[{\mbox{\hyperlink{structttak__u128__t}{ttak\+\_\+u128\+\_\+t}}}]{value}{, }\item[{uint64\+\_\+t}]{now}{}\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{bigint_8h_af55c0c937ae4d6005b92aa49c13ff9f2}\label{bigint_8h_af55c0c937ae4d6005b92aa49c13ff9f2}} 
-\index{bigint.h@{bigint.h}!ttak\_bigint\_set\_u256@{ttak\_bigint\_set\_u256}}
+\Hypertarget{bigint_8h_af55c0c937ae4d6005b92aa49c13ff9f2}\index{bigint.h@{bigint.h}!ttak\_bigint\_set\_u256@{ttak\_bigint\_set\_u256}}
 \index{ttak\_bigint\_set\_u256@{ttak\_bigint\_set\_u256}!bigint.h@{bigint.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigint\_set\_u256()}{ttak\_bigint\_set\_u256()}}
-{\footnotesize\ttfamily bool ttak\+\_\+bigint\+\_\+set\+\_\+u256 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{bi,  }\item[{\mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}}}]{value,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{bigint_8h_af55c0c937ae4d6005b92aa49c13ff9f2} 
+bool ttak\+\_\+bigint\+\_\+set\+\_\+u256 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{bi}{, }\item[{\mbox{\hyperlink{structttak__u256__t}{ttak\+\_\+u256\+\_\+t}}}]{value}{, }\item[{uint64\+\_\+t}]{now}{}\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{bigint_8h_a000ba64ec10406a3a470b572dee91602}\label{bigint_8h_a000ba64ec10406a3a470b572dee91602}} 
-\index{bigint.h@{bigint.h}!ttak\_bigint\_set\_u64@{ttak\_bigint\_set\_u64}}
+\Hypertarget{bigint_8h_a000ba64ec10406a3a470b572dee91602}\index{bigint.h@{bigint.h}!ttak\_bigint\_set\_u64@{ttak\_bigint\_set\_u64}}
 \index{ttak\_bigint\_set\_u64@{ttak\_bigint\_set\_u64}!bigint.h@{bigint.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigint\_set\_u64()}{ttak\_bigint\_set\_u64()}}
-{\footnotesize\ttfamily bool ttak\+\_\+bigint\+\_\+set\+\_\+u64 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{bi,  }\item[{uint64\+\_\+t}]{value,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{bigint_8h_a000ba64ec10406a3a470b572dee91602} 
+bool ttak\+\_\+bigint\+\_\+set\+\_\+u64 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{bi}{, }\item[{uint64\+\_\+t}]{value}{, }\item[{uint64\+\_\+t}]{now}{}\end{DoxyParamCaption})}
 
 
 
@@ -347,21 +353,21 @@ Assigns an unsigned 64-\/bit value to the bigint.
 \begin{DoxyReturn}{Returns}
 true on success, false on allocation failure. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{bigint_8h_a3ac7f3d32d0627dcf9133a47368eb3f8}\label{bigint_8h_a3ac7f3d32d0627dcf9133a47368eb3f8}} 
-\index{bigint.h@{bigint.h}!ttak\_bigint\_sub@{ttak\_bigint\_sub}}
+\Hypertarget{bigint_8h_a3ac7f3d32d0627dcf9133a47368eb3f8}\index{bigint.h@{bigint.h}!ttak\_bigint\_sub@{ttak\_bigint\_sub}}
 \index{ttak\_bigint\_sub@{ttak\_bigint\_sub}!bigint.h@{bigint.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigint\_sub()}{ttak\_bigint\_sub()}}
-{\footnotesize\ttfamily bool ttak\+\_\+bigint\+\_\+sub (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{dst,  }\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{lhs,  }\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{rhs,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{bigint_8h_a3ac7f3d32d0627dcf9133a47368eb3f8} 
+bool ttak\+\_\+bigint\+\_\+sub (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{dst}{, }\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{lhs}{, }\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{rhs}{, }\item[{uint64\+\_\+t}]{now}{}\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{bigint_8h_ac4659c21c5e59a5e28e324a515adc9a0}\label{bigint_8h_ac4659c21c5e59a5e28e324a515adc9a0}} 
-\index{bigint.h@{bigint.h}!ttak\_bigint\_to\_hex\_hash@{ttak\_bigint\_to\_hex\_hash}}
+\Hypertarget{bigint_8h_ac4659c21c5e59a5e28e324a515adc9a0}\index{bigint.h@{bigint.h}!ttak\_bigint\_to\_hex\_hash@{ttak\_bigint\_to\_hex\_hash}}
 \index{ttak\_bigint\_to\_hex\_hash@{ttak\_bigint\_to\_hex\_hash}!bigint.h@{bigint.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigint\_to\_hex\_hash()}{ttak\_bigint\_to\_hex\_hash()}}
-{\footnotesize\ttfamily void ttak\+\_\+bigint\+\_\+to\+\_\+hex\+\_\+hash (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{bi,  }\item[{char}]{out\mbox{[}65\mbox{]} }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{bigint_8h_ac4659c21c5e59a5e28e324a515adc9a0} 
+void ttak\+\_\+bigint\+\_\+to\+\_\+hex\+\_\+hash (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{bi}{, }\item[{char}]{out}{\mbox{[}65\mbox{]}}\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{bigint_8h_a1f30d9508ff74d0eeedcd22ec9f0ae09}\label{bigint_8h_a1f30d9508ff74d0eeedcd22ec9f0ae09}} 
-\index{bigint.h@{bigint.h}!ttak\_bigint\_to\_string@{ttak\_bigint\_to\_string}}
+\Hypertarget{bigint_8h_a27bb46730e0d7dfe78c9db77022d9645}\index{bigint.h@{bigint.h}!ttak\_bigint\_to\_string@{ttak\_bigint\_to\_string}}
 \index{ttak\_bigint\_to\_string@{ttak\_bigint\_to\_string}!bigint.h@{bigint.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_bigint\_to\_string()}{ttak\_bigint\_to\_string()}}
-{\footnotesize\ttfamily char$\ast$ ttak\+\_\+bigint\+\_\+to\+\_\+string (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} $\ast$}]{bi,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{bigint_8h_a27bb46730e0d7dfe78c9db77022d9645} 
+char \texorpdfstring{$\ast$}{*} ttak\+\_\+bigint\+\_\+to\+\_\+string (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{bi}{, }\item[{uint64\+\_\+t}]{now}{}\end{DoxyParamCaption})}
 

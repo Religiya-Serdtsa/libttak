@@ -1,7 +1,7 @@
 var structttak__shared__s =
 [
-    [ "access", "structttak__shared__s.html#ae88ca9b642f932ad2afa448af281705b", null ],
-    [ "access_ebr", "structttak__shared__s.html#a142a4174f243b3bf843704357c4e5288", null ],
+    [ "access", "structttak__shared__s.html#a42f2e13886e5802246e449e67eef376e", null ],
+    [ "access_ebr", "structttak__shared__s.html#a2c9942afdf460fd8dbbdfeec1e6798a9", null ],
     [ "add_owner", "structttak__shared__s.html#aa3ed576e6146a3d1f6d1a22d19d5d5cb", null ],
     [ "allocate", "structttak__shared__s.html#a8a74b0b7c836d561d50adb7c2fad0324", null ],
     [ "allocate_typed", "structttak__shared__s.html#a2b93d3794fba03f6a5fe3a77d8a89666", null ],

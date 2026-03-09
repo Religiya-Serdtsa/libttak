@@ -1,12 +1,12 @@
-\hypertarget{logger_8h}{}\doxysection{include/ttak/log/logger.h File Reference}
-\label{logger_8h}\index{include/ttak/log/logger.h@{include/ttak/log/logger.h}}
+\doxysection{include/ttak/log/logger.h File Reference}
+\hypertarget{logger_8h}{}\label{logger_8h}\index{include/ttak/log/logger.h@{include/ttak/log/logger.h}}
 {\ttfamily \#include $<$stdarg.\+h$>$}\newline
 Include dependency graph for logger.\+h\+:
 \nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=200pt]{logger_8h__incl}
+\includegraphics[width=214pt]{logger_8h__incl}
 \end{center}
 \end{figure}
 This graph shows which files directly or indirectly include this file\+:
@@ -14,24 +14,24 @@ This graph shows which files directly or indirectly include this file\+:
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=200pt]{logger_8h__dep__incl}
+\includegraphics[width=214pt]{logger_8h__dep__incl}
 \end{center}
 \end{figure}
-\doxysubsection*{Classes}
+\doxysubsubsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
 struct \mbox{\hyperlink{structttak__logger}{ttak\+\_\+logger}}
 \begin{DoxyCompactList}\small\item\em Logger structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\doxysubsection*{Typedefs}
+\doxysubsubsection*{Typedefs}
 \begin{DoxyCompactItemize}
 \item 
-typedef void($\ast$ \mbox{\hyperlink{logger_8h_a9c88f26d8f8810ba8ff97f986e82319a}{ttak\+\_\+log\+\_\+func\+\_\+t}}) (\mbox{\hyperlink{logger_8h_a13b7cbf4245d32959202870c26bbd3e4}{ttak\+\_\+log\+\_\+level\+\_\+t}} level, const char $\ast$msg)
+typedef void(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{logger_8h_a9c88f26d8f8810ba8ff97f986e82319a}{ttak\+\_\+log\+\_\+func\+\_\+t}}) (\mbox{\hyperlink{logger_8h_a13b7cbf4245d32959202870c26bbd3e4}{ttak\+\_\+log\+\_\+level\+\_\+t}} level, const char \texorpdfstring{$\ast$}{*}msg)
 \begin{DoxyCompactList}\small\item\em Function pointer definition for custom log handlers. \end{DoxyCompactList}\item 
 typedef struct \mbox{\hyperlink{structttak__logger}{ttak\+\_\+logger}} \mbox{\hyperlink{logger_8h_a3a653b85eb05b9b2000b5e7e20fedcda}{ttak\+\_\+logger\+\_\+t}}
 \begin{DoxyCompactList}\small\item\em Logger structure. \end{DoxyCompactList}\item 
 typedef \mbox{\hyperlink{logger_8h_a3a653b85eb05b9b2000b5e7e20fedcda}{ttak\+\_\+logger\+\_\+t}} \mbox{\hyperlink{logger_8h_a09af614ae19dca4978a6b3df0f80bf9b}{tt\+\_\+logger\+\_\+t}}
 \end{DoxyCompactItemize}
-\doxysubsection*{Enumerations}
+\doxysubsubsection*{Enumerations}
 \begin{DoxyCompactItemize}
 \item 
 enum \mbox{\hyperlink{logger_8h_a13b7cbf4245d32959202870c26bbd3e4}{ttak\+\_\+log\+\_\+level\+\_\+t}} \{ \mbox{\hyperlink{logger_8h_a13b7cbf4245d32959202870c26bbd3e4aaa15a233cf59ffb44ff5bb284e26232e}{TTAK\+\_\+\+LOG\+\_\+\+DEBUG}}
@@ -40,33 +40,35 @@ enum \mbox{\hyperlink{logger_8h_a13b7cbf4245d32959202870c26bbd3e4}{ttak\+\_\+log
 , \mbox{\hyperlink{logger_8h_a13b7cbf4245d32959202870c26bbd3e4a3c15d82ae51223aa509051b77801dbc5}{TTAK\+\_\+\+LOG\+\_\+\+ERROR}}
  \}
 \begin{DoxyCompactList}\small\item\em Log levels. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\doxysubsection*{Functions}
+\doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
 void \mbox{\hyperlink{logger_8h_adfcac077aeb029c04c4fb47dc33116a0}{ttak\+\_\+mem\+\_\+set\+\_\+trace}} (int enable)
 \begin{DoxyCompactList}\small\item\em Toggles memory tracing globally and for existing allocations. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{logger_8h_a521315f19c7d983c5f323d47a86e9832}{ttak\+\_\+logger\+\_\+init}} (\mbox{\hyperlink{logger_8h_a3a653b85eb05b9b2000b5e7e20fedcda}{ttak\+\_\+logger\+\_\+t}} $\ast$l, \mbox{\hyperlink{logger_8h_a9c88f26d8f8810ba8ff97f986e82319a}{ttak\+\_\+log\+\_\+func\+\_\+t}} func, \mbox{\hyperlink{logger_8h_a13b7cbf4245d32959202870c26bbd3e4}{ttak\+\_\+log\+\_\+level\+\_\+t}} level)
+void \mbox{\hyperlink{logger_8h_a521315f19c7d983c5f323d47a86e9832}{ttak\+\_\+logger\+\_\+init}} (\mbox{\hyperlink{logger_8h_a3a653b85eb05b9b2000b5e7e20fedcda}{ttak\+\_\+logger\+\_\+t}} \texorpdfstring{$\ast$}{*}l, \mbox{\hyperlink{logger_8h_a9c88f26d8f8810ba8ff97f986e82319a}{ttak\+\_\+log\+\_\+func\+\_\+t}} func, \mbox{\hyperlink{logger_8h_a13b7cbf4245d32959202870c26bbd3e4}{ttak\+\_\+log\+\_\+level\+\_\+t}} level)
 \begin{DoxyCompactList}\small\item\em Initializes the logger. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{logger_8h_ac3cf29e97c6046fd7efcc81a18599844}{ttak\+\_\+logger\+\_\+log}} (\mbox{\hyperlink{logger_8h_a3a653b85eb05b9b2000b5e7e20fedcda}{ttak\+\_\+logger\+\_\+t}} $\ast$l, \mbox{\hyperlink{logger_8h_a13b7cbf4245d32959202870c26bbd3e4}{ttak\+\_\+log\+\_\+level\+\_\+t}} level, const char $\ast$fmt,...)
+void \mbox{\hyperlink{logger_8h_ac3cf29e97c6046fd7efcc81a18599844}{ttak\+\_\+logger\+\_\+log}} (\mbox{\hyperlink{logger_8h_a3a653b85eb05b9b2000b5e7e20fedcda}{ttak\+\_\+logger\+\_\+t}} \texorpdfstring{$\ast$}{*}l, \mbox{\hyperlink{logger_8h_a13b7cbf4245d32959202870c26bbd3e4}{ttak\+\_\+log\+\_\+level\+\_\+t}} level, const char \texorpdfstring{$\ast$}{*}fmt,...)
 \begin{DoxyCompactList}\small\item\em Logs a message. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
+\label{doc-typedef-members}
+\Hypertarget{logger_8h_doc-typedef-members}
 \doxysubsection{Typedef Documentation}
-\mbox{\Hypertarget{logger_8h_a09af614ae19dca4978a6b3df0f80bf9b}\label{logger_8h_a09af614ae19dca4978a6b3df0f80bf9b}} 
-\index{logger.h@{logger.h}!tt\_logger\_t@{tt\_logger\_t}}
+\Hypertarget{logger_8h_a09af614ae19dca4978a6b3df0f80bf9b}\index{logger.h@{logger.h}!tt\_logger\_t@{tt\_logger\_t}}
 \index{tt\_logger\_t@{tt\_logger\_t}!logger.h@{logger.h}}
 \doxysubsubsection{\texorpdfstring{tt\_logger\_t}{tt\_logger\_t}}
-{\footnotesize\ttfamily typedef \mbox{\hyperlink{logger_8h_a3a653b85eb05b9b2000b5e7e20fedcda}{ttak\+\_\+logger\+\_\+t}} \mbox{\hyperlink{logger_8h_a09af614ae19dca4978a6b3df0f80bf9b}{tt\+\_\+logger\+\_\+t}}}
+{\footnotesize\ttfamily \label{logger_8h_a09af614ae19dca4978a6b3df0f80bf9b} 
+typedef \mbox{\hyperlink{logger_8h_a3a653b85eb05b9b2000b5e7e20fedcda}{ttak\+\_\+logger\+\_\+t}} \mbox{\hyperlink{logger_8h_a09af614ae19dca4978a6b3df0f80bf9b}{tt\+\_\+logger\+\_\+t}}}
 
 
 
-Definition at line 35 of file logger.\+h.
+Definition at line \mbox{\hyperlink{logger_8h_source_l00035}{35}} of file \mbox{\hyperlink{logger_8h_source}{logger.\+h}}.
 
-\mbox{\Hypertarget{logger_8h_a9c88f26d8f8810ba8ff97f986e82319a}\label{logger_8h_a9c88f26d8f8810ba8ff97f986e82319a}} 
-\index{logger.h@{logger.h}!ttak\_log\_func\_t@{ttak\_log\_func\_t}}
+\Hypertarget{logger_8h_a9c88f26d8f8810ba8ff97f986e82319a}\index{logger.h@{logger.h}!ttak\_log\_func\_t@{ttak\_log\_func\_t}}
 \index{ttak\_log\_func\_t@{ttak\_log\_func\_t}!logger.h@{logger.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_log\_func\_t}{ttak\_log\_func\_t}}
-{\footnotesize\ttfamily typedef void($\ast$ ttak\+\_\+log\+\_\+func\+\_\+t) (\mbox{\hyperlink{logger_8h_a13b7cbf4245d32959202870c26bbd3e4}{ttak\+\_\+log\+\_\+level\+\_\+t}} level, const char $\ast$msg)}
+{\footnotesize\ttfamily \label{logger_8h_a9c88f26d8f8810ba8ff97f986e82319a} 
+typedef void(\texorpdfstring{$\ast$}{*} ttak\+\_\+log\+\_\+func\+\_\+t) (\mbox{\hyperlink{logger_8h_a13b7cbf4245d32959202870c26bbd3e4}{ttak\+\_\+log\+\_\+level\+\_\+t}} level, const char \texorpdfstring{$\ast$}{*}msg)}
 
 
 
@@ -81,13 +83,13 @@ Function pointer definition for custom log handlers.
 \end{DoxyParams}
 
 
-Definition at line 22 of file logger.\+h.
+Definition at line \mbox{\hyperlink{logger_8h_source_l00022}{22}} of file \mbox{\hyperlink{logger_8h_source}{logger.\+h}}.
 
-\mbox{\Hypertarget{logger_8h_a3a653b85eb05b9b2000b5e7e20fedcda}\label{logger_8h_a3a653b85eb05b9b2000b5e7e20fedcda}} 
-\index{logger.h@{logger.h}!ttak\_logger\_t@{ttak\_logger\_t}}
+\Hypertarget{logger_8h_a3a653b85eb05b9b2000b5e7e20fedcda}\index{logger.h@{logger.h}!ttak\_logger\_t@{ttak\_logger\_t}}
 \index{ttak\_logger\_t@{ttak\_logger\_t}!logger.h@{logger.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_logger\_t}{ttak\_logger\_t}}
-{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__logger}{ttak\+\_\+logger}} \mbox{\hyperlink{logger_8h_a3a653b85eb05b9b2000b5e7e20fedcda}{ttak\+\_\+logger\+\_\+t}}}
+{\footnotesize\ttfamily \label{logger_8h_a3a653b85eb05b9b2000b5e7e20fedcda} 
+typedef struct \mbox{\hyperlink{structttak__logger}{ttak\+\_\+logger}} \mbox{\hyperlink{logger_8h_a3a653b85eb05b9b2000b5e7e20fedcda}{ttak\+\_\+logger\+\_\+t}}}
 
 
 
@@ -95,47 +97,51 @@ Logger structure.
 
 Encapsulates logging configuration including minimum level and handler. 
 
+\label{doc-enum-members}
+\Hypertarget{logger_8h_doc-enum-members}
 \doxysubsection{Enumeration Type Documentation}
-\mbox{\Hypertarget{logger_8h_a13b7cbf4245d32959202870c26bbd3e4}\label{logger_8h_a13b7cbf4245d32959202870c26bbd3e4}} 
-\index{logger.h@{logger.h}!ttak\_log\_level\_t@{ttak\_log\_level\_t}}
+\Hypertarget{logger_8h_a13b7cbf4245d32959202870c26bbd3e4}\index{logger.h@{logger.h}!ttak\_log\_level\_t@{ttak\_log\_level\_t}}
 \index{ttak\_log\_level\_t@{ttak\_log\_level\_t}!logger.h@{logger.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_log\_level\_t}{ttak\_log\_level\_t}}
-{\footnotesize\ttfamily enum \mbox{\hyperlink{logger_8h_a13b7cbf4245d32959202870c26bbd3e4}{ttak\+\_\+log\+\_\+level\+\_\+t}}}
+{\footnotesize\ttfamily \label{logger_8h_a13b7cbf4245d32959202870c26bbd3e4} 
+enum \mbox{\hyperlink{logger_8h_a13b7cbf4245d32959202870c26bbd3e4}{ttak\+\_\+log\+\_\+level\+\_\+t}}}
 
 
 
 Log levels. 
 
-\begin{DoxyEnumFields}{Enumerator}
-\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_LOG\_DEBUG@{TTAK\_LOG\_DEBUG}!logger.h@{logger.h}}\index{logger.h@{logger.h}!TTAK\_LOG\_DEBUG@{TTAK\_LOG\_DEBUG}}}\mbox{\Hypertarget{logger_8h_a13b7cbf4245d32959202870c26bbd3e4aaa15a233cf59ffb44ff5bb284e26232e}\label{logger_8h_a13b7cbf4245d32959202870c26bbd3e4aaa15a233cf59ffb44ff5bb284e26232e}} 
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_LOG\_DEBUG@{TTAK\_LOG\_DEBUG}!logger.h@{logger.h}}\index{logger.h@{logger.h}!TTAK\_LOG\_DEBUG@{TTAK\_LOG\_DEBUG}}}\Hypertarget{logger_8h_a13b7cbf4245d32959202870c26bbd3e4aaa15a233cf59ffb44ff5bb284e26232e}\label{logger_8h_a13b7cbf4245d32959202870c26bbd3e4aaa15a233cf59ffb44ff5bb284e26232e} 
 TTAK\+\_\+\+LOG\+\_\+\+DEBUG&\\
 \hline
 
-\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_LOG\_INFO@{TTAK\_LOG\_INFO}!logger.h@{logger.h}}\index{logger.h@{logger.h}!TTAK\_LOG\_INFO@{TTAK\_LOG\_INFO}}}\mbox{\Hypertarget{logger_8h_a13b7cbf4245d32959202870c26bbd3e4acb352e0c20de60006f58c68a466840b4}\label{logger_8h_a13b7cbf4245d32959202870c26bbd3e4acb352e0c20de60006f58c68a466840b4}} 
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_LOG\_INFO@{TTAK\_LOG\_INFO}!logger.h@{logger.h}}\index{logger.h@{logger.h}!TTAK\_LOG\_INFO@{TTAK\_LOG\_INFO}}}\Hypertarget{logger_8h_a13b7cbf4245d32959202870c26bbd3e4acb352e0c20de60006f58c68a466840b4}\label{logger_8h_a13b7cbf4245d32959202870c26bbd3e4acb352e0c20de60006f58c68a466840b4} 
 TTAK\+\_\+\+LOG\+\_\+\+INFO&\\
 \hline
 
-\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_LOG\_WARN@{TTAK\_LOG\_WARN}!logger.h@{logger.h}}\index{logger.h@{logger.h}!TTAK\_LOG\_WARN@{TTAK\_LOG\_WARN}}}\mbox{\Hypertarget{logger_8h_a13b7cbf4245d32959202870c26bbd3e4a516688026ec77907cc3b03993542c097}\label{logger_8h_a13b7cbf4245d32959202870c26bbd3e4a516688026ec77907cc3b03993542c097}} 
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_LOG\_WARN@{TTAK\_LOG\_WARN}!logger.h@{logger.h}}\index{logger.h@{logger.h}!TTAK\_LOG\_WARN@{TTAK\_LOG\_WARN}}}\Hypertarget{logger_8h_a13b7cbf4245d32959202870c26bbd3e4a516688026ec77907cc3b03993542c097}\label{logger_8h_a13b7cbf4245d32959202870c26bbd3e4a516688026ec77907cc3b03993542c097} 
 TTAK\+\_\+\+LOG\+\_\+\+WARN&\\
 \hline
 
-\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_LOG\_ERROR@{TTAK\_LOG\_ERROR}!logger.h@{logger.h}}\index{logger.h@{logger.h}!TTAK\_LOG\_ERROR@{TTAK\_LOG\_ERROR}}}\mbox{\Hypertarget{logger_8h_a13b7cbf4245d32959202870c26bbd3e4a3c15d82ae51223aa509051b77801dbc5}\label{logger_8h_a13b7cbf4245d32959202870c26bbd3e4a3c15d82ae51223aa509051b77801dbc5}} 
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_LOG\_ERROR@{TTAK\_LOG\_ERROR}!logger.h@{logger.h}}\index{logger.h@{logger.h}!TTAK\_LOG\_ERROR@{TTAK\_LOG\_ERROR}}}\Hypertarget{logger_8h_a13b7cbf4245d32959202870c26bbd3e4a3c15d82ae51223aa509051b77801dbc5}\label{logger_8h_a13b7cbf4245d32959202870c26bbd3e4a3c15d82ae51223aa509051b77801dbc5} 
 TTAK\+\_\+\+LOG\+\_\+\+ERROR&\\
 \hline
 
 \end{DoxyEnumFields}
 
 
-Definition at line 9 of file logger.\+h.
+Definition at line \mbox{\hyperlink{logger_8h_source_l00009}{9}} of file \mbox{\hyperlink{logger_8h_source}{logger.\+h}}.
 
 
 
+\label{doc-func-members}
+\Hypertarget{logger_8h_doc-func-members}
 \doxysubsection{Function Documentation}
-\mbox{\Hypertarget{logger_8h_a521315f19c7d983c5f323d47a86e9832}\label{logger_8h_a521315f19c7d983c5f323d47a86e9832}} 
-\index{logger.h@{logger.h}!ttak\_logger\_init@{ttak\_logger\_init}}
+\Hypertarget{logger_8h_a521315f19c7d983c5f323d47a86e9832}\index{logger.h@{logger.h}!ttak\_logger\_init@{ttak\_logger\_init}}
 \index{ttak\_logger\_init@{ttak\_logger\_init}!logger.h@{logger.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_logger\_init()}{ttak\_logger\_init()}}
-{\footnotesize\ttfamily void ttak\+\_\+logger\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{logger_8h_a3a653b85eb05b9b2000b5e7e20fedcda}{ttak\+\_\+logger\+\_\+t}} $\ast$}]{l,  }\item[{\mbox{\hyperlink{logger_8h_a9c88f26d8f8810ba8ff97f986e82319a}{ttak\+\_\+log\+\_\+func\+\_\+t}}}]{func,  }\item[{\mbox{\hyperlink{logger_8h_a13b7cbf4245d32959202870c26bbd3e4}{ttak\+\_\+log\+\_\+level\+\_\+t}}}]{level }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{logger_8h_a521315f19c7d983c5f323d47a86e9832} 
+void ttak\+\_\+logger\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{logger_8h_a3a653b85eb05b9b2000b5e7e20fedcda}{ttak\+\_\+logger\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{l}{, }\item[{\mbox{\hyperlink{logger_8h_a9c88f26d8f8810ba8ff97f986e82319a}{ttak\+\_\+log\+\_\+func\+\_\+t}}}]{func}{, }\item[{\mbox{\hyperlink{logger_8h_a13b7cbf4245d32959202870c26bbd3e4}{ttak\+\_\+log\+\_\+level\+\_\+t}}}]{level}{}\end{DoxyParamCaption})}
 
 
 
@@ -150,11 +156,11 @@ Initializes the logger.
 {\em level} & Minimum log level. \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{logger_8h_ac3cf29e97c6046fd7efcc81a18599844}\label{logger_8h_ac3cf29e97c6046fd7efcc81a18599844}} 
-\index{logger.h@{logger.h}!ttak\_logger\_log@{ttak\_logger\_log}}
+\Hypertarget{logger_8h_ac3cf29e97c6046fd7efcc81a18599844}\index{logger.h@{logger.h}!ttak\_logger\_log@{ttak\_logger\_log}}
 \index{ttak\_logger\_log@{ttak\_logger\_log}!logger.h@{logger.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_logger\_log()}{ttak\_logger\_log()}}
-{\footnotesize\ttfamily void ttak\+\_\+logger\+\_\+log (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{logger_8h_a3a653b85eb05b9b2000b5e7e20fedcda}{ttak\+\_\+logger\+\_\+t}} $\ast$}]{l,  }\item[{\mbox{\hyperlink{logger_8h_a13b7cbf4245d32959202870c26bbd3e4}{ttak\+\_\+log\+\_\+level\+\_\+t}}}]{level,  }\item[{const char $\ast$}]{fmt,  }\item[{}]{... }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{logger_8h_ac3cf29e97c6046fd7efcc81a18599844} 
+void ttak\+\_\+logger\+\_\+log (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{logger_8h_a3a653b85eb05b9b2000b5e7e20fedcda}{ttak\+\_\+logger\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{l}{, }\item[{\mbox{\hyperlink{logger_8h_a13b7cbf4245d32959202870c26bbd3e4}{ttak\+\_\+log\+\_\+level\+\_\+t}}}]{level}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{fmt}{, }\item[{}]{...}{}\end{DoxyParamCaption})}
 
 
 
@@ -171,11 +177,11 @@ Logs a message.
 {\em ...} & Arguments for format string. \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{logger_8h_adfcac077aeb029c04c4fb47dc33116a0}\label{logger_8h_adfcac077aeb029c04c4fb47dc33116a0}} 
-\index{logger.h@{logger.h}!ttak\_mem\_set\_trace@{ttak\_mem\_set\_trace}}
+\Hypertarget{logger_8h_adfcac077aeb029c04c4fb47dc33116a0}\index{logger.h@{logger.h}!ttak\_mem\_set\_trace@{ttak\_mem\_set\_trace}}
 \index{ttak\_mem\_set\_trace@{ttak\_mem\_set\_trace}!logger.h@{logger.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_mem\_set\_trace()}{ttak\_mem\_set\_trace()}}
-{\footnotesize\ttfamily void ttak\+\_\+mem\+\_\+set\+\_\+trace (\begin{DoxyParamCaption}\item[{int}]{enable }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{logger_8h_adfcac077aeb029c04c4fb47dc33116a0} 
+void ttak\+\_\+mem\+\_\+set\+\_\+trace (\begin{DoxyParamCaption}\item[{int}]{enable}{}\end{DoxyParamCaption})}
 
 
 

@@ -1,20 +1,115 @@
-\label{index_md_bench_README}%
-\Hypertarget{index_md_bench_README}%
- This directory contains performance testing utilities and stress tests for the Lib\+TTAK subsystems.\hypertarget{index_autotoc_md1}{}\doxysection{Core Benchmarks}\label{index_autotoc_md1}
-\hypertarget{index_autotoc_md2}{}\doxysubsection{1. TTL Cache Multi-\/threaded Benchmark}\label{index_autotoc_md2}
-Located in {\ttfamily ttl-\/cache-\/multithread-\/bench/}.
-\begin{DoxyItemize}
-\item {\bfseries{Focus\+:}} Lock-\/free shared memory throughput under heavy churn.
-\item {\bfseries{Strategy\+:}} Uses Choi Seok-\/jeong\textquotesingle{}s OLS principle to achieve extreme Ops/s by trading off RSS.
-\item {\bfseries{Peak Result\+:}} {\bfseries{29.\+2M Ops/s}} (Lock-\/\+Free Shards).
-\end{DoxyItemize}\hypertarget{index_autotoc_md3}{}\doxysubsection{2. General Benchmark Hub ($<$tt$>$ttak\+\_\+bench.\+c$<$/tt$>$)}\label{index_autotoc_md3}
+\chapter{libttak }
+\hypertarget{index}{}\label{index}\index{libttak@{libttak}}
+\label{index_md_README}%
+\Hypertarget{index_md_README}%
+ 
+
+ \hypertarget{index_autotoc_md26}{}\doxysection{\texorpdfstring{Lib\+TTAK}{Lib\+TTAK}}\label{index_autotoc_md26}
+\begin{quote}
+{\bfseries{"{}\+Stop praying for \`{}free()\`{}. Start governing your lifetimes."{}}} \end{quote}
+
+
+{\bfseries{Gentle. Predictable. Explicit.}}
+
+Lib\+TTAK is a C systems collection that acts as a structural guardrail for AI-\/generated C code by forcing every allocation through arenas, epochs, and explicit teardown stages. \href{https://gg582.github.io/libttak}{\texttt{Docs}}
+
+\DoxyHorRuler{0}
+\hypertarget{index_autotoc_md28}{}\doxysubsection{\texorpdfstring{Mathematical Foundation\+: The OLS Principle}{Mathematical Foundation\+: The OLS Principle}}\label{index_autotoc_md28}
+Lib\+TTAK\textquotesingle{}s high-\/performance synchronization layer is built on the mathematical brilliance of {\bfseries{Choi Seok-\/jeong\textquotesingle{}s Orthogonal Latin Square (OLS)}} principle.
+
+We have made an explicit architectural choice\+: {\bfseries{Strategically accepting a significant increase in memory footprint (RSS) to achieve an explosive, multi-\/fold increase in throughput (Ops/s).}}
+
+By applying deterministic slot isolation through OLS-\/inspired segmented shard tables, we eliminate hardware-\/level lock contention. Each thread operates in its own isolated version shard, allowing the system to scale linearly with CPU core counts. The resulting throughput—surpassing \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}29M Ops/s\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}—is a direct result of this "{}\+Memory-\/for-\/\+Speed"{} trade-\/off.
+
+\DoxyHorRuler{0}
+\hypertarget{index_autotoc_md30}{}\doxysubsection{\texorpdfstring{Integrated Architectural Map}{Integrated Architectural Map}}\label{index_autotoc_md30}
+ 
+\begin{DoxyImage}
+\includegraphics[width=\textwidth,height=\textheight/2,keepaspectratio=true]{all.png}
+\doxyfigcaption{Blueprint}
+\end{DoxyImage}
+   
+
+Generational arenas, epoch reclamation, and context bridges are wired together exactly as shown\+: arenas own lifetimes, epochs enforce bulk reclamation barriers, and worker threads cross the bridge via explicit context binding. No hidden allocators, no implicit threads.
+
+\DoxyHorRuler{0}
+\hypertarget{index_autotoc_md32}{}\doxysubsection{\texorpdfstring{Why Lib\+TTAK?}{Why Lib\+TTAK?}}\label{index_autotoc_md32}
+\hypertarget{index_autotoc_md33}{}\doxysubsubsection{\texorpdfstring{Practical Utility for AI-\/\+Assisted Development}{Practical Utility for AI-\/\+Assisted Development}}\label{index_autotoc_md33}
+LLMs frequently miss ownership cues. Lib\+TTAK constrains them to a single instruction set\+: allocate inside a {\ttfamily ttak\+\_\+arena}, hand releases to the epoch manager, and keep user code free from stray {\ttfamily free()} calls. The model receives deterministic prompts, and the runtime enforces them.\hypertarget{index_autotoc_md34}{}\doxysubsubsection{\texorpdfstring{Deterministic Lifetime-\/as-\/\+Data}{Deterministic Lifetime-\/as-\/\+Data}}\label{index_autotoc_md34}
+Rust encodes lifetimes in the compiler; Lib\+TTAK encodes them on the allocation record. Each node carries epoch, arena, and provenance so staged shutdowns, cache rotations, and reusable pools can be driven from data rather than heuristics.\hypertarget{index_autotoc_md35}{}\doxysubsubsection{\texorpdfstring{Predictable Resource Discipline}{Predictable Resource Discipline}}\label{index_autotoc_md35}
+There are no assembly fast paths or exotic TLS caches. Standard {\ttfamily malloc} plus disciplined ownership keeps the implementation transparent and debuggable on any libc, matching the library’s gentle, predictable, explicit goals.
+
+\DoxyHorRuler{0}
+\hypertarget{index_autotoc_md37}{}\doxysubsection{\texorpdfstring{Comparison\+: Lib\+TTAK, Rust, and C++}{Comparison\+: Lib\+TTAK, Rust, and C++}}\label{index_autotoc_md37}
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{4}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Concern  }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Lib\+TTAK  }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Rust  }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ C++  }\\\cline{1-4}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Concern  }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Lib\+TTAK  }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Rust  }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ C++  }\\\cline{1-4}
+\endhead
+Lifetime guarantees  &Runtime-\/verified arenas and epochs with manual checkpoints  &Compile-\/time borrow checker rejects unsafe moves  &User-\/space RAII; compiler permits unsafe mutation  \\\cline{1-4}
+Memory reclamation  &Bulk arena resets and epoch-\/based reclamation only when commanded  &Ownership drop occurs automatically at scope end  &Mix of smart pointers and manual {\ttfamily delete}  \\\cline{1-4}
+Concurrency model  &Lock-\/free Segmented Shards; EBR-\/based reclamation  &{\ttfamily Send}/{\ttfamily Sync} traits gate sharing at compile time  &Library-\/dependent; undefined behavior if discipline fails  \\\cline{1-4}
+Tooling expectations  &Works with plain C toolchains; ideal for AI-\/generated patches  &Requires Rust toolchain and language expertise  &Depends on template libraries; AI output often diverges  \\\cline{1-4}
+\end{longtabu}
+
+
+\DoxyHorRuler{0}
+\hypertarget{index_autotoc_md39}{}\doxysubsection{\texorpdfstring{Core Components}{Core Components}}\label{index_autotoc_md39}
 
 \begin{DoxyItemize}
-\item {\bfseries{Focus\+:}} Micro-\/benchmarking core primitives (allocators, atomics, math).
-\end{DoxyItemize}\hypertarget{index_autotoc_md4}{}\doxysection{Architectural Philosophy}\label{index_autotoc_md4}
-We prioritize {\bfseries{predictable latency}} and {\bfseries{massive throughput}} over minimal memory footprint.
+\item {\bfseries{Generational Arena}}\+: Batches allocations, timestamps each generation, and clears on demand.
+\item {\bfseries{Epoch Manager}}\+: Coordinates retire lists and ensures cross-\/thread reclamation after quiescence.
+\item {\bfseries{Context Bridge}}\+: Pins worker threads to explicit contexts for reproducible scheduling.
+\item {\bfseries{Segmented Shard Table}}\+: Lock-\/free version tracking inspired by Choi Seok-\/jeong\textquotesingle{}s OLS.
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{index_autotoc_md41}{}\doxysubsection{\texorpdfstring{Benchmarks}{Benchmarks}}\label{index_autotoc_md41}
+Test\+: Ryzen 5600X, RTX 3070 Lite Hash Rate, Samsung DDR4 3200MHz 32GB x 2\hypertarget{index_autotoc_md42}{}\doxysubsubsection{\texorpdfstring{High-\/\+Performance Lock-\/\+Free Baseline}{High-\/\+Performance Lock-\/\+Free Baseline}}\label{index_autotoc_md42}
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{3}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Metric  }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Result  }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Note  }\\\cline{1-3}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Metric  }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Result  }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Note  }\\\cline{1-3}
+\endhead
+Throughput  &30.\+8M Ops/s  &Sustained peak during multi-\/threaded shared memory stress test  \\\cline{1-3}
+Latency  &\texorpdfstring{$\sim$}{\string~}80 ns  &Measured during high-\/concurrency validation  \\\cline{1-3}
+Memory Stability  &Stable RSS  &Optimized for high-\/thread-\/count environments  \\\cline{1-3}
+\end{longtabu}
+\hypertarget{index_autotoc_md43}{}\doxysubsubsection{\texorpdfstring{TTL Cache Benchmarks (Compiler Sweep)}{TTL Cache Benchmarks (Compiler Sweep)}}\label{index_autotoc_md43}
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{5}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Metric Category  }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Metric  }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ GCC -\/O3  }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ TCC -\/O3  }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Clang -\/O3  }\\\cline{1-5}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Metric Category  }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Metric  }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ GCC -\/O3  }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ TCC -\/O3  }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Clang -\/O3  }\\\cline{1-5}
+\endhead
+Throughput  &Operations per Second (Ops/s)  &30,851,515  &20,413,284  &25,671,794  \\\cline{1-5}
+Logic Integrity  &Cache Hit Rate (\%)  &76.\+91\%  &76.\+61\%  &76.\+58\%  \\\cline{1-5}
+Resource Usage  &RSS Memory Usage (KB)  &3,541,128  &4,146,252  &4,800,072  \\\cline{1-5}
+GC Performance  &Clean\+Ns\+Avg (Nanoseconds)  &45,000,000  &32,000,000  &30,000,000  \\\cline{1-5}
+Runtime Control  &Total Epochs Transitioned  &63,393  &60,000  &61,000  \\\cline{1-5}
+\end{longtabu}
+\hypertarget{index_autotoc_md44}{}\doxysubsubsection{\texorpdfstring{Benchmark Environment}{Benchmark Environment}}\label{index_autotoc_md44}
+
 \begin{DoxyItemize}
-\item Traditional C libraries often sacrifice Ops/s to save a few kilobytes of RAM.
-\item Lib\+TTAK reverses this\+: we use segmented memory structures and deterministic isolation to ensure that synchronization never becomes a CPU bottleneck.
-\end{DoxyItemize}\hypertarget{index_autotoc_md5}{}\doxysection{Analysis Tools}\label{index_autotoc_md5}
-Use the {\ttfamily visualize\+\_\+memory\+\_\+calls.\+py} script in the root {\ttfamily scripts/} directory to analyze allocation patterns generated by these benchmarks. 
+\item OS\+: Linux x64
+\item CPU\+: Ryzen 5 5600X
+\item RAM\+: 64 GB DDR4 3200 MHz
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{index_autotoc_md46}{}\doxysubsection{\texorpdfstring{Documentation}{Documentation}}\label{index_autotoc_md46}
+Refer to the linked docs for API references, tutorials, and Doxygen output. All modules retain the same naming scheme present in {\ttfamily include/ttak/}. 

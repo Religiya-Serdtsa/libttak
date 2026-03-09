@@ -1,2 +1,23 @@
-\hypertarget{dir_eb2249ee15a877def82239bf2f1586ea}{}\doxysection{tutorials/29-\/ast-\/walking Directory Reference}
-\label{dir_eb2249ee15a877def82239bf2f1586ea}\index{tutorials/29-\/ast-\/walking Directory Reference@{tutorials/29-\/ast-\/walking Directory Reference}}
+\doxysection{tutorials/29-\/ast-\/walking Directory Reference}
+\hypertarget{dir_eb2249ee15a877def82239bf2f1586ea}{}\label{dir_eb2249ee15a877def82239bf2f1586ea}\index{tutorials/29-\/ast-\/walking Directory Reference@{tutorials/29-\/ast-\/walking Directory Reference}}
+Directory dependency graph for 29-\/ast-\/walking\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=200pt]{dir_eb2249ee15a877def82239bf2f1586ea_dep}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Detailed Description}
+\hypertarget{README.md_autotoc_md105}{}\doxysubsection{\texorpdfstring{Tutorial 29 – AST Walking}{Tutorial 29 – AST Walking}}\label{README.md_autotoc_md105}
+{\ttfamily modules/29-\/ast-\/walking} focuses on the visitor utilities in {\ttfamily src/tree/ast.\+c}.
+
+{\ttfamily lesson29\+\_\+ast\+\_\+walking.\+c} builds a miniature tree; rebuild it to debug allocations and traversal order.\hypertarget{README.md_autotoc_md106}{}\doxysubsection{\texorpdfstring{Checklist}{Checklist}}\label{README.md_autotoc_md106}
+
+\begin{DoxyEnumerate}
+\item Diagram the AST node structure (children list, parent pointers, timestamps) and keep traversal pseudocode here.
+\item Re-\/implement node creation, child insertion, and destroy helpers while mirroring the ownership rules documented in the lesson.
+\item Because there is no dedicated automated test, grow the driver into a mini traversal harness that asserts preorder/postorder sequences.
+\item Write down how you validated destructor correctness so later tree lessons inherit the safeguards. 
+\end{DoxyEnumerate}

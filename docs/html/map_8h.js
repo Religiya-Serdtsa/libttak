@@ -6,7 +6,7 @@ var map_8h =
     [ "ttak_delete_from_map", "map_8h.html#aaf07aafced923862d2b186975733f846", null ],
     [ "ttak_insert_to_map", "map_8h.html#a0da5008a7fc916608a4d15b37c0cd0fe", null ],
     [ "ttak_map_get_key", "map_8h.html#a1051095fca50e9ef2982aff8b139b60a", null ],
-    [ "ttak_create_map", "map_8h.html#ab75a575b0175d5d14c4975087d1b707c", null ],
+    [ "ttak_create_map", "map_8h.html#a6ffa9856b32ae9f5b1b265db61bbafa6", null ],
     [ "ttak_delete_from_map", "map_8h.html#aa69948afd2835468dc6d23d559c72a87", null ],
     [ "ttak_insert_to_map", "map_8h.html#ab15a74cf74e73a2a596a238eceec7f33", null ],
     [ "ttak_map_get_key", "map_8h.html#aebb1ab4dbd5d7dd2887690388f47f0c8", null ]

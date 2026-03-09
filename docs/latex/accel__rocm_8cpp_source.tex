@@ -4,22 +4,57 @@
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{ttak__accelerator_8h}{ttak/ttak\_accelerator.h}}"{}}}
 \DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00002}00002\ }
-\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00003}\mbox{\hyperlink{accel__rocm_8cpp_a6b106ad62ee99aca6ee8fbf92d04bcf3}{00003}}\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \mbox{\hyperlink{ttak__accelerator_8h_ad112d6852d4170064b4efdba029ef930}{ttak\_result\_t}}\ \mbox{\hyperlink{accel__rocm_8cpp_a6b106ad62ee99aca6ee8fbf92d04bcf3}{ttak\_accel\_run\_cpu}}(}
-\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00004}00004\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__accel__batch__item}{ttak\_accel\_batch\_item\_t}}\ *items,}
-\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00005}00005\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ item\_count,}
-\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00006}00006\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__accel__config}{ttak\_accel\_config\_t}}\ *config);}
-\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00007}00007\ }
-\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00008}00008\ \textcolor{comment}{/*\ HIP/ROCm\ requires\ a\ C++\ compiler,\ hence\ this\ translation\ unit\ is\ C++\ even}}
-\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00009}00009\ \textcolor{comment}{\ *\ though\ the\ surrounding\ project\ stays\ in\ C.\ The\ function\ still\ exposes\ a\ C\ ABI.}}
-\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00010}00010\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00011}\mbox{\hyperlink{accel__rocm_8cpp_acbe36305318c7dbc8147cd44469dfbce}{00011}}\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \mbox{\hyperlink{ttak__accelerator_8h_ad112d6852d4170064b4efdba029ef930}{ttak\_result\_t}}\ \mbox{\hyperlink{accel__rocm_8cpp_acbe36305318c7dbc8147cd44469dfbce}{ttak\_accel\_run\_rocm}}(}
-\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00012}00012\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__accel__batch__item}{ttak\_accel\_batch\_item\_t}}\ *items,}
-\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00013}00013\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ item\_count,}
-\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00014}00014\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__accel__config}{ttak\_accel\_config\_t}}\ *config)\ \{}
-\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00015}00015\ \ \ \ \ (void)items;}
-\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00016}00016\ \ \ \ \ (void)item\_count;}
-\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00017}00017\ \ \ \ \ (void)config;}
-\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00018}00018\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{accel__rocm_8cpp_a6b106ad62ee99aca6ee8fbf92d04bcf3}{ttak\_accel\_run\_cpu}}(items,\ item\_count,\ config);}
-\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00019}00019\ \}}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#ifdef\ ENABLE\_ROCM}}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <hip/hip\_runtime.h>}}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00005}00005\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00007}\mbox{\hyperlink{accel__rocm_8cpp_a6b106ad62ee99aca6ee8fbf92d04bcf3}{00007}}\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \mbox{\hyperlink{ttak__accelerator_8h_ad112d6852d4170064b4efdba029ef930}{ttak\_result\_t}}\ \mbox{\hyperlink{accel__rocm_8cpp_a6b106ad62ee99aca6ee8fbf92d04bcf3}{ttak\_accel\_run\_cpu}}(}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00008}00008\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{ttak__accelerator_8h_aa1689adc22b84a59d14d42050fe255c9}{ttak\_accel\_batch\_item\_t}}\ *items,}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00009}00009\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ item\_count,}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00010}00010\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{ttak__accelerator_8h_a5c6a6c6799183f581aa1926cfe76c592}{ttak\_accel\_config\_t}}\ *config);}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00012}00012\ \textcolor{preprocessor}{\#ifdef\ ENABLE\_ROCM}}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00013}00013\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ ttak\_rocm\_context\_ready(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00014}00014\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ checked\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00015}00015\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ ready\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00016}00016\ \ \ \ \ \textcolor{keywordflow}{if}\ (checked)\ \{}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00017}00017\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ready;}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00018}00018\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00020}00020\ \ \ \ \ \textcolor{keywordtype}{int}\ device\_count\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00021}00021\ \ \ \ \ hipError\_t\ err\ =\ hipInit(0);}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00022}00022\ \ \ \ \ \textcolor{keywordflow}{if}\ (err\ ==\ hipSuccess)\ \{}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00023}00023\ \ \ \ \ \ \ \ \ err\ =\ hipGetDeviceCount(\&device\_count);}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00024}00024\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00025}00025\ \ \ \ \ ready\ =\ (err\ ==\ hipSuccess\ \&\&\ device\_count\ >\ 0);}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00026}00026\ \ \ \ \ checked\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00027}00027\ \ \ \ \ \textcolor{keywordflow}{return}\ ready;}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00028}00028\ \}}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00029}00029\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00031}\mbox{\hyperlink{accel__rocm_8cpp_acbe36305318c7dbc8147cd44469dfbce}{00031}}\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \mbox{\hyperlink{ttak__accelerator_8h_ad112d6852d4170064b4efdba029ef930}{ttak\_result\_t}}\ \mbox{\hyperlink{accel__rocm_8cpp_acbe36305318c7dbc8147cd44469dfbce}{ttak\_accel\_run\_rocm}}(}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00032}00032\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{ttak__accelerator_8h_aa1689adc22b84a59d14d42050fe255c9}{ttak\_accel\_batch\_item\_t}}\ *items,}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00033}00033\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ item\_count,}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00034}00034\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{ttak__accelerator_8h_a5c6a6c6799183f581aa1926cfe76c592}{ttak\_accel\_config\_t}}\ *config)\ \{}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00035}00035\ \textcolor{preprocessor}{\#ifdef\ ENABLE\_ROCM}}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00036}00036\ \ \ \ \ \textcolor{keywordflow}{if}\ (items\ ==\ \textcolor{keyword}{nullptr}\ ||\ config\ ==\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00037}00037\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{ttak__accelerator_8h_a4c4c114f1628da0d3fc56a9f9b5cb5c9a086bba2ff571862449eaf670fabaccb9}{TTAK\_RESULT\_ERR\_ARGUMENT}};}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00038}00038\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00040}00040\ \ \ \ \ \textcolor{keywordflow}{if}\ (!ttak\_rocm\_context\_ready())\ \{}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00041}00041\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{accel__rocm_8cpp_a6b106ad62ee99aca6ee8fbf92d04bcf3}{ttak\_accel\_run\_cpu}}(items,\ item\_count,\ config);}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00042}00042\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00044}00044\ \ \ \ \ \textcolor{comment}{/*\ GPU\ kernels\ are\ not\ wired\ yet;\ keep\ parity\ by\ falling\ back\ after}}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00045}00045\ \textcolor{comment}{\ \ \ \ \ *\ verifying\ that\ the\ runtime\ is\ available.}}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00046}00046\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00047}00047\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{accel__rocm_8cpp_a6b106ad62ee99aca6ee8fbf92d04bcf3}{ttak\_accel\_run\_cpu}}(items,\ item\_count,\ config);}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00048}00048\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00049}00049\ \ \ \ \ (void)items;}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00050}00050\ \ \ \ \ (void)item\_count;}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00051}00051\ \ \ \ \ (void)config;}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00052}00052\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{accel__rocm_8cpp_a6b106ad62ee99aca6ee8fbf92d04bcf3}{ttak\_accel\_run\_cpu}}(items,\ item\_count,\ config);}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00053}00053\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{accel__rocm_8cpp_source_l00054}00054\ \}}
 
 \end{DoxyCode}

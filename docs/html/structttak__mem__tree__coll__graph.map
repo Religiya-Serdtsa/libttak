@@ -1,4 +1,7 @@
 <map id="ttak_mem_tree" name="ttak_mem_tree">
-<area shape="rect" id="node1" title="Manages the collection of dynamically allocated memory blocks as a mem tree." alt="" coords="8,5,117,32"/>
-<area shape="rect" id="node2" href="$structttak__mem__node.html" title="Represents a node in the generic heap tree, tracking a dynamically allocated memory block." alt="" coords="5,96,120,123"/>
+<area shape="rect" id="Node000001" title="Manages the collection of dynamically allocated memory blocks as a mem tree." alt="" coords="8,5,130,33"/>
+<area shape="rect" id="Node000002" href="$structttak__mem__node.html" title="Represents a node in the generic heap tree, tracking a dynamically allocated memory block." alt="" coords="5,116,133,144"/>
+<area shape="poly" id="edge3_Node000002_Node000001" title=" " alt="" coords="43,46,36,58,33,69,36,81,45,99,58,114,53,117,41,102,31,83,28,69,31,56,39,43"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="69,100,70,57,68,34,73,33,76,57,75,100"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="150,120,159,130,151,139,134,143,133,138,149,135,154,130,146,123"/>
 </map>

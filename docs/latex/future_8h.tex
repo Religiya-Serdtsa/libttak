@@ -1,5 +1,5 @@
-\hypertarget{future_8h}{}\doxysection{include/ttak/async/future.h File Reference}
-\label{future_8h}\index{include/ttak/async/future.h@{include/ttak/async/future.h}}
+\doxysection{include/ttak/async/future.h File Reference}
+\hypertarget{future_8h}{}\label{future_8h}\index{include/ttak/async/future.h@{include/ttak/async/future.h}}
 
 
 Simple blocking future for async task result retrieval.  
@@ -12,7 +12,7 @@ Include dependency graph for future.\+h\+:
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=212pt]{future_8h__incl}
+\includegraphics[width=222pt]{future_8h__incl}
 \end{center}
 \end{figure}
 This graph shows which files directly or indirectly include this file\+:
@@ -20,50 +20,58 @@ This graph shows which files directly or indirectly include this file\+:
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=177pt]{future_8h__dep__incl}
+\includegraphics[width=188pt]{future_8h__dep__incl}
 \end{center}
 \end{figure}
-\doxysubsection*{Classes}
+\doxysubsubsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
 struct \mbox{\hyperlink{structttak__future}{ttak\+\_\+future}}
-\begin{DoxyCompactList}\small\item\em Blocking future that carries a single void$\ast$ result. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\doxysubsection*{Typedefs}
+\begin{DoxyCompactList}\small\item\em Blocking future that carries a single void\texorpdfstring{$\ast$}{*} result. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
 \begin{DoxyCompactItemize}
 \item 
 typedef struct \mbox{\hyperlink{structttak__future}{ttak\+\_\+future}} \mbox{\hyperlink{future_8h_a56ca146ef4be9bd1d67a1250de2ce2c2}{ttak\+\_\+future\+\_\+t}}
-\begin{DoxyCompactList}\small\item\em Blocking future that carries a single void$\ast$ result. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\doxysubsection*{Functions}
+\begin{DoxyCompactList}\small\item\em Blocking future that carries a single void\texorpdfstring{$\ast$}{*} result. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-void $\ast$ \mbox{\hyperlink{future_8h_a45f526919b0859d07918c40669d8fec0}{ttak\+\_\+future\+\_\+get}} (\mbox{\hyperlink{future_8h_a56ca146ef4be9bd1d67a1250de2ce2c2}{ttak\+\_\+future\+\_\+t}} $\ast$future)
+void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{future_8h_a5c44aae0f472071a500c1c6a265ba7d0}{ttak\+\_\+future\+\_\+get}} (\mbox{\hyperlink{future_8h_a56ca146ef4be9bd1d67a1250de2ce2c2}{ttak\+\_\+future\+\_\+t}} \texorpdfstring{$\ast$}{*}future)
 \begin{DoxyCompactList}\small\item\em Blocks until the future is fulfilled and returns its result. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
 Simple blocking future for async task result retrieval. 
 
-A {\ttfamily ttak\+\_\+future\+\_\+t} is produced by \mbox{\hyperlink{promise_8h_a6d7bfc3b57e932e249ffc0f43c0fd6c9}{ttak\+\_\+promise\+\_\+get\+\_\+future()}} and consumed by calling \mbox{\hyperlink{future_8h_a45f526919b0859d07918c40669d8fec0}{ttak\+\_\+future\+\_\+get()}}, which blocks the caller until the associated promise is fulfilled. 
+A {\ttfamily \doxylink{future_8h_a56ca146ef4be9bd1d67a1250de2ce2c2}{ttak\+\_\+future\+\_\+t}} is produced by \doxylink{promise_8h_a44baea2754e16f9017be08a8e94654b2}{ttak\+\_\+promise\+\_\+get\+\_\+future()} and consumed by calling \doxylink{future_8h_a5c44aae0f472071a500c1c6a265ba7d0}{ttak\+\_\+future\+\_\+get()}, which blocks the caller until the associated promise is fulfilled. 
 
+Definition in file \mbox{\hyperlink{future_8h_source}{future.\+h}}.
+
+
+
+\label{doc-typedef-members}
+\Hypertarget{future_8h_doc-typedef-members}
 \doxysubsection{Typedef Documentation}
-\mbox{\Hypertarget{future_8h_a56ca146ef4be9bd1d67a1250de2ce2c2}\label{future_8h_a56ca146ef4be9bd1d67a1250de2ce2c2}} 
-\index{future.h@{future.h}!ttak\_future\_t@{ttak\_future\_t}}
+\Hypertarget{future_8h_a56ca146ef4be9bd1d67a1250de2ce2c2}\index{future.h@{future.h}!ttak\_future\_t@{ttak\_future\_t}}
 \index{ttak\_future\_t@{ttak\_future\_t}!future.h@{future.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_future\_t}{ttak\_future\_t}}
-{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__future}{ttak\+\_\+future}} \mbox{\hyperlink{future_8h_a56ca146ef4be9bd1d67a1250de2ce2c2}{ttak\+\_\+future\+\_\+t}}}
+{\footnotesize\ttfamily \label{future_8h_a56ca146ef4be9bd1d67a1250de2ce2c2} 
+typedef struct \mbox{\hyperlink{structttak__future}{ttak\+\_\+future}} \mbox{\hyperlink{future_8h_a56ca146ef4be9bd1d67a1250de2ce2c2}{ttak\+\_\+future\+\_\+t}}}
 
 
 
-Blocking future that carries a single void$\ast$ result. 
+Blocking future that carries a single void\texorpdfstring{$\ast$}{*} result. 
 
 
 
+\label{doc-func-members}
+\Hypertarget{future_8h_doc-func-members}
 \doxysubsection{Function Documentation}
-\mbox{\Hypertarget{future_8h_a45f526919b0859d07918c40669d8fec0}\label{future_8h_a45f526919b0859d07918c40669d8fec0}} 
-\index{future.h@{future.h}!ttak\_future\_get@{ttak\_future\_get}}
+\Hypertarget{future_8h_a5c44aae0f472071a500c1c6a265ba7d0}\index{future.h@{future.h}!ttak\_future\_get@{ttak\_future\_get}}
 \index{ttak\_future\_get@{ttak\_future\_get}!future.h@{future.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_future\_get()}{ttak\_future\_get()}}
-{\footnotesize\ttfamily void$\ast$ ttak\+\_\+future\+\_\+get (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{future_8h_a56ca146ef4be9bd1d67a1250de2ce2c2}{ttak\+\_\+future\+\_\+t}} $\ast$}]{future }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{future_8h_a5c44aae0f472071a500c1c6a265ba7d0} 
+void \texorpdfstring{$\ast$}{*} ttak\+\_\+future\+\_\+get (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{future_8h_a56ca146ef4be9bd1d67a1250de2ce2c2}{ttak\+\_\+future\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{future}{}\end{DoxyParamCaption})}
 
 
 

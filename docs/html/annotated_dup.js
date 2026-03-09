@@ -1,17 +1,5 @@
 var annotated_dup =
 [
-    [ "Orientation – Setup + Helper", "md_tutorials_CLONE_PATH.html#autotoc_md183", null ],
-    [ "Stage 1 – Core Data + Logging", "md_tutorials_CLONE_PATH.html#autotoc_md184", null ],
-    [ "Stage 2 – Concurrency Primitives", "md_tutorials_CLONE_PATH.html#autotoc_md185", null ],
-    [ "Stage 3 – Thread Pool & Async", "md_tutorials_CLONE_PATH.html#autotoc_md186", null ],
-    [ "Stage 4 – Timing + Limiters + Stats", "md_tutorials_CLONE_PATH.html#autotoc_md187", null ],
-    [ "Stage 5 – Memory Systems", "md_tutorials_CLONE_PATH.html#autotoc_md188", null ],
-    [ "Stage 6 – Math & Security", "md_tutorials_CLONE_PATH.html#autotoc_md189", null ],
-    [ "Stage 7 – Trees + AST", "md_tutorials_CLONE_PATH.html#autotoc_md190", null ],
-    [ "Stage 8 – Application Layer", "md_tutorials_CLONE_PATH.html#autotoc_md191", null ],
-    [ "Stage 9 – DANGEROUS (Unsafe)", "md_tutorials_CLONE_PATH.html#autotoc_md192", null ],
-    [ "Stage 10 – Arena Families & Signal Guards", "md_tutorials_CLONE_PATH.html#autotoc_md193", null ],
-    [ "Stage 11 – IO & Network Stack", "md_tutorials_CLONE_PATH.html#autotoc_md194", null ],
     [ "__internal_ttak_proc_priority_queue_t", "struct____internal__ttak__proc__priority__queue__t.html", "struct____internal__ttak__proc__priority__queue__t" ],
     [ "__internal_ttak_qnode_t", "struct____internal__ttak__qnode__t.html", "struct____internal__ttak__qnode__t" ],
     [ "atomic_flag", "structatomic__flag.html", "structatomic__flag" ],

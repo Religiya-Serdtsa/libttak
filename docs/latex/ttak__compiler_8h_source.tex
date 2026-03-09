@@ -9,43 +9,133 @@
 \DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00005}00005\ }
 \DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00006}00006\ \textcolor{preprocessor}{\#ifndef\ TTAK\_COMPILER\_H}}
 \DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00007}00007\ \textcolor{preprocessor}{\#define\ TTAK\_COMPILER\_H}}
-\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00008}00008\ }
-\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00009}00009\ \textcolor{preprocessor}{\#if\ defined(\_\_GNUC\_\_)\ ||\ defined(\_\_clang\_\_)}}
-\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00010}00010\ \textcolor{preprocessor}{\#\ \ define\ TTAK\_LIKELY(x)\ \ \ \_\_builtin\_expect(!!(x),\ 1)}}
-\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00011}00011\ \textcolor{preprocessor}{\#\ \ define\ TTAK\_UNLIKELY(x)\ \_\_builtin\_expect(!!(x),\ 0)}}
-\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00012}00012\ \textcolor{preprocessor}{\#else}}
-\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00013}\mbox{\hyperlink{ttak__compiler_8h_a4e4c8922939b18c2f54aadc28824cbfd}{00013}}\ \textcolor{preprocessor}{\#\ \ define\ TTAK\_LIKELY(x)\ \ \ (x)}}
-\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00014}\mbox{\hyperlink{ttak__compiler_8h_a79e6ab9372fcc255fb4075c4ed8857dd}{00014}}\ \textcolor{preprocessor}{\#\ \ define\ TTAK\_UNLIKELY(x)\ (x)}}
-\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00015}00015\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00016}00016\ }
-\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00017}00017\ \textcolor{preprocessor}{\#if\ defined(\_\_GNUC\_\_)\ ||\ defined(\_\_clang\_\_)}}
-\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00018}00018\ \textcolor{preprocessor}{\#\ \ define\ TTAK\_FORCE\_INLINE\ \_\_attribute\_\_((always\_inline))\ inline}}
-\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00019}00019\ \textcolor{preprocessor}{\#elif\ defined(\_MSC\_VER)}}
-\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00020}00020\ \textcolor{preprocessor}{\#\ \ define\ TTAK\_FORCE\_INLINE\ \_\_forceinline}}
-\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00021}00021\ \textcolor{preprocessor}{\#else}}
-\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00022}\mbox{\hyperlink{ttak__compiler_8h_a7759c1f89dd694da3576024767572ddc}{00022}}\ \textcolor{preprocessor}{\#\ \ define\ TTAK\_FORCE\_INLINE\ inline}}
-\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00023}00023\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00024}00024\ }
-\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00025}00025\ \textcolor{preprocessor}{\#if\ !defined(\_\_GNUC\_\_)\ \&\&\ !defined(\_\_clang\_\_)}}
-\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00026}\mbox{\hyperlink{ttak__compiler_8h_a57c438c3efdb8824d6f208df9c25d47e}{00026}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{ttak__compiler_8h_a57c438c3efdb8824d6f208df9c25d47e}{\_\_ttak\_ctzll}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ v)\ \{}
-\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00027}00027\ \ \ \ \ \textcolor{keywordtype}{int}\ r\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00028}00028\ \ \ \ \ \textcolor{keywordflow}{if}\ (!v)\ \textcolor{keywordflow}{return}\ 64;}
-\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00029}00029\ \ \ \ \ \textcolor{keywordflow}{while}\ (!(v\ \&\ 1))\ \{\ v\ >>=\ 1;\ r++;\ \}}
-\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00030}00030\ \ \ \ \ \textcolor{keywordflow}{return}\ r;}
-\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00031}00031\ \}}
-\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00032}\mbox{\hyperlink{ttak__compiler_8h_a973a1217d00a575f1d04db14c4ad3298}{00032}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{ttak__compiler_8h_a973a1217d00a575f1d04db14c4ad3298}{\_\_ttak\_clzll}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ v)\ \{}
-\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00033}00033\ \ \ \ \ \textcolor{keywordtype}{int}\ r\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00034}00034\ \ \ \ \ \textcolor{keywordflow}{if}\ (!v)\ \textcolor{keywordflow}{return}\ 64;}
-\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00035}00035\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 63;\ i\ >=\ 0;\ i-\/-\/)\ \{}
-\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00036}00036\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (v\ \&\ (1ULL\ <<\ i))\ \textcolor{keywordflow}{break};}
-\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00037}00037\ \ \ \ \ \ \ \ \ r++;}
-\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00038}00038\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00039}00039\ \ \ \ \ \textcolor{keywordflow}{return}\ r;}
-\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00040}00040\ \}}
-\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00041}\mbox{\hyperlink{ttak__compiler_8h_a7127135e8502e259083fbc93d189db9d}{00041}}\ \textcolor{preprocessor}{\#define\ \_\_builtin\_ctzll(x)\ \_\_ttak\_ctzll(x)}}
-\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00042}\mbox{\hyperlink{ttak__compiler_8h_aded4ba7a8e210443e0f6245a10ee5e5b}{00042}}\ \textcolor{preprocessor}{\#define\ \_\_builtin\_clzll(x)\ \_\_ttak\_clzll(x)}}
-\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00043}00043\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00044}00044\ }
-\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00045}00045\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ TTAK\_COMPILER\_H\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00008}00008\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00009}00009\ \textcolor{comment}{/**\ @brief\ 1\ if\ TinyCC\ is\ targeting\ a\ non-\/x86\ platform\ and\ needs\ portable\ fallbacks.\ */}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00010}00010\ \textcolor{preprocessor}{\#if\ !defined(TTAK\_TINYCC\_NEEDS\_PORTABLE\_FALLBACK)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00011}00011\ \textcolor{preprocessor}{\#\ \ if\ defined(\_\_TINYC\_\_)\ \&\&\ !defined(\_\_x86\_64\_\_)\ \&\&\ !defined(\_\_i386\_\_)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00012}00012\ \textcolor{preprocessor}{\#\ \ \ \ define\ TTAK\_TINYCC\_NEEDS\_PORTABLE\_FALLBACK\ 1}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00013}00013\ \textcolor{preprocessor}{\#\ \ else}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00014}\mbox{\hyperlink{ttak__compiler_8h_a4c41c2645bf95641f159def7be087513}{00014}}\ \textcolor{preprocessor}{\#\ \ \ \ define\ TTAK\_TINYCC\_NEEDS\_PORTABLE\_FALLBACK\ 0}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00015}00015\ \textcolor{preprocessor}{\#\ \ endif}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00016}00016\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00017}00017\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00018}00018\ \textcolor{comment}{/**\ @brief\ Branch\ prediction\ hints\ for\ GCC/Clang;\ no-\/op\ on\ MSVC.\ */}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00019}00019\ \textcolor{preprocessor}{\#if\ defined(\_\_GNUC\_\_)\ ||\ defined(\_\_clang\_\_)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00020}00020\ \textcolor{preprocessor}{\#\ \ define\ TTAK\_LIKELY(x)\ \ \ \_\_builtin\_expect(!!(x),\ 1)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00021}00021\ \textcolor{preprocessor}{\#\ \ define\ TTAK\_UNLIKELY(x)\ \_\_builtin\_expect(!!(x),\ 0)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00022}00022\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00023}\mbox{\hyperlink{ttak__compiler_8h_a4e4c8922939b18c2f54aadc28824cbfd}{00023}}\ \textcolor{preprocessor}{\#\ \ define\ TTAK\_LIKELY(x)\ \ \ (x)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00024}\mbox{\hyperlink{ttak__compiler_8h_a79e6ab9372fcc255fb4075c4ed8857dd}{00024}}\ \textcolor{preprocessor}{\#\ \ define\ TTAK\_UNLIKELY(x)\ (x)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00025}00025\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00026}00026\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00027}00027\ \textcolor{comment}{/**\ @brief\ Forces\ inlining\ on\ GCC/Clang/MSVC;\ falls\ back\ to\ plain\ inline.\ */}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00028}00028\ \textcolor{preprocessor}{\#if\ defined(\_\_GNUC\_\_)\ ||\ defined(\_\_clang\_\_)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00029}00029\ \textcolor{preprocessor}{\#\ \ define\ TTAK\_FORCE\_INLINE\ static\ inline\ \_\_attribute\_\_((always\_inline))}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00030}00030\ \textcolor{preprocessor}{\#elif\ defined(\_MSC\_VER)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00031}00031\ \textcolor{preprocessor}{\#\ \ define\ TTAK\_FORCE\_INLINE\ static\ \_\_forceinline}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00032}00032\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00033}\mbox{\hyperlink{ttak__compiler_8h_a7759c1f89dd694da3576024767572ddc}{00033}}\ \textcolor{preprocessor}{\#\ \ define\ TTAK\_FORCE\_INLINE\ static\ inline}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00034}00034\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00035}00035\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00036}00036\ \textcolor{comment}{/**\ @brief\ Suppresses\ unused-\/variable\ warnings\ portably.\ */}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00037}00037\ \textcolor{preprocessor}{\#if\ defined(\_\_GNUC\_\_)\ ||\ defined(\_\_clang\_\_)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00038}00038\ \textcolor{preprocessor}{\#\ \ define\ TTAK\_MAYBE\_UNUSED\ \_\_attribute\_\_((unused))}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00039}00039\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00040}\mbox{\hyperlink{ttak__compiler_8h_a0473b234ca3f1d4765266d0515b288da}{00040}}\ \textcolor{preprocessor}{\#\ \ define\ TTAK\_MAYBE\_UNUSED}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00041}00041\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00043}00043\ \textcolor{preprocessor}{\#if\ !defined(\_\_GNUC\_\_)\ \&\&\ !defined(\_\_clang\_\_)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00044}\mbox{\hyperlink{ttak__compiler_8h_a57c438c3efdb8824d6f208df9c25d47e}{00044}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{ttak__compiler_8h_a57c438c3efdb8824d6f208df9c25d47e}{\_\_ttak\_ctzll}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ v)\ \{}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00045}00045\ \ \ \ \ \textcolor{keywordtype}{int}\ r\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00046}00046\ \ \ \ \ \textcolor{keywordflow}{if}\ (!v)\ \textcolor{keywordflow}{return}\ 64;}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00047}00047\ \ \ \ \ \textcolor{keywordflow}{while}\ (!(v\ \&\ 1))\ \{\ v\ >>=\ 1;\ r++;\ \}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00048}00048\ \ \ \ \ \textcolor{keywordflow}{return}\ r;}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00049}00049\ \}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00050}\mbox{\hyperlink{ttak__compiler_8h_a973a1217d00a575f1d04db14c4ad3298}{00050}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{ttak__compiler_8h_a973a1217d00a575f1d04db14c4ad3298}{\_\_ttak\_clzll}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ v)\ \{}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00051}00051\ \ \ \ \ \textcolor{keywordtype}{int}\ r\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00052}00052\ \ \ \ \ \textcolor{keywordflow}{if}\ (!v)\ \textcolor{keywordflow}{return}\ 64;}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00053}00053\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 63;\ i\ >=\ 0;\ i-\/-\/)\ \{}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00054}00054\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (v\ \&\ (1ULL\ <<\ i))\ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00055}00055\ \ \ \ \ \ \ \ \ r++;}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00056}00056\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00057}00057\ \ \ \ \ \textcolor{keywordflow}{return}\ r;}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00058}00058\ \}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00059}\mbox{\hyperlink{ttak__compiler_8h_a7127135e8502e259083fbc93d189db9d}{00059}}\ \textcolor{preprocessor}{\#define\ \_\_builtin\_ctzll(x)\ \_\_ttak\_ctzll(x)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00060}\mbox{\hyperlink{ttak__compiler_8h_aded4ba7a8e210443e0f6245a10ee5e5b}{00060}}\ \textcolor{preprocessor}{\#define\ \_\_builtin\_clzll(x)\ \_\_ttak\_clzll(x)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00061}00061\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00063}00063\ \textcolor{preprocessor}{\#if\ defined(\_\_TINYC\_\_)\ \&\&\ defined(\_\_x86\_64\_\_)}\textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00064}00064\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00065}00065\ \textcolor{comment}{\ *\ Optimized\ atomic\ operations\ for\ TinyC\ Compiler\ on\ x86\_64.}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00066}00066\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00067}00067\ \textcolor{comment}{\ *\ Provides\ inline\ assembly\ implementations\ to\ bypass\ standard\ library\ }}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00068}00068\ \textcolor{comment}{\ *\ overhead\ for\ common\ atomic\ patterns.}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00069}00069\ \textcolor{comment}{\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00070}00070\ \textcolor{preprocessor}{\#define\ TTAK\_FAST\_ATOMIC\_ADD\_U64(ptr,\ val)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00071}00071\ \textcolor{preprocessor}{\ \ \ \ \_\_extension\_\_\ (\{\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00072}00072\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ uint64\_t\ \_\_v\ =\ (val);\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00073}00073\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \_\_asm\_\_\ volatile\ ("{}lock;\ xaddq\ \%0,\ \%1"{}\ :\ "{}+r"{}(\_\_v),\ "{}+m"{}(*(volatile\ uint64\_t\ *)(ptr))\ :\ :\ "{}memory"{},\ "{}cc"{});\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00074}00074\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \_\_v;\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00075}00075\ \textcolor{preprocessor}{\ \ \ \ \})}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00076}00076\ }
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00077}00077\ \textcolor{preprocessor}{\#define\ TTAK\_FAST\_ATOMIC\_ADD\_U32(ptr,\ val)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00078}00078\ \textcolor{preprocessor}{\ \ \ \ \_\_extension\_\_\ (\{\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00079}00079\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ uint32\_t\ \_\_v\ =\ (val);\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00080}00080\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \_\_asm\_\_\ volatile\ ("{}lock;\ xaddl\ \%0,\ \%1"{}\ :\ "{}+r"{}(\_\_v),\ "{}+m"{}(*(volatile\ uint32\_t\ *)(ptr))\ :\ :\ "{}memory"{},\ "{}cc"{});\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00081}00081\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \_\_v;\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00082}00082\ \textcolor{preprocessor}{\ \ \ \ \})}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00083}00083\ }
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00084}00084\ \textcolor{preprocessor}{\#define\ TTAK\_FAST\_ATOMIC\_LOAD\_U64(ptr)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00085}00085\ \textcolor{preprocessor}{\ \ \ \ \_\_extension\_\_\ (\{\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00086}00086\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ uint64\_t\ \_\_v;\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00087}00087\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \_\_asm\_\_\ volatile\ ("{}movq\ \%1,\ \%0"{}\ :\ "{}=r"{}(\_\_v)\ :\ "{}m"{}(*(volatile\ uint64\_t\ *)(ptr))\ :\ "{}memory"{});\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00088}00088\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \_\_v;\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00089}00089\ \textcolor{preprocessor}{\ \ \ \ \})}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00091}00091\ \textcolor{preprocessor}{\#define\ TTAK\_FAST\_ATOMIC\_STORE\_U32(ptr,\ val)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00092}00092\ \textcolor{preprocessor}{\ \ \ \ \_\_extension\_\_\ (\{\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00093}00093\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ uint32\_t\ \_\_v\ =\ (val);\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00094}00094\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \_\_asm\_\_\ volatile\ ("{}movl\ \%1,\ \%0"{}\ :\ "{}=m"{}(*(volatile\ uint32\_t\ *)(ptr))\ :\ "{}r"{}(\_\_v)\ :\ "{}memory"{});\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00095}00095\ \textcolor{preprocessor}{\ \ \ \ \})}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00096}00096\ }
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00097}00097\ \textcolor{preprocessor}{\#define\ TTAK\_FAST\_ATOMIC\_STORE\_BOOL(ptr,\ val)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00098}00098\ \textcolor{preprocessor}{\ \ \ \ \_\_extension\_\_\ (\{\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00099}00099\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ uint8\_t\ \_\_v\ =\ (val);\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00100}00100\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \_\_asm\_\_\ volatile\ ("{}movb\ \%1,\ \%0"{}\ :\ "{}=m"{}(*(volatile\ uint8\_t\ *)(ptr))\ :\ "{}r"{}(\_\_v)\ :\ "{}memory"{});\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00101}00101\ \textcolor{preprocessor}{\ \ \ \ \})}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00102}00102\ }
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00103}00103\ \textcolor{preprocessor}{\#define\ TTAK\_FAST\_ATOMIC\_XCHG\_U64(ptr,\ val)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00104}00104\ \textcolor{preprocessor}{\ \ \ \ \_\_extension\_\_\ (\{\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00105}00105\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ uint64\_t\ \_\_v\ =\ (val);\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00106}00106\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \_\_asm\_\_\ volatile\ ("{}lock;\ xchgq\ \%0,\ \%1"{}\ :\ "{}+r"{}(\_\_v),\ "{}+m"{}(*(volatile\ uint64\_t\ *)(ptr))\ :\ :\ "{}memory"{});\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00107}00107\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \_\_v;\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00108}00108\ \textcolor{preprocessor}{\ \ \ \ \})}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00109}00109\ }
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00110}00110\ \textcolor{preprocessor}{\#elif\ defined(\_\_TINYC\_\_)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00111}00111\ \textcolor{preprocessor}{\#include\ <stdatomic.h>}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00112}00112\ \textcolor{preprocessor}{\#define\ TTAK\_FAST\_ATOMIC\_ADD\_U64(ptr,\ val)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00113}00113\ \textcolor{preprocessor}{\ \ \ \ atomic\_fetch\_add\_explicit((\_Atomic\ uint64\_t\ *)(ptr),\ (uint64\_t)(val),\ memory\_order\_relaxed)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00114}00114\ \textcolor{preprocessor}{\#define\ TTAK\_FAST\_ATOMIC\_ADD\_U32(ptr,\ val)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00115}00115\ \textcolor{preprocessor}{\ \ \ \ atomic\_fetch\_add\_explicit((\_Atomic\ uint32\_t\ *)(ptr),\ (uint32\_t)(val),\ memory\_order\_relaxed)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00116}00116\ \textcolor{preprocessor}{\#define\ TTAK\_FAST\_ATOMIC\_LOAD\_U64(ptr)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00117}00117\ \textcolor{preprocessor}{\ \ \ \ atomic\_load\_explicit((\_Atomic\ uint64\_t\ *)(ptr),\ memory\_order\_relaxed)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00118}00118\ \textcolor{preprocessor}{\#define\ TTAK\_FAST\_ATOMIC\_STORE\_U32(ptr,\ val)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00119}00119\ \textcolor{preprocessor}{\ \ \ \ atomic\_store\_explicit((\_Atomic\ uint32\_t\ *)(ptr),\ (uint32\_t)(val),\ memory\_order\_relaxed)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00120}00120\ \textcolor{preprocessor}{\#define\ TTAK\_FAST\_ATOMIC\_STORE\_BOOL(ptr,\ val)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00121}00121\ \textcolor{preprocessor}{\ \ \ \ atomic\_store\_explicit((\_Atomic\ uint64\_t\ *)(ptr),\ (uint64\_t)((val)\ ?\ 1\ :\ 0),\ memory\_order\_relaxed)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00122}00122\ \textcolor{preprocessor}{\#define\ TTAK\_FAST\_ATOMIC\_XCHG\_U64(ptr,\ val)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00123}00123\ \textcolor{preprocessor}{\ \ \ \ atomic\_exchange\_explicit((\_Atomic\ uint64\_t\ *)(ptr),\ (uint64\_t)(val),\ memory\_order\_relaxed)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00124}00124\ }
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00125}00125\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00126}00126\ \textcolor{preprocessor}{\#include\ <stdatomic.h>}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00127}\mbox{\hyperlink{ttak__compiler_8h_a966b919194eba8b9581f0dead8effecf}{00127}}\ \textcolor{preprocessor}{\#define\ TTAK\_FAST\_ATOMIC\_ADD\_U64(ptr,\ val)\ \_\_atomic\_fetch\_add((ptr),\ (val),\ \_\_ATOMIC\_RELAXED)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00128}\mbox{\hyperlink{ttak__compiler_8h_ad8f1611e566fbff0e2d7920e9fe59130}{00128}}\ \textcolor{preprocessor}{\#define\ TTAK\_FAST\_ATOMIC\_ADD\_U32(ptr,\ val)\ \_\_atomic\_fetch\_add((ptr),\ (val),\ \_\_ATOMIC\_RELAXED)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00129}\mbox{\hyperlink{ttak__compiler_8h_a326daeea4d60d85414964232a072e4a2}{00129}}\ \textcolor{preprocessor}{\#define\ TTAK\_FAST\_ATOMIC\_LOAD\_U64(ptr)\ \_\_atomic\_load\_n((ptr),\ \_\_ATOMIC\_RELAXED)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00130}\mbox{\hyperlink{ttak__compiler_8h_aa11c9b38f427e8f89e998fa977348ecf}{00130}}\ \textcolor{preprocessor}{\#define\ TTAK\_FAST\_ATOMIC\_STORE\_U32(ptr,\ val)\ \_\_atomic\_store\_n((ptr),\ (val),\ \_\_ATOMIC\_RELAXED)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00131}\mbox{\hyperlink{ttak__compiler_8h_ad7643c1ada5cdb5ad3ee1a144bf9a9ed}{00131}}\ \textcolor{preprocessor}{\#define\ TTAK\_FAST\_ATOMIC\_STORE\_BOOL(ptr,\ val)\ \_\_atomic\_store\_n((ptr),\ (val),\ \_\_ATOMIC\_RELAXED)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00132}\mbox{\hyperlink{ttak__compiler_8h_a9b4039c7fdcd18fc5d6f0183a78052c6}{00132}}\ \textcolor{preprocessor}{\#define\ TTAK\_FAST\_ATOMIC\_XCHG\_U64(ptr,\ val)\ \_\_atomic\_exchange\_n((ptr),\ (val),\ \_\_ATOMIC\_RELAXED)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00133}00133\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00134}00134\ }
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00135}00135\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ TTAK\_COMPILER\_H\ */}\textcolor{preprocessor}{}}
 
 \end{DoxyCode}

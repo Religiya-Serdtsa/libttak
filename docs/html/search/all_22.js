@@ -1,15 +1,21 @@
 var searchData=
 [
-  ['walkthrough_0',['Code Walkthrough',['..//home/yjlee/libttak/tutorials/38-ebr-shared/README.md#autotoc_md138',1,'']]],
-  ['what_20happened_1',['What happened?',['..//home/yjlee/libttak/tutorials/43-bigscript/01-getting-started/README.md#autotoc_md160',1,'']]],
-  ['what_20you_20will_20do_2',['What you will do',['..//home/yjlee/libttak/tutorials/01-getting-started/README.md#autotoc_md47',1,'']]],
-  ['why_20_24o_201_20_24_3',['Why $O(1)$?',['..//home/yjlee/libttak/tutorials/37-shared-memory-ownership/README.md#autotoc_md128',1,'']]],
-  ['why_20it_20is_20dangerous_4',['Why it is dangerous',['..//home/yjlee/libttak/tutorials/DANGEROUS/README.md#autotoc_md196',1,'']]],
-  ['why_20libttak_5',['Why LibTTAK?',['..//home/yjlee/libttak/README.md#autotoc_md31',1,'']]],
-  ['why_20this_20matters_6',['Why this matters?',['..//home/yjlee/libttak/tutorials/36-trace-memory/README.md#autotoc_md123',1,'']]],
-  ['will_20do_7',['What you will do',['..//home/yjlee/libttak/tutorials/01-getting-started/README.md#autotoc_md47',1,'']]],
-  ['worker_2eh_8',['worker.h',['../worker_8h.html',1,'']]],
-  ['workers_9',['workers',['../structttak__thread__pool.html#ab6f0dc625cc83c204a3ad9964fe955d3',1,'ttak_thread_pool']]],
-  ['workspace_10',['workspace',['..//home/yjlee/libttak/tutorials/39-detachable-memory/README.md#autotoc_md141',1,'Repo Workspace'],['..//home/yjlee/libttak/tutorials/40-arena-memory/README.md#autotoc_md146',1,'Repo Workspace'],['..//home/yjlee/libttak/tutorials/42-io-guarded-streams/README.md#autotoc_md154',1,'Repo Workspace']]],
-  ['wrapper_11',['wrapper',['../structttak__worker.html#aa43969e853405f2ce3da99a15dc305a9',1,'ttak_worker']]]
+  ['walking_0',['Tutorial 29 – AST Walking',['..//home/yjlee/libttak/tutorials/29-ast-walking/README.md#autotoc_md105',1,'']]],
+  ['walkthrough_1',['Code Walkthrough',['..//home/yjlee/libttak/tutorials/38-ebr-shared/README.md#autotoc_md139',1,'']]],
+  ['what_20happened_2',['What happened?',['..//home/yjlee/libttak/tutorials/43-bigscript/01-getting-started/README.md#autotoc_md161',1,'']]],
+  ['what_20you_20will_20do_3',['What you will do',['..//home/yjlee/libttak/tutorials/01-getting-started/README.md#autotoc_md48',1,'']]],
+  ['why_20_24o_201_20_24_4',['Why $O(1)$?',['..//home/yjlee/libttak/tutorials/37-shared-memory-ownership/README.md#autotoc_md129',1,'']]],
+  ['why_20it_20is_20dangerous_5',['Why it is dangerous',['..//home/yjlee/libttak/tutorials/DANGEROUS/README.md#autotoc_md197',1,'']]],
+  ['why_20libttak_6',['Why LibTTAK?',['../index.html#autotoc_md32',1,'']]],
+  ['why_20this_20matters_7',['Why this matters?',['..//home/yjlee/libttak/tutorials/36-trace-memory/README.md#autotoc_md124',1,'']]],
+  ['will_20do_8',['What you will do',['..//home/yjlee/libttak/tutorials/01-getting-started/README.md#autotoc_md48',1,'']]],
+  ['with_20bigscript_9',['01 - Getting Started with BigScript',['..//home/yjlee/libttak/tutorials/43-bigscript/01-getting-started/README.md#autotoc_md158',1,'']]],
+  ['with_20bitmap_20ownership_10',['Lesson 37: Shared Memory with Bitmap Ownership',['..//home/yjlee/libttak/tutorials/37-shared-memory-ownership/README.md#autotoc_md125',1,'']]],
+  ['worker_20ownership_11',['Tutorial 13 – Worker Ownership',['..//home/yjlee/libttak/tutorials/13-worker-ownership/README.md#autotoc_md72',1,'']]],
+  ['worker_2eh_12',['worker.h',['../worker_8h.html',1,'']]],
+  ['workers_13',['workers',['../structttak__thread__pool.html#ab6f0dc625cc83c204a3ad9964fe955d3',1,'ttak_thread_pool']]],
+  ['workflow_14',['Tutorial 02 – Helper Workflow',['..//home/yjlee/libttak/tutorials/02-helper-workflow/README.md#autotoc_md51',1,'']]],
+  ['workspace_15',['Workspace',['..//home/yjlee/libttak/tutorials/39-detachable-memory/README.md#autotoc_md142',1,'Repo Workspace'],['..//home/yjlee/libttak/tutorials/40-arena-memory/README.md#autotoc_md147',1,'Repo Workspace'],['..//home/yjlee/libttak/tutorials/42-io-guarded-streams/README.md#autotoc_md155',1,'Repo Workspace']]],
+  ['wrapper_16',['wrapper',['../structttak__worker.html#aa43969e853405f2ce3da99a15dc305a9',1,'ttak_worker']]],
+  ['wyhash_2eh_17',['wyhash.h',['../wyhash_8h.html',1,'']]]
 ];

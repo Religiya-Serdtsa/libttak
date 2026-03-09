@@ -1,4 +1,5 @@
 <map id="_ttak_wyr4" name="_ttak_wyr4">
-<area shape="rect" id="node1" title=" " alt="" coords="149,5,236,32"/>
-<area shape="rect" id="node2" href="$wyhash_8h.html#a0e377b29f348982f5cdd54746e615972" title=" " alt="" coords="5,5,101,32"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="158,5,251,33"/>
+<area shape="rect" id="Node000002" href="$wyhash_8h.html#a0e377b29f348982f5cdd54746e615972" title=" " alt="" coords="5,5,110,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="142,22,110,22,110,16,142,16"/>
 </map>

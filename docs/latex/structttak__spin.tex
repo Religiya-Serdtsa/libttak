@@ -1,5 +1,5 @@
-\hypertarget{structttak__spin}{}\doxysection{ttak\+\_\+spin Struct Reference}
-\label{structttak__spin}\index{ttak\_spin@{ttak\_spin}}
+\doxysection{ttak\+\_\+spin Struct Reference}
+\hypertarget{structttak__spin}{}\label{structttak__spin}\index{ttak\_spin@{ttak\_spin}}
 
 
 Spinlock structure.  
@@ -16,10 +16,10 @@ Collaboration diagram for ttak\+\_\+spin\+:
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=147pt]{structttak__spin__coll__graph}
+\includegraphics[width=153pt]{structttak__spin__coll__graph}
 \end{center}
 \end{figure}
-\doxysubsection*{Public Attributes}
+\doxysubsubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
 volatile \mbox{\hyperlink{structatomic__flag}{atomic\+\_\+flag}} \mbox{\hyperlink{structttak__spin_a33d3c246a2db2f9c8bee949d6cdf07b7}{flag}}
@@ -31,20 +31,22 @@ Spinlock structure.
 
 Uses an atomic flag for mutual exclusion. Prefer this over mutexes for very short critical sections. 
 
-Definition at line 46 of file spinlock.\+h.
+Definition at line \mbox{\hyperlink{spinlock_8h_source_l00046}{46}} of file \mbox{\hyperlink{spinlock_8h_source}{spinlock.\+h}}.
 
 
 
+\label{doc-variable-members}
+\Hypertarget{structttak__spin_doc-variable-members}
 \doxysubsection{Member Data Documentation}
-\mbox{\Hypertarget{structttak__spin_a33d3c246a2db2f9c8bee949d6cdf07b7}\label{structttak__spin_a33d3c246a2db2f9c8bee949d6cdf07b7}} 
-\index{ttak\_spin@{ttak\_spin}!flag@{flag}}
+\Hypertarget{structttak__spin_a33d3c246a2db2f9c8bee949d6cdf07b7}\index{ttak\_spin@{ttak\_spin}!flag@{flag}}
 \index{flag@{flag}!ttak\_spin@{ttak\_spin}}
 \doxysubsubsection{\texorpdfstring{flag}{flag}}
-{\footnotesize\ttfamily volatile \mbox{\hyperlink{structatomic__flag}{atomic\+\_\+flag}} ttak\+\_\+spin\+::flag}
+{\footnotesize\ttfamily \label{structttak__spin_a33d3c246a2db2f9c8bee949d6cdf07b7} 
+volatile \mbox{\hyperlink{structatomic__flag}{atomic\+\_\+flag}} ttak\+\_\+spin\+::flag}
 
 Atomic flag (TAS). 
 
-Definition at line 47 of file spinlock.\+h.
+Definition at line \mbox{\hyperlink{spinlock_8h_source_l00047}{47}} of file \mbox{\hyperlink{spinlock_8h_source}{spinlock.\+h}}.
 
 
 

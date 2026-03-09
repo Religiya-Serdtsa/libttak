@@ -1,2 +1,23 @@
-\hypertarget{dir_a23fa9b7d39d4daa14d3282961c9b9d0}{}\doxysection{tutorials/22-\/mem-\/tree Directory Reference}
-\label{dir_a23fa9b7d39d4daa14d3282961c9b9d0}\index{tutorials/22-\/mem-\/tree Directory Reference@{tutorials/22-\/mem-\/tree Directory Reference}}
+\doxysection{tutorials/22-\/mem-\/tree Directory Reference}
+\hypertarget{dir_a23fa9b7d39d4daa14d3282961c9b9d0}{}\label{dir_a23fa9b7d39d4daa14d3282961c9b9d0}\index{tutorials/22-\/mem-\/tree Directory Reference@{tutorials/22-\/mem-\/tree Directory Reference}}
+Directory dependency graph for 22-\/mem-\/tree\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=194pt]{dir_a23fa9b7d39d4daa14d3282961c9b9d0_dep}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Detailed Description}
+\hypertarget{README.md_autotoc_md90}{}\doxysubsection{\texorpdfstring{Tutorial 22 – Mem Tree}{Tutorial 22 – Mem Tree}}\label{README.md_autotoc_md90}
+Just like the lesson in {\ttfamily modules/22-\/mem-\/tree}, this workspace is for the tracking tree built inside {\ttfamily src/mem\+\_\+tree/mem\+\_\+tree.\+c}.
+
+{\ttfamily lesson22\+\_\+mem\+\_\+tree.\+c} stores and removes tracked nodes; build/run it to visualize how nodes move through the tree.\hypertarget{README.md_autotoc_md91}{}\doxysubsection{\texorpdfstring{Checklist}{Checklist}}\label{README.md_autotoc_md91}
+
+\begin{DoxyEnumerate}
+\item Outline the responsibilities of {\ttfamily \doxylink{mem__tree_8h_a247fb2ceb1803d4d3ad077d0785cc858}{ttak\+\_\+mem\+\_\+tree\+\_\+t}} (ordering by expiration, safe iteration) and keep the drawing nearby.
+\item Rebuild {\ttfamily ttak\+\_\+mem\+\_\+tree\+\_\+init/add/remove/destroy} along with the helper that prunes expired nodes.
+\item Because there is no dedicated automated test, lean on the lesson driver or a custom unit to validate insertion/removal orderings.
+\item Document how you verified the tree stays balanced and how you avoided double-\/free scenarios. 
+\end{DoxyEnumerate}

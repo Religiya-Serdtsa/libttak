@@ -2,44 +2,66 @@
 \hypertarget{hash_8h_source}{}\label{hash_8h_source}\index{include/ttak/ht/hash.h@{include/ttak/ht/hash.h}}
 \mbox{\hyperlink{hash_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\Hypertarget{hash_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ \_\_TTAK\_HASH\_H\_\_}}
-\DoxyCodeLine{\Hypertarget{hash_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ \_\_TTAK\_HASH\_H\_\_}}
-\DoxyCodeLine{\Hypertarget{hash_8h_source_l00003}00003\ }
-\DoxyCodeLine{\Hypertarget{hash_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
-\DoxyCodeLine{\Hypertarget{hash_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
-\DoxyCodeLine{\Hypertarget{hash_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <stdalign.h>}}
-\DoxyCodeLine{\Hypertarget{hash_8h_source_l00007}00007\ }
-\DoxyCodeLine{\Hypertarget{hash_8h_source_l00008}\mbox{\hyperlink{hash_8h_a2b7cf2a3641be7b89138615764d60ba3}{00008}}\ \textcolor{preprocessor}{\#define\ EMPTY\ \ \ \ 0x00}}
-\DoxyCodeLine{\Hypertarget{hash_8h_source_l00009}\mbox{\hyperlink{hash_8h_ab792dfd97ab00abb6a5fc20191a9e952}{00009}}\ \textcolor{preprocessor}{\#define\ DELETED\ \ 0xDE}}
-\DoxyCodeLine{\Hypertarget{hash_8h_source_l00010}\mbox{\hyperlink{hash_8h_a217ad8485de2dcca79110f37d4da9688}{00010}}\ \textcolor{preprocessor}{\#define\ OCCUPIED\ 0x0C}}
-\DoxyCodeLine{\Hypertarget{hash_8h_source_l00011}00011\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{hash_8h_source_l00012}00012\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{hash_8h_source_l00013}00013\ \textcolor{comment}{\ *\ @brief\ Node\ structure\ with\ max\_align\_t\ padding\ for\ Raspberry\ Pi\ compatibility.}}
-\DoxyCodeLine{\Hypertarget{hash_8h_source_l00014}00014\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{hash_8h_source_l00015}\mbox{\hyperlink{struct__node}{00015}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct__node}{\_node}}\ \{}
-\DoxyCodeLine{\Hypertarget{hash_8h_source_l00016}\mbox{\hyperlink{struct__node_aad32bd6ffdfed0a3bf4bfdde4ede2218}{00016}}\ \ \ \ \ uintptr\_t\ \mbox{\hyperlink{struct__node_aad32bd6ffdfed0a3bf4bfdde4ede2218}{key}};}
-\DoxyCodeLine{\Hypertarget{hash_8h_source_l00017}\mbox{\hyperlink{struct__node_aac33312d6f7d63df74ad38d3d6fb0166}{00017}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \ \ \ \mbox{\hyperlink{struct__node_aac33312d6f7d63df74ad38d3d6fb0166}{value}};}
-\DoxyCodeLine{\Hypertarget{hash_8h_source_l00018}\mbox{\hyperlink{struct__node_ae3f8bb98545485738428f81dfcf6a14b}{00018}}\ \ \ \ \ uint8\_t\ \ \ \mbox{\hyperlink{struct__node_ae3f8bb98545485738428f81dfcf6a14b}{ctrl}};}
-\DoxyCodeLine{\Hypertarget{hash_8h_source_l00019}00019\ \textcolor{preprocessor}{\#ifndef\ \_MSC\_VER}}
-\DoxyCodeLine{\Hypertarget{hash_8h_source_l00020}\mbox{\hyperlink{struct__node_a0bc4ccf390e9a7c9395184d1c51e9172}{00020}}\ \ \ \ \ \textcolor{keyword}{alignas}(max\_align\_t)\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{struct__node_a0bc4ccf390e9a7c9395184d1c51e9172}{padding}}[0];\ }
-\DoxyCodeLine{\Hypertarget{hash_8h_source_l00021}00021\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{\Hypertarget{hash_8h_source_l00022}\mbox{\hyperlink{hash_8h_a39cea30a6762653587526256ec50c847}{00022}}\ \}\ \mbox{\hyperlink{hash_8h_a39cea30a6762653587526256ec50c847}{ttak\_node\_t}};}
-\DoxyCodeLine{\Hypertarget{hash_8h_source_l00023}00023\ }
-\DoxyCodeLine{\Hypertarget{hash_8h_source_l00024}\mbox{\hyperlink{hash_8h_ab5081f0575ed9a431e1e35e25975dfda}{00024}}\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{struct__node}{ttak\_node\_t}}\ \mbox{\hyperlink{hash_8h_ab5081f0575ed9a431e1e35e25975dfda}{tt\_nd\_t}};}
-\DoxyCodeLine{\Hypertarget{hash_8h_source_l00025}00025\ }
-\DoxyCodeLine{\Hypertarget{hash_8h_source_l00026}\mbox{\hyperlink{structttak__map__t}{00026}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
-\DoxyCodeLine{\Hypertarget{hash_8h_source_l00027}\mbox{\hyperlink{structttak__map__t_ae0f18ce51a303ea84e43faaaf15cda03}{00027}}\ \ \ \ \ \mbox{\hyperlink{struct__node}{ttak\_node\_t}}\ *\mbox{\hyperlink{structttak__map__t_ae0f18ce51a303ea84e43faaaf15cda03}{tbl}};}
-\DoxyCodeLine{\Hypertarget{hash_8h_source_l00028}\mbox{\hyperlink{structttak__map__t_a78c16627c9ef1b90cbaa6ca777a85531}{00028}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \ \ \ \ \ \mbox{\hyperlink{structttak__map__t_a78c16627c9ef1b90cbaa6ca777a85531}{cap}};}
-\DoxyCodeLine{\Hypertarget{hash_8h_source_l00029}\mbox{\hyperlink{structttak__map__t_a8c1be4e04db13c3236fc25ac26d95821}{00029}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \ \ \ \ \ \mbox{\hyperlink{structttak__map__t_a8c1be4e04db13c3236fc25ac26d95821}{size}};}
-\DoxyCodeLine{\Hypertarget{hash_8h_source_l00030}00030\ \textcolor{preprocessor}{\#ifndef\ \_MSC\_VER}}
-\DoxyCodeLine{\Hypertarget{hash_8h_source_l00031}\mbox{\hyperlink{structttak__map__t_adc5832eca0702fc73ce1bac9df5556b8}{00031}}\ \ \ \ \ \textcolor{keyword}{alignas}(max\_align\_t)\ \textcolor{keywordtype}{char}\ padding[0];}
-\DoxyCodeLine{\Hypertarget{hash_8h_source_l00032}00032\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{\Hypertarget{hash_8h_source_l00033}00033\ \}\ \mbox{\hyperlink{structttak__map__t}{ttak\_map\_t}};}
-\DoxyCodeLine{\Hypertarget{hash_8h_source_l00034}00034\ }
-\DoxyCodeLine{\Hypertarget{hash_8h_source_l00035}\mbox{\hyperlink{hash_8h_a1f1a8bb38c53fea315e97508c3d66efd}{00035}}\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{structttak__map__t}{ttak\_map\_t}}\ \mbox{\hyperlink{hash_8h_a1f1a8bb38c53fea315e97508c3d66efd}{tt\_map\_t}};}
-\DoxyCodeLine{\Hypertarget{hash_8h_source_l00036}00036\ }
-\DoxyCodeLine{\Hypertarget{hash_8h_source_l00037}\mbox{\hyperlink{hash_8h_a86c0b717fb0af43c6f5c2232a2efa00f}{00037}}\ uint64\_t\ \mbox{\hyperlink{hash_8h_a86c0b717fb0af43c6f5c2232a2efa00f}{gen\_hash\_sip24}}(uintptr\_t\ key,\ uint64\_t\ k0,\ uint64\_t\ k1);}
-\DoxyCodeLine{\Hypertarget{hash_8h_source_l00038}00038\ }
-\DoxyCodeLine{\Hypertarget{hash_8h_source_l00039}00039\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ \_\_TTAK\_HASH\_H\_\_}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00001}00001\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00002}00002\ \textcolor{comment}{\ *\ @file\ hash.h}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00003}00003\ \textcolor{comment}{\ *\ @brief\ Low-\/level\ open-\/addressing\ hash\ map\ (SoA\ layout)\ with\ SipHash/wyhash.}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00004}00004\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00005}00005\ \textcolor{comment}{\ *\ @c\ ttak\_map\_t\ is\ the\ inner\ SoA\ table\ used\ by\ the\ higher-\/level\ map\ and}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00006}00006\ \textcolor{comment}{\ *\ table\ APIs.\ \ Control\ bytes\ follow\ the\ Swiss-\/table\ convention:}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00007}00007\ \textcolor{comment}{\ *\ @c\ EMPTY\ (0x00),\ @c\ DELETED\ (0xDE),\ @c\ OCCUPIED\ (0x0C).}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00008}00008\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00010}00010\ \textcolor{preprocessor}{\#ifndef\ \_\_TTAK\_HASH\_H\_\_}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00011}00011\ \textcolor{preprocessor}{\#define\ \_\_TTAK\_HASH\_H\_\_}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00014}00014\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00015}00015\ \textcolor{preprocessor}{\#include\ <stdalign.h>}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00016}00016\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{ttak__align_8h}{ttak/types/ttak\_align.h}}>}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00017}00017\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00018}00018\ \textcolor{comment}{/**\ @brief\ Slot\ is\ empty\ and\ was\ never\ used.\ */}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00019}\mbox{\hyperlink{hash_8h_a2b7cf2a3641be7b89138615764d60ba3}{00019}}\ \textcolor{preprocessor}{\#define\ EMPTY\ \ \ \ 0x00}\textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00020}00020\ \textcolor{comment}{/**\ @brief\ Slot\ was\ occupied\ but\ has\ been\ deleted\ (tombstone).\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00021}\mbox{\hyperlink{hash_8h_ab792dfd97ab00abb6a5fc20191a9e952}{00021}}\ \textcolor{preprocessor}{\#define\ DELETED\ \ 0xDE}\textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00022}00022\ \textcolor{comment}{/**\ @brief\ Slot\ holds\ a\ live\ key/value\ pair.\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00023}\mbox{\hyperlink{hash_8h_a217ad8485de2dcca79110f37d4da9688}{00023}}\ \textcolor{preprocessor}{\#define\ OCCUPIED\ 0x0C}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00024}00024\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00025}00025\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00026}00026\ \textcolor{comment}{\ *\ @brief\ Map\ structure\ using\ Structure\ of\ Arrays\ (SoA)\ for\ cache\ efficiency.}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00027}00027\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00028}\mbox{\hyperlink{structttak__map__t}{00028}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00029}\mbox{\hyperlink{structttak__map__t_af2689822b881ed9f02dd10c4352c4654}{00029}}\ \ \ \ \ uint8\_t\ \ \ *\mbox{\hyperlink{structttak__map__t_af2689822b881ed9f02dd10c4352c4654}{ctrls}};\ \ \textcolor{comment}{/**<\ Control\ bytes\ (OCCUPIED,\ EMPTY,\ DELETED)\ */}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00030}\mbox{\hyperlink{structttak__map__t_a7b9d73c301a2413f2cfe5cebe22b1695}{00030}}\ \ \ \ \ uintptr\_t\ *\mbox{\hyperlink{structttak__map__t_a7b9d73c301a2413f2cfe5cebe22b1695}{keys}};\ \ \ \textcolor{comment}{/**<\ Keys\ array\ */}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00031}\mbox{\hyperlink{structttak__map__t_a8d932ec292049d6be322cae0ff3407e2}{00031}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \ \ \ *\mbox{\hyperlink{structttak__map__t_a8d932ec292049d6be322cae0ff3407e2}{values}};\ \textcolor{comment}{/**<\ Values\ array\ */}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00032}\mbox{\hyperlink{structttak__map__t_a78c16627c9ef1b90cbaa6ca777a85531}{00032}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \ \ \ \mbox{\hyperlink{structttak__map__t_a78c16627c9ef1b90cbaa6ca777a85531}{cap}};\ \ \ \ \ \textcolor{comment}{/**<\ Capacity\ (must\ be\ power\ of\ two)\ */}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00033}\mbox{\hyperlink{structttak__map__t_a8c1be4e04db13c3236fc25ac26d95821}{00033}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \ \ \ \mbox{\hyperlink{structttak__map__t_a8c1be4e04db13c3236fc25ac26d95821}{size}};\ \ \ \ \textcolor{comment}{/**<\ Number\ of\ occupied\ slots\ */}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00034}\mbox{\hyperlink{structttak__map__t_aed914aac9adb94fc2b28492f4bca5fd7}{00034}}\ \ \ \ \ uint64\_t\ \ \mbox{\hyperlink{structttak__map__t_aed914aac9adb94fc2b28492f4bca5fd7}{seed}};\ \ \ \ \textcolor{comment}{/**<\ Seed\ for\ wyhash\ */}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00035}00035\ \textcolor{preprocessor}{\#ifndef\ \_MSC\_VER}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00036}\mbox{\hyperlink{structttak__map__t_adc5832eca0702fc73ce1bac9df5556b8}{00036}}\ \ \ \ \ \textcolor{keyword}{alignas}(\mbox{\hyperlink{ttak__align_8h_a57fbdeca2fdfd0ec356c5d1fa8aba7e3}{ttak\_max\_align\_t}})\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{structttak__map__t_adc5832eca0702fc73ce1bac9df5556b8}{padding}}[0];}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00037}00037\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00038}00038\ \}\ \mbox{\hyperlink{structttak__map__t}{ttak\_map\_t}};}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00040}\mbox{\hyperlink{hash_8h_a1f1a8bb38c53fea315e97508c3d66efd}{00040}}\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{structttak__map__t}{ttak\_map\_t}}\ \mbox{\hyperlink{hash_8h_a1f1a8bb38c53fea315e97508c3d66efd}{tt\_map\_t}};}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00041}00041\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00042}00042\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00043}00043\ \textcolor{comment}{\ *\ @brief\ Computes\ a\ 64-\/bit\ SipHash-\/2-\/4\ digest\ of\ a\ single\ uintptr\_t\ key.}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00044}00044\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00045}00045\ \textcolor{comment}{\ *\ @param\ key\ \ Key\ to\ hash.}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00046}00046\ \textcolor{comment}{\ *\ @param\ k0\ \ \ First\ half\ of\ the\ 128-\/bit\ SipHash\ seed.}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00047}00047\ \textcolor{comment}{\ *\ @param\ k1\ \ \ Second\ half\ of\ the\ 128-\/bit\ SipHash\ seed.}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00048}00048\ \textcolor{comment}{\ *\ @return\ \ \ \ \ 64-\/bit\ digest.}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00049}00049\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00050}\mbox{\hyperlink{hash_8h_a86c0b717fb0af43c6f5c2232a2efa00f}{00050}}\ uint64\_t\ \mbox{\hyperlink{hash_8h_a86c0b717fb0af43c6f5c2232a2efa00f}{gen\_hash\_sip24}}(uintptr\_t\ key,\ uint64\_t\ k0,\ uint64\_t\ k1);}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00051}00051\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00052}00052\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00053}00053\ \textcolor{comment}{\ *\ @brief\ Computes\ a\ 64-\/bit\ wyhash\ digest\ of\ a\ single\ uintptr\_t\ key.}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00054}00054\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00055}00055\ \textcolor{comment}{\ *\ @param\ key\ \ Key\ to\ hash.}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00056}00056\ \textcolor{comment}{\ *\ @param\ seed\ wyhash\ seed.}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00057}00057\ \textcolor{comment}{\ *\ @return\ \ \ \ \ 64-\/bit\ digest.}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00058}00058\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00059}\mbox{\hyperlink{hash_8h_a179c0ac27cec5394397f94cca05cb07d}{00059}}\ uint64\_t\ \mbox{\hyperlink{hash_8h_a179c0ac27cec5394397f94cca05cb07d}{gen\_hash\_wyhash}}(uintptr\_t\ key,\ uint64\_t\ seed);}
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{hash_8h_source_l00061}00061\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ \_\_TTAK\_HASH\_H\_\_}}
 
 \end{DoxyCode}

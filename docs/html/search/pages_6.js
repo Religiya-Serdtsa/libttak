@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['math_20tuning_0',['TCC-Oriented Build and Math Tuning',['../md_docs_2TCC__OPTIMIZATION.html',1,'']]]
+  ['5_20–_20memory_20systems_0',['Stage 5 – Memory Systems',['../md_tutorials_2CLONE__PATH.html#autotoc_md188',1,'']]]
 ];

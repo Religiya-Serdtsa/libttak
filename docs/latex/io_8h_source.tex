@@ -2,94 +2,119 @@
 \hypertarget{io_8h_source}{}\label{io_8h_source}\index{include/ttak/io/io.h@{include/ttak/io/io.h}}
 \mbox{\hyperlink{io_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ TTAK\_IO\_IO\_H}}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ TTAK\_IO\_IO\_H}}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00003}00003\ }
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00007}00007\ }
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{owner_8h}{ttak/mem/owner.h}}>}}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{detachable_8h}{ttak/mem/detachable.h}}>}}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{timing_8h}{ttak/timing/timing.h}}>}}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00011}00011\ }
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00012}00012\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00013}00013\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00014}00014\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00015}00015\ }
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00016}\mbox{\hyperlink{io_8h_a4c5731f8c7bf69338c8fba54e58f3109}{00016}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{io_8h_a4c5731f8c7bf69338c8fba54e58f3109}{ttak\_io\_status}}\ \{}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00017}\mbox{\hyperlink{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a67cc2be6d1693662e59ca19f14c6ff31}{00017}}\ \ \ \ \ \mbox{\hyperlink{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a67cc2be6d1693662e59ca19f14c6ff31}{TTAK\_IO\_SUCCESS}}\ =\ 0,}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00018}\mbox{\hyperlink{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a54de52442b04580a6239efda00de1e3b}{00018}}\ \ \ \ \ \mbox{\hyperlink{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a54de52442b04580a6239efda00de1e3b}{TTAK\_IO\_ERR\_INVALID\_ARGUMENT}},}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00019}\mbox{\hyperlink{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a426a6f812b233e797056f485fd985740}{00019}}\ \ \ \ \ \mbox{\hyperlink{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a426a6f812b233e797056f485fd985740}{TTAK\_IO\_ERR\_EXPIRED\_GUARD}},}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00020}\mbox{\hyperlink{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a2c185f6d7153f021168e9ace782f7ebf}{00020}}\ \ \ \ \ \mbox{\hyperlink{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a2c185f6d7153f021168e9ace782f7ebf}{TTAK\_IO\_ERR\_SYS\_FAILURE}},}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00021}\mbox{\hyperlink{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a4daa069a8f600416376c6ced88c18b23}{00021}}\ \ \ \ \ \mbox{\hyperlink{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a4daa069a8f600416376c6ced88c18b23}{TTAK\_IO\_ERR\_RANGE}},}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00022}00022\ \ \ \ \ \mbox{\hyperlink{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a879188f5579cf0ad3c6c6312d32de652}{TTAK\_IO\_ERR\_NEEDS\_RETRY}}}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00023}\mbox{\hyperlink{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a879188f5579cf0ad3c6c6312d32de652}{00023}}\ \}\ \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\_io\_status\_t}};}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00024}00024\ }
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00025}\mbox{\hyperlink{io_8h_a4b16199a2071984f634a8da16869da1a}{00025}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{io_8h_a4b16199a2071984f634a8da16869da1a}{ttak\_io\_buffer\_mode}}\ \{}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00026}\mbox{\hyperlink{io_8h_a4b16199a2071984f634a8da16869da1aadb545676a09a26986c7e34e40727b77c}{00026}}\ \ \ \ \ \mbox{\hyperlink{io_8h_a4b16199a2071984f634a8da16869da1aadb545676a09a26986c7e34e40727b77c}{TTAK\_IO\_BUFFER\_READ}}\ =\ 0,}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00027}00027\ \ \ \ \ \mbox{\hyperlink{io_8h_a4b16199a2071984f634a8da16869da1aafedfb190441a126a1c8ab2087ba77960}{TTAK\_IO\_BUFFER\_WRITE}}\ =\ 1}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00028}\mbox{\hyperlink{io_8h_a3df6d51462672ec9a7b6d89fedd141c7}{00028}}\ \}\ \mbox{\hyperlink{io_8h_a3df6d51462672ec9a7b6d89fedd141c7}{ttak\_io\_buffer\_mode\_t}};}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00029}00029\ }
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00030}\mbox{\hyperlink{structttak__io__buffer}{00030}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__io__buffer}{ttak\_io\_buffer}}\ \{}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00031}\mbox{\hyperlink{structttak__io__buffer_abeac8d53c1de043be4324d1958ec4096}{00031}}\ \ \ \ \ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{structttak__io__buffer_abeac8d53c1de043be4324d1958ec4096}{user\_ptr}};}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00032}\mbox{\hyperlink{structttak__io__buffer_a59ebd3cf0dcf8225ffa26ed332434fcf}{00032}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structttak__io__buffer_a59ebd3cf0dcf8225ffa26ed332434fcf}{len}};}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00033}\mbox{\hyperlink{structttak__io__buffer_a97cfc6db810448eab964b13773b79916}{00033}}\ \ \ \ \ \mbox{\hyperlink{io_8h_a3df6d51462672ec9a7b6d89fedd141c7}{ttak\_io\_buffer\_mode\_t}}\ \mbox{\hyperlink{structttak__io__buffer_a97cfc6db810448eab964b13773b79916}{mode}};}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00034}\mbox{\hyperlink{structttak__io__buffer_ad3e952477b8f3ec28ce495bfbf1ba467}{00034}}\ \ \ \ \ \mbox{\hyperlink{structttak__detachable__context}{ttak\_detachable\_context\_t}}\ *\mbox{\hyperlink{structttak__io__buffer_ad3e952477b8f3ec28ce495bfbf1ba467}{arena}};}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00035}\mbox{\hyperlink{structttak__io__buffer_a2ce8b327cbf730d88b2e125cda9c8d6a}{00035}}\ \ \ \ \ \mbox{\hyperlink{structttak__detachable__allocation}{ttak\_detachable\_allocation\_t}}\ \mbox{\hyperlink{structttak__io__buffer_a2ce8b327cbf730d88b2e125cda9c8d6a}{staging}};}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00036}\mbox{\hyperlink{io_8h_a13577555a348473d37e420b72805a261}{00036}}\ \}\ \mbox{\hyperlink{io_8h_a13577555a348473d37e420b72805a261}{ttak\_io\_buffer\_t}};}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00037}00037\ }
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00038}\mbox{\hyperlink{structttak__io__guard}{00038}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__io__guard}{ttak\_io\_guard}}\ \{}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00039}\mbox{\hyperlink{structttak__io__guard_a1a14eb51bb89423b12e8b92da0af2ea5}{00039}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structttak__io__guard_a1a14eb51bb89423b12e8b92da0af2ea5}{fd}};}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00040}\mbox{\hyperlink{structttak__io__guard_adb0557e8d69c41f6263140ab13b2e7a3}{00040}}\ \ \ \ \ \mbox{\hyperlink{structttak__owner}{ttak\_owner\_t}}\ *\mbox{\hyperlink{structttak__io__guard_adb0557e8d69c41f6263140ab13b2e7a3}{owner}};}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00041}\mbox{\hyperlink{structttak__io__guard_aa6b80bfe2f9edcbfb7263419f6458289}{00041}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__io__guard_aa6b80bfe2f9edcbfb7263419f6458289}{ttl\_ns}};}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00042}\mbox{\hyperlink{structttak__io__guard_a27ce08200665acb63547c2f5264d1c66}{00042}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__io__guard_a27ce08200665acb63547c2f5264d1c66}{expires\_at}};}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00043}\mbox{\hyperlink{structttak__io__guard_a3cd78119bdd33f3946bd480f5e564ae5}{00043}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__io__guard_a3cd78119bdd33f3946bd480f5e564ae5}{last\_used}};}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00044}\mbox{\hyperlink{structttak__io__guard_ae3f751000653366659cbf2742df6c367}{00044}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structttak__io__guard_ae3f751000653366659cbf2742df6c367}{closed}};}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00045}\mbox{\hyperlink{structttak__io__guard_af7e7e4e719c6d522a6055c52c1182381}{00045}}\ \ \ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{structttak__io__guard_af7e7e4e719c6d522a6055c52c1182381}{resource\_tag}}[32];}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00046}\mbox{\hyperlink{io_8h_aca20f4767510d423ee88de501eb72575}{00046}}\ \}\ \mbox{\hyperlink{io_8h_aca20f4767510d423ee88de501eb72575}{ttak\_io\_guard\_t}};}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00047}00047\ }
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00048}\mbox{\hyperlink{io_8h_a83220f33ce23c74a5328306b8996ce1b}{00048}}\ \textcolor{keyword}{typedef}\ void\ (*\mbox{\hyperlink{io_8h_a83220f33ce23c74a5328306b8996ce1b}{ttak\_io\_poll\_cb}})(\textcolor{keywordtype}{int}\ fd,\ \textcolor{keywordtype}{short}\ revents,\ \textcolor{keywordtype}{void}\ *user);}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00049}00049\ }
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00050}\mbox{\hyperlink{io_8h_a8bbfe43096ae070a6c176562f6502854}{00050}}\ \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\_io\_status\_t}}\ \mbox{\hyperlink{io_8h_a8bbfe43096ae070a6c176562f6502854}{ttak\_io\_guard\_init}}(\mbox{\hyperlink{structttak__io__guard}{ttak\_io\_guard\_t}}\ *guard,}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ fd,}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structttak__owner}{ttak\_owner\_t}}\ *owner,}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint64\_t\ ttl\_ns,}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint64\_t\ now);}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00055}00055\ }
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00056}\mbox{\hyperlink{io_8h_a60de91808c79ff338a29ae54972f0297}{00056}}\ \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\_io\_status\_t}}\ \mbox{\hyperlink{io_8h_a60de91808c79ff338a29ae54972f0297}{ttak\_io\_guard\_refresh}}(\mbox{\hyperlink{structttak__io__guard}{ttak\_io\_guard\_t}}\ *guard,\ uint64\_t\ now);}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00057}00057\ }
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00058}\mbox{\hyperlink{io_8h_a86ac8dcd843708afc3ddf556d6760664}{00058}}\ \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\_io\_status\_t}}\ \mbox{\hyperlink{io_8h_a86ac8dcd843708afc3ddf556d6760664}{ttak\_io\_guard\_close}}(\mbox{\hyperlink{structttak__io__guard}{ttak\_io\_guard\_t}}\ *guard,\ uint64\_t\ now);}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00059}00059\ }
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00060}\mbox{\hyperlink{io_8h_a7cd44036a34402d6b84d35539a4c1ed2}{00060}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{io_8h_a7cd44036a34402d6b84d35539a4c1ed2}{ttak\_io\_guard\_valid}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__io__guard}{ttak\_io\_guard\_t}}\ *guard,\ uint64\_t\ now);}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00061}00061\ }
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00062}\mbox{\hyperlink{io_8h_a37257227b6a468f1d428d3cf15d0b6a5}{00062}}\ \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\_io\_status\_t}}\ \mbox{\hyperlink{io_8h_a37257227b6a468f1d428d3cf15d0b6a5}{ttak\_io\_buffer\_acquire}}(\mbox{\hyperlink{structttak__io__buffer}{ttak\_io\_buffer\_t}}\ *buffer,}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ *user\_ptr,}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ len,}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{io_8h_a3df6d51462672ec9a7b6d89fedd141c7}{ttak\_io\_buffer\_mode\_t}}\ mode,}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint64\_t\ now);}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00067}00067\ }
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00068}\mbox{\hyperlink{io_8h_a0df4b1af2ebb99d24a6d3f2d63070e11}{00068}}\ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{io_8h_a0df4b1af2ebb99d24a6d3f2d63070e11}{ttak\_io\_buffer\_data}}(\mbox{\hyperlink{structttak__io__buffer}{ttak\_io\_buffer\_t}}\ *buffer);}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00069}00069\ }
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00070}\mbox{\hyperlink{io_8h_a242e3d01cd4a0c1d01c32614c636c318}{00070}}\ \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\_io\_status\_t}}\ \mbox{\hyperlink{io_8h_a242e3d01cd4a0c1d01c32614c636c318}{ttak\_io\_buffer\_sync\_in}}(\mbox{\hyperlink{structttak__io__buffer}{ttak\_io\_buffer\_t}}\ *buffer,\ uint64\_t\ now);}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00071}00071\ }
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00072}\mbox{\hyperlink{io_8h_abfe0c375ab83f1874649aa6410449e2c}{00072}}\ \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\_io\_status\_t}}\ \mbox{\hyperlink{io_8h_abfe0c375ab83f1874649aa6410449e2c}{ttak\_io\_buffer\_sync\_out}}(\mbox{\hyperlink{structttak__io__buffer}{ttak\_io\_buffer\_t}}\ *buffer,\ \textcolor{keywordtype}{size\_t}\ bytes,\ uint64\_t\ now);}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00073}00073\ }
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00074}\mbox{\hyperlink{io_8h_afa990535c35c232630de3a05c52b73a1}{00074}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{io_8h_afa990535c35c232630de3a05c52b73a1}{ttak\_io\_buffer\_release}}(\mbox{\hyperlink{structttak__io__buffer}{ttak\_io\_buffer\_t}}\ *buffer);}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00075}00075\ }
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00076}\mbox{\hyperlink{io_8h_aaa071ccdcf6e81a5257e0c30e7d59d9d}{00076}}\ \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\_io\_status\_t}}\ \mbox{\hyperlink{io_8h_aaa071ccdcf6e81a5257e0c30e7d59d9d}{ttak\_io\_poll\_wait}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__io__guard}{ttak\_io\_guard\_t}}\ *guard,}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{short}\ events,}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ timeout\_ms,}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{io_8h_a83220f33ce23c74a5328306b8996ce1b}{ttak\_io\_poll\_cb}}\ callback,}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ *user,}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{short}\ *out\_revents,}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ schedule\_async,}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00001}00001\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00002}00002\ \textcolor{comment}{\ *\ @file\ io.h}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00003}00003\ \textcolor{comment}{\ *\ @brief\ Core\ I/O\ types:\ status\ codes,\ buffers,\ TTL\ guards,\ and\ poll\ helpers.}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00004}00004\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00005}00005\ \textcolor{comment}{\ *\ Defines\ the\ shared\ @c\ ttak\_io\_status\_t\ result\ type\ used\ across\ all\ I/O}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00006}00006\ \textcolor{comment}{\ *\ subsystems,\ the\ @c\ ttak\_io\_buffer\_t\ staging\ wrapper,\ and\ the}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00007}00007\ \textcolor{comment}{\ *\ @c\ ttak\_io\_guard\_t\ TTL-\/bounded\ file-\/descriptor\ guard\ that\ prevents\ use}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00008}00008\ \textcolor{comment}{\ *\ of\ expired\ or\ closed\ descriptors.}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00009}00009\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00011}00011\ \textcolor{preprocessor}{\#ifndef\ TTAK\_IO\_IO\_H}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00012}00012\ \textcolor{preprocessor}{\#define\ TTAK\_IO\_IO\_H}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00014}00014\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00015}00015\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00016}00016\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00018}00018\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{owner_8h}{ttak/mem/owner.h}}>}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00019}00019\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{detachable_8h}{ttak/mem/detachable.h}}>}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00020}00020\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{timing_8h}{ttak/timing/timing.h}}>}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00022}00022\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00023}00023\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00024}00024\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00025}00025\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00026}00026\ \textcolor{comment}{/**\ @brief\ Return\ status\ for\ all\ I/O\ operations.\ */}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00027}\mbox{\hyperlink{io_8h_a4c5731f8c7bf69338c8fba54e58f3109}{00027}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{io_8h_a4c5731f8c7bf69338c8fba54e58f3109}{ttak\_io\_status}}\ \{}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00028}\mbox{\hyperlink{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a67cc2be6d1693662e59ca19f14c6ff31}{00028}}\ \ \ \ \ \mbox{\hyperlink{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a67cc2be6d1693662e59ca19f14c6ff31}{TTAK\_IO\_SUCCESS}}\ =\ 0,\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Operation\ completed\ successfully.\ */}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00029}\mbox{\hyperlink{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a54de52442b04580a6239efda00de1e3b}{00029}}\ \ \ \ \ \mbox{\hyperlink{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a54de52442b04580a6239efda00de1e3b}{TTAK\_IO\_ERR\_INVALID\_ARGUMENT}},\ \ \ \ \textcolor{comment}{/**<\ NULL\ or\ out-\/of-\/range\ argument.\ */}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00030}\mbox{\hyperlink{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a426a6f812b233e797056f485fd985740}{00030}}\ \ \ \ \ \mbox{\hyperlink{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a426a6f812b233e797056f485fd985740}{TTAK\_IO\_ERR\_EXPIRED\_GUARD}},\ \ \ \ \ \ \ \textcolor{comment}{/**<\ TTL\ guard\ has\ expired\ or\ fd\ is\ closed.\ */}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00031}\mbox{\hyperlink{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a2c185f6d7153f021168e9ace782f7ebf}{00031}}\ \ \ \ \ \mbox{\hyperlink{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a2c185f6d7153f021168e9ace782f7ebf}{TTAK\_IO\_ERR\_SYS\_FAILURE}},\ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Underlying\ system\ call\ failed.\ */}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00032}\mbox{\hyperlink{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a4daa069a8f600416376c6ced88c18b23}{00032}}\ \ \ \ \ \mbox{\hyperlink{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a4daa069a8f600416376c6ced88c18b23}{TTAK\_IO\_ERR\_RANGE}},\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Length\ or\ offset\ out\ of\ range.\ */}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00033}\mbox{\hyperlink{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a879188f5579cf0ad3c6c6312d32de652}{00033}}\ \ \ \ \ \mbox{\hyperlink{io_8h_a4c5731f8c7bf69338c8fba54e58f3109a879188f5579cf0ad3c6c6312d32de652}{TTAK\_IO\_ERR\_NEEDS\_RETRY}}\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Transient\ failure;\ caller\ should\ retry.\ */}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00034}\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{00034}}\ \}\ \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\_io\_status\_t}};}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00035}00035\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00036}00036\ \textcolor{comment}{/**\ @brief\ Access\ mode\ for\ @c\ ttak\_io\_buffer\_t\ staging\ buffers.\ */}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00037}\mbox{\hyperlink{io_8h_a4b16199a2071984f634a8da16869da1a}{00037}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{io_8h_a4b16199a2071984f634a8da16869da1a}{ttak\_io\_buffer\_mode}}\ \{}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00038}\mbox{\hyperlink{io_8h_a4b16199a2071984f634a8da16869da1aadb545676a09a26986c7e34e40727b77c}{00038}}\ \ \ \ \ \mbox{\hyperlink{io_8h_a4b16199a2071984f634a8da16869da1aadb545676a09a26986c7e34e40727b77c}{TTAK\_IO\_BUFFER\_READ}}\ =\ 0,\ \textcolor{comment}{/**<\ Buffer\ is\ used\ for\ incoming\ data.\ */}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00039}\mbox{\hyperlink{io_8h_a4b16199a2071984f634a8da16869da1aafedfb190441a126a1c8ab2087ba77960}{00039}}\ \ \ \ \ \mbox{\hyperlink{io_8h_a4b16199a2071984f634a8da16869da1aafedfb190441a126a1c8ab2087ba77960}{TTAK\_IO\_BUFFER\_WRITE}}\ =\ 1\ \textcolor{comment}{/**<\ Buffer\ is\ used\ for\ outgoing\ data.\ */}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00040}\mbox{\hyperlink{io_8h_a3df6d51462672ec9a7b6d89fedd141c7}{00040}}\ \}\ \mbox{\hyperlink{io_8h_a3df6d51462672ec9a7b6d89fedd141c7}{ttak\_io\_buffer\_mode\_t}};}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00041}00041\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00042}00042\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00043}00043\ \textcolor{comment}{\ *\ @brief\ Staging\ buffer\ that\ pins\ a\ user\ pointer\ into\ a\ detachable\ arena.}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00044}00044\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00045}00045\ \textcolor{comment}{\ *\ Acquire\ with\ ttak\_io\_buffer\_acquire()\ and\ release\ with}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00046}00046\ \textcolor{comment}{\ *\ ttak\_io\_buffer\_release()\ to\ keep\ the\ arena\ lifetime\ correct.}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00047}00047\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00048}\mbox{\hyperlink{structttak__io__buffer}{00048}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__io__buffer}{ttak\_io\_buffer}}\ \{}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00049}\mbox{\hyperlink{structttak__io__buffer_abeac8d53c1de043be4324d1958ec4096}{00049}}\ \ \ \ \ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{structttak__io__buffer_abeac8d53c1de043be4324d1958ec4096}{user\_ptr}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Caller-\/supplied\ data\ pointer.\ */}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00050}\mbox{\hyperlink{structttak__io__buffer_a59ebd3cf0dcf8225ffa26ed332434fcf}{00050}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structttak__io__buffer_a59ebd3cf0dcf8225ffa26ed332434fcf}{len}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Buffer\ length\ in\ bytes.\ */}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00051}\mbox{\hyperlink{structttak__io__buffer_a97cfc6db810448eab964b13773b79916}{00051}}\ \ \ \ \ \mbox{\hyperlink{io_8h_a3df6d51462672ec9a7b6d89fedd141c7}{ttak\_io\_buffer\_mode\_t}}\ \mbox{\hyperlink{structttak__io__buffer_a97cfc6db810448eab964b13773b79916}{mode}};\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Read\ or\ write\ direction.\ */}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00052}\mbox{\hyperlink{structttak__io__buffer_ad3e952477b8f3ec28ce495bfbf1ba467}{00052}}\ \ \ \ \ \mbox{\hyperlink{detachable_8h_ac2e1577a34551ffaedf5a16d11bdff0b}{ttak\_detachable\_context\_t}}\ *\mbox{\hyperlink{structttak__io__buffer_ad3e952477b8f3ec28ce495bfbf1ba467}{arena}};\ \ \ \ \textcolor{comment}{/**<\ Owning\ detachable\ arena.\ */}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00053}\mbox{\hyperlink{structttak__io__buffer_a2ce8b327cbf730d88b2e125cda9c8d6a}{00053}}\ \ \ \ \ \mbox{\hyperlink{detachable_8h_a849243c766d591f9c26aab69b9933f1b}{ttak\_detachable\_allocation\_t}}\ \mbox{\hyperlink{structttak__io__buffer_a2ce8b327cbf730d88b2e125cda9c8d6a}{staging}};\textcolor{comment}{/**<\ Internal\ staging\ allocation.\ */}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00054}\mbox{\hyperlink{io_8h_a13577555a348473d37e420b72805a261}{00054}}\ \}\ \mbox{\hyperlink{io_8h_a13577555a348473d37e420b72805a261}{ttak\_io\_buffer\_t}};}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00055}00055\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00056}00056\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00057}00057\ \textcolor{comment}{\ *\ @brief\ TTL-\/bounded\ guard\ wrapping\ a\ file\ descriptor.}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00058}00058\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00059}00059\ \textcolor{comment}{\ *\ All\ I/O\ operations\ check\ the\ guard\ before\ touching\ the\ fd.\ \ Once}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00060}00060\ \textcolor{comment}{\ *\ @c\ expires\_at\ is\ exceeded\ the\ guard\ is\ considered\ invalid\ and\ operations}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00061}00061\ \textcolor{comment}{\ *\ return\ @c\ TTAK\_IO\_ERR\_EXPIRED\_GUARD.}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00062}00062\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00063}\mbox{\hyperlink{structttak__io__guard}{00063}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__io__guard}{ttak\_io\_guard}}\ \{}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00064}\mbox{\hyperlink{structttak__io__guard_a1a14eb51bb89423b12e8b92da0af2ea5}{00064}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structttak__io__guard_a1a14eb51bb89423b12e8b92da0af2ea5}{fd}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Underlying\ file\ descriptor.\ */}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00065}\mbox{\hyperlink{structttak__io__guard_adb0557e8d69c41f6263140ab13b2e7a3}{00065}}\ \ \ \ \ \mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\_owner\_t}}\ *\mbox{\hyperlink{structttak__io__guard_adb0557e8d69c41f6263140ab13b2e7a3}{owner}};\ \ \ \ \textcolor{comment}{/**<\ Owning\ arena/epoch\ context.\ */}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00066}\mbox{\hyperlink{structttak__io__guard_aa6b80bfe2f9edcbfb7263419f6458289}{00066}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__io__guard_aa6b80bfe2f9edcbfb7263419f6458289}{ttl\_ns}};\ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ Configured\ time-\/to-\/live\ in\ nanoseconds.\ */}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00067}\mbox{\hyperlink{structttak__io__guard_a27ce08200665acb63547c2f5264d1c66}{00067}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__io__guard_a27ce08200665acb63547c2f5264d1c66}{expires\_at}};\ \ \ \ \textcolor{comment}{/**<\ Absolute\ expiry\ timestamp\ (ns).\ */}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00068}\mbox{\hyperlink{structttak__io__guard_a3cd78119bdd33f3946bd480f5e564ae5}{00068}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structttak__io__guard_a3cd78119bdd33f3946bd480f5e564ae5}{last\_used}};\ \ \ \ \ \textcolor{comment}{/**<\ Timestamp\ of\ the\ last\ successful\ operation.\ */}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00069}\mbox{\hyperlink{structttak__io__guard_ae3f751000653366659cbf2742df6c367}{00069}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structttak__io__guard_ae3f751000653366659cbf2742df6c367}{closed}};\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/**<\ True\ after\ ttak\_io\_guard\_close().\ */}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00070}\mbox{\hyperlink{structttak__io__guard_af7e7e4e719c6d522a6055c52c1182381}{00070}}\ \ \ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{structttak__io__guard_af7e7e4e719c6d522a6055c52c1182381}{resource\_tag}}[32];\ \ \textcolor{comment}{/**<\ Diagnostic\ label\ for\ the\ guarded\ resource.\ */}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00071}\mbox{\hyperlink{io_8h_aca20f4767510d423ee88de501eb72575}{00071}}\ \}\ \mbox{\hyperlink{io_8h_aca20f4767510d423ee88de501eb72575}{ttak\_io\_guard\_t}};}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00073}\mbox{\hyperlink{io_8h_a83220f33ce23c74a5328306b8996ce1b}{00073}}\ \textcolor{keyword}{typedef}\ void\ (*\mbox{\hyperlink{io_8h_a83220f33ce23c74a5328306b8996ce1b}{ttak\_io\_poll\_cb}})(\textcolor{keywordtype}{int}\ fd,\ \textcolor{keywordtype}{short}\ revents,\ \textcolor{keywordtype}{void}\ *user);}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00074}00074\ }
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00075}\mbox{\hyperlink{io_8h_a8bbfe43096ae070a6c176562f6502854}{00075}}\ \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\_io\_status\_t}}\ \mbox{\hyperlink{io_8h_a8bbfe43096ae070a6c176562f6502854}{ttak\_io\_guard\_init}}(\mbox{\hyperlink{io_8h_aca20f4767510d423ee88de501eb72575}{ttak\_io\_guard\_t}}\ *guard,}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ fd,}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\_owner\_t}}\ *owner,}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint64\_t\ ttl\_ns,}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00080}00080\ }
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00081}\mbox{\hyperlink{io_8h_a60de91808c79ff338a29ae54972f0297}{00081}}\ \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\_io\_status\_t}}\ \mbox{\hyperlink{io_8h_a60de91808c79ff338a29ae54972f0297}{ttak\_io\_guard\_refresh}}(\mbox{\hyperlink{io_8h_aca20f4767510d423ee88de501eb72575}{ttak\_io\_guard\_t}}\ *guard,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00082}00082\ }
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00083}\mbox{\hyperlink{io_8h_a86ac8dcd843708afc3ddf556d6760664}{00083}}\ \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\_io\_status\_t}}\ \mbox{\hyperlink{io_8h_a86ac8dcd843708afc3ddf556d6760664}{ttak\_io\_guard\_close}}(\mbox{\hyperlink{io_8h_aca20f4767510d423ee88de501eb72575}{ttak\_io\_guard\_t}}\ *guard,\ uint64\_t\ now);}
 \DoxyCodeLine{\Hypertarget{io_8h_source_l00084}00084\ }
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00085}00085\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00086}00086\ \}}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00087}00087\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00088}00088\ }
-\DoxyCodeLine{\Hypertarget{io_8h_source_l00089}00089\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ TTAK\_IO\_IO\_H\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00085}\mbox{\hyperlink{io_8h_a7cd44036a34402d6b84d35539a4c1ed2}{00085}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{io_8h_a7cd44036a34402d6b84d35539a4c1ed2}{ttak\_io\_guard\_valid}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{io_8h_aca20f4767510d423ee88de501eb72575}{ttak\_io\_guard\_t}}\ *guard,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00086}00086\ }
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00087}\mbox{\hyperlink{io_8h_a37257227b6a468f1d428d3cf15d0b6a5}{00087}}\ \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\_io\_status\_t}}\ \mbox{\hyperlink{io_8h_a37257227b6a468f1d428d3cf15d0b6a5}{ttak\_io\_buffer\_acquire}}(\mbox{\hyperlink{io_8h_a13577555a348473d37e420b72805a261}{ttak\_io\_buffer\_t}}\ *buffer,}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ *user\_ptr,}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ len,}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{io_8h_a3df6d51462672ec9a7b6d89fedd141c7}{ttak\_io\_buffer\_mode\_t}}\ mode,}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00092}00092\ }
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00093}\mbox{\hyperlink{io_8h_a0df4b1af2ebb99d24a6d3f2d63070e11}{00093}}\ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{io_8h_a0df4b1af2ebb99d24a6d3f2d63070e11}{ttak\_io\_buffer\_data}}(\mbox{\hyperlink{io_8h_a13577555a348473d37e420b72805a261}{ttak\_io\_buffer\_t}}\ *buffer);}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00094}00094\ }
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00095}\mbox{\hyperlink{io_8h_a242e3d01cd4a0c1d01c32614c636c318}{00095}}\ \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\_io\_status\_t}}\ \mbox{\hyperlink{io_8h_a242e3d01cd4a0c1d01c32614c636c318}{ttak\_io\_buffer\_sync\_in}}(\mbox{\hyperlink{io_8h_a13577555a348473d37e420b72805a261}{ttak\_io\_buffer\_t}}\ *buffer,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00096}00096\ }
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00097}\mbox{\hyperlink{io_8h_abfe0c375ab83f1874649aa6410449e2c}{00097}}\ \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\_io\_status\_t}}\ \mbox{\hyperlink{io_8h_abfe0c375ab83f1874649aa6410449e2c}{ttak\_io\_buffer\_sync\_out}}(\mbox{\hyperlink{io_8h_a13577555a348473d37e420b72805a261}{ttak\_io\_buffer\_t}}\ *buffer,\ \textcolor{keywordtype}{size\_t}\ bytes,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00098}00098\ }
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00099}\mbox{\hyperlink{io_8h_afa990535c35c232630de3a05c52b73a1}{00099}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{io_8h_afa990535c35c232630de3a05c52b73a1}{ttak\_io\_buffer\_release}}(\mbox{\hyperlink{io_8h_a13577555a348473d37e420b72805a261}{ttak\_io\_buffer\_t}}\ *buffer);}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00100}00100\ }
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00101}\mbox{\hyperlink{io_8h_aaa071ccdcf6e81a5257e0c30e7d59d9d}{00101}}\ \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\_io\_status\_t}}\ \mbox{\hyperlink{io_8h_aaa071ccdcf6e81a5257e0c30e7d59d9d}{ttak\_io\_poll\_wait}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{io_8h_aca20f4767510d423ee88de501eb72575}{ttak\_io\_guard\_t}}\ *guard,}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{short}\ events,}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ timeout\_ms,}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{io_8h_a83220f33ce23c74a5328306b8996ce1b}{ttak\_io\_poll\_cb}}\ callback,}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ *user,}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{short}\ *out\_revents,}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ schedule\_async,}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00109}00109\ }
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00110}00110\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00111}00111\ \}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00112}00112\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00113}00113\ }
+\DoxyCodeLine{\Hypertarget{io_8h_source_l00114}00114\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ TTAK\_IO\_IO\_H\ */}\textcolor{preprocessor}{}}
 
 \end{DoxyCode}

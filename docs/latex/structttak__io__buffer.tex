@@ -1,5 +1,5 @@
-\hypertarget{structttak__io__buffer}{}\doxysection{ttak\+\_\+io\+\_\+buffer Struct Reference}
-\label{structttak__io__buffer}\index{ttak\_io\_buffer@{ttak\_io\_buffer}}
+\doxysection{ttak\+\_\+io\+\_\+buffer Struct Reference}
+\hypertarget{structttak__io__buffer}{}\label{structttak__io__buffer}\index{ttak\_io\_buffer@{ttak\_io\_buffer}}
 
 
 Staging buffer that pins a user pointer into a detachable arena.  
@@ -19,16 +19,16 @@ Collaboration diagram for ttak\+\_\+io\+\_\+buffer\+:
 \includegraphics[width=350pt]{structttak__io__buffer__coll__graph}
 \end{center}
 \end{figure}
-\doxysubsection*{Public Attributes}
+\doxysubsubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-void $\ast$ \mbox{\hyperlink{structttak__io__buffer_abeac8d53c1de043be4324d1958ec4096}{user\+\_\+ptr}}
+void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__io__buffer_abeac8d53c1de043be4324d1958ec4096}{user\+\_\+ptr}}
 \item 
 size\+\_\+t \mbox{\hyperlink{structttak__io__buffer_a59ebd3cf0dcf8225ffa26ed332434fcf}{len}}
 \item 
 \mbox{\hyperlink{io_8h_a3df6d51462672ec9a7b6d89fedd141c7}{ttak\+\_\+io\+\_\+buffer\+\_\+mode\+\_\+t}} \mbox{\hyperlink{structttak__io__buffer_a97cfc6db810448eab964b13773b79916}{mode}}
 \item 
-\mbox{\hyperlink{detachable_8h_ac2e1577a34551ffaedf5a16d11bdff0b}{ttak\+\_\+detachable\+\_\+context\+\_\+t}} $\ast$ \mbox{\hyperlink{structttak__io__buffer_ad3e952477b8f3ec28ce495bfbf1ba467}{arena}}
+\mbox{\hyperlink{detachable_8h_ac2e1577a34551ffaedf5a16d11bdff0b}{ttak\+\_\+detachable\+\_\+context\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__io__buffer_ad3e952477b8f3ec28ce495bfbf1ba467}{arena}}
 \item 
 \mbox{\hyperlink{detachable_8h_a849243c766d591f9c26aab69b9933f1b}{ttak\+\_\+detachable\+\_\+allocation\+\_\+t}} \mbox{\hyperlink{structttak__io__buffer_a2ce8b327cbf730d88b2e125cda9c8d6a}{staging}}
 \end{DoxyCompactItemize}
@@ -37,62 +37,64 @@ size\+\_\+t \mbox{\hyperlink{structttak__io__buffer_a59ebd3cf0dcf8225ffa26ed3324
 \doxysubsection{Detailed Description}
 Staging buffer that pins a user pointer into a detachable arena. 
 
-Acquire with \mbox{\hyperlink{io_8h_a37257227b6a468f1d428d3cf15d0b6a5}{ttak\+\_\+io\+\_\+buffer\+\_\+acquire()}} and release with \mbox{\hyperlink{io_8h_afa990535c35c232630de3a05c52b73a1}{ttak\+\_\+io\+\_\+buffer\+\_\+release()}} to keep the arena lifetime correct. 
+Acquire with \doxylink{io_8h_a37257227b6a468f1d428d3cf15d0b6a5}{ttak\+\_\+io\+\_\+buffer\+\_\+acquire()} and release with \doxylink{io_8h_afa990535c35c232630de3a05c52b73a1}{ttak\+\_\+io\+\_\+buffer\+\_\+release()} to keep the arena lifetime correct. 
 
-Definition at line 48 of file io.\+h.
+Definition at line \mbox{\hyperlink{io_8h_source_l00048}{48}} of file \mbox{\hyperlink{io_8h_source}{io.\+h}}.
 
 
 
+\label{doc-variable-members}
+\Hypertarget{structttak__io__buffer_doc-variable-members}
 \doxysubsection{Member Data Documentation}
-\mbox{\Hypertarget{structttak__io__buffer_ad3e952477b8f3ec28ce495bfbf1ba467}\label{structttak__io__buffer_ad3e952477b8f3ec28ce495bfbf1ba467}} 
-\index{ttak\_io\_buffer@{ttak\_io\_buffer}!arena@{arena}}
+\Hypertarget{structttak__io__buffer_ad3e952477b8f3ec28ce495bfbf1ba467}\index{ttak\_io\_buffer@{ttak\_io\_buffer}!arena@{arena}}
 \index{arena@{arena}!ttak\_io\_buffer@{ttak\_io\_buffer}}
 \doxysubsubsection{\texorpdfstring{arena}{arena}}
-{\footnotesize\ttfamily \mbox{\hyperlink{detachable_8h_ac2e1577a34551ffaedf5a16d11bdff0b}{ttak\+\_\+detachable\+\_\+context\+\_\+t}}$\ast$ ttak\+\_\+io\+\_\+buffer\+::arena}
+{\footnotesize\ttfamily \label{structttak__io__buffer_ad3e952477b8f3ec28ce495bfbf1ba467} 
+\mbox{\hyperlink{detachable_8h_ac2e1577a34551ffaedf5a16d11bdff0b}{ttak\+\_\+detachable\+\_\+context\+\_\+t}}\texorpdfstring{$\ast$}{*} ttak\+\_\+io\+\_\+buffer\+::arena}
 
 Owning detachable arena. 
 
-Definition at line 52 of file io.\+h.
+Definition at line \mbox{\hyperlink{io_8h_source_l00052}{52}} of file \mbox{\hyperlink{io_8h_source}{io.\+h}}.
 
-\mbox{\Hypertarget{structttak__io__buffer_a59ebd3cf0dcf8225ffa26ed332434fcf}\label{structttak__io__buffer_a59ebd3cf0dcf8225ffa26ed332434fcf}} 
-\index{ttak\_io\_buffer@{ttak\_io\_buffer}!len@{len}}
+\Hypertarget{structttak__io__buffer_a59ebd3cf0dcf8225ffa26ed332434fcf}\index{ttak\_io\_buffer@{ttak\_io\_buffer}!len@{len}}
 \index{len@{len}!ttak\_io\_buffer@{ttak\_io\_buffer}}
 \doxysubsubsection{\texorpdfstring{len}{len}}
-{\footnotesize\ttfamily size\+\_\+t ttak\+\_\+io\+\_\+buffer\+::len}
+{\footnotesize\ttfamily \label{structttak__io__buffer_a59ebd3cf0dcf8225ffa26ed332434fcf} 
+size\+\_\+t ttak\+\_\+io\+\_\+buffer\+::len}
 
 Buffer length in bytes. 
 
-Definition at line 50 of file io.\+h.
+Definition at line \mbox{\hyperlink{io_8h_source_l00050}{50}} of file \mbox{\hyperlink{io_8h_source}{io.\+h}}.
 
-\mbox{\Hypertarget{structttak__io__buffer_a97cfc6db810448eab964b13773b79916}\label{structttak__io__buffer_a97cfc6db810448eab964b13773b79916}} 
-\index{ttak\_io\_buffer@{ttak\_io\_buffer}!mode@{mode}}
+\Hypertarget{structttak__io__buffer_a97cfc6db810448eab964b13773b79916}\index{ttak\_io\_buffer@{ttak\_io\_buffer}!mode@{mode}}
 \index{mode@{mode}!ttak\_io\_buffer@{ttak\_io\_buffer}}
 \doxysubsubsection{\texorpdfstring{mode}{mode}}
-{\footnotesize\ttfamily \mbox{\hyperlink{io_8h_a3df6d51462672ec9a7b6d89fedd141c7}{ttak\+\_\+io\+\_\+buffer\+\_\+mode\+\_\+t}} ttak\+\_\+io\+\_\+buffer\+::mode}
+{\footnotesize\ttfamily \label{structttak__io__buffer_a97cfc6db810448eab964b13773b79916} 
+\mbox{\hyperlink{io_8h_a3df6d51462672ec9a7b6d89fedd141c7}{ttak\+\_\+io\+\_\+buffer\+\_\+mode\+\_\+t}} ttak\+\_\+io\+\_\+buffer\+::mode}
 
 Read or write direction. 
 
-Definition at line 51 of file io.\+h.
+Definition at line \mbox{\hyperlink{io_8h_source_l00051}{51}} of file \mbox{\hyperlink{io_8h_source}{io.\+h}}.
 
-\mbox{\Hypertarget{structttak__io__buffer_a2ce8b327cbf730d88b2e125cda9c8d6a}\label{structttak__io__buffer_a2ce8b327cbf730d88b2e125cda9c8d6a}} 
-\index{ttak\_io\_buffer@{ttak\_io\_buffer}!staging@{staging}}
+\Hypertarget{structttak__io__buffer_a2ce8b327cbf730d88b2e125cda9c8d6a}\index{ttak\_io\_buffer@{ttak\_io\_buffer}!staging@{staging}}
 \index{staging@{staging}!ttak\_io\_buffer@{ttak\_io\_buffer}}
 \doxysubsubsection{\texorpdfstring{staging}{staging}}
-{\footnotesize\ttfamily \mbox{\hyperlink{detachable_8h_a849243c766d591f9c26aab69b9933f1b}{ttak\+\_\+detachable\+\_\+allocation\+\_\+t}} ttak\+\_\+io\+\_\+buffer\+::staging}
+{\footnotesize\ttfamily \label{structttak__io__buffer_a2ce8b327cbf730d88b2e125cda9c8d6a} 
+\mbox{\hyperlink{detachable_8h_a849243c766d591f9c26aab69b9933f1b}{ttak\+\_\+detachable\+\_\+allocation\+\_\+t}} ttak\+\_\+io\+\_\+buffer\+::staging}
 
 Internal staging allocation. 
 
-Definition at line 53 of file io.\+h.
+Definition at line \mbox{\hyperlink{io_8h_source_l00053}{53}} of file \mbox{\hyperlink{io_8h_source}{io.\+h}}.
 
-\mbox{\Hypertarget{structttak__io__buffer_abeac8d53c1de043be4324d1958ec4096}\label{structttak__io__buffer_abeac8d53c1de043be4324d1958ec4096}} 
-\index{ttak\_io\_buffer@{ttak\_io\_buffer}!user\_ptr@{user\_ptr}}
+\Hypertarget{structttak__io__buffer_abeac8d53c1de043be4324d1958ec4096}\index{ttak\_io\_buffer@{ttak\_io\_buffer}!user\_ptr@{user\_ptr}}
 \index{user\_ptr@{user\_ptr}!ttak\_io\_buffer@{ttak\_io\_buffer}}
 \doxysubsubsection{\texorpdfstring{user\_ptr}{user\_ptr}}
-{\footnotesize\ttfamily void$\ast$ ttak\+\_\+io\+\_\+buffer\+::user\+\_\+ptr}
+{\footnotesize\ttfamily \label{structttak__io__buffer_abeac8d53c1de043be4324d1958ec4096} 
+void\texorpdfstring{$\ast$}{*} ttak\+\_\+io\+\_\+buffer\+::user\+\_\+ptr}
 
 Caller-\/supplied data pointer. 
 
-Definition at line 49 of file io.\+h.
+Definition at line \mbox{\hyperlink{io_8h_source_l00049}{49}} of file \mbox{\hyperlink{io_8h_source}{io.\+h}}.
 
 
 

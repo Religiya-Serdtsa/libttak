@@ -1,2 +1,48 @@
-\hypertarget{dir_e61bb1d9ecc6461b2096de18f44e6afb}{}\doxysection{tutorials/43-\/bigscript/02-\/variables-\/arithmetic Directory Reference}
-\label{dir_e61bb1d9ecc6461b2096de18f44e6afb}\index{tutorials/43-\/bigscript/02-\/variables-\/arithmetic Directory Reference@{tutorials/43-\/bigscript/02-\/variables-\/arithmetic Directory Reference}}
+\doxysection{tutorials/43-\/bigscript/02-\/variables-\/arithmetic Directory Reference}
+\hypertarget{dir_e61bb1d9ecc6461b2096de18f44e6afb}{}\label{dir_e61bb1d9ecc6461b2096de18f44e6afb}\index{tutorials/43-\/bigscript/02-\/variables-\/arithmetic Directory Reference@{tutorials/43-\/bigscript/02-\/variables-\/arithmetic Directory Reference}}
+Directory dependency graph for 02-\/variables-\/arithmetic\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=244pt]{dir_e61bb1d9ecc6461b2096de18f44e6afb_dep}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Detailed Description}
+\hypertarget{README.md_autotoc_md162}{}\doxysubsection{\texorpdfstring{02 -\/ Variables and Arithmetic}{02 -\/ Variables and Arithmetic}}\label{README.md_autotoc_md162}
+Big\+Script allows you to define local variables and perform standard arithmetic operations.\hypertarget{README.md_autotoc_md163}{}\doxysubsection{\texorpdfstring{Variables}{Variables}}\label{README.md_autotoc_md163}
+Variables are declared using the {\ttfamily let} keyword. Big\+Script uses lexical scoping within blocks.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{let\ x\ =\ 10;}
+\DoxyCodeLine{let\ y\ =\ x\ +\ 5;}
+
+\end{DoxyCode}
+\hypertarget{README.md_autotoc_md164}{}\doxysubsection{\texorpdfstring{Arithmetic Operators}{Arithmetic Operators}}\label{README.md_autotoc_md164}
+Big\+Script supports the following operators for integers\+:
+\begin{DoxyItemize}
+\item {\ttfamily +} \+: Addition
+\item {\ttfamily -\/} \+: Subtraction
+\item {\ttfamily \texorpdfstring{$\ast$}{*}} \+: Multiplication
+\item {\ttfamily /} \+: Division (integer division for Big\+Int)
+\item {\ttfamily \%} \+: Modulo
+\end{DoxyItemize}
+
+Note\+: All integers in Big\+Script are arbitrary-\/precision integers (Big\+Int).\hypertarget{README.md_autotoc_md165}{}\doxysubsection{\texorpdfstring{Running the Example}{Running the Example}}\label{README.md_autotoc_md165}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{gcc\ main.c\ -\/o\ arithmetic\ -\/lttak}
+\DoxyCodeLine{./arithmetic}
+
+\end{DoxyCode}
+
+
+Result\+:
+\begin{DoxyItemize}
+\item {\ttfamily z = (10 + 20) \texorpdfstring{$\ast$}{*} 2 -\/ 5 = 55}
+\item {\ttfamily quotient = 55 / 3 = 18}
+\item {\ttfamily remainder = 55 \% 3 = 1}
+\item {\ttfamily return 18 + 1 = 19} 
+\end{DoxyItemize}

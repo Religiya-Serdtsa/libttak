@@ -1,2 +1,31 @@
-\hypertarget{dir_07747147e2212ecf3906eef30a76c446}{}\doxysection{bench/ttl-\/cache-\/multithread-\/bench Directory Reference}
-\label{dir_07747147e2212ecf3906eef30a76c446}\index{bench/ttl-\/cache-\/multithread-\/bench Directory Reference@{bench/ttl-\/cache-\/multithread-\/bench Directory Reference}}
+\doxysection{bench/ttl-\/cache-\/multithread-\/bench Directory Reference}
+\hypertarget{dir_07747147e2212ecf3906eef30a76c446}{}\label{dir_07747147e2212ecf3906eef30a76c446}\index{bench/ttl-\/cache-\/multithread-\/bench Directory Reference@{bench/ttl-\/cache-\/multithread-\/bench Directory Reference}}
+Directory dependency graph for ttl-\/cache-\/multithread-\/bench\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=232pt]{dir_07747147e2212ecf3906eef30a76c446_dep}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Detailed Description}
+\hypertarget{README.md_autotoc_md6}{}\doxysubsection{\texorpdfstring{Multi-\/threaded TTL Cache Benchmark}{Multi-\/threaded TTL Cache Benchmark}}\label{README.md_autotoc_md6}
+This directory contains the flagship performance benchmark for Lib\+TTAK\textquotesingle{}s lock-\/free shared memory subsystem.\hypertarget{README.md_autotoc_md7}{}\doxysubsection{\texorpdfstring{Performance Philosophy}{Performance Philosophy}}\label{README.md_autotoc_md7}
+Lib\+TTAK utilizes mathematical principles inspired by {\bfseries{Choi Seok-\/jeong\textquotesingle{}s Orthogonal Latin Square (OLS)}} to eliminate hardware-\/level lock contention.
+
+We strategically prioritize {\bfseries{explosive throughput (Ops/s)}} by utilizing deterministic slot isolation. Each thread operates in isolated version shards, ensuring zero overlap between concurrent writers and allowing readers to validate consistency with minimal overhead.\hypertarget{README.md_autotoc_md8}{}\doxysubsubsection{\texorpdfstring{Key Performance Targets}{Key Performance Targets}}\label{README.md_autotoc_md8}
+
+\begin{DoxyItemize}
+\item {\bfseries{Throughput\+:}} \texorpdfstring{$>$}{>} 25M Ops/s (on modern x64 hardware)
+\item {\bfseries{Latency\+:}} \texorpdfstring{$<$}{<} 100 ns per access
+\item {\bfseries{Scalability\+:}} Linear performance scaling with CPU core count
+\end{DoxyItemize}\hypertarget{README.md_autotoc_md9}{}\doxysubsection{\texorpdfstring{Running the Benchmark}{Running the Benchmark}}\label{README.md_autotoc_md9}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{make}
+\DoxyCodeLine{./ttl\_cache\_bench\_lockfree}
+
+\end{DoxyCode}
+\hypertarget{README.md_autotoc_md10}{}\doxysubsection{\texorpdfstring{Compiler Comparison}{Compiler Comparison}}\label{README.md_autotoc_md10}
+  

@@ -1,7 +1,12 @@
 <map id="ttak_stats_ext" name="ttak_stats_ext">
-<area shape="rect" id="node1" title="Extended statistics structure with automatic promotion and high precision." alt="" coords="93,347,199,373"/>
-<area shape="rect" id="node2" href="$structttak__spin.html" title="Spinlock structure." alt="" coords="13,95,87,121"/>
-<area shape="rect" id="node4" href="$structttak__stats.html" title="Thread&#45;safe Statistics structure." alt="" coords="106,184,186,211"/>
-<area shape="rect" id="node3" href="$structatomic__flag.html" title=" " alt="" coords="5,5,95,32"/>
-<area shape="rect" id="node5" href="$structttak__bigint.html" title="Arbitrary&#45;precision integer engine with Small Stack Optimization (SSO)." alt="" coords="210,184,293,211"/>
+<area shape="rect" id="Node000001" title="Extended statistics structure with automatic promotion and high precision." alt="" coords="106,419,220,447"/>
+<area shape="rect" id="Node000002" href="$structttak__stats.html" title="Thread&#45;safe Statistics structure." alt="" coords="120,207,206,234"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="166,250,166,418,161,418,161,250"/>
+<area shape="rect" id="Node000003" href="$structttak__spin.html" title="Spinlock structure." alt="" coords="13,106,95,134"/>
+<area shape="poly" id="edge5_Node000001_Node000003" title=" " alt="" coords="49,149,44,190,48,234,70,290,100,342,154,417,150,420,95,345,65,292,43,235,39,190,44,148"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="81,142,150,204,147,208,77,146"/>
+<area shape="rect" id="Node000004" href="$structatomic__flag.html" title=" " alt="" coords="5,5,103,33"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="57,49,57,105,51,105,51,49"/>
+<area shape="rect" id="Node000005" href="$structttak__bigint.html" title="Arbitrary&#45;precision integer engine with Small Stack Optimization (SSO)." alt="" coords="231,207,322,234"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="273,250,250,320,232,359,209,397,185,420,181,416,205,393,227,357,245,318,268,249"/>
 </map>

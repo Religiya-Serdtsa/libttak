@@ -1,5 +1,7 @@
 <map id="ttak_detachable_allocation" name="ttak_detachable_allocation">
-<area shape="rect" id="node1" title="Description of the detachable allocation returned to callers." alt="" coords="79,95,255,121"/>
-<area shape="rect" id="node2" href="$structttak__detachable__cache.html" title="Per&#45;context cache for tiny detachable chunks (&lt;= 16 bytes)." alt="" coords="5,5,161,32"/>
-<area shape="rect" id="node3" href="$structttak__detach__status.html" title="Tracks the detach lifecycle of a detachable block." alt="" coords="186,5,319,32"/>
+<area shape="rect" id="Node000001" title="Description of the detachable allocation returned to callers." alt="" coords="70,106,267,134"/>
+<area shape="rect" id="Node000002" href="$structttak__detach__status.html" title="Tracks the detach lifecycle of a detachable block." alt="" coords="5,5,151,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="101,43,134,80,157,104,153,107,130,84,97,47"/>
+<area shape="rect" id="Node000003" href="$structttak__detachable__cache.html" title="Per&#45;context cache for tiny detachable chunks (&lt;= 16 bytes)." alt="" coords="175,5,346,33"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="254,49,245,67,233,84,201,108,198,103,229,80,241,64,249,47"/>
 </map>

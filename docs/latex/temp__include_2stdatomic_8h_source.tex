@@ -94,18 +94,18 @@
 \DoxyCodeLine{\Hypertarget{temp__include_2stdatomic_8h_source_l00090}00090\ }
 \DoxyCodeLine{\Hypertarget{temp__include_2stdatomic_8h_source_l00091}00091\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{include_2stdatomic_8h_aeca7c45606fc2b5e0c8dca53a76f40ac}{atomic\_flag\_test\_and\_set\_explicit}}(\mbox{\hyperlink{structatomic__flag}{atomic\_flag}}\ *obj,\ \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1b}{memory\_order}}\ order)\ \{}
 \DoxyCodeLine{\Hypertarget{temp__include_2stdatomic_8h_source_l00092}00092\ \ \ \ \ (void)order;}
-\DoxyCodeLine{\Hypertarget{temp__include_2stdatomic_8h_source_l00093}00093\ \ \ \ \ \mbox{\hyperlink{include_2stdatomic_8h_a7b82615cb418a296137e2abcff7db14e}{\_\_TT\_ATOMIC\_LOCK}}();}
+\DoxyCodeLine{\Hypertarget{temp__include_2stdatomic_8h_source_l00093}00093\ \ \ \ \ \_\_TT\_ATOMIC\_LOCK();}
 \DoxyCodeLine{\Hypertarget{temp__include_2stdatomic_8h_source_l00094}00094\ \ \ \ \ \textcolor{keywordtype}{bool}\ prev\ =\ obj-\/>\mbox{\hyperlink{structatomic__flag_a1e78a66d91bdb267b55596d71d6dcd79}{\_value}}\ !=\ 0;}
 \DoxyCodeLine{\Hypertarget{temp__include_2stdatomic_8h_source_l00095}00095\ \ \ \ \ obj-\/>\mbox{\hyperlink{structatomic__flag_a1e78a66d91bdb267b55596d71d6dcd79}{\_value}}\ =\ 1;}
-\DoxyCodeLine{\Hypertarget{temp__include_2stdatomic_8h_source_l00096}00096\ \ \ \ \ \mbox{\hyperlink{include_2stdatomic_8h_a078ff22b16930edd2268d1cb679445a5}{\_\_TT\_ATOMIC\_UNLOCK}}();}
+\DoxyCodeLine{\Hypertarget{temp__include_2stdatomic_8h_source_l00096}00096\ \ \ \ \ \_\_TT\_ATOMIC\_UNLOCK();}
 \DoxyCodeLine{\Hypertarget{temp__include_2stdatomic_8h_source_l00097}00097\ \ \ \ \ \textcolor{keywordflow}{return}\ prev;}
 \DoxyCodeLine{\Hypertarget{temp__include_2stdatomic_8h_source_l00098}00098\ \}}
 \DoxyCodeLine{\Hypertarget{temp__include_2stdatomic_8h_source_l00099}00099\ }
 \DoxyCodeLine{\Hypertarget{temp__include_2stdatomic_8h_source_l00100}00100\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{include_2stdatomic_8h_a4154e94db39d792afa138536ccaa0d7e}{atomic\_flag\_clear\_explicit}}(\mbox{\hyperlink{structatomic__flag}{atomic\_flag}}\ *obj,\ \mbox{\hyperlink{include_2stdatomic_8h_a17c2de5ae768960284c047a320f17d1b}{memory\_order}}\ order)\ \{}
 \DoxyCodeLine{\Hypertarget{temp__include_2stdatomic_8h_source_l00101}00101\ \ \ \ \ (void)order;}
-\DoxyCodeLine{\Hypertarget{temp__include_2stdatomic_8h_source_l00102}00102\ \ \ \ \ \mbox{\hyperlink{include_2stdatomic_8h_a7b82615cb418a296137e2abcff7db14e}{\_\_TT\_ATOMIC\_LOCK}}();}
+\DoxyCodeLine{\Hypertarget{temp__include_2stdatomic_8h_source_l00102}00102\ \ \ \ \ \_\_TT\_ATOMIC\_LOCK();}
 \DoxyCodeLine{\Hypertarget{temp__include_2stdatomic_8h_source_l00103}00103\ \ \ \ \ obj-\/>\mbox{\hyperlink{structatomic__flag_a1e78a66d91bdb267b55596d71d6dcd79}{\_value}}\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{temp__include_2stdatomic_8h_source_l00104}00104\ \ \ \ \ \mbox{\hyperlink{include_2stdatomic_8h_a078ff22b16930edd2268d1cb679445a5}{\_\_TT\_ATOMIC\_UNLOCK}}();}
+\DoxyCodeLine{\Hypertarget{temp__include_2stdatomic_8h_source_l00104}00104\ \ \ \ \ \_\_TT\_ATOMIC\_UNLOCK();}
 \DoxyCodeLine{\Hypertarget{temp__include_2stdatomic_8h_source_l00105}00105\ \}}
 \DoxyCodeLine{\Hypertarget{temp__include_2stdatomic_8h_source_l00106}00106\ }
 \DoxyCodeLine{\Hypertarget{temp__include_2stdatomic_8h_source_l00107}00107\ \textcolor{preprocessor}{\#define\ atomic\_flag\_test\_and\_set(obj)\ \(\backslash\)}}

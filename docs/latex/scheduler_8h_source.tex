@@ -2,49 +2,57 @@
 \hypertarget{scheduler_8h_source}{}\label{scheduler_8h_source}\index{include/ttak/priority/scheduler.h@{include/ttak/priority/scheduler.h}}
 \mbox{\hyperlink{scheduler_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ TTAK\_PRIORITY\_SCHEDULER\_H}}
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ TTAK\_PRIORITY\_SCHEDULER\_H}}
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00003}00003\ }
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{nice_8h}{ttak/priority/nice.h}}>}}
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{task_8h}{ttak/async/task.h}}>}}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00001}00001\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00002}00002\ \textcolor{comment}{\ *\ @file\ scheduler.h}}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00003}00003\ \textcolor{comment}{\ *\ @brief\ Priority-\/aware\ task\ scheduler\ that\ maps\ nice\ values\ to\ run\ queues.}}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00004}00004\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00005}00005\ \textcolor{comment}{\ *\ Maintains\ @c\ TTAK\_SCHED\_LEVELS\ separate\ queues.\ \ Each\ call\ to}}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00006}00006\ \textcolor{comment}{\ *\ ttak\_scheduler\_pick()\ dequeues\ the\ highest-\/priority\ ready\ task.}}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00007}00007\ \textcolor{comment}{\ */}}
 \DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00008}00008\ }
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00009}\mbox{\hyperlink{scheduler_8h_ac3b38b93cbc96685a8e81488999d7717}{00009}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__scheduler}{ttak\_scheduler}}\ \mbox{\hyperlink{structttak__scheduler}{ttak\_scheduler\_t}};}
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00010}00010\ }
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00011}\mbox{\hyperlink{structttak__scheduler}{00011}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__scheduler}{ttak\_scheduler}}\ \{}
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00012}\mbox{\hyperlink{structttak__scheduler_ab1461b2473b5c907902bbe06d1425347}{00012}}\ \ \ \ \ int\ (*\mbox{\hyperlink{structttak__scheduler_ab1461b2473b5c907902bbe06d1425347}{get\_current\_priority}})(\mbox{\hyperlink{structttak__scheduler}{ttak\_scheduler\_t}}\ *sched);}
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00013}\mbox{\hyperlink{structttak__scheduler_a92aea68756d5941841d07f0240d5781c}{00013}}\ \ \ \ \ void\ (*\mbox{\hyperlink{structttak__scheduler_a92aea68756d5941841d07f0240d5781c}{set\_priority\_override}})(\mbox{\hyperlink{structttak__scheduler}{ttak\_scheduler\_t}}\ *sched,\ \mbox{\hyperlink{task_8h_a6a4c7b4b8f087d53e7b2a92f84db216e}{ttak\_task\_t}}\ *task,\ \textcolor{keywordtype}{int}\ new\_priority);}
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00014}00014\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00015}00015\ \ \ \ \ \textcolor{comment}{/*\ Inspect\ series\ */}}
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00016}\mbox{\hyperlink{structttak__scheduler_afe35f4bb762a64de648a69e0df3ec114}{00016}}\ \ \ \ \ size\_t\ (*\mbox{\hyperlink{structttak__scheduler_afe35f4bb762a64de648a69e0df3ec114}{get\_pending\_count}})(\mbox{\hyperlink{structttak__scheduler}{ttak\_scheduler\_t}}\ *sched);}
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00017}\mbox{\hyperlink{structttak__scheduler_af3448cd2c75d1a97380db9f6e77b3e1e}{00017}}\ \ \ \ \ size\_t\ (*\mbox{\hyperlink{structttak__scheduler_af3448cd2c75d1a97380db9f6e77b3e1e}{get\_running\_count}})(\mbox{\hyperlink{structttak__scheduler}{ttak\_scheduler\_t}}\ *sched);}
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00018}\mbox{\hyperlink{structttak__scheduler_a9ed7f5dad32f52dda6ec697850105cf3}{00018}}\ \ \ \ \ double\ (*\mbox{\hyperlink{structttak__scheduler_a9ed7f5dad32f52dda6ec697850105cf3}{get\_load\_average}})(\mbox{\hyperlink{structttak__scheduler}{ttak\_scheduler\_t}}\ *sched);}
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00019}00019\ \};}
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00020}00020\ }
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00021}\mbox{\hyperlink{scheduler_8h_a0d6f67b8f8b3c3b5273ff0a18ff40b23}{00021}}\ \mbox{\hyperlink{structttak__scheduler}{ttak\_scheduler\_t}}\ *\mbox{\hyperlink{scheduler_8h_a0d6f67b8f8b3c3b5273ff0a18ff40b23}{ttak\_scheduler\_get\_instance}}(\textcolor{keywordtype}{void});}
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00022}00022\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00023}00023\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00024}00024\ \textcolor{comment}{\ *\ @brief\ Initialize\ the\ scheduler's\ internal\ history\ tracking.}}
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00025}00025\ \textcolor{comment}{\ *\ Must\ be\ called\ once\ before\ using\ smart\ features.}}
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00026}00026\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00027}\mbox{\hyperlink{scheduler_8h_ab1f971def167a77f0c34f6360245a353}{00027}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{scheduler_8h_ab1f971def167a77f0c34f6360245a353}{ttak\_scheduler\_init}}(\textcolor{keywordtype}{void});}
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00028}00028\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00029}00029\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00030}00030\ \textcolor{comment}{\ *\ @brief\ Record\ a\ task's\ execution\ duration\ to\ update\ its\ history.}}
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00031}00031\ \textcolor{comment}{\ *\ @param\ task\ The\ task\ that\ finished.}}
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00032}00032\ \textcolor{comment}{\ *\ @param\ duration\_ms\ Execution\ time\ in\ milliseconds.}}
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00033}00033\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00034}\mbox{\hyperlink{scheduler_8h_a09598523ab35dbf87ce9e2ae6d0b6806}{00034}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{scheduler_8h_a09598523ab35dbf87ce9e2ae6d0b6806}{ttak\_scheduler\_record\_execution}}(\mbox{\hyperlink{task_8h_a6a4c7b4b8f087d53e7b2a92f84db216e}{ttak\_task\_t}}\ *task,\ uint64\_t\ duration\_ms);}
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00035}00035\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00036}00036\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00037}00037\ \textcolor{comment}{\ *\ @brief\ Calculate\ an\ adjusted\ priority\ based\ on\ history\ (SJF)\ and\ user\ priority.}}
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00038}00038\ \textcolor{comment}{\ *\ @param\ task\ The\ task\ to\ evaluate.}}
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00039}00039\ \textcolor{comment}{\ *\ @param\ base\_priority\ The\ requested\ priority\ (e.g.\ from\ thread\ pool\ submit).}}
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00040}00040\ \textcolor{comment}{\ *\ @return\ Adjusted\ priority.}}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00009}00009\ \textcolor{preprocessor}{\#ifndef\ TTAK\_PRIORITY\_SCHEDULER\_H}}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00010}00010\ \textcolor{preprocessor}{\#define\ TTAK\_PRIORITY\_SCHEDULER\_H}}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00014}00014\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{nice_8h}{ttak/priority/nice.h}}>}}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00015}00015\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{task_8h}{ttak/async/task.h}}>}}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00017}\mbox{\hyperlink{scheduler_8h_ac3b38b93cbc96685a8e81488999d7717}{00017}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__scheduler}{ttak\_scheduler}}\ \mbox{\hyperlink{scheduler_8h_ac3b38b93cbc96685a8e81488999d7717}{ttak\_scheduler\_t}};}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00019}\mbox{\hyperlink{structttak__scheduler}{00019}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__scheduler}{ttak\_scheduler}}\ \{}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00020}\mbox{\hyperlink{structttak__scheduler_ab1461b2473b5c907902bbe06d1425347}{00020}}\ \ \ \ \ int\ (*\mbox{\hyperlink{structttak__scheduler_ab1461b2473b5c907902bbe06d1425347}{get\_current\_priority}})(\mbox{\hyperlink{scheduler_8h_ac3b38b93cbc96685a8e81488999d7717}{ttak\_scheduler\_t}}\ *sched);}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00021}\mbox{\hyperlink{structttak__scheduler_a92aea68756d5941841d07f0240d5781c}{00021}}\ \ \ \ \ void\ (*\mbox{\hyperlink{structttak__scheduler_a92aea68756d5941841d07f0240d5781c}{set\_priority\_override}})(\mbox{\hyperlink{scheduler_8h_ac3b38b93cbc96685a8e81488999d7717}{ttak\_scheduler\_t}}\ *sched,\ \mbox{\hyperlink{task_8h_a6a4c7b4b8f087d53e7b2a92f84db216e}{ttak\_task\_t}}\ *task,\ \textcolor{keywordtype}{int}\ new\_priority);}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00022}00022\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00023}00023\ \ \ \ \ \textcolor{comment}{/*\ Inspect\ series\ */}}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00024}\mbox{\hyperlink{structttak__scheduler_afe35f4bb762a64de648a69e0df3ec114}{00024}}\ \ \ \ \ size\_t\ (*\mbox{\hyperlink{structttak__scheduler_afe35f4bb762a64de648a69e0df3ec114}{get\_pending\_count}})(\mbox{\hyperlink{scheduler_8h_ac3b38b93cbc96685a8e81488999d7717}{ttak\_scheduler\_t}}\ *sched);}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00025}\mbox{\hyperlink{structttak__scheduler_af3448cd2c75d1a97380db9f6e77b3e1e}{00025}}\ \ \ \ \ size\_t\ (*\mbox{\hyperlink{structttak__scheduler_af3448cd2c75d1a97380db9f6e77b3e1e}{get\_running\_count}})(\mbox{\hyperlink{scheduler_8h_ac3b38b93cbc96685a8e81488999d7717}{ttak\_scheduler\_t}}\ *sched);}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00026}\mbox{\hyperlink{structttak__scheduler_a9ed7f5dad32f52dda6ec697850105cf3}{00026}}\ \ \ \ \ double\ (*\mbox{\hyperlink{structttak__scheduler_a9ed7f5dad32f52dda6ec697850105cf3}{get\_load\_average}})(\mbox{\hyperlink{scheduler_8h_ac3b38b93cbc96685a8e81488999d7717}{ttak\_scheduler\_t}}\ *sched);}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00027}00027\ \};}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00029}\mbox{\hyperlink{scheduler_8h_a0d6f67b8f8b3c3b5273ff0a18ff40b23}{00029}}\ \mbox{\hyperlink{scheduler_8h_ac3b38b93cbc96685a8e81488999d7717}{ttak\_scheduler\_t}}\ *\mbox{\hyperlink{scheduler_8h_a0d6f67b8f8b3c3b5273ff0a18ff40b23}{ttak\_scheduler\_get\_instance}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00030}00030\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00031}00031\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00032}00032\ \textcolor{comment}{\ *\ @brief\ Initialize\ the\ scheduler's\ internal\ history\ tracking.}}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00033}00033\ \textcolor{comment}{\ *\ Must\ be\ called\ once\ before\ using\ smart\ features.}}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00034}00034\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00035}\mbox{\hyperlink{scheduler_8h_ab1f971def167a77f0c34f6360245a353}{00035}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{scheduler_8h_ab1f971def167a77f0c34f6360245a353}{ttak\_scheduler\_init}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00036}00036\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00037}00037\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00038}00038\ \textcolor{comment}{\ *\ @brief\ Record\ a\ task's\ execution\ duration\ to\ update\ its\ history.}}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00039}00039\ \textcolor{comment}{\ *\ @param\ task\ The\ task\ that\ finished.}}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00040}00040\ \textcolor{comment}{\ *\ @param\ duration\_ms\ Execution\ time\ in\ milliseconds.}}
 \DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00041}00041\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00042}\mbox{\hyperlink{scheduler_8h_aee546bda2168ddeee160fccbdf6f5419}{00042}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{scheduler_8h_aee546bda2168ddeee160fccbdf6f5419}{ttak\_scheduler\_get\_adjusted\_priority}}(\mbox{\hyperlink{task_8h_a6a4c7b4b8f087d53e7b2a92f84db216e}{ttak\_task\_t}}\ *task,\ \textcolor{keywordtype}{int}\ base\_priority);}
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00043}00043\ }
-\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00044}00044\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_PRIORITY\_SCHEDULER\_H}}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00042}\mbox{\hyperlink{scheduler_8h_a09598523ab35dbf87ce9e2ae6d0b6806}{00042}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{scheduler_8h_a09598523ab35dbf87ce9e2ae6d0b6806}{ttak\_scheduler\_record\_execution}}(\mbox{\hyperlink{task_8h_a6a4c7b4b8f087d53e7b2a92f84db216e}{ttak\_task\_t}}\ *task,\ uint64\_t\ duration\_ms);}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00043}00043\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00044}00044\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00045}00045\ \textcolor{comment}{\ *\ @brief\ Calculate\ an\ adjusted\ priority\ based\ on\ history\ (SJF)\ and\ user\ priority.}}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00046}00046\ \textcolor{comment}{\ *\ @param\ task\ The\ task\ to\ evaluate.}}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00047}00047\ \textcolor{comment}{\ *\ @param\ base\_priority\ The\ requested\ priority\ (e.g.\ from\ thread\ pool\ submit).}}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00048}00048\ \textcolor{comment}{\ *\ @return\ Adjusted\ priority.}}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00049}00049\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00050}\mbox{\hyperlink{scheduler_8h_aee546bda2168ddeee160fccbdf6f5419}{00050}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{scheduler_8h_aee546bda2168ddeee160fccbdf6f5419}{ttak\_scheduler\_get\_adjusted\_priority}}(\mbox{\hyperlink{task_8h_a6a4c7b4b8f087d53e7b2a92f84db216e}{ttak\_task\_t}}\ *task,\ \textcolor{keywordtype}{int}\ base\_priority);}
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{scheduler_8h_source_l00052}00052\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_PRIORITY\_SCHEDULER\_H}}
 
 \end{DoxyCode}

@@ -1,4 +1,5 @@
 <map id="ttak_promise" name="ttak_promise">
-<area shape="rect" id="node1" title="Promise handle that pairs with exactly one ttak_future_t." alt="" coords="5,95,103,121"/>
-<area shape="rect" id="node2" href="$structttak__future.html" title="Blocking future that carries a single void* result." alt="" coords="12,5,96,32"/>
+<area shape="rect" id="Node000001" title="Promise handle that pairs with exactly one ttak_future_t." alt="" coords="5,106,113,134"/>
+<area shape="rect" id="Node000002" href="$structttak__future.html" title="Blocking future that carries a single void* result." alt="" coords="12,5,106,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="62,49,62,105,56,105,56,49"/>
 </map>

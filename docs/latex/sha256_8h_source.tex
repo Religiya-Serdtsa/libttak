@@ -2,33 +2,65 @@
 \hypertarget{sha256_8h_source}{}\label{sha256_8h_source}\index{include/ttak/security/sha256.h@{include/ttak/security/sha256.h}}
 \mbox{\hyperlink{sha256_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ TTAK\_SECURITY\_SHA256\_H\_}}
-\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ TTAK\_SECURITY\_SHA256\_H\_}}
-\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00003}00003\ }
-\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
-\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
-\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00006}00006\ }
-\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00007}00007\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
-\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00008}00008\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{}
-\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00009}00009\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00010}00010\ }
-\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00011}\mbox{\hyperlink{sha256_8h_a9c1fe69ad43d4ca74b84303a0ed64f2f}{00011}}\ \textcolor{preprocessor}{\#define\ SHA256\_BLOCK\_SIZE\ 32}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00001}00001\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00002}00002\ \textcolor{comment}{\ *\ @file\ sha256.h}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00003}00003\ \textcolor{comment}{\ *\ @brief\ Minimal\ SHA-\/256\ hash\ interface.}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00004}00004\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00005}00005\ \textcolor{comment}{\ *\ Provides\ a\ standard\ init/update/final\ streaming\ hash\ API.\ \ The\ output}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00006}00006\ \textcolor{comment}{\ *\ digest\ is\ 32\ bytes\ (256\ bits)\ written\ to\ the\ caller-\/supplied\ array\ in}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00007}00007\ \textcolor{comment}{\ *\ ttak\_sha256\_final().}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00008}00008\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00010}00010\ \textcolor{preprocessor}{\#ifndef\ TTAK\_SECURITY\_SHA256\_H\_}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00011}00011\ \textcolor{preprocessor}{\#define\ TTAK\_SECURITY\_SHA256\_H\_}}
 \DoxyCodeLine{\Hypertarget{sha256_8h_source_l00012}00012\ }
-\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00013}\mbox{\hyperlink{structSHA256__CTX}{00013}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
-\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00014}\mbox{\hyperlink{structSHA256__CTX_a6cf3cb8ea45199394807480f74d10744}{00014}}\ \ \ \ \ uint8\_t\ data[64];}
-\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00015}\mbox{\hyperlink{structSHA256__CTX_a3323baf7e2859578db6c7a59fbb67fcc}{00015}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structSHA256__CTX_a3323baf7e2859578db6c7a59fbb67fcc}{datalen}};}
-\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00016}\mbox{\hyperlink{structSHA256__CTX_a22b9f345eb0273f497b397a09409cc4e}{00016}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structSHA256__CTX_a22b9f345eb0273f497b397a09409cc4e}{bitlen}};}
-\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00017}\mbox{\hyperlink{structSHA256__CTX_a4824db6fff77d15d5c8579b45d3f9b22}{00017}}\ \ \ \ \ uint32\_t\ state[8];}
-\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00018}00018\ \}\ \mbox{\hyperlink{structSHA256__CTX}{SHA256\_CTX}};}
-\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00019}00019\ }
-\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00020}\mbox{\hyperlink{sha256_8h_ade6fde6ef9ea137449d72891931c77ef}{00020}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{sha256_8h_ade6fde6ef9ea137449d72891931c77ef}{sha256\_init}}(\mbox{\hyperlink{structSHA256__CTX}{SHA256\_CTX}}\ *ctx);}
-\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00021}\mbox{\hyperlink{sha256_8h_ad50c7f40296b547daf5b9ebd5d7de32d}{00021}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{sha256_8h_ad50c7f40296b547daf5b9ebd5d7de32d}{sha256\_update}}(\mbox{\hyperlink{structSHA256__CTX}{SHA256\_CTX}}\ *ctx,\ \textcolor{keyword}{const}\ uint8\_t\ data[],\ \textcolor{keywordtype}{size\_t}\ len);}
-\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00022}\mbox{\hyperlink{sha256_8h_a06e2c69855478e4860ba1b82e8b1fbc5}{00022}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{sha256_8h_a06e2c69855478e4860ba1b82e8b1fbc5}{sha256\_final}}(\mbox{\hyperlink{structSHA256__CTX}{SHA256\_CTX}}\ *ctx,\ uint8\_t\ hash[]);}
-\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00023}00023\ }
-\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00024}00024\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
-\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00025}00025\ \}}
-\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00026}00026\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00027}00027\ }
-\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00028}00028\ \textcolor{preprocessor}{\#endif\ \ }\textcolor{comment}{//\ TTAK\_SECURITY\_SHA256\_H\_}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00014}00014\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00016}00016\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00017}00017\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00018}00018\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00019}00019\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00020}00020\ \textcolor{comment}{/**\ @brief\ Output\ digest\ length\ in\ bytes.\ */}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00021}\mbox{\hyperlink{sha256_8h_a9c1fe69ad43d4ca74b84303a0ed64f2f}{00021}}\ \textcolor{preprocessor}{\#define\ SHA256\_BLOCK\_SIZE\ 32}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00022}00022\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00023}00023\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00024}00024\ \textcolor{comment}{\ *\ @brief\ SHA-\/256\ incremental\ hash\ context.}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00025}00025\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00026}\mbox{\hyperlink{structSHA256__CTX}{00026}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00027}\mbox{\hyperlink{structSHA256__CTX_a6cf3cb8ea45199394807480f74d10744}{00027}}\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structSHA256__CTX_a6cf3cb8ea45199394807480f74d10744}{data}}[64];\ \ \ \ \textcolor{comment}{/**<\ Partial-\/block\ input\ buffer.\ */}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00028}\mbox{\hyperlink{structSHA256__CTX_a3323baf7e2859578db6c7a59fbb67fcc}{00028}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structSHA256__CTX_a3323baf7e2859578db6c7a59fbb67fcc}{datalen}};\ \ \ \ \textcolor{comment}{/**<\ Bytes\ currently\ buffered\ in\ @c\ data.\ */}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00029}\mbox{\hyperlink{structSHA256__CTX_a22b9f345eb0273f497b397a09409cc4e}{00029}}\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structSHA256__CTX_a22b9f345eb0273f497b397a09409cc4e}{bitlen}};\ \ \ \ \ \textcolor{comment}{/**<\ Total\ bits\ processed\ so\ far.\ */}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00030}\mbox{\hyperlink{structSHA256__CTX_a4824db6fff77d15d5c8579b45d3f9b22}{00030}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structSHA256__CTX_a4824db6fff77d15d5c8579b45d3f9b22}{state}}[8];\ \ \ \textcolor{comment}{/**<\ Running\ hash\ state\ (H0–H7).\ */}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00031}00031\ \}\ \mbox{\hyperlink{structSHA256__CTX}{SHA256\_CTX}};}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00032}00032\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00033}00033\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00034}00034\ \textcolor{comment}{\ *\ @brief\ Initialises\ a\ SHA-\/256\ context\ with\ the\ standard\ IV.}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00035}00035\ \textcolor{comment}{\ *\ @param\ ctx\ Context\ to\ initialise.}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00036}00036\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00037}\mbox{\hyperlink{sha256_8h_ade6fde6ef9ea137449d72891931c77ef}{00037}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{sha256_8h_ade6fde6ef9ea137449d72891931c77ef}{sha256\_init}}(\mbox{\hyperlink{structSHA256__CTX}{SHA256\_CTX}}\ *ctx);}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00038}00038\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00039}00039\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00040}00040\ \textcolor{comment}{\ *\ @brief\ Feeds\ bytes\ into\ an\ in-\/progress\ SHA-\/256\ computation.}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00041}00041\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00042}00042\ \textcolor{comment}{\ *\ @param\ ctx\ \ Active\ hash\ context.}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00043}00043\ \textcolor{comment}{\ *\ @param\ data\ Input\ bytes.}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00044}00044\ \textcolor{comment}{\ *\ @param\ len\ \ Number\ of\ bytes\ in\ @p\ data.}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00045}00045\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00046}\mbox{\hyperlink{sha256_8h_ad50c7f40296b547daf5b9ebd5d7de32d}{00046}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{sha256_8h_ad50c7f40296b547daf5b9ebd5d7de32d}{sha256\_update}}(\mbox{\hyperlink{structSHA256__CTX}{SHA256\_CTX}}\ *ctx,\ \textcolor{keyword}{const}\ uint8\_t\ data[],\ \textcolor{keywordtype}{size\_t}\ len);}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00047}00047\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00048}00048\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00049}00049\ \textcolor{comment}{\ *\ @brief\ Finalises\ the\ digest\ and\ writes\ 32\ bytes\ to\ @p\ hash.}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00050}00050\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00051}00051\ \textcolor{comment}{\ *\ @param\ ctx\ \ Active\ hash\ context\ (invalidated\ after\ this\ call).}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00052}00052\ \textcolor{comment}{\ *\ @param\ hash\ Output\ buffer\ receiving\ the\ 32-\/byte\ digest.}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00053}00053\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00054}\mbox{\hyperlink{sha256_8h_a06e2c69855478e4860ba1b82e8b1fbc5}{00054}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{sha256_8h_a06e2c69855478e4860ba1b82e8b1fbc5}{sha256\_final}}(\mbox{\hyperlink{structSHA256__CTX}{SHA256\_CTX}}\ *ctx,\ uint8\_t\ hash[]);}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00056}00056\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00057}00057\ \}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00058}00058\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{sha256_8h_source_l00060}00060\ \textcolor{preprocessor}{\#endif\ \ }\textcolor{comment}{//\ TTAK\_SECURITY\_SHA256\_H\_}}
 
 \end{DoxyCode}

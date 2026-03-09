@@ -1,0 +1,37 @@
+\doxysection{siphash.\+h}
+\hypertarget{siphash_8h_source}{}\label{siphash_8h_source}\index{include/ttak/security/siphash.h@{include/ttak/security/siphash.h}}
+\mbox{\hyperlink{siphash_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{siphash_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ TTAK\_SECURITY\_SIPHASH\_H}}
+\DoxyCodeLine{\Hypertarget{siphash_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ TTAK\_SECURITY\_SIPHASH\_H}}
+\DoxyCodeLine{\Hypertarget{siphash_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{siphash_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{siphash_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
+\DoxyCodeLine{\Hypertarget{siphash_8h_source_l00006}00006\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{siphash_8h_source_l00007}00007\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{siphash_8h_source_l00008}00008\ \textcolor{comment}{\ *\ @brief\ SipHash-\/2-\/4\ implementation\ for\ arbitrary\ byte\ arrays.}}
+\DoxyCodeLine{\Hypertarget{siphash_8h_source_l00009}00009\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{siphash_8h_source_l00010}00010\ \textcolor{comment}{\ *\ SipHash\ is\ a\ cryptographically\ strong\ PRF\ (pseudorandom\ function)}}
+\DoxyCodeLine{\Hypertarget{siphash_8h_source_l00011}00011\ \textcolor{comment}{\ *\ optimized\ for\ short\ messages.}}
+\DoxyCodeLine{\Hypertarget{siphash_8h_source_l00012}00012\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{siphash_8h_source_l00013}00013\ \textcolor{comment}{\ *\ @param\ key\ \ \ \ \ Input\ data\ to\ hash.}}
+\DoxyCodeLine{\Hypertarget{siphash_8h_source_l00014}00014\ \textcolor{comment}{\ *\ @param\ len\ \ \ \ \ Length\ of\ the\ input\ data.}}
+\DoxyCodeLine{\Hypertarget{siphash_8h_source_l00015}00015\ \textcolor{comment}{\ *\ @param\ k0\ \ \ \ \ \ First\ 64-\/bit\ key.}}
+\DoxyCodeLine{\Hypertarget{siphash_8h_source_l00016}00016\ \textcolor{comment}{\ *\ @param\ k1\ \ \ \ \ \ Second\ 64-\/bit\ key.}}
+\DoxyCodeLine{\Hypertarget{siphash_8h_source_l00017}00017\ \textcolor{comment}{\ *\ @return\ 64-\/bit\ hash\ value.}}
+\DoxyCodeLine{\Hypertarget{siphash_8h_source_l00018}00018\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{siphash_8h_source_l00019}\mbox{\hyperlink{siphash_8h_a28b43f1178141e2473e77fa0cd8b655d}{00019}}\ uint64\_t\ \mbox{\hyperlink{siphash_8h_a28b43f1178141e2473e77fa0cd8b655d}{ttak\_siphash24}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *key,\ \textcolor{keywordtype}{size\_t}\ len,\ uint64\_t\ k0,\ uint64\_t\ k1);}
+\DoxyCodeLine{\Hypertarget{siphash_8h_source_l00020}00020\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{siphash_8h_source_l00021}00021\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{siphash_8h_source_l00022}00022\ \textcolor{comment}{\ *\ @brief\ Compute\ SipHash-\/2-\/4\ for\ a\ single\ 64-\/bit\ word.}}
+\DoxyCodeLine{\Hypertarget{siphash_8h_source_l00023}00023\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{siphash_8h_source_l00024}00024\ \textcolor{comment}{\ *\ @param\ val\ \ \ \ \ 64-\/bit\ value\ to\ hash.}}
+\DoxyCodeLine{\Hypertarget{siphash_8h_source_l00025}00025\ \textcolor{comment}{\ *\ @param\ k0\ \ \ \ \ \ First\ 64-\/bit\ key.}}
+\DoxyCodeLine{\Hypertarget{siphash_8h_source_l00026}00026\ \textcolor{comment}{\ *\ @param\ k1\ \ \ \ \ \ Second\ 64-\/bit\ key.}}
+\DoxyCodeLine{\Hypertarget{siphash_8h_source_l00027}00027\ \textcolor{comment}{\ *\ @return\ 64-\/bit\ hash\ value.}}
+\DoxyCodeLine{\Hypertarget{siphash_8h_source_l00028}00028\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{siphash_8h_source_l00029}\mbox{\hyperlink{siphash_8h_a0dba5e3d2d5bbcff897653148aa1706b}{00029}}\ uint64\_t\ \mbox{\hyperlink{siphash_8h_a0dba5e3d2d5bbcff897653148aa1706b}{ttak\_siphash24\_u64}}(uint64\_t\ val,\ uint64\_t\ k0,\ uint64\_t\ k1);}
+\DoxyCodeLine{\Hypertarget{siphash_8h_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{siphash_8h_source_l00031}00031\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_SECURITY\_SIPHASH\_H}}
+
+\end{DoxyCode}

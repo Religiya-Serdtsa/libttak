@@ -1,0 +1,99 @@
+\doxysection{wyhash.\+h}
+\hypertarget{wyhash_8h_source}{}\label{wyhash_8h_source}\index{include/ttak/ht/wyhash.h@{include/ttak/ht/wyhash.h}}
+\mbox{\hyperlink{wyhash_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ TTAK\_HT\_WYHASH\_H}}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ TTAK\_HT\_WYHASH\_H}}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <string.h>}}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00007}00007\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00008}00008\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00009}00009\ \textcolor{comment}{\ *\ @brief\ wyhash\ 64-\/bit\ implementation\ (v4).}}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00010}00010\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00011}00011\ \textcolor{comment}{\ *\ Optimized\ for\ speed\ and\ quality,\ using\ bit\ manipulation\ and\ branchless}}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00012}00012\ \textcolor{comment}{\ *\ logic\ where\ possible.}}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00013}00013\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00015}\mbox{\hyperlink{wyhash_8h_ae3a49e99eee6935b3a1d82d777b55565}{00015}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ uint64\_t\ \mbox{\hyperlink{wyhash_8h_ae3a49e99eee6935b3a1d82d777b55565}{\_ttak\_wymum}}(uint64\_t\ A,\ uint64\_t\ B)\ \{}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00016}00016\ \textcolor{preprocessor}{\#ifdef\ \_\_SIZEOF\_INT128\_\_}}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00017}00017\ \ \ \ \ \_\_uint128\_t\ r\ =\ (\_\_uint128\_t)A\ *\ B;}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00018}00018\ \ \ \ \ \textcolor{keywordflow}{return}\ (uint64\_t)r\ \string^\ (uint64\_t)(r\ >>\ 64);}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00019}00019\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00020}00020\ \ \ \ \ uint64\_t\ ha\ =\ A\ >>\ 32,\ hb\ =\ B\ >>\ 32,\ la\ =\ (uint32\_t)A,\ lb\ =\ (uint32\_t)B;}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00021}00021\ \ \ \ \ uint64\_t\ rh\ =\ ha\ *\ hb,\ rm0\ =\ ha\ *\ lb,\ rm1\ =\ hb\ *\ la,\ rl\ =\ la\ *\ lb;}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00022}00022\ \ \ \ \ uint64\_t\ t\ =\ rl\ +\ (rm0\ <<\ 32),\ c\ =\ t\ <\ rl;}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00023}00023\ \ \ \ \ uint64\_t\ lo\ =\ t\ +\ (rm1\ <<\ 32),\ hi\ =\ rh\ +\ (rm0\ >>\ 32)\ +\ (rm1\ >>\ 32)\ +\ c\ +\ (lo\ <\ t);}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00024}00024\ \ \ \ \ \textcolor{keywordflow}{return}\ hi\ \string^\ lo;}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00025}00025\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00026}00026\ \}}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00028}\mbox{\hyperlink{wyhash_8h_a3c7655cae4aaf843a2a13ce57d76a565}{00028}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ uint64\_t\ \mbox{\hyperlink{wyhash_8h_a3c7655cae4aaf843a2a13ce57d76a565}{\_ttak\_wyr8}}(\textcolor{keyword}{const}\ uint8\_t\ *p)\ \{}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00029}00029\ \ \ \ \ uint64\_t\ v;\ memcpy(\&v,\ p,\ 8);\ \textcolor{keywordflow}{return}\ v;}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00030}00030\ \}}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00031}\mbox{\hyperlink{wyhash_8h_a02bacd9ddb2730b14461bdc046c41db4}{00031}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ uint64\_t\ \mbox{\hyperlink{wyhash_8h_a02bacd9ddb2730b14461bdc046c41db4}{\_ttak\_wyr4}}(\textcolor{keyword}{const}\ uint8\_t\ *p)\ \{}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00032}00032\ \ \ \ \ uint32\_t\ v;\ memcpy(\&v,\ p,\ 4);\ \textcolor{keywordflow}{return}\ v;}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00033}00033\ \}}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00034}\mbox{\hyperlink{wyhash_8h_aad24de1fa1451677a303d8aee9b6885a}{00034}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ uint64\_t\ \mbox{\hyperlink{wyhash_8h_aad24de1fa1451677a303d8aee9b6885a}{\_ttak\_wyr3}}(\textcolor{keyword}{const}\ uint8\_t\ *p,\ \textcolor{keywordtype}{size\_t}\ k)\ \{}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00035}00035\ \ \ \ \ \textcolor{keywordflow}{return}\ (((uint64\_t)p[0])\ <<\ 16)\ |\ (((uint64\_t)p[k\ >>\ 1])\ <<\ 8)\ |\ p[k\ -\/\ 1];}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00036}00036\ \}}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00038}\mbox{\hyperlink{wyhash_8h_a0e377b29f348982f5cdd54746e615972}{00038}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ uint64\_t\ \mbox{\hyperlink{wyhash_8h_a0e377b29f348982f5cdd54746e615972}{ttak\_wyhash}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *key,\ \textcolor{keywordtype}{size\_t}\ len,\ uint64\_t\ seed)\ \{}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00039}00039\ \ \ \ \ \textcolor{keyword}{const}\ uint8\_t\ *p\ =\ (\textcolor{keyword}{const}\ uint8\_t\ *)key;}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00040}00040\ \ \ \ \ uint64\_t\ a,\ b;}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00041}00041\ \ \ \ \ seed\ \string^=\ 0xa0761d6478bd642fULL;}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00042}00042\ \ \ \ \ \textcolor{keywordflow}{if}\ (len\ <=\ 16)\ \{}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00043}00043\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (len\ >=\ 4)\ \{}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ a\ =\ (\mbox{\hyperlink{wyhash_8h_a02bacd9ddb2730b14461bdc046c41db4}{\_ttak\_wyr4}}(p)\ <<\ 32)\ |\ \mbox{\hyperlink{wyhash_8h_a02bacd9ddb2730b14461bdc046c41db4}{\_ttak\_wyr4}}(p\ +\ len\ -\/\ 4);}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ (\mbox{\hyperlink{wyhash_8h_a02bacd9ddb2730b14461bdc046c41db4}{\_ttak\_wyr4}}(p\ +\ ((len\ >>\ 3)\ <<\ 2))\ <<\ 32)\ |\ \mbox{\hyperlink{wyhash_8h_a02bacd9ddb2730b14461bdc046c41db4}{\_ttak\_wyr4}}(p\ +\ len\ -\/\ 4\ -\/\ ((len\ >>\ 3)\ <<\ 2));}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00046}00046\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (len\ >\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ a\ =\ \mbox{\hyperlink{wyhash_8h_aad24de1fa1451677a303d8aee9b6885a}{\_ttak\_wyr3}}(p,\ len);}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00049}00049\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ a\ =\ b\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00050}00050\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00051}00051\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ i\ =\ len;}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00052}00052\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (i\ >\ 48)\ \{}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ uint64\_t\ see1\ =\ seed,\ see2\ =\ seed;}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{do}\ \{}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ seed\ =\ \mbox{\hyperlink{wyhash_8h_ae3a49e99eee6935b3a1d82d777b55565}{\_ttak\_wymum}}(\mbox{\hyperlink{wyhash_8h_a3c7655cae4aaf843a2a13ce57d76a565}{\_ttak\_wyr8}}(p)\ \string^\ 0xe7037ed1a0b428dbULL,\ \mbox{\hyperlink{wyhash_8h_a3c7655cae4aaf843a2a13ce57d76a565}{\_ttak\_wyr8}}(p\ +\ 8)\ \string^\ seed);}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ see1\ =\ \mbox{\hyperlink{wyhash_8h_ae3a49e99eee6935b3a1d82d777b55565}{\_ttak\_wymum}}(\mbox{\hyperlink{wyhash_8h_a3c7655cae4aaf843a2a13ce57d76a565}{\_ttak\_wyr8}}(p\ +\ 16)\ \string^\ 0x8ebc6af09c88c6e3ULL,\ \mbox{\hyperlink{wyhash_8h_a3c7655cae4aaf843a2a13ce57d76a565}{\_ttak\_wyr8}}(p\ +\ 24)\ \string^\ see1);}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ see2\ =\ \mbox{\hyperlink{wyhash_8h_ae3a49e99eee6935b3a1d82d777b55565}{\_ttak\_wymum}}(\mbox{\hyperlink{wyhash_8h_a3c7655cae4aaf843a2a13ce57d76a565}{\_ttak\_wyr8}}(p\ +\ 32)\ \string^\ 0x589965cc75374cc3ULL,\ \mbox{\hyperlink{wyhash_8h_a3c7655cae4aaf843a2a13ce57d76a565}{\_ttak\_wyr8}}(p\ +\ 40)\ \string^\ see2);}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p\ +=\ 48;\ i\ -\/=\ 48;}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{while}\ (i\ >\ 48);}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ seed\ \string^=\ see1\ \string^\ see2;}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00061}00061\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00062}00062\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (i\ >\ 16)\ \{}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ seed\ =\ \mbox{\hyperlink{wyhash_8h_ae3a49e99eee6935b3a1d82d777b55565}{\_ttak\_wymum}}(\mbox{\hyperlink{wyhash_8h_a3c7655cae4aaf843a2a13ce57d76a565}{\_ttak\_wyr8}}(p)\ \string^\ 0xe7037ed1a0b428dbULL,\ \mbox{\hyperlink{wyhash_8h_a3c7655cae4aaf843a2a13ce57d76a565}{\_ttak\_wyr8}}(p\ +\ 8)\ \string^\ seed);}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ p\ +=\ 16;\ i\ -\/=\ 16;}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00065}00065\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00066}00066\ \ \ \ \ \ \ \ \ a\ =\ \mbox{\hyperlink{wyhash_8h_a3c7655cae4aaf843a2a13ce57d76a565}{\_ttak\_wyr8}}(p\ +\ i\ -\/\ 16);}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00067}00067\ \ \ \ \ \ \ \ \ b\ =\ \mbox{\hyperlink{wyhash_8h_a3c7655cae4aaf843a2a13ce57d76a565}{\_ttak\_wyr8}}(p\ +\ i\ -\/\ 8);}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00068}00068\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00069}00069\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{wyhash_8h_ae3a49e99eee6935b3a1d82d777b55565}{\_ttak\_wymum}}(a\ \string^\ 0xe7037ed1a0b428dbULL,\ b\ \string^\ seed\ \string^\ len);}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00070}00070\ \}}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00071}00071\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00072}00072\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00073}00073\ \textcolor{comment}{\ *\ @brief\ Fast\ hashing\ of\ a\ 64-\/bit\ integer\ using\ wyhash\ principles.}}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00074}00074\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00075}\mbox{\hyperlink{wyhash_8h_a64d34c6284a3c4d54fdc7c83fcdcb450}{00075}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ uint64\_t\ \mbox{\hyperlink{wyhash_8h_a64d34c6284a3c4d54fdc7c83fcdcb450}{ttak\_hash\_u64}}(uint64\_t\ val,\ uint64\_t\ seed)\ \{}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00076}00076\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{wyhash_8h_ae3a49e99eee6935b3a1d82d777b55565}{\_ttak\_wymum}}(val\ \string^\ 0xa0761d6478bd642fULL,\ seed\ \string^\ 0xe7037ed1a0b428dbULL);}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00077}00077\ \}}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00078}00078\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00079}00079\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00080}00080\ \textcolor{comment}{\ *\ @brief\ Fast\ range\ mapping\ (FastMod)\ to\ avoid\ modulo\ operation.}}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00081}00081\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00082}00082\ \textcolor{comment}{\ *\ Maps\ a\ 64-\/bit\ hash\ to\ [0,\ range)\ using\ a\ single\ 128-\/bit\ multiplication.}}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00083}00083\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00084}\mbox{\hyperlink{wyhash_8h_acca382f7f06147d6dfc950f0e45933cf}{00084}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ uint64\_t\ \mbox{\hyperlink{wyhash_8h_acca382f7f06147d6dfc950f0e45933cf}{ttak\_fast\_range}}(uint64\_t\ hash,\ uint64\_t\ range)\ \{}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00085}00085\ \textcolor{preprocessor}{\#ifdef\ \_\_SIZEOF\_INT128\_\_}}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00086}00086\ \ \ \ \ \_\_uint128\_t\ m\ =\ (\_\_uint128\_t)hash\ *\ range;}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00087}00087\ \ \ \ \ \textcolor{keywordflow}{return}\ (uint64\_t)(m\ >>\ 64);}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00088}00088\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00089}00089\ \ \ \ \ \textcolor{keywordflow}{return}\ hash\ \%\ range;}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00090}00090\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00091}00091\ \}}
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00092}00092\ }
+\DoxyCodeLine{\Hypertarget{wyhash_8h_source_l00093}00093\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_HT\_WYHASH\_H}}
+
+\end{DoxyCode}

@@ -1,2 +1,23 @@
-\hypertarget{dir_635f981d4b377380e95dce4e64b2ba65}{}\doxysection{tutorials/23-\/bigint-\/foundations Directory Reference}
-\label{dir_635f981d4b377380e95dce4e64b2ba65}\index{tutorials/23-\/bigint-\/foundations Directory Reference@{tutorials/23-\/bigint-\/foundations Directory Reference}}
+\doxysection{tutorials/23-\/bigint-\/foundations Directory Reference}
+\hypertarget{dir_635f981d4b377380e95dce4e64b2ba65}{}\label{dir_635f981d4b377380e95dce4e64b2ba65}\index{tutorials/23-\/bigint-\/foundations Directory Reference@{tutorials/23-\/bigint-\/foundations Directory Reference}}
+Directory dependency graph for 23-\/bigint-\/foundations\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=234pt]{dir_635f981d4b377380e95dce4e64b2ba65_dep}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Detailed Description}
+\hypertarget{README.md_autotoc_md92}{}\doxysubsection{\texorpdfstring{Tutorial 23 – Bigint Foundations}{Tutorial 23 – Bigint Foundations}}\label{README.md_autotoc_md92}
+{\ttfamily modules/23-\/bigint-\/foundations} is the first math-\/heavy lesson and focuses on {\ttfamily src/math/bigint.\+c}.
+
+{\ttfamily lesson23\+\_\+bigint\+\_\+foundations.\+c} drives the init/add/hex helpers; rebuild it after each milestone to confirm your bigint still serializes correctly.\hypertarget{README.md_autotoc_md93}{}\doxysubsection{\texorpdfstring{Checklist}{Checklist}}\label{README.md_autotoc_md93}
+
+\begin{DoxyEnumerate}
+\item Capture the struct layout (SSO buffer vs. dynamic limbs) and the invariants for {\ttfamily \doxylink{bigint_8h_ad2cfb5db6b27efcca04f256dc0622bfa}{ttak\+\_\+bigint\+\_\+t}}.
+\item Rebuild init/free/set/add/serialization helpers exactly as documented so the advanced math lessons have a stable base.
+\item Run {\ttfamily make tests/test\+\_\+math} frequently—those tests hit init, mersenne mod, unit ops, and multiplication scaffolding.
+\item Archive any tricky carry-\/handling notes so you can revisit them when debugging later math modules. 
+\end{DoxyEnumerate}

@@ -1,4 +1,32 @@
 var searchData=
 [
-  ['memory_20lifetime_20thread_20and_20async_20toolkit_0',['LibTTAK: Timestamp-tracking memory lifetime, Thread and Async Toolkit',['../index.html',1,'']]]
+  ['b_20tree_0',['B Tree',['..//home/yjlee/libttak/tutorials/30-bplus-tree/README.md#autotoc_md107',1,'Tutorial 30 – B+ Tree'],['..//home/yjlee/libttak/tutorials/31-btree/README.md#autotoc_md109',1,'Tutorial 31 – B-Tree']]],
+  ['based_20reclamation_20ebr_20for_20shared_20objects_1',['Tutorial 38: Epoch-based Reclamation (EBR) for Shared Objects',['..//home/yjlee/libttak/tutorials/38-ebr-shared/README.md#autotoc_md130',1,'']]],
+  ['baseline_2',['High-Performance Lock-Free Baseline',['../index.html#autotoc_md42',1,'']]],
+  ['basics_3',['Tutorial 08 – Logger Basics',['..//home/yjlee/libttak/tutorials/08-logger-basics/README.md#autotoc_md62',1,'']]],
+  ['bench_20suite_4',['Tutorial 33 – Bench Suite',['..//home/yjlee/libttak/tutorials/33-bench-suite/README.md#autotoc_md113',1,'']]],
+  ['benchmark_5',['Benchmark',['..//home/yjlee/libttak/bench/README.md#autotoc_md2',1,'1. TTL Cache Multi-threaded Benchmark'],['..//home/yjlee/libttak/bench/ttl-cache-multithread-bench/README.md#autotoc_md6',1,'Multi-threaded TTL Cache Benchmark'],['..//home/yjlee/libttak/bench/ttl-cache-multithread-bench/README.md#autotoc_md9',1,'Running the Benchmark']]],
+  ['benchmark_20environment_6',['Benchmark Environment',['../index.html#autotoc_md44',1,'']]],
+  ['benchmark_20hub_20ttak_5fbench_20c_7',['2. General Benchmark Hub (&lt;span class=&quot;tt&quot;&gt;ttak_bench.c&lt;/span&gt;)',['..//home/yjlee/libttak/bench/README.md#autotoc_md3',1,'']]],
+  ['benchmark_20suite_8',['LibTTAK Benchmark Suite',['..//home/yjlee/libttak/bench/README.md#autotoc_md0',1,'']]],
+  ['benchmarks_9',['Benchmarks',['../index.html#autotoc_md41',1,'Benchmarks'],['..//home/yjlee/libttak/bench/README.md#autotoc_md1',1,'Core Benchmarks']]],
+  ['benchmarks_20compiler_20sweep_10',['TTL Cache Benchmarks (Compiler Sweep)',['../index.html#autotoc_md43',1,'']]],
+  ['bigint_20foundations_11',['Tutorial 23 – Bigint Foundations',['..//home/yjlee/libttak/tutorials/23-bigint-foundations/README.md#autotoc_md92',1,'']]],
+  ['bigmul_20bigreal_12',['Tutorial 24 – Bigmul + Bigreal',['..//home/yjlee/libttak/tutorials/24-bigmul-bigreal/README.md#autotoc_md94',1,'']]],
+  ['bigreal_13',['Tutorial 24 – Bigmul + Bigreal',['..//home/yjlee/libttak/tutorials/24-bigmul-bigreal/README.md#autotoc_md94',1,'']]],
+  ['bigscript_14',['BigScript',['..//home/yjlee/libttak/tutorials/43-bigscript/01-getting-started/README.md#autotoc_md158',1,'01 - Getting Started with BigScript'],['..//home/yjlee/libttak/tutorials/43-bigscript/README.md#autotoc_md181',1,'How to Run BigScript']]],
+  ['bigscript_20language_20course_15',['BigScript Language Course',['..//home/yjlee/libttak/tutorials/43-bigscript/README.md#autotoc_md179',1,'']]],
+  ['bigscript_20program_16',['The BigScript Program',['..//home/yjlee/libttak/tutorials/43-bigscript/01-getting-started/README.md#autotoc_md159',1,'']]],
+  ['bitmap_20ownership_17',['Lesson 37: Shared Memory with Bitmap Ownership',['..//home/yjlee/libttak/tutorials/37-shared-memory-ownership/README.md#autotoc_md125',1,'']]],
+  ['blueprints_18',['Blueprints',['..//home/yjlee/libttak/blueprints/README.md#autotoc_md15',1,'Adding New Blueprints'],['..//home/yjlee/libttak/blueprints/README.md#autotoc_md11',1,'Blueprints'],['..//home/yjlee/libttak/blueprints/README.md#autotoc_md13',1,'Notable Blueprints'],['..//home/yjlee/libttak/blueprints/README.md#autotoc_md14',1,'Rendering Blueprints']]],
+  ['bridge_19',['Tutorial 35 – Context Bridge',['..//home/yjlee/libttak/tutorials/35-context-bridge/README.md#autotoc_md117',1,'']]],
+  ['buckets_20',['Tutorial 03 – Hash Table Buckets',['..//home/yjlee/libttak/tutorials/03-hash-table-buckets/README.md#autotoc_md53',1,'']]],
+  ['buffer_21',['Tutorial 06 – Ring Buffer',['..//home/yjlee/libttak/tutorials/06-ring-buffer/README.md#autotoc_md58',1,'']]],
+  ['build_20and_20math_20tuning_22',['TCC-Oriented Build and Math Tuning',['../md_docs_2TCC__OPTIMIZATION.html',1,'']]],
+  ['build_20expectations_23',['Build Expectations',['../md_docs_2TCC__OPTIMIZATION.html#autotoc_md17',1,'']]],
+  ['build_20run_24',['Build Run',['..//home/yjlee/libttak/tutorials/39-detachable-memory/README.md#autotoc_md143',1,'Build &amp; Run'],['..//home/yjlee/libttak/tutorials/40-arena-memory/README.md#autotoc_md148',1,'Build &amp; Run'],['..//home/yjlee/libttak/tutorials/41-io-network-stack/README.md#autotoc_md152',1,'Build &amp; Run'],['..//home/yjlee/libttak/tutorials/42-io-guarded-streams/README.md#autotoc_md156',1,'Build &amp; Run']]],
+  ['build_20stabilization_25',['Initial Skeleton Creation &amp;amp; Build Stabilization',['../md_HISTORY.html#autotoc_md24',1,'']]],
+  ['building_20and_20running_26',['Building and Running',['..//home/yjlee/libttak/tutorials/38-ebr-shared/README.md#autotoc_md138',1,'']]],
+  ['building_20the_20sample_27',['Building the sample',['..//home/yjlee/libttak/tutorials/01-getting-started/README.md#autotoc_md49',1,'']]],
+  ['built_20in_20functions_28',['04 - Built-in Functions',['..//home/yjlee/libttak/tutorials/43-bigscript/04-builtins/README.md#autotoc_md170',1,'']]]
 ];

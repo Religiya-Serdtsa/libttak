@@ -22,7 +22,7 @@ var endpoint_8h =
     ] ],
     [ "ttak_net_endpoint_bind_fd", "endpoint_8h.html#ae7fa8743864c858ae149bf27e9b5a053", null ],
     [ "ttak_net_endpoint_close", "endpoint_8h.html#aeec35d0ff1a02ab39bb0b25d384fc05b", null ],
-    [ "ttak_net_endpoint_create", "endpoint_8h.html#a60a71cf562019ccb10bd3955b9c5ef1c", null ],
+    [ "ttak_net_endpoint_create", "endpoint_8h.html#a6f7b076106e03025e711ca7c8e56a5e3", null ],
     [ "ttak_net_endpoint_destroy", "endpoint_8h.html#a8d3676882b7a1b913e330f0e5b7698c9", null ],
     [ "ttak_net_endpoint_force_restart", "endpoint_8h.html#a5c8b97ad9a71a423a041b787829bbe84", null ],
     [ "ttak_net_endpoint_guard_commit", "endpoint_8h.html#a7dda0da5ff1f07d1061791730e8c5d8d", null ],
