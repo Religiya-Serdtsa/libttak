@@ -30,6 +30,12 @@
 #  define TTAK_FORCE_INLINE static inline
 #endif
 
+#if defined(__GNUC__) || defined(__clang__)
+#  define TTAK_MAYBE_UNUSED __attribute__((unused))
+#else
+#  define TTAK_MAYBE_UNUSED
+#endif
+
 #if !defined(__GNUC__) && !defined(__clang__)
 static inline int __ttak_ctzll(unsigned long long v) {
     int r = 0;
