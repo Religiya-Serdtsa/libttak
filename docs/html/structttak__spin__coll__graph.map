@@ -1,5 +1,4 @@
 <map id="ttak_spin" name="ttak_spin">
-<area shape="rect" id="Node000001" title="Spinlock structure." alt="" coords="13,93,96,119"/>
-<area shape="rect" id="Node000002" href="$structatomic__flag.html" title=" " alt="" coords="5,5,104,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="57,45,57,93,52,93,52,45"/>
+<area shape="rect" id="node1" title="Spinlock structure." alt="" coords="13,95,87,121"/>
+<area shape="rect" id="node2" href="$structatomic__flag.html" title=" " alt="" coords="5,5,95,32"/>
 </map>

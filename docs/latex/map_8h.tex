@@ -1,13 +1,19 @@
-\doxysection{include/ttak/ht/map.h File Reference}
-\hypertarget{map_8h}{}\label{map_8h}\index{include/ttak/ht/map.h@{include/ttak/ht/map.h}}
+\hypertarget{map_8h}{}\doxysection{include/ttak/ht/map.h File Reference}
+\label{map_8h}\index{include/ttak/ht/map.h@{include/ttak/ht/map.h}}
+
+
+Public API for the SoA open-\/addressing integer-\/keyed hash map.  
+
+
 {\ttfamily \#include $<$stddef.\+h$>$}\newline
 {\ttfamily \#include $<$stdint.\+h$>$}\newline
 {\ttfamily \#include $<$ttak/ht/hash.\+h$>$}\newline
-Include dependency graph for map.\+h\+:\nopagebreak
+Include dependency graph for map.\+h\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=288pt]{map_8h__incl}
+\includegraphics[width=350pt]{map_8h__incl}
 \end{center}
 \end{figure}
 This graph shows which files directly or indirectly include this file\+:
@@ -18,36 +24,41 @@ This graph shows which files directly or indirectly include this file\+:
 \includegraphics[width=350pt]{map_8h__dep__incl}
 \end{center}
 \end{figure}
-\doxysubsubsection*{Macros}
+\doxysubsection*{Macros}
 \begin{DoxyCompactItemize}
 \item 
 \#define \mbox{\hyperlink{map_8h_a1e585d13c2e9006359f5bff2e3dc5d80}{ttak\+\_\+create\+\_\+map}}~tt\+\_\+create\+\_\+map
-\item 
+\begin{DoxyCompactList}\small\item\em Alias\+: create a new map with {\ttfamily init\+\_\+cap} initial capacity. \end{DoxyCompactList}\item 
 \#define \mbox{\hyperlink{map_8h_a0da5008a7fc916608a4d15b37c0cd0fe}{ttak\+\_\+insert\+\_\+to\+\_\+map}}~tt\+\_\+ins\+\_\+map
-\item 
+\begin{DoxyCompactList}\small\item\em Alias\+: insert key/value into the map. \end{DoxyCompactList}\item 
 \#define \mbox{\hyperlink{map_8h_a1051095fca50e9ef2982aff8b139b60a}{ttak\+\_\+map\+\_\+get\+\_\+key}}~tt\+\_\+map\+\_\+get
-\item 
+\begin{DoxyCompactList}\small\item\em Alias\+: look up a key in the map. \end{DoxyCompactList}\item 
 \#define \mbox{\hyperlink{map_8h_aaf07aafced923862d2b186975733f846}{ttak\+\_\+delete\+\_\+from\+\_\+map}}~tt\+\_\+del\+\_\+map
-\item 
+\begin{DoxyCompactList}\small\item\em Alias\+: delete a key from the map. \end{DoxyCompactList}\item 
 \#define \mbox{\hyperlink{map_8h_ac9d48387fe08e1741f9f916fd05697ee}{\+\_\+\+\_\+\+TT\+\_\+\+MAP\+\_\+\+RESIZE\+\_\+\+\_\+}}~3
-\item 
+\begin{DoxyCompactList}\small\item\em Trigger growth when load exceeds 1/3 of capacity. \end{DoxyCompactList}\item 
 \#define \mbox{\hyperlink{map_8h_ae5ce0ae47e6cc761a9c49dbb3e5f06b5}{\+\_\+\+\_\+\+TT\+\_\+\+MAP\+\_\+\+SHRINK\+\_\+\+\_\+}}~2
-\end{DoxyCompactItemize}
-\doxysubsubsection*{Functions}
+\begin{DoxyCompactList}\small\item\em Trigger shrink when load drops below 1/2 of capacity. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{hash_8h_a1f1a8bb38c53fea315e97508c3d66efd}{tt\+\_\+map\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{map_8h_a6ffa9856b32ae9f5b1b265db61bbafa6}{ttak\+\_\+create\+\_\+map}} (size\+\_\+t init\+\_\+cap, uint64\+\_\+t now)
-\item 
-void \mbox{\hyperlink{map_8h_ab15a74cf74e73a2a596a238eceec7f33}{ttak\+\_\+insert\+\_\+to\+\_\+map}} (\mbox{\hyperlink{hash_8h_a1f1a8bb38c53fea315e97508c3d66efd}{tt\+\_\+map\+\_\+t}} \texorpdfstring{$\ast$}{*}map, uintptr\+\_\+t key, size\+\_\+t val, uint64\+\_\+t now)
-\item 
-void \mbox{\hyperlink{map_8h_aa69948afd2835468dc6d23d559c72a87}{ttak\+\_\+delete\+\_\+from\+\_\+map}} (\mbox{\hyperlink{hash_8h_a1f1a8bb38c53fea315e97508c3d66efd}{tt\+\_\+map\+\_\+t}} \texorpdfstring{$\ast$}{*}map, uintptr\+\_\+t key, uint64\+\_\+t now)
-\item 
-\+\_\+\+Bool \mbox{\hyperlink{map_8h_aebb1ab4dbd5d7dd2887690388f47f0c8}{ttak\+\_\+map\+\_\+get\+\_\+key}} (\mbox{\hyperlink{hash_8h_a1f1a8bb38c53fea315e97508c3d66efd}{tt\+\_\+map\+\_\+t}} \texorpdfstring{$\ast$}{*}map, uintptr\+\_\+t key, size\+\_\+t \texorpdfstring{$\ast$}{*}out, uint64\+\_\+t now)
-\end{DoxyCompactItemize}
+\mbox{\hyperlink{hash_8h_a1f1a8bb38c53fea315e97508c3d66efd}{tt\+\_\+map\+\_\+t}} $\ast$ \mbox{\hyperlink{map_8h_ab75a575b0175d5d14c4975087d1b707c}{ttak\+\_\+create\+\_\+map}} (size\+\_\+t init\+\_\+cap, uint64\+\_\+t now)
+\begin{DoxyCompactList}\small\item\em Creates a new hash map with an initial capacity. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{map_8h_ab15a74cf74e73a2a596a238eceec7f33}{ttak\+\_\+insert\+\_\+to\+\_\+map}} (\mbox{\hyperlink{hash_8h_a1f1a8bb38c53fea315e97508c3d66efd}{tt\+\_\+map\+\_\+t}} $\ast$map, uintptr\+\_\+t key, size\+\_\+t val, uint64\+\_\+t now)
+\begin{DoxyCompactList}\small\item\em Inserts or updates a key/value pair. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{map_8h_aa69948afd2835468dc6d23d559c72a87}{ttak\+\_\+delete\+\_\+from\+\_\+map}} (\mbox{\hyperlink{hash_8h_a1f1a8bb38c53fea315e97508c3d66efd}{tt\+\_\+map\+\_\+t}} $\ast$map, uintptr\+\_\+t key, uint64\+\_\+t now)
+\begin{DoxyCompactList}\small\item\em Removes a key from the map (no-\/op if not present). \end{DoxyCompactList}\item 
+\+\_\+\+Bool \mbox{\hyperlink{map_8h_aebb1ab4dbd5d7dd2887690388f47f0c8}{ttak\+\_\+map\+\_\+get\+\_\+key}} (\mbox{\hyperlink{hash_8h_a1f1a8bb38c53fea315e97508c3d66efd}{tt\+\_\+map\+\_\+t}} $\ast$map, uintptr\+\_\+t key, size\+\_\+t $\ast$out, uint64\+\_\+t now)
+\begin{DoxyCompactList}\small\item\em Looks up a key and writes its value to {\ttfamily out}. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
+
+\doxysubsection{Detailed Description}
+Public API for the SoA open-\/addressing integer-\/keyed hash map. 
+
+Wraps the lower-\/level {\ttfamily \mbox{\hyperlink{structttak__map__t}{ttak\+\_\+map\+\_\+t}}} with convenience aliases so callers can use either the verbose {\ttfamily ttak\+\_\+$\ast$} names or the shorter {\ttfamily tt\+\_\+$\ast$} aliases. 
 
 \doxysubsection{Macro Definition Documentation}
-\Hypertarget{map_8h_ac9d48387fe08e1741f9f916fd05697ee}\label{map_8h_ac9d48387fe08e1741f9f916fd05697ee} 
+\mbox{\Hypertarget{map_8h_ac9d48387fe08e1741f9f916fd05697ee}\label{map_8h_ac9d48387fe08e1741f9f916fd05697ee}} 
 \index{map.h@{map.h}!\_\_TT\_MAP\_RESIZE\_\_@{\_\_TT\_MAP\_RESIZE\_\_}}
 \index{\_\_TT\_MAP\_RESIZE\_\_@{\_\_TT\_MAP\_RESIZE\_\_}!map.h@{map.h}}
 \doxysubsubsection{\texorpdfstring{\_\_TT\_MAP\_RESIZE\_\_}{\_\_TT\_MAP\_RESIZE\_\_}}
@@ -55,9 +66,13 @@ void \mbox{\hyperlink{map_8h_aa69948afd2835468dc6d23d559c72a87}{ttak\+\_\+delete
 
 
 
-Definition at line \mbox{\hyperlink{map_8h_source_l00020}{20}} of file \mbox{\hyperlink{map_8h_source}{map.\+h}}.
+Trigger growth when load exceeds 1/3 of capacity. 
 
-\Hypertarget{map_8h_ae5ce0ae47e6cc761a9c49dbb3e5f06b5}\label{map_8h_ae5ce0ae47e6cc761a9c49dbb3e5f06b5} 
+
+
+Definition at line 65 of file map.\+h.
+
+\mbox{\Hypertarget{map_8h_ae5ce0ae47e6cc761a9c49dbb3e5f06b5}\label{map_8h_ae5ce0ae47e6cc761a9c49dbb3e5f06b5}} 
 \index{map.h@{map.h}!\_\_TT\_MAP\_SHRINK\_\_@{\_\_TT\_MAP\_SHRINK\_\_}}
 \index{\_\_TT\_MAP\_SHRINK\_\_@{\_\_TT\_MAP\_SHRINK\_\_}!map.h@{map.h}}
 \doxysubsubsection{\texorpdfstring{\_\_TT\_MAP\_SHRINK\_\_}{\_\_TT\_MAP\_SHRINK\_\_}}
@@ -65,9 +80,13 @@ Definition at line \mbox{\hyperlink{map_8h_source_l00020}{20}} of file \mbox{\hy
 
 
 
-Definition at line \mbox{\hyperlink{map_8h_source_l00021}{21}} of file \mbox{\hyperlink{map_8h_source}{map.\+h}}.
+Trigger shrink when load drops below 1/2 of capacity. 
 
-\Hypertarget{map_8h_a1e585d13c2e9006359f5bff2e3dc5d80}\label{map_8h_a1e585d13c2e9006359f5bff2e3dc5d80} 
+
+
+Definition at line 67 of file map.\+h.
+
+\mbox{\Hypertarget{map_8h_a1e585d13c2e9006359f5bff2e3dc5d80}\label{map_8h_a1e585d13c2e9006359f5bff2e3dc5d80}} 
 \index{map.h@{map.h}!ttak\_create\_map@{ttak\_create\_map}}
 \index{ttak\_create\_map@{ttak\_create\_map}!map.h@{map.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_create\_map}{ttak\_create\_map}}
@@ -75,9 +94,13 @@ Definition at line \mbox{\hyperlink{map_8h_source_l00021}{21}} of file \mbox{\hy
 
 
 
-Definition at line \mbox{\hyperlink{map_8h_source_l00009}{9}} of file \mbox{\hyperlink{map_8h_source}{map.\+h}}.
+Alias\+: create a new map with {\ttfamily init\+\_\+cap} initial capacity. 
 
-\Hypertarget{map_8h_aaf07aafced923862d2b186975733f846}\label{map_8h_aaf07aafced923862d2b186975733f846} 
+
+
+Definition at line 17 of file map.\+h.
+
+\mbox{\Hypertarget{map_8h_aaf07aafced923862d2b186975733f846}\label{map_8h_aaf07aafced923862d2b186975733f846}} 
 \index{map.h@{map.h}!ttak\_delete\_from\_map@{ttak\_delete\_from\_map}}
 \index{ttak\_delete\_from\_map@{ttak\_delete\_from\_map}!map.h@{map.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_delete\_from\_map}{ttak\_delete\_from\_map}}
@@ -85,9 +108,13 @@ Definition at line \mbox{\hyperlink{map_8h_source_l00009}{9}} of file \mbox{\hyp
 
 
 
-Definition at line \mbox{\hyperlink{map_8h_source_l00012}{12}} of file \mbox{\hyperlink{map_8h_source}{map.\+h}}.
+Alias\+: delete a key from the map. 
 
-\Hypertarget{map_8h_a0da5008a7fc916608a4d15b37c0cd0fe}\label{map_8h_a0da5008a7fc916608a4d15b37c0cd0fe} 
+
+
+Definition at line 23 of file map.\+h.
+
+\mbox{\Hypertarget{map_8h_a0da5008a7fc916608a4d15b37c0cd0fe}\label{map_8h_a0da5008a7fc916608a4d15b37c0cd0fe}} 
 \index{map.h@{map.h}!ttak\_insert\_to\_map@{ttak\_insert\_to\_map}}
 \index{ttak\_insert\_to\_map@{ttak\_insert\_to\_map}!map.h@{map.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_insert\_to\_map}{ttak\_insert\_to\_map}}
@@ -95,9 +122,13 @@ Definition at line \mbox{\hyperlink{map_8h_source_l00012}{12}} of file \mbox{\hy
 
 
 
-Definition at line \mbox{\hyperlink{map_8h_source_l00010}{10}} of file \mbox{\hyperlink{map_8h_source}{map.\+h}}.
+Alias\+: insert key/value into the map. 
 
-\Hypertarget{map_8h_a1051095fca50e9ef2982aff8b139b60a}\label{map_8h_a1051095fca50e9ef2982aff8b139b60a} 
+
+
+Definition at line 19 of file map.\+h.
+
+\mbox{\Hypertarget{map_8h_a1051095fca50e9ef2982aff8b139b60a}\label{map_8h_a1051095fca50e9ef2982aff8b139b60a}} 
 \index{map.h@{map.h}!ttak\_map\_get\_key@{ttak\_map\_get\_key}}
 \index{ttak\_map\_get\_key@{ttak\_map\_get\_key}!map.h@{map.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_map\_get\_key}{ttak\_map\_get\_key}}
@@ -105,32 +136,96 @@ Definition at line \mbox{\hyperlink{map_8h_source_l00010}{10}} of file \mbox{\hy
 
 
 
-Definition at line \mbox{\hyperlink{map_8h_source_l00011}{11}} of file \mbox{\hyperlink{map_8h_source}{map.\+h}}.
+Alias\+: look up a key in the map. 
+
+
+
+Definition at line 21 of file map.\+h.
 
 
 
 \doxysubsection{Function Documentation}
-\Hypertarget{map_8h_a6ffa9856b32ae9f5b1b265db61bbafa6}\label{map_8h_a6ffa9856b32ae9f5b1b265db61bbafa6} 
+\mbox{\Hypertarget{map_8h_ab75a575b0175d5d14c4975087d1b707c}\label{map_8h_ab75a575b0175d5d14c4975087d1b707c}} 
 \index{map.h@{map.h}!ttak\_create\_map@{ttak\_create\_map}}
 \index{ttak\_create\_map@{ttak\_create\_map}!map.h@{map.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_create\_map()}{ttak\_create\_map()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{hash_8h_a1f1a8bb38c53fea315e97508c3d66efd}{tt\+\_\+map\+\_\+t}} \texorpdfstring{$\ast$}{*} ttak\+\_\+create\+\_\+map (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{init\+\_\+cap,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \mbox{\hyperlink{hash_8h_a1f1a8bb38c53fea315e97508c3d66efd}{tt\+\_\+map\+\_\+t}}$\ast$ ttak\+\_\+create\+\_\+map (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{init\+\_\+cap,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
 
-\Hypertarget{map_8h_aa69948afd2835468dc6d23d559c72a87}\label{map_8h_aa69948afd2835468dc6d23d559c72a87} 
+
+
+Creates a new hash map with an initial capacity. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em init\+\_\+cap} & Desired initial slot count (rounded up to power-\/of-\/two). \\
+\hline
+{\em now} & Current monotonic timestamp in nanoseconds. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the allocated map, or NULL on failure. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{map_8h_aa69948afd2835468dc6d23d559c72a87}\label{map_8h_aa69948afd2835468dc6d23d559c72a87}} 
 \index{map.h@{map.h}!ttak\_delete\_from\_map@{ttak\_delete\_from\_map}}
 \index{ttak\_delete\_from\_map@{ttak\_delete\_from\_map}!map.h@{map.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_delete\_from\_map()}{ttak\_delete\_from\_map()}}
-{\footnotesize\ttfamily void ttak\+\_\+delete\+\_\+from\+\_\+map (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{hash_8h_a1f1a8bb38c53fea315e97508c3d66efd}{tt\+\_\+map\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{map,  }\item[{uintptr\+\_\+t}]{key,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void ttak\+\_\+delete\+\_\+from\+\_\+map (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{hash_8h_a1f1a8bb38c53fea315e97508c3d66efd}{tt\+\_\+map\+\_\+t}} $\ast$}]{map,  }\item[{uintptr\+\_\+t}]{key,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
 
-\Hypertarget{map_8h_ab15a74cf74e73a2a596a238eceec7f33}\label{map_8h_ab15a74cf74e73a2a596a238eceec7f33} 
+
+
+Removes a key from the map (no-\/op if not present). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em map} & Map to modify. \\
+\hline
+{\em key} & Key to remove. \\
+\hline
+{\em now} & Current monotonic timestamp in nanoseconds. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{map_8h_ab15a74cf74e73a2a596a238eceec7f33}\label{map_8h_ab15a74cf74e73a2a596a238eceec7f33}} 
 \index{map.h@{map.h}!ttak\_insert\_to\_map@{ttak\_insert\_to\_map}}
 \index{ttak\_insert\_to\_map@{ttak\_insert\_to\_map}!map.h@{map.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_insert\_to\_map()}{ttak\_insert\_to\_map()}}
-{\footnotesize\ttfamily void ttak\+\_\+insert\+\_\+to\+\_\+map (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{hash_8h_a1f1a8bb38c53fea315e97508c3d66efd}{tt\+\_\+map\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{map,  }\item[{uintptr\+\_\+t}]{key,  }\item[{size\+\_\+t}]{val,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void ttak\+\_\+insert\+\_\+to\+\_\+map (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{hash_8h_a1f1a8bb38c53fea315e97508c3d66efd}{tt\+\_\+map\+\_\+t}} $\ast$}]{map,  }\item[{uintptr\+\_\+t}]{key,  }\item[{size\+\_\+t}]{val,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
 
-\Hypertarget{map_8h_aebb1ab4dbd5d7dd2887690388f47f0c8}\label{map_8h_aebb1ab4dbd5d7dd2887690388f47f0c8} 
+
+
+Inserts or updates a key/value pair. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em map} & Map to modify. \\
+\hline
+{\em key} & Integer key. \\
+\hline
+{\em val} & Value to associate with {\ttfamily key}. \\
+\hline
+{\em now} & Current monotonic timestamp in nanoseconds. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{map_8h_aebb1ab4dbd5d7dd2887690388f47f0c8}\label{map_8h_aebb1ab4dbd5d7dd2887690388f47f0c8}} 
 \index{map.h@{map.h}!ttak\_map\_get\_key@{ttak\_map\_get\_key}}
 \index{ttak\_map\_get\_key@{ttak\_map\_get\_key}!map.h@{map.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_map\_get\_key()}{ttak\_map\_get\_key()}}
-{\footnotesize\ttfamily \+\_\+\+Bool ttak\+\_\+map\+\_\+get\+\_\+key (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{hash_8h_a1f1a8bb38c53fea315e97508c3d66efd}{tt\+\_\+map\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{map,  }\item[{uintptr\+\_\+t}]{key,  }\item[{size\+\_\+t \texorpdfstring{$\ast$}{*}}]{out,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \+\_\+\+Bool ttak\+\_\+map\+\_\+get\+\_\+key (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{hash_8h_a1f1a8bb38c53fea315e97508c3d66efd}{tt\+\_\+map\+\_\+t}} $\ast$}]{map,  }\item[{uintptr\+\_\+t}]{key,  }\item[{size\+\_\+t $\ast$}]{out,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
 
+
+
+Looks up a key and writes its value to {\ttfamily out}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em map} & Map to search. \\
+\hline
+{\em key} & Key to find. \\
+\hline
+{\em out} & Receives the associated value on success. \\
+\hline
+{\em now} & Current monotonic timestamp in nanoseconds. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Non-\/zero if the key was found. 
+\end{DoxyReturn}

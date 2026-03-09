@@ -1,8 +1,11 @@
 var include_2stdatomic_8h =
 [
     [ "atomic_flag", "structatomic__flag.html", "structatomic__flag" ],
-    [ "__TT_ATOMIC_LOCK", "include_2stdatomic_8h.html#a7b82615cb418a296137e2abcff7db14e", null ],
-    [ "__TT_ATOMIC_UNLOCK", "include_2stdatomic_8h.html#a078ff22b16930edd2268d1cb679445a5", null ],
+    [ "__TT_ATOMIC_FALLBACK_SHARDS", "include_2stdatomic_8h.html#a5e88c6a3441e11f503b5632713badf7b", null ],
+    [ "__TT_ATOMIC_FETCH_BINOP", "include_2stdatomic_8h.html#a6444b0d25e523458c7ae366244644dc6", null ],
+    [ "__TT_ATOMIC_IGNORE_ORDER", "include_2stdatomic_8h.html#a7e0c35c34b47c032ea511ceaf64e1a76", null ],
+    [ "__TT_ATOMIC_RUN", "include_2stdatomic_8h.html#a39ec9da8cb68ace850cea1f5e3666261", null ],
+    [ "__TT_ATOMIC_RUN_RET", "include_2stdatomic_8h.html#af6526ff3e8830e6cc9c27c27d358d8bb", null ],
     [ "__TTAK_NEEDS_PORTABLE_STDATOMIC__", "include_2stdatomic_8h.html#a58014a490f8aa8f5dd78cd9203229cdf", null ],
     [ "_Atomic", "include_2stdatomic_8h.html#a94674db2fe3c7496dfdcaa9b81486e79", null ],
     [ "_BOOL_DEFINED", "include_2stdatomic_8h.html#ad87ea8b8e6e5edd21da6ea973b847b22", null ],
@@ -75,7 +78,12 @@ var include_2stdatomic_8h =
       [ "memory_order_acq_rel", "include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1bae17e60cbfd766a7f165872c36e2f7bc5", null ],
       [ "memory_order_seq_cst", "include_2stdatomic_8h.html#a17c2de5ae768960284c047a320f17d1ba2d21914d1edd227a890107e7878a3752", null ]
     ] ],
+    [ "__ttak_atomic_fallback_init", "include_2stdatomic_8h.html#a55f621ad8cd15aed91063387100e197a", null ],
+    [ "__ttak_atomic_fallback_thread_fence", "include_2stdatomic_8h.html#a1860fd152001172354ab81c448635e86", null ],
+    [ "__ttak_atomic_lock_for_ptr", "include_2stdatomic_8h.html#ad4c0e9a11c3a43524825fd47bbf86bcc", null ],
     [ "atomic_flag_clear_explicit", "include_2stdatomic_8h.html#a4154e94db39d792afa138536ccaa0d7e", null ],
     [ "atomic_flag_test_and_set_explicit", "include_2stdatomic_8h.html#aeca7c45606fc2b5e0c8dca53a76f40ac", null ],
+    [ "__ttak_atomic_fallback_locks", "include_2stdatomic_8h.html#af2ecc3c589ae5f773acff9298a04dbfc", null ],
+    [ "__ttak_atomic_fallback_once", "include_2stdatomic_8h.html#adfa4e5582f5dd1838fb1d47a892d7f01", null ],
     [ "__ttak_atomic_global_lock", "include_2stdatomic_8h.html#a7082a0c612e692d1d2182aea6fcecb26", null ]
 ];

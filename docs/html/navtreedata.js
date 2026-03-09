@@ -25,20 +25,28 @@
 var NAVTREE =
 [
   [ "libttak", "index.html", [
-    [ "LibTTAK Benchmark Suite", "index.html", "index" ],
-    [ "TCC-Oriented Build and Math Tuning", "md_docs_2TCC__OPTIMIZATION.html", [
-      [ "Build Expectations", "md_docs_2TCC__OPTIMIZATION.html#autotoc_md17", null ],
-      [ "Hardcore C Tricks", "md_docs_2TCC__OPTIMIZATION.html#autotoc_md18", null ],
-      [ "Portable Assembly Strategy", "md_docs_2TCC__OPTIMIZATION.html#autotoc_md19", null ],
-      [ "Applying the Tricks Elsewhere", "md_docs_2TCC__OPTIMIZATION.html#autotoc_md20", null ]
+    [ "LibTTAK Benchmark Suite", "index.html", [
+      [ "Core Benchmarks", "index.html#autotoc_md1", [
+        [ "1. TTL Cache Multi-threaded Benchmark", "index.html#autotoc_md2", null ],
+        [ "2. General Benchmark Hub (<tt>ttak_bench.c</tt>)", "index.html#autotoc_md3", null ]
+      ] ],
+      [ "Architectural Philosophy", "index.html#autotoc_md4", null ],
+      [ "Analysis Tools", "index.html#autotoc_md5", null ]
+    ] ],
+    [ "TCC-Oriented Build and Math Tuning", "md_docs_TCC_OPTIMIZATION.html", [
+      [ "Build Expectations", "md_docs_TCC_OPTIMIZATION.html#autotoc_md17", null ],
+      [ "Hardcore C Tricks", "md_docs_TCC_OPTIMIZATION.html#autotoc_md18", null ],
+      [ "Portable Assembly Strategy", "md_docs_TCC_OPTIMIZATION.html#autotoc_md19", null ],
+      [ "TinyCC Streaming Fast Paths", "md_docs_TCC_OPTIMIZATION.html#autotoc_md20", null ],
+      [ "Applying the Tricks Elsewhere", "md_docs_TCC_OPTIMIZATION.html#autotoc_md21", null ]
     ] ],
     [ "Development History", "md_HISTORY.html", [
-      [ "2026-01-30", "md_HISTORY.html#autotoc_md22", [
-        [ "Initial Skeleton Creation & Build Stabilization", "md_HISTORY.html#autotoc_md23", null ],
-        [ "Key Diffs Overview", "md_HISTORY.html#autotoc_md24", null ]
+      [ "2026-01-30", "md_HISTORY.html#autotoc_md23", [
+        [ "Initial Skeleton Creation & Build Stabilization", "md_HISTORY.html#autotoc_md24", null ],
+        [ "Key Diffs Overview", "md_HISTORY.html#autotoc_md25", null ]
       ] ]
     ] ],
-    [ "Clone Coding Path", "md_tutorials_2CLONE__PATH.html", null ],
+    [ "Clone Coding Path", "md_tutorials_CLONE_PATH.html", null ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
@@ -66,14 +74,14 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "00__overview_8puml.html",
-"context_8h.html#a3ce5ce1f27b068f718459c1316c97bc9",
-"fixed_8h.html#ac0d78544bdf52b1e7be2adad8d318749",
-"lattice_8h.html#a66ecd7734451a2c81904dd69903e61b0",
-"ringbuf_8h.html#abe2e766a3c7a5e4497d44c76e56b8918",
-"structttak__bigcomplex.html",
-"structttak__mem__header__t.html#afb19e735d7af574abc849acff5d5a3e2",
-"structttak__stats__ext.html",
-"worker_8h.html#a3cd30f2c4e30576065ee8e7347240afc"
+"context_8h.html#a50c6b1c90b40b23d2fd1b715271a3d83",
+"fixed_8h.html#a8efab2f600f17fcb131ed9c647277c81",
+"io_8h.html#a4c5731f8c7bf69338c8fba54e58f3109a4daa069a8f600416376c6ced88c18b23",
+"port_8h.html#a9c772162be718df750f452ed87452d80a19b0baaa8e6569bfff4c88757aace0d9",
+"structttak__accel__batch__item.html#ab55dab014cfce96fe3e5c9938bcbb1c3",
+"structttak__logger.html#a8489256cafc9961e644cd68e83e86a5f",
+"structttak__shared__s.html#aa3ed576e6146a3d1f6d1a22d19d5d5cb",
+"ttak__accelerator_8h_source.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

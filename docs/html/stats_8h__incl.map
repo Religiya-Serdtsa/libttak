@@ -1,34 +1,17 @@
 <map id="include/ttak/stats/stats.h" name="include/ttak/stats/stats.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="248,5,383,45"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="336,313,407,339"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="322,45,369,299,364,300,316,46"/>
-<area shape="rect" id="Node000003" href="$sync_2sync_8h.html" title=" " alt="" coords="30,240,158,265"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="299,47,117,232,113,228,295,44"/>
-<area shape="rect" id="Node000006" href="$spinlock_8h.html" title=" " alt="" coords="182,240,334,265"/>
-<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="313,46,267,227,262,226,308,45"/>
-<area shape="rect" id="Node000009" href="$bigreal_8h.html" title=" " alt="" coords="458,93,605,119"/>
-<area shape="poly" id="edge11_Node000001_Node000009" title=" " alt="" coords="368,43,488,86,486,91,366,48"/>
-<area shape="poly" id="edge4_Node000003_Node000002" title=" " alt="" coords="139,263,323,310,322,315,138,268"/>
-<area shape="rect" id="Node000004" href="$pthread_8h.html" title="POSIX thread compatibility shim." alt="" coords="5,313,89,339"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="89,267,65,303,60,300,84,264"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="114,313,213,339"/>
-<area shape="poly" id="edge5_Node000003_Node000005" title=" " alt="" coords="107,264,145,302,141,305,104,268"/>
-<area shape="poly" id="edge9_Node000006_Node000002" title=" " alt="" coords="278,263,343,304,340,308,275,268"/>
-<area shape="poly" id="edge7_Node000006_Node000005" title=" " alt="" coords="244,267,191,307,188,303,241,263"/>
-<area shape="rect" id="Node000007" title=" " alt="" coords="486,313,569,339"/>
-<area shape="poly" id="edge8_Node000006_Node000007" title=" " alt="" coords="302,263,474,308,472,313,301,268"/>
-<area shape="rect" id="Node000008" title=" " alt="" coords="237,313,301,339"/>
-<area shape="poly" id="edge10_Node000006_Node000008" title=" " alt="" coords="262,265,268,299,262,300,257,266"/>
-<area shape="rect" id="Node000010" href="$bigint_8h.html" title=" " alt="" coords="510,167,649,192"/>
-<area shape="poly" id="edge12_Node000009_Node000010" title=" " alt="" coords="541,118,566,154,562,157,537,121"/>
-<area shape="poly" id="edge13_Node000010_Node000002" title=" " alt="" coords="546,195,499,214,450,242,417,272,390,304,386,300,413,269,447,238,496,209,544,190"/>
-<area shape="poly" id="edge15_Node000010_Node000007" title=" " alt="" coords="591,191,610,225,614,246,610,266,591,291,567,309,564,304,587,287,605,264,609,246,605,227,586,193"/>
-<area shape="rect" id="Node000011" title=" " alt="" coords="670,240,745,265"/>
-<area shape="poly" id="edge14_Node000010_Node000011" title=" " alt="" coords="601,190,675,231,673,235,599,194"/>
-<area shape="rect" id="Node000012" title=" " alt="" coords="769,240,856,265"/>
-<area shape="poly" id="edge16_Node000010_Node000012" title=" " alt="" coords="618,189,763,233,761,239,616,195"/>
-<area shape="rect" id="Node000013" href="$fixed_8h.html" title=" " alt="" coords="460,240,595,265"/>
-<area shape="poly" id="edge17_Node000010_Node000013" title=" " alt="" coords="573,194,546,230,542,227,569,191"/>
-<area shape="poly" id="edge18_Node000013_Node000002" title=" " alt="" coords="503,268,410,310,408,305,501,263"/>
-<area shape="poly" id="edge19_Node000013_Node000007" title=" " alt="" coords="530,266,530,300,525,300,525,266"/>
+<area shape="rect" id="node1" title=" " alt="" coords="177,5,300,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="177,319,241,345"/>
+<area shape="rect" id="node3" href="$sync_2sync_8h.html" title=" " alt="" coords="5,244,123,271"/>
+<area shape="rect" id="node6" href="$spinlock_8h.html" title=" " alt="" coords="248,244,387,271"/>
+<area shape="rect" id="node9" href="$bigreal_8h.html" title=" " alt="" coords="424,95,555,121"/>
+<area shape="rect" id="node4" href="$pthread_8h.html" title="POSIX thread compatibility shim." alt="" coords="26,319,102,345"/>
+<area shape="rect" id="node5" title=" " alt="" coords="316,393,407,420"/>
+<area shape="rect" id="node7" title=" " alt="" coords="399,319,473,345"/>
+<area shape="rect" id="node8" title=" " alt="" coords="265,319,324,345"/>
+<area shape="rect" id="node10" href="$bigint_8h.html" title=" " alt="" coords="536,169,659,196"/>
+<area shape="rect" id="node11" title=" " alt="" coords="750,319,818,345"/>
+<area shape="rect" id="node12" title=" " alt="" coords="558,244,637,271"/>
+<area shape="rect" id="node13" href="$ttak__align_8h.html" title="Alignment utilities and compatibility helpers." alt="" coords="763,244,914,271"/>
+<area shape="rect" id="node14" href="$fixed_8h.html" title=" " alt="" coords="411,244,533,271"/>
+<area shape="rect" id="node15" href="$ttak__compiler_8h.html" title="Compiler&#45;specific macros and compatibility layer." alt="" coords="497,319,671,345"/>
 </map>

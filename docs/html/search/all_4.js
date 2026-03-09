@@ -1,5 +1,28 @@
 var searchData=
 [
-  ['3_20–_20thread_20pool_20async_0',['Stage 3 – Thread Pool &amp; Async',['../md_tutorials_2CLONE__PATH.html#autotoc_md185',1,'']]],
-  ['30_1',['2026-01-30',['../md_HISTORY.html#autotoc_md22',1,'']]]
+  ['base_160',['base',['../structttak__stats__ext.html#a42369ced8c84f8b45dbe8e9e1305e040',1,'ttak_stats_ext::base()'],['../structttak__arena__generation.html#a9e8b2998e365de5bb35e53aae8703662',1,'ttak_arena_generation::base()'],['../structtt__shared__vector.html#aa63a64f5ac761a4c898a62d3a321fdb1',1,'tt_shared_vector::base()']]],
+  ['base_5fstatus_161',['base_status',['../structttak__detachable__context.html#ae9e1edc36ce0e1b94acf8d67975bda8e',1,'ttak_detachable_context']]],
+  ['bigcomplex_2eh_162',['bigcomplex.h',['../bigcomplex_8h.html',1,'']]],
+  ['bigint_2eh_163',['bigint.h',['../bigint_8h.html',1,'']]],
+  ['bigint_5faccel_2eh_164',['bigint_accel.h',['../bigint__accel_8h.html',1,'']]],
+  ['bigint_5frocm_2ecpp_165',['bigint_rocm.cpp',['../bigint__rocm_8cpp.html',1,'']]],
+  ['bigmul_2eh_166',['bigmul.h',['../bigmul_8h.html',1,'']]],
+  ['bigreal_2eh_167',['bigreal.h',['../bigreal_8h.html',1,'']]],
+  ['bigscript_2eh_168',['bigscript.h',['../bigscript_8h.html',1,'']]],
+  ['birth_5fns_169',['birth_ns',['../structttak__net__view.html#a559d9fd6cfc42d7f9ebcdb495a7ed555',1,'ttak_net_view']]],
+  ['bitlen_170',['bitlen',['../structSHA256__CTX.html#a22b9f345eb0273f497b397a09409cc4e',1,'SHA256_CTX']]],
+  ['bitmap_171',['bitmap',['../structttak__object__pool.html#a5d2309b73288099265b56b0555c8d17e',1,'ttak_object_pool']]],
+  ['bits_172',['bits',['../structttak__detach__status.html#a54b750fad4203f83102c2600eb220302',1,'ttak_detach_status::bits()'],['../structttak__dynamic__mask__t.html#a888a142a9acc56e0c1113a0bde6260d5',1,'ttak_dynamic_mask_t::bits()']]],
+  ['bits_2eh_173',['bits.h',['../bits_8h.html',1,'']]],
+  ['block_5fcount_174',['block_count',['../structttak__crypto__ctx.html#a72762a06b1850b01223bb06c2f8b8581',1,'ttak_crypto_ctx']]],
+  ['block_5fsize_175',['block_size',['../structttak__crypto__ctx.html#a3e355e9c06fcf7fa6c772b63b6ec468a',1,'ttak_crypto_ctx::block_size()'],['../structttak__slab__t.html#a35b93f7693dcc569da512c5bd827f44d',1,'ttak_slab_t::block_size()']]],
+  ['bplus_2eh_176',['bplus.h',['../bplus_8h.html',1,'']]],
+  ['bridge_5flock_177',['bridge_lock',['../structttak__context.html#a63feef9e95620e4495e637a691cef6f7',1,'ttak_context']]],
+  ['bsd_5fsysctl_2eh_178',['bsd_sysctl.h',['../bsd__sysctl_8h.html',1,'']]],
+  ['btree_2eh_179',['btree.h',['../btree_8h.html',1,'']]],
+  ['bucket_180',['bucket',['../structttak__ratelimit.html#a19b939a6b2e0c9941b3ed567d90c20b5',1,'ttak_ratelimit']]],
+  ['buddy_2eh_181',['buddy.h',['../buddy_8h.html',1,'']]],
+  ['buddy_5falloc_182',['buddy_alloc',['../structttak__net__baremetal__spec.html#a59c6828e80dde8b3419d142dd9d1513b',1,'ttak_net_baremetal_spec']]],
+  ['buddy_5ffree_183',['buddy_free',['../structttak__net__baremetal__spec.html#a6df6075fd981c3db4f03827a00135fd2',1,'ttak_net_baremetal_spec']]],
+  ['buffer_184',['buffer',['../structttak__lf__queue__t.html#a9098da444001008adb5ea7219aada7b4',1,'ttak_lf_queue_t::buffer()'],['../structttak__object__pool.html#a73ea2079b6694a8aad3b037175b4567c',1,'ttak_object_pool::buffer()'],['../structttak__ringbuf.html#a756ba68ca45210f8377ee7a868289e61',1,'ttak_ringbuf::buffer()']]]
 ];

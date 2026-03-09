@@ -1,10 +1,19 @@
-\doxysection{include/ttak/types/ttak\+\_\+compiler.h File Reference}
-\hypertarget{ttak__compiler_8h}{}\label{ttak__compiler_8h}\index{include/ttak/types/ttak\_compiler.h@{include/ttak/types/ttak\_compiler.h}}
+\hypertarget{ttak__compiler_8h}{}\doxysection{include/ttak/types/ttak\+\_\+compiler.h File Reference}
+\label{ttak__compiler_8h}\index{include/ttak/types/ttak\_compiler.h@{include/ttak/types/ttak\_compiler.h}}
 
 
 Compiler-\/specific macros and compatibility layer.  
 
 
+{\ttfamily \#include $<$stdatomic.\+h$>$}\newline
+Include dependency graph for ttak\+\_\+compiler.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=174pt]{ttak__compiler_8h__incl}
+\end{center}
+\end{figure}
 This graph shows which files directly or indirectly include this file\+:
 \nopagebreak
 \begin{figure}[H]
@@ -13,20 +22,36 @@ This graph shows which files directly or indirectly include this file\+:
 \includegraphics[width=350pt]{ttak__compiler_8h__dep__incl}
 \end{center}
 \end{figure}
-\doxysubsubsection*{Macros}
+\doxysubsection*{Macros}
 \begin{DoxyCompactItemize}
 \item 
+\#define \mbox{\hyperlink{ttak__compiler_8h_a4c41c2645bf95641f159def7be087513}{TTAK\+\_\+\+TINYCC\+\_\+\+NEEDS\+\_\+\+PORTABLE\+\_\+\+FALLBACK}}~0
+\begin{DoxyCompactList}\small\item\em 1 if Tiny\+CC is targeting a non-\/x86 platform and needs portable fallbacks. \end{DoxyCompactList}\item 
 \#define \mbox{\hyperlink{ttak__compiler_8h_a4e4c8922939b18c2f54aadc28824cbfd}{TTAK\+\_\+\+LIKELY}}(x)~(x)
-\item 
+\begin{DoxyCompactList}\small\item\em Branch prediction hints for GCC/\+Clang; no-\/op on MSVC. \end{DoxyCompactList}\item 
 \#define \mbox{\hyperlink{ttak__compiler_8h_a79e6ab9372fcc255fb4075c4ed8857dd}{TTAK\+\_\+\+UNLIKELY}}(x)~(x)
 \item 
-\#define \mbox{\hyperlink{ttak__compiler_8h_a7759c1f89dd694da3576024767572ddc}{TTAK\+\_\+\+FORCE\+\_\+\+INLINE}}~inline
-\item 
+\#define \mbox{\hyperlink{ttak__compiler_8h_a7759c1f89dd694da3576024767572ddc}{TTAK\+\_\+\+FORCE\+\_\+\+INLINE}}~static inline
+\begin{DoxyCompactList}\small\item\em Forces inlining on GCC/\+Clang/\+MSVC; falls back to plain inline. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{ttak__compiler_8h_a0473b234ca3f1d4765266d0515b288da}{TTAK\+\_\+\+MAYBE\+\_\+\+UNUSED}}
+\begin{DoxyCompactList}\small\item\em Suppresses unused-\/variable warnings portably. \end{DoxyCompactList}\item 
 \#define \mbox{\hyperlink{ttak__compiler_8h_a7127135e8502e259083fbc93d189db9d}{\+\_\+\+\_\+builtin\+\_\+ctzll}}(x)~\mbox{\hyperlink{ttak__compiler_8h_a57c438c3efdb8824d6f208df9c25d47e}{\+\_\+\+\_\+ttak\+\_\+ctzll}}(x)
 \item 
 \#define \mbox{\hyperlink{ttak__compiler_8h_aded4ba7a8e210443e0f6245a10ee5e5b}{\+\_\+\+\_\+builtin\+\_\+clzll}}(x)~\mbox{\hyperlink{ttak__compiler_8h_a973a1217d00a575f1d04db14c4ad3298}{\+\_\+\+\_\+ttak\+\_\+clzll}}(x)
+\item 
+\#define \mbox{\hyperlink{ttak__compiler_8h_a966b919194eba8b9581f0dead8effecf}{TTAK\+\_\+\+FAST\+\_\+\+ATOMIC\+\_\+\+ADD\+\_\+\+U64}}(ptr,  val)~\+\_\+\+\_\+atomic\+\_\+fetch\+\_\+add((ptr), (val), \+\_\+\+\_\+\+ATOMIC\+\_\+\+RELAXED)
+\item 
+\#define \mbox{\hyperlink{ttak__compiler_8h_ad8f1611e566fbff0e2d7920e9fe59130}{TTAK\+\_\+\+FAST\+\_\+\+ATOMIC\+\_\+\+ADD\+\_\+\+U32}}(ptr,  val)~\+\_\+\+\_\+atomic\+\_\+fetch\+\_\+add((ptr), (val), \+\_\+\+\_\+\+ATOMIC\+\_\+\+RELAXED)
+\item 
+\#define \mbox{\hyperlink{ttak__compiler_8h_a326daeea4d60d85414964232a072e4a2}{TTAK\+\_\+\+FAST\+\_\+\+ATOMIC\+\_\+\+LOAD\+\_\+\+U64}}(ptr)~\+\_\+\+\_\+atomic\+\_\+load\+\_\+n((ptr), \+\_\+\+\_\+\+ATOMIC\+\_\+\+RELAXED)
+\item 
+\#define \mbox{\hyperlink{ttak__compiler_8h_aa11c9b38f427e8f89e998fa977348ecf}{TTAK\+\_\+\+FAST\+\_\+\+ATOMIC\+\_\+\+STORE\+\_\+\+U32}}(ptr,  val)~\+\_\+\+\_\+atomic\+\_\+store\+\_\+n((ptr), (val), \+\_\+\+\_\+\+ATOMIC\+\_\+\+RELAXED)
+\item 
+\#define \mbox{\hyperlink{ttak__compiler_8h_ad7643c1ada5cdb5ad3ee1a144bf9a9ed}{TTAK\+\_\+\+FAST\+\_\+\+ATOMIC\+\_\+\+STORE\+\_\+\+BOOL}}(ptr,  val)~\+\_\+\+\_\+atomic\+\_\+store\+\_\+n((ptr), (val), \+\_\+\+\_\+\+ATOMIC\+\_\+\+RELAXED)
+\item 
+\#define \mbox{\hyperlink{ttak__compiler_8h_a9b4039c7fdcd18fc5d6f0183a78052c6}{TTAK\+\_\+\+FAST\+\_\+\+ATOMIC\+\_\+\+XCHG\+\_\+\+U64}}(ptr,  val)~\+\_\+\+\_\+atomic\+\_\+exchange\+\_\+n((ptr), (val), \+\_\+\+\_\+\+ATOMIC\+\_\+\+RELAXED)
 \end{DoxyCompactItemize}
-\doxysubsubsection*{Functions}
+\doxysubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
 static int \mbox{\hyperlink{ttak__compiler_8h_a57c438c3efdb8824d6f208df9c25d47e}{\+\_\+\+\_\+ttak\+\_\+ctzll}} (unsigned long long v)
@@ -40,12 +65,8 @@ Compiler-\/specific macros and compatibility layer.
 
 
 
-Definition in file \mbox{\hyperlink{ttak__compiler_8h_source}{ttak\+\_\+compiler.\+h}}.
-
-
-
 \doxysubsection{Macro Definition Documentation}
-\Hypertarget{ttak__compiler_8h_aded4ba7a8e210443e0f6245a10ee5e5b}\label{ttak__compiler_8h_aded4ba7a8e210443e0f6245a10ee5e5b} 
+\mbox{\Hypertarget{ttak__compiler_8h_aded4ba7a8e210443e0f6245a10ee5e5b}\label{ttak__compiler_8h_aded4ba7a8e210443e0f6245a10ee5e5b}} 
 \index{ttak\_compiler.h@{ttak\_compiler.h}!\_\_builtin\_clzll@{\_\_builtin\_clzll}}
 \index{\_\_builtin\_clzll@{\_\_builtin\_clzll}!ttak\_compiler.h@{ttak\_compiler.h}}
 \doxysubsubsection{\texorpdfstring{\_\_builtin\_clzll}{\_\_builtin\_clzll}}
@@ -53,9 +74,9 @@ Definition in file \mbox{\hyperlink{ttak__compiler_8h_source}{ttak\+\_\+compiler
 
 
 
-Definition at line \mbox{\hyperlink{ttak__compiler_8h_source_l00042}{42}} of file \mbox{\hyperlink{ttak__compiler_8h_source}{ttak\+\_\+compiler.\+h}}.
+Definition at line 60 of file ttak\+\_\+compiler.\+h.
 
-\Hypertarget{ttak__compiler_8h_a7127135e8502e259083fbc93d189db9d}\label{ttak__compiler_8h_a7127135e8502e259083fbc93d189db9d} 
+\mbox{\Hypertarget{ttak__compiler_8h_a7127135e8502e259083fbc93d189db9d}\label{ttak__compiler_8h_a7127135e8502e259083fbc93d189db9d}} 
 \index{ttak\_compiler.h@{ttak\_compiler.h}!\_\_builtin\_ctzll@{\_\_builtin\_ctzll}}
 \index{\_\_builtin\_ctzll@{\_\_builtin\_ctzll}!ttak\_compiler.h@{ttak\_compiler.h}}
 \doxysubsubsection{\texorpdfstring{\_\_builtin\_ctzll}{\_\_builtin\_ctzll}}
@@ -63,19 +84,83 @@ Definition at line \mbox{\hyperlink{ttak__compiler_8h_source_l00042}{42}} of fil
 
 
 
-Definition at line \mbox{\hyperlink{ttak__compiler_8h_source_l00041}{41}} of file \mbox{\hyperlink{ttak__compiler_8h_source}{ttak\+\_\+compiler.\+h}}.
+Definition at line 59 of file ttak\+\_\+compiler.\+h.
 
-\Hypertarget{ttak__compiler_8h_a7759c1f89dd694da3576024767572ddc}\label{ttak__compiler_8h_a7759c1f89dd694da3576024767572ddc} 
+\mbox{\Hypertarget{ttak__compiler_8h_ad8f1611e566fbff0e2d7920e9fe59130}\label{ttak__compiler_8h_ad8f1611e566fbff0e2d7920e9fe59130}} 
+\index{ttak\_compiler.h@{ttak\_compiler.h}!TTAK\_FAST\_ATOMIC\_ADD\_U32@{TTAK\_FAST\_ATOMIC\_ADD\_U32}}
+\index{TTAK\_FAST\_ATOMIC\_ADD\_U32@{TTAK\_FAST\_ATOMIC\_ADD\_U32}!ttak\_compiler.h@{ttak\_compiler.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_FAST\_ATOMIC\_ADD\_U32}{TTAK\_FAST\_ATOMIC\_ADD\_U32}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+FAST\+\_\+\+ATOMIC\+\_\+\+ADD\+\_\+\+U32(\begin{DoxyParamCaption}\item[{}]{ptr,  }\item[{}]{val }\end{DoxyParamCaption})~\+\_\+\+\_\+atomic\+\_\+fetch\+\_\+add((ptr), (val), \+\_\+\+\_\+\+ATOMIC\+\_\+\+RELAXED)}
+
+
+
+Definition at line 128 of file ttak\+\_\+compiler.\+h.
+
+\mbox{\Hypertarget{ttak__compiler_8h_a966b919194eba8b9581f0dead8effecf}\label{ttak__compiler_8h_a966b919194eba8b9581f0dead8effecf}} 
+\index{ttak\_compiler.h@{ttak\_compiler.h}!TTAK\_FAST\_ATOMIC\_ADD\_U64@{TTAK\_FAST\_ATOMIC\_ADD\_U64}}
+\index{TTAK\_FAST\_ATOMIC\_ADD\_U64@{TTAK\_FAST\_ATOMIC\_ADD\_U64}!ttak\_compiler.h@{ttak\_compiler.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_FAST\_ATOMIC\_ADD\_U64}{TTAK\_FAST\_ATOMIC\_ADD\_U64}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+FAST\+\_\+\+ATOMIC\+\_\+\+ADD\+\_\+\+U64(\begin{DoxyParamCaption}\item[{}]{ptr,  }\item[{}]{val }\end{DoxyParamCaption})~\+\_\+\+\_\+atomic\+\_\+fetch\+\_\+add((ptr), (val), \+\_\+\+\_\+\+ATOMIC\+\_\+\+RELAXED)}
+
+
+
+Definition at line 127 of file ttak\+\_\+compiler.\+h.
+
+\mbox{\Hypertarget{ttak__compiler_8h_a326daeea4d60d85414964232a072e4a2}\label{ttak__compiler_8h_a326daeea4d60d85414964232a072e4a2}} 
+\index{ttak\_compiler.h@{ttak\_compiler.h}!TTAK\_FAST\_ATOMIC\_LOAD\_U64@{TTAK\_FAST\_ATOMIC\_LOAD\_U64}}
+\index{TTAK\_FAST\_ATOMIC\_LOAD\_U64@{TTAK\_FAST\_ATOMIC\_LOAD\_U64}!ttak\_compiler.h@{ttak\_compiler.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_FAST\_ATOMIC\_LOAD\_U64}{TTAK\_FAST\_ATOMIC\_LOAD\_U64}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+FAST\+\_\+\+ATOMIC\+\_\+\+LOAD\+\_\+\+U64(\begin{DoxyParamCaption}\item[{}]{ptr }\end{DoxyParamCaption})~\+\_\+\+\_\+atomic\+\_\+load\+\_\+n((ptr), \+\_\+\+\_\+\+ATOMIC\+\_\+\+RELAXED)}
+
+
+
+Definition at line 129 of file ttak\+\_\+compiler.\+h.
+
+\mbox{\Hypertarget{ttak__compiler_8h_ad7643c1ada5cdb5ad3ee1a144bf9a9ed}\label{ttak__compiler_8h_ad7643c1ada5cdb5ad3ee1a144bf9a9ed}} 
+\index{ttak\_compiler.h@{ttak\_compiler.h}!TTAK\_FAST\_ATOMIC\_STORE\_BOOL@{TTAK\_FAST\_ATOMIC\_STORE\_BOOL}}
+\index{TTAK\_FAST\_ATOMIC\_STORE\_BOOL@{TTAK\_FAST\_ATOMIC\_STORE\_BOOL}!ttak\_compiler.h@{ttak\_compiler.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_FAST\_ATOMIC\_STORE\_BOOL}{TTAK\_FAST\_ATOMIC\_STORE\_BOOL}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+FAST\+\_\+\+ATOMIC\+\_\+\+STORE\+\_\+\+BOOL(\begin{DoxyParamCaption}\item[{}]{ptr,  }\item[{}]{val }\end{DoxyParamCaption})~\+\_\+\+\_\+atomic\+\_\+store\+\_\+n((ptr), (val), \+\_\+\+\_\+\+ATOMIC\+\_\+\+RELAXED)}
+
+
+
+Definition at line 131 of file ttak\+\_\+compiler.\+h.
+
+\mbox{\Hypertarget{ttak__compiler_8h_aa11c9b38f427e8f89e998fa977348ecf}\label{ttak__compiler_8h_aa11c9b38f427e8f89e998fa977348ecf}} 
+\index{ttak\_compiler.h@{ttak\_compiler.h}!TTAK\_FAST\_ATOMIC\_STORE\_U32@{TTAK\_FAST\_ATOMIC\_STORE\_U32}}
+\index{TTAK\_FAST\_ATOMIC\_STORE\_U32@{TTAK\_FAST\_ATOMIC\_STORE\_U32}!ttak\_compiler.h@{ttak\_compiler.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_FAST\_ATOMIC\_STORE\_U32}{TTAK\_FAST\_ATOMIC\_STORE\_U32}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+FAST\+\_\+\+ATOMIC\+\_\+\+STORE\+\_\+\+U32(\begin{DoxyParamCaption}\item[{}]{ptr,  }\item[{}]{val }\end{DoxyParamCaption})~\+\_\+\+\_\+atomic\+\_\+store\+\_\+n((ptr), (val), \+\_\+\+\_\+\+ATOMIC\+\_\+\+RELAXED)}
+
+
+
+Definition at line 130 of file ttak\+\_\+compiler.\+h.
+
+\mbox{\Hypertarget{ttak__compiler_8h_a9b4039c7fdcd18fc5d6f0183a78052c6}\label{ttak__compiler_8h_a9b4039c7fdcd18fc5d6f0183a78052c6}} 
+\index{ttak\_compiler.h@{ttak\_compiler.h}!TTAK\_FAST\_ATOMIC\_XCHG\_U64@{TTAK\_FAST\_ATOMIC\_XCHG\_U64}}
+\index{TTAK\_FAST\_ATOMIC\_XCHG\_U64@{TTAK\_FAST\_ATOMIC\_XCHG\_U64}!ttak\_compiler.h@{ttak\_compiler.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_FAST\_ATOMIC\_XCHG\_U64}{TTAK\_FAST\_ATOMIC\_XCHG\_U64}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+FAST\+\_\+\+ATOMIC\+\_\+\+XCHG\+\_\+\+U64(\begin{DoxyParamCaption}\item[{}]{ptr,  }\item[{}]{val }\end{DoxyParamCaption})~\+\_\+\+\_\+atomic\+\_\+exchange\+\_\+n((ptr), (val), \+\_\+\+\_\+\+ATOMIC\+\_\+\+RELAXED)}
+
+
+
+Definition at line 132 of file ttak\+\_\+compiler.\+h.
+
+\mbox{\Hypertarget{ttak__compiler_8h_a7759c1f89dd694da3576024767572ddc}\label{ttak__compiler_8h_a7759c1f89dd694da3576024767572ddc}} 
 \index{ttak\_compiler.h@{ttak\_compiler.h}!TTAK\_FORCE\_INLINE@{TTAK\_FORCE\_INLINE}}
 \index{TTAK\_FORCE\_INLINE@{TTAK\_FORCE\_INLINE}!ttak\_compiler.h@{ttak\_compiler.h}}
 \doxysubsubsection{\texorpdfstring{TTAK\_FORCE\_INLINE}{TTAK\_FORCE\_INLINE}}
-{\footnotesize\ttfamily \#define TTAK\+\_\+\+FORCE\+\_\+\+INLINE~inline}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+FORCE\+\_\+\+INLINE~static inline}
 
 
 
-Definition at line \mbox{\hyperlink{ttak__compiler_8h_source_l00022}{22}} of file \mbox{\hyperlink{ttak__compiler_8h_source}{ttak\+\_\+compiler.\+h}}.
+Forces inlining on GCC/\+Clang/\+MSVC; falls back to plain inline. 
 
-\Hypertarget{ttak__compiler_8h_a4e4c8922939b18c2f54aadc28824cbfd}\label{ttak__compiler_8h_a4e4c8922939b18c2f54aadc28824cbfd} 
+
+
+Definition at line 33 of file ttak\+\_\+compiler.\+h.
+
+\mbox{\Hypertarget{ttak__compiler_8h_a4e4c8922939b18c2f54aadc28824cbfd}\label{ttak__compiler_8h_a4e4c8922939b18c2f54aadc28824cbfd}} 
 \index{ttak\_compiler.h@{ttak\_compiler.h}!TTAK\_LIKELY@{TTAK\_LIKELY}}
 \index{TTAK\_LIKELY@{TTAK\_LIKELY}!ttak\_compiler.h@{ttak\_compiler.h}}
 \doxysubsubsection{\texorpdfstring{TTAK\_LIKELY}{TTAK\_LIKELY}}
@@ -83,9 +168,41 @@ Definition at line \mbox{\hyperlink{ttak__compiler_8h_source_l00022}{22}} of fil
 
 
 
-Definition at line \mbox{\hyperlink{ttak__compiler_8h_source_l00013}{13}} of file \mbox{\hyperlink{ttak__compiler_8h_source}{ttak\+\_\+compiler.\+h}}.
+Branch prediction hints for GCC/\+Clang; no-\/op on MSVC. 
 
-\Hypertarget{ttak__compiler_8h_a79e6ab9372fcc255fb4075c4ed8857dd}\label{ttak__compiler_8h_a79e6ab9372fcc255fb4075c4ed8857dd} 
+
+
+Definition at line 23 of file ttak\+\_\+compiler.\+h.
+
+\mbox{\Hypertarget{ttak__compiler_8h_a0473b234ca3f1d4765266d0515b288da}\label{ttak__compiler_8h_a0473b234ca3f1d4765266d0515b288da}} 
+\index{ttak\_compiler.h@{ttak\_compiler.h}!TTAK\_MAYBE\_UNUSED@{TTAK\_MAYBE\_UNUSED}}
+\index{TTAK\_MAYBE\_UNUSED@{TTAK\_MAYBE\_UNUSED}!ttak\_compiler.h@{ttak\_compiler.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_MAYBE\_UNUSED}{TTAK\_MAYBE\_UNUSED}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+MAYBE\+\_\+\+UNUSED}
+
+
+
+Suppresses unused-\/variable warnings portably. 
+
+
+
+Definition at line 40 of file ttak\+\_\+compiler.\+h.
+
+\mbox{\Hypertarget{ttak__compiler_8h_a4c41c2645bf95641f159def7be087513}\label{ttak__compiler_8h_a4c41c2645bf95641f159def7be087513}} 
+\index{ttak\_compiler.h@{ttak\_compiler.h}!TTAK\_TINYCC\_NEEDS\_PORTABLE\_FALLBACK@{TTAK\_TINYCC\_NEEDS\_PORTABLE\_FALLBACK}}
+\index{TTAK\_TINYCC\_NEEDS\_PORTABLE\_FALLBACK@{TTAK\_TINYCC\_NEEDS\_PORTABLE\_FALLBACK}!ttak\_compiler.h@{ttak\_compiler.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_TINYCC\_NEEDS\_PORTABLE\_FALLBACK}{TTAK\_TINYCC\_NEEDS\_PORTABLE\_FALLBACK}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+TINYCC\+\_\+\+NEEDS\+\_\+\+PORTABLE\+\_\+\+FALLBACK~0}
+
+
+
+1 if Tiny\+CC is targeting a non-\/x86 platform and needs portable fallbacks. 
+
+
+
+Definition at line 14 of file ttak\+\_\+compiler.\+h.
+
+\mbox{\Hypertarget{ttak__compiler_8h_a79e6ab9372fcc255fb4075c4ed8857dd}\label{ttak__compiler_8h_a79e6ab9372fcc255fb4075c4ed8857dd}} 
 \index{ttak\_compiler.h@{ttak\_compiler.h}!TTAK\_UNLIKELY@{TTAK\_UNLIKELY}}
 \index{TTAK\_UNLIKELY@{TTAK\_UNLIKELY}!ttak\_compiler.h@{ttak\_compiler.h}}
 \doxysubsubsection{\texorpdfstring{TTAK\_UNLIKELY}{TTAK\_UNLIKELY}}
@@ -93,12 +210,12 @@ Definition at line \mbox{\hyperlink{ttak__compiler_8h_source_l00013}{13}} of fil
 
 
 
-Definition at line \mbox{\hyperlink{ttak__compiler_8h_source_l00014}{14}} of file \mbox{\hyperlink{ttak__compiler_8h_source}{ttak\+\_\+compiler.\+h}}.
+Definition at line 24 of file ttak\+\_\+compiler.\+h.
 
 
 
 \doxysubsection{Function Documentation}
-\Hypertarget{ttak__compiler_8h_a973a1217d00a575f1d04db14c4ad3298}\label{ttak__compiler_8h_a973a1217d00a575f1d04db14c4ad3298} 
+\mbox{\Hypertarget{ttak__compiler_8h_a973a1217d00a575f1d04db14c4ad3298}\label{ttak__compiler_8h_a973a1217d00a575f1d04db14c4ad3298}} 
 \index{ttak\_compiler.h@{ttak\_compiler.h}!\_\_ttak\_clzll@{\_\_ttak\_clzll}}
 \index{\_\_ttak\_clzll@{\_\_ttak\_clzll}!ttak\_compiler.h@{ttak\_compiler.h}}
 \doxysubsubsection{\texorpdfstring{\_\_ttak\_clzll()}{\_\_ttak\_clzll()}}
@@ -106,9 +223,9 @@ Definition at line \mbox{\hyperlink{ttak__compiler_8h_source_l00014}{14}} of fil
 
 
 
-Definition at line \mbox{\hyperlink{ttak__compiler_8h_source_l00032}{32}} of file \mbox{\hyperlink{ttak__compiler_8h_source}{ttak\+\_\+compiler.\+h}}.
+Definition at line 50 of file ttak\+\_\+compiler.\+h.
 
-\Hypertarget{ttak__compiler_8h_a57c438c3efdb8824d6f208df9c25d47e}\label{ttak__compiler_8h_a57c438c3efdb8824d6f208df9c25d47e} 
+\mbox{\Hypertarget{ttak__compiler_8h_a57c438c3efdb8824d6f208df9c25d47e}\label{ttak__compiler_8h_a57c438c3efdb8824d6f208df9c25d47e}} 
 \index{ttak\_compiler.h@{ttak\_compiler.h}!\_\_ttak\_ctzll@{\_\_ttak\_ctzll}}
 \index{\_\_ttak\_ctzll@{\_\_ttak\_ctzll}!ttak\_compiler.h@{ttak\_compiler.h}}
 \doxysubsubsection{\texorpdfstring{\_\_ttak\_ctzll()}{\_\_ttak\_ctzll()}}
@@ -116,5 +233,5 @@ Definition at line \mbox{\hyperlink{ttak__compiler_8h_source_l00032}{32}} of fil
 
 
 
-Definition at line \mbox{\hyperlink{ttak__compiler_8h_source_l00026}{26}} of file \mbox{\hyperlink{ttak__compiler_8h_source}{ttak\+\_\+compiler.\+h}}.
+Definition at line 44 of file ttak\+\_\+compiler.\+h.
 

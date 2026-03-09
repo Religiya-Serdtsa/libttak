@@ -1,0 +1,4 @@
+<map id="ttak_get_tick_count_ns" name="ttak_get_tick_count_ns">
+<area shape="rect" id="node1" title="Returns the current tick count in nanoseconds." alt="" coords="189,5,347,32"/>
+<area shape="rect" id="node2" href="$timing_8h.html#ab89967dd277adc228208b2efe487215c" title="Returns the current tick count in milliseconds." alt="" coords="5,5,141,32"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="examples/mersenne&#45;prime/thread_compat.h" name="examples/mersenne&#45;prime/thread_compat.h">
+<area shape="rect" id="node1" title=" " alt="" coords="51,5,227,47"/>
+<area shape="rect" id="node2" href="$include_2ttak_2thread_2thread__compat_8h.html" title="Minimal cross&#45;platform thread wrappers exposed by libttak." alt="" coords="77,95,201,136"/>
+<area shape="rect" id="node3" href="$pthread_8h.html" title="POSIX thread compatibility shim." alt="" coords="5,184,81,211"/>
+<area shape="rect" id="node4" title=" " alt="" coords="105,184,173,211"/>
+<area shape="rect" id="node5" href="$sched_8h.html" title="Async task scheduler — init, shutdown, schedule, and yield." alt="" coords="197,184,265,211"/>
+<area shape="rect" id="node6" href="$task_8h.html" title=" " alt="" coords="121,259,243,285"/>
+<area shape="rect" id="node7" title=" " alt="" coords="199,333,263,360"/>
+</map>

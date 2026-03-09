@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['and_20math_20tuning_0',['TCC-Oriented Build and Math Tuning',['../md_docs_2TCC__OPTIMIZATION.html',1,'']]]
+  ['clone_20coding_20path_3170',['Clone Coding Path',['../md_tutorials_CLONE_PATH.html',1,'']]]
 ];

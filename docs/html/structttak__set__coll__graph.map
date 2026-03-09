@@ -1,8 +1,4 @@
 <map id="ttak_set" name="ttak_set">
-<area shape="rect" id="Node000001" title=" " alt="" coords="33,181,107,207"/>
-<area shape="rect" id="Node000002" href="$structttak__table.html" title="Generic SipHash Table." alt="" coords="26,93,114,119"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="73,133,73,181,67,181,67,133"/>
-<area shape="rect" id="Node000003" href="$structttak__table__entry.html" title="Generic Table Entry." alt="" coords="5,5,135,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="73,45,73,93,67,93,67,45"/>
-<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="150,10,161,18,153,26,135,28,135,23,151,21,156,18,147,14"/>
+<area shape="rect" id="node1" title=" " alt="" coords="10,95,79,121"/>
+<area shape="rect" id="node2" href="$structttak__table.html" title="Generic SipHash Table (Refactored to Open Addressing SoA)." alt="" coords="5,5,84,32"/>
 </map>

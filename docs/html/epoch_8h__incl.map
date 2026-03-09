@@ -1,9 +1,7 @@
 <map id="include/ttak/mem/epoch.h" name="include/ttak/mem/epoch.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="52,5,244,31"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,88,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="133,33,76,73,73,68,130,28"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="113,79,183,104"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="151,31,151,65,145,65,145,31"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="208,79,307,104"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="167,28,229,69,226,73,164,33"/>
+<area shape="rect" id="node1" title=" " alt="" coords="85,5,257,32"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,80,80,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="104,80,168,107"/>
+<area shape="rect" id="node4" title=" " alt="" coords="221,155,312,181"/>
+<area shape="rect" id="node5" href="$ttak__compiler_8h.html" title="Compiler&#45;specific macros and compatibility layer." alt="" coords="243,80,416,107"/>
 </map>

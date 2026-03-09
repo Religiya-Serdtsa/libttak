@@ -1,5 +1,5 @@
-\doxysection{ttak\+\_\+net\+\_\+lattice Struct Reference}
-\hypertarget{structttak__net__lattice}{}\label{structttak__net__lattice}\index{ttak\_net\_lattice@{ttak\_net\_lattice}}
+\hypertarget{structttak__net__lattice}{}\doxysection{ttak\+\_\+net\+\_\+lattice Struct Reference}
+\label{structttak__net__lattice}\index{ttak\_net\_lattice@{ttak\_net\_lattice}}
 
 
 The Lattice (Sanpan) structure.  
@@ -16,10 +16,10 @@ Collaboration diagram for ttak\+\_\+net\+\_\+lattice\+:
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=228pt]{structttak__net__lattice__coll__graph}
+\includegraphics[width=214pt]{structttak__net__lattice__coll__graph}
 \end{center}
 \end{figure}
-\doxysubsubsection*{Public Attributes}
+\doxysubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
 uint32\+\_\+t \mbox{\hyperlink{structttak__net__lattice_ab7b8a5de7145b8ec92bd14695ec7d950}{dim}}
@@ -28,19 +28,21 @@ uint32\+\_\+t \mbox{\hyperlink{structttak__net__lattice_a4732285a865acf030dbe348
 \item 
 uint32\+\_\+t \mbox{\hyperlink{structttak__net__lattice_a29aa15c29a9b3035a86db889287ce236}{capacity}}
 \item 
-\mbox{\hyperlink{lattice_8h_a66ecd7734451a2c81904dd69903e61b0}{ttak\+\_\+net\+\_\+lattice\+\_\+slot\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__net__lattice_a535801341b5d5f391914d65f0b4f0ad0}{slots}}
+\mbox{\hyperlink{lattice_8h_a66ecd7734451a2c81904dd69903e61b0}{ttak\+\_\+net\+\_\+lattice\+\_\+slot\+\_\+t}} $\ast$ \mbox{\hyperlink{structttak__net__lattice_a535801341b5d5f391914d65f0b4f0ad0}{slots}}
 \item 
 volatile uint64\+\_\+t \mbox{\hyperlink{structttak__net__lattice_a5ebe603a2fb87e2c85979624ffbecb1c}{total\+\_\+ingress}}
 \item 
 volatile uint64\+\_\+t \mbox{\hyperlink{structttak__net__lattice_ac8d1b41ef99dfd5baad66a7cdf7b0eb3}{used\+\_\+slots}}
 \item 
+\mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\+\_\+\+Atomic}} uint32\+\_\+t \mbox{\hyperlink{structttak__net__lattice_a0a711f06e2727d4e8abe2e229186652c}{compact\+\_\+state}}
+\item 
 \+\_\+\+Bool \mbox{\hyperlink{structttak__net__lattice_a9afbd44947b1a1b3ccfa6996a23d4fe1}{is\+\_\+full}}
 \item 
 \+\_\+\+Bool \mbox{\hyperlink{structttak__net__lattice_a358cb3cf400cc7f1fede78fba6385e8e}{is\+\_\+stub}}
 \item 
-struct \mbox{\hyperlink{structttak__net__lattice}{ttak\+\_\+net\+\_\+lattice}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__net__lattice_a750527ee7cf297b1834dc5cdc01f8bca}{prev}}
+struct \mbox{\hyperlink{structttak__net__lattice}{ttak\+\_\+net\+\_\+lattice}} $\ast$ \mbox{\hyperlink{structttak__net__lattice_a750527ee7cf297b1834dc5cdc01f8bca}{prev}}
 \item 
-struct \mbox{\hyperlink{structttak__net__lattice}{ttak\+\_\+net\+\_\+lattice}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__net__lattice_a032e2b38fb4c82c155dfcea77fb9c96b}{next}}
+struct \mbox{\hyperlink{structttak__net__lattice}{ttak\+\_\+net\+\_\+lattice}} $\ast$ \mbox{\hyperlink{structttak__net__lattice_a032e2b38fb4c82c155dfcea77fb9c96b}{next}}
 \item 
 \mbox{\hyperlink{sync_2sync_8h_a099d39f1f8999756bc828ad4b337d5b6}{ttak\+\_\+mutex\+\_\+t}} \mbox{\hyperlink{structttak__net__lattice_aa9dec0cfede463e45920179552098b0b}{expand\+\_\+lock}}
 \end{DoxyCompactItemize}
@@ -49,12 +51,12 @@ struct \mbox{\hyperlink{structttak__net__lattice}{ttak\+\_\+net\+\_\+lattice}} \
 \doxysubsection{Detailed Description}
 The Lattice (Sanpan) structure. 
 
-Definition at line \mbox{\hyperlink{lattice_8h_source_l00034}{34}} of file \mbox{\hyperlink{lattice_8h_source}{lattice.\+h}}.
+Definition at line 35 of file lattice.\+h.
 
 
 
 \doxysubsection{Member Data Documentation}
-\Hypertarget{structttak__net__lattice_a29aa15c29a9b3035a86db889287ce236}\label{structttak__net__lattice_a29aa15c29a9b3035a86db889287ce236} 
+\mbox{\Hypertarget{structttak__net__lattice_a29aa15c29a9b3035a86db889287ce236}\label{structttak__net__lattice_a29aa15c29a9b3035a86db889287ce236}} 
 \index{ttak\_net\_lattice@{ttak\_net\_lattice}!capacity@{capacity}}
 \index{capacity@{capacity}!ttak\_net\_lattice@{ttak\_net\_lattice}}
 \doxysubsubsection{\texorpdfstring{capacity}{capacity}}
@@ -62,9 +64,19 @@ Definition at line \mbox{\hyperlink{lattice_8h_source_l00034}{34}} of file \mbox
 
 
 
-Definition at line \mbox{\hyperlink{lattice_8h_source_l00037}{37}} of file \mbox{\hyperlink{lattice_8h_source}{lattice.\+h}}.
+Definition at line 38 of file lattice.\+h.
 
-\Hypertarget{structttak__net__lattice_ab7b8a5de7145b8ec92bd14695ec7d950}\label{structttak__net__lattice_ab7b8a5de7145b8ec92bd14695ec7d950} 
+\mbox{\Hypertarget{structttak__net__lattice_a0a711f06e2727d4e8abe2e229186652c}\label{structttak__net__lattice_a0a711f06e2727d4e8abe2e229186652c}} 
+\index{ttak\_net\_lattice@{ttak\_net\_lattice}!compact\_state@{compact\_state}}
+\index{compact\_state@{compact\_state}!ttak\_net\_lattice@{ttak\_net\_lattice}}
+\doxysubsubsection{\texorpdfstring{compact\_state}{compact\_state}}
+{\footnotesize\ttfamily \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\+\_\+\+Atomic}} uint32\+\_\+t ttak\+\_\+net\+\_\+lattice\+::compact\+\_\+state}
+
+
+
+Definition at line 42 of file lattice.\+h.
+
+\mbox{\Hypertarget{structttak__net__lattice_ab7b8a5de7145b8ec92bd14695ec7d950}\label{structttak__net__lattice_ab7b8a5de7145b8ec92bd14695ec7d950}} 
 \index{ttak\_net\_lattice@{ttak\_net\_lattice}!dim@{dim}}
 \index{dim@{dim}!ttak\_net\_lattice@{ttak\_net\_lattice}}
 \doxysubsubsection{\texorpdfstring{dim}{dim}}
@@ -72,9 +84,9 @@ Definition at line \mbox{\hyperlink{lattice_8h_source_l00037}{37}} of file \mbox
 
 
 
-Definition at line \mbox{\hyperlink{lattice_8h_source_l00035}{35}} of file \mbox{\hyperlink{lattice_8h_source}{lattice.\+h}}.
+Definition at line 36 of file lattice.\+h.
 
-\Hypertarget{structttak__net__lattice_aa9dec0cfede463e45920179552098b0b}\label{structttak__net__lattice_aa9dec0cfede463e45920179552098b0b} 
+\mbox{\Hypertarget{structttak__net__lattice_aa9dec0cfede463e45920179552098b0b}\label{structttak__net__lattice_aa9dec0cfede463e45920179552098b0b}} 
 \index{ttak\_net\_lattice@{ttak\_net\_lattice}!expand\_lock@{expand\_lock}}
 \index{expand\_lock@{expand\_lock}!ttak\_net\_lattice@{ttak\_net\_lattice}}
 \doxysubsubsection{\texorpdfstring{expand\_lock}{expand\_lock}}
@@ -82,9 +94,9 @@ Definition at line \mbox{\hyperlink{lattice_8h_source_l00035}{35}} of file \mbox
 
 
 
-Definition at line \mbox{\hyperlink{lattice_8h_source_l00045}{45}} of file \mbox{\hyperlink{lattice_8h_source}{lattice.\+h}}.
+Definition at line 47 of file lattice.\+h.
 
-\Hypertarget{structttak__net__lattice_a9afbd44947b1a1b3ccfa6996a23d4fe1}\label{structttak__net__lattice_a9afbd44947b1a1b3ccfa6996a23d4fe1} 
+\mbox{\Hypertarget{structttak__net__lattice_a9afbd44947b1a1b3ccfa6996a23d4fe1}\label{structttak__net__lattice_a9afbd44947b1a1b3ccfa6996a23d4fe1}} 
 \index{ttak\_net\_lattice@{ttak\_net\_lattice}!is\_full@{is\_full}}
 \index{is\_full@{is\_full}!ttak\_net\_lattice@{ttak\_net\_lattice}}
 \doxysubsubsection{\texorpdfstring{is\_full}{is\_full}}
@@ -92,9 +104,9 @@ Definition at line \mbox{\hyperlink{lattice_8h_source_l00045}{45}} of file \mbox
 
 
 
-Definition at line \mbox{\hyperlink{lattice_8h_source_l00041}{41}} of file \mbox{\hyperlink{lattice_8h_source}{lattice.\+h}}.
+Definition at line 43 of file lattice.\+h.
 
-\Hypertarget{structttak__net__lattice_a358cb3cf400cc7f1fede78fba6385e8e}\label{structttak__net__lattice_a358cb3cf400cc7f1fede78fba6385e8e} 
+\mbox{\Hypertarget{structttak__net__lattice_a358cb3cf400cc7f1fede78fba6385e8e}\label{structttak__net__lattice_a358cb3cf400cc7f1fede78fba6385e8e}} 
 \index{ttak\_net\_lattice@{ttak\_net\_lattice}!is\_stub@{is\_stub}}
 \index{is\_stub@{is\_stub}!ttak\_net\_lattice@{ttak\_net\_lattice}}
 \doxysubsubsection{\texorpdfstring{is\_stub}{is\_stub}}
@@ -102,9 +114,9 @@ Definition at line \mbox{\hyperlink{lattice_8h_source_l00041}{41}} of file \mbox
 
 
 
-Definition at line \mbox{\hyperlink{lattice_8h_source_l00042}{42}} of file \mbox{\hyperlink{lattice_8h_source}{lattice.\+h}}.
+Definition at line 44 of file lattice.\+h.
 
-\Hypertarget{structttak__net__lattice_a4732285a865acf030dbe34855819e870}\label{structttak__net__lattice_a4732285a865acf030dbe34855819e870} 
+\mbox{\Hypertarget{structttak__net__lattice_a4732285a865acf030dbe34855819e870}\label{structttak__net__lattice_a4732285a865acf030dbe34855819e870}} 
 \index{ttak\_net\_lattice@{ttak\_net\_lattice}!mask@{mask}}
 \index{mask@{mask}!ttak\_net\_lattice@{ttak\_net\_lattice}}
 \doxysubsubsection{\texorpdfstring{mask}{mask}}
@@ -112,39 +124,39 @@ Definition at line \mbox{\hyperlink{lattice_8h_source_l00042}{42}} of file \mbox
 
 
 
-Definition at line \mbox{\hyperlink{lattice_8h_source_l00036}{36}} of file \mbox{\hyperlink{lattice_8h_source}{lattice.\+h}}.
+Definition at line 37 of file lattice.\+h.
 
-\Hypertarget{structttak__net__lattice_a032e2b38fb4c82c155dfcea77fb9c96b}\label{structttak__net__lattice_a032e2b38fb4c82c155dfcea77fb9c96b} 
+\mbox{\Hypertarget{structttak__net__lattice_a032e2b38fb4c82c155dfcea77fb9c96b}\label{structttak__net__lattice_a032e2b38fb4c82c155dfcea77fb9c96b}} 
 \index{ttak\_net\_lattice@{ttak\_net\_lattice}!next@{next}}
 \index{next@{next}!ttak\_net\_lattice@{ttak\_net\_lattice}}
 \doxysubsubsection{\texorpdfstring{next}{next}}
-{\footnotesize\ttfamily struct \mbox{\hyperlink{structttak__net__lattice}{ttak\+\_\+net\+\_\+lattice}}\texorpdfstring{$\ast$}{*} ttak\+\_\+net\+\_\+lattice\+::next}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structttak__net__lattice}{ttak\+\_\+net\+\_\+lattice}}$\ast$ ttak\+\_\+net\+\_\+lattice\+::next}
 
 
 
-Definition at line \mbox{\hyperlink{lattice_8h_source_l00044}{44}} of file \mbox{\hyperlink{lattice_8h_source}{lattice.\+h}}.
+Definition at line 46 of file lattice.\+h.
 
-\Hypertarget{structttak__net__lattice_a750527ee7cf297b1834dc5cdc01f8bca}\label{structttak__net__lattice_a750527ee7cf297b1834dc5cdc01f8bca} 
+\mbox{\Hypertarget{structttak__net__lattice_a750527ee7cf297b1834dc5cdc01f8bca}\label{structttak__net__lattice_a750527ee7cf297b1834dc5cdc01f8bca}} 
 \index{ttak\_net\_lattice@{ttak\_net\_lattice}!prev@{prev}}
 \index{prev@{prev}!ttak\_net\_lattice@{ttak\_net\_lattice}}
 \doxysubsubsection{\texorpdfstring{prev}{prev}}
-{\footnotesize\ttfamily struct \mbox{\hyperlink{structttak__net__lattice}{ttak\+\_\+net\+\_\+lattice}}\texorpdfstring{$\ast$}{*} ttak\+\_\+net\+\_\+lattice\+::prev}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structttak__net__lattice}{ttak\+\_\+net\+\_\+lattice}}$\ast$ ttak\+\_\+net\+\_\+lattice\+::prev}
 
 
 
-Definition at line \mbox{\hyperlink{lattice_8h_source_l00043}{43}} of file \mbox{\hyperlink{lattice_8h_source}{lattice.\+h}}.
+Definition at line 45 of file lattice.\+h.
 
-\Hypertarget{structttak__net__lattice_a535801341b5d5f391914d65f0b4f0ad0}\label{structttak__net__lattice_a535801341b5d5f391914d65f0b4f0ad0} 
+\mbox{\Hypertarget{structttak__net__lattice_a535801341b5d5f391914d65f0b4f0ad0}\label{structttak__net__lattice_a535801341b5d5f391914d65f0b4f0ad0}} 
 \index{ttak\_net\_lattice@{ttak\_net\_lattice}!slots@{slots}}
 \index{slots@{slots}!ttak\_net\_lattice@{ttak\_net\_lattice}}
 \doxysubsubsection{\texorpdfstring{slots}{slots}}
-{\footnotesize\ttfamily \mbox{\hyperlink{lattice_8h_a66ecd7734451a2c81904dd69903e61b0}{ttak\+\_\+net\+\_\+lattice\+\_\+slot\+\_\+t}}\texorpdfstring{$\ast$}{*} ttak\+\_\+net\+\_\+lattice\+::slots}
+{\footnotesize\ttfamily \mbox{\hyperlink{lattice_8h_a66ecd7734451a2c81904dd69903e61b0}{ttak\+\_\+net\+\_\+lattice\+\_\+slot\+\_\+t}}$\ast$ ttak\+\_\+net\+\_\+lattice\+::slots}
 
 
 
-Definition at line \mbox{\hyperlink{lattice_8h_source_l00038}{38}} of file \mbox{\hyperlink{lattice_8h_source}{lattice.\+h}}.
+Definition at line 39 of file lattice.\+h.
 
-\Hypertarget{structttak__net__lattice_a5ebe603a2fb87e2c85979624ffbecb1c}\label{structttak__net__lattice_a5ebe603a2fb87e2c85979624ffbecb1c} 
+\mbox{\Hypertarget{structttak__net__lattice_a5ebe603a2fb87e2c85979624ffbecb1c}\label{structttak__net__lattice_a5ebe603a2fb87e2c85979624ffbecb1c}} 
 \index{ttak\_net\_lattice@{ttak\_net\_lattice}!total\_ingress@{total\_ingress}}
 \index{total\_ingress@{total\_ingress}!ttak\_net\_lattice@{ttak\_net\_lattice}}
 \doxysubsubsection{\texorpdfstring{total\_ingress}{total\_ingress}}
@@ -152,9 +164,9 @@ Definition at line \mbox{\hyperlink{lattice_8h_source_l00038}{38}} of file \mbox
 
 
 
-Definition at line \mbox{\hyperlink{lattice_8h_source_l00039}{39}} of file \mbox{\hyperlink{lattice_8h_source}{lattice.\+h}}.
+Definition at line 40 of file lattice.\+h.
 
-\Hypertarget{structttak__net__lattice_ac8d1b41ef99dfd5baad66a7cdf7b0eb3}\label{structttak__net__lattice_ac8d1b41ef99dfd5baad66a7cdf7b0eb3} 
+\mbox{\Hypertarget{structttak__net__lattice_ac8d1b41ef99dfd5baad66a7cdf7b0eb3}\label{structttak__net__lattice_ac8d1b41ef99dfd5baad66a7cdf7b0eb3}} 
 \index{ttak\_net\_lattice@{ttak\_net\_lattice}!used\_slots@{used\_slots}}
 \index{used\_slots@{used\_slots}!ttak\_net\_lattice@{ttak\_net\_lattice}}
 \doxysubsubsection{\texorpdfstring{used\_slots}{used\_slots}}
@@ -162,7 +174,7 @@ Definition at line \mbox{\hyperlink{lattice_8h_source_l00039}{39}} of file \mbox
 
 
 
-Definition at line \mbox{\hyperlink{lattice_8h_source_l00040}{40}} of file \mbox{\hyperlink{lattice_8h_source}{lattice.\+h}}.
+Definition at line 41 of file lattice.\+h.
 
 
 

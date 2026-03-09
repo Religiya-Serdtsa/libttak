@@ -6,6 +6,6 @@ var timing_8h =
     [ "TT_MINUTE", "timing_8h.html#a3209654bf799b3cadd064970c008a32a", null ],
     [ "TT_NANO_SECOND", "timing_8h.html#a8f73ed891f186c57f1a72da390592879", null ],
     [ "TT_SECOND", "timing_8h.html#a751dbf1f1d796405a9b2fe2f7ffa945e", null ],
-    [ "ttak_get_tick_count", "timing_8h.html#ada5bc2c64ded59838280a07e7cadfbf9", null ],
-    [ "ttak_get_tick_count_ns", "timing_8h.html#a804f49096c6f68d22be9d271168e1619", null ]
+    [ "ttak_get_tick_count", "timing_8h.html#ab89967dd277adc228208b2efe487215c", null ],
+    [ "ttak_get_tick_count_ns", "timing_8h.html#a7c8ce36764d5190e6d54d194108eaf78", null ]
 ];

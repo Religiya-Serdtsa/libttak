@@ -1,13 +1,18 @@
-\doxysection{ttak\+\_\+future Struct Reference}
-\hypertarget{structttak__future}{}\label{structttak__future}\index{ttak\_future@{ttak\_future}}
+\hypertarget{structttak__future}{}\doxysection{ttak\+\_\+future Struct Reference}
+\label{structttak__future}\index{ttak\_future@{ttak\_future}}
+
+
+Blocking future that carries a single void$\ast$ result.  
+
+
 
 
 {\ttfamily \#include $<$future.\+h$>$}
 
-\doxysubsubsection*{Public Attributes}
+\doxysubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__future_a486767b89d5b5f842a868f614632cc42}{result}}
+void $\ast$ \mbox{\hyperlink{structttak__future_a486767b89d5b5f842a868f614632cc42}{result}}
 \item 
 \+\_\+\+Bool \mbox{\hyperlink{structttak__future_a16a9ed5137851ca5cc7387fed679269a}{ready}}
 \item 
@@ -18,52 +23,52 @@ pthread\+\_\+cond\+\_\+t \mbox{\hyperlink{structttak__future_a51864bb1d03b06e09c
 
 
 \doxysubsection{Detailed Description}
+Blocking future that carries a single void$\ast$ result. 
 
-
-Definition at line \mbox{\hyperlink{future_8h_source_l00007}{7}} of file \mbox{\hyperlink{future_8h_source}{future.\+h}}.
+Definition at line 19 of file future.\+h.
 
 
 
 \doxysubsection{Member Data Documentation}
-\Hypertarget{structttak__future_a51864bb1d03b06e09cb18262b2bd3675}\label{structttak__future_a51864bb1d03b06e09cb18262b2bd3675} 
+\mbox{\Hypertarget{structttak__future_a51864bb1d03b06e09cb18262b2bd3675}\label{structttak__future_a51864bb1d03b06e09cb18262b2bd3675}} 
 \index{ttak\_future@{ttak\_future}!cond@{cond}}
 \index{cond@{cond}!ttak\_future@{ttak\_future}}
 \doxysubsubsection{\texorpdfstring{cond}{cond}}
 {\footnotesize\ttfamily pthread\+\_\+cond\+\_\+t ttak\+\_\+future\+::cond}
 
+Signalled when {\ttfamily ready} becomes true. 
 
+Definition at line 23 of file future.\+h.
 
-Definition at line \mbox{\hyperlink{future_8h_source_l00011}{11}} of file \mbox{\hyperlink{future_8h_source}{future.\+h}}.
-
-\Hypertarget{structttak__future_a0c6c4437d3e6f0c8d89745dc178c626f}\label{structttak__future_a0c6c4437d3e6f0c8d89745dc178c626f} 
+\mbox{\Hypertarget{structttak__future_a0c6c4437d3e6f0c8d89745dc178c626f}\label{structttak__future_a0c6c4437d3e6f0c8d89745dc178c626f}} 
 \index{ttak\_future@{ttak\_future}!mutex@{mutex}}
 \index{mutex@{mutex}!ttak\_future@{ttak\_future}}
 \doxysubsubsection{\texorpdfstring{mutex}{mutex}}
 {\footnotesize\ttfamily pthread\+\_\+mutex\+\_\+t ttak\+\_\+future\+::mutex}
 
+Guards {\ttfamily ready} and {\ttfamily result}. 
 
+Definition at line 22 of file future.\+h.
 
-Definition at line \mbox{\hyperlink{future_8h_source_l00010}{10}} of file \mbox{\hyperlink{future_8h_source}{future.\+h}}.
-
-\Hypertarget{structttak__future_a16a9ed5137851ca5cc7387fed679269a}\label{structttak__future_a16a9ed5137851ca5cc7387fed679269a} 
+\mbox{\Hypertarget{structttak__future_a16a9ed5137851ca5cc7387fed679269a}\label{structttak__future_a16a9ed5137851ca5cc7387fed679269a}} 
 \index{ttak\_future@{ttak\_future}!ready@{ready}}
 \index{ready@{ready}!ttak\_future@{ttak\_future}}
 \doxysubsubsection{\texorpdfstring{ready}{ready}}
 {\footnotesize\ttfamily \+\_\+\+Bool ttak\+\_\+future\+::ready}
 
+Non-\/zero once the result is available. 
 
+Definition at line 21 of file future.\+h.
 
-Definition at line \mbox{\hyperlink{future_8h_source_l00009}{9}} of file \mbox{\hyperlink{future_8h_source}{future.\+h}}.
-
-\Hypertarget{structttak__future_a486767b89d5b5f842a868f614632cc42}\label{structttak__future_a486767b89d5b5f842a868f614632cc42} 
+\mbox{\Hypertarget{structttak__future_a486767b89d5b5f842a868f614632cc42}\label{structttak__future_a486767b89d5b5f842a868f614632cc42}} 
 \index{ttak\_future@{ttak\_future}!result@{result}}
 \index{result@{result}!ttak\_future@{ttak\_future}}
 \doxysubsubsection{\texorpdfstring{result}{result}}
-{\footnotesize\ttfamily void\texorpdfstring{$\ast$}{*} ttak\+\_\+future\+::result}
+{\footnotesize\ttfamily void$\ast$ ttak\+\_\+future\+::result}
 
+Result pointer set by the fulfilling promise. 
 
-
-Definition at line \mbox{\hyperlink{future_8h_source_l00008}{8}} of file \mbox{\hyperlink{future_8h_source}{future.\+h}}.
+Definition at line 20 of file future.\+h.
 
 
 

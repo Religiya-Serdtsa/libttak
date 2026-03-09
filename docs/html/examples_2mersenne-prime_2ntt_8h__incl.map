@@ -1,7 +1,5 @@
 <map id="examples/mersenne&#45;prime/ntt.h" name="examples/mersenne&#45;prime/ntt.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,203,50"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="21,98,91,126"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="94,52,74,86,69,83,89,49"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="115,98,189,126"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="119,49,139,83,134,86,114,52"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,5,181,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="16,95,80,121"/>
+<area shape="rect" id="node3" title=" " alt="" coords="105,95,173,121"/>
 </map>

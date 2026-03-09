@@ -1,5 +1,5 @@
-\doxysection{ttak\+\_\+bigint Struct Reference}
-\hypertarget{structttak__bigint}{}\label{structttak__bigint}\index{ttak\_bigint@{ttak\_bigint}}
+\hypertarget{structttak__bigint}{}\doxysection{ttak\+\_\+bigint Struct Reference}
+\label{structttak__bigint}\index{ttak\_bigint@{ttak\_bigint}}
 
 
 Arbitrary-\/precision integer engine with Small Stack Optimization (SSO).  
@@ -9,7 +9,7 @@ Arbitrary-\/precision integer engine with Small Stack Optimization (SSO).
 
 {\ttfamily \#include $<$bigint.\+h$>$}
 
-\doxysubsubsection*{Public Attributes}
+\doxysubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
 size\+\_\+t \mbox{\hyperlink{structttak__bigint_a5f013e071399db36a34cf97b00a32c07}{capacity}}
@@ -23,7 +23,7 @@ bool \mbox{\hyperlink{structttak__bigint_a5a9c6a5094e5b13806b34fcbba0380ab}{is\+
 \begin{tabbing}
 xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
 union \{\\
-\>\mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\_t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__bigint_a3bf5b190c917a856b8a01fd628d16bfe}{dyn\_ptr}}\\
+\>\mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\_t}} $\ast$ \mbox{\hyperlink{structttak__bigint_a3bf5b190c917a856b8a01fd628d16bfe}{dyn\_ptr}}\\
 \>\mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\_t}} \mbox{\hyperlink{structttak__bigint_ad4f0ae085a821e2f308ddec33b58c18e}{sso\_buf}} \mbox{[}\mbox{\hyperlink{bigint_8h_a0e2f0eb2f43ff9d8dd473fac7b29e498}{TTAK\_BIGINT\_SSO\_LIMIT}}\mbox{]}\\
 \} \mbox{\hyperlink{structttak__bigint_a9989f8df96c70877cdf06ab5bb953496}{data}}\\
 
@@ -35,12 +35,12 @@ char \mbox{\hyperlink{structttak__bigint_a8fbea7942dc9eaf6ee2ae942cd1d2b34}{padd
 \doxysubsection{Detailed Description}
 Arbitrary-\/precision integer engine with Small Stack Optimization (SSO). 
 
-Definition at line \mbox{\hyperlink{bigint_8h_source_l00020}{20}} of file \mbox{\hyperlink{bigint_8h_source}{bigint.\+h}}.
+Definition at line 21 of file bigint.\+h.
 
 
 
 \doxysubsection{Member Data Documentation}
-\Hypertarget{structttak__bigint_a5f013e071399db36a34cf97b00a32c07}\label{structttak__bigint_a5f013e071399db36a34cf97b00a32c07} 
+\mbox{\Hypertarget{structttak__bigint_a5f013e071399db36a34cf97b00a32c07}\label{structttak__bigint_a5f013e071399db36a34cf97b00a32c07}} 
 \index{ttak\_bigint@{ttak\_bigint}!capacity@{capacity}}
 \index{capacity@{capacity}!ttak\_bigint@{ttak\_bigint}}
 \doxysubsubsection{\texorpdfstring{capacity}{capacity}}
@@ -48,25 +48,25 @@ Definition at line \mbox{\hyperlink{bigint_8h_source_l00020}{20}} of file \mbox{
 
 
 
-Definition at line \mbox{\hyperlink{bigint_8h_source_l00021}{21}} of file \mbox{\hyperlink{bigint_8h_source}{bigint.\+h}}.
+Definition at line 22 of file bigint.\+h.
 
-\Hypertarget{structttak__bigint_a9989f8df96c70877cdf06ab5bb953496}\label{structttak__bigint_a9989f8df96c70877cdf06ab5bb953496} 
+\mbox{\Hypertarget{structttak__bigint_a9989f8df96c70877cdf06ab5bb953496}\label{structttak__bigint_a9989f8df96c70877cdf06ab5bb953496}} 
 \index{ttak\_bigint@{ttak\_bigint}!data@{data}}
 \index{data@{data}!ttak\_bigint@{ttak\_bigint}}
-\doxysubsubsection{\texorpdfstring{[union]}{[union]}}
-{\footnotesize\ttfamily union  \{ ... \}  ttak\+\_\+bigint\+::data}
+\doxysubsubsection{\texorpdfstring{}{}}
+{\footnotesize\ttfamily union \{ ... \}  ttak\+\_\+bigint\+::data}
 
-\Hypertarget{structttak__bigint_a3bf5b190c917a856b8a01fd628d16bfe}\label{structttak__bigint_a3bf5b190c917a856b8a01fd628d16bfe} 
+\mbox{\Hypertarget{structttak__bigint_a3bf5b190c917a856b8a01fd628d16bfe}\label{structttak__bigint_a3bf5b190c917a856b8a01fd628d16bfe}} 
 \index{ttak\_bigint@{ttak\_bigint}!dyn\_ptr@{dyn\_ptr}}
 \index{dyn\_ptr@{dyn\_ptr}!ttak\_bigint@{ttak\_bigint}}
 \doxysubsubsection{\texorpdfstring{dyn\_ptr}{dyn\_ptr}}
-{\footnotesize\ttfamily \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}}\texorpdfstring{$\ast$}{*} ttak\+\_\+bigint\+::dyn\+\_\+ptr}
+{\footnotesize\ttfamily \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\+\_\+t}}$\ast$ ttak\+\_\+bigint\+::dyn\+\_\+ptr}
 
 
 
-Definition at line \mbox{\hyperlink{bigint_8h_source_l00026}{26}} of file \mbox{\hyperlink{bigint_8h_source}{bigint.\+h}}.
+Definition at line 27 of file bigint.\+h.
 
-\Hypertarget{structttak__bigint_a5a9c6a5094e5b13806b34fcbba0380ab}\label{structttak__bigint_a5a9c6a5094e5b13806b34fcbba0380ab} 
+\mbox{\Hypertarget{structttak__bigint_a5a9c6a5094e5b13806b34fcbba0380ab}\label{structttak__bigint_a5a9c6a5094e5b13806b34fcbba0380ab}} 
 \index{ttak\_bigint@{ttak\_bigint}!is\_dynamic@{is\_dynamic}}
 \index{is\_dynamic@{is\_dynamic}!ttak\_bigint@{ttak\_bigint}}
 \doxysubsubsection{\texorpdfstring{is\_dynamic}{is\_dynamic}}
@@ -74,9 +74,9 @@ Definition at line \mbox{\hyperlink{bigint_8h_source_l00026}{26}} of file \mbox{
 
 
 
-Definition at line \mbox{\hyperlink{bigint_8h_source_l00024}{24}} of file \mbox{\hyperlink{bigint_8h_source}{bigint.\+h}}.
+Definition at line 25 of file bigint.\+h.
 
-\Hypertarget{structttak__bigint_aeead030132cb1f017dc3bd37e2909c3e}\label{structttak__bigint_aeead030132cb1f017dc3bd37e2909c3e} 
+\mbox{\Hypertarget{structttak__bigint_aeead030132cb1f017dc3bd37e2909c3e}\label{structttak__bigint_aeead030132cb1f017dc3bd37e2909c3e}} 
 \index{ttak\_bigint@{ttak\_bigint}!is\_negative@{is\_negative}}
 \index{is\_negative@{is\_negative}!ttak\_bigint@{ttak\_bigint}}
 \doxysubsubsection{\texorpdfstring{is\_negative}{is\_negative}}
@@ -84,9 +84,9 @@ Definition at line \mbox{\hyperlink{bigint_8h_source_l00024}{24}} of file \mbox{
 
 
 
-Definition at line \mbox{\hyperlink{bigint_8h_source_l00023}{23}} of file \mbox{\hyperlink{bigint_8h_source}{bigint.\+h}}.
+Definition at line 24 of file bigint.\+h.
 
-\Hypertarget{structttak__bigint_a8fbea7942dc9eaf6ee2ae942cd1d2b34}\label{structttak__bigint_a8fbea7942dc9eaf6ee2ae942cd1d2b34} 
+\mbox{\Hypertarget{structttak__bigint_a8fbea7942dc9eaf6ee2ae942cd1d2b34}\label{structttak__bigint_a8fbea7942dc9eaf6ee2ae942cd1d2b34}} 
 \index{ttak\_bigint@{ttak\_bigint}!padding@{padding}}
 \index{padding@{padding}!ttak\_bigint@{ttak\_bigint}}
 \doxysubsubsection{\texorpdfstring{padding}{padding}}
@@ -94,9 +94,9 @@ Definition at line \mbox{\hyperlink{bigint_8h_source_l00023}{23}} of file \mbox{
 
 
 
-Definition at line \mbox{\hyperlink{bigint_8h_source_l00030}{30}} of file \mbox{\hyperlink{bigint_8h_source}{bigint.\+h}}.
+Definition at line 31 of file bigint.\+h.
 
-\Hypertarget{structttak__bigint_ad4f0ae085a821e2f308ddec33b58c18e}\label{structttak__bigint_ad4f0ae085a821e2f308ddec33b58c18e} 
+\mbox{\Hypertarget{structttak__bigint_ad4f0ae085a821e2f308ddec33b58c18e}\label{structttak__bigint_ad4f0ae085a821e2f308ddec33b58c18e}} 
 \index{ttak\_bigint@{ttak\_bigint}!sso\_buf@{sso\_buf}}
 \index{sso\_buf@{sso\_buf}!ttak\_bigint@{ttak\_bigint}}
 \doxysubsubsection{\texorpdfstring{sso\_buf}{sso\_buf}}
@@ -104,9 +104,9 @@ Definition at line \mbox{\hyperlink{bigint_8h_source_l00030}{30}} of file \mbox{
 
 
 
-Definition at line \mbox{\hyperlink{bigint_8h_source_l00027}{27}} of file \mbox{\hyperlink{bigint_8h_source}{bigint.\+h}}.
+Definition at line 28 of file bigint.\+h.
 
-\Hypertarget{structttak__bigint_a6e54dfdf29b65f2439c8fbb9c95fd758}\label{structttak__bigint_a6e54dfdf29b65f2439c8fbb9c95fd758} 
+\mbox{\Hypertarget{structttak__bigint_a6e54dfdf29b65f2439c8fbb9c95fd758}\label{structttak__bigint_a6e54dfdf29b65f2439c8fbb9c95fd758}} 
 \index{ttak\_bigint@{ttak\_bigint}!used@{used}}
 \index{used@{used}!ttak\_bigint@{ttak\_bigint}}
 \doxysubsubsection{\texorpdfstring{used}{used}}
@@ -114,7 +114,7 @@ Definition at line \mbox{\hyperlink{bigint_8h_source_l00027}{27}} of file \mbox{
 
 
 
-Definition at line \mbox{\hyperlink{bigint_8h_source_l00022}{22}} of file \mbox{\hyperlink{bigint_8h_source}{bigint.\+h}}.
+Definition at line 23 of file bigint.\+h.
 
 
 

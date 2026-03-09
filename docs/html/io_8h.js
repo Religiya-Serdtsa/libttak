@@ -20,7 +20,7 @@ var io_8h =
       [ "TTAK_IO_ERR_NEEDS_RETRY", "io_8h.html#a4c5731f8c7bf69338c8fba54e58f3109a879188f5579cf0ad3c6c6312d32de652", null ]
     ] ],
     [ "ttak_io_buffer_acquire", "io_8h.html#a37257227b6a468f1d428d3cf15d0b6a5", null ],
-    [ "ttak_io_buffer_data", "io_8h.html#a0df4b1af2ebb99d24a6d3f2d63070e11", null ],
+    [ "ttak_io_buffer_data", "io_8h.html#a0ccb29e84ef12dd8a675e2c01489031f", null ],
     [ "ttak_io_buffer_release", "io_8h.html#afa990535c35c232630de3a05c52b73a1", null ],
     [ "ttak_io_buffer_sync_in", "io_8h.html#a242e3d01cd4a0c1d01c32614c636c318", null ],
     [ "ttak_io_buffer_sync_out", "io_8h.html#abfe0c375ab83f1874649aa6410449e2c", null ],

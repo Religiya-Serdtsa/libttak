@@ -1,5 +1,10 @@
-\doxysection{include/ttak/async/promise.h File Reference}
-\hypertarget{promise_8h}{}\label{promise_8h}\index{include/ttak/async/promise.h@{include/ttak/async/promise.h}}
+\hypertarget{promise_8h}{}\doxysection{include/ttak/async/promise.h File Reference}
+\label{promise_8h}\index{include/ttak/async/promise.h@{include/ttak/async/promise.h}}
+
+
+One-\/shot promise for fulfilling a ttak\+\_\+future\+\_\+t from a worker thread.  
+
+
 {\ttfamily \#include $<$stdint.\+h$>$}\newline
 {\ttfamily \#include $<$ttak/async/future.\+h$>$}\newline
 Include dependency graph for promise.\+h\+:
@@ -7,7 +12,7 @@ Include dependency graph for promise.\+h\+:
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=277pt]{promise_8h__incl}
+\includegraphics[width=260pt]{promise_8h__incl}
 \end{center}
 \end{figure}
 This graph shows which files directly or indirectly include this file\+:
@@ -15,32 +20,37 @@ This graph shows which files directly or indirectly include this file\+:
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=189pt]{promise_8h__dep__incl}
+\includegraphics[width=177pt]{promise_8h__dep__incl}
 \end{center}
 \end{figure}
-\doxysubsubsection*{Classes}
+\doxysubsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
 struct \mbox{\hyperlink{structttak__promise}{ttak\+\_\+promise}}
-\end{DoxyCompactItemize}
-\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactList}\small\item\em Promise handle that pairs with exactly one ttak\+\_\+future\+\_\+t. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
 \begin{DoxyCompactItemize}
 \item 
 typedef struct \mbox{\hyperlink{structttak__promise}{ttak\+\_\+promise}} \mbox{\hyperlink{promise_8h_aa604edbaa7c611ec386757f8db43d1e3}{ttak\+\_\+promise\+\_\+t}}
-\end{DoxyCompactItemize}
-\doxysubsubsection*{Functions}
+\begin{DoxyCompactList}\small\item\em Promise handle that pairs with exactly one ttak\+\_\+future\+\_\+t. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{promise_8h_aa604edbaa7c611ec386757f8db43d1e3}{ttak\+\_\+promise\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{promise_8h_aeb1b9a9332785b2e897acf0a04bf4033}{ttak\+\_\+promise\+\_\+create}} (uint64\+\_\+t now)
-\item 
-void \mbox{\hyperlink{promise_8h_ae4d7300d418736b6deb56f8c19d8b52f}{ttak\+\_\+promise\+\_\+set\+\_\+value}} (\mbox{\hyperlink{promise_8h_aa604edbaa7c611ec386757f8db43d1e3}{ttak\+\_\+promise\+\_\+t}} \texorpdfstring{$\ast$}{*}promise, void \texorpdfstring{$\ast$}{*}val, uint64\+\_\+t now)
-\item 
-\mbox{\hyperlink{future_8h_a56ca146ef4be9bd1d67a1250de2ce2c2}{ttak\+\_\+future\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{promise_8h_a44baea2754e16f9017be08a8e94654b2}{ttak\+\_\+promise\+\_\+get\+\_\+future}} (\mbox{\hyperlink{promise_8h_aa604edbaa7c611ec386757f8db43d1e3}{ttak\+\_\+promise\+\_\+t}} \texorpdfstring{$\ast$}{*}promise)
-\end{DoxyCompactItemize}
+\mbox{\hyperlink{promise_8h_aa604edbaa7c611ec386757f8db43d1e3}{ttak\+\_\+promise\+\_\+t}} $\ast$ \mbox{\hyperlink{promise_8h_af7cd6c810a6e79977479b5128ad5dddf}{ttak\+\_\+promise\+\_\+create}} (uint64\+\_\+t now)
+\begin{DoxyCompactList}\small\item\em Allocates and initialises a new promise/future pair. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{promise_8h_ae4d7300d418736b6deb56f8c19d8b52f}{ttak\+\_\+promise\+\_\+set\+\_\+value}} (\mbox{\hyperlink{promise_8h_aa604edbaa7c611ec386757f8db43d1e3}{ttak\+\_\+promise\+\_\+t}} $\ast$promise, void $\ast$val, uint64\+\_\+t now)
+\begin{DoxyCompactList}\small\item\em Fulfils the promise with a result value, unblocking any waiter. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{future_8h_a56ca146ef4be9bd1d67a1250de2ce2c2}{ttak\+\_\+future\+\_\+t}} $\ast$ \mbox{\hyperlink{promise_8h_a6d7bfc3b57e932e249ffc0f43c0fd6c9}{ttak\+\_\+promise\+\_\+get\+\_\+future}} (\mbox{\hyperlink{promise_8h_aa604edbaa7c611ec386757f8db43d1e3}{ttak\+\_\+promise\+\_\+t}} $\ast$promise)
+\begin{DoxyCompactList}\small\item\em Returns the future associated with this promise. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
+
+\doxysubsection{Detailed Description}
+One-\/shot promise for fulfilling a ttak\+\_\+future\+\_\+t from a worker thread. 
+
+Create a promise with \mbox{\hyperlink{promise_8h_af7cd6c810a6e79977479b5128ad5dddf}{ttak\+\_\+promise\+\_\+create()}}, obtain its future with \mbox{\hyperlink{promise_8h_a6d7bfc3b57e932e249ffc0f43c0fd6c9}{ttak\+\_\+promise\+\_\+get\+\_\+future()}}, and fulfil it from the worker thread via \mbox{\hyperlink{promise_8h_ae4d7300d418736b6deb56f8c19d8b52f}{ttak\+\_\+promise\+\_\+set\+\_\+value()}}. 
 
 \doxysubsection{Typedef Documentation}
-\Hypertarget{promise_8h_aa604edbaa7c611ec386757f8db43d1e3}\label{promise_8h_aa604edbaa7c611ec386757f8db43d1e3} 
+\mbox{\Hypertarget{promise_8h_aa604edbaa7c611ec386757f8db43d1e3}\label{promise_8h_aa604edbaa7c611ec386757f8db43d1e3}} 
 \index{promise.h@{promise.h}!ttak\_promise\_t@{ttak\_promise\_t}}
 \index{ttak\_promise\_t@{ttak\_promise\_t}!promise.h@{promise.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_promise\_t}{ttak\_promise\_t}}
@@ -48,22 +58,63 @@ void \mbox{\hyperlink{promise_8h_ae4d7300d418736b6deb56f8c19d8b52f}{ttak\+\_\+pr
 
 
 
+Promise handle that pairs with exactly one ttak\+\_\+future\+\_\+t. 
+
+
+
 \doxysubsection{Function Documentation}
-\Hypertarget{promise_8h_aeb1b9a9332785b2e897acf0a04bf4033}\label{promise_8h_aeb1b9a9332785b2e897acf0a04bf4033} 
+\mbox{\Hypertarget{promise_8h_af7cd6c810a6e79977479b5128ad5dddf}\label{promise_8h_af7cd6c810a6e79977479b5128ad5dddf}} 
 \index{promise.h@{promise.h}!ttak\_promise\_create@{ttak\_promise\_create}}
 \index{ttak\_promise\_create@{ttak\_promise\_create}!promise.h@{promise.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_promise\_create()}{ttak\_promise\_create()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{promise_8h_aa604edbaa7c611ec386757f8db43d1e3}{ttak\+\_\+promise\+\_\+t}} \texorpdfstring{$\ast$}{*} ttak\+\_\+promise\+\_\+create (\begin{DoxyParamCaption}\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \mbox{\hyperlink{promise_8h_aa604edbaa7c611ec386757f8db43d1e3}{ttak\+\_\+promise\+\_\+t}}$\ast$ ttak\+\_\+promise\+\_\+create (\begin{DoxyParamCaption}\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
 
-\Hypertarget{promise_8h_a44baea2754e16f9017be08a8e94654b2}\label{promise_8h_a44baea2754e16f9017be08a8e94654b2} 
+
+
+Allocates and initialises a new promise/future pair. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em now} & Current monotonic timestamp in nanoseconds. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the new promise, or NULL on allocation failure. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{promise_8h_a6d7bfc3b57e932e249ffc0f43c0fd6c9}\label{promise_8h_a6d7bfc3b57e932e249ffc0f43c0fd6c9}} 
 \index{promise.h@{promise.h}!ttak\_promise\_get\_future@{ttak\_promise\_get\_future}}
 \index{ttak\_promise\_get\_future@{ttak\_promise\_get\_future}!promise.h@{promise.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_promise\_get\_future()}{ttak\_promise\_get\_future()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{future_8h_a56ca146ef4be9bd1d67a1250de2ce2c2}{ttak\+\_\+future\+\_\+t}} \texorpdfstring{$\ast$}{*} ttak\+\_\+promise\+\_\+get\+\_\+future (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{promise_8h_aa604edbaa7c611ec386757f8db43d1e3}{ttak\+\_\+promise\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{promise }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \mbox{\hyperlink{future_8h_a56ca146ef4be9bd1d67a1250de2ce2c2}{ttak\+\_\+future\+\_\+t}}$\ast$ ttak\+\_\+promise\+\_\+get\+\_\+future (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{promise_8h_aa604edbaa7c611ec386757f8db43d1e3}{ttak\+\_\+promise\+\_\+t}} $\ast$}]{promise }\end{DoxyParamCaption})}
 
-\Hypertarget{promise_8h_ae4d7300d418736b6deb56f8c19d8b52f}\label{promise_8h_ae4d7300d418736b6deb56f8c19d8b52f} 
+
+
+Returns the future associated with this promise. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em promise} & Source promise. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the paired future. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{promise_8h_ae4d7300d418736b6deb56f8c19d8b52f}\label{promise_8h_ae4d7300d418736b6deb56f8c19d8b52f}} 
 \index{promise.h@{promise.h}!ttak\_promise\_set\_value@{ttak\_promise\_set\_value}}
 \index{ttak\_promise\_set\_value@{ttak\_promise\_set\_value}!promise.h@{promise.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_promise\_set\_value()}{ttak\_promise\_set\_value()}}
-{\footnotesize\ttfamily void ttak\+\_\+promise\+\_\+set\+\_\+value (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{promise_8h_aa604edbaa7c611ec386757f8db43d1e3}{ttak\+\_\+promise\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{promise,  }\item[{void \texorpdfstring{$\ast$}{*}}]{val,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void ttak\+\_\+promise\+\_\+set\+\_\+value (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{promise_8h_aa604edbaa7c611ec386757f8db43d1e3}{ttak\+\_\+promise\+\_\+t}} $\ast$}]{promise,  }\item[{void $\ast$}]{val,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
 
+
+
+Fulfils the promise with a result value, unblocking any waiter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em promise} & Promise to fulfil. \\
+\hline
+{\em val} & Result pointer to store in the paired future. \\
+\hline
+{\em now} & Current monotonic timestamp in nanoseconds. \\
+\hline
+\end{DoxyParams}

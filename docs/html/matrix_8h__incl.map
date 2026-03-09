@@ -1,61 +1,22 @@
 <map id="include/ttak/math/matrix.h" name="include/ttak/math/matrix.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="449,5,645,31"/>
-<area shape="rect" id="Node000002" href="$vector_8h.html" title=" " alt="" coords="476,79,619,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="550,31,550,65,545,65,545,31"/>
-<area shape="rect" id="Node000003" href="$bigreal_8h.html" title=" " alt="" coords="285,152,431,177"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="518,107,403,149,401,144,516,102"/>
-<area shape="rect" id="Node000007" title=" " alt="" coords="529,372,611,397"/>
-<area shape="poly" id="edge41_Node000002_Node000007" title=" " alt="" coords="545,105,526,167,520,208,522,250,539,309,560,358,555,361,534,311,517,251,515,208,521,166,540,103"/>
-<area shape="rect" id="Node000010" href="$shared_8h.html" title=" " alt="" coords="771,152,927,177"/>
-<area shape="poly" id="edge11_Node000002_Node000010" title=" " alt="" coords="596,101,787,146,786,151,595,107"/>
-<area shape="rect" id="Node000011" href="$owner_8h.html" title=" " alt="" coords="531,225,673,251"/>
-<area shape="poly" id="edge40_Node000002_Node000011" title=" " alt="" coords="554,104,595,212,590,213,549,105"/>
-<area shape="rect" id="Node000004" href="$bigint_8h.html" title=" " alt="" coords="239,225,378,251"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="352,179,327,216,322,213,348,176"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="613,445,684,471"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="308,251,304,286,306,305,314,323,331,340,360,358,437,392,524,421,600,442,599,447,522,426,435,397,357,363,328,345,309,325,301,306,299,286,303,251"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="117,445,191,471"/>
-<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="239,245,208,251,177,262,149,278,127,300,119,316,115,332,117,368,128,403,142,432,137,435,123,405,112,369,109,332,114,314,123,297,146,274,175,257,207,246,238,240"/>
-<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="353,248,410,268,471,296,515,328,551,360,547,364,512,332,469,301,408,273,351,253"/>
-<area shape="rect" id="Node000008" title=" " alt="" coords="5,445,92,471"/>
-<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="239,247,206,254,172,264,139,280,111,301,86,331,70,367,60,402,54,432,49,431,54,401,65,365,82,328,107,297,137,275,170,259,205,249,238,242"/>
-<area shape="rect" id="Node000009" href="$fixed_8h.html" title=" " alt="" coords="324,299,459,324"/>
-<area shape="poly" id="edge8_Node000004_Node000009" title=" " alt="" coords="324,249,369,287,366,292,320,253"/>
-<area shape="poly" id="edge9_Node000009_Node000005" title=" " alt="" coords="408,322,456,356,518,395,608,438,606,443,515,400,453,361,405,326"/>
-<area shape="poly" id="edge10_Node000009_Node000007" title=" " alt="" coords="421,322,529,364,527,369,419,327"/>
-<area shape="poly" id="edge37_Node000010_Node000005" title=" " alt="" coords="927,165,980,170,1037,181,1096,198,1151,223,1199,259,1217,281,1230,303,1237,327,1237,352,1229,376,1212,399,1184,413,1134,424,990,441,828,452,698,458,698,452,828,447,989,436,1133,419,1182,408,1208,395,1224,374,1231,351,1231,328,1225,306,1212,284,1195,263,1149,228,1094,203,1036,186,979,176,927,170"/>
-<area shape="poly" id="edge36_Node000010_Node000006" title=" " alt="" coords="771,172,482,190,334,206,274,216,228,228,158,251,134,269,111,300,106,313,103,334,104,362,113,396,122,416,135,433,131,437,118,419,107,398,99,363,98,334,101,311,106,297,130,265,156,247,227,223,273,211,333,201,482,184,770,166"/>
-<area shape="poly" id="edge38_Node000010_Node000007" title=" " alt="" coords="823,180,781,200,737,228,694,262,653,299,591,364,587,360,649,295,690,258,734,223,779,196,821,175"/>
-<area shape="poly" id="edge12_Node000010_Node000011" title=" " alt="" coords="810,180,656,224,654,219,808,175"/>
-<area shape="rect" id="Node000014" href="$sync_2sync_8h.html" title=" " alt="" coords="889,299,1017,324"/>
-<area shape="poly" id="edge26_Node000010_Node000014" title=" " alt="" coords="895,175,933,193,951,207,964,224,970,239,971,256,965,286,960,285,966,256,965,241,960,227,947,211,930,198,893,180"/>
-<area shape="rect" id="Node000016" title=" " alt="" coords="1099,372,1198,397"/>
-<area shape="poly" id="edge39_Node000010_Node000016" title=" " alt="" coords="927,168,996,180,1070,203,1107,220,1141,241,1171,266,1196,297,1202,315,1197,333,1175,364,1170,361,1192,331,1196,315,1192,300,1167,270,1138,245,1104,224,1068,208,994,185,926,174"/>
-<area shape="rect" id="Node000017" href="$dynamic__mask_8h.html" title="Dynamic bitmap utility with thread&#45;safe access." alt="" coords="747,225,950,251"/>
-<area shape="poly" id="edge27_Node000010_Node000017" title=" " alt="" coords="851,178,851,212,846,212,846,178"/>
-<area shape="rect" id="Node000018" href="$epoch_8h.html" title=" " alt="" coords="1041,299,1182,324"/>
-<area shape="poly" id="edge32_Node000010_Node000018" title=" " alt="" coords="879,175,929,196,985,223,1040,256,1086,288,1083,293,1037,261,982,228,927,201,877,180"/>
-<area shape="poly" id="edge25_Node000011_Node000005" title=" " alt="" coords="607,250,646,431,641,432,602,252"/>
-<area shape="poly" id="edge24_Node000011_Node000007" title=" " alt="" coords="602,252,578,359,573,358,597,251"/>
-<area shape="rect" id="Node000012" href="$map_8h.html" title=" " alt="" coords="137,299,248,324"/>
-<area shape="poly" id="edge13_Node000011_Node000012" title=" " alt="" coords="537,253,262,301,261,295,536,248"/>
-<area shape="poly" id="edge20_Node000011_Node000014" title=" " alt="" coords="659,248,883,293,882,299,658,253"/>
-<area shape="poly" id="edge15_Node000012_Node000005" title=" " alt="" coords="217,322,370,395,431,413,493,428,600,447,599,453,492,433,429,418,368,400,214,326"/>
-<area shape="poly" id="edge14_Node000012_Node000006" title=" " alt="" coords="192,325,178,373,163,433,157,431,173,371,187,323"/>
-<area shape="rect" id="Node000013" href="$hash_8h.html" title=" " alt="" coords="187,372,299,397"/>
-<area shape="poly" id="edge16_Node000012_Node000013" title=" " alt="" coords="203,323,229,359,225,362,199,326"/>
-<area shape="poly" id="edge17_Node000013_Node000005" title=" " alt="" coords="300,393,600,446,599,451,299,398"/>
-<area shape="poly" id="edge18_Node000013_Node000006" title=" " alt="" coords="231,399,181,439,178,434,227,395"/>
-<area shape="poly" id="edge19_Node000013_Node000008" title=" " alt="" coords="213,400,94,443,92,438,211,395"/>
-<area shape="poly" id="edge22_Node000014_Node000005" title=" " alt="" coords="947,326,916,362,895,383,871,400,828,421,782,436,699,454,697,448,781,431,826,416,869,395,892,378,912,359,942,323"/>
-<area shape="rect" id="Node000015" href="$pthread_8h.html" title="POSIX thread compatibility shim." alt="" coords="940,372,1024,397"/>
-<area shape="poly" id="edge21_Node000014_Node000015" title=" " alt="" coords="960,323,974,358,970,360,955,325"/>
-<area shape="poly" id="edge23_Node000014_Node000016" title=" " alt="" coords="985,322,1105,365,1103,370,983,327"/>
-<area shape="poly" id="edge29_Node000017_Node000005" title=" " alt="" coords="853,251,854,280,852,319,843,361,834,381,821,399,794,422,763,439,730,449,698,455,697,450,728,444,761,434,792,418,817,396,829,379,838,359,847,318,849,280,847,251"/>
-<area shape="poly" id="edge31_Node000017_Node000006" title=" " alt="" coords="840,253,806,287,760,326,696,370,665,385,624,400,509,429,393,447,287,456,205,459,205,454,287,450,392,441,508,424,623,395,663,380,693,365,756,322,802,283,836,249"/>
-<area shape="poly" id="edge30_Node000017_Node000007" title=" " alt="" coords="835,253,784,288,719,326,667,350,618,370,616,365,665,345,717,322,782,283,832,249"/>
-<area shape="poly" id="edge28_Node000017_Node000014" title=" " alt="" coords="867,248,926,288,923,293,864,253"/>
-<area shape="poly" id="edge34_Node000018_Node000005" title=" " alt="" coords="1107,326,1081,363,1061,383,1038,400,1010,411,973,421,880,437,698,456,698,451,880,432,972,416,1009,406,1035,395,1057,379,1076,360,1103,323"/>
-<area shape="poly" id="edge33_Node000018_Node000007" title=" " alt="" coords="1041,325,1029,327,626,379,625,374,1028,321,1040,320"/>
-<area shape="poly" id="edge35_Node000018_Node000016" title=" " alt="" coords="1120,323,1139,359,1134,361,1115,326"/>
+<area shape="rect" id="node1" title=" " alt="" coords="727,5,899,32"/>
+<area shape="rect" id="node2" href="$vector_8h.html" title=" " alt="" coords="750,80,877,107"/>
+<area shape="rect" id="node3" href="$bigreal_8h.html" title=" " alt="" coords="923,155,1053,181"/>
+<area shape="rect" id="node7" title=" " alt="" coords="700,379,775,405"/>
+<area shape="rect" id="node13" href="$shared_8h.html" title=" " alt="" coords="385,155,527,181"/>
+<area shape="rect" id="node14" href="$owner_8h.html" title=" " alt="" coords="674,229,801,256"/>
+<area shape="rect" id="node4" href="$bigint_8h.html" title=" " alt="" coords="975,229,1097,256"/>
+<area shape="rect" id="node5" title=" " alt="" coords="604,453,668,480"/>
+<area shape="rect" id="node6" title=" " alt="" coords="991,528,1059,555"/>
+<area shape="rect" id="node8" title=" " alt="" coords="1263,453,1342,480"/>
+<area shape="rect" id="node9" href="$ttak__align_8h.html" title="Alignment utilities and compatibility helpers." alt="" coords="1089,453,1239,480"/>
+<area shape="rect" id="node10" href="$fixed_8h.html" title=" " alt="" coords="825,304,948,331"/>
+<area shape="rect" id="node11" href="$ttak__compiler_8h.html" title="Compiler&#45;specific macros and compatibility layer." alt="" coords="31,379,204,405"/>
+<area shape="rect" id="node12" title=" " alt="" coords="11,453,101,480"/>
+<area shape="rect" id="node17" href="$sync_2sync_8h.html" title=" " alt="" coords="228,379,345,405"/>
+<area shape="rect" id="node19" href="$dynamic__mask_8h.html" title="Dynamic bitmap utility with thread&#45;safe access." alt="" coords="365,304,547,331"/>
+<area shape="rect" id="node20" href="$epoch_8h.html" title=" " alt="" coords="111,304,238,331"/>
+<area shape="rect" id="node15" href="$map_8h.html" title="Public API for the SoA open&#45;addressing integer&#45;keyed hash map." alt="" coords="1073,304,1172,331"/>
+<area shape="rect" id="node16" href="$hash_8h.html" title="Low&#45;level open&#45;addressing hash map (SoA layout) with SipHash/wyhash." alt="" coords="1069,379,1171,405"/>
+<area shape="rect" id="node18" href="$pthread_8h.html" title="POSIX thread compatibility shim." alt="" coords="249,453,325,480"/>
 </map>

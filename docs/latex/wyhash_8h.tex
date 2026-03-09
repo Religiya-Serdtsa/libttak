@@ -1,0 +1,163 @@
+\hypertarget{wyhash_8h}{}\doxysection{include/ttak/ht/wyhash.h File Reference}
+\label{wyhash_8h}\index{include/ttak/ht/wyhash.h@{include/ttak/ht/wyhash.h}}
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+Include dependency graph for wyhash.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=265pt]{wyhash_8h__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+static uint64\+\_\+t \mbox{\hyperlink{wyhash_8h_ae3a49e99eee6935b3a1d82d777b55565}{\+\_\+ttak\+\_\+wymum}} (uint64\+\_\+t A, uint64\+\_\+t B)
+\begin{DoxyCompactList}\small\item\em wyhash 64-\/bit implementation (v4). \end{DoxyCompactList}\item 
+static uint64\+\_\+t \mbox{\hyperlink{wyhash_8h_a3c7655cae4aaf843a2a13ce57d76a565}{\+\_\+ttak\+\_\+wyr8}} (const uint8\+\_\+t $\ast$p)
+\item 
+static uint64\+\_\+t \mbox{\hyperlink{wyhash_8h_a02bacd9ddb2730b14461bdc046c41db4}{\+\_\+ttak\+\_\+wyr4}} (const uint8\+\_\+t $\ast$p)
+\item 
+static uint64\+\_\+t \mbox{\hyperlink{wyhash_8h_aad24de1fa1451677a303d8aee9b6885a}{\+\_\+ttak\+\_\+wyr3}} (const uint8\+\_\+t $\ast$p, size\+\_\+t k)
+\item 
+static uint64\+\_\+t \mbox{\hyperlink{wyhash_8h_a0e377b29f348982f5cdd54746e615972}{ttak\+\_\+wyhash}} (const void $\ast$key, size\+\_\+t len, uint64\+\_\+t seed)
+\item 
+static uint64\+\_\+t \mbox{\hyperlink{wyhash_8h_a64d34c6284a3c4d54fdc7c83fcdcb450}{ttak\+\_\+hash\+\_\+u64}} (uint64\+\_\+t val, uint64\+\_\+t seed)
+\begin{DoxyCompactList}\small\item\em Fast hashing of a 64-\/bit integer using wyhash principles. \end{DoxyCompactList}\item 
+static uint64\+\_\+t \mbox{\hyperlink{wyhash_8h_acca382f7f06147d6dfc950f0e45933cf}{ttak\+\_\+fast\+\_\+range}} (uint64\+\_\+t hash, uint64\+\_\+t range)
+\begin{DoxyCompactList}\small\item\em Fast range mapping (Fast\+Mod) to avoid modulo operation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{wyhash_8h_ae3a49e99eee6935b3a1d82d777b55565}\label{wyhash_8h_ae3a49e99eee6935b3a1d82d777b55565}} 
+\index{wyhash.h@{wyhash.h}!\_ttak\_wymum@{\_ttak\_wymum}}
+\index{\_ttak\_wymum@{\_ttak\_wymum}!wyhash.h@{wyhash.h}}
+\doxysubsubsection{\texorpdfstring{\_ttak\_wymum()}{\_ttak\_wymum()}}
+{\footnotesize\ttfamily static uint64\+\_\+t \+\_\+ttak\+\_\+wymum (\begin{DoxyParamCaption}\item[{uint64\+\_\+t}]{A,  }\item[{uint64\+\_\+t}]{B }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+wyhash 64-\/bit implementation (v4). 
+
+Optimized for speed and quality, using bit manipulation and branchless logic where possible. 
+
+Definition at line 15 of file wyhash.\+h.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=274pt]{wyhash_8h_ae3a49e99eee6935b3a1d82d777b55565_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{wyhash_8h_aad24de1fa1451677a303d8aee9b6885a}\label{wyhash_8h_aad24de1fa1451677a303d8aee9b6885a}} 
+\index{wyhash.h@{wyhash.h}!\_ttak\_wyr3@{\_ttak\_wyr3}}
+\index{\_ttak\_wyr3@{\_ttak\_wyr3}!wyhash.h@{wyhash.h}}
+\doxysubsubsection{\texorpdfstring{\_ttak\_wyr3()}{\_ttak\_wyr3()}}
+{\footnotesize\ttfamily static uint64\+\_\+t \+\_\+ttak\+\_\+wyr3 (\begin{DoxyParamCaption}\item[{const uint8\+\_\+t $\ast$}]{p,  }\item[{size\+\_\+t}]{k }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line 34 of file wyhash.\+h.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=253pt]{wyhash_8h_aad24de1fa1451677a303d8aee9b6885a_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{wyhash_8h_a02bacd9ddb2730b14461bdc046c41db4}\label{wyhash_8h_a02bacd9ddb2730b14461bdc046c41db4}} 
+\index{wyhash.h@{wyhash.h}!\_ttak\_wyr4@{\_ttak\_wyr4}}
+\index{\_ttak\_wyr4@{\_ttak\_wyr4}!wyhash.h@{wyhash.h}}
+\doxysubsubsection{\texorpdfstring{\_ttak\_wyr4()}{\_ttak\_wyr4()}}
+{\footnotesize\ttfamily static uint64\+\_\+t \+\_\+ttak\+\_\+wyr4 (\begin{DoxyParamCaption}\item[{const uint8\+\_\+t $\ast$}]{p }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line 31 of file wyhash.\+h.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=253pt]{wyhash_8h_a02bacd9ddb2730b14461bdc046c41db4_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{wyhash_8h_a3c7655cae4aaf843a2a13ce57d76a565}\label{wyhash_8h_a3c7655cae4aaf843a2a13ce57d76a565}} 
+\index{wyhash.h@{wyhash.h}!\_ttak\_wyr8@{\_ttak\_wyr8}}
+\index{\_ttak\_wyr8@{\_ttak\_wyr8}!wyhash.h@{wyhash.h}}
+\doxysubsubsection{\texorpdfstring{\_ttak\_wyr8()}{\_ttak\_wyr8()}}
+{\footnotesize\ttfamily static uint64\+\_\+t \+\_\+ttak\+\_\+wyr8 (\begin{DoxyParamCaption}\item[{const uint8\+\_\+t $\ast$}]{p }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line 28 of file wyhash.\+h.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=253pt]{wyhash_8h_a3c7655cae4aaf843a2a13ce57d76a565_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{wyhash_8h_acca382f7f06147d6dfc950f0e45933cf}\label{wyhash_8h_acca382f7f06147d6dfc950f0e45933cf}} 
+\index{wyhash.h@{wyhash.h}!ttak\_fast\_range@{ttak\_fast\_range}}
+\index{ttak\_fast\_range@{ttak\_fast\_range}!wyhash.h@{wyhash.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_fast\_range()}{ttak\_fast\_range()}}
+{\footnotesize\ttfamily static uint64\+\_\+t ttak\+\_\+fast\+\_\+range (\begin{DoxyParamCaption}\item[{uint64\+\_\+t}]{hash,  }\item[{uint64\+\_\+t}]{range }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Fast range mapping (Fast\+Mod) to avoid modulo operation. 
+
+Maps a 64-\/bit hash to \mbox{[}0, range) using a single 128-\/bit multiplication. 
+
+Definition at line 84 of file wyhash.\+h.
+
+\mbox{\Hypertarget{wyhash_8h_a64d34c6284a3c4d54fdc7c83fcdcb450}\label{wyhash_8h_a64d34c6284a3c4d54fdc7c83fcdcb450}} 
+\index{wyhash.h@{wyhash.h}!ttak\_hash\_u64@{ttak\_hash\_u64}}
+\index{ttak\_hash\_u64@{ttak\_hash\_u64}!wyhash.h@{wyhash.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_hash\_u64()}{ttak\_hash\_u64()}}
+{\footnotesize\ttfamily static uint64\+\_\+t ttak\+\_\+hash\+\_\+u64 (\begin{DoxyParamCaption}\item[{uint64\+\_\+t}]{val,  }\item[{uint64\+\_\+t}]{seed }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Fast hashing of a 64-\/bit integer using wyhash principles. 
+
+
+
+Definition at line 75 of file wyhash.\+h.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=274pt]{wyhash_8h_a64d34c6284a3c4d54fdc7c83fcdcb450_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{wyhash_8h_a0e377b29f348982f5cdd54746e615972}\label{wyhash_8h_a0e377b29f348982f5cdd54746e615972}} 
+\index{wyhash.h@{wyhash.h}!ttak\_wyhash@{ttak\_wyhash}}
+\index{ttak\_wyhash@{ttak\_wyhash}!wyhash.h@{wyhash.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_wyhash()}{ttak\_wyhash()}}
+{\footnotesize\ttfamily static uint64\+\_\+t ttak\+\_\+wyhash (\begin{DoxyParamCaption}\item[{const void $\ast$}]{key,  }\item[{size\+\_\+t}]{len,  }\item[{uint64\+\_\+t}]{seed }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line 38 of file wyhash.\+h.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=266pt]{wyhash_8h_a0e377b29f348982f5cdd54746e615972_cgraph}
+\end{center}
+\end{figure}

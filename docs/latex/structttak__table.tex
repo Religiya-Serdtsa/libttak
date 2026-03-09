@@ -1,27 +1,24 @@
-\doxysection{ttak\+\_\+table Struct Reference}
-\hypertarget{structttak__table}{}\label{structttak__table}\index{ttak\_table@{ttak\_table}}
+\hypertarget{structttak__table}{}\doxysection{ttak\+\_\+table Struct Reference}
+\label{structttak__table}\index{ttak\_table@{ttak\_table}}
 
 
-Generic Sip\+Hash Table.  
+Generic Sip\+Hash Table (Refactored to Open Addressing SoA).  
 
 
 
 
 {\ttfamily \#include $<$table.\+h$>$}
 
-
-
-Collaboration diagram for ttak\+\_\+table\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=220pt]{structttak__table__coll__graph}
-\end{center}
-\end{figure}
-\doxysubsubsection*{Public Attributes}
+\doxysubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{table_8h_a3bf40d9bd30341376b18a85e49f4440c}{ttak\+\_\+table\+\_\+entry\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__table_af2bec832cd9fd19a6b687ba1edadba1d}{buckets}}
+uint8\+\_\+t $\ast$ \mbox{\hyperlink{structttak__table_a58733e4defd5c37d904a97e89dd4eaa7}{ctrls}}
+\item 
+void $\ast$$\ast$ \mbox{\hyperlink{structttak__table_ac355c2b0e751b696278508aca59dfd4a}{keys}}
+\item 
+size\+\_\+t $\ast$ \mbox{\hyperlink{structttak__table_a2e8214df06ae3399ef9371d11fed9de3}{key\+\_\+lens}}
+\item 
+void $\ast$$\ast$ \mbox{\hyperlink{structttak__table_a4bdf139d19cc088280c87607face31c0}{values}}
 \item 
 size\+\_\+t \mbox{\hyperlink{structttak__table_a2b70a3388897ec19b7b13534c0aac9d0}{capacity}}
 \item 
@@ -31,35 +28,25 @@ uint64\+\_\+t \mbox{\hyperlink{structttak__table_a7e6479ebfc2d791fcad1e1945692c7
 \item 
 uint64\+\_\+t \mbox{\hyperlink{structttak__table_a2f8f8082386ff94cde0afccb5e2269f9}{k1}}
 \item 
-uint64\+\_\+t(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__table_ac90c1f46800a3c62a2984c1af31dbef7}{hash\+\_\+func}} )(const void \texorpdfstring{$\ast$}{*}key, size\+\_\+t key\+\_\+len, uint64\+\_\+t \mbox{\hyperlink{structttak__table_a7e6479ebfc2d791fcad1e1945692c713}{k0}}, uint64\+\_\+t \mbox{\hyperlink{structttak__table_a2f8f8082386ff94cde0afccb5e2269f9}{k1}})
+uint64\+\_\+t($\ast$ \mbox{\hyperlink{structttak__table_ac90c1f46800a3c62a2984c1af31dbef7}{hash\+\_\+func}} )(const void $\ast$key, size\+\_\+t key\+\_\+len, uint64\+\_\+t \mbox{\hyperlink{structttak__table_a7e6479ebfc2d791fcad1e1945692c713}{k0}}, uint64\+\_\+t \mbox{\hyperlink{structttak__table_a2f8f8082386ff94cde0afccb5e2269f9}{k1}})
 \item 
-int(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__table_a59575b01f30c571d6e2e8818d6cc785a}{key\+\_\+cmp}} )(const void \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{structttak__table_a2f8f8082386ff94cde0afccb5e2269f9}{k1}}, const void \texorpdfstring{$\ast$}{*}k2)
+int($\ast$ \mbox{\hyperlink{structttak__table_a59575b01f30c571d6e2e8818d6cc785a}{key\+\_\+cmp}} )(const void $\ast$\mbox{\hyperlink{structttak__table_a2f8f8082386ff94cde0afccb5e2269f9}{k1}}, const void $\ast$k2)
 \item 
-void(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__table_a656889e2ba4a75d1a15a49808f2349cc}{key\+\_\+free}} )(void \texorpdfstring{$\ast$}{*}key)
+void($\ast$ \mbox{\hyperlink{structttak__table_a656889e2ba4a75d1a15a49808f2349cc}{key\+\_\+free}} )(void $\ast$key)
 \item 
-void(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__table_a691d524a5327dbfa40dae6bd48e02a48}{val\+\_\+free}} )(void \texorpdfstring{$\ast$}{*}val)
+void($\ast$ \mbox{\hyperlink{structttak__table_a691d524a5327dbfa40dae6bd48e02a48}{val\+\_\+free}} )(void $\ast$val)
 \end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
-Generic Sip\+Hash Table. 
+Generic Sip\+Hash Table (Refactored to Open Addressing SoA). 
 
-Definition at line \mbox{\hyperlink{table_8h_source_l00020}{20}} of file \mbox{\hyperlink{table_8h_source}{table.\+h}}.
+Definition at line 20 of file table.\+h.
 
 
 
 \doxysubsection{Member Data Documentation}
-\Hypertarget{structttak__table_af2bec832cd9fd19a6b687ba1edadba1d}\label{structttak__table_af2bec832cd9fd19a6b687ba1edadba1d} 
-\index{ttak\_table@{ttak\_table}!buckets@{buckets}}
-\index{buckets@{buckets}!ttak\_table@{ttak\_table}}
-\doxysubsubsection{\texorpdfstring{buckets}{buckets}}
-{\footnotesize\ttfamily \mbox{\hyperlink{table_8h_a3bf40d9bd30341376b18a85e49f4440c}{ttak\+\_\+table\+\_\+entry\+\_\+t}}\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} ttak\+\_\+table\+::buckets}
-
-
-
-Definition at line \mbox{\hyperlink{table_8h_source_l00021}{21}} of file \mbox{\hyperlink{table_8h_source}{table.\+h}}.
-
-\Hypertarget{structttak__table_a2b70a3388897ec19b7b13534c0aac9d0}\label{structttak__table_a2b70a3388897ec19b7b13534c0aac9d0} 
+\mbox{\Hypertarget{structttak__table_a2b70a3388897ec19b7b13534c0aac9d0}\label{structttak__table_a2b70a3388897ec19b7b13534c0aac9d0}} 
 \index{ttak\_table@{ttak\_table}!capacity@{capacity}}
 \index{capacity@{capacity}!ttak\_table@{ttak\_table}}
 \doxysubsubsection{\texorpdfstring{capacity}{capacity}}
@@ -67,19 +54,29 @@ Definition at line \mbox{\hyperlink{table_8h_source_l00021}{21}} of file \mbox{\
 
 
 
-Definition at line \mbox{\hyperlink{table_8h_source_l00022}{22}} of file \mbox{\hyperlink{table_8h_source}{table.\+h}}.
+Definition at line 25 of file table.\+h.
 
-\Hypertarget{structttak__table_ac90c1f46800a3c62a2984c1af31dbef7}\label{structttak__table_ac90c1f46800a3c62a2984c1af31dbef7} 
+\mbox{\Hypertarget{structttak__table_a58733e4defd5c37d904a97e89dd4eaa7}\label{structttak__table_a58733e4defd5c37d904a97e89dd4eaa7}} 
+\index{ttak\_table@{ttak\_table}!ctrls@{ctrls}}
+\index{ctrls@{ctrls}!ttak\_table@{ttak\_table}}
+\doxysubsubsection{\texorpdfstring{ctrls}{ctrls}}
+{\footnotesize\ttfamily uint8\+\_\+t$\ast$ ttak\+\_\+table\+::ctrls}
+
+Control bytes 
+
+Definition at line 21 of file table.\+h.
+
+\mbox{\Hypertarget{structttak__table_ac90c1f46800a3c62a2984c1af31dbef7}\label{structttak__table_ac90c1f46800a3c62a2984c1af31dbef7}} 
 \index{ttak\_table@{ttak\_table}!hash\_func@{hash\_func}}
 \index{hash\_func@{hash\_func}!ttak\_table@{ttak\_table}}
 \doxysubsubsection{\texorpdfstring{hash\_func}{hash\_func}}
-{\footnotesize\ttfamily uint64\+\_\+t(\texorpdfstring{$\ast$}{*} ttak\+\_\+table\+::hash\+\_\+func) (const void \texorpdfstring{$\ast$}{*}key, size\+\_\+t key\+\_\+len, uint64\+\_\+t \mbox{\hyperlink{structttak__table_a7e6479ebfc2d791fcad1e1945692c713}{k0}}, uint64\+\_\+t \mbox{\hyperlink{structttak__table_a2f8f8082386ff94cde0afccb5e2269f9}{k1}})}
+{\footnotesize\ttfamily uint64\+\_\+t($\ast$ ttak\+\_\+table\+::hash\+\_\+func) (const void $\ast$key, size\+\_\+t key\+\_\+len, uint64\+\_\+t \mbox{\hyperlink{structttak__table_a7e6479ebfc2d791fcad1e1945692c713}{k0}}, uint64\+\_\+t \mbox{\hyperlink{structttak__table_a2f8f8082386ff94cde0afccb5e2269f9}{k1}})}
 
 
 
-Definition at line \mbox{\hyperlink{table_8h_source_l00028}{28}} of file \mbox{\hyperlink{table_8h_source}{table.\+h}}.
+Definition at line 31 of file table.\+h.
 
-\Hypertarget{structttak__table_a7e6479ebfc2d791fcad1e1945692c713}\label{structttak__table_a7e6479ebfc2d791fcad1e1945692c713} 
+\mbox{\Hypertarget{structttak__table_a7e6479ebfc2d791fcad1e1945692c713}\label{structttak__table_a7e6479ebfc2d791fcad1e1945692c713}} 
 \index{ttak\_table@{ttak\_table}!k0@{k0}}
 \index{k0@{k0}!ttak\_table@{ttak\_table}}
 \doxysubsubsection{\texorpdfstring{k0}{k0}}
@@ -87,9 +84,9 @@ Definition at line \mbox{\hyperlink{table_8h_source_l00028}{28}} of file \mbox{\
 
 
 
-Definition at line \mbox{\hyperlink{table_8h_source_l00024}{24}} of file \mbox{\hyperlink{table_8h_source}{table.\+h}}.
+Definition at line 27 of file table.\+h.
 
-\Hypertarget{structttak__table_a2f8f8082386ff94cde0afccb5e2269f9}\label{structttak__table_a2f8f8082386ff94cde0afccb5e2269f9} 
+\mbox{\Hypertarget{structttak__table_a2f8f8082386ff94cde0afccb5e2269f9}\label{structttak__table_a2f8f8082386ff94cde0afccb5e2269f9}} 
 \index{ttak\_table@{ttak\_table}!k1@{k1}}
 \index{k1@{k1}!ttak\_table@{ttak\_table}}
 \doxysubsubsection{\texorpdfstring{k1}{k1}}
@@ -97,29 +94,49 @@ Definition at line \mbox{\hyperlink{table_8h_source_l00024}{24}} of file \mbox{\
 
 
 
-Definition at line \mbox{\hyperlink{table_8h_source_l00025}{25}} of file \mbox{\hyperlink{table_8h_source}{table.\+h}}.
+Definition at line 28 of file table.\+h.
 
-\Hypertarget{structttak__table_a59575b01f30c571d6e2e8818d6cc785a}\label{structttak__table_a59575b01f30c571d6e2e8818d6cc785a} 
+\mbox{\Hypertarget{structttak__table_a59575b01f30c571d6e2e8818d6cc785a}\label{structttak__table_a59575b01f30c571d6e2e8818d6cc785a}} 
 \index{ttak\_table@{ttak\_table}!key\_cmp@{key\_cmp}}
 \index{key\_cmp@{key\_cmp}!ttak\_table@{ttak\_table}}
 \doxysubsubsection{\texorpdfstring{key\_cmp}{key\_cmp}}
-{\footnotesize\ttfamily int(\texorpdfstring{$\ast$}{*} ttak\+\_\+table\+::key\+\_\+cmp) (const void \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{structttak__table_a2f8f8082386ff94cde0afccb5e2269f9}{k1}}, const void \texorpdfstring{$\ast$}{*}k2)}
+{\footnotesize\ttfamily int($\ast$ ttak\+\_\+table\+::key\+\_\+cmp) (const void $\ast$\mbox{\hyperlink{structttak__table_a2f8f8082386ff94cde0afccb5e2269f9}{k1}}, const void $\ast$k2)}
 
 
 
-Definition at line \mbox{\hyperlink{table_8h_source_l00029}{29}} of file \mbox{\hyperlink{table_8h_source}{table.\+h}}.
+Definition at line 32 of file table.\+h.
 
-\Hypertarget{structttak__table_a656889e2ba4a75d1a15a49808f2349cc}\label{structttak__table_a656889e2ba4a75d1a15a49808f2349cc} 
+\mbox{\Hypertarget{structttak__table_a656889e2ba4a75d1a15a49808f2349cc}\label{structttak__table_a656889e2ba4a75d1a15a49808f2349cc}} 
 \index{ttak\_table@{ttak\_table}!key\_free@{key\_free}}
 \index{key\_free@{key\_free}!ttak\_table@{ttak\_table}}
 \doxysubsubsection{\texorpdfstring{key\_free}{key\_free}}
-{\footnotesize\ttfamily void(\texorpdfstring{$\ast$}{*} ttak\+\_\+table\+::key\+\_\+free) (void \texorpdfstring{$\ast$}{*}key)}
+{\footnotesize\ttfamily void($\ast$ ttak\+\_\+table\+::key\+\_\+free) (void $\ast$key)}
 
 
 
-Definition at line \mbox{\hyperlink{table_8h_source_l00030}{30}} of file \mbox{\hyperlink{table_8h_source}{table.\+h}}.
+Definition at line 33 of file table.\+h.
 
-\Hypertarget{structttak__table_aec32d1eeaa4f691e5268462b2a95e444}\label{structttak__table_aec32d1eeaa4f691e5268462b2a95e444} 
+\mbox{\Hypertarget{structttak__table_a2e8214df06ae3399ef9371d11fed9de3}\label{structttak__table_a2e8214df06ae3399ef9371d11fed9de3}} 
+\index{ttak\_table@{ttak\_table}!key\_lens@{key\_lens}}
+\index{key\_lens@{key\_lens}!ttak\_table@{ttak\_table}}
+\doxysubsubsection{\texorpdfstring{key\_lens}{key\_lens}}
+{\footnotesize\ttfamily size\+\_\+t$\ast$ ttak\+\_\+table\+::key\+\_\+lens}
+
+Key lengths array 
+
+Definition at line 23 of file table.\+h.
+
+\mbox{\Hypertarget{structttak__table_ac355c2b0e751b696278508aca59dfd4a}\label{structttak__table_ac355c2b0e751b696278508aca59dfd4a}} 
+\index{ttak\_table@{ttak\_table}!keys@{keys}}
+\index{keys@{keys}!ttak\_table@{ttak\_table}}
+\doxysubsubsection{\texorpdfstring{keys}{keys}}
+{\footnotesize\ttfamily void$\ast$$\ast$ ttak\+\_\+table\+::keys}
+
+Keys array 
+
+Definition at line 22 of file table.\+h.
+
+\mbox{\Hypertarget{structttak__table_aec32d1eeaa4f691e5268462b2a95e444}\label{structttak__table_aec32d1eeaa4f691e5268462b2a95e444}} 
 \index{ttak\_table@{ttak\_table}!size@{size}}
 \index{size@{size}!ttak\_table@{ttak\_table}}
 \doxysubsubsection{\texorpdfstring{size}{size}}
@@ -127,17 +144,27 @@ Definition at line \mbox{\hyperlink{table_8h_source_l00030}{30}} of file \mbox{\
 
 
 
-Definition at line \mbox{\hyperlink{table_8h_source_l00023}{23}} of file \mbox{\hyperlink{table_8h_source}{table.\+h}}.
+Definition at line 26 of file table.\+h.
 
-\Hypertarget{structttak__table_a691d524a5327dbfa40dae6bd48e02a48}\label{structttak__table_a691d524a5327dbfa40dae6bd48e02a48} 
+\mbox{\Hypertarget{structttak__table_a691d524a5327dbfa40dae6bd48e02a48}\label{structttak__table_a691d524a5327dbfa40dae6bd48e02a48}} 
 \index{ttak\_table@{ttak\_table}!val\_free@{val\_free}}
 \index{val\_free@{val\_free}!ttak\_table@{ttak\_table}}
 \doxysubsubsection{\texorpdfstring{val\_free}{val\_free}}
-{\footnotesize\ttfamily void(\texorpdfstring{$\ast$}{*} ttak\+\_\+table\+::val\+\_\+free) (void \texorpdfstring{$\ast$}{*}val)}
+{\footnotesize\ttfamily void($\ast$ ttak\+\_\+table\+::val\+\_\+free) (void $\ast$val)}
 
 
 
-Definition at line \mbox{\hyperlink{table_8h_source_l00031}{31}} of file \mbox{\hyperlink{table_8h_source}{table.\+h}}.
+Definition at line 34 of file table.\+h.
+
+\mbox{\Hypertarget{structttak__table_a4bdf139d19cc088280c87607face31c0}\label{structttak__table_a4bdf139d19cc088280c87607face31c0}} 
+\index{ttak\_table@{ttak\_table}!values@{values}}
+\index{values@{values}!ttak\_table@{ttak\_table}}
+\doxysubsubsection{\texorpdfstring{values}{values}}
+{\footnotesize\ttfamily void$\ast$$\ast$ ttak\+\_\+table\+::values}
+
+Values array 
+
+Definition at line 24 of file table.\+h.
 
 
 

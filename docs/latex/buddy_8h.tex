@@ -1,61 +1,73 @@
-\doxysection{include/ttak/phys/mem/buddy.h File Reference}
-\hypertarget{buddy_8h}{}\label{buddy_8h}\index{include/ttak/phys/mem/buddy.h@{include/ttak/phys/mem/buddy.h}}
+\hypertarget{buddy_8h}{}\doxysection{include/ttak/phys/mem/buddy.h File Reference}
+\label{buddy_8h}\index{include/ttak/phys/mem/buddy.h@{include/ttak/phys/mem/buddy.h}}
+
+
+Power-\/of-\/two buddy allocator for embedded and bare-\/metal targets.  
+
+
 {\ttfamily \#include $<$stddef.\+h$>$}\newline
 {\ttfamily \#include $<$stdint.\+h$>$}\newline
-Include dependency graph for buddy.\+h\+:\nopagebreak
+Include dependency graph for buddy.\+h\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=209pt]{buddy_8h__incl}
+\includegraphics[width=198pt]{buddy_8h__incl}
 \end{center}
 \end{figure}
-This graph shows which files directly or indirectly include this file\+:\nopagebreak
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=222pt]{buddy_8h__dep__incl}
+\includegraphics[width=208pt]{buddy_8h__dep__incl}
 \end{center}
 \end{figure}
-\doxysubsubsection*{Classes}
+\doxysubsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
 struct \mbox{\hyperlink{structttak__mem__req}{ttak\+\_\+mem\+\_\+req}}
-\end{DoxyCompactItemize}
-\doxysubsubsection*{Macros}
+\begin{DoxyCompactList}\small\item\em Allocation request descriptor passed to \mbox{\hyperlink{buddy_8h_adac79372adf55f023a1b92a7ec2f541f}{ttak\+\_\+mem\+\_\+buddy\+\_\+alloc()}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
 \begin{DoxyCompactItemize}
 \item 
 \#define \mbox{\hyperlink{buddy_8h_ae47a1cb6076cec70cf9ea8efc1d5f3ff}{EMBEDDED}}~0
-\end{DoxyCompactItemize}
-\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactList}\small\item\em Set to 1 to compile the allocator without OS dependencies. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
 \begin{DoxyCompactItemize}
 \item 
 typedef enum \mbox{\hyperlink{buddy_8h_a3273cde05aae384fc401209911116e37}{ttak\+\_\+priority}} \mbox{\hyperlink{buddy_8h_ae3b1c4c90dae1308675a4543d9f7c932}{ttak\+\_\+priority\+\_\+t}}
-\item 
+\begin{DoxyCompactList}\small\item\em Allocation placement policy for the buddy allocator. \end{DoxyCompactList}\item 
 typedef struct \mbox{\hyperlink{structttak__mem__req}{ttak\+\_\+mem\+\_\+req}} \mbox{\hyperlink{buddy_8h_ad5a0d5a5827e4cf192c4e9e021cc1aec}{ttak\+\_\+mem\+\_\+req\+\_\+t}}
-\end{DoxyCompactItemize}
-\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactList}\small\item\em Allocation request descriptor passed to \mbox{\hyperlink{buddy_8h_adac79372adf55f023a1b92a7ec2f541f}{ttak\+\_\+mem\+\_\+buddy\+\_\+alloc()}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
 \begin{DoxyCompactItemize}
 \item 
 enum \mbox{\hyperlink{buddy_8h_a3273cde05aae384fc401209911116e37}{ttak\+\_\+priority}} \{ \mbox{\hyperlink{buddy_8h_a3273cde05aae384fc401209911116e37aefaf60fe23bce74faa038d73be8d5e0f}{TTAK\+\_\+\+PRIORITY\+\_\+\+BEST\+\_\+\+FIT}}
 , \mbox{\hyperlink{buddy_8h_a3273cde05aae384fc401209911116e37a5c22bf096c857267a336849ee447640e}{TTAK\+\_\+\+PRIORITY\+\_\+\+WORST\+\_\+\+FIT}}
 , \mbox{\hyperlink{buddy_8h_a3273cde05aae384fc401209911116e37a00db2b92a5459006a7e4fd82e6e4d0c3}{TTAK\+\_\+\+PRIORITY\+\_\+\+FIRST\+\_\+\+FIT}}
  \}
-\end{DoxyCompactItemize}
-\doxysubsubsection*{Functions}
+\begin{DoxyCompactList}\small\item\em Allocation placement policy for the buddy allocator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \mbox{\hyperlink{buddy_8h_ae83acf1c249899b6fcfc4580dbf0b082}{ttak\+\_\+mem\+\_\+buddy\+\_\+init}} (void \texorpdfstring{$\ast$}{*}pool\+\_\+start, size\+\_\+t pool\+\_\+len, int embedded\+\_\+mode)
-\item 
-void \mbox{\hyperlink{buddy_8h_a9cc9a5945e39175f56fbf3ee961ff546}{ttak\+\_\+mem\+\_\+buddy\+\_\+set\+\_\+pool}} (void \texorpdfstring{$\ast$}{*}pool\+\_\+start, size\+\_\+t pool\+\_\+len)
-\item 
-void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{buddy_8h_a8d680ee1076c6ff365cdb72e6627287e}{ttak\+\_\+mem\+\_\+buddy\+\_\+alloc}} (const \mbox{\hyperlink{buddy_8h_ad5a0d5a5827e4cf192c4e9e021cc1aec}{ttak\+\_\+mem\+\_\+req\+\_\+t}} \texorpdfstring{$\ast$}{*}req)
-\item 
-void \mbox{\hyperlink{buddy_8h_a01404719f60c2c150a3b0170d7528be5}{ttak\+\_\+mem\+\_\+buddy\+\_\+free}} (void \texorpdfstring{$\ast$}{*}ptr)
-\end{DoxyCompactItemize}
+void \mbox{\hyperlink{buddy_8h_ae83acf1c249899b6fcfc4580dbf0b082}{ttak\+\_\+mem\+\_\+buddy\+\_\+init}} (void $\ast$pool\+\_\+start, size\+\_\+t pool\+\_\+len, int embedded\+\_\+mode)
+\begin{DoxyCompactList}\small\item\em Initialises the buddy allocator over a caller-\/supplied memory region. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{buddy_8h_a9cc9a5945e39175f56fbf3ee961ff546}{ttak\+\_\+mem\+\_\+buddy\+\_\+set\+\_\+pool}} (void $\ast$pool\+\_\+start, size\+\_\+t pool\+\_\+len)
+\begin{DoxyCompactList}\small\item\em Replaces the active pool without re-\/initialising internal state. \end{DoxyCompactList}\item 
+void $\ast$ \mbox{\hyperlink{buddy_8h_adac79372adf55f023a1b92a7ec2f541f}{ttak\+\_\+mem\+\_\+buddy\+\_\+alloc}} (const \mbox{\hyperlink{buddy_8h_ad5a0d5a5827e4cf192c4e9e021cc1aec}{ttak\+\_\+mem\+\_\+req\+\_\+t}} $\ast$req)
+\begin{DoxyCompactList}\small\item\em Allocates a block from the buddy pool. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{buddy_8h_a01404719f60c2c150a3b0170d7528be5}{ttak\+\_\+mem\+\_\+buddy\+\_\+free}} (void $\ast$ptr)
+\begin{DoxyCompactList}\small\item\em Returns a previously allocated block to the buddy pool. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
+
+\doxysubsection{Detailed Description}
+Power-\/of-\/two buddy allocator for embedded and bare-\/metal targets. 
+
+Manages a contiguous memory pool using the classic buddy-\/system algorithm. When {\ttfamily EMBEDDED} is defined to 1 the allocator operates without any OS memory services. Three placement policies are available\+: best-\/fit, worst-\/fit, and first-\/fit. 
 
 \doxysubsection{Macro Definition Documentation}
-\Hypertarget{buddy_8h_ae47a1cb6076cec70cf9ea8efc1d5f3ff}\label{buddy_8h_ae47a1cb6076cec70cf9ea8efc1d5f3ff} 
+\mbox{\Hypertarget{buddy_8h_ae47a1cb6076cec70cf9ea8efc1d5f3ff}\label{buddy_8h_ae47a1cb6076cec70cf9ea8efc1d5f3ff}} 
 \index{buddy.h@{buddy.h}!EMBEDDED@{EMBEDDED}}
 \index{EMBEDDED@{EMBEDDED}!buddy.h@{buddy.h}}
 \doxysubsubsection{\texorpdfstring{EMBEDDED}{EMBEDDED}}
@@ -63,18 +75,26 @@ void \mbox{\hyperlink{buddy_8h_a01404719f60c2c150a3b0170d7528be5}{ttak\+\_\+mem\
 
 
 
-Definition at line \mbox{\hyperlink{buddy_8h_source_l00012}{12}} of file \mbox{\hyperlink{buddy_8h_source}{buddy.\+h}}.
+Set to 1 to compile the allocator without OS dependencies. 
+
+
+
+Definition at line 23 of file buddy.\+h.
 
 
 
 \doxysubsection{Typedef Documentation}
-\Hypertarget{buddy_8h_ad5a0d5a5827e4cf192c4e9e021cc1aec}\label{buddy_8h_ad5a0d5a5827e4cf192c4e9e021cc1aec} 
+\mbox{\Hypertarget{buddy_8h_ad5a0d5a5827e4cf192c4e9e021cc1aec}\label{buddy_8h_ad5a0d5a5827e4cf192c4e9e021cc1aec}} 
 \index{buddy.h@{buddy.h}!ttak\_mem\_req\_t@{ttak\_mem\_req\_t}}
 \index{ttak\_mem\_req\_t@{ttak\_mem\_req\_t}!buddy.h@{buddy.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_mem\_req\_t}{ttak\_mem\_req\_t}}
 {\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__mem__req}{ttak\+\_\+mem\+\_\+req}} \mbox{\hyperlink{buddy_8h_ad5a0d5a5827e4cf192c4e9e021cc1aec}{ttak\+\_\+mem\+\_\+req\+\_\+t}}}
 
-\Hypertarget{buddy_8h_ae3b1c4c90dae1308675a4543d9f7c932}\label{buddy_8h_ae3b1c4c90dae1308675a4543d9f7c932} 
+
+
+Allocation request descriptor passed to \mbox{\hyperlink{buddy_8h_adac79372adf55f023a1b92a7ec2f541f}{ttak\+\_\+mem\+\_\+buddy\+\_\+alloc()}}. 
+
+\mbox{\Hypertarget{buddy_8h_ae3b1c4c90dae1308675a4543d9f7c932}\label{buddy_8h_ae3b1c4c90dae1308675a4543d9f7c932}} 
 \index{buddy.h@{buddy.h}!ttak\_priority\_t@{ttak\_priority\_t}}
 \index{ttak\_priority\_t@{ttak\_priority\_t}!buddy.h@{buddy.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_priority\_t}{ttak\_priority\_t}}
@@ -82,55 +102,108 @@ Definition at line \mbox{\hyperlink{buddy_8h_source_l00012}{12}} of file \mbox{\
 
 
 
+Allocation placement policy for the buddy allocator. 
+
+
+
 \doxysubsection{Enumeration Type Documentation}
-\Hypertarget{buddy_8h_a3273cde05aae384fc401209911116e37}\label{buddy_8h_a3273cde05aae384fc401209911116e37} 
+\mbox{\Hypertarget{buddy_8h_a3273cde05aae384fc401209911116e37}\label{buddy_8h_a3273cde05aae384fc401209911116e37}} 
 \index{buddy.h@{buddy.h}!ttak\_priority@{ttak\_priority}}
 \index{ttak\_priority@{ttak\_priority}!buddy.h@{buddy.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_priority}{ttak\_priority}}
 {\footnotesize\ttfamily enum \mbox{\hyperlink{buddy_8h_a3273cde05aae384fc401209911116e37}{ttak\+\_\+priority}}}
 
+
+
+Allocation placement policy for the buddy allocator. 
+
 \begin{DoxyEnumFields}{Enumerator}
-\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_PRIORITY\_BEST\_FIT@{TTAK\_PRIORITY\_BEST\_FIT}!buddy.h@{buddy.h}}\index{buddy.h@{buddy.h}!TTAK\_PRIORITY\_BEST\_FIT@{TTAK\_PRIORITY\_BEST\_FIT}}}\Hypertarget{buddy_8h_a3273cde05aae384fc401209911116e37aefaf60fe23bce74faa038d73be8d5e0f}\label{buddy_8h_a3273cde05aae384fc401209911116e37aefaf60fe23bce74faa038d73be8d5e0f} 
-TTAK\+\_\+\+PRIORITY\+\_\+\+BEST\+\_\+\+FIT&\\
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_PRIORITY\_BEST\_FIT@{TTAK\_PRIORITY\_BEST\_FIT}!buddy.h@{buddy.h}}\index{buddy.h@{buddy.h}!TTAK\_PRIORITY\_BEST\_FIT@{TTAK\_PRIORITY\_BEST\_FIT}}}\mbox{\Hypertarget{buddy_8h_a3273cde05aae384fc401209911116e37aefaf60fe23bce74faa038d73be8d5e0f}\label{buddy_8h_a3273cde05aae384fc401209911116e37aefaf60fe23bce74faa038d73be8d5e0f}} 
+TTAK\+\_\+\+PRIORITY\+\_\+\+BEST\+\_\+\+FIT&Smallest block that fits (reduces waste). \\
 \hline
 
-\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_PRIORITY\_WORST\_FIT@{TTAK\_PRIORITY\_WORST\_FIT}!buddy.h@{buddy.h}}\index{buddy.h@{buddy.h}!TTAK\_PRIORITY\_WORST\_FIT@{TTAK\_PRIORITY\_WORST\_FIT}}}\Hypertarget{buddy_8h_a3273cde05aae384fc401209911116e37a5c22bf096c857267a336849ee447640e}\label{buddy_8h_a3273cde05aae384fc401209911116e37a5c22bf096c857267a336849ee447640e} 
-TTAK\+\_\+\+PRIORITY\+\_\+\+WORST\+\_\+\+FIT&\\
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_PRIORITY\_WORST\_FIT@{TTAK\_PRIORITY\_WORST\_FIT}!buddy.h@{buddy.h}}\index{buddy.h@{buddy.h}!TTAK\_PRIORITY\_WORST\_FIT@{TTAK\_PRIORITY\_WORST\_FIT}}}\mbox{\Hypertarget{buddy_8h_a3273cde05aae384fc401209911116e37a5c22bf096c857267a336849ee447640e}\label{buddy_8h_a3273cde05aae384fc401209911116e37a5c22bf096c857267a336849ee447640e}} 
+TTAK\+\_\+\+PRIORITY\+\_\+\+WORST\+\_\+\+FIT&Largest available block (keeps large holes). \\
 \hline
 
-\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_PRIORITY\_FIRST\_FIT@{TTAK\_PRIORITY\_FIRST\_FIT}!buddy.h@{buddy.h}}\index{buddy.h@{buddy.h}!TTAK\_PRIORITY\_FIRST\_FIT@{TTAK\_PRIORITY\_FIRST\_FIT}}}\Hypertarget{buddy_8h_a3273cde05aae384fc401209911116e37a00db2b92a5459006a7e4fd82e6e4d0c3}\label{buddy_8h_a3273cde05aae384fc401209911116e37a00db2b92a5459006a7e4fd82e6e4d0c3} 
-TTAK\+\_\+\+PRIORITY\+\_\+\+FIRST\+\_\+\+FIT&\\
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_PRIORITY\_FIRST\_FIT@{TTAK\_PRIORITY\_FIRST\_FIT}!buddy.h@{buddy.h}}\index{buddy.h@{buddy.h}!TTAK\_PRIORITY\_FIRST\_FIT@{TTAK\_PRIORITY\_FIRST\_FIT}}}\mbox{\Hypertarget{buddy_8h_a3273cde05aae384fc401209911116e37a00db2b92a5459006a7e4fd82e6e4d0c3}\label{buddy_8h_a3273cde05aae384fc401209911116e37a00db2b92a5459006a7e4fd82e6e4d0c3}} 
+TTAK\+\_\+\+PRIORITY\+\_\+\+FIRST\+\_\+\+FIT&First block that fits (fastest search). \\
 \hline
 
 \end{DoxyEnumFields}
 
 
-Definition at line \mbox{\hyperlink{buddy_8h_source_l00015}{15}} of file \mbox{\hyperlink{buddy_8h_source}{buddy.\+h}}.
+Definition at line 27 of file buddy.\+h.
 
 
 
 \doxysubsection{Function Documentation}
-\Hypertarget{buddy_8h_a8d680ee1076c6ff365cdb72e6627287e}\label{buddy_8h_a8d680ee1076c6ff365cdb72e6627287e} 
+\mbox{\Hypertarget{buddy_8h_adac79372adf55f023a1b92a7ec2f541f}\label{buddy_8h_adac79372adf55f023a1b92a7ec2f541f}} 
 \index{buddy.h@{buddy.h}!ttak\_mem\_buddy\_alloc@{ttak\_mem\_buddy\_alloc}}
 \index{ttak\_mem\_buddy\_alloc@{ttak\_mem\_buddy\_alloc}!buddy.h@{buddy.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_mem\_buddy\_alloc()}{ttak\_mem\_buddy\_alloc()}}
-{\footnotesize\ttfamily void \texorpdfstring{$\ast$}{*} ttak\+\_\+mem\+\_\+buddy\+\_\+alloc (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{buddy_8h_ad5a0d5a5827e4cf192c4e9e021cc1aec}{ttak\+\_\+mem\+\_\+req\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{req }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void$\ast$ ttak\+\_\+mem\+\_\+buddy\+\_\+alloc (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{buddy_8h_ad5a0d5a5827e4cf192c4e9e021cc1aec}{ttak\+\_\+mem\+\_\+req\+\_\+t}} $\ast$}]{req }\end{DoxyParamCaption})}
 
-\Hypertarget{buddy_8h_a01404719f60c2c150a3b0170d7528be5}\label{buddy_8h_a01404719f60c2c150a3b0170d7528be5} 
+
+
+Allocates a block from the buddy pool. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em req} & Allocation request specifying size and policy. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Aligned pointer to allocated memory, or NULL on failure. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{buddy_8h_a01404719f60c2c150a3b0170d7528be5}\label{buddy_8h_a01404719f60c2c150a3b0170d7528be5}} 
 \index{buddy.h@{buddy.h}!ttak\_mem\_buddy\_free@{ttak\_mem\_buddy\_free}}
 \index{ttak\_mem\_buddy\_free@{ttak\_mem\_buddy\_free}!buddy.h@{buddy.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_mem\_buddy\_free()}{ttak\_mem\_buddy\_free()}}
-{\footnotesize\ttfamily void ttak\+\_\+mem\+\_\+buddy\+\_\+free (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{ptr }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void ttak\+\_\+mem\+\_\+buddy\+\_\+free (\begin{DoxyParamCaption}\item[{void $\ast$}]{ptr }\end{DoxyParamCaption})}
 
-\Hypertarget{buddy_8h_ae83acf1c249899b6fcfc4580dbf0b082}\label{buddy_8h_ae83acf1c249899b6fcfc4580dbf0b082} 
+
+
+Returns a previously allocated block to the buddy pool. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ptr} & Pointer returned by \mbox{\hyperlink{buddy_8h_adac79372adf55f023a1b92a7ec2f541f}{ttak\+\_\+mem\+\_\+buddy\+\_\+alloc()}}. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{buddy_8h_ae83acf1c249899b6fcfc4580dbf0b082}\label{buddy_8h_ae83acf1c249899b6fcfc4580dbf0b082}} 
 \index{buddy.h@{buddy.h}!ttak\_mem\_buddy\_init@{ttak\_mem\_buddy\_init}}
 \index{ttak\_mem\_buddy\_init@{ttak\_mem\_buddy\_init}!buddy.h@{buddy.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_mem\_buddy\_init()}{ttak\_mem\_buddy\_init()}}
-{\footnotesize\ttfamily void ttak\+\_\+mem\+\_\+buddy\+\_\+init (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{pool\+\_\+start,  }\item[{size\+\_\+t}]{pool\+\_\+len,  }\item[{int}]{embedded\+\_\+mode }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void ttak\+\_\+mem\+\_\+buddy\+\_\+init (\begin{DoxyParamCaption}\item[{void $\ast$}]{pool\+\_\+start,  }\item[{size\+\_\+t}]{pool\+\_\+len,  }\item[{int}]{embedded\+\_\+mode }\end{DoxyParamCaption})}
 
-\Hypertarget{buddy_8h_a9cc9a5945e39175f56fbf3ee961ff546}\label{buddy_8h_a9cc9a5945e39175f56fbf3ee961ff546} 
+
+
+Initialises the buddy allocator over a caller-\/supplied memory region. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pool\+\_\+start} & Start of the memory pool. \\
+\hline
+{\em pool\+\_\+len} & Total pool size in bytes. \\
+\hline
+{\em embedded\+\_\+mode} & Non-\/zero to disable OS-\/level features. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{buddy_8h_a9cc9a5945e39175f56fbf3ee961ff546}\label{buddy_8h_a9cc9a5945e39175f56fbf3ee961ff546}} 
 \index{buddy.h@{buddy.h}!ttak\_mem\_buddy\_set\_pool@{ttak\_mem\_buddy\_set\_pool}}
 \index{ttak\_mem\_buddy\_set\_pool@{ttak\_mem\_buddy\_set\_pool}!buddy.h@{buddy.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_mem\_buddy\_set\_pool()}{ttak\_mem\_buddy\_set\_pool()}}
-{\footnotesize\ttfamily void ttak\+\_\+mem\+\_\+buddy\+\_\+set\+\_\+pool (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{pool\+\_\+start,  }\item[{size\+\_\+t}]{pool\+\_\+len }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void ttak\+\_\+mem\+\_\+buddy\+\_\+set\+\_\+pool (\begin{DoxyParamCaption}\item[{void $\ast$}]{pool\+\_\+start,  }\item[{size\+\_\+t}]{pool\+\_\+len }\end{DoxyParamCaption})}
 
+
+
+Replaces the active pool without re-\/initialising internal state. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pool\+\_\+start} & New pool base address. \\
+\hline
+{\em pool\+\_\+len} & New pool size in bytes. \\
+\hline
+\end{DoxyParams}

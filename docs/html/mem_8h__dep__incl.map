@@ -1,18 +1,10 @@
 <map id="include/ttak/mem/mem.h" name="include/ttak/mem/mem.h">
-<area shape="rect" id="Node000001" title="TTAK Unified Memory Subsystem with Lifecycle Management and Hardware Optimization." alt="" coords="301,5,488,31"/>
-<area shape="rect" id="Node000002" href="$arena__helper_8h.html" title=" " alt="" coords="5,79,184,119"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="339,37,167,81,166,76,337,31"/>
-<area shape="rect" id="Node000003" href="$lattice_8h.html" title="Choi Seok&#45;jeong&#39;s Lattice (Sanpan) for Lock&#45;Free Parallel Ingress." alt="" coords="208,86,389,111"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="372,41,315,88,311,84,368,37"/>
-<area shape="rect" id="Node000007" href="$app__types_8h.html" title=" " alt="" coords="413,86,568,111"/>
-<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="421,37,478,84,475,88,418,41"/>
-<area shape="rect" id="Node000008" href="$mem__internal_8h.html" title="Internal memory subsystem definitions and tiered allocator interfaces." alt="" coords="461,167,670,192"/>
-<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="502,27,546,46,566,59,582,77,591,100,590,125,574,167,569,165,585,124,586,101,578,80,562,63,544,50,500,32"/>
-<area shape="rect" id="Node000004" href="$endpoint_8h.html" title=" " alt="" coords="200,167,397,192"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="301,125,301,166,296,166,296,125"/>
-<area shape="rect" id="Node000005" href="$session_8h.html" title=" " alt="" coords="103,240,292,265"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="273,202,215,242,212,238,270,198"/>
-<area shape="rect" id="Node000006" href="$view_8h.html" title=" " alt="" coords="316,240,487,265"/>
-<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="328,198,386,238,383,242,325,202"/>
-<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="513,119,556,165,552,168,509,123"/>
+<area shape="rect" id="node1" title="TTAK Unified Memory Subsystem with Lifecycle Management and Hardware Optimization." alt="" coords="272,5,439,32"/>
+<area shape="rect" id="node2" href="$arena__helper_8h.html" title=" " alt="" coords="5,80,164,121"/>
+<area shape="rect" id="node3" href="$lattice_8h.html" title="Choi Seok&#45;jeong&#39;s Lattice (Sanpan) for Lock&#45;Free Parallel Ingress." alt="" coords="188,87,349,114"/>
+<area shape="rect" id="node7" href="$app__types_8h.html" title=" " alt="" coords="374,87,513,114"/>
+<area shape="rect" id="node8" href="$mem__internal_8h.html" title="Internal memory subsystem definitions and tiered allocator interfaces." alt="" coords="419,169,601,196"/>
+<area shape="rect" id="node4" href="$endpoint_8h.html" title=" " alt="" coords="181,169,356,196"/>
+<area shape="rect" id="node5" href="$session_8h.html" title=" " alt="" coords="91,244,262,271"/>
+<area shape="rect" id="node6" href="$view_8h.html" title=" " alt="" coords="286,244,438,271"/>
 </map>

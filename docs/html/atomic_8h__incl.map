@@ -1,16 +1,12 @@
 <map id="include/ttak/atomic/atomic.h" name="include/ttak/atomic/atomic.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="123,5,271,45"/>
-<area shape="rect" id="Node000002" href="$hash_8h.html" title=" " alt="" coords="81,93,193,119"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="184,47,156,84,152,81,180,44"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="5,167,76,192"/>
-<area shape="poly" id="edge5_Node000001_Node000003" title=" " alt="" coords="141,48,103,67,71,95,55,123,46,153,41,152,50,121,67,92,100,63,138,43"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="217,93,299,119"/>
-<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="214,44,243,81,238,84,209,47"/>
-<area shape="rect" id="Node000007" href="$pthread_8h.html" title="POSIX thread compatibility shim." alt="" coords="324,93,408,119"/>
-<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="238,43,330,85,327,90,236,48"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="123,121,69,160,66,156,120,117"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="101,167,175,192"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="140,119,140,153,135,153,134,119"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="200,167,287,192"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="155,116,216,157,213,161,152,121"/>
+<area shape="rect" id="node1" title=" " alt="" coords="266,5,398,47"/>
+<area shape="rect" id="node2" href="$hash_8h.html" title="Low&#45;level open&#45;addressing hash map (SoA layout) with SipHash/wyhash." alt="" coords="118,95,221,121"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,169,69,196"/>
+<area shape="rect" id="node7" href="$ttak__compiler_8h.html" title="Compiler&#45;specific macros and compatibility layer." alt="" coords="245,95,419,121"/>
+<area shape="rect" id="node9" title=" " alt="" coords="443,95,517,121"/>
+<area shape="rect" id="node10" href="$pthread_8h.html" title="POSIX thread compatibility shim." alt="" coords="542,95,618,121"/>
+<area shape="rect" id="node4" title=" " alt="" coords="181,244,249,271"/>
+<area shape="rect" id="node5" title=" " alt="" coords="145,169,223,196"/>
+<area shape="rect" id="node6" href="$ttak__align_8h.html" title="Alignment utilities and compatibility helpers." alt="" coords="247,169,398,196"/>
+<area shape="rect" id="node8" title=" " alt="" coords="423,169,513,196"/>
 </map>
