@@ -98,21 +98,21 @@ $(function(){initNavTree('dir_3124f3233923550c0620e1aa49127f52.html','',''); });
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="dir_3124f3233923550c0620e1aa49127f52_dep.png" border="0" usemap="#adir__3124f3233923550c0620e1aa49127f52__dep" loading="lazy" alt="tutorials/43-bigscript/05-complex-math"/></div>
 <map name="adir__3124f3233923550c0620e1aa49127f52__dep" id="adir__3124f3233923550c0620e1aa49127f52__dep">
-<area shape="rect" href="dir_3124f3233923550c0620e1aa49127f52.html" title="05&#45;complex&#45;math" alt="" coords="27,52,165,77"/>
-<area shape="rect" href="dir_1fa4d05fd89467237e65f36651efba33.html" title="43&#45;bigscript" alt="" coords="16,16,176,88"/>
+<area shape="rect" href="dir_3124f3233923550c0620e1aa49127f52.html" title="05&#45;complex&#45;math" alt="" coords="27,54,165,82"/>
+<area shape="rect" href="dir_1fa4d05fd89467237e65f36651efba33.html" title="43&#45;bigscript" alt="" coords="16,16,176,93"/>
 </map>
 </div>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md174"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md186"></a>
 05 - Real and Complex Numbers</h1>
 <p>BigScript isn't limited to integers. It also supports <span class="tt">BigReal</span> and <span class="tt">BigComplex</span> types.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md175"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md187"></a>
 Type Conversion and Construction</h1>
 <ul>
 <li><span class="tt">real(n)</span>: Converts an integer <span class="tt">n</span> to a real number.</li>
 <li><span class="tt">complex(re, im)</span>: Constructs a complex number from real/integer components.</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md176"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md188"></a>
 Example</h1>
 <div class="fragment"><div class="line">fn main(seed, sn) {</div>
 <div class="line">  let r = real(seed);</div>
@@ -120,10 +120,10 @@ Example</h1>
 <div class="line">  return c;</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>In this example, if <span class="tt">seed</span> is 5, the script returns the complex number <span class="tt">5.0 + 10.0i</span>.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md177"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md189"></a>
 Handling Results in C</h1>
 <p>When a script returns a non-integer value, the <span class="tt">is_found</span> flag in <span class="tt"><a class="el" href="structttak__bigscript__value__t.html" title="Output value resulting from evaluating a seed.">ttak_bigscript_value_t</a></span> is set to <span class="tt">true</span>, and you can inspect the <span class="tt">value.type</span> and <span class="tt">value.v</span> members to extract the result.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md178"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md190"></a>
 Running the Example</h1>
 <div class="fragment"><div class="line">gcc main.c -o complex_math -lttak</div>
 <div class="line">./complex_math</div>

@@ -98,28 +98,28 @@ $(function(){initNavTree('dir_eb929d016ca34d9c3898e7cf715349b3.html','',''); });
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="dir_eb929d016ca34d9c3898e7cf715349b3_dep.png" border="0" usemap="#adir__eb929d016ca34d9c3898e7cf715349b3__dep" loading="lazy" alt="tutorials/43-bigscript/04-builtins"/></div>
 <map name="adir__eb929d016ca34d9c3898e7cf715349b3__dep" id="adir__eb929d016ca34d9c3898e7cf715349b3__dep">
-<area shape="rect" href="dir_eb929d016ca34d9c3898e7cf715349b3.html" title="04&#45;builtins" alt="" coords="27,52,117,77"/>
-<area shape="rect" href="dir_1fa4d05fd89467237e65f36651efba33.html" title="43&#45;bigscript" alt="" coords="16,16,128,88"/>
+<area shape="rect" href="dir_eb929d016ca34d9c3898e7cf715349b3.html" title="04&#45;builtins" alt="" coords="27,54,117,82"/>
+<area shape="rect" href="dir_1fa4d05fd89467237e65f36651efba33.html" title="43&#45;bigscript" alt="" coords="16,16,128,93"/>
 </map>
 </div>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md170"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md182"></a>
 04 - Built-in Functions</h1>
 <p>BigScript provides several built-in functions for common mathematical operations.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md171"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md183"></a>
 <span class="tt">s(n)</span></h1>
 <p>The most important built-in function is <span class="tt">s(n)</span>, which calculates the <b>sum of proper divisors</b> of an integer <span class="tt">n</span>.</p>
 <div class="fragment"><div class="line">if (s(seed) == seed) {</div>
 <div class="line">  return 1; // Found a perfect number!</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1 class="doxsection"><a class="anchor" id="autotoc_md172"></a>
+</div><!-- fragment --><h1 class="doxsection"><a class="anchor" id="autotoc_md184"></a>
 Input Arguments: <span class="tt">seed</span> and <span class="tt">sn</span></h1>
 <p>When <span class="tt">ttak_bigscript_eval_seed</span> is called from C, it passes two values to the <span class="tt">main</span> function:</p><ol type="1">
 <li><span class="tt">seed</span>: The number being evaluated.</li>
 <li><span class="tt">sn</span>: The precomputed <span class="tt">s(seed)</span> value.</li>
 </ol>
 <p>Using <span class="tt">sn</span> is faster because the C host has often already calculated this value before invoking the script. However, you can also call <span class="tt">s(n)</span> explicitly within the script for any number.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md173"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md185"></a>
 Running the Example</h1>
 <div class="fragment"><div class="line">gcc main.c -o builtins -lttak</div>
 <div class="line">./builtins</div>

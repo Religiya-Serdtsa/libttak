@@ -1,6 +1,7 @@
 \doxysection{tutorials/26-\/factorization Directory Reference}
 \hypertarget{dir_0df05cf08bb3083e64bb7baf1a62ac0a}{}\label{dir_0df05cf08bb3083e64bb7baf1a62ac0a}\index{tutorials/26-\/factorization Directory Reference@{tutorials/26-\/factorization Directory Reference}}
-Directory dependency graph for 26-\/factorization\+:\nopagebreak
+Directory dependency graph for 26-\/factorization\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -10,10 +11,10 @@ Directory dependency graph for 26-\/factorization\+:\nopagebreak
 
 
 \doxysubsection{Detailed Description}
-\hypertarget{README.md_autotoc_md98}{}\doxysubsection{\texorpdfstring{Tutorial 26 – Factorization}{Tutorial 26 – Factorization}}\label{README.md_autotoc_md98}
+\hypertarget{README.md_autotoc_md110}{}\doxysubsection{\texorpdfstring{Tutorial 26 – Factorization}{Tutorial 26 – Factorization}}\label{README.md_autotoc_md110}
 {\ttfamily modules/26-\/factorization} rebuilds the factoring helpers under {\ttfamily src/math/factor.\+c}.
 
-{\ttfamily lesson26\+\_\+factorization.\+c} factors 360 as a sanity check; reuse it (and extend it) to validate your routines.\hypertarget{README.md_autotoc_md99}{}\doxysubsection{\texorpdfstring{Engine Notes}{Engine Notes}}\label{README.md_autotoc_md99}
+{\ttfamily lesson26\+\_\+factorization.\+c} factors 360 as a sanity check; reuse it (and extend it) to validate your routines.\hypertarget{README.md_autotoc_md111}{}\doxysubsection{\texorpdfstring{Engine Notes}{Engine Notes}}\label{README.md_autotoc_md111}
 The production engine now mirrors the EPR design goals\+:
 
 
@@ -24,7 +25,7 @@ The production engine now mirrors the EPR design goals\+:
 \item {\bfseries{Bigint Fast Path}} – When a bigint fits inside 64 bits we reuse the optimized {\ttfamily \doxylink{factor_8h_ae6b18eac3f9615ae93f70bbe09218716}{ttak\+\_\+factor\+\_\+u64()}} output to avoid repeated allocations.
 \end{DoxyEnumerate}
 
-Document any regressions or late-\/stage fallbacks when you extend this tutorial; the aliquot tracker depends on deterministic outputs when the CPU backend runs without GPU help.\hypertarget{README.md_autotoc_md100}{}\doxysubsection{\texorpdfstring{Checklist}{Checklist}}\label{README.md_autotoc_md100}
+Document any regressions or late-\/stage fallbacks when you extend this tutorial; the aliquot tracker depends on deterministic outputs when the CPU backend runs without GPU help.\hypertarget{README.md_autotoc_md112}{}\doxysubsection{\texorpdfstring{Checklist}{Checklist}}\label{README.md_autotoc_md112}
 
 \begin{DoxyEnumerate}
 \item Write down the algorithm mix (trial division, wheel, rho, etc.) that the lesson expects and capture any randomness requirements.

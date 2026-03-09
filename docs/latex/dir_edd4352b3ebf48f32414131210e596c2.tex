@@ -1,6 +1,7 @@
 \doxysection{tutorials/36-\/trace-\/memory Directory Reference}
 \hypertarget{dir_edd4352b3ebf48f32414131210e596c2}{}\label{dir_edd4352b3ebf48f32414131210e596c2}\index{tutorials/36-\/trace-\/memory Directory Reference@{tutorials/36-\/trace-\/memory Directory Reference}}
-Directory dependency graph for 36-\/trace-\/memory\+:\nopagebreak
+Directory dependency graph for 36-\/trace-\/memory\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -10,15 +11,15 @@ Directory dependency graph for 36-\/trace-\/memory\+:\nopagebreak
 
 
 \doxysubsection{Detailed Description}
-\hypertarget{README.md_autotoc_md119}{}\doxysubsection{\texorpdfstring{Lesson 36\+: Memory Tracing \& LRU Caching}{Lesson 36\+: Memory Tracing \& LRU Caching}}\label{README.md_autotoc_md119}
-In this tutorial, we demonstrate how to trace memory allocations and ownership hierarchy using an LRU (Least Recently Used) cache implementation.\hypertarget{README.md_autotoc_md120}{}\doxysubsection{\texorpdfstring{Key Features}{Key Features}}\label{README.md_autotoc_md120}
+\hypertarget{README.md_autotoc_md131}{}\doxysubsection{\texorpdfstring{Lesson 36\+: Memory Tracing \& LRU Caching}{Lesson 36\+: Memory Tracing \& LRU Caching}}\label{README.md_autotoc_md131}
+In this tutorial, we demonstrate how to trace memory allocations and ownership hierarchy using an LRU (Least Recently Used) cache implementation.\hypertarget{README.md_autotoc_md132}{}\doxysubsection{\texorpdfstring{Key Features}{Key Features}}\label{README.md_autotoc_md132}
 
 \begin{DoxyEnumerate}
 \item {\bfseries{Allocation Timing}}\+: Trace when memory is allocated and freed.
 \item {\bfseries{Access Auditing}}\+: Record every time {\ttfamily ttak\+\_\+mem\+\_\+access} is called.
 \item {\bfseries{Ownership Hierarchy}}\+: Use {\ttfamily \doxylink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} to group resources (cache entries) under a parent container.
 \item {\bfseries{Visual Analysis}}\+: Generate a timeline and hierarchy graph from the trace logs.
-\end{DoxyEnumerate}\hypertarget{README.md_autotoc_md121}{}\doxysubsection{\texorpdfstring{The Deterministic LRU \& Synchronous Eviction}{The Deterministic LRU \& Synchronous Eviction}}\label{README.md_autotoc_md121}
+\end{DoxyEnumerate}\hypertarget{README.md_autotoc_md133}{}\doxysubsection{\texorpdfstring{The Deterministic LRU \& Synchronous Eviction}{The Deterministic LRU \& Synchronous Eviction}}\label{README.md_autotoc_md133}
 Lesson 36 has been upgraded to demonstrate a {\bfseries{Synchronous Eviction}} model, ensuring absolute control over memory density\+:
 
 
@@ -33,12 +34,12 @@ Lesson 36 has been upgraded to demonstrate a {\bfseries{Synchronous Eviction}} m
 \item Uses {\ttfamily TTAK\+\_\+\+MEM\+\_\+\+STRICT\+\_\+\+CHECK} to validate state transitions at every allocation.
 \item Proves causality\+: New allocation directly triggers the eviction and immediate cleanup of the oldest node.
 \end{DoxyItemize}
-\end{DoxyEnumerate}\hypertarget{README.md_autotoc_md122}{}\doxysubsection{\texorpdfstring{How to Run}{How to Run}}\label{README.md_autotoc_md122}
+\end{DoxyEnumerate}\hypertarget{README.md_autotoc_md134}{}\doxysubsection{\texorpdfstring{How to Run}{How to Run}}\label{README.md_autotoc_md134}
 
 \begin{DoxyEnumerate}
 \item {\bfseries{Compile and Run}}\+: {\ttfamily bash make ./lesson36\+\_\+trace\+\_\+memory 2\texorpdfstring{$>$}{>} trace.\+log } (We redirect {\ttfamily stderr} to {\ttfamily trace.\+log} to capture the JSON logs).
 \item {\bfseries{Visualize}}\+: {\ttfamily bash python3 ../../scripts/visualize\+\_\+memory\+\_\+calls.py trace.\+log }
-\end{DoxyEnumerate}\hypertarget{README.md_autotoc_md123}{}\doxysubsection{\texorpdfstring{Expected Outputs}{Expected Outputs}}\label{README.md_autotoc_md123}
+\end{DoxyEnumerate}\hypertarget{README.md_autotoc_md135}{}\doxysubsection{\texorpdfstring{Expected Outputs}{Expected Outputs}}\label{README.md_autotoc_md135}
 
 \begin{DoxyItemize}
 \item {\ttfamily memory\+\_\+analysis.\+png}\+: Contains two subplots\+:
@@ -46,7 +47,7 @@ Lesson 36 has been upgraded to demonstrate a {\bfseries{Synchronous Eviction}} m
 \item {\bfseries{Ownership Hierarchy}}\+: A graph showing how the {\ttfamily \doxylink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} (the cache) owns its data resources.
 \item {\bfseries{Lifetime Timeline}}\+: A Gantt chart showing allocation/free timings. Blue bars are global, orange bars are owned resources. Red dots indicate {\ttfamily ttak\+\_\+mem\+\_\+access} events.
 \end{DoxyEnumerate}
-\end{DoxyItemize}\hypertarget{README.md_autotoc_md124}{}\doxysubsection{\texorpdfstring{Why this matters?}{Why this matters?}}\label{README.md_autotoc_md124}
+\end{DoxyItemize}\hypertarget{README.md_autotoc_md136}{}\doxysubsection{\texorpdfstring{Why this matters?}{Why this matters?}}\label{README.md_autotoc_md136}
 Memory tracing is crucial for\+:
 \begin{DoxyItemize}
 \item {\bfseries{Leak Detection}}\+: Visualizing blocks that are never freed.

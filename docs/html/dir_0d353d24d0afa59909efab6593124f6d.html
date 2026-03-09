@@ -141,7 +141,7 @@ Directories</h2></td></tr>
 <tr class="memitem:DANGEROUS" id="r_DANGEROUS"><td class="memItemLeft" align="right" valign="top"><span class="iconfolder"><div class="folder-icon"></div></span>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dir_a7b74cb14d16019b23286ede1db62264.html">DANGEROUS</a></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md199"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md211"></a>
 LibTTAK Tutorials</h1>
 <p>These tutorials are designed for clone-coding: every step rebuilds an existing subsystem from scratch so that, after completing the list, you will have covered <b>every module and public facility in <span class="tt">libttak</span>, unsafe contexts included</b>. The guide now ships as <b>dozens of bite-sized lessons</b> (<span class="tt">modules/01-*/README.md</span>, <span class="tt">modules/02-*/README.md</span>, …) so that you can focus on one commitment-sized topic at a time instead of scrolling a giant README. Start with Lesson 01 and walk forward; the ordering is intentional so that you literally re-lay the foundation of the library, stack the intermediate subsystems, and finish with the unsafe bridges—by the end you should be able to think and ship like the library’s original designer.</p>
 <p>Key ideas:</p>
@@ -151,7 +151,7 @@ LibTTAK Tutorials</h1>
 <li><b>Use the helper.</b> Run <span class="tt">tutorials/helper/helper libttak.hlp</span> to read the manual while you work. If you need the unsafe addendum, run the helper with <span class="tt">tutorials/DANGEROUS/libttak_unsafe.hlp</span>.</li>
 <li><b>Design-mindset prompts.</b> Several lessons remind you to write down intent and invariants so an amateur can gradually reason like the architect who authored <span class="tt">libttak</span>.</li>
 </ol>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md200"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md212"></a>
 Lesson Groups</h1>
 <ul>
 <li><b>Orientation (Lessons 01–02).</b> Prep the repo and learn the helper workflow before touching code.</li>
@@ -170,7 +170,7 @@ Lesson Groups</h1>
 <li><b>Guarded IO Streams (Lesson 42).</b> Separates the IO side from networking so you can practice <span class="tt"><a class="el" href="io_8h.html#aca20f4767510d423ee88de501eb72575" title="TTL-bounded guard wrapping a file descriptor.">ttak_io_guard_t</a></span>, synchronous read/write helpers, manual TTL refresh, <span class="tt">ttak_io_async_read</span>, and direct <span class="tt">ttak_io_poll_wait</span> flows before layering net endpoints on top.</li>
 <li><b>BigScript Language (Lesson 43).</b> <a class="el" href="tutorials_243-bigscript_2README_8md.html">Introduction to BigScript</a>, the custom mathematical scripting language for <span class="tt">libttak</span>. Covers syntax, built-ins, and execution.</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md201"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md213"></a>
 Coverage Guarantees</h1>
 <p>Every stage in <span class="tt"><a class="el" href="CLONE__PATH_8md.html">CLONE_PATH.md</a></span> points at one or more lessons, and each lesson references the exact source files you must clone. When you check every box you will have:</p>
 <ul>
@@ -179,7 +179,7 @@ Coverage Guarantees</h1>
 <li>Captured “What I learned” entries so you can cross-link design notes to commits.</li>
 <li>Mirrored visually by <span class="tt">blueprints/09_tutorial_curriculum.puml</span>, which diagrams the required flow from foundation to unsafe contexts.</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md202"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md214"></a>
 Files &amp; Tools</h1>
 <ul>
 <li><span class="tt"><a class="el" href="CLONE__PATH_8md.html">CLONE_PATH.md</a></span> – ordered checklist that maps every tutorial stage to the lesson files.</li>
@@ -188,7 +188,7 @@ Files &amp; Tools</h1>
 <li><span class="tt">libttak.hlp</span> – concise manual fed into the helper program.</li>
 <li><span class="tt">helper/</span> – source for the helper tool that lets you page through <span class="tt">.hlp</span> files and mark confusing sections for later review.</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md203"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md215"></a>
 Per-lesson folders</h1>
 <p>Each lesson now has a sibling workspace under <span class="tt">tutorials/NN-lesson-name/</span> where you can keep the code and notes that the module references. Start with:</p>
 <ul>

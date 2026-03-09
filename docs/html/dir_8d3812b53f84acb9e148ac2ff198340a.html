@@ -98,15 +98,15 @@ $(function(){initNavTree('dir_8d3812b53f84acb9e148ac2ff198340a.html','',''); });
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="dir_8d3812b53f84acb9e148ac2ff198340a_dep.png" border="0" usemap="#adir__8d3812b53f84acb9e148ac2ff198340a__dep" loading="lazy" alt="tutorials/39-detachable-memory"/></div>
 <map name="adir__8d3812b53f84acb9e148ac2ff198340a__dep" id="adir__8d3812b53f84acb9e148ac2ff198340a__dep">
-<area shape="rect" href="dir_8d3812b53f84acb9e148ac2ff198340a.html" title="39&#45;detachable&#45;memory" alt="" coords="27,52,202,77"/>
-<area shape="rect" href="dir_0d353d24d0afa59909efab6593124f6d.html" title="tutorials" alt="" coords="16,16,213,88"/>
+<area shape="rect" href="dir_8d3812b53f84acb9e148ac2ff198340a.html" title="39&#45;detachable&#45;memory" alt="" coords="26,54,200,82"/>
+<area shape="rect" href="dir_0d353d24d0afa59909efab6593124f6d.html" title="tutorials" alt="" coords="16,16,211,93"/>
 </map>
 </div>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md140"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md152"></a>
 Lesson 39: Detachable Memory &amp; Signal Guards</h1>
 <p>This lesson covers the detachable memory allocator that arrived with the new proposal. You will wire a detachable context, exercise the tiny-chunk cache, watch the arena rows advance, and enable the hard-kill signal guards that flush everything before the process dies.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md141"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md153"></a>
 Objectives</h1>
 <ol type="1">
 <li>Clone the reference implementation from <span class="tt"><a class="el" href="detachable_8h.html">include/ttak/mem/detachable.h</a></span>, <span class="tt">src/mem/detachable.c</span>, and the safety helper in <span class="tt"><a class="el" href="tt__jmp_8h.html">internal/tt_jmp.h</a></span> to understand how detachable arenas layer on top of epoch reclamation.</li>
@@ -116,7 +116,7 @@ Objectives</h1>
 <blockquote class="doxtable">
 <p><b>Blueprint reference:</b> See <span class="tt">blueprints/10_detachable_memory.puml</span> for a structural overview of the cache, arena rows, and signal hooks. </p>
 </blockquote>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md142"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md154"></a>
 Repo Workspace</h1>
 <p>Use this folder as your scratch space:</p>
 <div class="fragment"><div class="line">tutorials/39-detachable-memory/</div>
@@ -129,7 +129,7 @@ Repo Workspace</h1>
 <li>Shows when allocations reuse the cache vs. push pointers through the arena rows.</li>
 <li>Forks a short-lived helper process to demonstrate how <span class="tt">ttak_hard_kill_graceful_exit</span> flushes the registry and exits with the requested status code.</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md143"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md155"></a>
 Build &amp; Run</h1>
 <div class="fragment"><div class="line">make</div>
 <div class="line">./lesson39_detachable_memory</div>
@@ -140,7 +140,7 @@ Build &amp; Run</h1>
 <div class="line">[stats] cache hits=120 misses=8 flushes=8</div>
 <div class="line">[signal-demo] child exited after SIGUSR1 with code 12</div>
 </div><!-- fragment --><p>The exact numbers differ per run, but you should see cache hits climbing after the warm-up and the signal demo reporting the child exit code you configured.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md144"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md156"></a>
 Verification Checklist</h1>
 <ul class="check">
 <li class="unchecked"><span class="tt">ttak_detachable_context_init</span> receives the mix of flags described above and initializes locks + cache.</li>

@@ -1,6 +1,7 @@
 \doxysection{tutorials/42-\/io-\/guarded-\/streams Directory Reference}
 \hypertarget{dir_74699fa1f55476b507556b4ed04e3463}{}\label{dir_74699fa1f55476b507556b4ed04e3463}\index{tutorials/42-\/io-\/guarded-\/streams Directory Reference@{tutorials/42-\/io-\/guarded-\/streams Directory Reference}}
-Directory dependency graph for 42-\/io-\/guarded-\/streams\+:\nopagebreak
+Directory dependency graph for 42-\/io-\/guarded-\/streams\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -10,14 +11,14 @@ Directory dependency graph for 42-\/io-\/guarded-\/streams\+:\nopagebreak
 
 
 \doxysubsection{Detailed Description}
-\hypertarget{README.md_autotoc_md153}{}\doxysubsection{\texorpdfstring{Lesson 42 – Guarded IO Streams}{Lesson 42 – Guarded IO Streams}}\label{README.md_autotoc_md153}
-Lesson 41 shipped the network stack on top of detachable arenas. This follow-\/up focuses purely on the IO half\+: {\ttfamily \doxylink{io_8h_aca20f4767510d423ee88de501eb72575}{ttak\+\_\+io\+\_\+guard\+\_\+t}}, the synchronous read/write helpers, staged buffers, and the polling shim that lets you safely wait on descriptors while TTL + ownership rules stay enforced.\hypertarget{README.md_autotoc_md154}{}\doxysubsection{\texorpdfstring{Objectives}{Objectives}}\label{README.md_autotoc_md154}
+\hypertarget{README.md_autotoc_md165}{}\doxysubsection{\texorpdfstring{Lesson 42 – Guarded IO Streams}{Lesson 42 – Guarded IO Streams}}\label{README.md_autotoc_md165}
+Lesson 41 shipped the network stack on top of detachable arenas. This follow-\/up focuses purely on the IO half\+: {\ttfamily \doxylink{io_8h_aca20f4767510d423ee88de501eb72575}{ttak\+\_\+io\+\_\+guard\+\_\+t}}, the synchronous read/write helpers, staged buffers, and the polling shim that lets you safely wait on descriptors while TTL + ownership rules stay enforced.\hypertarget{README.md_autotoc_md166}{}\doxysubsection{\texorpdfstring{Objectives}{Objectives}}\label{README.md_autotoc_md166}
 
 \begin{DoxyEnumerate}
 \item Wrap raw descriptors with {\ttfamily \doxylink{io_8h_aca20f4767510d423ee88de501eb72575}{ttak\+\_\+io\+\_\+guard\+\_\+t}} and observe when guards refresh/expire.
 \item Copy user buffers through {\ttfamily \doxylink{io_8h_a13577555a348473d37e420b72805a261}{ttak\+\_\+io\+\_\+buffer\+\_\+t}} by calling {\ttfamily ttak\+\_\+io\+\_\+sync\+\_\+write} / {\ttfamily ttak\+\_\+io\+\_\+sync\+\_\+read}.
 \item Wait for readiness with {\ttfamily ttak\+\_\+io\+\_\+poll\+\_\+wait}, then manually extend the TTL via {\ttfamily ttak\+\_\+io\+\_\+guard\+\_\+refresh} so long-\/lived streams stay valid.
-\end{DoxyEnumerate}\hypertarget{README.md_autotoc_md155}{}\doxysubsection{\texorpdfstring{Repo Workspace}{Repo Workspace}}\label{README.md_autotoc_md155}
+\end{DoxyEnumerate}\hypertarget{README.md_autotoc_md167}{}\doxysubsection{\texorpdfstring{Repo Workspace}{Repo Workspace}}\label{README.md_autotoc_md167}
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{tutorials/42-\/io-\/guarded-\/streams/}
@@ -40,7 +41,7 @@ Lesson 41 shipped the network stack on top of detachable arenas. This follow-\/u
 
 \begin{quote}
 {\ttfamily \doxylink{timing_8h_ab89967dd277adc228208b2efe487215c}{ttak\+\_\+get\+\_\+tick\+\_\+count()}} returns milliseconds, so the TTL values in the sample are expressed directly in milliseconds ({\ttfamily 300} → 300 ms, {\ttfamily 2000} → 2 s). \end{quote}
-\hypertarget{README.md_autotoc_md156}{}\doxysubsection{\texorpdfstring{Build \& Run}{Build \& Run}}\label{README.md_autotoc_md156}
+\hypertarget{README.md_autotoc_md168}{}\doxysubsection{\texorpdfstring{Build \& Run}{Build \& Run}}\label{README.md_autotoc_md168}
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{make}
@@ -70,7 +71,7 @@ Expected log excerpt (trimmed)\+:
 \end{DoxyCode}
 
 
-Exact wording may differ, but you should see at least one guard expiry, a re-\/initialisation using {\ttfamily dup(2)}, and a manual refresh prolonging the guard TTL before the third read.\hypertarget{README.md_autotoc_md157}{}\doxysubsection{\texorpdfstring{Verification Checklist}{Verification Checklist}}\label{README.md_autotoc_md157}
+Exact wording may differ, but you should see at least one guard expiry, a re-\/initialisation using {\ttfamily dup(2)}, and a manual refresh prolonging the guard TTL before the third read.\hypertarget{README.md_autotoc_md169}{}\doxysubsection{\texorpdfstring{Verification Checklist}{Verification Checklist}}\label{README.md_autotoc_md169}
 
 \begin{DoxyItemize}
 \item[\DoxyUnchecked] {\ttfamily ttak\+\_\+io\+\_\+guard\+\_\+init} registers the descriptor with an owner (watch the resource tag logs or breakpoints).

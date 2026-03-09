@@ -98,15 +98,15 @@ $(function(){initNavTree('dir_07c02e99f16d379c6b4c012a89726eb2.html','',''); });
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="dir_07c02e99f16d379c6b4c012a89726eb2_dep.png" border="0" usemap="#adir__07c02e99f16d379c6b4c012a89726eb2__dep" loading="lazy" alt="tutorials/37-shared-memory-ownership"/></div>
 <map name="adir__07c02e99f16d379c6b4c012a89726eb2__dep" id="adir__07c02e99f16d379c6b4c012a89726eb2__dep">
-<area shape="rect" href="dir_07c02e99f16d379c6b4c012a89726eb2.html" title="37&#45;shared&#45;memory&#45;ownership" alt="" coords="27,52,245,77"/>
-<area shape="rect" href="dir_0d353d24d0afa59909efab6593124f6d.html" title="tutorials" alt="" coords="16,16,256,88"/>
+<area shape="rect" href="dir_07c02e99f16d379c6b4c012a89726eb2.html" title="37&#45;shared&#45;memory&#45;ownership" alt="" coords="27,54,245,82"/>
+<area shape="rect" href="dir_0d353d24d0afa59909efab6593124f6d.html" title="tutorials" alt="" coords="16,16,256,93"/>
 </map>
 </div>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md125"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md137"></a>
 Lesson 37: Shared Memory with Bitmap Ownership</h1>
 <p>This tutorial introduces <span class="tt"><a class="el" href="structttak__shared__t.html" title="Core structure for managing shared variables among multiple owners.">ttak_shared_t</a></span> and <span class="tt"><a class="el" href="structttak__dynamic__mask__t.html" title="Thread-safe dynamic bitmap. Optimized for lock-free reads via EBR.">ttak_dynamic_mask_t</a></span>, which provide a high-performance, $O(1)$ ownership validation system for shared resources.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md126"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md138"></a>
 Concepts</h1>
 <ol type="1">
 <li><b>Unique Owner IDs</b>: Every <span class="tt"><a class="el" href="owner_8h.html#a8e92d0c2dff13d75471e19a1596d4b9c" title="The Owner structure.">ttak_owner_t</a></span> is assigned a unique, monotonically increasing ID upon creation.</li>
@@ -120,7 +120,7 @@ Concepts</h1>
 </li>
 <li><b>Atomic Masking</b>: The <span class="tt"><a class="el" href="structttak__dynamic__mask__t.html" title="Thread-safe dynamic bitmap. Optimized for lock-free reads via EBR.">ttak_dynamic_mask_t</a></span> uses an internal <span class="tt"><a class="el" href="sync_2sync_8h.html#ad3f9b08e4c066e7bb7b1ed98d2a90386">ttak_rwlock_t</a></span> to ensure that setting, clearing, and testing bits are thread-safe operations.</li>
 </ol>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md127"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md139"></a>
 How to Run</h1>
 <ol type="1">
 <li><b>Compile</b>: <span class="tt">bash
@@ -130,7 +130,7 @@ How to Run</h1>
     make run
     </span></li>
 </ol>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md128"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md140"></a>
 Example Code Sneak Peek</h1>
 <div class="fragment"><div class="line"><a class="code hl_struct" href="structttak__shared__t.html">ttak_shared_t</a> shared;</div>
 <div class="line"><a class="code hl_function" href="shared_8h.html#a32180ab208d8a2290565861adba3f4a7">ttak_shared_init</a>(&amp;shared);</div>
@@ -155,7 +155,7 @@ Example Code Sneak Peek</h1>
 <div class="ttc" id="ashared_8h_html_a9e87115c8ab89cdc85a268b523179cef"><div class="ttname"><a href="shared_8h.html#a9e87115c8ab89cdc85a268b523179cef">ttak_shared_result_t</a></div><div class="ttdeci">uint32_t ttak_shared_result_t</div><div class="ttdoc">Operational result codes for shared memory actions.</div><div class="ttdef"><b>Definition</b> <a href="shared_8h_source.html#l00050">shared.h:50</a></div></div>
 <div class="ttc" id="ashared_8h_html_ae6eb27b055588903d427f15cc0cec6f5a577c57951143ba8e64aff010c9383d78"><div class="ttname"><a href="shared_8h.html#ae6eb27b055588903d427f15cc0cec6f5a577c57951143ba8e64aff010c9383d78">TTAK_SHARED_LEVEL_3</a></div><div class="ttdeci">@ TTAK_SHARED_LEVEL_3</div><div class="ttdef"><b>Definition</b> <a href="shared_8h_source.html#l00062">shared.h:62</a></div></div>
 <div class="ttc" id="astructttak__shared__t_html"><div class="ttname"><a href="structttak__shared__t.html">ttak_shared_t</a></div><div class="ttdoc">Core structure for managing shared variables among multiple owners.</div></div>
-</div><!-- fragment --><h1 class="doxsection"><a class="anchor" id="autotoc_md129"></a>
+</div><!-- fragment --><h1 class="doxsection"><a class="anchor" id="autotoc_md141"></a>
 Why $O(1)$?</h1>
 <p>In complex systems with hundreds of owners, iterating through a list to check permissions is slow. By using a bitmap indexed by the Owner's ID, we can check access permissions with a single bitwise operation, regardless of the number of registered owners. </p>
 </div><!-- contents -->

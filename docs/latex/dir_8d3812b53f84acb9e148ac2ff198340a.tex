@@ -1,17 +1,18 @@
 \doxysection{tutorials/39-\/detachable-\/memory Directory Reference}
 \hypertarget{dir_8d3812b53f84acb9e148ac2ff198340a}{}\label{dir_8d3812b53f84acb9e148ac2ff198340a}\index{tutorials/39-\/detachable-\/memory Directory Reference@{tutorials/39-\/detachable-\/memory Directory Reference}}
-Directory dependency graph for 39-\/detachable-\/memory\+:\nopagebreak
+Directory dependency graph for 39-\/detachable-\/memory\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=244pt]{dir_8d3812b53f84acb9e148ac2ff198340a_dep}
+\includegraphics[width=242pt]{dir_8d3812b53f84acb9e148ac2ff198340a_dep}
 \end{center}
 \end{figure}
 
 
 \doxysubsection{Detailed Description}
-\hypertarget{README.md_autotoc_md140}{}\doxysubsection{\texorpdfstring{Lesson 39\+: Detachable Memory \& Signal Guards}{Lesson 39\+: Detachable Memory \& Signal Guards}}\label{README.md_autotoc_md140}
-This lesson covers the detachable memory allocator that arrived with the new proposal. You will wire a detachable context, exercise the tiny-\/chunk cache, watch the arena rows advance, and enable the hard-\/kill signal guards that flush everything before the process dies.\hypertarget{README.md_autotoc_md141}{}\doxysubsection{\texorpdfstring{Objectives}{Objectives}}\label{README.md_autotoc_md141}
+\hypertarget{README.md_autotoc_md152}{}\doxysubsection{\texorpdfstring{Lesson 39\+: Detachable Memory \& Signal Guards}{Lesson 39\+: Detachable Memory \& Signal Guards}}\label{README.md_autotoc_md152}
+This lesson covers the detachable memory allocator that arrived with the new proposal. You will wire a detachable context, exercise the tiny-\/chunk cache, watch the arena rows advance, and enable the hard-\/kill signal guards that flush everything before the process dies.\hypertarget{README.md_autotoc_md153}{}\doxysubsection{\texorpdfstring{Objectives}{Objectives}}\label{README.md_autotoc_md153}
 
 \begin{DoxyEnumerate}
 \item Clone the reference implementation from {\ttfamily \doxylink{detachable_8h}{include/ttak/mem/detachable.\+h}}, {\ttfamily src/mem/detachable.\+c}, and the safety helper in {\ttfamily \doxylink{tt__jmp_8h}{internal/tt\+\_\+jmp.\+h}} to understand how detachable arenas layer on top of epoch reclamation.
@@ -21,7 +22,7 @@ This lesson covers the detachable memory allocator that arrived with the new pro
 
 \begin{quote}
 {\bfseries{Blueprint reference\+:}} See {\ttfamily blueprints/10\+\_\+detachable\+\_\+memory.\+puml} for a structural overview of the cache, arena rows, and signal hooks. \end{quote}
-\hypertarget{README.md_autotoc_md142}{}\doxysubsection{\texorpdfstring{Repo Workspace}{Repo Workspace}}\label{README.md_autotoc_md142}
+\hypertarget{README.md_autotoc_md154}{}\doxysubsection{\texorpdfstring{Repo Workspace}{Repo Workspace}}\label{README.md_autotoc_md154}
 Use this folder as your scratch space\+:
 
 
@@ -41,7 +42,7 @@ Use this folder as your scratch space\+:
 \item Spawns worker threads that allocate and free detachable chunks of different sizes.
 \item Shows when allocations reuse the cache vs. push pointers through the arena rows.
 \item Forks a short-\/lived helper process to demonstrate how {\ttfamily ttak\+\_\+hard\+\_\+kill\+\_\+graceful\+\_\+exit} flushes the registry and exits with the requested status code.
-\end{DoxyItemize}\hypertarget{README.md_autotoc_md143}{}\doxysubsection{\texorpdfstring{Build \& Run}{Build \& Run}}\label{README.md_autotoc_md143}
+\end{DoxyItemize}\hypertarget{README.md_autotoc_md155}{}\doxysubsection{\texorpdfstring{Build \& Run}{Build \& Run}}\label{README.md_autotoc_md155}
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{make}
@@ -63,7 +64,7 @@ Expected output (abbreviated)\+:
 \end{DoxyCode}
 
 
-The exact numbers differ per run, but you should see cache hits climbing after the warm-\/up and the signal demo reporting the child exit code you configured.\hypertarget{README.md_autotoc_md144}{}\doxysubsection{\texorpdfstring{Verification Checklist}{Verification Checklist}}\label{README.md_autotoc_md144}
+The exact numbers differ per run, but you should see cache hits climbing after the warm-\/up and the signal demo reporting the child exit code you configured.\hypertarget{README.md_autotoc_md156}{}\doxysubsection{\texorpdfstring{Verification Checklist}{Verification Checklist}}\label{README.md_autotoc_md156}
 
 \begin{DoxyItemize}
 \item[\DoxyUnchecked] {\ttfamily ttak\+\_\+detachable\+\_\+context\+\_\+init} receives the mix of flags described above and initializes locks + cache.

@@ -98,12 +98,12 @@ $(function(){initNavTree('dir_440562e819a7ecef357014e34fa97ab6.html','',''); });
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="dir_440562e819a7ecef357014e34fa97ab6_dep.png" border="0" usemap="#adir__440562e819a7ecef357014e34fa97ab6__dep" loading="lazy" alt="tutorials/41-io-network-stack"/></div>
 <map name="adir__440562e819a7ecef357014e34fa97ab6__dep" id="adir__440562e819a7ecef357014e34fa97ab6__dep">
-<area shape="rect" href="dir_440562e819a7ecef357014e34fa97ab6.html" title="41&#45;io&#45;network&#45;stack" alt="" coords="27,52,181,77"/>
-<area shape="rect" href="dir_0d353d24d0afa59909efab6593124f6d.html" title="tutorials" alt="" coords="16,16,192,88"/>
+<area shape="rect" href="dir_440562e819a7ecef357014e34fa97ab6.html" title="41&#45;io&#45;network&#45;stack" alt="" coords="26,54,179,82"/>
+<area shape="rect" href="dir_0d353d24d0afa59909efab6593124f6d.html" title="tutorials" alt="" coords="16,16,189,93"/>
 </map>
 </div>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md150"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md162"></a>
 Lesson 41 – Guarded IO &amp; Network Sessions</h1>
 <p>This lesson introduces the <span class="tt">io/</span> + <span class="tt">net/</span> stack that now sits on top of detachable arenas and ownership enforcement. You will learn how to:</p>
 <ol type="1">
@@ -112,7 +112,7 @@ Lesson 41 – Guarded IO &amp; Network Sessions</h1>
 <li>Expose readonly <span class="tt"><a class="el" href="view_8h.html#a764bf4963c58bc00051fe1e24de7afc8" title="Read-only zero-copy snapshot returned by ttak_net_view_from_endpoint().">ttak_net_view_t</a></span> snapshots via zero-copy receives.</li>
 <li>Chain endpoints inside <span class="tt"><a class="el" href="session_8h.html#a3598ff01f8c011939240eb993b224783">ttak_net_session_mgr_t</a></span>, using Epoch GC + EBR to retire entire trees of sockets safely.</li>
 </ol>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md151"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md163"></a>
 Steps</h1>
 <ol type="1">
 <li>Build <span class="tt">lesson41_io_network_stack.c</span> with the provided <span class="tt">Makefile</span>.</li>
@@ -125,7 +125,7 @@ Steps</h1>
 </li>
 <li>Modify <span class="tt">MAX_TTL_NS</span> or the payload helpers to observe how the guard expires and how the session-manager cleanup tears down descendants.</li>
 </ol>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md152"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md164"></a>
 Build &amp; Run</h1>
 <div class="fragment"><div class="line">make</div>
 <div class="line">./lesson41_io_network_stack</div>

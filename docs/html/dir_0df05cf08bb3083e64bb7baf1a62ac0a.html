@@ -98,16 +98,16 @@ $(function(){initNavTree('dir_0df05cf08bb3083e64bb7baf1a62ac0a.html','',''); });
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="dir_0df05cf08bb3083e64bb7baf1a62ac0a_dep.png" border="0" usemap="#adir__0df05cf08bb3083e64bb7baf1a62ac0a__dep" loading="lazy" alt="tutorials/26-factorization"/></div>
 <map name="adir__0df05cf08bb3083e64bb7baf1a62ac0a__dep" id="adir__0df05cf08bb3083e64bb7baf1a62ac0a__dep">
-<area shape="rect" href="dir_0df05cf08bb3083e64bb7baf1a62ac0a.html" title="26&#45;factorization" alt="" coords="27,52,152,77"/>
-<area shape="rect" href="dir_0d353d24d0afa59909efab6593124f6d.html" title="tutorials" alt="" coords="16,16,163,88"/>
+<area shape="rect" href="dir_0df05cf08bb3083e64bb7baf1a62ac0a.html" title="26&#45;factorization" alt="" coords="27,54,152,82"/>
+<area shape="rect" href="dir_0d353d24d0afa59909efab6593124f6d.html" title="tutorials" alt="" coords="16,16,163,93"/>
 </map>
 </div>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md98"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md110"></a>
 Tutorial 26 – Factorization</h1>
 <p><span class="tt">modules/26-factorization</span> rebuilds the factoring helpers under <span class="tt">src/math/factor.c</span>.</p>
 <p><span class="tt">lesson26_factorization.c</span> factors 360 as a sanity check; reuse it (and extend it) to validate your routines.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md99"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md111"></a>
 Engine Notes</h1>
 <p>The production engine now mirrors the EPR design goals:</p>
 <ol type="1">
@@ -117,7 +117,7 @@ Engine Notes</h1>
 <li><b>Bigint Fast Path</b> – When a bigint fits inside 64 bits we reuse the optimized <span class="tt"><a class="el" href="factor_8h.html#ae6b18eac3f9615ae93f70bbe09218716" title="Factorizes a 64-bit unsigned integer.">ttak_factor_u64()</a></span> output to avoid repeated allocations.</li>
 </ol>
 <p>Document any regressions or late-stage fallbacks when you extend this tutorial; the aliquot tracker depends on deterministic outputs when the CPU backend runs without GPU help.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md100"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md112"></a>
 Checklist</h1>
 <ol type="1">
 <li>Write down the algorithm mix (trial division, wheel, rho, etc.) that the lesson expects and capture any randomness requirements.</li>

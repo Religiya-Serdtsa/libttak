@@ -1,16 +1,17 @@
 \doxysection{tutorials/41-\/io-\/network-\/stack Directory Reference}
 \hypertarget{dir_440562e819a7ecef357014e34fa97ab6}{}\label{dir_440562e819a7ecef357014e34fa97ab6}\index{tutorials/41-\/io-\/network-\/stack Directory Reference@{tutorials/41-\/io-\/network-\/stack Directory Reference}}
-Directory dependency graph for 41-\/io-\/network-\/stack\+:\nopagebreak
+Directory dependency graph for 41-\/io-\/network-\/stack\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=228pt]{dir_440562e819a7ecef357014e34fa97ab6_dep}
+\includegraphics[width=226pt]{dir_440562e819a7ecef357014e34fa97ab6_dep}
 \end{center}
 \end{figure}
 
 
 \doxysubsection{Detailed Description}
-\hypertarget{README.md_autotoc_md150}{}\doxysubsection{\texorpdfstring{Lesson 41 – Guarded IO \& Network Sessions}{Lesson 41 – Guarded IO \& Network Sessions}}\label{README.md_autotoc_md150}
+\hypertarget{README.md_autotoc_md162}{}\doxysubsection{\texorpdfstring{Lesson 41 – Guarded IO \& Network Sessions}{Lesson 41 – Guarded IO \& Network Sessions}}\label{README.md_autotoc_md162}
 This lesson introduces the {\ttfamily io/} + {\ttfamily net/} stack that now sits on top of detachable arenas and ownership enforcement. You will learn how to\+:
 
 
@@ -19,7 +20,7 @@ This lesson introduces the {\ttfamily io/} + {\ttfamily net/} stack that now sit
 \item Bind guards into {\ttfamily \doxylink{endpoint_8h_a87c093171506552622516da1d6311a96}{ttak\+\_\+net\+\_\+endpoint\+\_\+t}} objects that ride inside the shared subsystem.
 \item Expose readonly {\ttfamily \doxylink{view_8h_a764bf4963c58bc00051fe1e24de7afc8}{ttak\+\_\+net\+\_\+view\+\_\+t}} snapshots via zero-\/copy receives.
 \item Chain endpoints inside {\ttfamily \doxylink{session_8h_a3598ff01f8c011939240eb993b224783}{ttak\+\_\+net\+\_\+session\+\_\+mgr\+\_\+t}}, using Epoch GC + EBR to retire entire trees of sockets safely.
-\end{DoxyEnumerate}\hypertarget{README.md_autotoc_md151}{}\doxysubsection{\texorpdfstring{Steps}{Steps}}\label{README.md_autotoc_md151}
+\end{DoxyEnumerate}\hypertarget{README.md_autotoc_md163}{}\doxysubsection{\texorpdfstring{Steps}{Steps}}\label{README.md_autotoc_md163}
 
 \begin{DoxyEnumerate}
 \item Build {\ttfamily lesson41\+\_\+io\+\_\+network\+\_\+stack.\+c} with the provided {\ttfamily Makefile}.
@@ -31,7 +32,7 @@ This lesson introduces the {\ttfamily io/} + {\ttfamily net/} stack that now sit
 \item {\ttfamily ttak\+\_\+net\+\_\+session\+\_\+mgr\+\_\+\texorpdfstring{$\ast$}{*}} calls demonstrate how the session tree protects parent/child sockets and retires them via EBR + Epoch GC.
 \end{DoxyItemize}
 \item Modify {\ttfamily MAX\+\_\+\+TTL\+\_\+\+NS} or the payload helpers to observe how the guard expires and how the session-\/manager cleanup tears down descendants.
-\end{DoxyEnumerate}\hypertarget{README.md_autotoc_md152}{}\doxysubsection{\texorpdfstring{Build \& Run}{Build \& Run}}\label{README.md_autotoc_md152}
+\end{DoxyEnumerate}\hypertarget{README.md_autotoc_md164}{}\doxysubsection{\texorpdfstring{Build \& Run}{Build \& Run}}\label{README.md_autotoc_md164}
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{make}

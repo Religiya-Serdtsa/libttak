@@ -98,15 +98,15 @@ $(function(){initNavTree('dir_c03a32ac37178602651a0810a724fdd6.html','',''); });
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="dir_c03a32ac37178602651a0810a724fdd6_dep.png" border="0" usemap="#adir__c03a32ac37178602651a0810a724fdd6__dep" loading="lazy" alt="tutorials/40-arena-memory"/></div>
 <map name="adir__c03a32ac37178602651a0810a724fdd6__dep" id="adir__c03a32ac37178602651a0810a724fdd6__dep">
-<area shape="rect" href="dir_c03a32ac37178602651a0810a724fdd6.html" title="40&#45;arena&#45;memory" alt="" coords="27,52,167,77"/>
-<area shape="rect" href="dir_0d353d24d0afa59909efab6593124f6d.html" title="tutorials" alt="" coords="16,16,179,88"/>
+<area shape="rect" href="dir_c03a32ac37178602651a0810a724fdd6.html" title="40&#45;arena&#45;memory" alt="" coords="26,54,166,82"/>
+<area shape="rect" href="dir_0d353d24d0afa59909efab6593124f6d.html" title="tutorials" alt="" coords="16,16,176,93"/>
 </map>
 </div>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md145"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md157"></a>
 Lesson 40: Arena Memory Orchestration</h1>
 <p>This lesson focuses on the generational arena workflow built on top of <span class="tt">ttak_mem_alloc_safe</span>, the mem-tree tracker, and the epoch GC wrapper. You will practice how each arena generation is allocated, retired, and flushed without leaking, mirroring the pattern used by the lock-free cache benchmarks.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md146"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md158"></a>
 Objectives</h1>
 <ol type="1">
 <li>Clone the arena-related entry points inside <span class="tt">src/mem/mem.c</span>, <span class="tt">src/mem/epoch_gc.c</span>, and <span class="tt">src/mem_tree/mem_tree.c</span> so you understand how tracked allocations feed the tree and epochs.</li>
@@ -116,14 +116,14 @@ Objectives</h1>
 <blockquote class="doxtable">
 <p><b>Blueprint reference:</b> The arena + epoch interaction is illustrated in <span class="tt">blueprints/09_epoch_reclamation.puml</span>; use it alongside the README sections that describe the lock-free arena measurements. </p>
 </blockquote>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md147"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md159"></a>
 Repo Workspace</h1>
 <div class="fragment"><div class="line">tutorials/40-arena-memory/</div>
 <div class="line">├── Makefile</div>
 <div class="line">├── README.md  ← you are here</div>
 <div class="line">└── lesson40_arena_memory.c</div>
 </div><!-- fragment --><p><span class="tt">lesson40_arena_memory.c</span> allocates fixed-width arena generations, uses <span class="tt">ttak_arena_generation_for_each</span> to carve deterministic chunks, retires each generation by releasing the mem-tree reference, and immediately rotates epochs to prove the buffer was flushed.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md148"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md160"></a>
 Build &amp; Run</h1>
 <div class="fragment"><div class="line">make</div>
 <div class="line">./lesson40_arena_memory</div>
@@ -135,7 +135,7 @@ Build &amp; Run</h1>
 <div class="line">  cleanup status: flushed</div>
 <div class="line">...</div>
 </div><!-- fragment --><p>Exact addresses differ per run, but each generation should log deterministic chunk offsets and report <span class="tt">cleanup status: flushed</span> after the epoch rotates.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md149"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md161"></a>
 Verification Checklist</h1>
 <ul class="check">
 <li class="unchecked"><span class="tt">ttak_mem_alloc_with_flags</span> is invoked with strict checks + cache alignment before every arena generation is registered with <span class="tt">ttak_epoch_gc_register</span>.</li>

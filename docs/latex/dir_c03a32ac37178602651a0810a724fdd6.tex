@@ -1,17 +1,18 @@
 \doxysection{tutorials/40-\/arena-\/memory Directory Reference}
 \hypertarget{dir_c03a32ac37178602651a0810a724fdd6}{}\label{dir_c03a32ac37178602651a0810a724fdd6}\index{tutorials/40-\/arena-\/memory Directory Reference@{tutorials/40-\/arena-\/memory Directory Reference}}
-Directory dependency graph for 40-\/arena-\/memory\+:\nopagebreak
+Directory dependency graph for 40-\/arena-\/memory\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=218pt]{dir_c03a32ac37178602651a0810a724fdd6_dep}
+\includegraphics[width=216pt]{dir_c03a32ac37178602651a0810a724fdd6_dep}
 \end{center}
 \end{figure}
 
 
 \doxysubsection{Detailed Description}
-\hypertarget{README.md_autotoc_md145}{}\doxysubsection{\texorpdfstring{Lesson 40\+: Arena Memory Orchestration}{Lesson 40\+: Arena Memory Orchestration}}\label{README.md_autotoc_md145}
-This lesson focuses on the generational arena workflow built on top of {\ttfamily ttak\+\_\+mem\+\_\+alloc\+\_\+safe}, the mem-\/tree tracker, and the epoch GC wrapper. You will practice how each arena generation is allocated, retired, and flushed without leaking, mirroring the pattern used by the lock-\/free cache benchmarks.\hypertarget{README.md_autotoc_md146}{}\doxysubsection{\texorpdfstring{Objectives}{Objectives}}\label{README.md_autotoc_md146}
+\hypertarget{README.md_autotoc_md157}{}\doxysubsection{\texorpdfstring{Lesson 40\+: Arena Memory Orchestration}{Lesson 40\+: Arena Memory Orchestration}}\label{README.md_autotoc_md157}
+This lesson focuses on the generational arena workflow built on top of {\ttfamily ttak\+\_\+mem\+\_\+alloc\+\_\+safe}, the mem-\/tree tracker, and the epoch GC wrapper. You will practice how each arena generation is allocated, retired, and flushed without leaking, mirroring the pattern used by the lock-\/free cache benchmarks.\hypertarget{README.md_autotoc_md158}{}\doxysubsection{\texorpdfstring{Objectives}{Objectives}}\label{README.md_autotoc_md158}
 
 \begin{DoxyEnumerate}
 \item Clone the arena-\/related entry points inside {\ttfamily src/mem/mem.\+c}, {\ttfamily src/mem/epoch\+\_\+gc.\+c}, and {\ttfamily src/mem\+\_\+tree/mem\+\_\+tree.\+c} so you understand how tracked allocations feed the tree and epochs.
@@ -21,7 +22,7 @@ This lesson focuses on the generational arena workflow built on top of {\ttfamil
 
 \begin{quote}
 {\bfseries{Blueprint reference\+:}} The arena + epoch interaction is illustrated in {\ttfamily blueprints/09\+\_\+epoch\+\_\+reclamation.\+puml}; use it alongside the README sections that describe the lock-\/free arena measurements. \end{quote}
-\hypertarget{README.md_autotoc_md147}{}\doxysubsection{\texorpdfstring{Repo Workspace}{Repo Workspace}}\label{README.md_autotoc_md147}
+\hypertarget{README.md_autotoc_md159}{}\doxysubsection{\texorpdfstring{Repo Workspace}{Repo Workspace}}\label{README.md_autotoc_md159}
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{tutorials/40-\/arena-\/memory/}
@@ -32,7 +33,7 @@ This lesson focuses on the generational arena workflow built on top of {\ttfamil
 \end{DoxyCode}
 
 
-{\ttfamily lesson40\+\_\+arena\+\_\+memory.\+c} allocates fixed-\/width arena generations, uses {\ttfamily ttak\+\_\+arena\+\_\+generation\+\_\+for\+\_\+each} to carve deterministic chunks, retires each generation by releasing the mem-\/tree reference, and immediately rotates epochs to prove the buffer was flushed.\hypertarget{README.md_autotoc_md148}{}\doxysubsection{\texorpdfstring{Build \& Run}{Build \& Run}}\label{README.md_autotoc_md148}
+{\ttfamily lesson40\+\_\+arena\+\_\+memory.\+c} allocates fixed-\/width arena generations, uses {\ttfamily ttak\+\_\+arena\+\_\+generation\+\_\+for\+\_\+each} to carve deterministic chunks, retires each generation by releasing the mem-\/tree reference, and immediately rotates epochs to prove the buffer was flushed.\hypertarget{README.md_autotoc_md160}{}\doxysubsection{\texorpdfstring{Build \& Run}{Build \& Run}}\label{README.md_autotoc_md160}
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{make}
@@ -55,7 +56,7 @@ Expected output (trimmed)\+:
 \end{DoxyCode}
 
 
-Exact addresses differ per run, but each generation should log deterministic chunk offsets and report {\ttfamily cleanup status\+: flushed} after the epoch rotates.\hypertarget{README.md_autotoc_md149}{}\doxysubsection{\texorpdfstring{Verification Checklist}{Verification Checklist}}\label{README.md_autotoc_md149}
+Exact addresses differ per run, but each generation should log deterministic chunk offsets and report {\ttfamily cleanup status\+: flushed} after the epoch rotates.\hypertarget{README.md_autotoc_md161}{}\doxysubsection{\texorpdfstring{Verification Checklist}{Verification Checklist}}\label{README.md_autotoc_md161}
 
 \begin{DoxyItemize}
 \item[\DoxyUnchecked] {\ttfamily ttak\+\_\+mem\+\_\+alloc\+\_\+with\+\_\+flags} is invoked with strict checks + cache alignment before every arena generation is registered with {\ttfamily ttak\+\_\+epoch\+\_\+gc\+\_\+register}.

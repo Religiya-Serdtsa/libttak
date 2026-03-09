@@ -98,15 +98,15 @@ $(function(){initNavTree('dir_edd4352b3ebf48f32414131210e596c2.html','',''); });
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="dir_edd4352b3ebf48f32414131210e596c2_dep.png" border="0" usemap="#adir__edd4352b3ebf48f32414131210e596c2__dep" loading="lazy" alt="tutorials/36-trace-memory"/></div>
 <map name="adir__edd4352b3ebf48f32414131210e596c2__dep" id="adir__edd4352b3ebf48f32414131210e596c2__dep">
-<area shape="rect" href="dir_edd4352b3ebf48f32414131210e596c2.html" title="36&#45;trace&#45;memory" alt="" coords="27,52,163,77"/>
-<area shape="rect" href="dir_0d353d24d0afa59909efab6593124f6d.html" title="tutorials" alt="" coords="16,16,173,88"/>
+<area shape="rect" href="dir_edd4352b3ebf48f32414131210e596c2.html" title="36&#45;trace&#45;memory" alt="" coords="27,54,162,82"/>
+<area shape="rect" href="dir_0d353d24d0afa59909efab6593124f6d.html" title="tutorials" alt="" coords="16,16,173,93"/>
 </map>
 </div>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md119"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md131"></a>
 Lesson 36: Memory Tracing &amp; LRU Caching</h1>
 <p>In this tutorial, we demonstrate how to trace memory allocations and ownership hierarchy using an LRU (Least Recently Used) cache implementation.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md120"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md132"></a>
 Key Features</h1>
 <ol type="1">
 <li><b>Allocation Timing</b>: Trace when memory is allocated and freed.</li>
@@ -114,7 +114,7 @@ Key Features</h1>
 <li><b>Ownership Hierarchy</b>: Use <span class="tt"><a class="el" href="owner_8h.html#a8e92d0c2dff13d75471e19a1596d4b9c" title="The Owner structure.">ttak_owner_t</a></span> to group resources (cache entries) under a parent container.</li>
 <li><b>Visual Analysis</b>: Generate a timeline and hierarchy graph from the trace logs.</li>
 </ol>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md121"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md133"></a>
 The Deterministic LRU &amp; Synchronous Eviction</h1>
 <p>Lesson 36 has been upgraded to demonstrate a <b>Synchronous Eviction</b> model, ensuring absolute control over memory density:</p>
 <ol type="1">
@@ -129,7 +129,7 @@ The Deterministic LRU &amp; Synchronous Eviction</h1>
 </ul>
 </li>
 </ol>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md122"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md134"></a>
 How to Run</h1>
 <ol type="1">
 <li><b>Compile and Run</b>: <span class="tt">bash
@@ -140,7 +140,7 @@ How to Run</h1>
     python3 ../../scripts/visualize_memory_calls.py trace.log
     </span></li>
 </ol>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md123"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md135"></a>
 Expected Outputs</h1>
 <ul>
 <li><span class="tt">memory_analysis.png</span>: Contains two subplots:<ol type="1">
@@ -149,7 +149,7 @@ Expected Outputs</h1>
 </ol>
 </li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md124"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md136"></a>
 Why this matters?</h1>
 <p>Memory tracing is crucial for:</p><ul>
 <li><b>Leak Detection</b>: Visualizing blocks that are never freed.</li>

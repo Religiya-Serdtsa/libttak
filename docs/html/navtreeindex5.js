@@ -1,5 +1,16 @@
 var NAVTREEINDEX5 =
 {
+"structtt__type__shared.html#accb59476dc158f9f07b3b3aee82d8bee":[4,0,5,0],
+"structttak__accel__batch__item.html":[4,0,6],
+"structttak__accel__batch__item.html#a57ff5d59619759907a9ec70245a02b68":[4,0,6,4],
+"structttak__accel__batch__item.html#a6e030697ef381a474229dc2756a77b5f":[4,0,6,0],
+"structttak__accel__batch__item.html#a827c6f868d56e006a6e77d15b17a2a04":[4,0,6,5],
+"structttak__accel__batch__item.html#a8c658d933968a97b1bdb0e2113885cea":[4,0,6,3],
+"structttak__accel__batch__item.html#ab55dab014cfce96fe3e5c9938bcbb1c3":[4,0,6,2],
+"structttak__accel__batch__item.html#ab5cee442fa3e2f7fb118dbfe24b376dd":[4,0,6,1],
+"structttak__accel__batch__item.html#acbda298b4da4bfaa53eb1cd70f6866da":[4,0,6,6],
+"structttak__accel__config.html":[4,0,7],
+"structttak__accel__config.html#a1b7e7e96f5d9630617b3dc44a08dfe42":[4,0,7,0],
 "structttak__accel__config.html#aa9ecfac5504e63246c81bb5b8f1e7990":[4,0,7,1],
 "structttak__accel__config.html#ac31a68d0148f4b0b8d2852149ee15feb":[4,0,7,2],
 "structttak__arena__env.html":[4,0,8],
@@ -238,16 +249,5 @@ var NAVTREEINDEX5 =
 "structttak__io__zerocopy__region.html#ae748aba4f9c2c603aa253fa2a88db60b":[4,0,44,4],
 "structttak__lea__schedule.html":[4,0,45],
 "structttak__lea__schedule.html#a50e210e0c4f2d766dfb36ccc864dcab3":[4,0,45,0],
-"structttak__lea__schedule.html#af5fef00c15b34a5924052ea593b61284":[4,0,45,1],
-"structttak__lf__queue__t.html":[4,0,46],
-"structttak__lf__queue__t.html#a9098da444001008adb5ea7219aada7b4":[4,0,46,0],
-"structttak__lf__queue__t.html#a9cba389b9110b02bc7e08be96514e7ed":[4,0,46,2],
-"structttak__lf__queue__t.html#a9ec3a51add9c337638fdfe9218481d98":[4,0,46,1],
-"structttak__logger.html":[4,0,47],
-"structttak__logger.html#a75133a7cb19ffae0042df8c5cd970760":[4,0,47,1],
-"structttak__logger.html#a8489256cafc9961e644cd68e83e86a5f":[4,0,47,2],
-"structttak__logger.html#ad14eb5229a9a1b9546005984b0f33433":[4,0,47,0],
-"structttak__map__t.html":[4,0,48],
-"structttak__map__t.html#a78c16627c9ef1b90cbaa6ca777a85531":[4,0,48,0],
-"structttak__map__t.html#a7b9d73c301a2413f2cfe5cebe22b1695":[4,0,48,2]
+"structttak__lea__schedule.html#af5fef00c15b34a5924052ea593b61284":[4,0,45,1]
 };

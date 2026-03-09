@@ -98,22 +98,22 @@ $(function(){initNavTree('dir_9cfe515b34ac7b9f628bff3eeeea5d16.html','',''); });
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="dir_9cfe515b34ac7b9f628bff3eeeea5d16_dep.png" border="0" usemap="#adir__9cfe515b34ac7b9f628bff3eeeea5d16__dep" loading="lazy" alt="tutorials/01-getting-started"/></div>
 <map name="adir__9cfe515b34ac7b9f628bff3eeeea5d16__dep" id="adir__9cfe515b34ac7b9f628bff3eeeea5d16__dep">
-<area shape="rect" href="dir_9cfe515b34ac7b9f628bff3eeeea5d16.html" title="01&#45;getting&#45;started" alt="" coords="27,52,167,77"/>
-<area shape="rect" href="dir_0d353d24d0afa59909efab6593124f6d.html" title="tutorials" alt="" coords="16,16,179,88"/>
+<area shape="rect" href="dir_9cfe515b34ac7b9f628bff3eeeea5d16.html" title="01&#45;getting&#45;started" alt="" coords="26,54,166,82"/>
+<area shape="rect" href="dir_0d353d24d0afa59909efab6593124f6d.html" title="tutorials" alt="" coords="16,16,176,93"/>
 </map>
 </div>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md47"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md59"></a>
 Tutorial 01 – Getting Started</h1>
 <p>This folder hosts the hands-on assets that accompany <span class="tt">modules/01-getting-started</span>. Use it after you have already built and <b>installed</b> <span class="tt">libttak</span> (e.g., <span class="tt">make &amp;&amp; sudo make install</span>). The intent is to prove that your toolchain is wired correctly and to watch the lifetime APIs work in a tiny, self-contained program.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md48"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md60"></a>
 What you will do</h1>
 <ul>
 <li>Compile <span class="tt">getting_started.c</span>, which allocates a short-lived message with <span class="tt">ttak_mem_alloc</span>, inspects it midway through its lifetime, and observes expiration.</li>
 <li>Run the program and compare the log output to the lesson checklist.</li>
 <li>Jot down your "What I learned" entry before moving on to Lesson 02.</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md49"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md61"></a>
 Building the sample</h1>
 <p>The provided <span class="tt">Makefile</span> links against <span class="tt">libttak</span> using standard system paths. Adjust <span class="tt">CFLAGS</span> or <span class="tt">LDFLAGS</span> if your installation requires custom flags.</p>
 <div class="fragment"><div class="line">cd tutorials/01-getting-started</div>
@@ -122,7 +122,7 @@ Building the sample</h1>
 </div><!-- fragment --><p>To see how the app behaves when you simulate later timestamps, override the <span class="tt">NOW</span> and <span class="tt">LIFETIME</span> environment variables when running:</p>
 <div class="fragment"><div class="line">NOW=2000 LIFETIME=600 make run</div>
 </div><!-- fragment --><p><span class="tt">make clean</span> removes the binary so you can start fresh.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md50"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md62"></a>
 Next steps</h1>
 <p>After you confirm that the sample mirrors the expectations in Lesson 01, move on to <span class="tt">tutorials/02-helper-workflow</span> to wire up the helper program before you start cloning modules in depth. </p>
 </div><!-- contents -->

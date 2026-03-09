@@ -12,10 +12,11 @@ var searchData=
   ['simd_5fmath_2eh_9',['simd_math.h',['../simd__math_8h.html',1,'']]],
   ['simple_2eh_10',['simple.h',['../simple_8h.html',1,'']]],
   ['siphash_2eh_11',['siphash.h',['../siphash_8h.html',1,'']]],
-  ['spinlock_2eh_12',['spinlock.h',['../spinlock_8h.html',1,'']]],
-  ['stats_2eh_13',['stats.h',['../stats_8h.html',1,'']]],
-  ['stats_5fext_2eh_14',['stats_ext.h',['../stats__ext_8h.html',1,'']]],
-  ['stdatomic_2eh_15',['stdatomic.h',['../include_2stdatomic_8h.html',1,'(Global Namespace)'],['../temp__include_2stdatomic_8h.html',1,'(Global Namespace)']]],
-  ['sum_5fdivisors_2eh_16',['sum_divisors.h',['../sum__divisors_8h.html',1,'']]],
-  ['sync_2eh_17',['sync.h',['../io_2sync_8h.html',1,'(Global Namespace)'],['../sync_2sync_8h.html',1,'(Global Namespace)']]]
+  ['specs_2emd_12',['SPECS.md',['../SPECS_8md.html',1,'']]],
+  ['spinlock_2eh_13',['spinlock.h',['../spinlock_8h.html',1,'']]],
+  ['stats_2eh_14',['stats.h',['../stats_8h.html',1,'']]],
+  ['stats_5fext_2eh_15',['stats_ext.h',['../stats__ext_8h.html',1,'']]],
+  ['stdatomic_2eh_16',['stdatomic.h',['../include_2stdatomic_8h.html',1,'(Global Namespace)'],['../temp__include_2stdatomic_8h.html',1,'(Global Namespace)']]],
+  ['sum_5fdivisors_2eh_17',['sum_divisors.h',['../sum__divisors_8h.html',1,'']]],
+  ['sync_2eh_18',['sync.h',['../io_2sync_8h.html',1,'(Global Namespace)'],['../sync_2sync_8h.html',1,'(Global Namespace)']]]
 ];

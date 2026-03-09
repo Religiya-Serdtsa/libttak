@@ -98,29 +98,29 @@ $(function(){initNavTree('dir_a7b74cb14d16019b23286ede1db62264.html','',''); });
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="dir_a7b74cb14d16019b23286ede1db62264_dep.png" border="0" usemap="#adir__a7b74cb14d16019b23286ede1db62264__dep" loading="lazy" alt="tutorials/DANGEROUS"/></div>
 <map name="adir__a7b74cb14d16019b23286ede1db62264__dep" id="adir__a7b74cb14d16019b23286ede1db62264__dep">
-<area shape="rect" href="dir_a7b74cb14d16019b23286ede1db62264.html" title="DANGEROUS" alt="" coords="27,52,133,77"/>
-<area shape="rect" href="dir_0d353d24d0afa59909efab6593124f6d.html" title="tutorials" alt="" coords="16,16,144,88"/>
+<area shape="rect" href="dir_a7b74cb14d16019b23286ede1db62264.html" title="DANGEROUS" alt="" coords="27,54,133,82"/>
+<area shape="rect" href="dir_0d353d24d0afa59909efab6593124f6d.html" title="tutorials" alt="" coords="16,16,144,93"/>
 </map>
 </div>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md195"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md207"></a>
 DANGEROUS Tutorials</h1>
 <p>Unsafe components live here. Complete these after mastering the safe stages.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md196"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md208"></a>
 Scope</h1>
 <ul>
 <li><span class="tt"><a class="el" href="context_8h.html#af1e1e607d4d863dfe439e9e537e9d6e0">ttak_context_t</a></span> shared-memory bridge (<span class="tt"><a class="el" href="context_8h.html" title="Unsafe execution-context primitives for cross-thread data bridging.">include/ttak/unsafe/context.h</a></span>, <span class="tt">src/unsafe/context.c</span>)</li>
 <li>Portable stdatomic fallback (<span class="tt">include/stdatomic.h</span>, <span class="tt"><a class="el" href="temp__include_2stdatomic_8h.html">temp_include/stdatomic.h</a></span>)</li>
 <li>Any code compiled with <span class="tt">__TTAK_UNSAFE_*__</span> flags or macros</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md197"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md209"></a>
 Why it is dangerous</h1>
 <ol type="1">
 <li><b>Ownership inheritance:</b> only one side may own locks or free memory at a time. If you skip the lock discipline, shared memory corrupts instantly.</li>
 <li><b>Macro contracts:</b> macros prefixed with <span class="tt">__TTAK_*__</span> flip behavior globally. Failing to reset them can break every module.</li>
 <li><b>Bridge lock:</b> the context bridge forces all calls through a single mutex so the wrong owner never runs <span class="tt">free</span>. Modifying it casually defeats the safety guarantee.</li>
 </ol>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md198"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md210"></a>
 Tutorial Outline</h1>
 <ol type="1">
 <li>Study <span class="tt">libttak_unsafe.hlp</span> with the helper (<span class="tt">./helper ../DANGEROUS/libttak_unsafe.hlp</span>).</li>

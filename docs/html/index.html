@@ -94,21 +94,21 @@ $(function(){initNavTree('index.html','',''); });
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md_README"></a> <img src="./mascot.png" alt="Memuh the sea rabbit" class="inline"/></p>
 <p><img src="./bench/ttl-cache-multithread-bench/throughput_comparison.png" alt="Compiler Performance Comparison" class="inline"/> <img src="./bench/ttl-cache-multithread-bench/rss_comparison.png" alt="Compiler RSS Footprint Comparison" class="inline"/></p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md26"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md20"></a>
 LibTTAK</h1>
 <blockquote class="doxtable">
 <p><b>"Stop praying for `free()`. Start governing your lifetimes."</b> </p>
 </blockquote>
 <p><b>Gentle. Predictable. Explicit.</b></p>
-<p>LibTTAK is a C systems collection that acts as a structural guardrail for AI-generated C code by forcing every allocation through arenas, epochs, and explicit teardown stages. <a href="https://gg582.github.io/libttak">Docs</a></p>
+<p>LibTTAK is a C systems collection that acts as a structural guardrail for AI-generated C code by forcing every allocation through arenas, epochs, and explicit teardown stages. <a href="https://religiya-serdtsa.github.io/libttak">Docs</a></p>
 <hr  />
-<h2 class="doxsection"><a class="anchor" id="autotoc_md28"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md22"></a>
 Mathematical Foundation: The OLS Principle</h2>
 <p>LibTTAK's high-performance synchronization layer is built on the mathematical brilliance of <b>Choi Seok-jeong's Orthogonal Latin Square (OLS)</b> principle.</p>
 <p>We have made an explicit architectural choice: <b>Strategically accepting a significant increase in memory footprint (RSS) to achieve an explosive, multi-fold increase in throughput (Ops/s).</b></p>
 <p>By applying deterministic slot isolation through OLS-inspired segmented shard tables, we eliminate hardware-level lock contention. Each thread operates in its own isolated version shard, allowing the system to scale linearly with CPU core counts. The resulting throughput—surpassing **29M Ops/s**—is a direct result of this "Memory-for-Speed" trade-off.</p>
 <hr  />
-<h2 class="doxsection"><a class="anchor" id="autotoc_md30"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md24"></a>
 Integrated Architectural Map</h2>
 <div class="image">
 <img src="all.png" alt=""/>
@@ -116,19 +116,19 @@ Integrated Architectural Map</h2>
 Blueprint</div></div>
     <p>Generational arenas, epoch reclamation, and context bridges are wired together exactly as shown: arenas own lifetimes, epochs enforce bulk reclamation barriers, and worker threads cross the bridge via explicit context binding. No hidden allocators, no implicit threads.</p>
 <hr  />
-<h2 class="doxsection"><a class="anchor" id="autotoc_md32"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md26"></a>
 Why LibTTAK?</h2>
-<h3 class="doxsection"><a class="anchor" id="autotoc_md33"></a>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md27"></a>
 Practical Utility for AI-Assisted Development</h3>
 <p>LLMs frequently miss ownership cues. LibTTAK constrains them to a single instruction set: allocate inside a <span class="tt">ttak_arena</span>, hand releases to the epoch manager, and keep user code free from stray <span class="tt">free()</span> calls. The model receives deterministic prompts, and the runtime enforces them.</p>
-<h3 class="doxsection"><a class="anchor" id="autotoc_md34"></a>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md28"></a>
 Deterministic Lifetime-as-Data</h3>
 <p>Rust encodes lifetimes in the compiler; LibTTAK encodes them on the allocation record. Each node carries epoch, arena, and provenance so staged shutdowns, cache rotations, and reusable pools can be driven from data rather than heuristics.</p>
-<h3 class="doxsection"><a class="anchor" id="autotoc_md35"></a>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md29"></a>
 Predictable Resource Discipline</h3>
 <p>There are no assembly fast paths or exotic TLS caches. Standard <span class="tt">malloc</span> plus disciplined ownership keeps the implementation transparent and debuggable on any libc, matching the library’s gentle, predictable, explicit goals.</p>
 <hr  />
-<h2 class="doxsection"><a class="anchor" id="autotoc_md37"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md31"></a>
 Comparison: LibTTAK, Rust, and C++</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -143,7 +143,7 @@ Comparison: LibTTAK, Rust, and C++</h2>
 <td class="markdownTableBodyNone">Tooling expectations  </td><td class="markdownTableBodyNone">Works with plain C toolchains; ideal for AI-generated patches  </td><td class="markdownTableBodyNone">Requires Rust toolchain and language expertise  </td><td class="markdownTableBodyNone">Depends on template libraries; AI output often diverges  </td></tr>
 </table>
 <hr  />
-<h2 class="doxsection"><a class="anchor" id="autotoc_md39"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md33"></a>
 Core Components</h2>
 <ul>
 <li><b>Generational Arena</b>: Batches allocations, timestamps each generation, and clears on demand.</li>
@@ -152,10 +152,10 @@ Core Components</h2>
 <li><b>Segmented Shard Table</b>: Lock-free version tracking inspired by Choi Seok-jeong's OLS.</li>
 </ul>
 <hr  />
-<h2 class="doxsection"><a class="anchor" id="autotoc_md41"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md35"></a>
 Benchmarks</h2>
 <p>Test: Ryzen 5600X, RTX 3070 Lite Hash Rate, Samsung DDR4 3200MHz 32GB x 2</p>
-<h3 class="doxsection"><a class="anchor" id="autotoc_md42"></a>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md36"></a>
 High-Performance Lock-Free Baseline</h3>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -167,7 +167,7 @@ High-Performance Lock-Free Baseline</h3>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">Memory Stability  </td><td class="markdownTableBodyNone">Stable RSS  </td><td class="markdownTableBodyNone">Optimized for high-thread-count environments  </td></tr>
 </table>
-<h3 class="doxsection"><a class="anchor" id="autotoc_md43"></a>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md37"></a>
 TTL Cache Benchmarks (Compiler Sweep)</h3>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -183,7 +183,7 @@ TTL Cache Benchmarks (Compiler Sweep)</h3>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">Runtime Control  </td><td class="markdownTableBodyNone">Total Epochs Transitioned  </td><td class="markdownTableBodyNone">63,393  </td><td class="markdownTableBodyNone">60,000  </td><td class="markdownTableBodyNone">61,000  </td></tr>
 </table>
-<h3 class="doxsection"><a class="anchor" id="autotoc_md44"></a>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md38"></a>
 Benchmark Environment</h3>
 <ul>
 <li>OS: Linux x64</li>
@@ -191,9 +191,10 @@ Benchmark Environment</h3>
 <li>RAM: 64 GB DDR4 3200 MHz</li>
 </ul>
 <hr  />
-<h2 class="doxsection"><a class="anchor" id="autotoc_md46"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md40"></a>
 Documentation</h2>
-<p>Refer to the linked docs for API references, tutorials, and Doxygen output. All modules retain the same naming scheme present in <span class="tt">include/ttak/</span>. </p>
+<p>Refer to the linked docs for API references, tutorials, and Doxygen output. All modules retain the same naming scheme present in <span class="tt">include/ttak/</span>.</p>
+<p>Documentation is automatically rebuilt via the <span class="tt">Docs Deploy</span> GitHub Action on every push to <span class="tt">main</span>. The workflow runs <span class="tt">doxygen Doxyfile</span>, then publishes the generated <span class="tt">docs/html</span> tree to the <span class="tt">gh-pages</span> branch, which surfaces at <a href="https://religiya-serdtsa.github.io/libttak">https://religiya-serdtsa.github.io/libttak</a>. </p>
 </div></div><!-- PageDoc -->
 <a href="doxygen_crawl.html"></a>
 </div><!-- contents -->
