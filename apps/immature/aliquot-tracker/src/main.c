@@ -787,7 +787,6 @@ static bool frontier_accept_seed(const ttak_bigint_t *seed, scan_result_t *resul
     // We record everything now, but still check catalog for metadata if needed.
     // However, we don't return false just because it's in catalog if we want to record it.
     // For now, let's keep the catalog check but maybe return true anyway to ensure recording?
-    // User said "애초에 작은 수부터도 모든 재현가능해야 할 기록들을 기록하며"
     if (is_catalog_value(seed)) {
         if (result) result->ended_by = SCAN_END_CATALOG;
         // return false; // Don't return false, let it be processed if it's a new seed.
