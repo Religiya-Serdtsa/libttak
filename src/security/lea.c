@@ -1,3 +1,13 @@
+/**
+ * @file lea.c
+ * @brief LEA block cipher implementation (KS X 3246).
+ *
+ * Implements key schedule expansion for 128/192/256-bit keys and a
+ * software encrypt path.  The encrypt loop is written to allow the
+ * compiler to auto-vectorise when lane_width > 1 is requested by the
+ * security engine driver.
+ */
+
 #include <ttak/security/lea.h>
 
 #include <string.h>

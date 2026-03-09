@@ -1,3 +1,12 @@
+/**
+ * @file pool.h
+ * @brief Managed thread pool built on top of the async task scheduler.
+ *
+ * Provides a fixed-size pool of worker threads that drain a shared task
+ * queue.  Threads are created lazily and respect the nice value set at
+ * init time.
+ */
+
 #ifndef TTAK_THREAD_POOL_H
 #define TTAK_THREAD_POOL_H
 

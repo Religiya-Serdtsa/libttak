@@ -1,3 +1,12 @@
+/**
+ * @file sync.c
+ * @brief Blocking read/write wrappers that honour the TTL guard.
+ *
+ * Translates POSIX read()/write() (or Windows _read()/_write()) return
+ * values and errno codes into typed ttak_io_status_t results, retrying
+ * on EINTR and failing fast when the guard has expired.
+ */
+
 #include <ttak/io/sync.h>
 
 #include <ttak/mem/mem.h>

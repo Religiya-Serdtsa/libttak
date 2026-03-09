@@ -1,3 +1,11 @@
+/**
+ * @file accel_opencl.c
+ * @brief OpenCL acceleration backend for LibTTAK compute kernels.
+ *
+ * Manages OpenCL context/queue lifetime, compiles kernels on first use,
+ * and dispatches bigint multiply and hash workloads to the GPU.
+ */
+
 #include "ttak/ttak_accelerator.h"
 
 #include <stdbool.h>

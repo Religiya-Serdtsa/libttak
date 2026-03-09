@@ -1,3 +1,8 @@
+/**
+ * @file bits.c
+ * @brief FNV-1a 32-bit checksum, buffer verification, and snapshot recovery.
+ */
+
 #include <ttak/io/bits.h>
 
 #include <ttak/mem/mem.h>

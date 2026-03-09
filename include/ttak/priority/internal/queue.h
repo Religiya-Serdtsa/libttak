@@ -1,3 +1,11 @@
+/**
+ * @file queue.h (internal)
+ * @brief Internal priority-queue node and vtable types.
+ *
+ * These types are implementation details of the priority subsystem.
+ * External code should use the public API in ttak/priority/queue.h.
+ */
+
 #ifndef __TTAK_INTERNAL_QUEUE_H__
 #define __TTAK_INTERNAL_QUEUE_H__
 

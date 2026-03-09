@@ -1,3 +1,12 @@
+/**
+ * @file endpoint.c
+ * @brief Shared network endpoint lifecycle: create, bind, role, restart.
+ *
+ * Wraps a raw socket fd inside a reference-counted shared handle with TTL
+ * guard and optional restart hooks for client/server roles.  All operations
+ * require a valid ttak_owner_t to enforce epoch-safe access.
+ */
+
 #include <ttak/net/endpoint.h>
 
 #include <stdlib.h>

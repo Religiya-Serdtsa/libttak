@@ -1,3 +1,12 @@
+/**
+ * @file async.c
+ * @brief Asynchronous I/O: schedules read/write tasks on the worker pool.
+ *
+ * Wraps ttak_io_sync_read / ttak_io_sync_write as async tasks submitted
+ * to the scheduler.  The completion callback is invoked on the worker
+ * thread when the operation finishes or the timeout expires.
+ */
+
 #include <ttak/io/async.h>
 
 #include <ttak/io/sync.h>

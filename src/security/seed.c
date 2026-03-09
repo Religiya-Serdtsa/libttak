@@ -1,3 +1,12 @@
+/**
+ * @file seed.c
+ * @brief SEED block cipher implementation (KS X 1213 / ISO 18033-3).
+ *
+ * Pure software implementation using the official SEED S-boxes and key
+ * schedule constants from the KISA specification.  No platform-specific
+ * optimisations; intended as a portable reference path.
+ */
+
 #include <ttak/security/seed.h>
 
 #include <string.h>

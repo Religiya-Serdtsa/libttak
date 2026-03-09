@@ -1,3 +1,12 @@
+/**
+ * @file detachable.c
+ * @brief Detachable arena — generation-tracked, cache-ring backed allocation.
+ *
+ * Detachable allocations can be handed off across ownership boundaries
+ * by transferring a generation ticket.  A per-CPU cache ring minimises
+ * lock contention on the hot path.
+ */
+
 #include <ttak/mem/detachable.h>
 #include <ttak/mem/fastpath.h>
 

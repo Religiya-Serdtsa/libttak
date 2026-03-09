@@ -1,3 +1,12 @@
+/**
+ * @file worker.h
+ * @brief Resilient worker-thread wrapper with fault isolation via setjmp.
+ *
+ * Each worker thread runs inside a @c ttak_worker_wrapper_t that installs
+ * a signal-safe recovery point.  On fatal signals the thread can be
+ * restarted without crashing the whole process.
+ */
+
 #ifndef TTAK_THREAD_WORKER_H
 #define TTAK_THREAD_WORKER_H
 

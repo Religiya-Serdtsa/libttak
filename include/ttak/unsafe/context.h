@@ -1,3 +1,11 @@
+/**
+ * @file context.h
+ * @brief Unsafe execution-context primitives for cross-thread data bridging.
+ *
+ * These APIs bypass normal ownership checks and must be used only when the
+ * caller can prove exclusive access.  Misuse will corrupt epoch accounting.
+ */
+
 #ifndef TTAK_UNSAFE_CONTEXT_H
 #define TTAK_UNSAFE_CONTEXT_H
 

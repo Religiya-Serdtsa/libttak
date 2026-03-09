@@ -1,3 +1,12 @@
+/**
+ * @file bigint_accel.c
+ * @brief Environment-variable threshold selection for BigInt acceleration.
+ *
+ * Reads TTAK_BIGINT_ACCEL_THRESHOLD at startup to decide the minimum
+ * operand size (in limbs) at which GPU or SIMD acceleration is engaged.
+ * Falls back to a compiled-in default when the variable is absent.
+ */
+
 #include <ttak/math/bigint_accel.h>
 
 #include <stdatomic.h>

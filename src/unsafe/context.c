@@ -1,3 +1,12 @@
+/**
+ * @file context.c
+ * @brief Unsafe execution-context bridging across ownership boundaries.
+ *
+ * Provides raw context capture and restore without epoch accounting.
+ * Used only in well-understood handoff scenarios; misuse will corrupt
+ * the memory subsystem's reference counts.
+ */
+
 #include <ttak/unsafe/context.h>
 #include <string.h>
 

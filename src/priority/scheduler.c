@@ -1,3 +1,12 @@
+/**
+ * @file scheduler.c
+ * @brief Priority scheduler — task history tracking and EWMA prediction.
+ *
+ * Maintains per-task execution time history in a hash map and uses
+ * exponentially weighted moving average (EWMA) to predict the next
+ * execution cost, informing the priority queue order.
+ */
+
 #include <ttak/priority/scheduler.h>
 #include <ttak/mem/mem.h>
 #include <ttak/ht/map.h>

@@ -1,3 +1,12 @@
+/**
+ * @file port.c
+ * @brief OS detection and socket vtable population (POSIX / WinSock / bare-metal).
+ *
+ * Called once at startup via ttak_net_driver_detect().  Selects the right
+ * socket function pointers based on the compiled target and, for bare-metal,
+ * installs the caller-supplied NIC hooks from @c ttak_net_baremetal_spec_t.
+ */
+
 #include <ttak/net/core/port.h>
 
 #if defined(_WIN32)

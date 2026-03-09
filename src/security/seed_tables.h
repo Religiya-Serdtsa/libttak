@@ -1,3 +1,12 @@
+/**
+ * @file seed_tables.h
+ * @brief SEED cipher S-box and substitution tables (internal use only).
+ *
+ * Pre-computed lookup tables derived from the official KISA SEED specification
+ * (TTAK.KO-12.0004).  These tables are used exclusively by seed.c and must
+ * not be included directly from external code.
+ */
+
 #ifndef TTAK_SECURITY_SEED_TABLES_H
 #define TTAK_SECURITY_SEED_TABLES_H
 

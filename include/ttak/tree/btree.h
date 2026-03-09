@@ -1,3 +1,12 @@
+/**
+ * @file btree.h
+ * @brief Generic order-N B-tree (multi-way search tree) interface.
+ *
+ * Keys and values are stored as @c void* with caller-supplied comparison
+ * and cleanup callbacks.  The tree is not thread-safe by itself; wrap
+ * accesses in a @c ttak_rwlock_t when sharing across threads.
+ */
+
 #ifndef TTAK_TREE_BTREE_H
 #define TTAK_TREE_BTREE_H
 

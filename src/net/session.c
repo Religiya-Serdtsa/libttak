@@ -1,3 +1,13 @@
+/**
+ * @file session.c
+ * @brief Network session manager: create, close, tick, and fault handling.
+ *
+ * Maintains a linked list of active sessions keyed by 64-bit ID.  A
+ * periodic sanity tick checks immortal sockets and applies the configured
+ * alert/restart policy.  Retiring and fault-queue processing can be
+ * offloaded to an async worker thread.
+ */
+
 #include <ttak/net/session.h>
 
 #include <ttak/net/core/port.h>

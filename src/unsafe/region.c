@@ -1,3 +1,12 @@
+/**
+ * @file region.c
+ * @brief Unsafe raw memory region manager with tag-based identity checks.
+ *
+ * Manages a fixed-size memory block without any epoch or owner tracking.
+ * Tag strings are used for basic identity verification to catch accidental
+ * double-frees or mismatched region reuse.
+ */
+
 #include <ttak/unsafe/region.h>
 #include <string.h>
 

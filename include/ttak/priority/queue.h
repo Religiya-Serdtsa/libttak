@@ -1,3 +1,8 @@
+/**
+ * @file queue.h
+ * @brief Public short-hand aliases for the internal priority-queue types.
+ */
+
 #include <ttak/priority/internal/queue.h>
 
 typedef struct __internal_ttak_qnode_t __i_tt_qn_t;
