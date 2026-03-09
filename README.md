@@ -9,7 +9,7 @@
 
 **Gentle. Predictable. Explicit.**
 
-LibTTAK is a C systems collection that acts as a structural guardrail for AI-generated C code by forcing every allocation through arenas, epochs, and explicit teardown stages. [Docs](https://gg582.github.io/libttak)
+LibTTAK is a C systems collection that acts as a structural guardrail for AI-generated C code by forcing every allocation through arenas, epochs, and explicit teardown stages. [Docs](https://religiya-serdtsa.github.io/libttak)
 
 ---
 
@@ -100,3 +100,5 @@ Test: Ryzen 5600X, RTX 3070 Lite Hash Rate, Samsung DDR4 3200MHz 32GB x 2
 ## Documentation
 
 Refer to the linked docs for API references, tutorials, and Doxygen output. All modules retain the same naming scheme present in `include/ttak/`.
+
+Documentation is automatically rebuilt via the `Docs Deploy` GitHub Action on every push to `main`. The workflow runs `doxygen Doxyfile`, then publishes the generated `docs/html` tree to the `gh-pages` branch, which surfaces at [https://religiya-serdtsa.github.io/libttak](https://religiya-serdtsa.github.io/libttak).
