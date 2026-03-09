@@ -162,7 +162,7 @@ obj/%.o: src/%.cu
 
 obj/%.obj: src/%.cu
 	@mkdir -p $(dir $@)
-	$(NVCC) $(NVCCFLAGS) -c $< /Fo$@
+	$(NVCC) $(NVCCFLAGS) -c $< -o $@
 
 obj/%.o: src/%.cpp
 	@mkdir -p $(dir $@)

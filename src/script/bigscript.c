@@ -283,7 +283,7 @@ ttak_bigscript_vm_t *ttak_bigscript_vm_create(const ttak_bigscript_limits_t *lim
 
 void ttak_bigscript_vm_free(ttak_bigscript_vm_t *vm, uint64_t now) { if (vm) { for (uint32_t i = 0; i < vm->stack_cap; i++) { variant_free(&vm->stack[i], now); } for (uint32_t i = 0; i < vm->locals_cap; i++) { variant_free(&vm->locals[i], now); } ttak_mem_free(vm->stack); ttak_mem_free(vm->locals); ttak_mem_free(vm); } }
 
-void ttak_bigscript_hash_program(ttak_bigscript_program_t *prog, char out_hex[65]) { if (prog) { strcpy(out_hex, prog->source_sha256); } else { memset(out_hex, 0, 65); } }
+void ttak_bigscript_hash_program(ttak_bigscript_program_t *prog, char out_hex[65]) { if (prog) { strncpy(out_hex, prog->source_sha256, 64); out_hex[64] = '\0'; } else { memset(out_hex, 0, 65); } }
 
 void ttak_bigscript_value_free(ttak_bigscript_value_t *val, uint64_t now) {
     if (val) { variant_free(&val->value, now); }
