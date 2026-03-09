@@ -1,3 +1,11 @@
+/**
+ * @file ast.h
+ * @brief Abstract Syntax Tree node definitions for the BigScript interpreter.
+ *
+ * Nodes are arena-allocated and linked by parent/child pointers.  The tree
+ * is walked by the evaluator in src/script/bigscript.c.
+ */
+
 #ifndef TTAK_TREE_AST_H
 #define TTAK_TREE_AST_H
 

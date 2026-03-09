@@ -1,3 +1,13 @@
+/**
+ * @file timing.c
+ * @brief High-resolution clock and TSC frequency calibration.
+ *
+ * Provides ttak_now_ns() which returns a monotonic nanosecond timestamp.
+ * On x86-64 the TSC is used after a one-time calibration against
+ * clock_gettime(CLOCK_MONOTONIC); other platforms fall back directly to
+ * clock_gettime or Windows QPC.
+ */
+
 #include <ttak/timing/timing.h>
 #include <time.h>
 #include <pthread.h>

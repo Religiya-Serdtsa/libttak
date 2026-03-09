@@ -1,3 +1,12 @@
+/**
+ * @file zerocopy.c
+ * @brief Zero-copy receive window backed by a detachable arena.
+ *
+ * Allocates a contiguous segment-aligned buffer in a detachable arena so
+ * that received data can be handed off to consumers without copying.
+ * Segment occupancy is tracked with a 256-bit bitmap for O(1) iteration.
+ */
+
 #include <ttak/io/zerocopy.h>
 
 #include <ttak/mem/mem.h>

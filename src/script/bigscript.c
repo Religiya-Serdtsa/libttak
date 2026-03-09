@@ -1,3 +1,13 @@
+/**
+ * @file bigscript.c
+ * @brief BigScript interpreter — lexer, parser, and evaluator.
+ *
+ * BigScript is a minimal scripting language for LibTTAK that operates on
+ * arbitrary-precision numeric types (ttak_bigint_t, ttak_bigreal_t,
+ * ttak_bigcomplex_t).  Scripts are compiled to an AST and interpreted
+ * in a single pass.
+ */
+
 #include <ttak/script/bigscript.h>
 #include <ttak/mem/mem.h>
 #include <ttak/math/bigint.h>

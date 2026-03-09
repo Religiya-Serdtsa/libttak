@@ -1,3 +1,13 @@
+/**
+ * @file fastpath.c
+ * @brief Compiler/arch-specific fast memory allocation hot path.
+ *
+ * Contains inline-assembly optimised allocation sequences for TinyCC on
+ * x86-64.  The generic C fallback is used on all other targets.
+ * @warning This file contains platform-specific inline assembly.
+ *          Do not modify the assembly blocks without testing all targets.
+ */
+
 #include <ttak/mem/fastpath.h>
 
 #if defined(__TINYC__)

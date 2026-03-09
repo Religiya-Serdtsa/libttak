@@ -1,3 +1,12 @@
+/**
+ * @file io.c
+ * @brief I/O guard lifecycle, buffer staging, and poll/async dispatch.
+ *
+ * Implements TTL expiry checks for ttak_io_guard_t, the staging buffer
+ * acquire/release cycle backed by ttak_detachable arenas, and the poll
+ * loop that drives async read/write completions.
+ */
+
 #include <ttak/io/io.h>
 
 #include <ttak/async/sched.h>

@@ -1,3 +1,11 @@
+/**
+ * @file scheduler.h
+ * @brief Priority-aware task scheduler that maps nice values to run queues.
+ *
+ * Maintains @c TTAK_SCHED_LEVELS separate queues.  Each call to
+ * ttak_scheduler_pick() dequeues the highest-priority ready task.
+ */
+
 #ifndef TTAK_PRIORITY_SCHEDULER_H
 #define TTAK_PRIORITY_SCHEDULER_H
 

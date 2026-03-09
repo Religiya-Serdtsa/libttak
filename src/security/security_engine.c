@@ -1,3 +1,12 @@
+/**
+ * @file security_engine.c
+ * @brief Runtime dispatch engine — routes crypto ops to the best driver.
+ *
+ * Detects SIMD capabilities (AVX-512, AVX2, NEON) at compile time and
+ * selects the widest available lane width.  Falls back to a scalar driver
+ * on platforms without SIMD extensions.
+ */
+
 #include <ttak/security/security_engine.h>
 #include <ttak/security/lea.h>
 #include <ttak/security/seed.h>

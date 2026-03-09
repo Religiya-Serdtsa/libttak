@@ -1,3 +1,11 @@
+/**
+ * @file bplus.h
+ * @brief B+ tree interface — all data stored in leaf nodes for range scans.
+ *
+ * Internal nodes hold only routing keys; leaf nodes hold key/value pairs
+ * and are linked in a doubly-linked list for efficient sequential access.
+ */
+
 #ifndef TTAK_TREE_BPLUS_H
 #define TTAK_TREE_BPLUS_H
 

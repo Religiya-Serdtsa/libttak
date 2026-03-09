@@ -1,3 +1,12 @@
+/**
+ * @file transport.c
+ * @brief Dimensionless physical transport layer — unit-aware numeric pipe.
+ *
+ * Validates that computed physical quantities carry consistent SI units
+ * before they are passed between subsystems.  Catches dimension mismatches
+ * at runtime rather than silently propagating NaN or Inf.
+ */
+
 #include <ttak/phys/dimless/transport.h>
 
 #include <math.h>

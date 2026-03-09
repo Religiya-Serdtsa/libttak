@@ -1,3 +1,14 @@
+/**
+ * @file lattice.c
+ * @brief Choi Seok-jeong Lattice (Sanpan): lock-free parallel ingress buffer.
+ *
+ * Implements a 2-D slot lattice for zero-copy parallel packet ingress,
+ * inspired by the 九數略 (Gusuryak, 1700) magic-square layout.  Contains
+ * architecture-specific inline assembly (x86-64, AArch64, RISC-V, PPC64)
+ * for the TinyCC fast-copy path.
+ * @warning Do not modify inline assembly blocks without testing all arches.
+ */
+
 #include <ttak/net/lattice.h>
 #include <ttak/mem/mem.h>
 #include <ttak/atomic/atomic.h>

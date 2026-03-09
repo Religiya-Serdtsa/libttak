@@ -1,3 +1,12 @@
+/**
+ * @file chacha20_poly1305.c
+ * @brief ChaCha20-Poly1305 AEAD cipher (RFC 8439) — pure software path.
+ *
+ * Implements the full ChaCha20 keystream generator and the Poly1305 MAC.
+ * No hardware acceleration is used; this is the portable fallback invoked
+ * by the security engine when TTAK_SECURITY_CHACHA20_POLY1305 is requested.
+ */
+
 #include <ttak/security/security_engine.h>
 
 #include <stdbool.h>

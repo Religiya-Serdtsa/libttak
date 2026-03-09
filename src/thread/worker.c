@@ -1,3 +1,12 @@
+/**
+ * @file worker.c
+ * @brief Worker thread lifecycle: spawn, fault-isolate, and restart.
+ *
+ * Each thread runs inside a setjmp recovery frame so that a recoverable
+ * fault (SIGSEGV caught by the pool) causes a longjmp back to the frame
+ * rather than terminating the whole process.
+ */
+
 #include <ttak/thread/worker.h>
 #include <ttak/thread/pool.h>
 #include <ttak/mem/mem.h>

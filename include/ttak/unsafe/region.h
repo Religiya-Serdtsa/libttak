@@ -1,3 +1,12 @@
+/**
+ * @file region.h
+ * @brief Unsafe raw memory region manager (no ownership tracking).
+ *
+ * Wraps a fixed-size memory block for use cases where epoch/arena overhead
+ * is unacceptable (e.g. interrupt-level DMA buffers).  The caller is
+ * entirely responsible for lifetime management.
+ */
+
 #ifndef TTAK_UNSAFE_REGION_H
 #define TTAK_UNSAFE_REGION_H
 

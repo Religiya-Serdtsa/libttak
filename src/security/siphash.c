@@ -1,3 +1,12 @@
+/**
+ * @file siphash.c
+ * @brief SipHash-2-4 implementation for byte buffers and single uint64 keys.
+ *
+ * SipHash-2-4 uses 2 compression rounds per block and 4 finalisation rounds.
+ * The 128-bit seed is split into k0/k1 to match the reference implementation
+ * by Aumasson and Bernstein (2012).
+ */
+
 #include <ttak/security/siphash.h>
 
 #define ROTL(x, b) (uint64_t)(((x) << (b)) | ((x) >> (64 - (b))))

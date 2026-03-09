@@ -1,3 +1,11 @@
+/**
+ * @file bigint_opencl.c
+ * @brief OpenCL kernel dispatch for arbitrary-precision integer operations.
+ *
+ * Provides GPU-accelerated multiplication and modular reduction for
+ * ttak_bigint_t operands above the threshold set in bigint_accel.c.
+ */
+
 #include <ttak/math/bigint.h>
 
 #ifdef ENABLE_OPENCL

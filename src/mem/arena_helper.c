@@ -1,3 +1,11 @@
+/**
+ * @file arena_helper.c
+ * @brief Arena lifecycle helpers built on top of the mem-tree subsystem.
+ *
+ * Provides convenience wrappers that create, grow, and destroy arenas
+ * while keeping the mem-tree node index consistent.
+ */
+
 #include <ttak/mem/arena_helper.h>
 #include <ttak/mem_tree/mem_tree.h>
 #include <ttak/timing/timing.h>

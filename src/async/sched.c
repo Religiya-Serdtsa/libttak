@@ -1,3 +1,12 @@
+/**
+ * @file sched.c
+ * @brief Async scheduler implementation — thread pool init, submit, drain.
+ *
+ * Initialises a fixed-size pool of POSIX threads (or Windows threads) and
+ * feeds them tasks from a priority queue.  Uses ttak_nice_to_prio() to map
+ * the caller's nice value to a queue index.
+ */
+
 #include <ttak/async/sched.h>
 #include <ttak/thread/pool.h>
 #include <ttak/timing/timing.h>

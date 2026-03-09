@@ -6,6 +6,7 @@
 #ifndef TTAK_COMPILER_H
 #define TTAK_COMPILER_H
 
+/** @brief 1 if TinyCC is targeting a non-x86 platform and needs portable fallbacks. */
 #if !defined(TTAK_TINYCC_NEEDS_PORTABLE_FALLBACK)
 #  if defined(__TINYC__) && !defined(__x86_64__) && !defined(__i386__)
 #    define TTAK_TINYCC_NEEDS_PORTABLE_FALLBACK 1
@@ -14,6 +15,7 @@
 #  endif
 #endif
 
+/** @brief Branch prediction hints for GCC/Clang; no-op on MSVC. */
 #if defined(__GNUC__) || defined(__clang__)
 #  define TTAK_LIKELY(x)   __builtin_expect(!!(x), 1)
 #  define TTAK_UNLIKELY(x) __builtin_expect(!!(x), 0)
@@ -22,6 +24,7 @@
 #  define TTAK_UNLIKELY(x) (x)
 #endif
 
+/** @brief Forces inlining on GCC/Clang/MSVC; falls back to plain inline. */
 #if defined(__GNUC__) || defined(__clang__)
 #  define TTAK_FORCE_INLINE static inline __attribute__((always_inline))
 #elif defined(_MSC_VER)
@@ -30,6 +33,7 @@
 #  define TTAK_FORCE_INLINE static inline
 #endif
 
+/** @brief Suppresses unused-variable warnings portably. */
 #if defined(__GNUC__) || defined(__clang__)
 #  define TTAK_MAYBE_UNUSED __attribute__((unused))
 #else
