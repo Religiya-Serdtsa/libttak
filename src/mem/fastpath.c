@@ -12,6 +12,28 @@
 
 #if defined(__TINYC__)
 
+#ifndef TTAK_MEM_FASTPATH_USE_X86_64_ASM
+#define TTAK_MEM_FASTPATH_USE_X86_64_ASM 1
+#endif
+#ifndef TTAK_MEM_FASTPATH_USE_AARCH64_ASM
+#define TTAK_MEM_FASTPATH_USE_AARCH64_ASM 0
+#endif
+#ifndef TTAK_MEM_FASTPATH_USE_RISCV64_ASM
+#define TTAK_MEM_FASTPATH_USE_RISCV64_ASM 0
+#endif
+#ifndef TTAK_MEM_FASTPATH_USE_MIPS64_ASM
+#define TTAK_MEM_FASTPATH_USE_MIPS64_ASM 0
+#endif
+#ifndef TTAK_MEM_FASTPATH_USE_PPC64_ASM
+#define TTAK_MEM_FASTPATH_USE_PPC64_ASM 0
+#endif
+
+/*
+ * TinyCC only features a mature inline assembler on x86-64 today. Allow other
+ * architectures to opt-in once their assembler backends can emit the sequences
+ * below without tripping over unsupported directives.
+ */
+
 static inline void ttak_mem_zero_fallback(uint8_t *dst, size_t len) {
     for (size_t i = 0; i < len; ++i) {
         dst[i] = 0;
@@ -27,7 +49,7 @@ static inline void ttak_mem_copy_fallback(uint8_t *dst, const uint8_t *src, size
 void ttak_mem_stream_zero(void *dst, size_t len) {
     if (!len) return;
     uint8_t *ptr = (uint8_t *)dst;
-#if defined(__x86_64__)
+#if defined(__x86_64__) && TTAK_MEM_FASTPATH_USE_X86_64_ASM
     size_t qwords = len >> 3;
     if (qwords) {
         __asm__ volatile(
@@ -49,7 +71,7 @@ void ttak_mem_stream_zero(void *dst, size_t len) {
             : "rax", "memory");
     }
     return;
-#elif defined(__aarch64__)
+#elif defined(__aarch64__) && TTAK_MEM_FASTPATH_USE_AARCH64_ASM
     size_t loops = len / 32;
     size_t bulk = loops * 32;
     if (loops) {
@@ -71,7 +93,7 @@ void ttak_mem_stream_zero(void *dst, size_t len) {
     }
     if (rem) ttak_mem_zero_fallback(ptr, rem);
     return;
-#elif defined(__riscv_xlen) && (__riscv_xlen == 64)
+#elif defined(__riscv_xlen) && (__riscv_xlen == 64) && TTAK_MEM_FASTPATH_USE_RISCV64_ASM
     size_t loops = len / 8;
     size_t bulk = loops * 8;
     if (loops) {
@@ -88,7 +110,8 @@ void ttak_mem_stream_zero(void *dst, size_t len) {
     size_t rem = len - bulk;
     if (rem) ttak_mem_zero_fallback(ptr, rem);
     return;
-#elif defined(__mips64) || defined(__mips64__) || (defined(__mips) && (__mips == 64))
+#elif (defined(__mips64) || defined(__mips64__) || (defined(__mips) && (__mips == 64))) && \
+    TTAK_MEM_FASTPATH_USE_MIPS64_ASM
     size_t loops = len / 8;
     size_t bulk = loops * 8;
     if (loops) {
@@ -109,7 +132,7 @@ void ttak_mem_stream_zero(void *dst, size_t len) {
     size_t rem = len - bulk;
     if (rem) ttak_mem_zero_fallback(ptr, rem);
     return;
-#elif defined(__powerpc64__) || defined(__ppc64__)
+#elif (defined(__powerpc64__) || defined(__ppc64__)) && TTAK_MEM_FASTPATH_USE_PPC64_ASM
     size_t loops = len / 32;
     size_t bulk = loops * 32;
     uint64_t zero_val = 0;
@@ -141,7 +164,7 @@ void ttak_mem_stream_copy(void *dst, const void *src, size_t len) {
     if (!len) return;
     uint8_t *dst_ptr = (uint8_t *)dst;
     const uint8_t *src_ptr = (const uint8_t *)src;
-#if defined(__x86_64__)
+#if defined(__x86_64__) && TTAK_MEM_FASTPATH_USE_X86_64_ASM
     size_t qwords = len >> 3;
     if (qwords) {
         __asm__ volatile(
@@ -161,7 +184,7 @@ void ttak_mem_stream_copy(void *dst, const void *src, size_t len) {
             : "memory");
     }
     return;
-#elif defined(__aarch64__)
+#elif defined(__aarch64__) && TTAK_MEM_FASTPATH_USE_AARCH64_ASM
     size_t loops = len / 32;
     size_t bulk = loops * 32;
     if (loops) {
@@ -180,7 +203,7 @@ void ttak_mem_stream_copy(void *dst, const void *src, size_t len) {
     size_t rem = len - bulk;
     if (rem) ttak_mem_copy_fallback(dst_ptr, src_ptr, rem);
     return;
-#elif defined(__riscv_xlen) && (__riscv_xlen == 64)
+#elif defined(__riscv_xlen) && (__riscv_xlen == 64) && TTAK_MEM_FASTPATH_USE_RISCV64_ASM
     size_t loops = len / 8;
     size_t bulk = loops * 8;
     if (loops) {
@@ -200,7 +223,8 @@ void ttak_mem_stream_copy(void *dst, const void *src, size_t len) {
     size_t rem = len - bulk;
     if (rem) ttak_mem_copy_fallback(dst_ptr, src_ptr, rem);
     return;
-#elif defined(__mips64) || defined(__mips64__) || (defined(__mips) && (__mips == 64))
+#elif (defined(__mips64) || defined(__mips64__) || (defined(__mips) && (__mips == 64))) && \
+    TTAK_MEM_FASTPATH_USE_MIPS64_ASM
     size_t loops = len / 8;
     size_t bulk = loops * 8;
     if (loops) {
@@ -224,7 +248,7 @@ void ttak_mem_stream_copy(void *dst, const void *src, size_t len) {
     size_t rem = len - bulk;
     if (rem) ttak_mem_copy_fallback(dst_ptr, src_ptr, rem);
     return;
-#elif defined(__powerpc64__) || defined(__ppc64__)
+#elif (defined(__powerpc64__) || defined(__ppc64__)) && TTAK_MEM_FASTPATH_USE_PPC64_ASM
     size_t loops = len / 32;
     size_t bulk = loops * 32;
     if (loops) {
