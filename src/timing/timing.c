@@ -16,17 +16,35 @@ void calibrate_tsc(void) {
 
     pthread_mutex_lock(&g_tsc_mutex);
     if (g_tsc_freq_ghz == 0) {
+        uint64_t tsc_start, tsc_end;
+        double elapsed;
+
+#ifdef _WIN32
+        LARGE_INTEGER qpf, qpc_start, qpc_end;
+        QueryPerformanceFrequency(&qpf);
+        QueryPerformanceCounter(&qpc_start);
+        tsc_start = __rdtsc();
+
+        Sleep(10); // 10ms
+
+        QueryPerformanceCounter(&qpc_end);
+        tsc_end = __rdtsc();
+
+        elapsed = (double)(qpc_end.QuadPart - qpc_start.QuadPart) / (double)qpf.QuadPart;
+#else
         struct timespec ts_start, ts_end;
         clock_gettime(CLOCK_MONOTONIC, &ts_start);
-        uint64_t tsc_start = __rdtsc();
-        
+        tsc_start = __rdtsc();
+
         struct timespec sleep_ts = {0, 10000000}; // 10ms
         nanosleep(&sleep_ts, NULL);
-        
+
         clock_gettime(CLOCK_MONOTONIC, &ts_end);
-        uint64_t tsc_end = __rdtsc();
-        
-        double elapsed = (double)(ts_end.tv_sec - ts_start.tv_sec) + (double)(ts_end.tv_nsec - ts_start.tv_nsec) * 1e-9;
+        tsc_end = __rdtsc();
+
+        elapsed = (double)(ts_end.tv_sec - ts_start.tv_sec) + (double)(ts_end.tv_nsec - ts_start.tv_nsec) * 1e-9;
+#endif
+
         if (elapsed > 0) {
             double freq_hz = (double)(tsc_end - tsc_start) / elapsed;
             uint64_t freq_ghz = (uint64_t)(freq_hz / 1e9);
