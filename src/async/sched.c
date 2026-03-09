@@ -7,15 +7,15 @@
 #endif
 #include <stddef.h>
 #ifdef _WIN32
-    #ifndef WIN32_LEAN_AND_MEAN
-        #define WIN32_LEAN_AND_MEAN
-    #endif
-    #include <windows.h>
+#  ifndef WIN32_LEAN_AND_MEAN
+#    define WIN32_LEAN_AND_MEAN
+#  endif
+#  include <windows.h>
 #else
-    #include <unistd.h>
-    #if defined(__NetBSD__) || defined(__OpenBSD__)
-        #include "../../internal/compat/bsd_sysctl.h"
-    #endif
+#  include <unistd.h>
+#  if defined(__NetBSD__) || defined(__OpenBSD__)
+#    include "../../internal/compat/bsd_sysctl.h"
+#  endif
 #endif
 
 ttak_thread_pool_t *async_pool = NULL;

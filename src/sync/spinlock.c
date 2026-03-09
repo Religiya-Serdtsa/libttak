@@ -2,8 +2,13 @@
 #include <ttak/types/ttak_compiler.h>
 #include <time.h>
 #include <stdlib.h>
-#include <sched.h>
-#ifdef _WIN32
+
+#ifndef _WIN32
+#  include <sched.h>
+#else
+#  ifndef WIN32_LEAN_AND_MEAN
+#    define WIN32_LEAN_AND_MEAN
+#  endif
 #  include <windows.h>
 #endif
 
@@ -60,7 +65,7 @@ void ttak_spin_lock(ttak_spin_t *lock) {
             : : "memory"
         );
         if (!old) return;
-        
+
         /* Backoff */
         if (++loop < 100) {
             __asm__ volatile ("pause");
