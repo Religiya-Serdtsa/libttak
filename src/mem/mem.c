@@ -276,7 +276,7 @@ void ttak_dangerous_free(void *ptr) {
 /**
  * @brief Recalculates the global friction as the product of all class values.
  */
-static ttak_fixed_16_16_t ttak_mem_calculate_global_friction(void) __attribute__((unused));
+static ttak_fixed_16_16_t ttak_mem_calculate_global_friction(void) TTAK_MAYBE_UNUSED;
 static ttak_fixed_16_16_t ttak_mem_calculate_global_friction(void) {
     ttak_fixed_16_16_t friction_product = TTAK_FP_ONE;
     for (int i = 0; i < 4; ++i) {
