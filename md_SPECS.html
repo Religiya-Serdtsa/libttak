@@ -93,11 +93,11 @@ $(document).ready(function(){initNavTree('md_SPECS.html',''); initResizable(); }
   <div class="headertitle"><div class="title">LibTTAK Specification</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md47"></a> </p>
-<h1><a class="anchor" id="autotoc_md48"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md41"></a> </p>
+<h1><a class="anchor" id="autotoc_md42"></a>
 1. Purpose</h1>
 <p>LibTTAK is a C systems collection purpose-built to keep AI-generated code predictable by forcing allocations, tasking, and teardown through explicit lifetimes. This document captures the guiding philosophy, architectural contracts, and module-level specifications that every contribution must respect.</p>
-<h1><a class="anchor" id="autotoc_md49"></a>
+<h1><a class="anchor" id="autotoc_md43"></a>
 2. Design Philosophy</h1>
 <ul>
 <li><b>Gentle:</b> APIs prefer explicit opt-in macros and flagged structures over global switches. Every subsystem must provide a safe default path before exposing "danger" helpers.</li>
@@ -106,7 +106,7 @@ $(document).ready(function(){initNavTree('md_SPECS.html',''); initResizable(); }
 <li><b>Memory-for-Speed:</b> Throughput wins over RSS as long as fragmentation is explainable. Segmented shards, arenas, and bulk reclamation deliberately trade memory for lock-free scaling.</li>
 <li><b>Math-grounded:</b> Core synchronization follows Choi Seok-jeong's Orthogonal Latin Square (OLS) principle to minimize contention via deterministic slot isolation.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md50"></a>
+<h1><a class="anchor" id="autotoc_md44"></a>
 3. Architectural Overview</h1>
 <ol type="1">
 <li><b>Generational Arenas:</b> Thread-local detachable arenas own all user allocations. Every pointer carries provenance (arena row, tier, lifetime, owner policy).</li>
@@ -116,9 +116,9 @@ $(document).ready(function(){initNavTree('md_SPECS.html',''); initResizable(); }
 <li><b>Acceleration Plane:</b> Optional accelerator drivers (CPU, CUDA, OpenCL, ROCm) are selected at runtime through <code>ttak_execute_batch</code> and <code>ttak_security_pick_driver</code>.</li>
 <li><b>Observability:</b> Stats, logging, and tracing are integrated into every high-level component. Enabling tracing (<code>ttak_mem_set_trace</code>) must produce deterministic, owner-scoped logs.</li>
 </ol>
-<h1><a class="anchor" id="autotoc_md51"></a>
+<h1><a class="anchor" id="autotoc_md45"></a>
 4. Memory Model</h1>
-<h2><a class="anchor" id="autotoc_md52"></a>
+<h2><a class="anchor" id="autotoc_md46"></a>
 4.1 Fortress Allocator (&lt;tt&gt;ttak_mem_alloc_safe&lt;/tt&gt;)</h2>
 <ul>
 <li><b>Headers:</b> Every allocation is preceded by a 64-byte header recording magic number, checksums, creation/expiration ticks, access counts, pin counts, and security flags (immutable, volatile, root, strict).</li>
@@ -127,27 +127,27 @@ $(document).ready(function(){initNavTree('md_SPECS.html',''); initResizable(); }
 <li><b>Safety Flags:</b> Strict mode enables canary checks; huge pages and cache alignment are opt-in with <code>ttak_mem_flags_t</code>.</li>
 <li><b>Fast Paths:</b> TinyCC builds rely on <code>ttak_mem_stream_zero/copy</code> to preserve throughput even when the compiler emits -O0 code.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md53"></a>
+<h2><a class="anchor" id="autotoc_md47"></a>
 4.2 Epoch &amp; Garbage Collection</h2>
 <ul>
 <li><b>Epoch Sessions:</b> Three rotating queues store retired nodes. Threads must register (<code>ttak_epoch_register_thread</code>) before entering epochs.</li>
 <li><b>Retire Contracts:</b> Every shared pointer freed outside its owning arena must be passed to <code>ttak_epoch_retire</code> with a cleanup callback.</li>
 <li><b>Mem Tree:</b> <code>ttak_mem_tree_t</code> tracks active nodes, reference counts, expiration ticks, and drives cleanup threads with adaptive intervals.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md54"></a>
+<h2><a class="anchor" id="autotoc_md48"></a>
 4.3 Detachable Arenas</h2>
 <ul>
 <li><b>Context Flags:</b> Arenas advertise capabilities (<code>TTAK_ARENA_HAS_OWNER</code>, <code>TTAK_ARENA_HAS_EPOCH_RECLAMATION</code>, etc.) so callers know which safety rails are active.</li>
 <li><b>Generation Matrix:</b> Rows of detachable generations avoid fragmentation and maintain zero-cost reuse for ≤16-byte chunks via per-context caches.</li>
 <li><b>Detachment Lifecycle:</b> <code>ttak_detach_status_t</code> guarantees status convergence. Writers must mark the status known and call <code>ttak_detachable_mem_free</code> to return memory through caches.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md55"></a>
+<h2><a class="anchor" id="autotoc_md49"></a>
 4.4 Ownership</h2>
 <ul>
 <li><b>Owner Records:</b> <code>ttak_owner_t</code> wraps resources and functions with maps guarded by RW locks. Transfers (<code>ttak_owner_transfer_resource</code>) are explicit and logged.</li>
 <li><b>Safe Execution:</b> <code>ttak_owner_execute</code> enforces policy bits (deny dangerous mem, deny threading, strict isolation) before invoking registered work.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md56"></a>
+<h1><a class="anchor" id="autotoc_md50"></a>
 5. Concurrency Model</h1>
 <ul>
 <li><b>Workers &amp; Thread Pool:</b> <code>ttak_thread_pool_t</code> spawns lazily, binding each worker to a <code>ttak_worker_wrapper_t</code> that installs <code>sigsetjmp</code> recovery points. Abort paths jump back via <code>ttak_worker_abort</code>.</li>
@@ -156,7 +156,7 @@ $(document).ready(function(){initNavTree('md_SPECS.html',''); initResizable(); }
 <li><b>Synchronization:</b> Standard pthread primitives are wrapped (<code>ttak_mutex_t</code>, <code>ttak_rwlock_t</code>) for clarity, while specialized spinlocks guard small stats/token-bucket structures.</li>
 <li><b>Segmented Shards:</b> Shared data uses per-thread slots to eliminate cache-line ping-pong. EBR protection is optional per access (<code>access_ebr</code>/<code>release_ebr</code>).</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md57"></a>
+<h1><a class="anchor" id="autotoc_md51"></a>
 6. Data Structures</h1>
 <ul>
 <li><b>Hash Tables:</b> Struct-of-arrays integer maps (<code><a class="el" href="structttak__map__t.html" title="Map structure using Structure of Arrays (SoA) for cache efficiency.">ttak_map_t</a></code>) resize on 1/3 load, shrink under 1/2, and expose wyhash-based fingerprints. All operations accept <code>now</code> timestamps for auditing.</li>
@@ -165,7 +165,7 @@ $(document).ready(function(){initNavTree('md_SPECS.html',''); initResizable(); }
 <li><b>Trees:</b> AST, B/B+ trees, and mem trees are arena-allocated. Free hooks must be provided so arenas can collapse without leaks.</li>
 <li><b>Dynamic Masks:</b> <code><a class="el" href="structttak__dynamic__mask__t.html" title="Thread-safe dynamic bitmap. Optimized for lock-free reads via EBR.">ttak_dynamic_mask_t</a></code> offers scalable bitmaps with lock-free reads and writer-side RW locks, underpinning owner and shard registries.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md58"></a>
+<h1><a class="anchor" id="autotoc_md52"></a>
 7. I/O Model</h1>
 <ul>
 <li><b>Guards:</b> <code>ttak_io_guard_t</code> wraps file descriptors with TTL metadata and owner provenance. Once <code>expires_at</code> &lt; <code>now</code>, all operations must fail with <code>TTAK_IO_ERR_EXPIRED_GUARD</code>.</li>
@@ -174,7 +174,7 @@ $(document).ready(function(){initNavTree('md_SPECS.html',''); initResizable(); }
 <li><b>Polling:</b> <code>ttak_io_poll_wait</code> consults guards, executes callbacks, and optionally schedules async work via the pool when <code>schedule_async</code> is true.</li>
 <li><b>Rate Limiting:</b> <code>ttak_token_bucket_t</code> and <code>ttak_ratelimit_t</code> provide spinlock-guarded token buckets for user-defined throttles.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md59"></a>
+<h1><a class="anchor" id="autotoc_md53"></a>
 8. Math &amp; Scripting</h1>
 <ul>
 <li><b>Bigint Engine:</b> Portable limb arithmetic (small-stack optimization) enables Montgomery math, mersenne reductions, and multi-limb operations even under TinyCC.</li>
@@ -183,7 +183,7 @@ $(document).ready(function(){initNavTree('md_SPECS.html',''); initResizable(); }
 <li><b>Physics Helpers:</b> Dimensionless transport utilities (Re, Sc, Pe, Sh, Pr, Gr, Ra) enforce domain-specific argument validation.</li>
 <li><b>Accelerators:</b> <code>ttak_execute_batch</code> and math accelerators use mask/checksum seeds for integrity verification across heterogeneous backends.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md60"></a>
+<h1><a class="anchor" id="autotoc_md54"></a>
 9. Security &amp; Integrity</h1>
 <ul>
 <li><b>Security Engine:</b> <code>ttak_security_execute</code> dispatches LEA, SEED, AES-256-GCM, ChaCha20-Poly1305, hashes, and KDFs to scalar, SIMD, or hardware drivers selected at runtime.</li>
@@ -191,7 +191,7 @@ $(document).ready(function(){initNavTree('md_SPECS.html',''); initResizable(); }
 <li><b>Logging:</b> <code>ttak_logger_t</code> centralizes logging with optional global memory tracing toggles. Critical paths must log owner IDs, epochs, and shard slots when diagnostics are enabled.</li>
 <li><b>Net Sessions:</b> Session managers (<code>ttak_net_session_mgr_t</code>) keep generation IDs, parent/child graphs, and state flags (ACTIVE, ZOMBIE, IMMORTAL). Policy bits (ALERT, RESTART) govern recovery.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md61"></a>
+<h1><a class="anchor" id="autotoc_md55"></a>
 10. Extensibility Rules</h1>
 <ol type="1">
 <li><b>New subsystems must declare ownership:</b> Every public structure requires explicit <code>ttak_owner_t</code> or shard integration.</li>
@@ -201,21 +201,21 @@ $(document).ready(function(){initNavTree('md_SPECS.html',''); initResizable(); }
 <li><b>TinyCC parity:</b> Features must build under TinyCC <code>-O0</code> with the default flag set. If ISA-specific optimizations are required, guard them and supply portable fallbacks.</li>
 <li><b>No implicit threads:</b> Background threads (cleanup, schedulers) must be registered, named, and tied to owners/arenas for deterministic shutdown.</li>
 </ol>
-<h1><a class="anchor" id="autotoc_md62"></a>
+<h1><a class="anchor" id="autotoc_md56"></a>
 11. Performance Expectations</h1>
 <ul>
 <li><b>Throughput:</b> Multi-threaded TTL cache benchmarks must exceed 30M ops/s on a Ryzen 5600X-class CPU when tuned.</li>
 <li><b>Latency:</b> Critical lock-free paths target ~80 ns latency under load.</li>
 <li><b>Resource Discipline:</b> Controlled memory growth is acceptable provided RSS stabilization strategies (manual cleanup, pressure thresholds) remain configurable.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md63"></a>
+<h1><a class="anchor" id="autotoc_md57"></a>
 12. Documentation &amp; Testing</h1>
 <ul>
 <li><b>Docs:</b> Every API addition requires Doxygen comments and, when applicable, blueprint updates. <a class="el" href="SPECS_8md.html">SPECS.md</a> remains the canonical high-level reference.</li>
 <li><b>Testing:</b> CI must cover epoch safety, owner enforcement, zero-copy IO loops, hash maps under contention, and security engine correctness. TinyCC build targets must be part of the test matrix.</li>
 <li><b>Blueprint Alignment:</b> Architectural diagrams (see <code>blueprints/png/integration/all.png</code>) must match code wiring; changes that diverge must update both the blueprint and this document.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md64"></a>
+<h1><a class="anchor" id="autotoc_md58"></a>
 13. Compliance Checklist</h1>
 <p>Before merging, confirm:</p><ol type="1">
 <li>Allocations go through arenas or detachable contexts with lifetime hints.</li>

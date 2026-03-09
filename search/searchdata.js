@@ -9,7 +9,7 @@ var indexSectionsWithContent =
   6: "mt",
   7: "mt",
   8: "_adeopst",
-  9: "abcdhlmopst"
+  9: "bcdhlps"
 };
 
 var indexSectionNames =

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['math_20tuning_0',['TCC-Oriented Build and Math Tuning',['../md_docs_2TCC__OPTIMIZATION.html',1,'']]]
+  ['specification_0',['LibTTAK Specification',['../md_SPECS.html',1,'']]],
+  ['suite_1',['LibTTAK Benchmark Suite',['../index.html',1,'']]]
 ];

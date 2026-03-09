@@ -26,38 +26,31 @@ var NAVTREE =
 [
   [ "libttak", "index.html", [
     [ "LibTTAK Benchmark Suite", "index.html", "index" ],
-    [ "TCC-Oriented Build and Math Tuning", "md_docs_2TCC__OPTIMIZATION.html", [
-      [ "Build Expectations", "md_docs_2TCC__OPTIMIZATION.html#autotoc_md17", null ],
-      [ "Hardcore C Tricks", "md_docs_2TCC__OPTIMIZATION.html#autotoc_md18", null ],
-      [ "Portable Assembly Strategy", "md_docs_2TCC__OPTIMIZATION.html#autotoc_md19", null ],
-      [ "TinyCC Streaming Fast Paths", "md_docs_2TCC__OPTIMIZATION.html#autotoc_md20", null ],
-      [ "Applying the Tricks Elsewhere", "md_docs_2TCC__OPTIMIZATION.html#autotoc_md21", null ]
-    ] ],
     [ "Development History", "md_HISTORY.html", [
-      [ "2026-01-30", "md_HISTORY.html#autotoc_md23", [
-        [ "Initial Skeleton Creation & Build Stabilization", "md_HISTORY.html#autotoc_md24", null ],
-        [ "Key Diffs Overview", "md_HISTORY.html#autotoc_md25", null ]
+      [ "2026-01-30", "md_HISTORY.html#autotoc_md17", [
+        [ "Initial Skeleton Creation & Build Stabilization", "md_HISTORY.html#autotoc_md18", null ],
+        [ "Key Diffs Overview", "md_HISTORY.html#autotoc_md19", null ]
       ] ]
     ] ],
     [ "LibTTAK Specification", "md_SPECS.html", [
-      [ "1. Purpose", "md_SPECS.html#autotoc_md48", null ],
-      [ "2. Design Philosophy", "md_SPECS.html#autotoc_md49", null ],
-      [ "3. Architectural Overview", "md_SPECS.html#autotoc_md50", null ],
-      [ "4. Memory Model", "md_SPECS.html#autotoc_md51", [
-        [ "4.1 Fortress Allocator (<tt>ttak_mem_alloc_safe</tt>)", "md_SPECS.html#autotoc_md52", null ],
-        [ "4.2 Epoch & Garbage Collection", "md_SPECS.html#autotoc_md53", null ],
-        [ "4.3 Detachable Arenas", "md_SPECS.html#autotoc_md54", null ],
-        [ "4.4 Ownership", "md_SPECS.html#autotoc_md55", null ]
+      [ "1. Purpose", "md_SPECS.html#autotoc_md42", null ],
+      [ "2. Design Philosophy", "md_SPECS.html#autotoc_md43", null ],
+      [ "3. Architectural Overview", "md_SPECS.html#autotoc_md44", null ],
+      [ "4. Memory Model", "md_SPECS.html#autotoc_md45", [
+        [ "4.1 Fortress Allocator (<tt>ttak_mem_alloc_safe</tt>)", "md_SPECS.html#autotoc_md46", null ],
+        [ "4.2 Epoch & Garbage Collection", "md_SPECS.html#autotoc_md47", null ],
+        [ "4.3 Detachable Arenas", "md_SPECS.html#autotoc_md48", null ],
+        [ "4.4 Ownership", "md_SPECS.html#autotoc_md49", null ]
       ] ],
-      [ "5. Concurrency Model", "md_SPECS.html#autotoc_md56", null ],
-      [ "6. Data Structures", "md_SPECS.html#autotoc_md57", null ],
-      [ "7. I/O Model", "md_SPECS.html#autotoc_md58", null ],
-      [ "8. Math & Scripting", "md_SPECS.html#autotoc_md59", null ],
-      [ "9. Security & Integrity", "md_SPECS.html#autotoc_md60", null ],
-      [ "10. Extensibility Rules", "md_SPECS.html#autotoc_md61", null ],
-      [ "11. Performance Expectations", "md_SPECS.html#autotoc_md62", null ],
-      [ "12. Documentation & Testing", "md_SPECS.html#autotoc_md63", null ],
-      [ "13. Compliance Checklist", "md_SPECS.html#autotoc_md64", null ]
+      [ "5. Concurrency Model", "md_SPECS.html#autotoc_md50", null ],
+      [ "6. Data Structures", "md_SPECS.html#autotoc_md51", null ],
+      [ "7. I/O Model", "md_SPECS.html#autotoc_md52", null ],
+      [ "8. Math & Scripting", "md_SPECS.html#autotoc_md53", null ],
+      [ "9. Security & Integrity", "md_SPECS.html#autotoc_md54", null ],
+      [ "10. Extensibility Rules", "md_SPECS.html#autotoc_md55", null ],
+      [ "11. Performance Expectations", "md_SPECS.html#autotoc_md56", null ],
+      [ "12. Documentation & Testing", "md_SPECS.html#autotoc_md57", null ],
+      [ "13. Compliance Checklist", "md_SPECS.html#autotoc_md58", null ]
     ] ],
     [ "Clone Coding Path", "md_tutorials_2CLONE__PATH.html", null ],
     [ "Classes", "annotated.html", [
@@ -88,13 +81,13 @@ var NAVTREEINDEX =
 [
 "00__overview_8puml.html",
 "context_8h.html#a3ce5ce1f27b068f718459c1316c97bc9",
-"fixed_8h.html#a8efab2f600f17fcb131ed9c647277c81",
-"io_8h.html#a4c5731f8c7bf69338c8fba54e58f3109a4daa069a8f600416376c6ced88c18b23",
-"pair_8h_source.html",
-"structtt__type__shared.html#accb59476dc158f9f07b3b3aee82d8bee",
-"structttak__lf__queue__t.html",
-"structttak__shared__s.html#a5545262c3ef21dce6c7eab22473c61a7",
-"ttak__accelerator_8h.html#ac7cac2c972f22538284d97bf3220ea04"
+"fixed_8h.html#a8fc96f8e7f1d99183873dcfa432f42af",
+"io_8h.html#a4c5731f8c7bf69338c8fba54e58f3109a54de52442b04580a6239efda00de1e3b",
+"port_8h.html#a9c772162be718df750f452ed87452d80a7116cce06df0cf2629d60b0403cd8100",
+"structttak__accel__batch__item.html#ab5cee442fa3e2f7fb118dbfe24b376dd",
+"structttak__logger.html#ad14eb5229a9a1b9546005984b0f33433",
+"structttak__shared__s.html#aa3ed576e6146a3d1f6d1a22d19d5d5cb",
+"ttak__align_8h.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

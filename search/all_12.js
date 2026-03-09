@@ -1,7 +1,7 @@
 var searchData=
 [
   ['g_5fepoch_5fmgr_0',['g_epoch_mgr',['../epoch_8h.html#a2192db0d487496ef34e4fa90b8b49329',1,'epoch.h']]],
-  ['garbage_20collection_1',['4.2 Epoch &amp; Garbage Collection',['../md_SPECS.html#autotoc_md53',1,'']]],
+  ['garbage_20collection_1',['4.2 Epoch &amp; Garbage Collection',['../md_SPECS.html#autotoc_md47',1,'']]],
   ['garbage_5fpressure_2',['garbage_pressure',['../structttak__mem__tree.html#a96aa133fccd921e1063aaa7e0461b32f',1,'ttak_mem_tree']]],
   ['gc_3',['gc',['../structttak__arena__env__config.html#ae6f51b622fa0539e034351e8044446b3',1,'ttak_arena_env_config::gc'],['../structttak__arena__env.html#a1ab4b3d6e34cc697fd533255241ba768',1,'ttak_arena_env::gc']]],
   ['gen_5fhash_5fsip24_4',['gen_hash_sip24',['../hash_8h.html#a86c0b717fb0af43c6f5c2232a2efa00f',1,'hash.h']]],
@@ -23,9 +23,9 @@ var searchData=
   ['global_5ffriction_20',['global_friction',['../structttak__mem__friction__matrix__t.html#a00aa5aa478a1fcd54691026789da2c7c',1,'ttak_mem_friction_matrix_t']]],
   ['global_5ffriction_5fmatrix_21',['global_friction_matrix',['../mem__internal_8h.html#a01418a27cc1879ab847f8bb8a395dc47',1,'mem_internal.h']]],
   ['global_5fvma_5fregion_22',['global_vma_region',['../mem__internal_8h.html#a786e428521881ef54ae52854d0b18b5e',1,'mem_internal.h']]],
-  ['groups_23',['Lesson Groups',['..//home/runner/work/libttak/libttak/tutorials/README.md#autotoc_md218',1,'']]],
-  ['guarantees_24',['Coverage Guarantees',['..//home/runner/work/libttak/libttak/tutorials/README.md#autotoc_md219',1,'']]],
+  ['groups_23',['Lesson Groups',['..//home/runner/work/libttak/libttak/tutorials/README.md#autotoc_md212',1,'']]],
+  ['guarantees_24',['Coverage Guarantees',['..//home/runner/work/libttak/libttak/tutorials/README.md#autotoc_md213',1,'']]],
   ['guard_25',['guard',['../structttak__net__endpoint.html#af3c9143a555226b9b428649b003e5f80',1,'ttak_net_endpoint']]],
   ['guard_5fgeneration_26',['guard_generation',['../structttak__net__guard__snapshot.html#a87415245ba07fc22201aa2206c46453d',1,'ttak_net_guard_snapshot']]],
-  ['guards_27',['Stage 10 – Arena Families &amp; Signal Guards',['../md_tutorials_2CLONE__PATH.html#autotoc_md211',1,'']]]
+  ['guards_27',['Stage 10 – Arena Families &amp; Signal Guards',['../md_tutorials_2CLONE__PATH.html#autotoc_md205',1,'']]]
 ];
