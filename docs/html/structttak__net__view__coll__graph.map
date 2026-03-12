@@ -1,23 +1,23 @@
 <map id="ttak_net_view" name="ttak_net_view">
-<area shape="rect" id="Node000001" title="Read&#45;only zero&#45;copy snapshot returned by ttak_net_view_from_endpoint()." alt="" coords="412,327,525,355"/>
-<area shape="rect" id="Node000002" href="$structttak__io__zerocopy__region.html" title="Temporary zero&#45;copy receive window allocated in a detachable arena." alt="" coords="240,216,420,244"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="352,254,403,301,441,324,439,329,399,305,349,258"/>
-<area shape="rect" id="Node000003" href="$structttak__detachable__context.html" title="State holder for detachable memory contexts." alt="" coords="279,106,461,134"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="363,149,337,217,332,215,358,147"/>
-<area shape="rect" id="Node000004" href="$structttak__detach__status.html" title="Tracks the detach lifecycle of a detachable block." alt="" coords="5,5,151,33"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="121,38,148,55,160,68,173,80,217,93,279,104,278,109,216,98,171,84,157,72,144,59,118,43"/>
-<area shape="rect" id="Node000007" href="$structttak__detachable__allocation.html" title="Description of the detachable allocation returned to callers." alt="" coords="58,106,255,134"/>
-<area shape="poly" id="edge7_Node000007_Node000004" title=" " alt="" coords="56,46,46,64,46,73,49,81,62,94,79,103,76,108,59,98,45,83,41,73,41,63,51,43"/>
-<area shape="rect" id="Node000005" href="$structttak__detachable__cache.html" title="Per&#45;context cache for tiny detachable chunks (&lt;= 16 bytes)." alt="" coords="207,5,378,33"/>
-<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="328,41,343,55,358,81,368,105,363,107,354,83,339,59,324,45"/>
-<area shape="poly" id="edge8_Node000007_Node000005" title=" " alt="" coords="287,49,278,68,265,84,245,98,223,108,220,103,242,93,262,80,274,65,282,47"/>
-<area shape="rect" id="Node000006" href="$structttak__detachable__generation__row.html" title="Fixed&#45;width arena row descriptor." alt="" coords="402,5,636,33"/>
-<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="498,46,451,84,406,108,403,103,449,80,495,42"/>
-<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="192,140,310,214,308,218,189,144"/>
-<area shape="rect" id="Node000008" href="$structttak__net__lattice__slot.html" title="A single data slot in the lattice." alt="" coords="501,106,655,134"/>
-<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="544,145,510,172,495,189,483,208,472,239,468,272,469,326,464,327,462,272,467,238,478,206,491,186,507,168,540,140"/>
-<area shape="rect" id="Node000009" href="$structttak__net__lattice.html" title="The Lattice (Sanpan) structure." alt="" coords="524,216,648,244"/>
-<area shape="poly" id="edge11_Node000009_Node000008" title=" " alt="" coords="583,149,588,216,582,216,577,149"/>
-<area shape="poly" id="edge10_Node000001_Node000009" title=" " alt="" coords="563,257,485,328,481,324,559,253"/>
-<area shape="poly" id="edge12_Node000009_Node000009" title=" " alt="" coords="665,220,674,230,666,240,649,244,647,239,664,235,669,230,661,224"/>
+<area shape="rect" id="Node000001" title="Read&#45;only zero&#45;copy snapshot returned by ttak_net_view_from_endpoint()." alt="" coords="407,273,521,299"/>
+<area shape="rect" id="Node000002" href="$structttak__io__zerocopy__region.html" title="Temporary zero&#45;copy receive window allocated in a detachable arena." alt="" coords="235,183,416,209"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="353,215,401,247,443,271,440,275,399,252,350,219"/>
+<area shape="rect" id="Node000003" href="$structttak__detachable__context.html" title="State holder for detachable memory contexts." alt="" coords="273,93,455,119"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="356,132,333,184,328,182,351,130"/>
+<area shape="rect" id="Node000004" href="$structttak__detach__status.html" title="Tracks the detach lifecycle of a detachable block." alt="" coords="5,5,152,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="115,35,149,52,174,67,223,82,273,92,272,97,222,87,172,72,147,57,113,39"/>
+<area shape="rect" id="Node000007" href="$structttak__detachable__allocation.html" title="Description of the detachable allocation returned to callers." alt="" coords="50,93,249,119"/>
+<area shape="poly" id="edge7_Node000007_Node000004" title=" " alt="" coords="59,43,52,56,54,68,68,81,85,91,82,96,65,86,50,71,47,55,54,40"/>
+<area shape="rect" id="Node000005" href="$structttak__detachable__cache.html" title="Per&#45;context cache for tiny detachable chunks (&lt;= 16 bytes)." alt="" coords="205,5,377,31"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="320,37,337,53,361,92,357,95,333,56,317,41"/>
+<area shape="poly" id="edge8_Node000007_Node000005" title=" " alt="" coords="283,45,263,71,240,86,214,96,212,91,237,81,260,67,279,42"/>
+<area shape="rect" id="Node000006" href="$structttak__detachable__generation__row.html" title="Fixed&#45;width arena row descriptor." alt="" coords="401,5,636,31"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="490,40,437,72,390,96,387,91,435,67,488,36"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="186,122,304,181,301,186,183,127"/>
+<area shape="rect" id="Node000008" href="$structttak__net__lattice__slot.html" title="A single data slot in the lattice." alt="" coords="495,93,649,119"/>
+<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="538,128,506,151,480,183,470,206,466,231,465,273,460,273,460,230,465,205,475,180,503,147,535,123"/>
+<area shape="rect" id="Node000009" href="$structttak__net__lattice.html" title="The Lattice (Sanpan) structure." alt="" coords="518,183,642,209"/>
+<area shape="poly" id="edge11_Node000009_Node000008" title=" " alt="" coords="577,132,582,183,576,183,572,133"/>
+<area shape="poly" id="edge10_Node000001_Node000009" title=" " alt="" coords="555,219,481,275,478,271,552,215"/>
+<area shape="poly" id="edge12_Node000009_Node000009" title=" " alt="" coords="657,187,669,196,660,204,643,207,642,202,658,199,663,196,654,192"/>
 </map>

@@ -8,17 +8,3 @@ Directory dependency graph for 27-\/ntt-\/module\+:
 \includegraphics[width=198pt]{dir_4b87bc2451e01c48362310a5389159b3_dep}
 \end{center}
 \end{figure}
-
-
-\doxysubsection{Detailed Description}
-\hypertarget{README.md_autotoc_md113}{}\doxysubsection{\texorpdfstring{Tutorial 27 – NTT Module}{Tutorial 27 – NTT Module}}\label{README.md_autotoc_md113}
-{\ttfamily modules/27-\/ntt-\/module} dives into the Number-\/\+Theoretic Transform implementation found in {\ttfamily src/math/ntt.\+c}.
-
-{\ttfamily lesson27\+\_\+ntt\+\_\+module.\+c} performs a forward + inverse transform; build it after every major change to confirm round-\/trips still work.\hypertarget{README.md_autotoc_md114}{}\doxysubsection{\texorpdfstring{Checklist}{Checklist}}\label{README.md_autotoc_md114}
-
-\begin{DoxyEnumerate}
-\item Capture the modulus/primitive-\/root table and how twiddle factors are cached so you replicate the structure accurately.
-\item Rebuild {\ttfamily ttak\+\_\+ntt\+\_\+transform}, pointwise multiply, and CRT combine helpers as described in the lesson.
-\item Run {\ttfamily make tests/test\+\_\+math\+\_\+advanced} since it already performs round-\/trips and pointwise-\/multiply checks.
-\item Store any additional test vectors or plots here for future debugging. 
-\end{DoxyEnumerate}

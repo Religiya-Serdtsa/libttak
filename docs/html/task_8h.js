@@ -1,5 +1,6 @@
 var task_8h =
 [
+    [ "ttak_promise_t", "task_8h.html#aa604edbaa7c611ec386757f8db43d1e3", null ],
     [ "ttak_task_func_t", "task_8h.html#aef94bfb234ab18af239e4a15f8366480", null ],
     [ "ttak_task_t", "task_8h.html#a6a4c7b4b8f087d53e7b2a92f84db216e", null ],
     [ "ttak_task_clone", "task_8h.html#a95071c16c2a8a8982bc55c09845b2cb8", null ],

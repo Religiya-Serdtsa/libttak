@@ -5,20 +5,6 @@ Directory dependency graph for 09-\/mutex-\/primitives\+:
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=228pt]{dir_ee9ff8099f2c78944fea07534c1a5ddb_dep}
+\includegraphics[width=230pt]{dir_ee9ff8099f2c78944fea07534c1a5ddb_dep}
 \end{center}
 \end{figure}
-
-
-\doxysubsection{Detailed Description}
-\hypertarget{README.md_autotoc_md76}{}\doxysubsection{\texorpdfstring{Tutorial 09 – Mutex Primitives}{Tutorial 09 – Mutex Primitives}}\label{README.md_autotoc_md76}
-This workspace mirrors {\ttfamily modules/09-\/mutex-\/primitives} where you re-\/implement the thin wrappers in {\ttfamily src/sync/sync.\+c}.
-
-{\ttfamily lesson09\+\_\+mutex\+\_\+primitives.\+c} is a micro app that takes the mutex through its lifecycle—build/run it as you verify lock/unlock/teardown paths.\hypertarget{README.md_autotoc_md77}{}\doxysubsection{\texorpdfstring{Checklist}{Checklist}}\label{README.md_autotoc_md77}
-
-\begin{DoxyEnumerate}
-\item Capture the invariants for {\ttfamily \doxylink{sync_2sync_8h_a099d39f1f8999756bc828ad4b337d5b6}{ttak\+\_\+mutex\+\_\+t}} (zeroed struct, pthread backing, error handling) in a note under this folder.
-\item Rebuild {\ttfamily ttak\+\_\+mutex\+\_\+init}, {\ttfamily ttak\+\_\+mutex\+\_\+lock}, {\ttfamily ttak\+\_\+mutex\+\_\+unlock}, and {\ttfamily ttak\+\_\+mutex\+\_\+destroy}, paying attention to how failures are reported upstream.
-\item Use {\ttfamily make tests/test\+\_\+sync} to run the synchronization regression suite after every major change.
-\item Log any scheduler interactions or priority-\/inversion considerations you want to revisit during the worker/thread lessons. 
-\end{DoxyEnumerate}

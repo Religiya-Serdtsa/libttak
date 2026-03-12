@@ -37,24 +37,22 @@ void \mbox{\hyperlink{container_2pool_8h_aa76851f60ea6890bb00c8127cbe448dd}{ttak
 \begin{DoxyCompactList}\small\item\em Returns an object to the pool (frees it). \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
-\label{doc-typedef-members}
-\Hypertarget{container_2pool_8h_doc-typedef-members}
 \doxysubsection{Typedef Documentation}
-\Hypertarget{container_2pool_8h_a23a4fa9c71c011f57ec588df18ca906b}\index{pool.h@{pool.h}!tt\_object\_pool\_t@{tt\_object\_pool\_t}}
+\Hypertarget{container_2pool_8h_a23a4fa9c71c011f57ec588df18ca906b}\label{container_2pool_8h_a23a4fa9c71c011f57ec588df18ca906b} 
+\index{pool.h@{pool.h}!tt\_object\_pool\_t@{tt\_object\_pool\_t}}
 \index{tt\_object\_pool\_t@{tt\_object\_pool\_t}!pool.h@{pool.h}}
 \doxysubsubsection{\texorpdfstring{tt\_object\_pool\_t}{tt\_object\_pool\_t}}
-{\footnotesize\ttfamily \label{container_2pool_8h_a23a4fa9c71c011f57ec588df18ca906b} 
-typedef \mbox{\hyperlink{container_2pool_8h_aeadd65a89efc983ccbb49d5c943060b4}{ttak\+\_\+object\+\_\+pool\+\_\+t}} \mbox{\hyperlink{container_2pool_8h_a23a4fa9c71c011f57ec588df18ca906b}{tt\+\_\+object\+\_\+pool\+\_\+t}}}
+{\footnotesize\ttfamily typedef \mbox{\hyperlink{container_2pool_8h_aeadd65a89efc983ccbb49d5c943060b4}{ttak\+\_\+object\+\_\+pool\+\_\+t}} \mbox{\hyperlink{container_2pool_8h_a23a4fa9c71c011f57ec588df18ca906b}{tt\+\_\+object\+\_\+pool\+\_\+t}}}
 
 
 
 Definition at line \mbox{\hyperlink{container_2pool_8h_source_l00034}{34}} of file \mbox{\hyperlink{container_2pool_8h_source}{pool.\+h}}.
 
-\Hypertarget{container_2pool_8h_aeadd65a89efc983ccbb49d5c943060b4}\index{pool.h@{pool.h}!ttak\_object\_pool\_t@{ttak\_object\_pool\_t}}
+\Hypertarget{container_2pool_8h_aeadd65a89efc983ccbb49d5c943060b4}\label{container_2pool_8h_aeadd65a89efc983ccbb49d5c943060b4} 
+\index{pool.h@{pool.h}!ttak\_object\_pool\_t@{ttak\_object\_pool\_t}}
 \index{ttak\_object\_pool\_t@{ttak\_object\_pool\_t}!pool.h@{pool.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_object\_pool\_t}{ttak\_object\_pool\_t}}
-{\footnotesize\ttfamily \label{container_2pool_8h_aeadd65a89efc983ccbb49d5c943060b4} 
-typedef struct \mbox{\hyperlink{structttak__object__pool}{ttak\+\_\+object\+\_\+pool}} \mbox{\hyperlink{container_2pool_8h_aeadd65a89efc983ccbb49d5c943060b4}{ttak\+\_\+object\+\_\+pool\+\_\+t}}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__object__pool}{ttak\+\_\+object\+\_\+pool}} \mbox{\hyperlink{container_2pool_8h_aeadd65a89efc983ccbb49d5c943060b4}{ttak\+\_\+object\+\_\+pool\+\_\+t}}}
 
 
 
@@ -62,14 +60,12 @@ Fixed-\/size Object Pool structure.
 
 Efficiently manages a set of pre-\/allocated objects of the same size. Uses a bitmap for allocation tracking and a spinlock for thread safety. 
 
-\label{doc-func-members}
-\Hypertarget{container_2pool_8h_doc-func-members}
 \doxysubsection{Function Documentation}
-\Hypertarget{container_2pool_8h_a220b1179fec38a46834a02ff45251daa}\index{pool.h@{pool.h}!ttak\_object\_pool\_alloc@{ttak\_object\_pool\_alloc}}
+\Hypertarget{container_2pool_8h_a220b1179fec38a46834a02ff45251daa}\label{container_2pool_8h_a220b1179fec38a46834a02ff45251daa} 
+\index{pool.h@{pool.h}!ttak\_object\_pool\_alloc@{ttak\_object\_pool\_alloc}}
 \index{ttak\_object\_pool\_alloc@{ttak\_object\_pool\_alloc}!pool.h@{pool.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_object\_pool\_alloc()}{ttak\_object\_pool\_alloc()}}
-{\footnotesize\ttfamily \label{container_2pool_8h_a220b1179fec38a46834a02ff45251daa} 
-void \texorpdfstring{$\ast$}{*} ttak\+\_\+object\+\_\+pool\+\_\+alloc (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{container_2pool_8h_aeadd65a89efc983ccbb49d5c943060b4}{ttak\+\_\+object\+\_\+pool\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{pool}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void \texorpdfstring{$\ast$}{*} ttak\+\_\+object\+\_\+pool\+\_\+alloc (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{container_2pool_8h_aeadd65a89efc983ccbb49d5c943060b4}{ttak\+\_\+object\+\_\+pool\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{pool }\end{DoxyParamCaption})}
 
 
 
@@ -83,11 +79,11 @@ Allocates an object from the pool.
 \begin{DoxyReturn}{Returns}
 Pointer to the allocated object, or NULL if pool is full. 
 \end{DoxyReturn}
-\Hypertarget{container_2pool_8h_a1e735c3b58df81d4fe9eccd4bdb345cd}\index{pool.h@{pool.h}!ttak\_object\_pool\_create@{ttak\_object\_pool\_create}}
+\Hypertarget{container_2pool_8h_a1e735c3b58df81d4fe9eccd4bdb345cd}\label{container_2pool_8h_a1e735c3b58df81d4fe9eccd4bdb345cd} 
+\index{pool.h@{pool.h}!ttak\_object\_pool\_create@{ttak\_object\_pool\_create}}
 \index{ttak\_object\_pool\_create@{ttak\_object\_pool\_create}!pool.h@{pool.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_object\_pool\_create()}{ttak\_object\_pool\_create()}}
-{\footnotesize\ttfamily \label{container_2pool_8h_a1e735c3b58df81d4fe9eccd4bdb345cd} 
-\mbox{\hyperlink{container_2pool_8h_aeadd65a89efc983ccbb49d5c943060b4}{ttak\+\_\+object\+\_\+pool\+\_\+t}} \texorpdfstring{$\ast$}{*} ttak\+\_\+object\+\_\+pool\+\_\+create (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{capacity}{, }\item[{size\+\_\+t}]{item\+\_\+size}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \mbox{\hyperlink{container_2pool_8h_aeadd65a89efc983ccbb49d5c943060b4}{ttak\+\_\+object\+\_\+pool\+\_\+t}} \texorpdfstring{$\ast$}{*} ttak\+\_\+object\+\_\+pool\+\_\+create (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{capacity,  }\item[{size\+\_\+t}]{item\+\_\+size }\end{DoxyParamCaption})}
 
 
 
@@ -103,11 +99,11 @@ Creates a new object pool.
 \begin{DoxyReturn}{Returns}
 Pointer to the new pool, or NULL on failure. 
 \end{DoxyReturn}
-\Hypertarget{container_2pool_8h_a8ca91c2bfd5b3529f07cfcba28d44bc8}\index{pool.h@{pool.h}!ttak\_object\_pool\_destroy@{ttak\_object\_pool\_destroy}}
+\Hypertarget{container_2pool_8h_a8ca91c2bfd5b3529f07cfcba28d44bc8}\label{container_2pool_8h_a8ca91c2bfd5b3529f07cfcba28d44bc8} 
+\index{pool.h@{pool.h}!ttak\_object\_pool\_destroy@{ttak\_object\_pool\_destroy}}
 \index{ttak\_object\_pool\_destroy@{ttak\_object\_pool\_destroy}!pool.h@{pool.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_object\_pool\_destroy()}{ttak\_object\_pool\_destroy()}}
-{\footnotesize\ttfamily \label{container_2pool_8h_a8ca91c2bfd5b3529f07cfcba28d44bc8} 
-void ttak\+\_\+object\+\_\+pool\+\_\+destroy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{container_2pool_8h_aeadd65a89efc983ccbb49d5c943060b4}{ttak\+\_\+object\+\_\+pool\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{pool}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void ttak\+\_\+object\+\_\+pool\+\_\+destroy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{container_2pool_8h_aeadd65a89efc983ccbb49d5c943060b4}{ttak\+\_\+object\+\_\+pool\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{pool }\end{DoxyParamCaption})}
 
 
 
@@ -118,11 +114,11 @@ Destroys the object pool and frees memory.
 {\em pool} & Pointer to the pool. \\
 \hline
 \end{DoxyParams}
-\Hypertarget{container_2pool_8h_aa76851f60ea6890bb00c8127cbe448dd}\index{pool.h@{pool.h}!ttak\_object\_pool\_free@{ttak\_object\_pool\_free}}
+\Hypertarget{container_2pool_8h_aa76851f60ea6890bb00c8127cbe448dd}\label{container_2pool_8h_aa76851f60ea6890bb00c8127cbe448dd} 
+\index{pool.h@{pool.h}!ttak\_object\_pool\_free@{ttak\_object\_pool\_free}}
 \index{ttak\_object\_pool\_free@{ttak\_object\_pool\_free}!pool.h@{pool.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_object\_pool\_free()}{ttak\_object\_pool\_free()}}
-{\footnotesize\ttfamily \label{container_2pool_8h_aa76851f60ea6890bb00c8127cbe448dd} 
-void ttak\+\_\+object\+\_\+pool\+\_\+free (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{container_2pool_8h_aeadd65a89efc983ccbb49d5c943060b4}{ttak\+\_\+object\+\_\+pool\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{pool}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{ptr}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void ttak\+\_\+object\+\_\+pool\+\_\+free (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{container_2pool_8h_aeadd65a89efc983ccbb49d5c943060b4}{ttak\+\_\+object\+\_\+pool\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{pool,  }\item[{void \texorpdfstring{$\ast$}{*}}]{ptr }\end{DoxyParamCaption})}
 
 
 

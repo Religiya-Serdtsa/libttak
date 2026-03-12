@@ -38,14 +38,14 @@
 \DoxyCodeLine{\Hypertarget{zerocopy_8h_source_l00034}\mbox{\hyperlink{structttak__io__zerocopy__region_a9fbbeaad8b674c09b69e7947e19ecbfc}{00034}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structttak__io__zerocopy__region_a9fbbeaad8b674c09b69e7947e19ecbfc}{capacity}};}
 \DoxyCodeLine{\Hypertarget{zerocopy_8h_source_l00035}\mbox{\hyperlink{structttak__io__zerocopy__region_ac70a33d80e159a62721c2b56674533e5}{00035}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structttak__io__zerocopy__region_ac70a33d80e159a62721c2b56674533e5}{read\_only}};}
 \DoxyCodeLine{\Hypertarget{zerocopy_8h_source_l00036}\mbox{\hyperlink{structttak__io__zerocopy__region_acb606e1f12f95b297dc2e9e3ca1fda55}{00036}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__io__zerocopy__region_acb606e1f12f95b297dc2e9e3ca1fda55}{segment\_mask}}[\mbox{\hyperlink{zerocopy_8h_a21ddff3c5ae247e5b7736b5f2ff20cda}{TTAK\_IO\_ZC\_SEGMENT\_WORD\_COUNT}}];}
-\DoxyCodeLine{\Hypertarget{zerocopy_8h_source_l00037}\mbox{\hyperlink{structttak__io__zerocopy__region_ae33fc4988fcaaee200c453ccb7c8fc3e}{00037}}\ \ \ \ \ \mbox{\hyperlink{detachable_8h_ac2e1577a34551ffaedf5a16d11bdff0b}{ttak\_detachable\_context\_t}}\ *\mbox{\hyperlink{structttak__io__zerocopy__region_ae33fc4988fcaaee200c453ccb7c8fc3e}{arena}};}
-\DoxyCodeLine{\Hypertarget{zerocopy_8h_source_l00038}\mbox{\hyperlink{structttak__io__zerocopy__region_ab23af8d27768603c84ca2380ffd0eb1c}{00038}}\ \ \ \ \ \mbox{\hyperlink{detachable_8h_a849243c766d591f9c26aab69b9933f1b}{ttak\_detachable\_allocation\_t}}\ \mbox{\hyperlink{structttak__io__zerocopy__region_ab23af8d27768603c84ca2380ffd0eb1c}{allocation}};}
+\DoxyCodeLine{\Hypertarget{zerocopy_8h_source_l00037}\mbox{\hyperlink{structttak__io__zerocopy__region_ae33fc4988fcaaee200c453ccb7c8fc3e}{00037}}\ \ \ \ \ \mbox{\hyperlink{structttak__detachable__context}{ttak\_detachable\_context\_t}}\ *\mbox{\hyperlink{structttak__io__zerocopy__region_ae33fc4988fcaaee200c453ccb7c8fc3e}{arena}};}
+\DoxyCodeLine{\Hypertarget{zerocopy_8h_source_l00038}\mbox{\hyperlink{structttak__io__zerocopy__region_ab23af8d27768603c84ca2380ffd0eb1c}{00038}}\ \ \ \ \ \mbox{\hyperlink{structttak__detachable__allocation}{ttak\_detachable\_allocation\_t}}\ \mbox{\hyperlink{structttak__io__zerocopy__region_ab23af8d27768603c84ca2380ffd0eb1c}{allocation}};}
 \DoxyCodeLine{\Hypertarget{zerocopy_8h_source_l00039}\mbox{\hyperlink{zerocopy_8h_a02af7635ee18d5bfac08b8c241523388}{00039}}\ \}\ \mbox{\hyperlink{zerocopy_8h_a02af7635ee18d5bfac08b8c241523388}{ttak\_io\_zerocopy\_region\_t}};}
 \DoxyCodeLine{\Hypertarget{zerocopy_8h_source_l00040}00040\ \textcolor{comment}{}}
 \DoxyCodeLine{\Hypertarget{zerocopy_8h_source_l00041}00041\ \textcolor{comment}{/**}}
 \DoxyCodeLine{\Hypertarget{zerocopy_8h_source_l00042}00042\ \textcolor{comment}{\ *\ @brief\ Initializes\ a\ region\ so\ it\ can\ be\ reused\ across\ recv\ operations.}}
 \DoxyCodeLine{\Hypertarget{zerocopy_8h_source_l00043}00043\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{zerocopy_8h_source_l00044}\mbox{\hyperlink{zerocopy_8h_ad9bf6c246671e8221f7d1dfcce554c6b}{00044}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{zerocopy_8h_ad9bf6c246671e8221f7d1dfcce554c6b}{ttak\_io\_zerocopy\_region\_init}}(\mbox{\hyperlink{zerocopy_8h_a02af7635ee18d5bfac08b8c241523388}{ttak\_io\_zerocopy\_region\_t}}\ *region);}
+\DoxyCodeLine{\Hypertarget{zerocopy_8h_source_l00044}\mbox{\hyperlink{zerocopy_8h_ad9bf6c246671e8221f7d1dfcce554c6b}{00044}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{zerocopy_8h_ad9bf6c246671e8221f7d1dfcce554c6b}{ttak\_io\_zerocopy\_region\_init}}(\mbox{\hyperlink{structttak__io__zerocopy__region}{ttak\_io\_zerocopy\_region\_t}}\ *region);}
 \DoxyCodeLine{\Hypertarget{zerocopy_8h_source_l00045}00045\ \textcolor{comment}{}}
 \DoxyCodeLine{\Hypertarget{zerocopy_8h_source_l00046}00046\ \textcolor{comment}{/**}}
 \DoxyCodeLine{\Hypertarget{zerocopy_8h_source_l00047}00047\ \textcolor{comment}{\ *\ @brief\ Receives\ data\ from\ @p\ fd\ into\ a\ detachable\ buffer\ without\ copying\ back}}
@@ -55,7 +55,7 @@
 \DoxyCodeLine{\Hypertarget{zerocopy_8h_source_l00051}00051\ \textcolor{comment}{\ *\ read-\/only\ buffer\ that\ remains\ valid\ until\ ttak\_io\_zerocopy\_release().}}
 \DoxyCodeLine{\Hypertarget{zerocopy_8h_source_l00052}00052\ \textcolor{comment}{\ */}}
 \DoxyCodeLine{\Hypertarget{zerocopy_8h_source_l00053}\mbox{\hyperlink{zerocopy_8h_a702d6206c55a57a0f4ede7eb46a624fc}{00053}}\ \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\_io\_status\_t}}\ \mbox{\hyperlink{zerocopy_8h_a702d6206c55a57a0f4ede7eb46a624fc}{ttak\_io\_zerocopy\_recv\_fd}}(\textcolor{keywordtype}{int}\ fd,}
-\DoxyCodeLine{\Hypertarget{zerocopy_8h_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{zerocopy_8h_a02af7635ee18d5bfac08b8c241523388}{ttak\_io\_zerocopy\_region\_t}}\ *region,}
+\DoxyCodeLine{\Hypertarget{zerocopy_8h_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structttak__io__zerocopy__region}{ttak\_io\_zerocopy\_region\_t}}\ *region,}
 \DoxyCodeLine{\Hypertarget{zerocopy_8h_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ max\_len,}
 \DoxyCodeLine{\Hypertarget{zerocopy_8h_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ flags,}
 \DoxyCodeLine{\Hypertarget{zerocopy_8h_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint64\_t\ now);}
@@ -63,7 +63,7 @@
 \DoxyCodeLine{\Hypertarget{zerocopy_8h_source_l00059}00059\ \textcolor{comment}{/**}}
 \DoxyCodeLine{\Hypertarget{zerocopy_8h_source_l00060}00060\ \textcolor{comment}{\ *\ @brief\ Releases\ resources\ captured\ during\ recv.}}
 \DoxyCodeLine{\Hypertarget{zerocopy_8h_source_l00061}00061\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{zerocopy_8h_source_l00062}\mbox{\hyperlink{zerocopy_8h_a5c546b073bf2b2e6c5d73225f46a658a}{00062}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{zerocopy_8h_a5c546b073bf2b2e6c5d73225f46a658a}{ttak\_io\_zerocopy\_release}}(\mbox{\hyperlink{zerocopy_8h_a02af7635ee18d5bfac08b8c241523388}{ttak\_io\_zerocopy\_region\_t}}\ *region);}
+\DoxyCodeLine{\Hypertarget{zerocopy_8h_source_l00062}\mbox{\hyperlink{zerocopy_8h_a5c546b073bf2b2e6c5d73225f46a658a}{00062}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{zerocopy_8h_a5c546b073bf2b2e6c5d73225f46a658a}{ttak\_io\_zerocopy\_release}}(\mbox{\hyperlink{structttak__io__zerocopy__region}{ttak\_io\_zerocopy\_region\_t}}\ *region);}
 \DoxyCodeLine{\Hypertarget{zerocopy_8h_source_l00063}00063\ }
 \DoxyCodeLine{\Hypertarget{zerocopy_8h_source_l00064}00064\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
 \DoxyCodeLine{\Hypertarget{zerocopy_8h_source_l00065}00065\ \}}

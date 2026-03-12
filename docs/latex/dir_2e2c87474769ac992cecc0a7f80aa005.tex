@@ -5,51 +5,6 @@ Directory dependency graph for 38-\/ebr-\/shared\+:
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=196pt]{dir_2e2c87474769ac992cecc0a7f80aa005_dep}
+\includegraphics[width=198pt]{dir_2e2c87474769ac992cecc0a7f80aa005_dep}
 \end{center}
 \end{figure}
-
-
-\doxysubsection{Detailed Description}
-\hypertarget{README.md_autotoc_md142}{}\doxysubsection{\texorpdfstring{Tutorial 38\+: Epoch-\/based Reclamation (EBR) for Shared Objects}{Tutorial 38\+: Epoch-\/based Reclamation (EBR) for Shared Objects}}\label{README.md_autotoc_md142}
-This tutorial demonstrates the high-\/performance {\bfseries{Epoch-\/based Reclamation (EBR)}} system integrated with {\ttfamily \doxylink{structttak__shared__t}{ttak\+\_\+shared\+\_\+t}}.\hypertarget{README.md_autotoc_md143}{}\doxysubsection{\texorpdfstring{Overview}{Overview}}\label{README.md_autotoc_md143}
-EBR allows for {\bfseries{lock-\/free readers}} and {\bfseries{safe memory reclamation}}. Unlike traditional Reference Counting (slow due to atomic contention) or Garbage Collection (unpredictable pauses), EBR provides\+:
-
-
-\begin{DoxyEnumerate}
-\item {\bfseries{Zero-\/overhead reads}}\+: Readers only write to a thread-\/local variable ({\ttfamily local\+\_\+epoch}).
-\item {\bfseries{Safe Reclaim}}\+: Memory is only freed when no active thread is referencing the old generation.
-\item {\bfseries{Lock-\/\+Free Sharding}}\+: Uses Choi Seok-\/jeong\textquotesingle{}s OLS principle to provide O(1) version validation without rwlocks.
-\item {\bfseries{Rough Share Mode}}\+: Option to bypass protection for extreme speed (unsafe).
-\end{DoxyEnumerate}\hypertarget{README.md_autotoc_md144}{}\doxysubsection{\texorpdfstring{Key Functions}{Key Functions}}\label{README.md_autotoc_md144}
-\hypertarget{README.md_autotoc_md145}{}\doxysubsubsection{\texorpdfstring{{\ttfamily ttak\+\_\+shared\+\_\+swap\+\_\+ebr}}{{\ttfamily ttak\+\_\+shared\+\_\+swap\+\_\+ebr}}}\label{README.md_autotoc_md145}
-Safely replaces the internal pointer of a {\ttfamily \doxylink{structttak__shared__t}{ttak\+\_\+shared\+\_\+t}} object. The old pointer is not freed immediately but is "{}retired"{} to the global epoch manager.\hypertarget{README.md_autotoc_md146}{}\doxysubsubsection{\texorpdfstring{{\ttfamily access\+\_\+ebr(..., protected=true)}}{{\ttfamily access\+\_\+ebr(..., protected=true)}}}\label{README.md_autotoc_md146}
-Enters the EBR critical section. Even if {\ttfamily swap\+\_\+ebr} occurs during access, the memory pointed to by the return value is guaranteed to stay valid until {\ttfamily release\+\_\+ebr} is called.\hypertarget{README.md_autotoc_md147}{}\doxysubsubsection{\texorpdfstring{{\ttfamily access\+\_\+ebr(..., protected=false)}}{{\ttfamily access\+\_\+ebr(..., protected=false)}}}\label{README.md_autotoc_md147}
-"{}\+Rough Share"{} mode. No epoch protection. Extremely fast, but accessing the pointer {\itshape after} the function returns is dangerous if a swap happens concurrently. Use only for atomic value copies or when external synchronization exists.\hypertarget{README.md_autotoc_md148}{}\doxysubsubsection{\texorpdfstring{{\ttfamily retire}}{{\ttfamily retire}}}\label{README.md_autotoc_md148}
-Replaces {\ttfamily destroy}. Instead of freeing immediately (which would crash active readers), it schedules the container itself for destruction once all current readers have exited their epoch.\hypertarget{README.md_autotoc_md149}{}\doxysubsubsection{\texorpdfstring{EBR and Epoch\+GC Integration}{EBR and Epoch\+GC Integration}}\label{README.md_autotoc_md149}
-In advanced or high-\/load systems, {\bfseries{EBR}} should be used in conjunction with {\bfseries{Epoch\+GC}} (Epoch-\/based Garbage Collection).
-
-
-\begin{DoxyItemize}
-\item {\bfseries{EBR ({\ttfamily ttak\+\_\+epoch\+\_\+reclaim})}}\+: Manages the "{}micro"{} lifecycle of pointers swapped via {\ttfamily ttak\+\_\+shared\+\_\+swap\+\_\+ebr}. It ensures that a pointer is only freed once all threads have moved past the epoch in which it was retired.
-\item {\bfseries{Epoch\+GC ({\ttfamily ttak\+\_\+epoch\+\_\+gc\+\_\+rotate})}}\+: Manages the "{}macro"{} lifecycle of containers and memory trees. It provides a structured way to trigger cleanup passes and ensures that orphaned or retired containers (via {\ttfamily retire}) are eventually reclaimed.
-\end{DoxyItemize}
-
-{\bfseries{Best Practice}}\+: Always pair {\ttfamily \doxylink{epoch_8h_aa6be6071c276481154cceb40f5720f32}{ttak\+\_\+epoch\+\_\+reclaim()}} with {\ttfamily \doxylink{epoch__gc_8h_a2c9fb90ed22fe61eea9bbcafddf53625}{ttak\+\_\+epoch\+\_\+gc\+\_\+rotate()}} in your main loop or worker tick to maintain overall system memory health.\hypertarget{README.md_autotoc_md150}{}\doxysubsection{\texorpdfstring{Building and Running}{Building and Running}}\label{README.md_autotoc_md150}
-Use the provided {\ttfamily Makefile}\+:
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{make}
-\DoxyCodeLine{./lesson38\_ebr\_shared}
-
-\end{DoxyCode}
-\hypertarget{README.md_autotoc_md151}{}\doxysubsection{\texorpdfstring{Code Walkthrough}{Code Walkthrough}}\label{README.md_autotoc_md151}
-See {\ttfamily lesson38\+\_\+ebr\+\_\+shared.\+c} for a complete example of\+:
-\begin{DoxyEnumerate}
-\item Initializing the shared object and allocating its payload.
-\item Registering reader threads with {\ttfamily ttak\+\_\+epoch\+\_\+register\+\_\+thread}.
-\item Reader threads using {\ttfamily access\+\_\+ebr} with EBR protection.
-\item Writer thread using {\ttfamily ttak\+\_\+shared\+\_\+swap\+\_\+ebr} and manually triggering {\ttfamily ttak\+\_\+epoch\+\_\+reclaim}.
-\item Safe container destruction using {\ttfamily retire} followed by final epoch flushes. 
-\end{DoxyEnumerate}

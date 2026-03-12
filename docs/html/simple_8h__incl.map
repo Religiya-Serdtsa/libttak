@@ -1,9 +1,9 @@
 <map id="include/ttak/priority/simple.h" name="include/ttak/priority/simple.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="63,5,213,50"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,98,79,126"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="115,52,71,90,67,85,111,48"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="103,98,173,126"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="141,50,141,82,135,82,135,50"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="197,98,279,126"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="166,48,212,86,209,90,163,52"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="65,5,215,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,93,80,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="118,48,69,87,66,82,115,43"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="105,93,175,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="143,46,143,79,137,79,137,46"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="200,93,283,119"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="166,43,217,82,214,87,163,48"/>
 </map>

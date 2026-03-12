@@ -8,17 +8,3 @@ Directory dependency graph for 05-\/pool-\/allocator\+:
 \includegraphics[width=212pt]{dir_782e8f9d5d6f52346def2cd368858e29_dep}
 \end{center}
 \end{figure}
-
-
-\doxysubsection{Detailed Description}
-\hypertarget{README.md_autotoc_md68}{}\doxysubsection{\texorpdfstring{Tutorial 05 – Pool Allocator}{Tutorial 05 – Pool Allocator}}\label{README.md_autotoc_md68}
-This workspace accompanies {\ttfamily modules/05-\/pool-\/allocator} and focuses on rebuilding the bitmap-\/backed object pool under {\ttfamily src/container/pool.\+c}.
-
-Use {\ttfamily lesson05\+\_\+pool\+\_\+allocator.\+c} plus the provided Makefile as a harness for allocating/freeing objects while you match the upstream locking and accounting rules.\hypertarget{README.md_autotoc_md69}{}\doxysubsection{\texorpdfstring{Checklist}{Checklist}}\label{README.md_autotoc_md69}
-
-\begin{DoxyEnumerate}
-\item Re-\/read the lesson with {\ttfamily \doxylink{container_2pool_8h}{include/ttak/container/pool.\+h}} nearby so that the struct layout and public signatures are clear.
-\item Document how the bitmap scan, {\ttfamily used\+\_\+count}, and spinlock interplay—especially what happens when the pool is full or a caller frees an invalid pointer.
-\item Mirror {\ttfamily ttak\+\_\+object\+\_\+pool\+\_\+create/alloc/free/destroy} inside {\ttfamily src/container/pool.\+c}, then run {\ttfamily make tests/test\+\_\+pool} to execute the pool regression in {\ttfamily tests/test\+\_\+pool.\+c}.
-\item Capture allocator traces (or screenshots of your scratch logs) in this folder along with your final takeaways. 
-\end{DoxyEnumerate}

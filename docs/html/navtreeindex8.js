@@ -1,11 +1,5 @@
 var NAVTREEINDEX8 =
 {
-"ttak__accelerator_8h.html#ac7cac2c972f22538284d97bf3220ea04a40dfe463bab8eef2411976e3dbd359f9":[5,0,3,0,24,7,1],
-"ttak__accelerator_8h.html#ac7cac2c972f22538284d97bf3220ea04a7117c0a39d9134451146bd532601c38a":[5,0,3,0,24,7,2],
-"ttak__accelerator_8h.html#ac7cac2c972f22538284d97bf3220ea04ac1eadf9e1fef84d364e7090c3ae492cf":[5,0,3,0,24,7,3],
-"ttak__accelerator_8h.html#ac7cac2c972f22538284d97bf3220ea04aed10b3cc1a80327cb1009599ff7fe47e":[5,0,3,0,24,7,0],
-"ttak__accelerator_8h.html#ad112d6852d4170064b4efdba029ef930":[5,0,3,0,24,6],
-"ttak__accelerator_8h_source.html":[5,0,3,0,24],
 "ttak__align_8h.html":[5,0,3,0,22,1],
 "ttak__align_8h.html#a57fbdeca2fdfd0ec356c5d1fa8aba7e3":[5,0,3,0,22,1,0],
 "ttak__align_8h_source.html":[5,0,3,0,22,1],

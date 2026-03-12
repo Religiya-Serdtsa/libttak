@@ -46,24 +46,22 @@ void \mbox{\hyperlink{epoch__gc_8h_a78ff9f44d1919ebb90542bfdd87f946e}{ttak\+\_\+
 \begin{DoxyCompactList}\small\item\em Enables or disables the automatic rotation worker. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
-\label{doc-typedef-members}
-\Hypertarget{epoch__gc_8h_doc-typedef-members}
 \doxysubsection{Typedef Documentation}
-\Hypertarget{epoch__gc_8h_a19a48ee392866ef40aed9cc4fa6bbf41}\index{epoch\_gc.h@{epoch\_gc.h}!tt\_epoch\_gc\_t@{tt\_epoch\_gc\_t}}
+\Hypertarget{epoch__gc_8h_a19a48ee392866ef40aed9cc4fa6bbf41}\label{epoch__gc_8h_a19a48ee392866ef40aed9cc4fa6bbf41} 
+\index{epoch\_gc.h@{epoch\_gc.h}!tt\_epoch\_gc\_t@{tt\_epoch\_gc\_t}}
 \index{tt\_epoch\_gc\_t@{tt\_epoch\_gc\_t}!epoch\_gc.h@{epoch\_gc.h}}
 \doxysubsubsection{\texorpdfstring{tt\_epoch\_gc\_t}{tt\_epoch\_gc\_t}}
-{\footnotesize\ttfamily \label{epoch__gc_8h_a19a48ee392866ef40aed9cc4fa6bbf41} 
-typedef \mbox{\hyperlink{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4}{ttak\+\_\+epoch\+\_\+gc\+\_\+t}} \mbox{\hyperlink{epoch__gc_8h_a19a48ee392866ef40aed9cc4fa6bbf41}{tt\+\_\+epoch\+\_\+gc\+\_\+t}}}
+{\footnotesize\ttfamily typedef \mbox{\hyperlink{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4}{ttak\+\_\+epoch\+\_\+gc\+\_\+t}} \mbox{\hyperlink{epoch__gc_8h_a19a48ee392866ef40aed9cc4fa6bbf41}{tt\+\_\+epoch\+\_\+gc\+\_\+t}}}
 
 
 
 Definition at line \mbox{\hyperlink{epoch__gc_8h_source_l00029}{29}} of file \mbox{\hyperlink{epoch__gc_8h_source}{epoch\+\_\+gc.\+h}}.
 
-\Hypertarget{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4}\index{epoch\_gc.h@{epoch\_gc.h}!ttak\_epoch\_gc\_t@{ttak\_epoch\_gc\_t}}
+\Hypertarget{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4}\label{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4} 
+\index{epoch\_gc.h@{epoch\_gc.h}!ttak\_epoch\_gc\_t@{ttak\_epoch\_gc\_t}}
 \index{ttak\_epoch\_gc\_t@{ttak\_epoch\_gc\_t}!epoch\_gc.h@{epoch\_gc.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_epoch\_gc\_t}{ttak\_epoch\_gc\_t}}
-{\footnotesize\ttfamily \label{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4} 
-typedef struct \mbox{\hyperlink{structttak__epoch__gc}{ttak\+\_\+epoch\+\_\+gc}} \mbox{\hyperlink{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4}{ttak\+\_\+epoch\+\_\+gc\+\_\+t}}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__epoch__gc}{ttak\+\_\+epoch\+\_\+gc}} \mbox{\hyperlink{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4}{ttak\+\_\+epoch\+\_\+gc\+\_\+t}}}
 
 
 
@@ -71,14 +69,12 @@ Epoch-\/based garbage collection context.
 
 Manages memory lifecycle using generational epochs. Designed for periodic, non-\/blocking cleanup where the user triggers the cycle. Traverses the heap tree to identify and free expired blocks without a global stop-\/the-\/world pause. 
 
-\label{doc-func-members}
-\Hypertarget{epoch__gc_8h_doc-func-members}
 \doxysubsection{Function Documentation}
-\Hypertarget{epoch__gc_8h_af549ef9e0036830f203fa10a01c2d484}\index{epoch\_gc.h@{epoch\_gc.h}!ttak\_epoch\_gc\_destroy@{ttak\_epoch\_gc\_destroy}}
+\Hypertarget{epoch__gc_8h_af549ef9e0036830f203fa10a01c2d484}\label{epoch__gc_8h_af549ef9e0036830f203fa10a01c2d484} 
+\index{epoch\_gc.h@{epoch\_gc.h}!ttak\_epoch\_gc\_destroy@{ttak\_epoch\_gc\_destroy}}
 \index{ttak\_epoch\_gc\_destroy@{ttak\_epoch\_gc\_destroy}!epoch\_gc.h@{epoch\_gc.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_epoch\_gc\_destroy()}{ttak\_epoch\_gc\_destroy()}}
-{\footnotesize\ttfamily \label{epoch__gc_8h_af549ef9e0036830f203fa10a01c2d484} 
-void ttak\+\_\+epoch\+\_\+gc\+\_\+destroy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4}{ttak\+\_\+epoch\+\_\+gc\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{gc}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void ttak\+\_\+epoch\+\_\+gc\+\_\+destroy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4}{ttak\+\_\+epoch\+\_\+gc\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{gc }\end{DoxyParamCaption})}
 
 
 
@@ -89,11 +85,11 @@ Destroys the GC context and frees tracked resources.
 {\em gc} & Pointer to the GC structure. \\
 \hline
 \end{DoxyParams}
-\Hypertarget{epoch__gc_8h_ad33bfc5d616f25de473c9dea52d0ae24}\index{epoch\_gc.h@{epoch\_gc.h}!ttak\_epoch\_gc\_init@{ttak\_epoch\_gc\_init}}
+\Hypertarget{epoch__gc_8h_ad33bfc5d616f25de473c9dea52d0ae24}\label{epoch__gc_8h_ad33bfc5d616f25de473c9dea52d0ae24} 
+\index{epoch\_gc.h@{epoch\_gc.h}!ttak\_epoch\_gc\_init@{ttak\_epoch\_gc\_init}}
 \index{ttak\_epoch\_gc\_init@{ttak\_epoch\_gc\_init}!epoch\_gc.h@{epoch\_gc.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_epoch\_gc\_init()}{ttak\_epoch\_gc\_init()}}
-{\footnotesize\ttfamily \label{epoch__gc_8h_ad33bfc5d616f25de473c9dea52d0ae24} 
-void ttak\+\_\+epoch\+\_\+gc\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4}{ttak\+\_\+epoch\+\_\+gc\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{gc}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void ttak\+\_\+epoch\+\_\+gc\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4}{ttak\+\_\+epoch\+\_\+gc\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{gc }\end{DoxyParamCaption})}
 
 
 
@@ -104,11 +100,11 @@ Initializes the Epoch GC.
 {\em gc} & Pointer to the GC structure. \\
 \hline
 \end{DoxyParams}
-\Hypertarget{epoch__gc_8h_a78ff9f44d1919ebb90542bfdd87f946e}\index{epoch\_gc.h@{epoch\_gc.h}!ttak\_epoch\_gc\_manual\_rotate@{ttak\_epoch\_gc\_manual\_rotate}}
+\Hypertarget{epoch__gc_8h_a78ff9f44d1919ebb90542bfdd87f946e}\label{epoch__gc_8h_a78ff9f44d1919ebb90542bfdd87f946e} 
+\index{epoch\_gc.h@{epoch\_gc.h}!ttak\_epoch\_gc\_manual\_rotate@{ttak\_epoch\_gc\_manual\_rotate}}
 \index{ttak\_epoch\_gc\_manual\_rotate@{ttak\_epoch\_gc\_manual\_rotate}!epoch\_gc.h@{epoch\_gc.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_epoch\_gc\_manual\_rotate()}{ttak\_epoch\_gc\_manual\_rotate()}}
-{\footnotesize\ttfamily \label{epoch__gc_8h_a78ff9f44d1919ebb90542bfdd87f946e} 
-void ttak\+\_\+epoch\+\_\+gc\+\_\+manual\+\_\+rotate (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4}{ttak\+\_\+epoch\+\_\+gc\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{gc}{, }\item[{\+\_\+\+Bool}]{manual\+\_\+mode}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void ttak\+\_\+epoch\+\_\+gc\+\_\+manual\+\_\+rotate (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4}{ttak\+\_\+epoch\+\_\+gc\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{gc,  }\item[{\+\_\+\+Bool}]{manual\+\_\+mode }\end{DoxyParamCaption})}
 
 
 
@@ -123,11 +119,11 @@ When manual mode is enabled, callers are responsible for invoking \doxylink{epoc
 {\em manual\+\_\+mode} & True to disable the auto-\/rotator, false to re-\/enable it. \\
 \hline
 \end{DoxyParams}
-\Hypertarget{epoch__gc_8h_a6bedbb1da48f451a81bac7e5cc47a50d}\index{epoch\_gc.h@{epoch\_gc.h}!ttak\_epoch\_gc\_register@{ttak\_epoch\_gc\_register}}
+\Hypertarget{epoch__gc_8h_a6bedbb1da48f451a81bac7e5cc47a50d}\label{epoch__gc_8h_a6bedbb1da48f451a81bac7e5cc47a50d} 
+\index{epoch\_gc.h@{epoch\_gc.h}!ttak\_epoch\_gc\_register@{ttak\_epoch\_gc\_register}}
 \index{ttak\_epoch\_gc\_register@{ttak\_epoch\_gc\_register}!epoch\_gc.h@{epoch\_gc.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_epoch\_gc\_register()}{ttak\_epoch\_gc\_register()}}
-{\footnotesize\ttfamily \label{epoch__gc_8h_a6bedbb1da48f451a81bac7e5cc47a50d} 
-void ttak\+\_\+epoch\+\_\+gc\+\_\+register (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4}{ttak\+\_\+epoch\+\_\+gc\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{gc}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{ptr}{, }\item[{size\+\_\+t}]{size}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void ttak\+\_\+epoch\+\_\+gc\+\_\+register (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4}{ttak\+\_\+epoch\+\_\+gc\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{gc,  }\item[{void \texorpdfstring{$\ast$}{*}}]{ptr,  }\item[{size\+\_\+t}]{size }\end{DoxyParamCaption})}
 
 
 
@@ -142,11 +138,11 @@ Registers a pointer to be managed by the current epoch.
 {\em size} & Size of the memory block. \\
 \hline
 \end{DoxyParams}
-\Hypertarget{epoch__gc_8h_a2c9fb90ed22fe61eea9bbcafddf53625}\index{epoch\_gc.h@{epoch\_gc.h}!ttak\_epoch\_gc\_rotate@{ttak\_epoch\_gc\_rotate}}
+\Hypertarget{epoch__gc_8h_a2c9fb90ed22fe61eea9bbcafddf53625}\label{epoch__gc_8h_a2c9fb90ed22fe61eea9bbcafddf53625} 
+\index{epoch\_gc.h@{epoch\_gc.h}!ttak\_epoch\_gc\_rotate@{ttak\_epoch\_gc\_rotate}}
 \index{ttak\_epoch\_gc\_rotate@{ttak\_epoch\_gc\_rotate}!epoch\_gc.h@{epoch\_gc.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_epoch\_gc\_rotate()}{ttak\_epoch\_gc\_rotate()}}
-{\footnotesize\ttfamily \label{epoch__gc_8h_a2c9fb90ed22fe61eea9bbcafddf53625} 
-void ttak\+\_\+epoch\+\_\+gc\+\_\+rotate (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4}{ttak\+\_\+epoch\+\_\+gc\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{gc}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void ttak\+\_\+epoch\+\_\+gc\+\_\+rotate (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4}{ttak\+\_\+epoch\+\_\+gc\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{gc }\end{DoxyParamCaption})}
 
 
 

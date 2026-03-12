@@ -18,7 +18,7 @@
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00014}00014\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00015}00015\ \textcolor{preprocessor}{\#include\ <stdatomic.h>}}
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00016}00016\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{pthread_8h}{pthread.h}}>}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00017}00017\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{app__types_8h}{../../internal/app\_types.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00017}00017\ \textcolor{preprocessor}{\#include\ "{}../../internal/app\_types.h"{}}}
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00018}00018\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{mem_8h}{ttak/mem/mem.h}}>}}
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00019}00019\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{ttak__compiler_8h}{ttak/types/ttak\_compiler.h}}>}}
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00020}00020\ }
@@ -41,7 +41,7 @@
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00037}00037\ \textcolor{comment}{\ *\ @typedef\ ttak\_fixed\_16\_16\_t}}
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00038}00038\ \textcolor{comment}{\ *\ @brief\ 16.16\ Fixed-\/point\ type\ for\ friction\ calculation.}}
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00039}00039\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00040}\mbox{\hyperlink{mem__internal_8h_ae642e58d4022dee07f1b179c530476ea}{00040}}\ \textcolor{keyword}{typedef}\ int32\_t\ \mbox{\hyperlink{mem__internal_8h_ae642e58d4022dee07f1b179c530476ea}{ttak\_fixed\_16\_16\_t}};}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00040}\mbox{\hyperlink{mem__internal_8h_aa52f0af3a2626d67b61777a1504a4415}{00040}}\ \textcolor{keyword}{typedef}\ int32\_t\ \mbox{\hyperlink{mem__internal_8h_aa52f0af3a2626d67b61777a1504a4415}{ttak\_fixed\_16\_16\_t}};}
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00041}00041\ }
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00042}\mbox{\hyperlink{mem__internal_8h_ad923ad1117b87a296109d5ed8b2b0ecf}{00042}}\ \textcolor{preprocessor}{\#define\ TTAK\_FP\_ONE\ (1\ <<\ 16)}}
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00043}\mbox{\hyperlink{mem__internal_8h_a001ec8a1869c8ce91a283e742ff056a2}{00043}}\ \textcolor{preprocessor}{\#define\ TTAK\_FP\_FROM\_INT(val)\ ((ttak\_fixed\_16\_16\_t)(val)\ <<\ 16)}}
@@ -54,9 +54,9 @@
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00050}00050\ \textcolor{comment}{\ *\ @brief\ Matrix\ for\ tracking\ memory\ pressure\ and\ "{}Mechanical\ Damping"{}.}}
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00051}00051\ \textcolor{comment}{\ */}}
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00052}\mbox{\hyperlink{structttak__mem__friction__matrix__t}{00052}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00053}\mbox{\hyperlink{structttak__mem__friction__matrix__t_ac07dd43aa7da57011cabf90b208c36f6}{00053}}\ \ \ \ \ \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\_Atomic}}\ \mbox{\hyperlink{mem__internal_8h_ae642e58d4022dee07f1b179c530476ea}{ttak\_fixed\_16\_16\_t}}\ \mbox{\hyperlink{structttak__mem__friction__matrix__t_ac07dd43aa7da57011cabf90b208c36f6}{values}}[4];\ \ \ \textcolor{comment}{/**<\ Per-\/size-\/class\ friction\ values\ */}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00054}\mbox{\hyperlink{structttak__mem__friction__matrix__t_a00aa5aa478a1fcd54691026789da2c7c}{00054}}\ \ \ \ \ \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\_Atomic}}\ \mbox{\hyperlink{mem__internal_8h_ae642e58d4022dee07f1b179c530476ea}{ttak\_fixed\_16\_16\_t}}\ \mbox{\hyperlink{structttak__mem__friction__matrix__t_a00aa5aa478a1fcd54691026789da2c7c}{global\_friction}};\ \textcolor{comment}{/**<\ Resulting\ product\ friction\ */}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00055}\mbox{\hyperlink{structttak__mem__friction__matrix__t_aee248efcae576a2d7a8a758d7e400b79}{00055}}\ \ \ \ \ \mbox{\hyperlink{mem__internal_8h_ae642e58d4022dee07f1b179c530476ea}{ttak\_fixed\_16\_16\_t}}\ \mbox{\hyperlink{structttak__mem__friction__matrix__t_aee248efcae576a2d7a8a758d7e400b79}{pressure\_threshold}};\ \ \ \ \ \ \textcolor{comment}{/**<\ High\ friction\ rejection\ point\ */}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00053}\mbox{\hyperlink{structttak__mem__friction__matrix__t_ac07dd43aa7da57011cabf90b208c36f6}{00053}}\ \ \ \ \ \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\_Atomic}}\ \mbox{\hyperlink{mem__internal_8h_aa52f0af3a2626d67b61777a1504a4415}{ttak\_fixed\_16\_16\_t}}\ values[4];\ \ \ \textcolor{comment}{/**<\ Per-\/size-\/class\ friction\ values\ */}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00054}\mbox{\hyperlink{structttak__mem__friction__matrix__t_a00aa5aa478a1fcd54691026789da2c7c}{00054}}\ \ \ \ \ \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\_Atomic}}\ \mbox{\hyperlink{mem__internal_8h_aa52f0af3a2626d67b61777a1504a4415}{ttak\_fixed\_16\_16\_t}}\ \mbox{\hyperlink{structttak__mem__friction__matrix__t_a00aa5aa478a1fcd54691026789da2c7c}{global\_friction}};\ \textcolor{comment}{/**<\ Resulting\ product\ friction\ */}}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00055}\mbox{\hyperlink{structttak__mem__friction__matrix__t_aee248efcae576a2d7a8a758d7e400b79}{00055}}\ \ \ \ \ \mbox{\hyperlink{mem__internal_8h_aa52f0af3a2626d67b61777a1504a4415}{ttak\_fixed\_16\_16\_t}}\ \mbox{\hyperlink{structttak__mem__friction__matrix__t_aee248efcae576a2d7a8a758d7e400b79}{pressure\_threshold}};\ \ \ \ \ \ \textcolor{comment}{/**<\ High\ friction\ rejection\ point\ */}}
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00056}00056\ \}\ \mbox{\hyperlink{structttak__mem__friction__matrix__t}{ttak\_mem\_friction\_matrix\_t}};}
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00057}00057\ \textcolor{comment}{}}
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00058}00058\ \textcolor{comment}{/**}}
@@ -66,7 +66,7 @@
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00062}00062\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{structttak__mem__friction__matrix__t}{ttak\_mem\_friction\_matrix\_t}}\ \mbox{\hyperlink{mem__internal_8h_a01418a27cc1879ab847f8bb8a395dc47}{global\_friction\_matrix}};}
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00063}00063\ }
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00064}00064\ \textcolor{comment}{//\ Forward\ declare\ ttak\_mem\_header\_t}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00065}00065\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__mem__header__t}{ttak\_mem\_header\_t}}\ \mbox{\hyperlink{structttak__mem__header__t}{ttak\_mem\_header\_t}};}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00065}\mbox{\hyperlink{mem__internal_8h_a574c320689c9aed0ca6559697013d05a}{00065}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__mem__header__t}{ttak\_mem\_header\_t}}\ \mbox{\hyperlink{structttak__mem__header__t}{ttak\_mem\_header\_t}};}
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00066}00066\ }
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00067}00067\ \textcolor{comment}{//\ -\/-\/-\/\ Thread-\/Local\ Pockets\ (Objects\ <=\ 128B\ total\ block)\ -\/-\/-\/}}
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00068}\mbox{\hyperlink{mem__internal_8h_a1d7f42e54833cbd413fa059f040e9455}{00068}}\ \textcolor{preprocessor}{\#define\ TTAK\_POCKET\_PAGE\_SIZE\ 4096\ }}
@@ -82,14 +82,14 @@
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00078}\mbox{\hyperlink{mem__internal_8h_af43b32a954757220aaa62ba3c6ecca77}{00078}}\ \}\ \mbox{\hyperlink{mem__internal_8h_af43b32a954757220aaa62ba3c6ecca77}{ttak\_mem\_pocket\_freelist\_t}};}
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00079}00079\ }
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00080}00080\ \textcolor{preprocessor}{\#if\ defined(\_\_TINYC\_\_)}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00081}00081\ \mbox{\hyperlink{mem__internal_8h_af43b32a954757220aaa62ba3c6ecca77}{ttak\_mem\_pocket\_freelist\_t}}\ *ttak\_tls\_get\_pocket\_freelists(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00081}00081\ \mbox{\hyperlink{structttak__mem__pocket__freelist}{ttak\_mem\_pocket\_freelist\_t}}\ *ttak\_tls\_get\_pocket\_freelists(\textcolor{keywordtype}{void});}
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00082}00082\ \textcolor{preprocessor}{\#define\ ttak\_pocket\_freelists\ (ttak\_tls\_get\_pocket\_freelists())}}
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00083}00083\ \textcolor{preprocessor}{\#else}\textcolor{comment}{}}
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00084}00084\ \textcolor{comment}{/**}}
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00085}00085\ \textcolor{comment}{\ *\ @brief\ Thread-\/local\ pocket\ freelists.}}
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00086}00086\ \textcolor{comment}{\ *\ Defined\ in\ ttak\_mem\_pocket.c.}}
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00087}00087\ \textcolor{comment}{\ */}\textcolor{preprocessor}{}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00088}00088\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{app__types_8h_a75cdd26ec56c06d5e1abe50b17a8f837}{TTAK\_THREAD\_LOCAL}}\ \mbox{\hyperlink{mem__internal_8h_af43b32a954757220aaa62ba3c6ecca77}{ttak\_mem\_pocket\_freelist\_t}}\ \mbox{\hyperlink{mem__internal_8h_aba9f426693a9a72a5154cfe22137dfbc}{ttak\_pocket\_freelists}}[\mbox{\hyperlink{mem__internal_8h_a10254fab4ae3ccc752ddcf5ca91a9803}{TTAK\_NUM\_POCKET\_FREELISTS}}];}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00088}00088\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{app__types_8h_a75cdd26ec56c06d5e1abe50b17a8f837}{TTAK\_THREAD\_LOCAL}}\ \mbox{\hyperlink{structttak__mem__pocket__freelist}{ttak\_mem\_pocket\_freelist\_t}}\ \mbox{\hyperlink{mem__internal_8h_aba9f426693a9a72a5154cfe22137dfbc}{ttak\_pocket\_freelists}}[\mbox{\hyperlink{mem__internal_8h_a10254fab4ae3ccc752ddcf5ca91a9803}{TTAK\_NUM\_POCKET\_FREELISTS}}];}
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00089}00089\ \textcolor{preprocessor}{\#endif}}
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00090}00090\ }
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00091}00091\ \textcolor{comment}{//\ -\/-\/-\/\ Bare-\/Metal\ VMA\ (Virtual\ Mapping\ Area)\ -\/-\/-\/}}
@@ -109,7 +109,7 @@
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00105}00105\ \textcolor{comment}{\ *\ @brief\ Global\ VMA\ region\ instance.}}
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00106}00106\ \textcolor{comment}{\ *\ Defined\ in\ ttak\_mem\_vma.c.}}
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00107}00107\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00108}00108\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{mem__internal_8h_a6c76dcfc177f693f5fbfed57f4ce0bb2}{ttak\_mem\_vma\_region\_t}}\ \mbox{\hyperlink{mem__internal_8h_a786e428521881ef54ae52854d0b18b5e}{global\_vma\_region}};}
+\DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00108}00108\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{structttak__mem__vma__region}{ttak\_mem\_vma\_region\_t}}\ \mbox{\hyperlink{mem__internal_8h_a786e428521881ef54ae52854d0b18b5e}{global\_vma\_region}};}
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00109}00109\ \textcolor{comment}{}}
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00110}00110\ \textcolor{comment}{/**}}
 \DoxyCodeLine{\Hypertarget{mem__internal_8h_source_l00111}00111\ \textcolor{comment}{\ *\ @struct\ ttak\_slab\_t}}

@@ -1,35 +1,35 @@
 <map id="include/ttak/mem/arena_helper.h" name="include/ttak/mem/arena_helper.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="64,5,242,50"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="62,325,143,353"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="90,53,59,72,35,99,14,146,8,186,16,227,35,276,50,297,68,314,65,318,46,300,31,278,11,229,3,186,9,144,31,97,56,68,88,48"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="167,325,240,353"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="147,51,134,94,123,152,122,215,127,246,137,276,151,297,170,314,166,318,147,300,132,278,122,248,116,215,118,151,129,93,142,50"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="265,325,335,353"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="166,49,290,310,285,313,161,51"/>
-<area shape="rect" id="Node000005" href="$mem_8h.html" title="TTAK Unified Memory Subsystem with Lifecycle Management and Hardware Optimization." alt="" coords="325,98,461,126"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="218,48,341,90,339,95,216,53"/>
-<area shape="rect" id="Node000007" href="$epoch__gc_8h.html" title=" " alt="" coords="620,174,782,201"/>
-<area shape="poly" id="edge22_Node000001_Node000007" title=" " alt="" coords="243,42,354,64,474,95,574,130,659,165,657,170,572,135,472,101,353,70,242,47"/>
-<area shape="poly" id="edge7_Node000005_Node000002" title=" " alt="" coords="363,129,320,149,276,176,231,211,190,249,125,315,121,312,186,245,228,207,273,171,318,144,360,124"/>
-<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="368,128,335,149,303,176,275,209,251,246,217,312,213,310,247,244,271,206,299,172,332,144,366,124"/>
-<area shape="poly" id="edge6_Node000005_Node000004" title=" " alt="" coords="378,128,328,177,302,212,284,250,281,265,281,281,289,310,284,312,276,281,275,265,279,249,298,209,324,174,375,124"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="549,325,648,353"/>
-<area shape="poly" id="edge8_Node000005_Node000006" title=" " alt="" coords="407,124,579,312,575,315,403,128"/>
-<area shape="poly" id="edge9_Node000005_Node000007" title=" " alt="" coords="449,124,632,167,630,172,448,129"/>
-<area shape="rect" id="Node000009" href="$pthread_8h.html" title="POSIX thread compatibility shim." alt="" coords="807,325,891,353"/>
-<area shape="poly" id="edge21_Node000005_Node000009" title=" " alt="" coords="461,113,549,118,647,129,736,146,771,157,796,172,822,202,839,239,847,277,851,309,846,310,842,278,834,241,818,205,793,176,769,162,735,151,646,134,549,123,461,118"/>
-<area shape="rect" id="Node000010" href="$ttak__compiler_8h.html" title="Compiler&#45;specific macros and compatibility layer." alt="" coords="569,249,761,277"/>
-<area shape="poly" id="edge18_Node000005_Node000010" title=" " alt="" coords="438,124,493,144,552,171,601,204,641,237,638,241,598,208,549,176,491,149,436,129"/>
-<area shape="rect" id="Node000011" title=" " alt="" coords="350,174,436,201"/>
-<area shape="poly" id="edge20_Node000005_Node000011" title=" " alt="" coords="396,126,396,158,390,158,390,126"/>
-<area shape="poly" id="edge17_Node000007_Node000006" title=" " alt="" coords="727,200,749,215,769,234,780,255,780,267,775,279,752,302,724,318,694,329,663,336,662,331,692,324,722,313,749,298,771,275,775,266,775,257,765,237,746,219,724,204"/>
-<area shape="rect" id="Node000008" href="$mem__tree_8h.html" title=" " alt="" coords="292,249,494,277"/>
-<area shape="poly" id="edge10_Node000007_Node000008" title=" " alt="" coords="646,205,464,248,463,243,645,199"/>
-<area shape="poly" id="edge16_Node000007_Node000009" title=" " alt="" coords="729,200,763,220,796,247,821,279,839,310,835,313,816,282,792,251,760,224,726,204"/>
-<area shape="poly" id="edge13_Node000008_Node000002" title=" " alt="" coords="341,280,159,326,158,321,340,275"/>
-<area shape="poly" id="edge11_Node000008_Node000003" title=" " alt="" coords="360,280,252,322,250,317,358,275"/>
-<area shape="poly" id="edge12_Node000008_Node000004" title=" " alt="" coords="378,280,330,317,326,313,375,275"/>
-<area shape="poly" id="edge14_Node000008_Node000006" title=" " alt="" coords="431,275,548,317,546,322,429,280"/>
-<area shape="poly" id="edge15_Node000008_Node000009" title=" " alt="" coords="476,275,792,326,791,331,475,280"/>
-<area shape="poly" id="edge19_Node000010_Node000006" title=" " alt="" coords="655,279,622,315,618,312,651,276"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="9,5,188,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,313,88,339"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="90,47,69,94,57,151,51,207,49,299,43,299,46,207,52,150,64,93,85,45"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="112,313,187,339"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="94,47,81,88,70,143,68,205,73,235,82,264,98,286,118,304,115,308,94,290,78,267,67,237,62,205,64,143,76,86,89,45"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="211,313,282,339"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="111,45,237,300,233,302,106,47"/>
+<area shape="rect" id="Node000005" href="$mem_8h.html" title="TTAK Unified Memory Subsystem with Lifecycle Management and Hardware Optimization." alt="" coords="271,93,407,119"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="157,43,291,87,290,92,155,48"/>
+<area shape="rect" id="Node000007" href="$epoch__gc_8h.html" title=" " alt="" coords="565,167,728,192"/>
+<area shape="poly" id="edge22_Node000001_Node000007" title=" " alt="" coords="189,39,299,61,419,91,523,125,609,159,607,164,521,130,418,96,298,66,188,44"/>
+<area shape="poly" id="edge7_Node000005_Node000002" title=" " alt="" coords="312,121,269,142,223,169,177,203,134,241,68,305,65,302,131,237,174,199,220,164,266,137,310,116"/>
+<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="317,121,283,141,250,169,222,202,197,238,162,302,158,300,193,235,217,199,246,165,280,137,314,117"/>
+<area shape="poly" id="edge6_Node000005_Node000004" title=" " alt="" coords="325,121,273,169,247,203,228,241,225,256,226,271,236,300,231,302,221,272,220,255,223,239,243,200,269,165,321,117"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="495,313,593,339"/>
+<area shape="poly" id="edge8_Node000005_Node000006" title=" " alt="" coords="352,117,525,301,521,304,348,121"/>
+<area shape="poly" id="edge9_Node000005_Node000007" title=" " alt="" coords="389,116,584,161,583,166,388,121"/>
+<area shape="rect" id="Node000009" href="$pthread_8h.html" title="POSIX thread compatibility shim." alt="" coords="755,313,839,339"/>
+<area shape="poly" id="edge21_Node000005_Node000009" title=" " alt="" coords="407,107,495,112,593,122,682,139,716,151,742,165,768,195,785,231,794,268,799,299,793,300,789,269,780,233,763,198,738,169,714,155,680,144,592,127,494,117,407,112"/>
+<area shape="rect" id="Node000010" href="$ttak__compiler_8h.html" title="Compiler&#45;specific macros and compatibility layer." alt="" coords="515,240,709,265"/>
+<area shape="poly" id="edge18_Node000005_Node000010" title=" " alt="" coords="378,116,436,136,497,164,548,197,590,229,587,233,545,201,495,169,434,141,377,121"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="295,167,382,192"/>
+<area shape="poly" id="edge20_Node000005_Node000011" title=" " alt="" coords="341,119,341,153,336,153,336,119"/>
+<area shape="poly" id="edge17_Node000007_Node000006" title=" " alt="" coords="671,190,694,204,716,222,728,244,729,255,724,267,700,291,670,307,639,318,608,324,606,319,637,313,668,302,697,286,719,264,723,254,723,245,712,226,691,208,668,194"/>
+<area shape="rect" id="Node000008" href="$mem__tree_8h.html" title=" " alt="" coords="237,240,440,265"/>
+<area shape="poly" id="edge10_Node000007_Node000008" title=" " alt="" coords="598,195,402,240,401,234,597,189"/>
+<area shape="poly" id="edge16_Node000007_Node000009" title=" " alt="" coords="672,190,707,210,743,238,769,269,788,300,783,303,764,272,739,242,704,215,669,194"/>
+<area shape="poly" id="edge13_Node000008_Node000002" title=" " alt="" coords="292,268,102,314,101,309,291,263"/>
+<area shape="poly" id="edge11_Node000008_Node000003" title=" " alt="" coords="309,268,194,311,192,306,307,263"/>
+<area shape="poly" id="edge12_Node000008_Node000004" title=" " alt="" coords="326,267,274,307,271,303,322,263"/>
+<area shape="poly" id="edge14_Node000008_Node000006" title=" " alt="" coords="373,263,499,306,497,311,371,268"/>
+<area shape="poly" id="edge15_Node000008_Node000009" title=" " alt="" coords="413,263,742,313,741,319,412,268"/>
+<area shape="poly" id="edge19_Node000010_Node000006" title=" " alt="" coords="603,268,567,305,563,301,599,264"/>
 </map>

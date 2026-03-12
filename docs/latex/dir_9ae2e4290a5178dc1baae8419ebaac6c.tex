@@ -8,17 +8,3 @@ Directory dependency graph for 24-\/bigmul-\/bigreal\+:
 \includegraphics[width=216pt]{dir_9ae2e4290a5178dc1baae8419ebaac6c_dep}
 \end{center}
 \end{figure}
-
-
-\doxysubsection{Detailed Description}
-\hypertarget{README.md_autotoc_md106}{}\doxysubsection{\texorpdfstring{Tutorial 24 – Bigmul + Bigreal}{Tutorial 24 – Bigmul + Bigreal}}\label{README.md_autotoc_md106}
-{\ttfamily modules/24-\/bigmul-\/bigreal} extends the bigint work into convolution helpers and arbitrary-\/precision real numbers.
-
-{\ttfamily lesson24\+\_\+bigmul\+\_\+bigreal.\+c} exercises both the {\ttfamily \doxylink{bigmul_8h_af1ef754b0d5f81cc53514c9ac47de997}{ttak\+\_\+bigmul\+\_\+t}} workspace and {\ttfamily \doxylink{bigreal_8h_ab9368b32d51ca2bce882ba0dbf872b4a}{ttak\+\_\+bigreal\+\_\+t}}; compile it as you iterate.\hypertarget{README.md_autotoc_md107}{}\doxysubsection{\texorpdfstring{Checklist}{Checklist}}\label{README.md_autotoc_md107}
-
-\begin{DoxyEnumerate}
-\item List the lifetimes for {\ttfamily \doxylink{bigmul_8h_af1ef754b0d5f81cc53514c9ac47de997}{ttak\+\_\+bigmul\+\_\+t}} (embedded bigints, scratch buffers) plus the exponent/mantissa rules for bigreals.
-\item Rebuild bigmul init/free and the high-\/level multiply helpers alongside the bigreal add/sub routines.
-\item Use both {\ttfamily make tests/test\+\_\+math} and {\ttfamily make tests/test\+\_\+math\+\_\+advanced} since those suites hit the new helpers.
-\item Document rounding and normalization decisions so the later FFT/\+NTT modules stay consistent. 
-\end{DoxyEnumerate}
