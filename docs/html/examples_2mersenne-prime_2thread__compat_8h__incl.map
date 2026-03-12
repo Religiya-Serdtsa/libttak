@@ -1,17 +1,17 @@
 <map id="examples/mersenne&#45;prime/thread_compat.h" name="examples/mersenne&#45;prime/thread_compat.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="52,5,251,45"/>
-<area shape="rect" id="Node000002" href="$include_2ttak_2thread_2thread__compat_8h.html" title="Minimal cross&#45;platform thread wrappers exposed by libttak." alt="" coords="81,93,221,133"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="154,46,154,79,149,79,149,46"/>
-<area shape="rect" id="Node000003" href="$pthread_8h.html" title="POSIX thread compatibility shim." alt="" coords="5,181,89,207"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="128,136,75,175,72,171,125,131"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="114,181,189,207"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="154,134,154,167,149,167,149,134"/>
-<area shape="rect" id="Node000005" href="$sched_8h.html" title="Async task scheduler — init, shutdown, schedule, and yield." alt="" coords="213,181,285,207"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="177,131,225,170,222,175,173,136"/>
-<area shape="poly" id="edge8_Node000005_Node000005" title=" " alt="" coords="277,179,300,180,308,185,311,194,305,205,291,210,290,205,302,201,306,194,304,189,298,185,277,184"/>
-<area shape="rect" id="Node000006" href="$task_8h.html" title=" " alt="" coords="128,255,263,280"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="242,209,214,245,210,242,238,205"/>
-<area shape="rect" id="Node000007" title=" " alt="" coords="212,328,283,353"/>
-<area shape="poly" id="edge7_Node000005_Node000007" title=" " alt="" coords="258,206,273,239,278,259,277,281,263,317,258,315,271,279,272,260,268,240,253,208"/>
-<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="206,279,233,315,229,318,202,282"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="51,5,248,50"/>
+<area shape="rect" id="Node000002" href="$include_2ttak_2thread_2thread__compat_8h.html" title="Minimal cross&#45;platform thread wrappers exposed by libttak." alt="" coords="80,98,219,143"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="152,50,152,83,147,83,147,50"/>
+<area shape="rect" id="Node000003" href="$pthread_8h.html" title="POSIX thread compatibility shim." alt="" coords="5,191,89,218"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="124,145,77,183,74,178,121,141"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="113,191,186,218"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="152,143,152,175,147,175,147,143"/>
+<area shape="rect" id="Node000005" href="$sched_8h.html" title="Async task scheduler — init, shutdown, schedule, and yield." alt="" coords="210,191,281,218"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="177,141,220,178,217,182,173,145"/>
+<area shape="poly" id="edge8_Node000005_Node000005" title=" " alt="" coords="282,188,300,191,308,204,305,213,298,218,295,214,301,210,303,205,297,196,281,193"/>
+<area shape="rect" id="Node000006" href="$task_8h.html" title=" " alt="" coords="127,266,260,294"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="239,220,214,255,209,252,234,217"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="210,342,281,370"/>
+<area shape="poly" id="edge7_Node000005_Node000007" title=" " alt="" coords="256,218,266,240,275,266,275,294,263,329,258,327,270,294,270,267,261,242,251,220"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="205,293,230,328,226,331,201,296"/>
 </map>

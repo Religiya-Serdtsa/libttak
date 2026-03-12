@@ -16,7 +16,7 @@ var searchData=
   ['spinlock_2eh_13',['spinlock.h',['../spinlock_8h.html',1,'']]],
   ['stats_2eh_14',['stats.h',['../stats_8h.html',1,'']]],
   ['stats_5fext_2eh_15',['stats_ext.h',['../stats__ext_8h.html',1,'']]],
-  ['stdatomic_2eh_16',['stdatomic.h',['../temp__include_2stdatomic_8h.html',1,'(Global Namespace)'],['../include_2stdatomic_8h.html',1,'(Global Namespace)']]],
+  ['stdatomic_2eh_16',['stdatomic.h',['../include_2stdatomic_8h.html',1,'(Global Namespace)'],['../temp__include_2stdatomic_8h.html',1,'(Global Namespace)']]],
   ['sum_5fdivisors_2eh_17',['sum_divisors.h',['../sum__divisors_8h.html',1,'']]],
-  ['sync_2eh_18',['sync.h',['../sync_2sync_8h.html',1,'(Global Namespace)'],['../io_2sync_8h.html',1,'(Global Namespace)']]]
+  ['sync_2eh_18',['sync.h',['../io_2sync_8h.html',1,'(Global Namespace)'],['../sync_2sync_8h.html',1,'(Global Namespace)']]]
 ];

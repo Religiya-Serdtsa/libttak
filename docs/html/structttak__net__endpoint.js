@@ -1,6 +1,6 @@
 var structttak__net__endpoint =
 [
-    [ "addr", "structttak__net__endpoint.html#a3ab7e7442e2e13b2492e24eee9119655", null ],
+    [ "addr", "structttak__net__endpoint.html#afa8e9d340790a926fafabb0c741cdead", null ],
     [ "domain", "structttak__net__endpoint.html#a2dffb6d3eb2b0912b1657b50f0cd1f30", null ],
     [ "fd", "structttak__net__endpoint.html#ab6f548125c5a1909e4d5682000439630", null ],
     [ "generation_id", "structttak__net__endpoint.html#a63c685b8516294372b8e278cfc761877", null ],

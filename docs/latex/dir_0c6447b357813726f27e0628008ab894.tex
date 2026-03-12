@@ -8,3 +8,17 @@ Directory dependency graph for 11-\/portable-\/atomics\+:
 \includegraphics[width=228pt]{dir_0c6447b357813726f27e0628008ab894_dep}
 \end{center}
 \end{figure}
+
+
+\doxysubsection{Detailed Description}
+\hypertarget{README.md_autotoc_md80}{}\doxysubsection{\texorpdfstring{Tutorial 11 – Portable Atomics}{Tutorial 11 – Portable Atomics}}\label{README.md_autotoc_md80}
+{\ttfamily modules/11-\/portable-\/atomics} walks through the {\ttfamily stdatomic} fallbacks in {\ttfamily src/atomic/atomic.\+c} and {\ttfamily include/stdatomic.\+h}.
+
+{\ttfamily lesson11\+\_\+portable\+\_\+atomics.\+c} gives you a quick sanity check for the 64-\/bit helpers; rebuild it whenever you adjust intrinsics or memory-\/ordering macros.\hypertarget{README.md_autotoc_md81}{}\doxysubsection{\texorpdfstring{Checklist}{Checklist}}\label{README.md_autotoc_md81}
+
+\begin{DoxyEnumerate}
+\item Map out which atomic primitives rely on compiler builtins versus hand-\/rolled mutexes so you know what needs cloning.
+\item Port {\ttfamily ttak\+\_\+atomic\+\_\+\texorpdfstring{$\ast$}{*}} functions and keep notes about any platforms that require special casing in {\ttfamily include/stdatomic.\+h}/{\ttfamily \doxylink{temp__include_2stdatomic_8h}{temp\+\_\+include/stdatomic.\+h}}.
+\item Run {\ttfamily make tests/test\+\_\+atomic} to cover the regression set plus any additional experiments you encode in this folder.
+\item Document the memory-\/ordering guarantees you preserved so later concurrency modules can rely on them. 
+\end{DoxyEnumerate}

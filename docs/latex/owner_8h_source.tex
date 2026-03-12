@@ -25,8 +25,8 @@
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00021}\mbox{\hyperlink{owner_8h_a6c47e6a1c635efb2ad989e927612e94aaf926995f7102aa5b23a6e4af4f5d6303}{00021}}\ \ \ \ \ \mbox{\hyperlink{owner_8h_a6c47e6a1c635efb2ad989e927612e94aaf926995f7102aa5b23a6e4af4f5d6303}{TTAK\_OWNER\_SAFE\_DEFAULT}}\ =\ 0,}
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00022}\mbox{\hyperlink{owner_8h_a6c47e6a1c635efb2ad989e927612e94aa55791aa9e8301d023a68a58576bc2291}{00022}}\ \ \ \ \ \mbox{\hyperlink{owner_8h_a6c47e6a1c635efb2ad989e927612e94aa55791aa9e8301d023a68a58576bc2291}{TTAK\_OWNER\_DENY\_DANGEROUS\_MEM}}\ =\ (1\ <<\ 0),\ \textcolor{comment}{/**<\ Prevent\ access\ to\ memory\ marked\ as\ unsafe/volatile.\ */}}
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00023}\mbox{\hyperlink{owner_8h_a6c47e6a1c635efb2ad989e927612e94aa5fc9f432296d5885fa5bb9d64a949197}{00023}}\ \ \ \ \ \mbox{\hyperlink{owner_8h_a6c47e6a1c635efb2ad989e927612e94aa5fc9f432296d5885fa5bb9d64a949197}{TTAK\_OWNER\_DENY\_THREADING}}\ =\ (1\ <<\ 1),\ \ \ \ \ \textcolor{comment}{/**<\ Prevent\ spawning\ threads\ or\ async\ tasks\ within\ this\ context.\ */}}
-\DoxyCodeLine{\Hypertarget{owner_8h_source_l00024}00024\ \ \ \ \ \mbox{\hyperlink{owner_8h_a6c47e6a1c635efb2ad989e927612e94aa161c7bdbf7ab13fa527d7dd726d0357b}{TTAK\_OWNER\_STRICT\_ISOLATION}}\ =\ (1\ <<\ 2)\ \ \ \ \textcolor{comment}{/**<\ Enforce\ strict\ data\ isolation\ (no\ external\ pointer\ access).\ */}}
-\DoxyCodeLine{\Hypertarget{owner_8h_source_l00025}\mbox{\hyperlink{owner_8h_a6c47e6a1c635efb2ad989e927612e94aa161c7bdbf7ab13fa527d7dd726d0357b}{00025}}\ \}\ \mbox{\hyperlink{owner_8h_a6c47e6a1c635efb2ad989e927612e94a}{ttak\_owner\_policy\_t}};}
+\DoxyCodeLine{\Hypertarget{owner_8h_source_l00024}\mbox{\hyperlink{owner_8h_a6c47e6a1c635efb2ad989e927612e94aa161c7bdbf7ab13fa527d7dd726d0357b}{00024}}\ \ \ \ \ \mbox{\hyperlink{owner_8h_a6c47e6a1c635efb2ad989e927612e94aa161c7bdbf7ab13fa527d7dd726d0357b}{TTAK\_OWNER\_STRICT\_ISOLATION}}\ =\ (1\ <<\ 2)\ \ \ \ \textcolor{comment}{/**<\ Enforce\ strict\ data\ isolation\ (no\ external\ pointer\ access).\ */}}
+\DoxyCodeLine{\Hypertarget{owner_8h_source_l00025}00025\ \}\ \mbox{\hyperlink{owner_8h_a6c47e6a1c635efb2ad989e927612e94a}{ttak\_owner\_policy\_t}};}
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00026}00026\ \textcolor{comment}{}}
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00027}00027\ \textcolor{comment}{/**}}
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00028}00028\ \textcolor{comment}{\ *\ @brief\ The\ Owner\ structure.}}
@@ -43,7 +43,7 @@
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00039}\mbox{\hyperlink{structttak__owner_a870e95008012760ad3712fe902a39c20}{00039}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__owner_a870e95008012760ad3712fe902a39c20}{policy\_flags}};\ \ \ \ \ \ \textcolor{comment}{/**<\ Safety\ policy\ bitmask.\ */}}
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00040}\mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{00040}}\ \}\ \mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\_owner\_t}};}
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00041}00041\ }
-\DoxyCodeLine{\Hypertarget{owner_8h_source_l00042}\mbox{\hyperlink{owner_8h_a9b17ab97f490a6a7a1a4f90c2216186c}{00042}}\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{structttak__owner}{ttak\_owner\_t}}\ \mbox{\hyperlink{owner_8h_a9b17ab97f490a6a7a1a4f90c2216186c}{tt\_owner\_t}};}
+\DoxyCodeLine{\Hypertarget{owner_8h_source_l00042}\mbox{\hyperlink{owner_8h_a9b17ab97f490a6a7a1a4f90c2216186c}{00042}}\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\_owner\_t}}\ \mbox{\hyperlink{owner_8h_a9b17ab97f490a6a7a1a4f90c2216186c}{tt\_owner\_t}};}
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00043}00043\ \textcolor{comment}{}}
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00044}00044\ \textcolor{comment}{/**}}
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00045}00045\ \textcolor{comment}{\ *\ @brief\ Creates\ a\ new\ Owner\ context.}}
@@ -51,14 +51,14 @@
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00047}00047\ \textcolor{comment}{\ *\ @param\ policy\ Safety\ policy\ flags.}}
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00048}00048\ \textcolor{comment}{\ *\ @return\ Pointer\ to\ the\ initialized\ owner,\ or\ NULL\ on\ failure.}}
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00049}00049\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{owner_8h_source_l00050}\mbox{\hyperlink{owner_8h_a7f2426faee1c99c71652d908024dadd8}{00050}}\ \mbox{\hyperlink{structttak__owner}{ttak\_owner\_t}}\ *\mbox{\hyperlink{owner_8h_a7f2426faee1c99c71652d908024dadd8}{ttak\_owner\_create}}(uint32\_t\ policy);}
+\DoxyCodeLine{\Hypertarget{owner_8h_source_l00050}\mbox{\hyperlink{owner_8h_a7f2426faee1c99c71652d908024dadd8}{00050}}\ \mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\_owner\_t}}\ *\mbox{\hyperlink{owner_8h_a7f2426faee1c99c71652d908024dadd8}{ttak\_owner\_create}}(uint32\_t\ policy);}
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00051}00051\ \textcolor{comment}{}}
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00052}00052\ \textcolor{comment}{/**}}
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00053}00053\ \textcolor{comment}{\ *\ @brief\ Destroys\ the\ Owner\ and\ releases\ all\ registered\ resources.}}
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00054}00054\ \textcolor{comment}{\ *\ }}
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00055}00055\ \textcolor{comment}{\ *\ @param\ owner\ The\ owner\ to\ destroy.}}
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00056}00056\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{owner_8h_source_l00057}\mbox{\hyperlink{owner_8h_a73e3bd2628d53ed3e2b168de4f999c16}{00057}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{owner_8h_a73e3bd2628d53ed3e2b168de4f999c16}{ttak\_owner\_destroy}}(\mbox{\hyperlink{structttak__owner}{ttak\_owner\_t}}\ *owner);}
+\DoxyCodeLine{\Hypertarget{owner_8h_source_l00057}\mbox{\hyperlink{owner_8h_a73e3bd2628d53ed3e2b168de4f999c16}{00057}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{owner_8h_a73e3bd2628d53ed3e2b168de4f999c16}{ttak\_owner\_destroy}}(\mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\_owner\_t}}\ *owner);}
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00058}00058\ \textcolor{comment}{}}
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00059}00059\ \textcolor{comment}{/**}}
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00060}00060\ \textcolor{comment}{\ *\ @brief\ Registers\ a\ function\ into\ the\ owner's\ isolated\ context.}}
@@ -70,7 +70,7 @@
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00066}00066\ \textcolor{comment}{\ *\ @param\ func\ Function\ pointer.}}
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00067}00067\ \textcolor{comment}{\ *\ @return\ true\ if\ registered\ successfully,\ false\ otherwise.}}
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00068}00068\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{owner_8h_source_l00069}\mbox{\hyperlink{owner_8h_ac4a9d4c89369dd2c3c208633fb41d9a8}{00069}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{owner_8h_ac4a9d4c89369dd2c3c208633fb41d9a8}{ttak\_owner\_register\_func}}(\mbox{\hyperlink{structttak__owner}{ttak\_owner\_t}}\ *owner,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *name,\ \mbox{\hyperlink{owner_8h_a0b143e19f7925443babcbe9e98b7bd7c}{ttak\_owner\_func\_t}}\ func);}
+\DoxyCodeLine{\Hypertarget{owner_8h_source_l00069}\mbox{\hyperlink{owner_8h_ac4a9d4c89369dd2c3c208633fb41d9a8}{00069}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{owner_8h_ac4a9d4c89369dd2c3c208633fb41d9a8}{ttak\_owner\_register\_func}}(\mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\_owner\_t}}\ *owner,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *name,\ \mbox{\hyperlink{owner_8h_a0b143e19f7925443babcbe9e98b7bd7c}{ttak\_owner\_func\_t}}\ func);}
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00070}00070\ \textcolor{comment}{}}
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00071}00071\ \textcolor{comment}{/**}}
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00072}00072\ \textcolor{comment}{\ *\ @brief\ Registers\ a\ resource\ (variable)\ into\ the\ owner's\ isolated\ context.}}
@@ -80,12 +80,12 @@
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00076}00076\ \textcolor{comment}{\ *\ @param\ data\ Pointer\ to\ the\ data.}}
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00077}00077\ \textcolor{comment}{\ *\ @return\ true\ if\ registered\ successfully.}}
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00078}00078\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{owner_8h_source_l00079}\mbox{\hyperlink{owner_8h_ae74497f47054f5c3204578fa163dc942}{00079}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{owner_8h_ae74497f47054f5c3204578fa163dc942}{ttak\_owner\_register\_resource}}(\mbox{\hyperlink{structttak__owner}{ttak\_owner\_t}}\ *owner,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *name,\ \textcolor{keywordtype}{void}\ *data);}
+\DoxyCodeLine{\Hypertarget{owner_8h_source_l00079}\mbox{\hyperlink{owner_8h_ae74497f47054f5c3204578fa163dc942}{00079}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{owner_8h_ae74497f47054f5c3204578fa163dc942}{ttak\_owner\_register\_resource}}(\mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\_owner\_t}}\ *owner,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *name,\ \textcolor{keywordtype}{void}\ *data);}
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00080}00080\ \textcolor{comment}{}}
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00081}00081\ \textcolor{comment}{/**}}
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00082}00082\ \textcolor{comment}{\ *\ @brief\ Transfers\ a\ resource\ from\ one\ owner\ to\ another.}}
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00083}00083\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{owner_8h_source_l00084}\mbox{\hyperlink{owner_8h_a25bcde8cc2013baf360122bd7ccd078f}{00084}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{owner_8h_a25bcde8cc2013baf360122bd7ccd078f}{ttak\_owner\_transfer\_resource}}(\mbox{\hyperlink{structttak__owner}{ttak\_owner\_t}}\ *from,\ \mbox{\hyperlink{structttak__owner}{ttak\_owner\_t}}\ *to,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *name);}
+\DoxyCodeLine{\Hypertarget{owner_8h_source_l00084}\mbox{\hyperlink{owner_8h_a25bcde8cc2013baf360122bd7ccd078f}{00084}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{owner_8h_a25bcde8cc2013baf360122bd7ccd078f}{ttak\_owner\_transfer\_resource}}(\mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\_owner\_t}}\ *from,\ \mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\_owner\_t}}\ *to,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *name);}
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00085}00085\ \textcolor{comment}{}}
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00086}00086\ \textcolor{comment}{/**}}
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00087}00087\ \textcolor{comment}{\ *\ @brief\ Executes\ a\ registered\ function\ within\ the\ owner's\ safety\ context.}}
@@ -96,7 +96,7 @@
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00092}00092\ \textcolor{comment}{\ *\ @param\ args\ runtime\ arguments\ to\ pass\ to\ the\ function.}}
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00093}00093\ \textcolor{comment}{\ *\ @return\ true\ if\ execution\ was\ permitted\ and\ successful.}}
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00094}00094\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{owner_8h_source_l00095}\mbox{\hyperlink{owner_8h_ac178a65367f5aec292088dcdc1e1ee36}{00095}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{owner_8h_ac178a65367f5aec292088dcdc1e1ee36}{ttak\_owner\_execute}}(\mbox{\hyperlink{structttak__owner}{ttak\_owner\_t}}\ *owner,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *func\_name,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *resource\_name,\ \textcolor{keywordtype}{void}\ *args);}
+\DoxyCodeLine{\Hypertarget{owner_8h_source_l00095}\mbox{\hyperlink{owner_8h_ac178a65367f5aec292088dcdc1e1ee36}{00095}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{owner_8h_ac178a65367f5aec292088dcdc1e1ee36}{ttak\_owner\_execute}}(\mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\_owner\_t}}\ *owner,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *func\_name,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *resource\_name,\ \textcolor{keywordtype}{void}\ *args);}
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00096}00096\ }
 \DoxyCodeLine{\Hypertarget{owner_8h_source_l00097}00097\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_MEM\_OWNER\_H}}
 

@@ -8,3 +8,17 @@ Directory dependency graph for 31-\/btree\+:
 \includegraphics[width=170pt]{dir_9f195b949b2a2535c2619822705af283_dep}
 \end{center}
 \end{figure}
+
+
+\doxysubsection{Detailed Description}
+\hypertarget{README.md_autotoc_md121}{}\doxysubsection{\texorpdfstring{Tutorial 31 – B-\/\+Tree}{Tutorial 31 – B-\/\+Tree}}\label{README.md_autotoc_md121}
+{\ttfamily modules/31-\/btree} tackles the sibling structure in {\ttfamily src/tree/btree.\+c}.
+
+{\ttfamily lesson31\+\_\+btree.\+c} exercises insert/search; keep extending it to hit deletion paths as you port the code.\hypertarget{README.md_autotoc_md122}{}\doxysubsection{\texorpdfstring{Checklist}{Checklist}}\label{README.md_autotoc_md122}
+
+\begin{DoxyEnumerate}
+\item Compare and contrast the B-\/tree node rules with the B+ tree lesson so you know what logic must change.
+\item Rebuild the insertion, search, and destruction helpers (plus merge/split) according to the lesson.
+\item Use custom drivers or scripts in this folder to stress deletion, borrow, and merge cases until you are confident in the implementation.
+\item Document invariants (min degree, key ordering) and keep them handy for future maintenance. 
+\end{DoxyEnumerate}

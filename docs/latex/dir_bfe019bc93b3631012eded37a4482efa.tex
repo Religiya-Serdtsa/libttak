@@ -8,3 +8,17 @@ Directory dependency graph for 28-\/sha256\+:
 \includegraphics[width=180pt]{dir_bfe019bc93b3631012eded37a4482efa_dep}
 \end{center}
 \end{figure}
+
+
+\doxysubsection{Detailed Description}
+\hypertarget{README.md_autotoc_md115}{}\doxysubsection{\texorpdfstring{Tutorial 28 – SHA-\/256}{Tutorial 28 – SHA-\/256}}\label{README.md_autotoc_md115}
+{\ttfamily modules/28-\/sha256} covers the crypto helper implemented in {\ttfamily src/security/sha256.\+c}.
+
+{\ttfamily lesson28\+\_\+sha256.\+c} hashes "{}libttak"{}; compile it while you mirror the block schedule and padding logic.\hypertarget{README.md_autotoc_md116}{}\doxysubsection{\texorpdfstring{Checklist}{Checklist}}\label{README.md_autotoc_md116}
+
+\begin{DoxyEnumerate}
+\item Keep the SHA-\/256 constants and schedule diagram in this folder for quick reference.
+\item Clone {\ttfamily sha256\+\_\+init/update/final} and make sure they match the FIPS 180-\/4 flow, including length padding.
+\item Use {\ttfamily make tests/test\+\_\+security} plus external known-\/answer tests to validate your implementation.
+\item Record any optimizations (loop unrolling, endianness tricks) you decide to port so future maintainers know what changed. 
+\end{DoxyEnumerate}

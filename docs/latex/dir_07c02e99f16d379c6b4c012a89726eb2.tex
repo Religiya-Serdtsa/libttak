@@ -8,3 +8,48 @@ Directory dependency graph for 37-\/shared-\/memory-\/ownership\+:
 \includegraphics[width=276pt]{dir_07c02e99f16d379c6b4c012a89726eb2_dep}
 \end{center}
 \end{figure}
+
+
+\doxysubsection{Detailed Description}
+\hypertarget{README.md_autotoc_md137}{}\doxysubsection{\texorpdfstring{Lesson 37\+: Shared Memory with Bitmap Ownership}{Lesson 37\+: Shared Memory with Bitmap Ownership}}\label{README.md_autotoc_md137}
+This tutorial introduces {\ttfamily \doxylink{structttak__shared__t}{ttak\+\_\+shared\+\_\+t}} and {\ttfamily \doxylink{structttak__dynamic__mask__t}{ttak\+\_\+dynamic\+\_\+mask\+\_\+t}}, which provide a high-\/performance, \$\+O(1)\$ ownership validation system for shared resources.\hypertarget{README.md_autotoc_md138}{}\doxysubsection{\texorpdfstring{Concepts}{Concepts}}\label{README.md_autotoc_md138}
+
+\begin{DoxyEnumerate}
+\item {\bfseries{Unique Owner IDs}}\+: Every {\ttfamily \doxylink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} is assigned a unique, monotonically increasing ID upon creation.
+\item {\bfseries{Bitmap-\/\+Based Validation}}\+: {\ttfamily \doxylink{structttak__shared__t}{ttak\+\_\+shared\+\_\+t}} uses a dynamic bitmap ({\ttfamily \doxylink{structttak__dynamic__mask__t}{ttak\+\_\+dynamic\+\_\+mask\+\_\+t}}) to track which owners have permission to access a shared resource. This allows for constant-\/time (\$\+O(1)\$) validation.
+\item {\bfseries{Synchronization Levels}}\+:
+\begin{DoxyItemize}
+\item {\bfseries{LEVEL 3}}\+: Strict validation of ownership and timestamps.
+\item {\bfseries{LEVEL 2}}\+: Moderate validation (allows some drift).
+\item {\bfseries{LEVEL 1}}\+: Basic ownership check.
+\item {\bfseries{NO\+\_\+\+LEVEL}}\+: Maximum performance with no safety checks.
+\end{DoxyItemize}
+\item {\bfseries{Atomic Masking}}\+: The {\ttfamily \doxylink{structttak__dynamic__mask__t}{ttak\+\_\+dynamic\+\_\+mask\+\_\+t}} uses an internal {\ttfamily \doxylink{sync_2sync_8h_ad3f9b08e4c066e7bb7b1ed98d2a90386}{ttak\+\_\+rwlock\+\_\+t}} to ensure that setting, clearing, and testing bits are thread-\/safe operations.
+\end{DoxyEnumerate}\hypertarget{README.md_autotoc_md139}{}\doxysubsection{\texorpdfstring{How to Run}{How to Run}}\label{README.md_autotoc_md139}
+
+\begin{DoxyEnumerate}
+\item {\bfseries{Compile}}\+: {\ttfamily bash make }
+\item {\bfseries{Run}}\+: {\ttfamily bash make run }
+\end{DoxyEnumerate}\hypertarget{README.md_autotoc_md140}{}\doxysubsection{\texorpdfstring{Example Code Sneak Peek}{Example Code Sneak Peek}}\label{README.md_autotoc_md140}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{structttak__shared__t}{ttak\_shared\_t}}\ shared;}
+\DoxyCodeLine{\mbox{\hyperlink{shared_8h_a32180ab208d8a2290565861adba3f4a7}{ttak\_shared\_init}}(\&shared);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ Allocate\ 1KB\ of\ shared\ memory}}
+\DoxyCodeLine{shared.allocate(\&shared,\ 1024,\ \mbox{\hyperlink{shared_8h_ae6eb27b055588903d427f15cc0cec6f5a577c57951143ba8e64aff010c9383d78}{TTAK\_SHARED\_LEVEL\_3}});}
+\DoxyCodeLine{}
+\DoxyCodeLine{\mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\_owner\_t}}\ *alice\ =\ \mbox{\hyperlink{owner_8h_a7f2426faee1c99c71652d908024dadd8}{ttak\_owner\_create}}(\mbox{\hyperlink{owner_8h_a6c47e6a1c635efb2ad989e927612e94aaf926995f7102aa5b23a6e4af4f5d6303}{TTAK\_OWNER\_SAFE\_DEFAULT}});}
+\DoxyCodeLine{shared.add\_owner(\&shared,\ alice);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ Alice\ can\ access}}
+\DoxyCodeLine{\mbox{\hyperlink{shared_8h_a9e87115c8ab89cdc85a268b523179cef}{ttak\_shared\_result\_t}}\ res;}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ *data\ =\ shared.access(\&shared,\ alice,\ \&res);}
+\DoxyCodeLine{\textcolor{keywordflow}{if}\ (data)\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Perform\ operations}}
+\DoxyCodeLine{\ \ \ \ shared.release(\&shared);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\hypertarget{README.md_autotoc_md141}{}\doxysubsection{\texorpdfstring{Why \$\+O(1)\$?}{Why \$\+O(1)\$?}}\label{README.md_autotoc_md141}
+In complex systems with hundreds of owners, iterating through a list to check permissions is slow. By using a bitmap indexed by the Owner\textquotesingle{}s ID, we can check access permissions with a single bitwise operation, regardless of the number of registered owners. 

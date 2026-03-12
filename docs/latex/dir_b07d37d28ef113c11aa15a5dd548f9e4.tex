@@ -8,3 +8,17 @@ Directory dependency graph for 07-\/set-\/container\+:
 \includegraphics[width=208pt]{dir_b07d37d28ef113c11aa15a5dd548f9e4_dep}
 \end{center}
 \end{figure}
+
+
+\doxysubsection{Detailed Description}
+\hypertarget{README.md_autotoc_md72}{}\doxysubsection{\texorpdfstring{Tutorial 07 – Set Container}{Tutorial 07 – Set Container}}\label{README.md_autotoc_md72}
+{\ttfamily modules/07-\/set-\/container} asks you to wrap the generic hash table into a key-\/only set stored in {\ttfamily src/container/set.\+c}.
+
+{\ttfamily lesson07\+\_\+set\+\_\+container.\+c} (build with {\ttfamily make}/{\ttfamily make run}) gives you a scratch driver for experimenting with {\ttfamily ttak\+\_\+set\+\_\+add}/{\ttfamily contains}/{\ttfamily remove} as you sort out placeholder values and ownership.\hypertarget{README.md_autotoc_md73}{}\doxysubsection{\texorpdfstring{Checklist}{Checklist}}\label{README.md_autotoc_md73}
+
+\begin{DoxyEnumerate}
+\item Sketch how {\ttfamily \doxylink{set_8h_a883b9629413040813df22b6b87ede789}{ttak\+\_\+set\+\_\+t}} delegates to {\ttfamily \doxylink{table_8h_ae98c30e481bee1ad9ed4278ba2f0341a}{ttak\+\_\+table\+\_\+t}}, including when the wrapper must free keys or simply forward {\ttfamily now} to the table.
+\item Decide what sentinel value you will store in the table to distinguish "{}present"{} from "{}missing"{} even when the logical value is {\ttfamily NULL}.
+\item Re-\/implement the init/add/contains/remove/destroy helpers and validate them with the driver (or bespoke unit tests) before wiring the code into the library.
+\item Document any ownership conventions you chose so later lessons know how to push heap-\/allocated keys through the set safely. 
+\end{DoxyEnumerate}

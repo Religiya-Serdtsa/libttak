@@ -9,7 +9,7 @@ var indexSectionsWithContent =
   6: "mt",
   7: "mt",
   8: "_adeopst",
-  9: "bcdhlps"
+  9: "$0123456789abcdefghiklmnopqrstuvwy–"
 };
 
 var indexSectionNames =

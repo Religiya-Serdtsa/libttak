@@ -6,5 +6,5 @@ var searchData=
   ['used_5fcount_3',['used_count',['../structttak__object__pool.html#a53077709490b4f7933fd2a6609d14e84',1,'ttak_object_pool']]],
   ['used_5fslots_4',['used_slots',['../structttak__net__lattice.html#ac8d1b41ef99dfd5baad66a7cdf7b0eb3',1,'ttak_net_lattice']]],
   ['user_5fptr_5',['user_ptr',['../structttak__io__buffer.html#abeac8d53c1de043be4324d1958ec4096',1,'ttak_io_buffer']]],
-  ['utility_20for_20ai_20assisted_20development_6',['Practical Utility for AI-Assisted Development',['..//home/runner/work/libttak/libttak/README.md#autotoc_md27',1,'']]]
+  ['utility_20for_20ai_20assisted_20development_6',['Practical Utility for AI-Assisted Development',['../index.html#autotoc_md27',1,'']]]
 ];

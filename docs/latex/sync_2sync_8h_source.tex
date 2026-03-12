@@ -30,7 +30,7 @@
 \DoxyCodeLine{\Hypertarget{sync_2sync_8h_source_l00026}\mbox{\hyperlink{structttak__shard_a59cebb3f0f79fe8924de24661b90fbf9}{00026}}\ \ \ \ \ \mbox{\hyperlink{sync_2sync_8h_ad3f9b08e4c066e7bb7b1ed98d2a90386}{ttak\_rwlock\_t}}\ \ \ \mbox{\hyperlink{structttak__shard_a59cebb3f0f79fe8924de24661b90fbf9}{lock}};}
 \DoxyCodeLine{\Hypertarget{sync_2sync_8h_source_l00027}\mbox{\hyperlink{sync_2sync_8h_a2af401fa7e43489271afefbdfa2b5399}{00027}}\ \}\ \mbox{\hyperlink{sync_2sync_8h_a2af401fa7e43489271afefbdfa2b5399}{ttak\_shard\_t}};}
 \DoxyCodeLine{\Hypertarget{sync_2sync_8h_source_l00028}00028\ }
-\DoxyCodeLine{\Hypertarget{sync_2sync_8h_source_l00029}\mbox{\hyperlink{sync_2sync_8h_a8d737f4190550c09c17a020ab282259f}{00029}}\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{structttak__shard}{ttak\_shard\_t}}\ \mbox{\hyperlink{sync_2sync_8h_a8d737f4190550c09c17a020ab282259f}{tt\_shard\_t}};}
+\DoxyCodeLine{\Hypertarget{sync_2sync_8h_source_l00029}\mbox{\hyperlink{sync_2sync_8h_a8d737f4190550c09c17a020ab282259f}{00029}}\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{sync_2sync_8h_a2af401fa7e43489271afefbdfa2b5399}{ttak\_shard\_t}}\ \mbox{\hyperlink{sync_2sync_8h_a8d737f4190550c09c17a020ab282259f}{tt\_shard\_t}};}
 \DoxyCodeLine{\Hypertarget{sync_2sync_8h_source_l00030}00030\ \textcolor{comment}{}}
 \DoxyCodeLine{\Hypertarget{sync_2sync_8h_source_l00031}00031\ \textcolor{comment}{/**}}
 \DoxyCodeLine{\Hypertarget{sync_2sync_8h_source_l00032}00032\ \textcolor{comment}{\ *\ @brief\ Shared\ resource\ structure.}}
@@ -42,7 +42,7 @@
 \DoxyCodeLine{\Hypertarget{sync_2sync_8h_source_l00038}\mbox{\hyperlink{structtt__type__shared_aa04c9333dcd0c2a95d117afc3a2e1e18}{00038}}\ \ \ \ \ uint64\_t\ \ \ \ \ \ \ \ \mbox{\hyperlink{structtt__type__shared_aa04c9333dcd0c2a95d117afc3a2e1e18}{ts}};\ \ \ \ \textcolor{comment}{/**\ Inherited\ timestamp\ (tick\ count)\ */}}
 \DoxyCodeLine{\Hypertarget{sync_2sync_8h_source_l00039}\mbox{\hyperlink{sync_2sync_8h_af7e69d4612c0d58e7c611b79f1f5d43e}{00039}}\ \}\ \mbox{\hyperlink{sync_2sync_8h_af7e69d4612c0d58e7c611b79f1f5d43e}{tt\_type\_shared\_t}};}
 \DoxyCodeLine{\Hypertarget{sync_2sync_8h_source_l00040}00040\ }
-\DoxyCodeLine{\Hypertarget{sync_2sync_8h_source_l00041}\mbox{\hyperlink{sync_2sync_8h_a39cac376f364ac1c89b986bdae4fae57}{00041}}\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{structtt__type__shared}{tt\_type\_shared\_t}}\ \mbox{\hyperlink{sync_2sync_8h_a39cac376f364ac1c89b986bdae4fae57}{ttak\_type\_shared\_t}};}
+\DoxyCodeLine{\Hypertarget{sync_2sync_8h_source_l00041}\mbox{\hyperlink{sync_2sync_8h_a39cac376f364ac1c89b986bdae4fae57}{00041}}\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{sync_2sync_8h_af7e69d4612c0d58e7c611b79f1f5d43e}{tt\_type\_shared\_t}}\ \mbox{\hyperlink{sync_2sync_8h_a39cac376f364ac1c89b986bdae4fae57}{ttak\_type\_shared\_t}};}
 \DoxyCodeLine{\Hypertarget{sync_2sync_8h_source_l00042}00042\ }
 \DoxyCodeLine{\Hypertarget{sync_2sync_8h_source_l00043}00043\ \textcolor{comment}{//\ Mutex}}
 \DoxyCodeLine{\Hypertarget{sync_2sync_8h_source_l00044}\mbox{\hyperlink{sync_2sync_8h_ac18cded8911f131cc856a866ed1c1b81}{00044}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{sync_2sync_8h_ac18cded8911f131cc856a866ed1c1b81}{ttak\_mutex\_init}}(\mbox{\hyperlink{sync_2sync_8h_a099d39f1f8999756bc828ad4b337d5b6}{ttak\_mutex\_t}}\ *mutex)\ \{}
@@ -83,12 +83,12 @@
 \DoxyCodeLine{\Hypertarget{sync_2sync_8h_source_l00079}00079\ \}}
 \DoxyCodeLine{\Hypertarget{sync_2sync_8h_source_l00080}00080\ }
 \DoxyCodeLine{\Hypertarget{sync_2sync_8h_source_l00081}00081\ \textcolor{comment}{//\ Shard}}
-\DoxyCodeLine{\Hypertarget{sync_2sync_8h_source_l00082}\mbox{\hyperlink{sync_2sync_8h_ab3cf1fe6aa9a8e470b81b6c11ed5d5b9}{00082}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{sync_2sync_8h_ab3cf1fe6aa9a8e470b81b6c11ed5d5b9}{ttak\_shard\_init}}(\mbox{\hyperlink{structttak__shard}{ttak\_shard\_t}}\ *shard,\ \textcolor{keywordtype}{void}\ *data)\ \{}
+\DoxyCodeLine{\Hypertarget{sync_2sync_8h_source_l00082}\mbox{\hyperlink{sync_2sync_8h_ab3cf1fe6aa9a8e470b81b6c11ed5d5b9}{00082}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{sync_2sync_8h_ab3cf1fe6aa9a8e470b81b6c11ed5d5b9}{ttak\_shard\_init}}(\mbox{\hyperlink{sync_2sync_8h_a2af401fa7e43489271afefbdfa2b5399}{ttak\_shard\_t}}\ *shard,\ \textcolor{keywordtype}{void}\ *data)\ \{}
 \DoxyCodeLine{\Hypertarget{sync_2sync_8h_source_l00083}00083\ \ \ \ \ shard-\/>\mbox{\hyperlink{structttak__shard_ae9781ea057c78a51876c3b87150d3c32}{data}}\ =\ data;}
 \DoxyCodeLine{\Hypertarget{sync_2sync_8h_source_l00084}00084\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{sync_2sync_8h_a4e2ad1456e1e587991494865526c078c}{ttak\_rwlock\_init}}(\&shard-\/>\mbox{\hyperlink{structttak__shard_a59cebb3f0f79fe8924de24661b90fbf9}{lock}});}
 \DoxyCodeLine{\Hypertarget{sync_2sync_8h_source_l00085}00085\ \}}
 \DoxyCodeLine{\Hypertarget{sync_2sync_8h_source_l00086}00086\ }
-\DoxyCodeLine{\Hypertarget{sync_2sync_8h_source_l00087}\mbox{\hyperlink{sync_2sync_8h_a81a287463238de01ad9f9b2233909e6c}{00087}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{sync_2sync_8h_a81a287463238de01ad9f9b2233909e6c}{ttak\_shard\_destroy}}(\mbox{\hyperlink{structttak__shard}{ttak\_shard\_t}}\ *shard)\ \{}
+\DoxyCodeLine{\Hypertarget{sync_2sync_8h_source_l00087}\mbox{\hyperlink{sync_2sync_8h_a81a287463238de01ad9f9b2233909e6c}{00087}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{sync_2sync_8h_a81a287463238de01ad9f9b2233909e6c}{ttak\_shard\_destroy}}(\mbox{\hyperlink{sync_2sync_8h_a2af401fa7e43489271afefbdfa2b5399}{ttak\_shard\_t}}\ *shard)\ \{}
 \DoxyCodeLine{\Hypertarget{sync_2sync_8h_source_l00088}00088\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{sync_2sync_8h_a3288e7ff7a6ecd8392f0296a9da8d59d}{ttak\_rwlock\_destroy}}(\&shard-\/>\mbox{\hyperlink{structttak__shard_a59cebb3f0f79fe8924de24661b90fbf9}{lock}});}
 \DoxyCodeLine{\Hypertarget{sync_2sync_8h_source_l00089}00089\ \}}
 \DoxyCodeLine{\Hypertarget{sync_2sync_8h_source_l00090}00090\ }

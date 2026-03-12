@@ -5,6 +5,39 @@ Directory dependency graph for 01-\/getting-\/started\+:
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=218pt]{dir_9cfe515b34ac7b9f628bff3eeeea5d16_dep}
+\includegraphics[width=216pt]{dir_9cfe515b34ac7b9f628bff3eeeea5d16_dep}
 \end{center}
 \end{figure}
+
+
+\doxysubsection{Detailed Description}
+\hypertarget{README.md_autotoc_md59}{}\doxysubsection{\texorpdfstring{Tutorial 01 – Getting Started}{Tutorial 01 – Getting Started}}\label{README.md_autotoc_md59}
+This folder hosts the hands-\/on assets that accompany {\ttfamily modules/01-\/getting-\/started}. Use it after you have already built and {\bfseries{installed}} {\ttfamily libttak} (e.\+g., {\ttfamily make \&\& sudo make install}). The intent is to prove that your toolchain is wired correctly and to watch the lifetime APIs work in a tiny, self-\/contained program.\hypertarget{README.md_autotoc_md60}{}\doxysubsection{\texorpdfstring{What you will do}{What you will do}}\label{README.md_autotoc_md60}
+
+\begin{DoxyItemize}
+\item Compile {\ttfamily getting\+\_\+started.\+c}, which allocates a short-\/lived message with {\ttfamily ttak\+\_\+mem\+\_\+alloc}, inspects it midway through its lifetime, and observes expiration.
+\item Run the program and compare the log output to the lesson checklist.
+\item Jot down your "{}\+What I learned"{} entry before moving on to Lesson 02.
+\end{DoxyItemize}\hypertarget{README.md_autotoc_md61}{}\doxysubsection{\texorpdfstring{Building the sample}{Building the sample}}\label{README.md_autotoc_md61}
+The provided {\ttfamily Makefile} links against {\ttfamily libttak} using standard system paths. Adjust {\ttfamily CFLAGS} or {\ttfamily LDFLAGS} if your installation requires custom flags.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cd\ tutorials/01-\/getting-\/started}
+\DoxyCodeLine{make\ \ \ \ \ \ \ \ \ \ \ \ \#\ builds\ ./getting\_started}
+\DoxyCodeLine{make\ run\ \ \ \ \ \ \ \ \#\ runs\ it\ with\ the\ default\ timestamps}
+
+\end{DoxyCode}
+
+
+To see how the app behaves when you simulate later timestamps, override the {\ttfamily NOW} and {\ttfamily LIFETIME} environment variables when running\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{NOW=2000\ LIFETIME=600\ make\ run}
+
+\end{DoxyCode}
+
+
+{\ttfamily make clean} removes the binary so you can start fresh.\hypertarget{README.md_autotoc_md62}{}\doxysubsection{\texorpdfstring{Next steps}{Next steps}}\label{README.md_autotoc_md62}
+After you confirm that the sample mirrors the expectations in Lesson 01, move on to {\ttfamily tutorials/02-\/helper-\/workflow} to wire up the helper program before you start cloning modules in depth. 

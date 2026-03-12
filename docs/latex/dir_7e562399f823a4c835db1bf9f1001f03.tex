@@ -5,6 +5,20 @@ Directory dependency graph for 12-\/thread-\/pool-\/core\+:
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=226pt]{dir_7e562399f823a4c835db1bf9f1001f03_dep}
+\includegraphics[width=224pt]{dir_7e562399f823a4c835db1bf9f1001f03_dep}
 \end{center}
 \end{figure}
+
+
+\doxysubsection{Detailed Description}
+\hypertarget{README.md_autotoc_md82}{}\doxysubsection{\texorpdfstring{Tutorial 12 – Thread Pool Core}{Tutorial 12 – Thread Pool Core}}\label{README.md_autotoc_md82}
+{\ttfamily modules/12-\/thread-\/pool-\/core} has you rebuild the pool lifecycle in {\ttfamily src/thread/pool.\+c}.
+
+{\ttfamily lesson12\+\_\+thread\+\_\+pool\+\_\+core.\+c} submits a tiny job to the pool and resolves a future—compile it to watch end-\/to-\/end scheduling as you iterate.\hypertarget{README.md_autotoc_md83}{}\doxysubsection{\texorpdfstring{Checklist}{Checklist}}\label{README.md_autotoc_md83}
+
+\begin{DoxyEnumerate}
+\item Write down the control flow for creating workers, submitting tasks, and tearing the pool down (queues, futures, timers).
+\item Clone the pool allocation, submit path, and shutdown logic along with the helper functions that wire promises/futures together.
+\item Use {\ttfamily make tests/test\+\_\+thread} plus {\ttfamily make tests/test\+\_\+async} to ensure the pool cooperates with the runtime.
+\item Record deadlock scenarios you encounter here so they inform the follow-\/up lessons on workers and scheduling. 
+\end{DoxyEnumerate}

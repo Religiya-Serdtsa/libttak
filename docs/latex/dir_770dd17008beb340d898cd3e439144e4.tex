@@ -8,3 +8,45 @@ Directory dependency graph for 03-\/control-\/flow\+:
 \includegraphics[width=202pt]{dir_770dd17008beb340d898cd3e439144e4_dep}
 \end{center}
 \end{figure}
+
+
+\doxysubsection{Detailed Description}
+\hypertarget{README.md_autotoc_md178}{}\doxysubsection{\texorpdfstring{03 -\/ Control Flow}{03 -\/ Control Flow}}\label{README.md_autotoc_md178}
+Big\+Script supports conditional execution using {\ttfamily if} statements and standard comparison operators.\hypertarget{README.md_autotoc_md179}{}\doxysubsection{\texorpdfstring{Comparison Operators}{Comparison Operators}}\label{README.md_autotoc_md179}
+The following comparison operators are available for integers\+:
+\begin{DoxyItemize}
+\item {\ttfamily ==} \+: Equal to
+\item {\ttfamily !=} \+: Not equal to
+\item {\ttfamily \texorpdfstring{$<$}{<}} \+: Less than
+\item {\ttfamily \texorpdfstring{$>$}{>}} \+: Greater than
+\item {\ttfamily \texorpdfstring{$<$}{<}=} \+: Less than or equal to
+\item {\ttfamily \texorpdfstring{$>$}{>}=} \+: Greater than or equal to
+\end{DoxyItemize}\hypertarget{README.md_autotoc_md180}{}\doxysubsection{\texorpdfstring{If Statements}{If Statements}}\label{README.md_autotoc_md180}
+The {\ttfamily if} statement evaluates a condition. If the condition is true (non-\/zero), the block is executed.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{if\ (seed\ ==\ 100)\ \{}
+\DoxyCodeLine{\ \ return\ 1;}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+{\itshape Note\+: Currently, Big\+Script only supports the {\ttfamily if} statement. {\ttfamily else} and {\ttfamily else if} are not yet implemented in the core engine.}\hypertarget{README.md_autotoc_md181}{}\doxysubsection{\texorpdfstring{Running the Example}{Running the Example}}\label{README.md_autotoc_md181}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{gcc\ main.c\ -\/o\ control\_flow\ -\/lttak}
+\DoxyCodeLine{./control\_flow}
+
+\end{DoxyCode}
+
+
+Expected output\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{Seed\ 100\ -\/>\ Result:\ 1}
+\DoxyCodeLine{Seed\ 25\ -\/>\ Result:\ 2}
+\DoxyCodeLine{Seed\ 75\ -\/>\ Result:\ 0}
+
+\end{DoxyCode}
+ 

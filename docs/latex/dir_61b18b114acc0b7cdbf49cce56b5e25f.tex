@@ -8,3 +8,17 @@ Directory dependency graph for 18-\/rate-\/limiters\+:
 \includegraphics[width=204pt]{dir_61b18b114acc0b7cdbf49cce56b5e25f_dep}
 \end{center}
 \end{figure}
+
+
+\doxysubsection{Detailed Description}
+\hypertarget{README.md_autotoc_md94}{}\doxysubsection{\texorpdfstring{Tutorial 18 – Rate Limiters}{Tutorial 18 – Rate Limiters}}\label{README.md_autotoc_md94}
+{\ttfamily modules/18-\/rate-\/limiters} covers the token-\/bucket logic implemented in {\ttfamily src/limit/limit.\+c}.
+
+{\ttfamily lesson18\+\_\+rate\+\_\+limiters.\+c} is a quick harness for {\ttfamily \doxylink{limit_8h_a8af4cfe974109d7dd4137f6cdeea1818}{ttak\+\_\+ratelimit\+\_\+t}}; rebuild it as you tweak refill math or burst caps.\hypertarget{README.md_autotoc_md95}{}\doxysubsection{\texorpdfstring{Checklist}{Checklist}}\label{README.md_autotoc_md95}
+
+\begin{DoxyEnumerate}
+\item Write down the formulas for token refill, burst limits, and fractional buckets so you have an oracle when cloning the code.
+\item Implement {\ttfamily ttak\+\_\+ratelimit\+\_\+init}, {\ttfamily ttak\+\_\+ratelimit\+\_\+allow}, and any helper you rely on, matching the floating-\/point precision expectations documented in the lesson.
+\item Use {\ttfamily lesson18\+\_\+rate\+\_\+limiters.\+c} plus custom scripts to simulate steady-\/state and bursty traffic patterns since no dedicated test binary exists.
+\item Record how you validated correctness (graphs, logs, comparisons) and keep the evidence with your notes. 
+\end{DoxyEnumerate}

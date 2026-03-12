@@ -5,6 +5,22 @@ Directory dependency graph for 03-\/hash-\/table-\/buckets\+:
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=238pt]{dir_d83a191f8d47c698c260f6a5ac21f70b_dep}
+\includegraphics[width=236pt]{dir_d83a191f8d47c698c260f6a5ac21f70b_dep}
 \end{center}
 \end{figure}
+
+
+\doxysubsection{Detailed Description}
+\hypertarget{README.md_autotoc_md65}{}\doxysubsection{\texorpdfstring{Tutorial 03 – Hash Table Buckets}{Tutorial 03 – Hash Table Buckets}}\label{README.md_autotoc_md65}
+Use this space while working through {\ttfamily modules/03-\/hash-\/table-\/buckets}. Suggested flow\+:
+
+
+\begin{DoxyEnumerate}
+\item Read the lesson once to understand which source files under {\ttfamily src/ht/} and headers under {\ttfamily include/ttak/ht/} you are rebuilding.
+\item Sketch the data layout for buckets (e.\+g., {\ttfamily bucket\+\_\+count}, probe strategy, tombstone handling) in a scratch file inside this folder.
+\item Re-\/implement the bucket allocator and verification helpers described in the lesson.
+\item Compile the unit tests that target {\ttfamily ttak\+\_\+ht\+\_\+\texorpdfstring{$\ast$}{*}} APIs\+: {\ttfamily make test\+\_\+ht} from the repo root. Keep the test logs or failures in this folder so you can compare runs.
+\item Summarize what you learned plus any open questions before proceeding to the map operations lesson.
+\end{DoxyEnumerate}
+
+Keeping these per-\/lesson artifacts in {\ttfamily tutorials/03-\/hash-\/table-\/buckets} mirrors how the rest of the tutorial folders should evolve\+: each folder houses the code snippets, scratch notes, and verification logs you produce while clone-\/coding that module. 

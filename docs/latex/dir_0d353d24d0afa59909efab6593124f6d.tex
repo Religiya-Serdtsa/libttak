@@ -91,3 +91,89 @@ directory \mbox{\hyperlink{dir_1fa4d05fd89467237e65f36651efba33}{43-\/bigscript}
 \item 
 directory \mbox{\hyperlink{dir_a7b74cb14d16019b23286ede1db62264}{DANGEROUS}}
 \end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\hypertarget{README.md_autotoc_md211}{}\doxysubsection{\texorpdfstring{Lib\+TTAK Tutorials}{Lib\+TTAK Tutorials}}\label{README.md_autotoc_md211}
+These tutorials are designed for clone-\/coding\+: every step rebuilds an existing subsystem from scratch so that, after completing the list, you will have covered {\bfseries{every module and public facility in {\ttfamily libttak}, unsafe contexts included}}. The guide now ships as {\bfseries{dozens of bite-\/sized lessons}} ({\ttfamily modules/01-\/\texorpdfstring{$\ast$}{*}/\+README.md}, {\ttfamily modules/02-\/\texorpdfstring{$\ast$}{*}/\+README.md}, …) so that you can focus on one commitment-\/sized topic at a time instead of scrolling a giant README. Start with Lesson 01 and walk forward; the ordering is intentional so that you literally re-\/lay the foundation of the library, stack the intermediate subsystems, and finish with the unsafe bridges—by the end you should be able to think and ship like the library’s original designer.
+
+Key ideas\+:
+
+
+\begin{DoxyEnumerate}
+\item {\bfseries{One lesson = one win.}} Every lesson fits in a short session (setup, tiny scope, checklist). Stop after each one to record “\+What I learned.\+”
+\item {\bfseries{Stage map via {\ttfamily \doxylink{CLONE__PATH_8md}{CLONE\+\_\+\+PATH.\+md}}.}} The clone path still groups lessons into stages; use it as the macro-\/level syllabus while the lessons provide the micro steps. The combination guarantees every subsystem—including the unsafe context bridge—gets attention exactly once.
+\item {\bfseries{Use the helper.}} Run {\ttfamily tutorials/helper/helper libttak.\+hlp} to read the manual while you work. If you need the unsafe addendum, run the helper with {\ttfamily tutorials/\+DANGEROUS/libttak\+\_\+unsafe.\+hlp}.
+\item {\bfseries{Design-\/mindset prompts.}} Several lessons remind you to write down intent and invariants so an amateur can gradually reason like the architect who authored {\ttfamily libttak}.
+\end{DoxyEnumerate}\hypertarget{README.md_autotoc_md212}{}\doxysubsection{\texorpdfstring{Lesson Groups}{Lesson Groups}}\label{README.md_autotoc_md212}
+
+\begin{DoxyItemize}
+\item {\bfseries{Orientation (Lessons 01–02).}} Prep the repo and learn the helper workflow before touching code.
+\item {\bfseries{Core Data + Logging (Lessons 03–08).}} Hash tables, containers, and the logger.
+\item {\bfseries{Concurrency Primitives (Lessons 09–11).}} Mutexes, spinlocks, portable atomics.
+\item {\bfseries{Async + Scheduling (Lessons 12–16).}} Thread pool, workers, heaps, promises/futures, scheduler.
+\item {\bfseries{Timing + Limits + Stats (Lessons 17–19).}} Timers, deadlines, token buckets, histogram resets.
+\item {\bfseries{Memory Systems (Lessons 20–22).}} Owners, epoch GC, memory tree integration.
+\item {\bfseries{Math + Security (Lessons 23–28).}} Big\+Int stack all the way through SHA-\/256.
+\item {\bfseries{Trees + AST (Lessons 29–31).}} AST walker and both tree variants.
+\item {\bfseries{Application Layer (Lessons 32–33).}} {\ttfamily apps/aliquot-\/tracker} and the optional bench suite.
+\item {\bfseries{Dangerous (Lessons 34–35).}} Unsafe reading plus the context bridge once you opt in.
+\item {\bfseries{Detachable Memory (Lesson 39).}} Optional final pass that layers detachable arenas and signal guards on top of epochs.
+\item {\bfseries{Arena Memory (Lesson 40).}} Demonstrates how tracked arena rows plug into the mem tree + epoch GC combo that powers the lock-\/free cache bench.
+\item {\bfseries{IO \& Network Guards (Lesson 41).}} Builds the new {\ttfamily \doxylink{io_8h_aca20f4767510d423ee88de501eb72575}{ttak\+\_\+io\+\_\+guard\+\_\+t}} + zero-\/copy layer, shared net endpoints, and the session manager so you can reason about descriptor lifetimes that ride on owners and epoch reclamation.
+\item {\bfseries{Guarded IO Streams (Lesson 42).}} Separates the IO side from networking so you can practice {\ttfamily \doxylink{io_8h_aca20f4767510d423ee88de501eb72575}{ttak\+\_\+io\+\_\+guard\+\_\+t}}, synchronous read/write helpers, manual TTL refresh, {\ttfamily ttak\+\_\+io\+\_\+async\+\_\+read}, and direct {\ttfamily ttak\+\_\+io\+\_\+poll\+\_\+wait} flows before layering net endpoints on top.
+\item {\bfseries{Big\+Script Language (Lesson 43).}} \doxylink{tutorials_243-bigscript_2README_8md}{Introduction to Big\+Script}, the custom mathematical scripting language for {\ttfamily libttak}. Covers syntax, built-\/ins, and execution.
+\end{DoxyItemize}\hypertarget{README.md_autotoc_md213}{}\doxysubsection{\texorpdfstring{Coverage Guarantees}{Coverage Guarantees}}\label{README.md_autotoc_md213}
+Every stage in {\ttfamily \doxylink{CLONE__PATH_8md}{CLONE\+\_\+\+PATH.\+md}} points at one or more lessons, and each lesson references the exact source files you must clone. When you check every box you will have\+:
+
+
+\begin{DoxyItemize}
+\item Recreated the base memory/model scaffolding before touching higher-\/level modules.
+\item Exercised every subsystem once (hash tables, pools, async runtime, timing, math, apps, unsafe).
+\item Captured “\+What I learned” entries so you can cross-\/link design notes to commits.
+\item Mirrored visually by {\ttfamily blueprints/09\+\_\+tutorial\+\_\+curriculum.\+puml}, which diagrams the required flow from foundation to unsafe contexts.
+\end{DoxyItemize}\hypertarget{README.md_autotoc_md214}{}\doxysubsection{\texorpdfstring{Files \& Tools}{Files \& Tools}}\label{README.md_autotoc_md214}
+
+\begin{DoxyItemize}
+\item {\ttfamily \doxylink{CLONE__PATH_8md}{CLONE\+\_\+\+PATH.\+md}} – ordered checklist that maps every tutorial stage to the lesson files.
+\item {\ttfamily modules/\texorpdfstring{$\ast$}{*}/\+README.md} – numbered lessons (01–35) with scope, steps, and verification tasks.
+\item {\ttfamily DANGEROUS/} – isolated guidance for unsafe facilities ({\ttfamily \doxylink{context_8h_af1e1e607d4d863dfe439e9e537e9d6e0}{ttak\+\_\+context\+\_\+t}}, raw shared memory, etc.).
+\item {\ttfamily libttak.\+hlp} – concise manual fed into the helper program.
+\item {\ttfamily helper/} – source for the helper tool that lets you page through {\ttfamily .hlp} files and mark confusing sections for later review.
+\end{DoxyItemize}\hypertarget{README.md_autotoc_md215}{}\doxysubsection{\texorpdfstring{Per-\/lesson folders}{Per-\/lesson folders}}\label{README.md_autotoc_md215}
+Each lesson now has a sibling workspace under {\ttfamily tutorials/\+NN-\/lesson-\/name/} where you can keep the code and notes that the module references. Start with\+:
+
+
+\begin{DoxyItemize}
+\item {\ttfamily tutorials/01-\/getting-\/started/} – ships a buildable sample program ({\ttfamily getting\+\_\+started.\+c}) plus a {\ttfamily Makefile} that assumes you already ran {\ttfamily make \&\& sudo make install} for {\ttfamily libttak}. Use it to confirm your compiler can include {\ttfamily \texorpdfstring{$<$}{<}ttak/...\texorpdfstring{$>$}{>}} headers and link against {\ttfamily -\/lttak}.
+\item {\ttfamily tutorials/02-\/helper-\/workflow/} – quick checklist for practicing the helper tool interface (build, run against {\ttfamily libttak.\+hlp}, jot down shortcuts).
+\item {\ttfamily tutorials/03-\/hash-\/table-\/buckets/} – scratchpad for the first data-\/structure clone; keep your sketches and hash-\/table test results here before moving on.
+\item {\ttfamily tutorials/bigscript/} – source for the Big\+Script language course, covering syntax, arithmetic, and mathematical built-\/ins.
+\end{DoxyItemize}
+
+Continue creating folders that match the remaining lesson numbers whenever you want to capture scratch code or logs separate from the main source tree.
+
+To build the helper\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cd\ tutorials/helper}
+\DoxyCodeLine{make}
+
+\end{DoxyCode}
+
+
+Usage\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{./helper\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ browse\ tutorial\ table\ of\ contents\ +\ READMEs}
+\DoxyCodeLine{./helper\ -\/-\/manual\ ../libttak.hlp\ \ \ \ \ \#\ legacy\ helper\ manual}
+\DoxyCodeLine{./helper\ -\/-\/manual\ ../DANGEROUS/libttak\_unsafe.hlp}
+
+\end{DoxyCode}
+
+
+Tutorial mode controls\+: {\ttfamily i}/{\ttfamily k} move, {\ttfamily Enter} opens the selected README in a {\ttfamily less} pager, {\ttfamily Tab} opens that lesson\textquotesingle{}s sample code (press {\ttfamily Tab} again to jump back to the table), {\ttfamily Backspace} returns to the table, {\ttfamily Esc} exits. Manual mode keeps the legacy controls and marking workflow, including {\ttfamily Enter} saving the current section to {\ttfamily marked\+\_\+explanations.\+txt}.
+
+Once you finish all clone steps (and optional DANGEROUS exercises), you will have reproduced the full library—with every module touched at least once—and gained familiarity with the helper/manual workflows needed for ongoing maintenance. 

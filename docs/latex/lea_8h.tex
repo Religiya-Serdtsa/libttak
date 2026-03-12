@@ -51,12 +51,14 @@ Definition in file \mbox{\hyperlink{lea_8h_source}{lea.\+h}}.
 
 
 
+\label{doc-define-members}
+\Hypertarget{lea_8h_doc-define-members}
 \doxysubsection{Macro Definition Documentation}
-\Hypertarget{lea_8h_a859f245ccebf4563383c8ef16aaeecda}\label{lea_8h_a859f245ccebf4563383c8ef16aaeecda} 
-\index{lea.h@{lea.h}!TTAK\_LEA\_BLOCK\_SIZE@{TTAK\_LEA\_BLOCK\_SIZE}}
+\Hypertarget{lea_8h_a859f245ccebf4563383c8ef16aaeecda}\index{lea.h@{lea.h}!TTAK\_LEA\_BLOCK\_SIZE@{TTAK\_LEA\_BLOCK\_SIZE}}
 \index{TTAK\_LEA\_BLOCK\_SIZE@{TTAK\_LEA\_BLOCK\_SIZE}!lea.h@{lea.h}}
 \doxysubsubsection{\texorpdfstring{TTAK\_LEA\_BLOCK\_SIZE}{TTAK\_LEA\_BLOCK\_SIZE}}
-{\footnotesize\ttfamily \#define TTAK\+\_\+\+LEA\+\_\+\+BLOCK\+\_\+\+SIZE~16U}
+{\footnotesize\ttfamily \label{lea_8h_a859f245ccebf4563383c8ef16aaeecda} 
+\#define TTAK\+\_\+\+LEA\+\_\+\+BLOCK\+\_\+\+SIZE~16U}
 
 
 
@@ -66,11 +68,11 @@ AES-\/compatible block size used by LEA (16 bytes).
 
 Definition at line \mbox{\hyperlink{lea_8h_source_l00023}{23}} of file \mbox{\hyperlink{lea_8h_source}{lea.\+h}}.
 
-\Hypertarget{lea_8h_ac987ec79e723d542935dbe6b45cd5f60}\label{lea_8h_ac987ec79e723d542935dbe6b45cd5f60} 
-\index{lea.h@{lea.h}!TTAK\_LEA\_MAX\_ROUNDS@{TTAK\_LEA\_MAX\_ROUNDS}}
+\Hypertarget{lea_8h_ac987ec79e723d542935dbe6b45cd5f60}\index{lea.h@{lea.h}!TTAK\_LEA\_MAX\_ROUNDS@{TTAK\_LEA\_MAX\_ROUNDS}}
 \index{TTAK\_LEA\_MAX\_ROUNDS@{TTAK\_LEA\_MAX\_ROUNDS}!lea.h@{lea.h}}
 \doxysubsubsection{\texorpdfstring{TTAK\_LEA\_MAX\_ROUNDS}{TTAK\_LEA\_MAX\_ROUNDS}}
-{\footnotesize\ttfamily \#define TTAK\+\_\+\+LEA\+\_\+\+MAX\+\_\+\+ROUNDS~32U}
+{\footnotesize\ttfamily \label{lea_8h_ac987ec79e723d542935dbe6b45cd5f60} 
+\#define TTAK\+\_\+\+LEA\+\_\+\+MAX\+\_\+\+ROUNDS~32U}
 
 
 
@@ -82,12 +84,14 @@ Definition at line \mbox{\hyperlink{lea_8h_source_l00025}{25}} of file \mbox{\hy
 
 
 
+\label{doc-typedef-members}
+\Hypertarget{lea_8h_doc-typedef-members}
 \doxysubsection{Typedef Documentation}
-\Hypertarget{lea_8h_a032c0050375ccaa4e1227f36938eea85}\label{lea_8h_a032c0050375ccaa4e1227f36938eea85} 
-\index{lea.h@{lea.h}!ttak\_lea\_schedule\_t@{ttak\_lea\_schedule\_t}}
+\Hypertarget{lea_8h_a032c0050375ccaa4e1227f36938eea85}\index{lea.h@{lea.h}!ttak\_lea\_schedule\_t@{ttak\_lea\_schedule\_t}}
 \index{ttak\_lea\_schedule\_t@{ttak\_lea\_schedule\_t}!lea.h@{lea.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_lea\_schedule\_t}{ttak\_lea\_schedule\_t}}
-{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__lea__schedule}{ttak\+\_\+lea\+\_\+schedule}} \mbox{\hyperlink{lea_8h_a032c0050375ccaa4e1227f36938eea85}{ttak\+\_\+lea\+\_\+schedule\+\_\+t}}}
+{\footnotesize\ttfamily \label{lea_8h_a032c0050375ccaa4e1227f36938eea85} 
+typedef struct \mbox{\hyperlink{structttak__lea__schedule}{ttak\+\_\+lea\+\_\+schedule}} \mbox{\hyperlink{lea_8h_a032c0050375ccaa4e1227f36938eea85}{ttak\+\_\+lea\+\_\+schedule\+\_\+t}}}
 
 
 
@@ -95,12 +99,14 @@ Pre-\/expanded LEA round-\/key schedule.
 
 Populated by \doxylink{lea_8h_a8eac1534454be6f33c3052964757b3fd}{ttak\+\_\+lea\+\_\+schedule\+\_\+init()}. The {\ttfamily rounds} field is set to 32 (256-\/bit), 28 (192-\/bit), or 24 (128-\/bit) depending on key length. 
 
+\label{doc-func-members}
+\Hypertarget{lea_8h_doc-func-members}
 \doxysubsection{Function Documentation}
-\Hypertarget{lea_8h_a7dc70d595d9604dc663ef8a350c0014a}\label{lea_8h_a7dc70d595d9604dc663ef8a350c0014a} 
-\index{lea.h@{lea.h}!ttak\_lea\_encrypt\_simd@{ttak\_lea\_encrypt\_simd}}
+\Hypertarget{lea_8h_a7dc70d595d9604dc663ef8a350c0014a}\index{lea.h@{lea.h}!ttak\_lea\_encrypt\_simd@{ttak\_lea\_encrypt\_simd}}
 \index{ttak\_lea\_encrypt\_simd@{ttak\_lea\_encrypt\_simd}!lea.h@{lea.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_lea\_encrypt\_simd()}{ttak\_lea\_encrypt\_simd()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} ttak\+\_\+lea\+\_\+encrypt\+\_\+simd (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{security__engine_8h_ab35679fcbd68d19ad05f01ff21fe7825}{ttak\+\_\+crypto\+\_\+ctx\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{ctx,  }\item[{const \mbox{\hyperlink{security__engine_8h_a0a2faa157fed8910f71a319d2ea04f4d}{ttak\+\_\+security\+\_\+driver\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{driver }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{lea_8h_a7dc70d595d9604dc663ef8a350c0014a} 
+\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} ttak\+\_\+lea\+\_\+encrypt\+\_\+simd (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{security__engine_8h_ab35679fcbd68d19ad05f01ff21fe7825}{ttak\+\_\+crypto\+\_\+ctx\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{ctx}{, }\item[{const \mbox{\hyperlink{security__engine_8h_a0a2faa157fed8910f71a319d2ea04f4d}{ttak\+\_\+security\+\_\+driver\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{driver}{}\end{DoxyParamCaption})}
 
 
 
@@ -118,11 +124,11 @@ Input/output buffers and key material are read from {\ttfamily ctx}. Block count
 \begin{DoxyReturn}{Returns}
 {\ttfamily TTAK\+\_\+\+IO\+\_\+\+SUCCESS} on success, or an error code. 
 \end{DoxyReturn}
-\Hypertarget{lea_8h_a8eac1534454be6f33c3052964757b3fd}\label{lea_8h_a8eac1534454be6f33c3052964757b3fd} 
-\index{lea.h@{lea.h}!ttak\_lea\_schedule\_init@{ttak\_lea\_schedule\_init}}
+\Hypertarget{lea_8h_a8eac1534454be6f33c3052964757b3fd}\index{lea.h@{lea.h}!ttak\_lea\_schedule\_init@{ttak\_lea\_schedule\_init}}
 \index{ttak\_lea\_schedule\_init@{ttak\_lea\_schedule\_init}!lea.h@{lea.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_lea\_schedule\_init()}{ttak\_lea\_schedule\_init()}}
-{\footnotesize\ttfamily void ttak\+\_\+lea\+\_\+schedule\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{lea_8h_a032c0050375ccaa4e1227f36938eea85}{ttak\+\_\+lea\+\_\+schedule\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{sched,  }\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{key,  }\item[{size\+\_\+t}]{key\+\_\+len }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{lea_8h_a8eac1534454be6f33c3052964757b3fd} 
+void ttak\+\_\+lea\+\_\+schedule\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{lea_8h_a032c0050375ccaa4e1227f36938eea85}{ttak\+\_\+lea\+\_\+schedule\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{sched}{, }\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{key}{, }\item[{size\+\_\+t}]{key\+\_\+len}{}\end{DoxyParamCaption})}
 
 
 
