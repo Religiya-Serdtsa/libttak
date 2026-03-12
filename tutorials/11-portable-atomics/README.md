@@ -1,6 +1,6 @@
 # Tutorial 11 – Portable Atomics
 
-[`modules/11-portable-atomics`](../modules/11-portable-atomics/README.md) walks through the `stdatomic` fallbacks in `src/atomic/atomic.c` and `include/stdatomic.h`.
+Lesson 11 walks through the `stdatomic` fallbacks in `src/atomic/atomic.c` and `include/stdatomic.h`.
 
 `lesson11_portable_atomics.c` gives you a quick sanity check for the 64-bit helpers; rebuild it whenever you adjust intrinsics or memory-ordering macros.
 

@@ -1,6 +1,6 @@
 # Tutorial 35 – Context Bridge
 
-[`modules/35-context-bridge`](../modules/35-context-bridge/README.md) closes the tutorial path by rebuilding the shared-memory bridge in `src/unsafe/context.c` and `include/ttak/unsafe/context.h`.
+The Lesson 35 walkthrough closes the tutorial path by rebuilding the shared-memory bridge in `src/unsafe/context.c` and `include/ttak/unsafe/context.h`.
 
 `lesson35_context_bridge.c` initializes a context between two owners; recompile it every time you adjust bridge state machines.
 

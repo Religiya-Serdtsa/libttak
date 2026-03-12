@@ -1,6 +1,6 @@
 # Tutorial 34 – Dangerous Primer
 
-[`modules/34-dangerous-primer`](../modules/34-dangerous-primer/README.md) is the opt-in introduction to the unsafe portion of the library.
+Lesson 34 is the opt-in introduction to the unsafe portion of the library.
 
 `lesson34_dangerous_primer.c` touches `ttak_unsafe_region_t`; build it only after you have read `tutorials/DANGEROUS/README.md` and paged through `libttak_unsafe.hlp`.
 

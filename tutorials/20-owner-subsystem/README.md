@@ -1,6 +1,6 @@
 # Tutorial 20 – Owner Subsystem
 
-[`modules/20-owner-subsystem`](../modules/20-owner-subsystem/README.md) walks through the sandbox owner tree in `src/mem/owner.c`.
+Lesson 20 walks through the sandbox owner tree in `src/mem/owner.c`.
 
 `lesson20_owner_subsystem.c` registers a resource + function so you can trace how callbacks execute under an owner context.
 

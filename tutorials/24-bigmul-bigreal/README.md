@@ -1,6 +1,6 @@
 # Tutorial 24 – Bigmul + Bigreal
 
-[`modules/24-bigmul-bigreal`](../modules/24-bigmul-bigreal/README.md) extends the bigint work into convolution helpers and arbitrary-precision real numbers.
+The Lesson 24 walkthrough extends the bigint work into convolution helpers and arbitrary-precision real numbers.
 
 `lesson24_bigmul_bigreal.c` exercises both the `ttak_bigmul_t` workspace and `ttak_bigreal_t`; compile it as you iterate.
 

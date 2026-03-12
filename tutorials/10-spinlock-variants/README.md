@@ -1,6 +1,6 @@
 # Tutorial 10 – Spinlock Variants
 
-[`modules/10-spinlock-variants`](../modules/10-spinlock-variants/README.md) focuses on the fast-path locks built in `src/sync/spinlock.c`.
+The Lesson 10 walkthrough focuses on the fast-path locks built in `src/sync/spinlock.c`.
 
 `lesson10_spinlock_variants.c` lets you profile lock latency quickly; recompile it as you tune the backoff or memory-ordering rules.
 

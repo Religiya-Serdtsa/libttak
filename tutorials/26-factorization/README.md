@@ -1,6 +1,6 @@
 # Tutorial 26 – Factorization
 
-[`modules/26-factorization`](../modules/26-factorization/README.md) rebuilds the factoring helpers under `src/math/factor.c`.
+The Lesson 26 walkthrough rebuilds the factoring helpers under `src/math/factor.c`.
 
 `lesson26_factorization.c` factors 360 as a sanity check; reuse it (and extend it) to validate your routines.
 

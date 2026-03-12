@@ -1,6 +1,6 @@
 # Tutorial 28 – SHA-256
 
-[`modules/28-sha256`](../modules/28-sha256/README.md) covers the crypto helper implemented in `src/security/sha256.c`.
+The Lesson 28 walkthrough covers the crypto helper implemented in `src/security/sha256.c`.
 
 `lesson28_sha256.c` hashes "libttak"; compile it while you mirror the block schedule and padding logic.
 

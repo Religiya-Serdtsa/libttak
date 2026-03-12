@@ -1,6 +1,6 @@
 # Tutorial 19 – Stats Aggregator
 
-[`modules/19-stats-aggregator`](../modules/19-stats-aggregator/README.md) rebuilds the histogram + running-stats helper in `src/stats/stats.c`.
+The Lesson 19 walkthrough rebuilds the histogram + running-stats helper in `src/stats/stats.c`.
 
 `lesson19_stats_aggregator.c` feeds a few samples into `ttak_stats_t`; run it as you confirm mean/percentile calculations.
 

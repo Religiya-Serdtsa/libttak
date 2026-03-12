@@ -1,6 +1,6 @@
 # Tutorial 02 – Helper Workflow
 
-This folder keeps the workflow notes, checkpoints, and helper commands that correspond to [`modules/02-helper-workflow`](../modules/02-helper-workflow/README.md).
+This folder keeps the workflow notes, checkpoints, and helper commands that correspond to the Lesson 02 walkthrough.
 
 ## Checklist
 

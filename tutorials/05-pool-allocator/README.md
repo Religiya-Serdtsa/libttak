@@ -1,6 +1,6 @@
 # Tutorial 05 – Pool Allocator
 
-This workspace accompanies [`modules/05-pool-allocator`](../modules/05-pool-allocator/README.md) and focuses on rebuilding the bitmap-backed object pool under `src/container/pool.c`.
+This workspace accompanies the Lesson 05 walkthrough and focuses on rebuilding the bitmap-backed object pool under `src/container/pool.c`.
 
 Use `lesson05_pool_allocator.c` plus the provided Makefile as a harness for allocating/freeing objects while you match the upstream locking and accounting rules.
 

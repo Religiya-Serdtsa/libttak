@@ -1,6 +1,6 @@
 # Tutorial 07 – Set Container
 
-[`modules/07-set-container`](../modules/07-set-container/README.md) asks you to wrap the generic hash table into a key-only set stored in `src/container/set.c`.
+The Lesson 07 walkthrough asks you to wrap the generic hash table into a key-only set stored in `src/container/set.c`.
 
 `lesson07_set_container.c` (build with `make`/`make run`) gives you a scratch driver for experimenting with `ttak_set_add`/`contains`/`remove` as you sort out placeholder values and ownership.
 

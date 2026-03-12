@@ -1,6 +1,6 @@
 # Tutorial 13 – Worker Ownership
 
-This folder lines up with [`modules/13-worker-ownership`](../modules/13-worker-ownership/README.md) and focuses on the glue in `src/thread/worker.c` that hands work units to owners.
+This folder lines up with the Lesson 13 walkthrough and focuses on the glue in `src/thread/worker.c` that hands work units to owners.
 
 `lesson13_worker_ownership.c` builds a `ttak_worker_wrapper_t` so you can trace the metadata that travels with each job.
 

@@ -1,6 +1,6 @@
 # Tutorial 04 – Map Operations
 
-This workspace matches [`modules/04-map-operations`](../modules/04-map-operations/README.md) and is where you finish the open-addressing map that sits on top of the bucket allocator from Lesson 03.
+This workspace matches the Lesson 04 walkthrough and is where you finish the open-addressing map that sits on top of the bucket allocator from Lesson 03.
 
 The sample driver `lesson04_map_operations.c` stresses the insert/find/remove helpers; build it with `make` and `make run` to confirm your installed `libttak` exposes the expected APIs while you iterate.
 

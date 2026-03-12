@@ -1,6 +1,6 @@
 # Tutorial 15 – Async Primitives
 
-[`modules/15-async-primitives`](../modules/15-async-primitives/README.md) covers tasks, promises, and futures under `src/async/{task,promise,future}.c`.
+The Lesson 15 walkthrough covers tasks, promises, and futures under `src/async/{task,promise,future}.c`.
 
 `lesson15_async_primitives.c` wires a promise/future pair; compile it to confirm the signaling path works as you re-create the internals.
 

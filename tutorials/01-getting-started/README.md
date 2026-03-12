@@ -1,6 +1,6 @@
 # Tutorial 01 – Getting Started
 
-This folder hosts the hands-on assets that accompany [`modules/01-getting-started`](../modules/01-getting-started/README.md). Use it after you have already built and **installed** `libttak` (e.g., `make && sudo make install`). The intent is to prove that your toolchain is wired correctly and to watch the lifetime APIs work in a tiny, self-contained program.
+This folder hosts the hands-on assets that accompany the Lesson 01 walkthrough. Use it after you have already built and **installed** `libttak` (e.g., `make && sudo make install`). The intent is to prove that your toolchain is wired correctly and to watch the lifetime APIs work in a tiny, self-contained program.
 
 ## What you will do
 
