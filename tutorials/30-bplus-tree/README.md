@@ -1,6 +1,6 @@
 # Tutorial 30 – B+ Tree
 
-[`modules/30-bplus-tree`](../modules/30-bplus-tree/README.md) rebuilds the B+ tree found in `src/tree/bplus.c`.
+The Lesson 30 walkthrough rebuilds the B+ tree found in `src/tree/bplus.c`.
 
 `lesson30_bplus_tree.c` inserts + queries a key; expand it while ensuring splits/merges match the upstream behavior.
 

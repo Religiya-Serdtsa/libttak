@@ -1,6 +1,6 @@
 # Tutorial 25 – Sum of Divisors
 
-[`modules/25-sum-divisors`](../modules/25-sum-divisors/README.md) focuses on the arithmetic helpers in `src/math/sum_divisors.c` that power the aliquot app.
+The Lesson 25 walkthrough focuses on the arithmetic helpers in `src/math/sum_divisors.c` that power the aliquot app.
 
 `lesson25_sum_divisors.c` queries `ttak_sum_proper_divisors_u64`; compile it as you verify sigma calculations.
 

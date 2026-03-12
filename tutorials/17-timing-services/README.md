@@ -1,6 +1,6 @@
 # Tutorial 17 – Timing Services
 
-[`modules/17-timing-services`](../modules/17-timing-services/README.md) returns to the low-level timers in `src/timing/timing.c` and `src/timing/deadline.c`.
+The Lesson 17 walkthrough returns to the low-level timers in `src/timing/timing.c` and `src/timing/deadline.c`.
 
 `lesson17_timing_services.c` reads ticks and deadlines; use `make run` to compare your results to the expectations in the lesson.
 

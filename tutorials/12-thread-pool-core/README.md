@@ -1,6 +1,6 @@
 # Tutorial 12 – Thread Pool Core
 
-[`modules/12-thread-pool-core`](../modules/12-thread-pool-core/README.md) has you rebuild the pool lifecycle in `src/thread/pool.c`.
+The Lesson 12 walkthrough has you rebuild the pool lifecycle in `src/thread/pool.c`.
 
 `lesson12_thread_pool_core.c` submits a tiny job to the pool and resolves a future—compile it to watch end-to-end scheduling as you iterate.
 

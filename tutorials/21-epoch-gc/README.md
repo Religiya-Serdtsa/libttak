@@ -1,6 +1,6 @@
 # Tutorial 21 – Epoch GC
 
-[`modules/21-epoch-gc`](../modules/21-epoch-gc/README.md) covers the deferred-free system inside `src/mem/epoch_gc.c`.
+The Lesson 21 walkthrough covers the deferred-free system inside `src/mem/epoch_gc.c`.
 
 `lesson21_epoch_gc.c` is a tiny harness for registering allocations and rotating epochs—use it every time you modify reclamation logic.
 

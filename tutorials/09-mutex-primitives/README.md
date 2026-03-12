@@ -1,6 +1,6 @@
 # Tutorial 09 – Mutex Primitives
 
-This workspace mirrors [`modules/09-mutex-primitives`](../modules/09-mutex-primitives/README.md) where you re-implement the thin wrappers in `src/sync/sync.c`.
+This workspace mirrors the Lesson 09 walkthrough where you re-implement the thin wrappers in `src/sync/sync.c`.
 
 `lesson09_mutex_primitives.c` is a micro app that takes the mutex through its lifecycle—build/run it as you verify lock/unlock/teardown paths.
 

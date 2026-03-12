@@ -1,6 +1,6 @@
 # Tutorial 22 – Mem Tree
 
-Just like the lesson in [`modules/22-mem-tree`](../modules/22-mem-tree/README.md), this workspace is for the tracking tree built inside `src/mem_tree/mem_tree.c`.
+Just like the lesson in the Lesson 22 walkthrough, this workspace is for the tracking tree built inside `src/mem_tree/mem_tree.c`.
 
 `lesson22_mem_tree.c` stores and removes tracked nodes; build/run it to visualize how nodes move through the tree.
 

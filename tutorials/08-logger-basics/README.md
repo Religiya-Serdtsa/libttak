@@ -1,6 +1,6 @@
 # Tutorial 08 – Logger Basics
 
-[`modules/08-logger-basics`](../modules/08-logger-basics/README.md) covers the minimal logger found in `src/log/logger.c`—severity filtering plus custom sinks.
+The Lesson 08 walkthrough covers the minimal logger found in `src/log/logger.c`—severity filtering plus custom sinks.
 
 `lesson08_logger_basics.c` routes logs to stdout; rebuild it with `make` whenever you tweak formatting or buffering rules.
 

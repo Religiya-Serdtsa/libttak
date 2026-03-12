@@ -1,6 +1,6 @@
 # Tutorial 31 – B-Tree
 
-[`modules/31-btree`](../modules/31-btree/README.md) tackles the sibling structure in `src/tree/btree.c`.
+The Lesson 31 walkthrough tackles the sibling structure in `src/tree/btree.c`.
 
 `lesson31_btree.c` exercises insert/search; keep extending it to hit deletion paths as you port the code.
 

@@ -1,6 +1,6 @@
 # Tutorial 29 – AST Walking
 
-[`modules/29-ast-walking`](../modules/29-ast-walking/README.md) focuses on the visitor utilities in `src/tree/ast.c`.
+The Lesson 29 walkthrough focuses on the visitor utilities in `src/tree/ast.c`.
 
 `lesson29_ast_walking.c` builds a miniature tree; rebuild it to debug allocations and traversal order.
 

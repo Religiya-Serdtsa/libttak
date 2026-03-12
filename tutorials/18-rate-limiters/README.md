@@ -1,6 +1,6 @@
 # Tutorial 18 – Rate Limiters
 
-[`modules/18-rate-limiters`](../modules/18-rate-limiters/README.md) covers the token-bucket logic implemented in `src/limit/limit.c`.
+The Lesson 18 walkthrough covers the token-bucket logic implemented in `src/limit/limit.c`.
 
 `lesson18_rate_limiters.c` is a quick harness for `ttak_ratelimit_t`; rebuild it as you tweak refill math or burst caps.
 

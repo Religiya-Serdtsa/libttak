@@ -1,6 +1,6 @@
 # Tutorial 14 – Priority Queues
 
-[`modules/14-priority-queues`](../modules/14-priority-queues/README.md) digs into `src/priority/queue.c` and the heap helpers that order tasks.
+The Lesson 14 walkthrough digs into `src/priority/queue.c` and the heap helpers that order tasks.
 
 `lesson14_priority_queues.c` hits the internal queue vtable so you can watch pushes/pops; rebuild it whenever you tweak heap semantics.
 

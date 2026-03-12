@@ -1,6 +1,6 @@
 # Tutorial 16 – Async Scheduler
 
-This workspace ties into [`modules/16-async-scheduler`](../modules/16-async-scheduler/README.md) and focuses on `src/async/sched.c` plus the priority scheduler glue.
+This workspace ties into the Lesson 16 walkthrough and focuses on `src/async/sched.c` plus the priority scheduler glue.
 
 `lesson16_async_scheduler.c` spins up the async runtime and schedules a single task; use it to watch the queue + worker interplay.
 

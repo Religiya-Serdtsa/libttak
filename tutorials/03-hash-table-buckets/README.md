@@ -1,6 +1,6 @@
 # Tutorial 03 – Hash Table Buckets
 
-Use this space while working through [`modules/03-hash-table-buckets`](../modules/03-hash-table-buckets/README.md). Suggested flow:
+Use this space while working through the Lesson 03 walkthrough. Suggested flow:
 
 1. Read the lesson once to understand which source files under `src/ht/` and headers under `include/ttak/ht/` you are rebuilding.
 2. Sketch the data layout for buckets (e.g., `bucket_count`, probe strategy, tombstone handling) in a scratch file inside this folder.

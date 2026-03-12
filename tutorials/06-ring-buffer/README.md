@@ -1,6 +1,6 @@
 # Tutorial 06 – Ring Buffer
 
-Use this folder for [`modules/06-ring-buffer`](../modules/06-ring-buffer/README.md) as you re-create the fixed-capacity queue that lives in `src/container/ringbuf.c`.
+Use this folder for the Lesson 06 walkthrough as you re-create the fixed-capacity queue that lives in `src/container/ringbuf.c`.
 
 `lesson06_ring_buffer.c` performs push/pop/count exercises; compile it with `make` to watch head/tail transitions while you debug.
 

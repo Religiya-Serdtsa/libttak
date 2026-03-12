@@ -1,6 +1,6 @@
 # Tutorial 33 – Bench Suite
 
-[`modules/33-bench-suite`](../modules/33-bench-suite/README.md) is an optional performance deep dive that mirrors the `bench/` utilities.
+Lesson 33 is an optional performance deep dive that mirrors the `bench/` utilities.
 
 `lesson33_bench_suite.c` records microbench timings; build it along with any CLI harness you create under `bench/`.
 

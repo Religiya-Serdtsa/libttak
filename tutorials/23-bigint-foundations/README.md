@@ -1,6 +1,6 @@
 # Tutorial 23 – Bigint Foundations
 
-[`modules/23-bigint-foundations`](../modules/23-bigint-foundations/README.md) is the first math-heavy lesson and focuses on `src/math/bigint.c`.
+Lesson 23 is the first math-heavy lesson and focuses on `src/math/bigint.c`.
 
 `lesson23_bigint_foundations.c` drives the init/add/hex helpers; rebuild it after each milestone to confirm your bigint still serializes correctly.
 

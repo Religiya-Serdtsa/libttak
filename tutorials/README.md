@@ -1,6 +1,6 @@
 # LibTTAK Tutorials
 
-These tutorials are designed for clone-coding: every step rebuilds an existing subsystem from scratch so that, after completing the list, you will have covered **every module and public facility in `libttak`, unsafe contexts included**. The guide now ships as **dozens of bite-sized lessons** (`modules/01-*/README.md`, `modules/02-*/README.md`, …) so that you can focus on one commitment-sized topic at a time instead of scrolling a giant README. Start with Lesson 01 and walk forward; the ordering is intentional so that you literally re-lay the foundation of the library, stack the intermediate subsystems, and finish with the unsafe bridges—by the end you should be able to think and ship like the library’s original designer.
+These tutorials are designed for clone-coding: every step rebuilds an existing subsystem from scratch so that, after completing the list, you will have covered **every module and public facility in `libttak`, unsafe contexts included**. The guide now ships as **dozens of bite-sized lessons** (`01-getting-started/README.md`, `02-helper-workflow/README.md`, …) so that you can focus on one commitment-sized topic at a time instead of scrolling a giant README. Start with Lesson 01 and walk forward; the ordering is intentional so that you literally re-lay the foundation of the library, stack the intermediate subsystems, and finish with the unsafe bridges—by the end you should be able to think and ship like the library’s original designer.
 
 Key ideas:
 
@@ -19,13 +19,14 @@ Key ideas:
 - **Memory Systems (Lessons 20–22).** Owners, epoch GC, memory tree integration.
 - **Math + Security (Lessons 23–28).** BigInt stack all the way through SHA-256.
 - **Trees + AST (Lessons 29–31).** AST walker and both tree variants.
-- **Application Layer (Lessons 32–33).** `apps/aliquot-tracker` and the optional bench suite.
+- **Application Layer (Lessons 32–33).** `apps/immature/aliquot-tracker` and the optional bench suite under `bench/`.
 - **Dangerous (Lessons 34–35).** Unsafe reading plus the context bridge once you opt in.
+- **Trace + Shared Memory (Lessons 36–38).** Memory tracing, bitmap-backed shared ownership, and epoch-based reclamation for shared objects.
 - **Detachable Memory (Lesson 39).** Optional final pass that layers detachable arenas and signal guards on top of epochs.
 - **Arena Memory (Lesson 40).** Demonstrates how tracked arena rows plug into the mem tree + epoch GC combo that powers the lock-free cache bench.
 - **IO & Network Guards (Lesson 41).** Builds the new `ttak_io_guard_t` + zero-copy layer, shared net endpoints, and the session manager so you can reason about descriptor lifetimes that ride on owners and epoch reclamation.
 - **Guarded IO Streams (Lesson 42).** Separates the IO side from networking so you can practice `ttak_io_guard_t`, synchronous read/write helpers, manual TTL refresh, `ttak_io_async_read`, and direct `ttak_io_poll_wait` flows before layering net endpoints on top.
-- **BigScript Language (Lesson 43).** [Introduction to BigScript](./bigscript/README.md), the custom mathematical scripting language for `libttak`. Covers syntax, built-ins, and execution.
+- **BigScript Language (Lesson 43).** [Introduction to BigScript](./43-bigscript/README.md), the custom mathematical scripting language for `libttak`. Covers syntax, built-ins, and execution.
 
 ## Coverage Guarantees
 
@@ -39,7 +40,7 @@ Every stage in `CLONE_PATH.md` points at one or more lessons, and each lesson re
 ## Files & Tools
 
 - `CLONE_PATH.md` – ordered checklist that maps every tutorial stage to the lesson files.
-- `modules/*/README.md` – numbered lessons (01–35) with scope, steps, and verification tasks.
+- `NN-lesson-name/README.md` – numbered lessons (01–43) with scope, steps, and verification tasks.
 - `DANGEROUS/` – isolated guidance for unsafe facilities (`ttak_context_t`, raw shared memory, etc.).
 - `libttak.hlp` – concise manual fed into the helper program.
 - `helper/` – source for the helper tool that lets you page through `.hlp` files and mark confusing sections for later review.
@@ -51,7 +52,7 @@ Each lesson now has a sibling workspace under `tutorials/NN-lesson-name/` where 
 - `tutorials/01-getting-started/` – ships a buildable sample program (`getting_started.c`) plus a `Makefile` that assumes you already ran `make && sudo make install` for `libttak`. Use it to confirm your compiler can include `<ttak/...>` headers and link against `-lttak`.
 - `tutorials/02-helper-workflow/` – quick checklist for practicing the helper tool interface (build, run against `libttak.hlp`, jot down shortcuts).
 - `tutorials/03-hash-table-buckets/` – scratchpad for the first data-structure clone; keep your sketches and hash-table test results here before moving on.
-- `tutorials/bigscript/` – source for the BigScript language course, covering syntax, arithmetic, and mathematical built-ins.
+- `tutorials/43-bigscript/` – source for the BigScript language course, covering syntax, arithmetic, and mathematical built-ins.
 
 Continue creating folders that match the remaining lesson numbers whenever you want to capture scratch code or logs separate from the main source tree.
 

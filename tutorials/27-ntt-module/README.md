@@ -1,6 +1,6 @@
 # Tutorial 27 – NTT Module
 
-[`modules/27-ntt-module`](../modules/27-ntt-module/README.md) dives into the Number-Theoretic Transform implementation found in `src/math/ntt.c`.
+The Lesson 27 walkthrough dives into the Number-Theoretic Transform implementation found in `src/math/ntt.c`.
 
 `lesson27_ntt_module.c` performs a forward + inverse transform; build it after every major change to confirm round-trips still work.
 
