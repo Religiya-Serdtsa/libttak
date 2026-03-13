@@ -125,6 +125,8 @@ typedef enum {
 void *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, uint64_t now_tick, bool is_const, bool is_volatile, bool allow_direct, bool is_root, ttak_mem_flags_t flags);
 /* @brief Wrapper for easy allocation with auto GC registering */
 void *ttak_fastalloc(ttak_epoch_gc_t *gc, size_t size, uint64_t lifetime_ticks, uint64_t now_tick);
+/* @brief Wrapper for easy allocation and zero-fill with auto GC registering */
+void * ttak_fastcalloc(ttak_epoch_gc_t *gc, size_t size, uint64_t lifetime_ticks, uint64_t now);
 /**
  * @brief Reallocates memory with lifecycle management.
  * @param ptr Existing allocation pointer.
