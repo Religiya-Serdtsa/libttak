@@ -15,7 +15,6 @@ int main(void) {
     for (size_t i = 0; i < SHA256_BLOCK_SIZE; ++i) {
         printf("%02x", digest[i]);
     }
-    putchar('
-');
+    putchar(' ');
     return 0;
 }
