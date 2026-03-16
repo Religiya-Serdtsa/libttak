@@ -1,24 +1,4 @@
 var searchData=
 [
-  ['1_20_24_0',['Why $O(1)$?',['..//home/yjlee/libttak/tutorials/37-shared-memory-ownership/README.md#autotoc_md141',1,'']]],
-  ['1_20fortress_20allocator_20ttak_5fmem_5falloc_5fsafe_1',['4.1 Fortress Allocator (&lt;span class=&quot;tt&quot;&gt;ttak_mem_alloc_safe&lt;/span&gt;)',['../md_SPECS.html#autotoc_md46',1,'']]],
-  ['1_20purpose_2',['1. Purpose',['../md_SPECS.html#autotoc_md42',1,'']]],
-  ['1_20ttl_20cache_20multi_20threaded_20benchmark_3',['1. TTL Cache Multi-threaded Benchmark',['..//home/yjlee/libttak/bench/README.md#autotoc_md2',1,'']]],
-  ['1_20–_20core_20data_20logging_4',['Stage 1 – Core Data + Logging',['../md_tutorials_2CLONE__PATH.html#autotoc_md196',1,'']]],
-  ['10_20extensibility_20rules_5',['10. Extensibility Rules',['../md_SPECS.html#autotoc_md55',1,'']]],
-  ['10_20–_20arena_20families_20signal_20guards_6',['Stage 10 – Arena Families &amp;amp; Signal Guards',['../md_tutorials_2CLONE__PATH.html#autotoc_md205',1,'']]],
-  ['10_20–_20spinlock_20variants_7',['Tutorial 10 – Spinlock Variants',['..//home/yjlee/libttak/tutorials/10-spinlock-variants/README.md#autotoc_md78',1,'']]],
-  ['11_20performance_20expectations_8',['11. Performance Expectations',['../md_SPECS.html#autotoc_md56',1,'']]],
-  ['11_20–_20io_20network_20stack_9',['Stage 11 – IO &amp;amp; Network Stack',['../md_tutorials_2CLONE__PATH.html#autotoc_md206',1,'']]],
-  ['11_20–_20portable_20atomics_10',['Tutorial 11 – Portable Atomics',['..//home/yjlee/libttak/tutorials/11-portable-atomics/README.md#autotoc_md80',1,'']]],
-  ['12_20documentation_20testing_11',['12. Documentation &amp;amp; Testing',['../md_SPECS.html#autotoc_md57',1,'']]],
-  ['12_20–_20thread_20pool_20core_12',['Tutorial 12 – Thread Pool Core',['..//home/yjlee/libttak/tutorials/12-thread-pool-core/README.md#autotoc_md82',1,'']]],
-  ['13_20compliance_20checklist_13',['13. Compliance Checklist',['../md_SPECS.html#autotoc_md58',1,'']]],
-  ['13_20–_20worker_20ownership_14',['Tutorial 13 – Worker Ownership',['..//home/yjlee/libttak/tutorials/13-worker-ownership/README.md#autotoc_md84',1,'']]],
-  ['14_20–_20priority_20queues_15',['Tutorial 14 – Priority Queues',['..//home/yjlee/libttak/tutorials/14-priority-queues/README.md#autotoc_md86',1,'']]],
-  ['15_20–_20async_20primitives_16',['Tutorial 15 – Async Primitives',['..//home/yjlee/libttak/tutorials/15-async-primitives/README.md#autotoc_md88',1,'']]],
-  ['16_20–_20async_20scheduler_17',['Tutorial 16 – Async Scheduler',['..//home/yjlee/libttak/tutorials/16-async-scheduler/README.md#autotoc_md90',1,'']]],
-  ['17_20–_20timing_20services_18',['Tutorial 17 – Timing Services',['..//home/yjlee/libttak/tutorials/17-timing-services/README.md#autotoc_md92',1,'']]],
-  ['18_20–_20rate_20limiters_19',['Tutorial 18 – Rate Limiters',['..//home/yjlee/libttak/tutorials/18-rate-limiters/README.md#autotoc_md94',1,'']]],
-  ['19_20–_20stats_20aggregator_20',['Tutorial 19 – Stats Aggregator',['..//home/yjlee/libttak/tutorials/19-stats-aggregator/README.md#autotoc_md96',1,'']]]
+  ['development_20history_0',['Development History',['../md_HISTORY.html',1,'']]]
 ];

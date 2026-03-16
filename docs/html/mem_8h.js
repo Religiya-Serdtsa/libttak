@@ -40,6 +40,7 @@ var mem_8h =
     [ "ttak_dangerous_calloc", "mem_8h.html#a3718153ec27ff216feedcf12f8583c9c", null ],
     [ "ttak_dangerous_free", "mem_8h.html#adf32b5f9a7de7217eff4987bae8c1515", null ],
     [ "ttak_fastalloc", "mem_8h.html#aa3ae2077f369ef1143f07dc791ad481d", null ],
+    [ "ttak_fastcalloc", "mem_8h.html#aed34655be8ef26f222a37a797c6627af", null ],
     [ "ttak_mem_access", "mem_8h.html#a1e451c99b337f68893aaf14cd3d1ffa1", null ],
     [ "ttak_mem_access_bridge", "mem_8h.html#a657dcd0f7a2091d74470b56ed6837a91", null ],
     [ "ttak_mem_alloc_safe", "mem_8h.html#acd407700ef90ad55bcec5ae7cf8b94b7", null ],

@@ -1,72 +1,9 @@
 \doxysection{tutorials/40-\/arena-\/memory Directory Reference}
 \hypertarget{dir_c03a32ac37178602651a0810a724fdd6}{}\label{dir_c03a32ac37178602651a0810a724fdd6}\index{tutorials/40-\/arena-\/memory Directory Reference@{tutorials/40-\/arena-\/memory Directory Reference}}
-Directory dependency graph for 40-\/arena-\/memory\+:
-\nopagebreak
+Directory dependency graph for 40-\/arena-\/memory\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=216pt]{dir_c03a32ac37178602651a0810a724fdd6_dep}
 \end{center}
 \end{figure}
-
-
-\doxysubsection{Detailed Description}
-\hypertarget{README.md_autotoc_md157}{}\doxysubsection{\texorpdfstring{Lesson 40\+: Arena Memory Orchestration}{Lesson 40\+: Arena Memory Orchestration}}\label{README.md_autotoc_md157}
-This lesson focuses on the generational arena workflow built on top of {\ttfamily ttak\+\_\+mem\+\_\+alloc\+\_\+safe}, the mem-\/tree tracker, and the epoch GC wrapper. You will practice how each arena generation is allocated, retired, and flushed without leaking, mirroring the pattern used by the lock-\/free cache benchmarks.\hypertarget{README.md_autotoc_md158}{}\doxysubsection{\texorpdfstring{Objectives}{Objectives}}\label{README.md_autotoc_md158}
-
-\begin{DoxyEnumerate}
-\item Clone the arena-\/related entry points inside {\ttfamily src/mem/mem.\+c}, {\ttfamily src/mem/epoch\+\_\+gc.\+c}, and {\ttfamily src/mem\+\_\+tree/mem\+\_\+tree.\+c} so you understand how tracked allocations feed the tree and epochs.
-\item Study how {\ttfamily bench/ttl-\/cache-\/multithread-\/bench/ttl\+\_\+cache\+\_\+bench\+\_\+lockfree.\+c} seeds four arenas per epoch and how segmented version sharding (OLS) enables {\bfseries{29M+ Ops/s}} by isolating thread lifetimes.
-\item Build and run the sample program in this folder to verify that retiring an arena generation releases its mem-\/tree node and that {\ttfamily ttak\+\_\+epoch\+\_\+gc\+\_\+rotate} frees the backing buffer.
-\end{DoxyEnumerate}
-
-\begin{quote}
-{\bfseries{Blueprint reference\+:}} The arena + epoch interaction is illustrated in {\ttfamily blueprints/09\+\_\+epoch\+\_\+reclamation.\+puml}; use it alongside the README sections that describe the lock-\/free arena measurements. \end{quote}
-\hypertarget{README.md_autotoc_md159}{}\doxysubsection{\texorpdfstring{Repo Workspace}{Repo Workspace}}\label{README.md_autotoc_md159}
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{tutorials/40-\/arena-\/memory/}
-\DoxyCodeLine{├──\ Makefile}
-\DoxyCodeLine{├──\ README.md\ \ ←\ you\ are\ here}
-\DoxyCodeLine{└──\ lesson40\_arena\_memory.c}
-
-\end{DoxyCode}
-
-
-{\ttfamily lesson40\+\_\+arena\+\_\+memory.\+c} allocates fixed-\/width arena generations, uses {\ttfamily ttak\+\_\+arena\+\_\+generation\+\_\+for\+\_\+each} to carve deterministic chunks, retires each generation by releasing the mem-\/tree reference, and immediately rotates epochs to prove the buffer was flushed.\hypertarget{README.md_autotoc_md160}{}\doxysubsection{\texorpdfstring{Build \& Run}{Build \& Run}}\label{README.md_autotoc_md160}
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{make}
-\DoxyCodeLine{./lesson40\_arena\_memory}
-
-\end{DoxyCode}
-
-
-Expected output (trimmed)\+:
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{[arena]\ generation\ 0\ started\ (capacity=4096,\ chunk=128)}
-\DoxyCodeLine{\ \ chunk[0]\ =>\ 0x55f1e678c2a0\ pattern=0x25}
-\DoxyCodeLine{\ \ chunk[8]\ =>\ 0x55f1e678c340\ pattern=0x2d}
-\DoxyCodeLine{\ \ used=4096\ /\ 4096\ bytes}
-\DoxyCodeLine{\ \ cleanup\ status:\ flushed}
-\DoxyCodeLine{...}
-
-\end{DoxyCode}
-
-
-Exact addresses differ per run, but each generation should log deterministic chunk offsets and report {\ttfamily cleanup status\+: flushed} after the epoch rotates.\hypertarget{README.md_autotoc_md161}{}\doxysubsection{\texorpdfstring{Verification Checklist}{Verification Checklist}}\label{README.md_autotoc_md161}
-
-\begin{DoxyItemize}
-\item[\DoxyUnchecked] {\ttfamily ttak\+\_\+mem\+\_\+alloc\+\_\+with\+\_\+flags} is invoked with strict checks + cache alignment before every arena generation is registered with {\ttfamily ttak\+\_\+epoch\+\_\+gc\+\_\+register}.
-\end{DoxyItemize}
-\begin{DoxyItemize}
-\item[\DoxyUnchecked] Retiring a generation calls {\ttfamily ttak\+\_\+mem\+\_\+tree\+\_\+find\+\_\+node} + {\ttfamily ttak\+\_\+mem\+\_\+node\+\_\+release} so the mem tree reports pressure before the next epoch rotation.
-\end{DoxyItemize}
-\begin{DoxyItemize}
-\item[\DoxyUnchecked] {\ttfamily ttak\+\_\+epoch\+\_\+gc\+\_\+rotate} reclaims each retired generation (look for the {\ttfamily cleanup status\+: flushed} log line).
-\end{DoxyItemize}
-\begin{DoxyItemize}
-\item[\DoxyUnchecked] Translate what you learned back into the lock-\/free benchmark\+: align generation capacity/chunk size with the per-\/epoch arenas shown in {\ttfamily ttl\+\_\+cache\+\_\+bench\+\_\+lockfree.\+c} and document the RSS impact in your notes. 
-\end{DoxyItemize}

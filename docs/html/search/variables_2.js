@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['base_0',['base',['../structtt__shared__vector.html#aa63a64f5ac761a4c898a62d3a321fdb1',1,'tt_shared_vector::base'],['../structttak__arena__generation.html#a9e8b2998e365de5bb35e53aae8703662',1,'ttak_arena_generation::base'],['../structttak__stats__ext.html#a42369ced8c84f8b45dbe8e9e1305e040',1,'ttak_stats_ext::base']]],
+  ['base_0',['base',['../structttak__arena__generation.html#a9e8b2998e365de5bb35e53aae8703662',1,'ttak_arena_generation::base'],['../structttak__stats__ext.html#a42369ced8c84f8b45dbe8e9e1305e040',1,'ttak_stats_ext::base'],['../structtt__shared__vector.html#aa63a64f5ac761a4c898a62d3a321fdb1',1,'tt_shared_vector::base']]],
   ['base_5fstatus_1',['base_status',['../structttak__detachable__context.html#ae9e1edc36ce0e1b94acf8d67975bda8e',1,'ttak_detachable_context']]],
   ['birth_5fns_2',['birth_ns',['../structttak__net__view.html#a559d9fd6cfc42d7f9ebcdb495a7ed555',1,'ttak_net_view']]],
   ['bitlen_3',['bitlen',['../structSHA256__CTX.html#a22b9f345eb0273f497b397a09409cc4e',1,'SHA256_CTX']]],

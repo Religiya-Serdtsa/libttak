@@ -1,24 +1,9 @@
 \doxysection{tutorials/06-\/ring-\/buffer Directory Reference}
 \hypertarget{dir_0284bd9524a1711c48fd4d647d4a35e1}{}\label{dir_0284bd9524a1711c48fd4d647d4a35e1}\index{tutorials/06-\/ring-\/buffer Directory Reference@{tutorials/06-\/ring-\/buffer Directory Reference}}
-Directory dependency graph for 06-\/ring-\/buffer\+:
-\nopagebreak
+Directory dependency graph for 06-\/ring-\/buffer\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=194pt]{dir_0284bd9524a1711c48fd4d647d4a35e1_dep}
 \end{center}
 \end{figure}
-
-
-\doxysubsection{Detailed Description}
-\hypertarget{README.md_autotoc_md70}{}\doxysubsection{\texorpdfstring{Tutorial 06 – Ring Buffer}{Tutorial 06 – Ring Buffer}}\label{README.md_autotoc_md70}
-Use this folder for {\ttfamily modules/06-\/ring-\/buffer} as you re-\/create the fixed-\/capacity queue that lives in {\ttfamily src/container/ringbuf.\+c}.
-
-{\ttfamily lesson06\+\_\+ring\+\_\+buffer.\+c} performs push/pop/count exercises; compile it with {\ttfamily make} to watch head/tail transitions while you debug.\hypertarget{README.md_autotoc_md71}{}\doxysubsection{\texorpdfstring{Checklist}{Checklist}}\label{README.md_autotoc_md71}
-
-\begin{DoxyEnumerate}
-\item List the invariants that must hold for {\ttfamily \doxylink{ringbuf_8h_ade1a3bb2033eab17549a208ab320b00c}{ttak\+\_\+ringbuf\+\_\+t}} (empty/full rules, wrap-\/around math, timestamp usage) and keep the notes here.
-\item Rebuild {\ttfamily ttak\+\_\+ringbuf\+\_\+create}, {\ttfamily ttak\+\_\+ringbuf\+\_\+push}, {\ttfamily ttak\+\_\+ringbuf\+\_\+pop}, and the helper predicates so that they match the legacy semantics.
-\item Run {\ttfamily make tests/test\+\_\+ringbuf} to execute the ring-\/buffer regression plus any extra stress cases you add in this folder ({\ttfamily tests/test\+\_\+ringbuf.\+c}).
-\item Record which overflow/underflow bugs you hit and how you resolved them so Lesson 07 builds on a clean foundation. 
-\end{DoxyEnumerate}

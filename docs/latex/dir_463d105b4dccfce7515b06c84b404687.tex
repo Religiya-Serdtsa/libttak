@@ -1,24 +1,9 @@
 \doxysection{tutorials/33-\/bench-\/suite Directory Reference}
 \hypertarget{dir_463d105b4dccfce7515b06c84b404687}{}\label{dir_463d105b4dccfce7515b06c84b404687}\index{tutorials/33-\/bench-\/suite Directory Reference@{tutorials/33-\/bench-\/suite Directory Reference}}
-Directory dependency graph for 33-\/bench-\/suite\+:
-\nopagebreak
+Directory dependency graph for 33-\/bench-\/suite\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=200pt]{dir_463d105b4dccfce7515b06c84b404687_dep}
 \end{center}
 \end{figure}
-
-
-\doxysubsection{Detailed Description}
-\hypertarget{README.md_autotoc_md125}{}\doxysubsection{\texorpdfstring{Tutorial 33 – Bench Suite}{Tutorial 33 – Bench Suite}}\label{README.md_autotoc_md125}
-{\ttfamily modules/33-\/bench-\/suite} is an optional performance deep dive that mirrors the {\ttfamily bench/} utilities.
-
-{\ttfamily lesson33\+\_\+bench\+\_\+suite.\+c} records microbench timings; build it along with any CLI harness you create under {\ttfamily bench/}.\hypertarget{README.md_autotoc_md126}{}\doxysubsection{\texorpdfstring{Checklist}{Checklist}}\label{README.md_autotoc_md126}
-
-\begin{DoxyEnumerate}
-\item Itemize which benchmarks you plan to port (allocators, schedulers, math) and write their goals at the top of this folder.
-\item Clone the measurement helpers ({\ttfamily \doxylink{stats_8h_a897b5aaf1addd7acb495025c2129969a}{ttak\+\_\+stats\+\_\+t}}, timer hooks) exactly so results stay comparable to upstream data.
-\item Use {\ttfamily lesson33\+\_\+bench\+\_\+suite.\+c} plus the {\ttfamily bench/ttl-\/cache-\/multithread-\/bench} sources as launchpads for your own tests.
-\item Archive raw benchmark output here so progress is easy to audit later. 
-\end{DoxyEnumerate}
