@@ -1,24 +1,9 @@
 \doxysection{tutorials/14-\/priority-\/queues Directory Reference}
 \hypertarget{dir_778f810e1f2948906d9752ac2613d1c7}{}\label{dir_778f810e1f2948906d9752ac2613d1c7}\index{tutorials/14-\/priority-\/queues Directory Reference@{tutorials/14-\/priority-\/queues Directory Reference}}
-Directory dependency graph for 14-\/priority-\/queues\+:
-\nopagebreak
+Directory dependency graph for 14-\/priority-\/queues\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=218pt]{dir_778f810e1f2948906d9752ac2613d1c7_dep}
 \end{center}
 \end{figure}
-
-
-\doxysubsection{Detailed Description}
-\hypertarget{README.md_autotoc_md86}{}\doxysubsection{\texorpdfstring{Tutorial 14 – Priority Queues}{Tutorial 14 – Priority Queues}}\label{README.md_autotoc_md86}
-{\ttfamily modules/14-\/priority-\/queues} digs into {\ttfamily src/priority/queue.\+c} and the heap helpers that order tasks.
-
-{\ttfamily lesson14\+\_\+priority\+\_\+queues.\+c} hits the internal queue vtable so you can watch pushes/pops; rebuild it whenever you tweak heap semantics.\hypertarget{README.md_autotoc_md87}{}\doxysubsection{\texorpdfstring{Checklist}{Checklist}}\label{README.md_autotoc_md87}
-
-\begin{DoxyEnumerate}
-\item Restate how {\ttfamily ttak\+\_\+priority\+\_\+queue\+\_\+init}, push/pop, and {\ttfamily get\+\_\+size} should behave for both normal and "{}nice"{} scheduling modes.
-\item Implement the heap operations ({\ttfamily src/priority/heap.\+c}) alongside the queue wrapper so the async runtime has deterministic ordering.
-\item Run {\ttfamily make tests/test\+\_\+priority} plus any targeted benchmarks you script in this folder to validate ordering guarantees.
-\item Capture diagrams that show how tasks bubble through the heap so Lessons 15–16 build on the same mental model. 
-\end{DoxyEnumerate}

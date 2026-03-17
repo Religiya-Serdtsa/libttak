@@ -1,0 +1,10 @@
+digraph "ttak_bigmul"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  Node1 [id="Node000001",label="ttak_bigmul",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Helper container for bigint multiplication workflows."];
+  Node2 -> Node1 [id="edge1_Node000001_Node000002",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" lhs\nproduct\nrhs",fontcolor="grey" ];
+  Node2 [id="Node000002",label="ttak_bigint",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$structttak__bigint.html",tooltip="Arbitrary-precision integer engine with Small Stack Optimization (SSO)."];
+}

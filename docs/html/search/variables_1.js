@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['a_0',['a',['../structttak__prime__factor__t.html#a020c18d6bd799199afcb738691cfa769',1,'ttak_prime_factor_t::a'],['../structttak__prime__factor__big__t.html#a6f4d585de07028f67feabd49022e2879',1,'ttak_prime_factor_big_t::a']]],
+  ['a_0',['a',['../structttak__prime__factor__big__t.html#a6f4d585de07028f67feabd49022e2879',1,'ttak_prime_factor_big_t::a'],['../structttak__prime__factor__t.html#a020c18d6bd799199afcb738691cfa769',1,'ttak_prime_factor_t::a']]],
   ['aad_1',['aad',['../structttak__crypto__ctx.html#add21e240461371bbda574b84229ee1ea',1,'ttak_crypto_ctx']]],
   ['aad_5flen_2',['aad_len',['../structttak__crypto__ctx.html#a2d3066e2e8432bb6e848d8412fba6b58',1,'ttak_crypto_ctx']]],
   ['access_3',['access',['../structttak__shared__s.html#a42f2e13886e5802246e449e67eef376e',1,'ttak_shared_s']]],
@@ -11,8 +11,8 @@ var searchData=
   ['active_5fpages_8',['active_pages',['../structttak__shard__table__t.html#a1e1c6452574070045a3686020620201b',1,'ttak_shard_table_t']]],
   ['active_5frow_9',['active_row',['../structttak__detachable__context.html#a0595619890f563b6a6c7165e800c876c',1,'ttak_detachable_context']]],
   ['add_5fowner_10',['add_owner',['../structttak__shared__s.html#aa3ed576e6146a3d1f6d1a22d19d5d5cb',1,'ttak_shared_s']]],
-  ['addr_11',['addr',['../structttak__net__endpoint.html#afa8e9d340790a926fafabb0c741cdead',1,'ttak_net_endpoint']]],
-  ['aes_12',['aes',['../structttak__crypto__ctx.html#a8f6ea04e5655d810e390fab44f76864f',1,'ttak_crypto_ctx']]],
+  ['addr_11',['addr',['../structttak__net__endpoint.html#a3ab7e7442e2e13b2492e24eee9119655',1,'ttak_net_endpoint']]],
+  ['aes_12',['aes',['../structttak__crypto__ctx.html#a82cc53df836329fc74e819c980d21f0d',1,'ttak_crypto_ctx']]],
   ['alloc_5fflags_13',['alloc_flags',['../structttak__arena__env__config.html#a09d5b498f40c94842de4ed6bfbf9db90',1,'ttak_arena_env_config']]],
   ['allocate_14',['allocate',['../structttak__shared__s.html#a8a74b0b7c836d561d50adb7c2fad0324',1,'ttak_shared_s']]],
   ['allocate_5ftyped_15',['allocate_typed',['../structttak__shared__s.html#a2b93d3794fba03f6a5fe3a77d8a89666',1,'ttak_shared_s']]],

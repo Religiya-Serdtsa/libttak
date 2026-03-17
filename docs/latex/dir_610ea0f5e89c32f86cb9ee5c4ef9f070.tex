@@ -1,24 +1,9 @@
 \doxysection{tutorials/34-\/dangerous-\/primer Directory Reference}
 \hypertarget{dir_610ea0f5e89c32f86cb9ee5c4ef9f070}{}\label{dir_610ea0f5e89c32f86cb9ee5c4ef9f070}\index{tutorials/34-\/dangerous-\/primer Directory Reference@{tutorials/34-\/dangerous-\/primer Directory Reference}}
-Directory dependency graph for 34-\/dangerous-\/primer\+:
-\nopagebreak
+Directory dependency graph for 34-\/dangerous-\/primer\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=230pt]{dir_610ea0f5e89c32f86cb9ee5c4ef9f070_dep}
 \end{center}
 \end{figure}
-
-
-\doxysubsection{Detailed Description}
-\hypertarget{README.md_autotoc_md127}{}\doxysubsection{\texorpdfstring{Tutorial 34 – Dangerous Primer}{Tutorial 34 – Dangerous Primer}}\label{README.md_autotoc_md127}
-{\ttfamily modules/34-\/dangerous-\/primer} is the opt-\/in introduction to the unsafe portion of the library.
-
-{\ttfamily lesson34\+\_\+dangerous\+\_\+primer.\+c} touches {\ttfamily \doxylink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}}; build it only after you have read {\ttfamily \doxylink{tutorials_2DANGEROUS_2README_8md}{tutorials/\+DANGEROUS/\+README.\+md}} and paged through {\ttfamily libttak\+\_\+unsafe.\+hlp}.\hypertarget{README.md_autotoc_md128}{}\doxysubsection{\texorpdfstring{Checklist}{Checklist}}\label{README.md_autotoc_md128}
-
-\begin{DoxyEnumerate}
-\item Re-\/read the DANGEROUS README plus the helper manual, then jot down the ownership/locking rules in this folder.
-\item Clone the unsafe region helpers carefully (init, adopt, pin/unpin, reset) and document every macro you toggle so you can revert if needed.
-\item Extend the lesson driver with extra asserts so you can prove (to yourself) that pins are balanced and buffers are released.
-\item Keep a risk log here noting anything you still find confusing before you advance to the context bridge. 
-\end{DoxyEnumerate}

@@ -6,26 +6,11 @@
 #include <string.h>
 
 #include <ttak/mem/mem.h>
-
-static uint64_t read_env_u64(const char *name, uint64_t fallback) {
-    const char *value = getenv(name);
-    if (!value || !*value) {
-        return fallback;
-    }
-
-    char *end = NULL;
-    uint64_t parsed = (uint64_t)strtoull(value, &end, 10);
-    if (end && *end != '\0') {
-        fprintf(stderr, "[warning] %s should be an integer, using fallback %" PRIu64 "\n",
-                name, fallback);
-        return fallback;
-    }
-    return parsed;
-}
+#include <ttak/timing/timing.h>
 
 int main(void) {
-    const uint64_t now = read_env_u64("NOW", 500);
-    const uint64_t lifetime = read_env_u64("LIFETIME", 1200);
+    const uint64_t now = ttak_get_tick_count();
+    const uint64_t lifetime = TT_MILLI_SECOND(0.3);
 
     printf("== LibTTAK getting started sample ==\n");
     printf("Requesting allocation at tick %" PRIu64 " with lifetime %" PRIu64 " ticks\n",
@@ -33,7 +18,7 @@ int main(void) {
 
     char *message = ttak_mem_alloc(128, lifetime, now);
     if (!message) {
-        fputs("Allocation failed. Did you install libttak and link with -lttak?\n", stderr);
+        printf("LibTTAK fails to allocate a memory.\n");
         return 1;
     }
 

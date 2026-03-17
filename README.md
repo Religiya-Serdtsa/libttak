@@ -69,25 +69,8 @@ There are no assembly fast paths or exotic TLS caches. Standard `malloc` plus di
 
 ## Benchmarks
 
-Test: Ryzen 5600X, RTX 3070 Lite Hash Rate, Samsung DDR4 3200MHz 32GB x 2
-
-### High-Performance Lock-Free Baseline
-
-| Metric | Result | Note |
-| --- | --- | --- |
-| Throughput | 30.8M Ops/s | Sustained peak during multi-threaded shared memory stress test |
-| Latency | ~80 ns | Measured during high-concurrency validation |
-| Memory Stability | Stable RSS | Optimized for high-thread-count environments |
-
-### TTL Cache Benchmarks (Compiler Sweep)
-
-| Metric Category | Metric | GCC -O3 | TCC -O3 | Clang -O3 |
-| --- | --- | --- | --- | --- |
-| Throughput | Operations per Second (Ops/s) | 30,851,515 | 20,413,284 | 25,671,794 |
-| Logic Integrity | Cache Hit Rate (%) | 76.91% | 76.61% | 76.58% |
-| Resource Usage | RSS Memory Usage (KB) | 3,541,128 | 4,146,252 | 4,800,072 |
-| GC Performance | CleanNsAvg (Nanoseconds) | 45,000,000 | 32,000,000 | 30,000,000 |
-| Runtime Control | Total Epochs Transitioned | 63,393 | 60,000 | 61,000 |
+![Compiler Performance Comparison](./bench/ttl-cache-multithread-bench/throughput_comparison.png)
+![Compiler RSS Footprint Comparison](./bench/ttl-cache-multithread-bench/rss_comparison.png)
 
 ### Benchmark Environment
 

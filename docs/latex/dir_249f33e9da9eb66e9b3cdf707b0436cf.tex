@@ -1,24 +1,9 @@
 \doxysection{tutorials/17-\/timing-\/services Directory Reference}
 \hypertarget{dir_249f33e9da9eb66e9b3cdf707b0436cf}{}\label{dir_249f33e9da9eb66e9b3cdf707b0436cf}\index{tutorials/17-\/timing-\/services Directory Reference@{tutorials/17-\/timing-\/services Directory Reference}}
-Directory dependency graph for 17-\/timing-\/services\+:
-\nopagebreak
+Directory dependency graph for 17-\/timing-\/services\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=220pt]{dir_249f33e9da9eb66e9b3cdf707b0436cf_dep}
 \end{center}
 \end{figure}
-
-
-\doxysubsection{Detailed Description}
-\hypertarget{README.md_autotoc_md92}{}\doxysubsection{\texorpdfstring{Tutorial 17 – Timing Services}{Tutorial 17 – Timing Services}}\label{README.md_autotoc_md92}
-{\ttfamily modules/17-\/timing-\/services} returns to the low-\/level timers in {\ttfamily src/timing/timing.\+c} and {\ttfamily src/timing/deadline.\+c}.
-
-{\ttfamily lesson17\+\_\+timing\+\_\+services.\+c} reads ticks and deadlines; use {\ttfamily make run} to compare your results to the expectations in the lesson.\hypertarget{README.md_autotoc_md93}{}\doxysubsection{\texorpdfstring{Checklist}{Checklist}}\label{README.md_autotoc_md93}
-
-\begin{DoxyEnumerate}
-\item Outline how the library obtains millisecond vs. nanosecond precision on your platform and note any fallbacks.
-\item Rebuild {\ttfamily ttak\+\_\+get\+\_\+tick\+\_\+count}, deadline helpers, and time arithmetic so higher modules can rely on them.
-\item Execute {\ttfamily make tests/test\+\_\+timing} plus any additional timing experiments to ensure the APIs behave monotonically.
-\item Store benchmark results or oscilloscope captures (if you take them) here for future tuning. 
-\end{DoxyEnumerate}

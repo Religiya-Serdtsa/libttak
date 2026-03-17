@@ -111,8 +111,8 @@
 \DoxyCodeLine{\Hypertarget{mem_8h_source_l00107}\mbox{\hyperlink{mem_8h_a05020ce7df6068f7d7f515ee4ea9cdadaa4cff10407296a029dba423e1ac75551}{00107}}\ \ \ \ \ \mbox{\hyperlink{mem_8h_a05020ce7df6068f7d7f515ee4ea9cdadaa4cff10407296a029dba423e1ac75551}{TTAK\_MEM\_HUGE\_PAGES}}\ =\ (1\ <<\ 0),\ \ \ \ \ \textcolor{comment}{/**<\ Try\ to\ use\ 2MB/1GB\ pages\ */}}
 \DoxyCodeLine{\Hypertarget{mem_8h_source_l00108}\mbox{\hyperlink{mem_8h_a05020ce7df6068f7d7f515ee4ea9cdada85fc84c07c8164ea4cd8048365cc3e2d}{00108}}\ \ \ \ \ \mbox{\hyperlink{mem_8h_a05020ce7df6068f7d7f515ee4ea9cdada85fc84c07c8164ea4cd8048365cc3e2d}{TTAK\_MEM\_CACHE\_ALIGNED}}\ =\ (1\ <<\ 1),\ \ \textcolor{comment}{/**<\ Force\ 64-\/byte\ cache\ alignment\ */}}
 \DoxyCodeLine{\Hypertarget{mem_8h_source_l00109}\mbox{\hyperlink{mem_8h_a05020ce7df6068f7d7f515ee4ea9cdada0b16ffc2f709ae7e7a5439e0ca8d7d86}{00109}}\ \ \ \ \ \mbox{\hyperlink{mem_8h_a05020ce7df6068f7d7f515ee4ea9cdada0b16ffc2f709ae7e7a5439e0ca8d7d86}{TTAK\_MEM\_STRICT\_CHECK}}\ =\ (1\ <<\ 2),\ \ \ \textcolor{comment}{/**<\ Enable\ strict\ boundary/canary\ checks\ */}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00110}\mbox{\hyperlink{mem_8h_a05020ce7df6068f7d7f515ee4ea9cdadad33e10539c3604becb675d3d3ec7bf72}{00110}}\ \ \ \ \ \mbox{\hyperlink{mem_8h_a05020ce7df6068f7d7f515ee4ea9cdadad33e10539c3604becb675d3d3ec7bf72}{TTAK\_MEM\_LOW\_PRIORITY}}\ =\ (1\ <<\ 3)\ \ \ \ \textcolor{comment}{/**<\ Reject\ if\ under\ memory\ pressure/high\ friction\ */}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00111}00111\ \}\ \mbox{\hyperlink{mem_8h_a05020ce7df6068f7d7f515ee4ea9cdad}{ttak\_mem\_flags\_t}};}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00110}00110\ \ \ \ \ \mbox{\hyperlink{mem_8h_a05020ce7df6068f7d7f515ee4ea9cdadad33e10539c3604becb675d3d3ec7bf72}{TTAK\_MEM\_LOW\_PRIORITY}}\ =\ (1\ <<\ 3)\ \ \ \ \textcolor{comment}{/**<\ Reject\ if\ under\ memory\ pressure/high\ friction\ */}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00111}\mbox{\hyperlink{mem_8h_a05020ce7df6068f7d7f515ee4ea9cdadad33e10539c3604becb675d3d3ec7bf72}{00111}}\ \}\ \mbox{\hyperlink{mem_8h_a05020ce7df6068f7d7f515ee4ea9cdad}{ttak\_mem\_flags\_t}};}
 \DoxyCodeLine{\Hypertarget{mem_8h_source_l00112}00112\ \textcolor{comment}{}}
 \DoxyCodeLine{\Hypertarget{mem_8h_source_l00113}00113\ \textcolor{comment}{/**}}
 \DoxyCodeLine{\Hypertarget{mem_8h_source_l00114}00114\ \textcolor{comment}{\ *\ @brief\ Unified\ memory\ allocation\ with\ lifecycle\ management.}}
@@ -128,198 +128,200 @@
 \DoxyCodeLine{\Hypertarget{mem_8h_source_l00124}00124\ \textcolor{comment}{\ */}}
 \DoxyCodeLine{\Hypertarget{mem_8h_source_l00125}\mbox{\hyperlink{mem_8h_acd407700ef90ad55bcec5ae7cf8b94b7}{00125}}\ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{mem_8h_acd407700ef90ad55bcec5ae7cf8b94b7}{ttak\_mem\_alloc\_safe}}(\textcolor{keywordtype}{size\_t}\ size,\ uint64\_t\ lifetime\_ticks,\ uint64\_t\ now\_tick,\ \textcolor{keywordtype}{bool}\ is\_const,\ \textcolor{keywordtype}{bool}\ is\_volatile,\ \textcolor{keywordtype}{bool}\ allow\_direct,\ \textcolor{keywordtype}{bool}\ is\_root,\ \mbox{\hyperlink{mem_8h_a05020ce7df6068f7d7f515ee4ea9cdad}{ttak\_mem\_flags\_t}}\ flags);}
 \DoxyCodeLine{\Hypertarget{mem_8h_source_l00126}00126\ \textcolor{comment}{/*\ @brief\ Wrapper\ for\ easy\ allocation\ with\ auto\ GC\ registering\ */}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00127}\mbox{\hyperlink{mem_8h_aa3ae2077f369ef1143f07dc791ad481d}{00127}}\ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{mem_8h_aa3ae2077f369ef1143f07dc791ad481d}{ttak\_fastalloc}}(\mbox{\hyperlink{epoch__gc_8h_a2f90109b245cba56d85e82cf71a8eef4}{ttak\_epoch\_gc\_t}}\ *gc,\ \textcolor{keywordtype}{size\_t}\ size,\ uint64\_t\ lifetime\_ticks,\ uint64\_t\ now\_tick);\textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00128}00128\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00129}00129\ \textcolor{comment}{\ *\ @brief\ Reallocates\ memory\ with\ lifecycle\ management.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00130}00130\ \textcolor{comment}{\ *\ @param\ ptr\ Existing\ allocation\ pointer.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00131}00131\ \textcolor{comment}{\ *\ @param\ new\_size\ Requested\ new\ size.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00132}00132\ \textcolor{comment}{\ *\ @param\ lifetime\_ticks\ Updated\ lifetime\ hint.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00133}00133\ \textcolor{comment}{\ *\ @param\ now\_tick\ Current\ timestamp\ in\ ticks.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00134}00134\ \textcolor{comment}{\ *\ @param\ is\_root\ Whether\ the\ new\ allocation\ is\ a\ root\ node.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00135}00135\ \textcolor{comment}{\ *\ @param\ flags\ Allocation\ behavior\ flags.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00136}00136\ \textcolor{comment}{\ *\ @return\ Reallocated\ pointer,\ or\ NULL\ on\ failure.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00137}00137\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00138}\mbox{\hyperlink{mem_8h_a3ecf5a43780a4a7f1c923b4bc3579464}{00138}}\ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{mem_8h_a3ecf5a43780a4a7f1c923b4bc3579464}{ttak\_mem\_realloc\_safe}}(\textcolor{keywordtype}{void}\ *ptr,\ \textcolor{keywordtype}{size\_t}\ new\_size,\ uint64\_t\ lifetime\_ticks,\ uint64\_t\ now\_tick,\ \textcolor{keywordtype}{bool}\ is\_root,\ \mbox{\hyperlink{mem_8h_a05020ce7df6068f7d7f515ee4ea9cdad}{ttak\_mem\_flags\_t}}\ flags);\textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00139}00139\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00140}00140\ \textcolor{comment}{\ *\ @brief\ Primitive\ allocator\ for\ internal\ subsystem\ bootstrap.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00141}00141\ \textcolor{comment}{\ *}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00142}00142\ \textcolor{comment}{\ *\ Bypasses\ all\ managed\ logic\ (Header,\ Map,\ Tree)\ to\ prevent\ recursive\ cycles}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00143}00143\ \textcolor{comment}{\ *\ during\ early\ initialization\ of\ the\ epoch\ or\ memory\ subsystems.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00144}00144\ \textcolor{comment}{\ *}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00145}00145\ \textcolor{comment}{\ *\ @param\ size\ Number\ of\ bytes\ requested.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00146}00146\ \textcolor{comment}{\ *\ @return\ Pointer\ to\ zeroed\ user\ memory\ (64-\/byte\ aligned),\ or\ NULL\ on\ failure.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00147}00147\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00148}00148\ }
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00149}\mbox{\hyperlink{mem_8h_af7ec7267633ddcac6923ca6f73a3bbf0}{00149}}\ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{mem_8h_af7ec7267633ddcac6923ca6f73a3bbf0}{ttak\_dangerous\_alloc}}(\textcolor{keywordtype}{size\_t}\ size);}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00150}00150\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00151}00151\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00152}00152\ \textcolor{comment}{\ *\ @brief\ Primitive\ calloc\ for\ internal\ subsystem\ bootstrap.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00153}00153\ \textcolor{comment}{\ *}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00154}00154\ \textcolor{comment}{\ *\ @param\ nmemb\ Number\ of\ elements.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00155}00155\ \textcolor{comment}{\ *\ @param\ size\ Size\ of\ each\ element.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00156}00156\ \textcolor{comment}{\ *\ @return\ Pointer\ to\ zeroed\ user\ memory\ (64-\/byte\ aligned),\ or\ NULL\ on\ failure.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00157}00157\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00158}\mbox{\hyperlink{mem_8h_a3718153ec27ff216feedcf12f8583c9c}{00158}}\ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{mem_8h_a3718153ec27ff216feedcf12f8583c9c}{ttak\_dangerous\_calloc}}(\textcolor{keywordtype}{size\_t}\ nmemb,\ \textcolor{keywordtype}{size\_t}\ size);}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00159}00159\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00160}00160\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00161}00161\ \textcolor{comment}{\ *\ @brief\ Primitive\ deallocator\ for\ internal\ subsystem\ cleanup.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00162}00162\ \textcolor{comment}{\ *}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00163}00163\ \textcolor{comment}{\ *\ Directly\ returns\ memory\ to\ the\ underlying\ system\ allocator\ or\ buddy\ pool}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00164}00164\ \textcolor{comment}{\ *\ without\ performing\ any\ managed\ header\ or\ checksum\ validations.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00165}00165\ \textcolor{comment}{\ *}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00166}00166\ \textcolor{comment}{\ *\ @param\ ptr\ Pointer\ to\ memory\ allocated\ via\ ttak\_dangerous\_alloc.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00167}00167\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00168}\mbox{\hyperlink{mem_8h_adf32b5f9a7de7217eff4987bae8c1515}{00168}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{mem_8h_adf32b5f9a7de7217eff4987bae8c1515}{ttak\_dangerous\_free}}(\textcolor{keywordtype}{void}\ *ptr);}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00169}00169\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00170}00170\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00171}00171\ \textcolor{comment}{\ *\ @brief\ Frees\ a\ memory\ block\ and\ updates\ usage\ statistics.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00172}00172\ \textcolor{comment}{\ *\ @param\ ptr\ Pointer\ to\ user\ memory.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00173}00173\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00174}\mbox{\hyperlink{mem_8h_afdcd75479e1ca4dde197214d0430de65}{00174}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{mem_8h_afdcd75479e1ca4dde197214d0430de65}{ttak\_mem\_free}}(\textcolor{keywordtype}{void}\ *ptr);}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00175}00175\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00176}00176\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00177}00177\ \textcolor{comment}{\ *\ @brief\ Duplicates\ a\ memory\ block\ with\ lifecycle\ management.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00178}00178\ \textcolor{comment}{\ *\ @param\ src\ Source\ memory\ block.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00179}00179\ \textcolor{comment}{\ *\ @param\ size\ Number\ of\ bytes\ to\ copy.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00180}00180\ \textcolor{comment}{\ *\ @param\ lifetime\_ticks\ Updated\ lifetime\ hint.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00181}00181\ \textcolor{comment}{\ *\ @param\ now\_tick\ Current\ timestamp\ in\ ticks.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00182}00182\ \textcolor{comment}{\ *\ @param\ is\_root\ Whether\ the\ new\ allocation\ is\ a\ root\ node.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00183}00183\ \textcolor{comment}{\ *\ @param\ flags\ Allocation\ behavior\ flags.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00184}00184\ \textcolor{comment}{\ *\ @return\ Duplicated\ pointer,\ or\ NULL\ on\ failure.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00185}00185\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00186}\mbox{\hyperlink{mem_8h_a9017be27d7753e502ed5097ee61fd6c5}{00186}}\ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{mem_8h_a9017be27d7753e502ed5097ee61fd6c5}{ttak\_mem\_dup\_safe}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *src,\ \textcolor{keywordtype}{size\_t}\ size,\ uint64\_t\ lifetime\_ticks,\ uint64\_t\ now\_tick,\ \textcolor{keywordtype}{bool}\ is\_root,\ \mbox{\hyperlink{mem_8h_a05020ce7df6068f7d7f515ee4ea9cdad}{ttak\_mem\_flags\_t}}\ flags);}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00187}00187\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00188}00188\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00189}00189\ \textcolor{comment}{\ *\ @brief\ Frees\ a\ memory\ block\ and\ updates\ usage\ statistics.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00190}00190\ \textcolor{comment}{\ *\ @param\ ptr\ Pointer\ to\ user\ memory.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00191}00191\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00192}00192\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{mem_8h_afdcd75479e1ca4dde197214d0430de65}{ttak\_mem\_free}}(\textcolor{keywordtype}{void}\ *ptr);}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00193}00193\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00194}00194\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00195}00195\ \textcolor{comment}{\ *\ @brief\ Safe\ accessor\ implemented\ in\ the\ library\ for\ ABI-\/stable\ builds.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00196}00196\ \textcolor{comment}{\ *}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00197}00197\ \textcolor{comment}{\ *\ Consumers\ that\ define\ TTAK\_MEM\_FORCE\_ACCESS\_BRIDGE\ will\ call\ into\ this}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00198}00198\ \textcolor{comment}{\ *\ function\ instead\ of\ relying\ on\ the\ inline\ header\ logic.\ This\ is\ primarily}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00199}00199\ \textcolor{comment}{\ *\ intended\ for\ scenarios\ where\ the\ library\ was\ compiled\ with\ a\ different}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00200}00200\ \textcolor{comment}{\ *\ compiler\ (e.g.,\ TinyCC)\ and\ the\ structure\ layout\ may\ not\ match\ the}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00201}00201\ \textcolor{comment}{\ *\ including\ translation\ unit.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00202}00202\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00203}\mbox{\hyperlink{mem_8h_a657dcd0f7a2091d74470b56ed6837a91}{00203}}\ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{mem_8h_a657dcd0f7a2091d74470b56ed6837a91}{ttak\_mem\_access\_bridge}}(\textcolor{keywordtype}{void}\ *ptr,\ uint64\_t\ now\_tick);}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00204}00204\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00205}00205\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00206}00206\ \textcolor{comment}{\ *\ @brief\ Accesses\ a\ memory\ block,\ verifying\ its\ lifecycle\ and\ security.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00207}00207\ \textcolor{comment}{\ *\ @param\ ptr\ Pointer\ to\ user\ memory.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00208}00208\ \textcolor{comment}{\ *\ @param\ now\_tick\ Current\ timestamp\ in\ ticks.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00209}00209\ \textcolor{comment}{\ *\ @return\ Validated\ pointer,\ or\ NULL\ if\ security\ check\ fails\ or\ block\ is\ expired.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00210}00210\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00211}00211\ \textcolor{preprocessor}{\#if\ defined(TTAK\_MEM\_FORCE\_ACCESS\_BRIDGE)}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00212}00212\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{mem_8h_a1e451c99b337f68893aaf14cd3d1ffa1}{ttak\_mem\_access}}(\textcolor{keywordtype}{void}\ *ptr,\ uint64\_t\ now\_tick)\ \{}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00213}00213\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{mem_8h_a657dcd0f7a2091d74470b56ed6837a91}{ttak\_mem\_access\_bridge}}(ptr,\ now\_tick);}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00214}00214\ \}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00215}00215\ \textcolor{preprocessor}{\#else}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00216}\mbox{\hyperlink{mem_8h_a1e451c99b337f68893aaf14cd3d1ffa1}{00216}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{mem_8h_a1e451c99b337f68893aaf14cd3d1ffa1}{ttak\_mem\_access}}(\textcolor{keywordtype}{void}\ *ptr,\ uint64\_t\ now\_tick)\ \{}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00217}00217\ \ \ \ \ \textcolor{keywordflow}{if}\ (!ptr)\ \textcolor{keywordflow}{return}\ NULL;}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00218}00218\ \ \ \ \ \mbox{\hyperlink{structttak__mem__header__t}{ttak\_mem\_header\_t}}\ *header\ =\ (\mbox{\hyperlink{structttak__mem__header__t}{ttak\_mem\_header\_t}}\ *)ptr\ -\/\ 1;}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00219}00219\ }
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00220}00220\ \ \ \ \ \textcolor{keywordflow}{if}\ (header-\/>\mbox{\hyperlink{structttak__mem__header__t_a63c543d0e2277438790686ca125adadf}{magic}}\ !=\ \mbox{\hyperlink{mem_8h_a02d61fafa21eadc8010ca9803d77bafb}{TTAK\_MAGIC\_NUMBER}})\ \textcolor{keywordflow}{return}\ NULL;}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00221}00221\ \ \ \ \ \textcolor{keywordflow}{if}\ (header-\/>\mbox{\hyperlink{structttak__mem__header__t_afb19e735d7af574abc849acff5d5a3e2}{freed}})\ \textcolor{keywordflow}{return}\ NULL;}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00222}00222\ \ \ \ \ \textcolor{keywordflow}{if}\ (header-\/>\mbox{\hyperlink{structttak__mem__header__t_a0362d896df5d92be01157426136ad6b0}{expires\_tick}}\ !=\ \mbox{\hyperlink{mem_8h_a798ceb4ce7e1d84af3001d7ec38d3da2}{\_\_TTAK\_UNSAFE\_MEM\_FOREVER\_\_}}\ \&\&\ now\_tick\ >\ header-\/>\mbox{\hyperlink{structttak__mem__header__t_a0362d896df5d92be01157426136ad6b0}{expires\_tick}})\ \textcolor{keywordflow}{return}\ NULL;}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00223}00223\ \ \ \ \ \textcolor{keywordflow}{if}\ (!header-\/>\mbox{\hyperlink{structttak__mem__header__t_a42432ca91571c572cd16cadbbc197e7c}{allow\_direct\_access}})\ \textcolor{keywordflow}{return}\ NULL;}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00224}00224\ }
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00225}00225\ \ \ \ \ \mbox{\hyperlink{mem_8h_a4c8f2c14a51569a7e6518fe83d873d41}{TTAK\_ATOMIC\_FETCH\_ADD\_U64}}(\&header-\/>\mbox{\hyperlink{structttak__mem__header__t_a0318bb3cfda8bb54cf6ec0c43e6b2584}{access\_count}},\ 1ULL);}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00226}00226\ \ \ \ \ \textcolor{keywordflow}{return}\ ptr;}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00227}00227\ \}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00228}00228\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00229}00229\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00230}00230\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00231}00231\ \textcolor{comment}{\ *\ @brief\ Inspects\ for\ "{}dirty"{}\ pointers\ (expired\ or\ over-\/accessed).}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00232}00232\ \textcolor{comment}{\ *\ @param\ now\_tick\ Current\ timestamp.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00233}00233\ \textcolor{comment}{\ *\ @param\ count\_out\ Pointer\ to\ store\ the\ number\ of\ dirty\ pointers\ found.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00234}00234\ \textcolor{comment}{\ *\ @return\ Array\ of\ pointers\ (caller\ must\ free),\ or\ NULL.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00235}00235\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00236}\mbox{\hyperlink{mem_8h_a000835e8881250f937ecebbde55ff0dd}{00236}}\ \textcolor{keywordtype}{void}\ **\mbox{\hyperlink{mem_8h_a000835e8881250f937ecebbde55ff0dd}{tt\_inspect\_dirty\_pointers}}(uint64\_t\ now\_tick,\ \textcolor{keywordtype}{size\_t}\ *count\_out);}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00237}00237\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00238}00238\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00239}00239\ \textcolor{comment}{\ *\ @brief\ Automatically\ cleans\ up\ expired\ memory\ blocks.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00240}00240\ \textcolor{comment}{\ *\ @param\ now\_tick\ Current\ timestamp.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00241}00241\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00242}\mbox{\hyperlink{mem_8h_a0b04cc34c8514125b98e707d18f74f21}{00242}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{mem_8h_a0b04cc34c8514125b98e707d18f74f21}{tt\_autoclean\_dirty\_pointers}}(uint64\_t\ now\_tick);}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00243}00243\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00244}00244\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00245}00245\ \textcolor{comment}{\ *\ @brief\ Configures\ background\ GC\ parameters.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00246}00246\ \textcolor{comment}{\ *\ @param\ min\_interval\_ns\ Minimum\ sweep\ interval.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00247}00247\ \textcolor{comment}{\ *\ @param\ max\_interval\_ns\ Maximum\ sweep\ interval.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00248}00248\ \textcolor{comment}{\ *\ @param\ pressure\_threshold\ Memory\ pressure\ threshold\ to\ trigger\ damping.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00249}00249\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00250}\mbox{\hyperlink{mem_8h_ae8973d60d53321ee8b36d15b1d7698ea}{00250}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{mem_8h_ae8973d60d53321ee8b36d15b1d7698ea}{ttak\_mem\_configure\_gc}}(uint64\_t\ min\_interval\_ns,\ uint64\_t\ max\_interval\_ns,\ \textcolor{keywordtype}{size\_t}\ pressure\_threshold);}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00251}00251\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00252}00252\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00253}00253\ \textcolor{comment}{\ *\ @brief\ Sweeps\ and\ returns\ dirty\ pointers\ in\ a\ single\ pass.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00254}00254\ \textcolor{comment}{\ *\ @param\ now\_tick\ Current\ timestamp.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00255}00255\ \textcolor{comment}{\ *\ @param\ count\_out\ Pointer\ to\ store\ found\ count.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00256}00256\ \textcolor{comment}{\ *\ @return\ Array\ of\ dirty\ pointers.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00257}00257\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00258}\mbox{\hyperlink{mem_8h_aff328295d8c8a2dc672f74c1fdd8c391}{00258}}\ \textcolor{keywordtype}{void}\ **\mbox{\hyperlink{mem_8h_aff328295d8c8a2dc672f74c1fdd8c391}{tt\_autoclean\_and\_inspect}}(uint64\_t\ now\_tick,\ \textcolor{keywordtype}{size\_t}\ *count\_out);}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00259}00259\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00260}00260\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00261}00261\ \textcolor{comment}{\ *\ @brief\ Sets\ the\ global\ memory\ tracing\ flag.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00262}00262\ \textcolor{comment}{\ *\ @param\ enable\ Non-\/zero\ to\ enable\ JSON\ tracing\ to\ stderr.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00263}00263\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00264}\mbox{\hyperlink{mem_8h_adfcac077aeb029c04c4fb47dc33116a0}{00264}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{mem_8h_adfcac077aeb029c04c4fb47dc33116a0}{ttak\_mem\_set\_trace}}(\textcolor{keywordtype}{int}\ enable);}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00265}00265\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00266}00266\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00267}00267\ \textcolor{comment}{\ *\ @brief\ Checks\ if\ memory\ tracing\ is\ enabled.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00268}00268\ \textcolor{comment}{\ *\ @return\ Non-\/zero\ if\ enabled.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00269}00269\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00270}\mbox{\hyperlink{mem_8h_a901d371e2cc570055bc60bcea5653df5}{00270}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{mem_8h_a901d371e2cc570055bc60bcea5653df5}{ttak\_mem\_is\_trace\_enabled}}(\textcolor{keywordtype}{void});}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00271}00271\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00272}00272\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00273}00273\ \textcolor{comment}{\ *\ @brief\ Calculates\ a\ 32-\/bit\ checksum\ for\ the\ memory\ header.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00274}00274\ \textcolor{comment}{\ *\ @param\ h\ Pointer\ to\ the\ header.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00275}00275\ \textcolor{comment}{\ *\ @return\ Calculated\ checksum.}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00276}00276\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00277}\mbox{\hyperlink{mem_8h_ad663cf355d411491ef16fbaba940be07}{00277}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ uint32\_t\ \mbox{\hyperlink{mem_8h_ad663cf355d411491ef16fbaba940be07}{ttak\_calc\_header\_checksum}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__mem__header__t}{ttak\_mem\_header\_t}}\ *h)\ \{}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00278}00278\ \ \ \ \ uint32\_t\ sum1\ =\ h-\/>\mbox{\hyperlink{structttak__mem__header__t_a63c543d0e2277438790686ca125adadf}{magic}};}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00279}00279\ \ \ \ \ uint32\_t\ sum2\ =\ (uint32\_t)h-\/>\mbox{\hyperlink{structttak__mem__header__t_aefba5a41d63f62a6de53c3a9a6f0f51b}{created\_tick}};}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00280}00280\ \ \ \ \ sum1\ \string^=\ (uint32\_t)(h-\/>\mbox{\hyperlink{structttak__mem__header__t_aefba5a41d63f62a6de53c3a9a6f0f51b}{created\_tick}}\ >>\ 32);}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00281}00281\ \ \ \ \ sum2\ \string^=\ (uint32\_t)h-\/>\mbox{\hyperlink{structttak__mem__header__t_a0362d896df5d92be01157426136ad6b0}{expires\_tick}};}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00282}00282\ \ \ \ \ sum1\ \string^=\ (uint32\_t)(h-\/>\mbox{\hyperlink{structttak__mem__header__t_a0362d896df5d92be01157426136ad6b0}{expires\_tick}}\ >>\ 32);}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00283}00283\ \ \ \ \ sum2\ \string^=\ (uint32\_t)h-\/>\mbox{\hyperlink{structttak__mem__header__t_a576f96336f81e4af314e70b911232dda}{size}};}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00284}00284\ \textcolor{preprocessor}{\#if\ defined(\_\_LP64\_\_)\ ||\ defined(\_WIN64)}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00285}00285\ \ \ \ \ sum1\ \string^=\ (uint32\_t)(h-\/>\mbox{\hyperlink{structttak__mem__header__t_a576f96336f81e4af314e70b911232dda}{size}}\ >>\ 32);}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00286}00286\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00287}00287\ \ \ \ \ sum2\ \string^=\ (uint32\_t)h-\/>\mbox{\hyperlink{structttak__mem__header__t_a507281872e1f22c889df12ff9c0be63e}{should\_join}};}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00288}00288\ \ \ \ \ sum1\ \string^=\ (uint32\_t)h-\/>\mbox{\hyperlink{structttak__mem__header__t_a8b1ec6a6c170869bd09dbf027b7b1d0a}{strict\_check}};}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00289}00289\ \ \ \ \ sum2\ \string^=\ (uint32\_t)h-\/>\mbox{\hyperlink{structttak__mem__header__t_ac5a057733c169250b2a6e4766940bcfe}{is\_root}};}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00290}00290\ \ \ \ \ sum1\ \string^=\ (uint32\_t)h-\/>\mbox{\hyperlink{structttak__mem__header__t_aeb69c52bed0292761ce4ff581eae37df}{canary\_start}};}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00291}00291\ \ \ \ \ sum2\ \string^=\ (uint32\_t)(h-\/>\mbox{\hyperlink{structttak__mem__header__t_aeb69c52bed0292761ce4ff581eae37df}{canary\_start}}\ >>\ 32);}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00292}00292\ \ \ \ \ sum1\ \string^=\ (uint32\_t)h-\/>\mbox{\hyperlink{structttak__mem__header__t_a9bc5cff0708537fe474f41e356e69284}{canary\_end}};}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00293}00293\ \ \ \ \ sum2\ \string^=\ (uint32\_t)(h-\/>\mbox{\hyperlink{structttak__mem__header__t_a9bc5cff0708537fe474f41e356e69284}{canary\_end}}\ >>\ 32);}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00294}00294\ \ \ \ \ sum1\ \string^=\ (uint32\_t)h-\/>\mbox{\hyperlink{structttak__mem__header__t_ac4eb77c659fb7cadcd333ecab2354b77}{allocation\_tier}};}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00295}00295\ \ \ \ \ \textcolor{keywordflow}{return}\ sum1\ \string^\ sum2;}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00296}00296\ \}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00297}00297\ }
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00298}00298\ \textcolor{comment}{/*\ Compatibility\ macros\ */}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00299}\mbox{\hyperlink{mem_8h_ab724d37f1a1c16f006309b8b2036b232}{00299}}\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{mem_8h_ab724d37f1a1c16f006309b8b2036b232}{ttak\_lifecycle\_obj\_t}};}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00300}\mbox{\hyperlink{mem_8h_ac5d995333f6871240af3fda323f9114f}{00300}}\ \textcolor{preprocessor}{\#define\ ttak\_mem\_alloc(size,\ lifetime,\ now\_tick)\ ttak\_mem\_alloc\_safe(size,\ lifetime,\ now\_tick,\ false,\ false,\ true,\ false,\ TTAK\_MEM\_DEFAULT)}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00301}\mbox{\hyperlink{mem_8h_a5d8a79f36fb4bd204046ea8834977297}{00301}}\ \textcolor{preprocessor}{\#define\ ttak\_root\_alloc(size,\ lifetime,\ now\_tick)\ ttak\_mem\_alloc\_safe(size,\ lifetime,\ now\_tick,\ true,\ true,\ true,\ true,\ TTAK\_MEM\_DEFAULT)}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00302}\mbox{\hyperlink{mem_8h_aebbfb88cdba4d11a524cae2a66972070}{00302}}\ \textcolor{preprocessor}{\#define\ ttak\_mem\_alloc\_with\_flags(size,\ lifetime,\ now\_tick,\ flags)\ ttak\_mem\_alloc\_safe(size,\ lifetime,\ now\_tick,\ false,\ false,\ true,\ false,\ flags)}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00303}\mbox{\hyperlink{mem_8h_a7f181fe8f133af55c3e2bf6e86b53c56}{00303}}\ \textcolor{preprocessor}{\#define\ ttak\_root\_alloc\_with\_flags(size,\ lifetime,\ now\_tick,\ flags)\ ttak\_mem\_alloc\_safe(size,\ lifetime,\ now\_tick,\ true,\ true,\ true,\ true,\ flags)}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00304}\mbox{\hyperlink{mem_8h_a97f451049eaeaf30598a37e13069c15d}{00304}}\ \textcolor{preprocessor}{\#define\ ttak\_mem\_realloc(ptr,\ size,\ lifetime,\ now\_tick)\ ttak\_mem\_realloc\_safe(ptr,\ size,\ lifetime,\ now\_tick,\ false,\ TTAK\_MEM\_DEFAULT)}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00305}\mbox{\hyperlink{mem_8h_a6deb46577a7ecf9a5c3178f438da0d5a}{00305}}\ \textcolor{preprocessor}{\#define\ ttak\_mem\_realloc\_with\_flags(ptr,\ size,\ lifetime,\ now\_tick,\ flags)\ ttak\_mem\_realloc\_safe(ptr,\ size,\ lifetime,\ now\_tick,\ false,\ flags)}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00306}\mbox{\hyperlink{mem_8h_a45976fd9be92932992d660f0c2d8255b}{00306}}\ \textcolor{preprocessor}{\#define\ ttak\_mem\_dup(src,\ size,\ lifetime,\ now\_tick)\ ttak\_mem\_dup\_safe(src,\ size,\ lifetime,\ now\_tick,\ false,\ TTAK\_MEM\_DEFAULT)}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00307}\mbox{\hyperlink{mem_8h_a7c0d648c72e9fc2d35932b78f7d08f09}{00307}}\ \textcolor{preprocessor}{\#define\ ttak\_mem\_dup\_with\_flags(src,\ size,\ lifetime,\ now\_tick,\ flags)\ ttak\_mem\_dup\_safe(src,\ size,\ lifetime,\ now\_tick,\ false,\ flags)}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00308}00308\ }
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00309}00309\ \textcolor{preprocessor}{\#ifndef\ EMBEDDED}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00310}\mbox{\hyperlink{mem_8h_ae47a1cb6076cec70cf9ea8efc1d5f3ff}{00310}}\ \textcolor{preprocessor}{\#define\ EMBEDDED\ 0}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00311}00311\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00312}00312\ }
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00313}00313\ \textcolor{preprocessor}{\#if\ EMBEDDED}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00314}00314\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{buddy_8h_ae83acf1c249899b6fcfc4580dbf0b082}{ttak\_mem\_buddy\_init}}(\textcolor{keywordtype}{void}\ *pool\_start,\ \textcolor{keywordtype}{size\_t}\ pool\_len,\ \textcolor{keywordtype}{int}\ embedded\_mode);}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00315}00315\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{buddy_8h_a9cc9a5945e39175f56fbf3ee961ff546}{ttak\_mem\_buddy\_set\_pool}}(\textcolor{keywordtype}{void}\ *pool\_start,\ \textcolor{keywordtype}{size\_t}\ pool\_len);}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00316}00316\ \textcolor{keywordtype}{void}\ ttak\_mem\_set\_embedded\_pool(\textcolor{keywordtype}{void}\ *pool\_start,\ \textcolor{keywordtype}{size\_t}\ pool\_len);}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00317}00317\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00318}00318\ }
-\DoxyCodeLine{\Hypertarget{mem_8h_source_l00319}00319\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_MEM\_H}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00127}\mbox{\hyperlink{mem_8h_aa3ae2077f369ef1143f07dc791ad481d}{00127}}\ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{mem_8h_aa3ae2077f369ef1143f07dc791ad481d}{ttak\_fastalloc}}(\mbox{\hyperlink{structttak__epoch__gc}{ttak\_epoch\_gc\_t}}\ *gc,\ \textcolor{keywordtype}{size\_t}\ size,\ uint64\_t\ lifetime\_ticks,\ uint64\_t\ now\_tick);}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00128}00128\ \textcolor{comment}{/*\ @brief\ Wrapper\ for\ easy\ allocation\ and\ zero-\/fill\ with\ auto\ GC\ registering\ */}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00129}\mbox{\hyperlink{mem_8h_aed34655be8ef26f222a37a797c6627af}{00129}}\ \textcolor{keywordtype}{void}\ *\ \mbox{\hyperlink{mem_8h_aed34655be8ef26f222a37a797c6627af}{ttak\_fastcalloc}}(\mbox{\hyperlink{structttak__epoch__gc}{ttak\_epoch\_gc\_t}}\ *gc,\ \textcolor{keywordtype}{size\_t}\ size,\ uint64\_t\ lifetime\_ticks,\ uint64\_t\ now);\textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00130}00130\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00131}00131\ \textcolor{comment}{\ *\ @brief\ Reallocates\ memory\ with\ lifecycle\ management.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00132}00132\ \textcolor{comment}{\ *\ @param\ ptr\ Existing\ allocation\ pointer.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00133}00133\ \textcolor{comment}{\ *\ @param\ new\_size\ Requested\ new\ size.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00134}00134\ \textcolor{comment}{\ *\ @param\ lifetime\_ticks\ Updated\ lifetime\ hint.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00135}00135\ \textcolor{comment}{\ *\ @param\ now\_tick\ Current\ timestamp\ in\ ticks.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00136}00136\ \textcolor{comment}{\ *\ @param\ is\_root\ Whether\ the\ new\ allocation\ is\ a\ root\ node.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00137}00137\ \textcolor{comment}{\ *\ @param\ flags\ Allocation\ behavior\ flags.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00138}00138\ \textcolor{comment}{\ *\ @return\ Reallocated\ pointer,\ or\ NULL\ on\ failure.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00139}00139\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00140}\mbox{\hyperlink{mem_8h_a3ecf5a43780a4a7f1c923b4bc3579464}{00140}}\ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{mem_8h_a3ecf5a43780a4a7f1c923b4bc3579464}{ttak\_mem\_realloc\_safe}}(\textcolor{keywordtype}{void}\ *ptr,\ \textcolor{keywordtype}{size\_t}\ new\_size,\ uint64\_t\ lifetime\_ticks,\ uint64\_t\ now\_tick,\ \textcolor{keywordtype}{bool}\ is\_root,\ \mbox{\hyperlink{mem_8h_a05020ce7df6068f7d7f515ee4ea9cdad}{ttak\_mem\_flags\_t}}\ flags);\textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00141}00141\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00142}00142\ \textcolor{comment}{\ *\ @brief\ Primitive\ allocator\ for\ internal\ subsystem\ bootstrap.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00143}00143\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00144}00144\ \textcolor{comment}{\ *\ Bypasses\ all\ managed\ logic\ (Header,\ Map,\ Tree)\ to\ prevent\ recursive\ cycles}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00145}00145\ \textcolor{comment}{\ *\ during\ early\ initialization\ of\ the\ epoch\ or\ memory\ subsystems.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00146}00146\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00147}00147\ \textcolor{comment}{\ *\ @param\ size\ Number\ of\ bytes\ requested.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00148}00148\ \textcolor{comment}{\ *\ @return\ Pointer\ to\ zeroed\ user\ memory\ (64-\/byte\ aligned),\ or\ NULL\ on\ failure.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00149}00149\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00150}00150\ }
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00151}\mbox{\hyperlink{mem_8h_af7ec7267633ddcac6923ca6f73a3bbf0}{00151}}\ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{mem_8h_af7ec7267633ddcac6923ca6f73a3bbf0}{ttak\_dangerous\_alloc}}(\textcolor{keywordtype}{size\_t}\ size);}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00152}00152\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00153}00153\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00154}00154\ \textcolor{comment}{\ *\ @brief\ Primitive\ calloc\ for\ internal\ subsystem\ bootstrap.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00155}00155\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00156}00156\ \textcolor{comment}{\ *\ @param\ nmemb\ Number\ of\ elements.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00157}00157\ \textcolor{comment}{\ *\ @param\ size\ Size\ of\ each\ element.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00158}00158\ \textcolor{comment}{\ *\ @return\ Pointer\ to\ zeroed\ user\ memory\ (64-\/byte\ aligned),\ or\ NULL\ on\ failure.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00159}00159\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00160}\mbox{\hyperlink{mem_8h_a3718153ec27ff216feedcf12f8583c9c}{00160}}\ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{mem_8h_a3718153ec27ff216feedcf12f8583c9c}{ttak\_dangerous\_calloc}}(\textcolor{keywordtype}{size\_t}\ nmemb,\ \textcolor{keywordtype}{size\_t}\ size);}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00161}00161\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00162}00162\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00163}00163\ \textcolor{comment}{\ *\ @brief\ Primitive\ deallocator\ for\ internal\ subsystem\ cleanup.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00164}00164\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00165}00165\ \textcolor{comment}{\ *\ Directly\ returns\ memory\ to\ the\ underlying\ system\ allocator\ or\ buddy\ pool}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00166}00166\ \textcolor{comment}{\ *\ without\ performing\ any\ managed\ header\ or\ checksum\ validations.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00167}00167\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00168}00168\ \textcolor{comment}{\ *\ @param\ ptr\ Pointer\ to\ memory\ allocated\ via\ ttak\_dangerous\_alloc.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00169}00169\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00170}\mbox{\hyperlink{mem_8h_adf32b5f9a7de7217eff4987bae8c1515}{00170}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{mem_8h_adf32b5f9a7de7217eff4987bae8c1515}{ttak\_dangerous\_free}}(\textcolor{keywordtype}{void}\ *ptr);}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00171}00171\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00172}00172\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00173}00173\ \textcolor{comment}{\ *\ @brief\ Frees\ a\ memory\ block\ and\ updates\ usage\ statistics.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00174}00174\ \textcolor{comment}{\ *\ @param\ ptr\ Pointer\ to\ user\ memory.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00175}00175\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00176}\mbox{\hyperlink{mem_8h_afdcd75479e1ca4dde197214d0430de65}{00176}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{mem_8h_afdcd75479e1ca4dde197214d0430de65}{ttak\_mem\_free}}(\textcolor{keywordtype}{void}\ *ptr);}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00177}00177\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00178}00178\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00179}00179\ \textcolor{comment}{\ *\ @brief\ Duplicates\ a\ memory\ block\ with\ lifecycle\ management.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00180}00180\ \textcolor{comment}{\ *\ @param\ src\ Source\ memory\ block.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00181}00181\ \textcolor{comment}{\ *\ @param\ size\ Number\ of\ bytes\ to\ copy.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00182}00182\ \textcolor{comment}{\ *\ @param\ lifetime\_ticks\ Updated\ lifetime\ hint.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00183}00183\ \textcolor{comment}{\ *\ @param\ now\_tick\ Current\ timestamp\ in\ ticks.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00184}00184\ \textcolor{comment}{\ *\ @param\ is\_root\ Whether\ the\ new\ allocation\ is\ a\ root\ node.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00185}00185\ \textcolor{comment}{\ *\ @param\ flags\ Allocation\ behavior\ flags.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00186}00186\ \textcolor{comment}{\ *\ @return\ Duplicated\ pointer,\ or\ NULL\ on\ failure.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00187}00187\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00188}\mbox{\hyperlink{mem_8h_a9017be27d7753e502ed5097ee61fd6c5}{00188}}\ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{mem_8h_a9017be27d7753e502ed5097ee61fd6c5}{ttak\_mem\_dup\_safe}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *src,\ \textcolor{keywordtype}{size\_t}\ size,\ uint64\_t\ lifetime\_ticks,\ uint64\_t\ now\_tick,\ \textcolor{keywordtype}{bool}\ is\_root,\ \mbox{\hyperlink{mem_8h_a05020ce7df6068f7d7f515ee4ea9cdad}{ttak\_mem\_flags\_t}}\ flags);}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00189}00189\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00190}00190\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00191}00191\ \textcolor{comment}{\ *\ @brief\ Frees\ a\ memory\ block\ and\ updates\ usage\ statistics.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00192}00192\ \textcolor{comment}{\ *\ @param\ ptr\ Pointer\ to\ user\ memory.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00193}00193\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00194}00194\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{mem_8h_afdcd75479e1ca4dde197214d0430de65}{ttak\_mem\_free}}(\textcolor{keywordtype}{void}\ *ptr);}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00195}00195\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00196}00196\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00197}00197\ \textcolor{comment}{\ *\ @brief\ Safe\ accessor\ implemented\ in\ the\ library\ for\ ABI-\/stable\ builds.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00198}00198\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00199}00199\ \textcolor{comment}{\ *\ Consumers\ that\ define\ TTAK\_MEM\_FORCE\_ACCESS\_BRIDGE\ will\ call\ into\ this}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00200}00200\ \textcolor{comment}{\ *\ function\ instead\ of\ relying\ on\ the\ inline\ header\ logic.\ This\ is\ primarily}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00201}00201\ \textcolor{comment}{\ *\ intended\ for\ scenarios\ where\ the\ library\ was\ compiled\ with\ a\ different}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00202}00202\ \textcolor{comment}{\ *\ compiler\ (e.g.,\ TinyCC)\ and\ the\ structure\ layout\ may\ not\ match\ the}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00203}00203\ \textcolor{comment}{\ *\ including\ translation\ unit.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00204}00204\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00205}\mbox{\hyperlink{mem_8h_a657dcd0f7a2091d74470b56ed6837a91}{00205}}\ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{mem_8h_a657dcd0f7a2091d74470b56ed6837a91}{ttak\_mem\_access\_bridge}}(\textcolor{keywordtype}{void}\ *ptr,\ uint64\_t\ now\_tick);}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00206}00206\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00207}00207\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00208}00208\ \textcolor{comment}{\ *\ @brief\ Accesses\ a\ memory\ block,\ verifying\ its\ lifecycle\ and\ security.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00209}00209\ \textcolor{comment}{\ *\ @param\ ptr\ Pointer\ to\ user\ memory.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00210}00210\ \textcolor{comment}{\ *\ @param\ now\_tick\ Current\ timestamp\ in\ ticks.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00211}00211\ \textcolor{comment}{\ *\ @return\ Validated\ pointer,\ or\ NULL\ if\ security\ check\ fails\ or\ block\ is\ expired.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00212}00212\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00213}00213\ \textcolor{preprocessor}{\#if\ defined(TTAK\_MEM\_FORCE\_ACCESS\_BRIDGE)}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00214}00214\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{mem_8h_a1e451c99b337f68893aaf14cd3d1ffa1}{ttak\_mem\_access}}(\textcolor{keywordtype}{void}\ *ptr,\ uint64\_t\ now\_tick)\ \{}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00215}00215\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{mem_8h_a657dcd0f7a2091d74470b56ed6837a91}{ttak\_mem\_access\_bridge}}(ptr,\ now\_tick);}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00216}00216\ \}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00217}00217\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00218}\mbox{\hyperlink{mem_8h_a1e451c99b337f68893aaf14cd3d1ffa1}{00218}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{mem_8h_a1e451c99b337f68893aaf14cd3d1ffa1}{ttak\_mem\_access}}(\textcolor{keywordtype}{void}\ *ptr,\ uint64\_t\ now\_tick)\ \{}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00219}00219\ \ \ \ \ \textcolor{keywordflow}{if}\ (!ptr)\ \textcolor{keywordflow}{return}\ NULL;}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00220}00220\ \ \ \ \ \mbox{\hyperlink{structttak__mem__header__t}{ttak\_mem\_header\_t}}\ *header\ =\ (\mbox{\hyperlink{structttak__mem__header__t}{ttak\_mem\_header\_t}}\ *)ptr\ -\/\ 1;}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00221}00221\ }
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00222}00222\ \ \ \ \ \textcolor{keywordflow}{if}\ (header-\/>\mbox{\hyperlink{structttak__mem__header__t_a63c543d0e2277438790686ca125adadf}{magic}}\ !=\ \mbox{\hyperlink{mem_8h_a02d61fafa21eadc8010ca9803d77bafb}{TTAK\_MAGIC\_NUMBER}})\ \textcolor{keywordflow}{return}\ NULL;}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00223}00223\ \ \ \ \ \textcolor{keywordflow}{if}\ (header-\/>\mbox{\hyperlink{structttak__mem__header__t_afb19e735d7af574abc849acff5d5a3e2}{freed}})\ \textcolor{keywordflow}{return}\ NULL;}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00224}00224\ \ \ \ \ \textcolor{keywordflow}{if}\ (header-\/>\mbox{\hyperlink{structttak__mem__header__t_a0362d896df5d92be01157426136ad6b0}{expires\_tick}}\ !=\ \mbox{\hyperlink{mem_8h_a798ceb4ce7e1d84af3001d7ec38d3da2}{\_\_TTAK\_UNSAFE\_MEM\_FOREVER\_\_}}\ \&\&\ now\_tick\ >\ header-\/>\mbox{\hyperlink{structttak__mem__header__t_a0362d896df5d92be01157426136ad6b0}{expires\_tick}})\ \textcolor{keywordflow}{return}\ NULL;}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00225}00225\ \ \ \ \ \textcolor{keywordflow}{if}\ (!header-\/>\mbox{\hyperlink{structttak__mem__header__t_a42432ca91571c572cd16cadbbc197e7c}{allow\_direct\_access}})\ \textcolor{keywordflow}{return}\ NULL;}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00226}00226\ }
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00227}00227\ \ \ \ \ \mbox{\hyperlink{mem_8h_a4c8f2c14a51569a7e6518fe83d873d41}{TTAK\_ATOMIC\_FETCH\_ADD\_U64}}(\&header-\/>\mbox{\hyperlink{structttak__mem__header__t_a0318bb3cfda8bb54cf6ec0c43e6b2584}{access\_count}},\ 1ULL);}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00228}00228\ \ \ \ \ \textcolor{keywordflow}{return}\ ptr;}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00229}00229\ \}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00230}00230\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00231}00231\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00232}00232\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00233}00233\ \textcolor{comment}{\ *\ @brief\ Inspects\ for\ "{}dirty"{}\ pointers\ (expired\ or\ over-\/accessed).}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00234}00234\ \textcolor{comment}{\ *\ @param\ now\_tick\ Current\ timestamp.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00235}00235\ \textcolor{comment}{\ *\ @param\ count\_out\ Pointer\ to\ store\ the\ number\ of\ dirty\ pointers\ found.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00236}00236\ \textcolor{comment}{\ *\ @return\ Array\ of\ pointers\ (caller\ must\ free),\ or\ NULL.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00237}00237\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00238}\mbox{\hyperlink{mem_8h_a000835e8881250f937ecebbde55ff0dd}{00238}}\ \textcolor{keywordtype}{void}\ **\mbox{\hyperlink{mem_8h_a000835e8881250f937ecebbde55ff0dd}{tt\_inspect\_dirty\_pointers}}(uint64\_t\ now\_tick,\ \textcolor{keywordtype}{size\_t}\ *count\_out);}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00239}00239\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00240}00240\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00241}00241\ \textcolor{comment}{\ *\ @brief\ Automatically\ cleans\ up\ expired\ memory\ blocks.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00242}00242\ \textcolor{comment}{\ *\ @param\ now\_tick\ Current\ timestamp.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00243}00243\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00244}\mbox{\hyperlink{mem_8h_a0b04cc34c8514125b98e707d18f74f21}{00244}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{mem_8h_a0b04cc34c8514125b98e707d18f74f21}{tt\_autoclean\_dirty\_pointers}}(uint64\_t\ now\_tick);}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00245}00245\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00246}00246\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00247}00247\ \textcolor{comment}{\ *\ @brief\ Configures\ background\ GC\ parameters.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00248}00248\ \textcolor{comment}{\ *\ @param\ min\_interval\_ns\ Minimum\ sweep\ interval.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00249}00249\ \textcolor{comment}{\ *\ @param\ max\_interval\_ns\ Maximum\ sweep\ interval.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00250}00250\ \textcolor{comment}{\ *\ @param\ pressure\_threshold\ Memory\ pressure\ threshold\ to\ trigger\ damping.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00251}00251\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00252}\mbox{\hyperlink{mem_8h_ae8973d60d53321ee8b36d15b1d7698ea}{00252}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{mem_8h_ae8973d60d53321ee8b36d15b1d7698ea}{ttak\_mem\_configure\_gc}}(uint64\_t\ min\_interval\_ns,\ uint64\_t\ max\_interval\_ns,\ \textcolor{keywordtype}{size\_t}\ pressure\_threshold);}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00253}00253\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00254}00254\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00255}00255\ \textcolor{comment}{\ *\ @brief\ Sweeps\ and\ returns\ dirty\ pointers\ in\ a\ single\ pass.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00256}00256\ \textcolor{comment}{\ *\ @param\ now\_tick\ Current\ timestamp.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00257}00257\ \textcolor{comment}{\ *\ @param\ count\_out\ Pointer\ to\ store\ found\ count.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00258}00258\ \textcolor{comment}{\ *\ @return\ Array\ of\ dirty\ pointers.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00259}00259\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00260}\mbox{\hyperlink{mem_8h_aff328295d8c8a2dc672f74c1fdd8c391}{00260}}\ \textcolor{keywordtype}{void}\ **\mbox{\hyperlink{mem_8h_aff328295d8c8a2dc672f74c1fdd8c391}{tt\_autoclean\_and\_inspect}}(uint64\_t\ now\_tick,\ \textcolor{keywordtype}{size\_t}\ *count\_out);}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00261}00261\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00262}00262\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00263}00263\ \textcolor{comment}{\ *\ @brief\ Sets\ the\ global\ memory\ tracing\ flag.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00264}00264\ \textcolor{comment}{\ *\ @param\ enable\ Non-\/zero\ to\ enable\ JSON\ tracing\ to\ stderr.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00265}00265\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00266}\mbox{\hyperlink{mem_8h_adfcac077aeb029c04c4fb47dc33116a0}{00266}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{mem_8h_adfcac077aeb029c04c4fb47dc33116a0}{ttak\_mem\_set\_trace}}(\textcolor{keywordtype}{int}\ enable);}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00267}00267\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00268}00268\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00269}00269\ \textcolor{comment}{\ *\ @brief\ Checks\ if\ memory\ tracing\ is\ enabled.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00270}00270\ \textcolor{comment}{\ *\ @return\ Non-\/zero\ if\ enabled.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00271}00271\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00272}\mbox{\hyperlink{mem_8h_a901d371e2cc570055bc60bcea5653df5}{00272}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{mem_8h_a901d371e2cc570055bc60bcea5653df5}{ttak\_mem\_is\_trace\_enabled}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00273}00273\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00274}00274\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00275}00275\ \textcolor{comment}{\ *\ @brief\ Calculates\ a\ 32-\/bit\ checksum\ for\ the\ memory\ header.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00276}00276\ \textcolor{comment}{\ *\ @param\ h\ Pointer\ to\ the\ header.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00277}00277\ \textcolor{comment}{\ *\ @return\ Calculated\ checksum.}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00278}00278\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00279}\mbox{\hyperlink{mem_8h_ad663cf355d411491ef16fbaba940be07}{00279}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ uint32\_t\ \mbox{\hyperlink{mem_8h_ad663cf355d411491ef16fbaba940be07}{ttak\_calc\_header\_checksum}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structttak__mem__header__t}{ttak\_mem\_header\_t}}\ *h)\ \{}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00280}00280\ \ \ \ \ uint32\_t\ sum1\ =\ h-\/>\mbox{\hyperlink{structttak__mem__header__t_a63c543d0e2277438790686ca125adadf}{magic}};}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00281}00281\ \ \ \ \ uint32\_t\ sum2\ =\ (uint32\_t)h-\/>\mbox{\hyperlink{structttak__mem__header__t_aefba5a41d63f62a6de53c3a9a6f0f51b}{created\_tick}};}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00282}00282\ \ \ \ \ sum1\ \string^=\ (uint32\_t)(h-\/>\mbox{\hyperlink{structttak__mem__header__t_aefba5a41d63f62a6de53c3a9a6f0f51b}{created\_tick}}\ >>\ 32);}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00283}00283\ \ \ \ \ sum2\ \string^=\ (uint32\_t)h-\/>\mbox{\hyperlink{structttak__mem__header__t_a0362d896df5d92be01157426136ad6b0}{expires\_tick}};}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00284}00284\ \ \ \ \ sum1\ \string^=\ (uint32\_t)(h-\/>\mbox{\hyperlink{structttak__mem__header__t_a0362d896df5d92be01157426136ad6b0}{expires\_tick}}\ >>\ 32);}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00285}00285\ \ \ \ \ sum2\ \string^=\ (uint32\_t)h-\/>\mbox{\hyperlink{structttak__mem__header__t_a576f96336f81e4af314e70b911232dda}{size}};}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00286}00286\ \textcolor{preprocessor}{\#if\ defined(\_\_LP64\_\_)\ ||\ defined(\_WIN64)}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00287}00287\ \ \ \ \ sum1\ \string^=\ (uint32\_t)(h-\/>\mbox{\hyperlink{structttak__mem__header__t_a576f96336f81e4af314e70b911232dda}{size}}\ >>\ 32);}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00288}00288\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00289}00289\ \ \ \ \ sum2\ \string^=\ (uint32\_t)h-\/>\mbox{\hyperlink{structttak__mem__header__t_a507281872e1f22c889df12ff9c0be63e}{should\_join}};}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00290}00290\ \ \ \ \ sum1\ \string^=\ (uint32\_t)h-\/>\mbox{\hyperlink{structttak__mem__header__t_a8b1ec6a6c170869bd09dbf027b7b1d0a}{strict\_check}};}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00291}00291\ \ \ \ \ sum2\ \string^=\ (uint32\_t)h-\/>\mbox{\hyperlink{structttak__mem__header__t_ac5a057733c169250b2a6e4766940bcfe}{is\_root}};}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00292}00292\ \ \ \ \ sum1\ \string^=\ (uint32\_t)h-\/>\mbox{\hyperlink{structttak__mem__header__t_aeb69c52bed0292761ce4ff581eae37df}{canary\_start}};}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00293}00293\ \ \ \ \ sum2\ \string^=\ (uint32\_t)(h-\/>\mbox{\hyperlink{structttak__mem__header__t_aeb69c52bed0292761ce4ff581eae37df}{canary\_start}}\ >>\ 32);}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00294}00294\ \ \ \ \ sum1\ \string^=\ (uint32\_t)h-\/>\mbox{\hyperlink{structttak__mem__header__t_a9bc5cff0708537fe474f41e356e69284}{canary\_end}};}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00295}00295\ \ \ \ \ sum2\ \string^=\ (uint32\_t)(h-\/>\mbox{\hyperlink{structttak__mem__header__t_a9bc5cff0708537fe474f41e356e69284}{canary\_end}}\ >>\ 32);}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00296}00296\ \ \ \ \ sum1\ \string^=\ (uint32\_t)h-\/>\mbox{\hyperlink{structttak__mem__header__t_ac4eb77c659fb7cadcd333ecab2354b77}{allocation\_tier}};}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00297}00297\ \ \ \ \ \textcolor{keywordflow}{return}\ sum1\ \string^\ sum2;}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00298}00298\ \}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00299}00299\ }
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00300}00300\ \textcolor{comment}{/*\ Compatibility\ macros\ */}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00301}\mbox{\hyperlink{mem_8h_ab724d37f1a1c16f006309b8b2036b232}{00301}}\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{mem_8h_ab724d37f1a1c16f006309b8b2036b232}{ttak\_lifecycle\_obj\_t}};}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00302}\mbox{\hyperlink{mem_8h_ac5d995333f6871240af3fda323f9114f}{00302}}\ \textcolor{preprocessor}{\#define\ ttak\_mem\_alloc(size,\ lifetime,\ now\_tick)\ ttak\_mem\_alloc\_safe(size,\ lifetime,\ now\_tick,\ false,\ false,\ true,\ false,\ TTAK\_MEM\_DEFAULT)}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00303}\mbox{\hyperlink{mem_8h_a5d8a79f36fb4bd204046ea8834977297}{00303}}\ \textcolor{preprocessor}{\#define\ ttak\_root\_alloc(size,\ lifetime,\ now\_tick)\ ttak\_mem\_alloc\_safe(size,\ lifetime,\ now\_tick,\ true,\ true,\ true,\ true,\ TTAK\_MEM\_DEFAULT)}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00304}\mbox{\hyperlink{mem_8h_aebbfb88cdba4d11a524cae2a66972070}{00304}}\ \textcolor{preprocessor}{\#define\ ttak\_mem\_alloc\_with\_flags(size,\ lifetime,\ now\_tick,\ flags)\ ttak\_mem\_alloc\_safe(size,\ lifetime,\ now\_tick,\ false,\ false,\ true,\ false,\ flags)}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00305}\mbox{\hyperlink{mem_8h_a7f181fe8f133af55c3e2bf6e86b53c56}{00305}}\ \textcolor{preprocessor}{\#define\ ttak\_root\_alloc\_with\_flags(size,\ lifetime,\ now\_tick,\ flags)\ ttak\_mem\_alloc\_safe(size,\ lifetime,\ now\_tick,\ true,\ true,\ true,\ true,\ flags)}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00306}\mbox{\hyperlink{mem_8h_a97f451049eaeaf30598a37e13069c15d}{00306}}\ \textcolor{preprocessor}{\#define\ ttak\_mem\_realloc(ptr,\ size,\ lifetime,\ now\_tick)\ ttak\_mem\_realloc\_safe(ptr,\ size,\ lifetime,\ now\_tick,\ false,\ TTAK\_MEM\_DEFAULT)}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00307}\mbox{\hyperlink{mem_8h_a6deb46577a7ecf9a5c3178f438da0d5a}{00307}}\ \textcolor{preprocessor}{\#define\ ttak\_mem\_realloc\_with\_flags(ptr,\ size,\ lifetime,\ now\_tick,\ flags)\ ttak\_mem\_realloc\_safe(ptr,\ size,\ lifetime,\ now\_tick,\ false,\ flags)}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00308}\mbox{\hyperlink{mem_8h_a45976fd9be92932992d660f0c2d8255b}{00308}}\ \textcolor{preprocessor}{\#define\ ttak\_mem\_dup(src,\ size,\ lifetime,\ now\_tick)\ ttak\_mem\_dup\_safe(src,\ size,\ lifetime,\ now\_tick,\ false,\ TTAK\_MEM\_DEFAULT)}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00309}\mbox{\hyperlink{mem_8h_a7c0d648c72e9fc2d35932b78f7d08f09}{00309}}\ \textcolor{preprocessor}{\#define\ ttak\_mem\_dup\_with\_flags(src,\ size,\ lifetime,\ now\_tick,\ flags)\ ttak\_mem\_dup\_safe(src,\ size,\ lifetime,\ now\_tick,\ false,\ flags)}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00310}00310\ }
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00311}00311\ \textcolor{preprocessor}{\#ifndef\ EMBEDDED}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00312}\mbox{\hyperlink{mem_8h_ae47a1cb6076cec70cf9ea8efc1d5f3ff}{00312}}\ \textcolor{preprocessor}{\#define\ EMBEDDED\ 0}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00313}00313\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00314}00314\ }
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00315}00315\ \textcolor{preprocessor}{\#if\ EMBEDDED}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00316}00316\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{buddy_8h_ae83acf1c249899b6fcfc4580dbf0b082}{ttak\_mem\_buddy\_init}}(\textcolor{keywordtype}{void}\ *pool\_start,\ \textcolor{keywordtype}{size\_t}\ pool\_len,\ \textcolor{keywordtype}{int}\ embedded\_mode);}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00317}00317\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{buddy_8h_a9cc9a5945e39175f56fbf3ee961ff546}{ttak\_mem\_buddy\_set\_pool}}(\textcolor{keywordtype}{void}\ *pool\_start,\ \textcolor{keywordtype}{size\_t}\ pool\_len);}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00318}00318\ \textcolor{keywordtype}{void}\ ttak\_mem\_set\_embedded\_pool(\textcolor{keywordtype}{void}\ *pool\_start,\ \textcolor{keywordtype}{size\_t}\ pool\_len);}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00319}00319\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00320}00320\ }
+\DoxyCodeLine{\Hypertarget{mem_8h_source_l00321}00321\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_MEM\_H}}
 
 \end{DoxyCode}

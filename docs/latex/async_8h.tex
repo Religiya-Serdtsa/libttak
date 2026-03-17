@@ -9,8 +9,7 @@ Non-\/blocking I/O read/write operations with completion callbacks.
 {\ttfamily \#include $<$stddef.\+h$>$}\newline
 {\ttfamily \#include $<$stdint.\+h$>$}\newline
 {\ttfamily \#include $<$ttak/io/io.\+h$>$}\newline
-Include dependency graph for async.\+h\+:
-\nopagebreak
+Include dependency graph for async.\+h\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -40,14 +39,12 @@ Definition in file \mbox{\hyperlink{async_8h_source}{async.\+h}}.
 
 
 
-\label{doc-typedef-members}
-\Hypertarget{async_8h_doc-typedef-members}
 \doxysubsection{Typedef Documentation}
-\Hypertarget{async_8h_a08998c317cf2de79c5c5e9ab434f9992}\index{async.h@{async.h}!ttak\_io\_async\_result\_cb@{ttak\_io\_async\_result\_cb}}
+\Hypertarget{async_8h_a08998c317cf2de79c5c5e9ab434f9992}\label{async_8h_a08998c317cf2de79c5c5e9ab434f9992} 
+\index{async.h@{async.h}!ttak\_io\_async\_result\_cb@{ttak\_io\_async\_result\_cb}}
 \index{ttak\_io\_async\_result\_cb@{ttak\_io\_async\_result\_cb}!async.h@{async.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_io\_async\_result\_cb}{ttak\_io\_async\_result\_cb}}
-{\footnotesize\ttfamily \label{async_8h_a08998c317cf2de79c5c5e9ab434f9992} 
-typedef void(\texorpdfstring{$\ast$}{*} ttak\+\_\+io\+\_\+async\+\_\+result\+\_\+cb) (\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} status, size\+\_\+t bytes, void \texorpdfstring{$\ast$}{*}user)}
+{\footnotesize\ttfamily typedef void(\texorpdfstring{$\ast$}{*} ttak\+\_\+io\+\_\+async\+\_\+result\+\_\+cb) (\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} status, size\+\_\+t bytes, void \texorpdfstring{$\ast$}{*}user)}
 
 
 
@@ -68,14 +65,12 @@ Definition at line \mbox{\hyperlink{async_8h_source_l00029}{29}} of file \mbox{\
 
 
 
-\label{doc-func-members}
-\Hypertarget{async_8h_doc-func-members}
 \doxysubsection{Function Documentation}
-\Hypertarget{async_8h_a35165e3907e4077fc1ced27159b1faf6}\index{async.h@{async.h}!ttak\_io\_async\_read@{ttak\_io\_async\_read}}
+\Hypertarget{async_8h_a35165e3907e4077fc1ced27159b1faf6}\label{async_8h_a35165e3907e4077fc1ced27159b1faf6} 
+\index{async.h@{async.h}!ttak\_io\_async\_read@{ttak\_io\_async\_read}}
 \index{ttak\_io\_async\_read@{ttak\_io\_async\_read}!async.h@{async.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_io\_async\_read()}{ttak\_io\_async\_read()}}
-{\footnotesize\ttfamily \label{async_8h_a35165e3907e4077fc1ced27159b1faf6} 
-\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} ttak\+\_\+io\+\_\+async\+\_\+read (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{io_8h_aca20f4767510d423ee88de501eb72575}{ttak\+\_\+io\+\_\+guard\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{guard}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{dst}{, }\item[{size\+\_\+t}]{len}{, }\item[{int}]{timeout\+\_\+ms}{, }\item[{\mbox{\hyperlink{async_8h_a08998c317cf2de79c5c5e9ab434f9992}{ttak\+\_\+io\+\_\+async\+\_\+result\+\_\+cb}}}]{cb}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{user}{, }\item[{uint64\+\_\+t}]{now}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} ttak\+\_\+io\+\_\+async\+\_\+read (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{io_8h_aca20f4767510d423ee88de501eb72575}{ttak\+\_\+io\+\_\+guard\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{guard,  }\item[{void \texorpdfstring{$\ast$}{*}}]{dst,  }\item[{size\+\_\+t}]{len,  }\item[{int}]{timeout\+\_\+ms,  }\item[{\mbox{\hyperlink{async_8h_a08998c317cf2de79c5c5e9ab434f9992}{ttak\+\_\+io\+\_\+async\+\_\+result\+\_\+cb}}}]{cb,  }\item[{void \texorpdfstring{$\ast$}{*}}]{user,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
 
 
 
@@ -101,11 +96,11 @@ Enqueues an asynchronous read from the guarded descriptor.
 \begin{DoxyReturn}{Returns}
 {\ttfamily TTAK\+\_\+\+IO\+\_\+\+SUCCESS} if the read was enqueued, else error. 
 \end{DoxyReturn}
-\Hypertarget{async_8h_a4bdf06bfb55ebdfe1f5352bcd5552ed8}\index{async.h@{async.h}!ttak\_io\_async\_write@{ttak\_io\_async\_write}}
+\Hypertarget{async_8h_a4bdf06bfb55ebdfe1f5352bcd5552ed8}\label{async_8h_a4bdf06bfb55ebdfe1f5352bcd5552ed8} 
+\index{async.h@{async.h}!ttak\_io\_async\_write@{ttak\_io\_async\_write}}
 \index{ttak\_io\_async\_write@{ttak\_io\_async\_write}!async.h@{async.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_io\_async\_write()}{ttak\_io\_async\_write()}}
-{\footnotesize\ttfamily \label{async_8h_a4bdf06bfb55ebdfe1f5352bcd5552ed8} 
-\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} ttak\+\_\+io\+\_\+async\+\_\+write (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{io_8h_aca20f4767510d423ee88de501eb72575}{ttak\+\_\+io\+\_\+guard\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{guard}{, }\item[{const void \texorpdfstring{$\ast$}{*}}]{src}{, }\item[{size\+\_\+t}]{len}{, }\item[{int}]{timeout\+\_\+ms}{, }\item[{\mbox{\hyperlink{async_8h_a08998c317cf2de79c5c5e9ab434f9992}{ttak\+\_\+io\+\_\+async\+\_\+result\+\_\+cb}}}]{cb}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{user}{, }\item[{uint64\+\_\+t}]{now}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} ttak\+\_\+io\+\_\+async\+\_\+write (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{io_8h_aca20f4767510d423ee88de501eb72575}{ttak\+\_\+io\+\_\+guard\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{guard,  }\item[{const void \texorpdfstring{$\ast$}{*}}]{src,  }\item[{size\+\_\+t}]{len,  }\item[{int}]{timeout\+\_\+ms,  }\item[{\mbox{\hyperlink{async_8h_a08998c317cf2de79c5c5e9ab434f9992}{ttak\+\_\+io\+\_\+async\+\_\+result\+\_\+cb}}}]{cb,  }\item[{void \texorpdfstring{$\ast$}{*}}]{user,  }\item[{uint64\+\_\+t}]{now }\end{DoxyParamCaption})}
 
 
 

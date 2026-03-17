@@ -8,8 +8,7 @@ Lightweight FNV-\/32 checksum utilities for buffer integrity checks.
 {\ttfamily \#include $<$stddef.\+h$>$}\newline
 {\ttfamily \#include $<$stdint.\+h$>$}\newline
 {\ttfamily \#include $<$ttak/io/io.\+h$>$}\newline
-Include dependency graph for bits.\+h\+:
-\nopagebreak
+Include dependency graph for bits.\+h\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -36,14 +35,12 @@ Definition in file \mbox{\hyperlink{bits_8h_source}{bits.\+h}}.
 
 
 
-\label{doc-func-members}
-\Hypertarget{bits_8h_doc-func-members}
 \doxysubsection{Function Documentation}
-\Hypertarget{bits_8h_af5e2db2228526f9fbd89df757329057c}\index{bits.h@{bits.h}!ttak\_io\_bits\_fnv32@{ttak\_io\_bits\_fnv32}}
+\Hypertarget{bits_8h_af5e2db2228526f9fbd89df757329057c}\label{bits_8h_af5e2db2228526f9fbd89df757329057c} 
+\index{bits.h@{bits.h}!ttak\_io\_bits\_fnv32@{ttak\_io\_bits\_fnv32}}
 \index{ttak\_io\_bits\_fnv32@{ttak\_io\_bits\_fnv32}!bits.h@{bits.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_io\_bits\_fnv32()}{ttak\_io\_bits\_fnv32()}}
-{\footnotesize\ttfamily \label{bits_8h_af5e2db2228526f9fbd89df757329057c} 
-uint32\+\_\+t ttak\+\_\+io\+\_\+bits\+\_\+fnv32 (\begin{DoxyParamCaption}\item[{const void \texorpdfstring{$\ast$}{*}}]{data}{, }\item[{size\+\_\+t}]{len}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily uint32\+\_\+t ttak\+\_\+io\+\_\+bits\+\_\+fnv32 (\begin{DoxyParamCaption}\item[{const void \texorpdfstring{$\ast$}{*}}]{data,  }\item[{size\+\_\+t}]{len }\end{DoxyParamCaption})}
 
 
 
@@ -59,11 +56,11 @@ Computes a 32-\/bit FNV-\/1a checksum over a byte buffer.
 \begin{DoxyReturn}{Returns}
 32-\/bit FNV-\/1a digest. 
 \end{DoxyReturn}
-\Hypertarget{bits_8h_a55749dbca0d218da2532c1d5d1715548}\index{bits.h@{bits.h}!ttak\_io\_bits\_recover@{ttak\_io\_bits\_recover}}
+\Hypertarget{bits_8h_a55749dbca0d218da2532c1d5d1715548}\label{bits_8h_a55749dbca0d218da2532c1d5d1715548} 
+\index{bits.h@{bits.h}!ttak\_io\_bits\_recover@{ttak\_io\_bits\_recover}}
 \index{ttak\_io\_bits\_recover@{ttak\_io\_bits\_recover}!bits.h@{bits.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_io\_bits\_recover()}{ttak\_io\_bits\_recover()}}
-{\footnotesize\ttfamily \label{bits_8h_a55749dbca0d218da2532c1d5d1715548} 
-\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} ttak\+\_\+io\+\_\+bits\+\_\+recover (\begin{DoxyParamCaption}\item[{const void \texorpdfstring{$\ast$}{*}}]{snapshot}{, }\item[{size\+\_\+t}]{len}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{dst}{, }\item[{uint32\+\_\+t}]{expected\+\_\+checksum}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} ttak\+\_\+io\+\_\+bits\+\_\+recover (\begin{DoxyParamCaption}\item[{const void \texorpdfstring{$\ast$}{*}}]{snapshot,  }\item[{size\+\_\+t}]{len,  }\item[{void \texorpdfstring{$\ast$}{*}}]{dst,  }\item[{uint32\+\_\+t}]{expected\+\_\+checksum }\end{DoxyParamCaption})}
 
 
 
@@ -83,11 +80,11 @@ Copies {\ttfamily snapshot} into {\ttfamily dst} only when the checksum is valid
 \begin{DoxyReturn}{Returns}
 {\ttfamily TTAK\+\_\+\+IO\+\_\+\+SUCCESS} if checksum matched and copy done. 
 \end{DoxyReturn}
-\Hypertarget{bits_8h_a929a8b4f967cefefc9fb2880b125b416}\index{bits.h@{bits.h}!ttak\_io\_bits\_verify@{ttak\_io\_bits\_verify}}
+\Hypertarget{bits_8h_a929a8b4f967cefefc9fb2880b125b416}\label{bits_8h_a929a8b4f967cefefc9fb2880b125b416} 
+\index{bits.h@{bits.h}!ttak\_io\_bits\_verify@{ttak\_io\_bits\_verify}}
 \index{ttak\_io\_bits\_verify@{ttak\_io\_bits\_verify}!bits.h@{bits.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_io\_bits\_verify()}{ttak\_io\_bits\_verify()}}
-{\footnotesize\ttfamily \label{bits_8h_a929a8b4f967cefefc9fb2880b125b416} 
-\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} ttak\+\_\+io\+\_\+bits\+\_\+verify (\begin{DoxyParamCaption}\item[{const void \texorpdfstring{$\ast$}{*}}]{data}{, }\item[{size\+\_\+t}]{len}{, }\item[{uint32\+\_\+t}]{expected\+\_\+checksum}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} ttak\+\_\+io\+\_\+bits\+\_\+verify (\begin{DoxyParamCaption}\item[{const void \texorpdfstring{$\ast$}{*}}]{data,  }\item[{size\+\_\+t}]{len,  }\item[{uint32\+\_\+t}]{expected\+\_\+checksum }\end{DoxyParamCaption})}
 
 
 

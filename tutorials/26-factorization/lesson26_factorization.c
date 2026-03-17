@@ -14,9 +14,7 @@ int main(void) {
         for (size_t i = 0; i < count; ++i) {
             printf("%" PRIu64 "^%u ", factors[i].p, factors[i].a);
         }
-        putchar('
-');
+        putchar(' ');
     }
-    free(factors);
     return 0;
 }

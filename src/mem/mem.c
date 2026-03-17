@@ -440,6 +440,13 @@ void * ttak_fastalloc(ttak_epoch_gc_t *gc, size_t size, uint64_t lifetime_ticks,
     return ptr;
 }
 
+void * ttak_fastcalloc(ttak_epoch_gc_t *gc, size_t size, uint64_t lifetime_ticks, uint64_t now) {
+    void *ptr = ttak_fastalloc(gc, size, lifetime_ticks, now);
+    memset(ptr, 0, size);
+    return ptr;
+}
+
+
 void TTAK_HOT_PATH *ttak_mem_realloc_safe(void *ptr, size_t new_size, uint64_t lifetime_ticks, uint64_t now, _Bool is_root, ttak_mem_flags_t flags) {
     V_HEADER(ptr);
     if (!ptr) return ttak_mem_alloc_safe(new_size, lifetime_ticks, now, false, false, true, is_root, flags);

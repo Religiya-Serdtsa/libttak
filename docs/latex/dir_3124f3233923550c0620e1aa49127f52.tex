@@ -1,47 +1,9 @@
 \doxysection{tutorials/43-\/bigscript/05-\/complex-\/math Directory Reference}
 \hypertarget{dir_3124f3233923550c0620e1aa49127f52}{}\label{dir_3124f3233923550c0620e1aa49127f52}\index{tutorials/43-\/bigscript/05-\/complex-\/math Directory Reference@{tutorials/43-\/bigscript/05-\/complex-\/math Directory Reference}}
-Directory dependency graph for 05-\/complex-\/math\+:
-\nopagebreak
+Directory dependency graph for 05-\/complex-\/math\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=216pt]{dir_3124f3233923550c0620e1aa49127f52_dep}
 \end{center}
 \end{figure}
-
-
-\doxysubsection{Detailed Description}
-\hypertarget{README.md_autotoc_md186}{}\doxysubsection{\texorpdfstring{05 -\/ Real and Complex Numbers}{05 -\/ Real and Complex Numbers}}\label{README.md_autotoc_md186}
-Big\+Script isn\textquotesingle{}t limited to integers. It also supports {\ttfamily Big\+Real} and {\ttfamily Big\+Complex} types.\hypertarget{README.md_autotoc_md187}{}\doxysubsection{\texorpdfstring{Type Conversion and Construction}{Type Conversion and Construction}}\label{README.md_autotoc_md187}
-
-\begin{DoxyItemize}
-\item {\ttfamily real(n)}\+: Converts an integer {\ttfamily n} to a real number.
-\item {\ttfamily complex(re, im)}\+: Constructs a complex number from real/integer components.
-\end{DoxyItemize}\hypertarget{README.md_autotoc_md188}{}\doxysubsection{\texorpdfstring{Example}{Example}}\label{README.md_autotoc_md188}
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{fn\ main(seed,\ sn)\ \{}
-\DoxyCodeLine{\ \ let\ r\ =\ real(seed);}
-\DoxyCodeLine{\ \ let\ c\ =\ complex(r,\ 10);}
-\DoxyCodeLine{\ \ return\ c;}
-\DoxyCodeLine{\}}
-
-\end{DoxyCode}
-
-
-In this example, if {\ttfamily seed} is 5, the script returns the complex number {\ttfamily 5.\+0 + 10.\+0i}.\hypertarget{README.md_autotoc_md189}{}\doxysubsection{\texorpdfstring{Handling Results in C}{Handling Results in C}}\label{README.md_autotoc_md189}
-When a script returns a non-\/integer value, the {\ttfamily is\+\_\+found} flag in {\ttfamily \doxylink{structttak__bigscript__value__t}{ttak\+\_\+bigscript\+\_\+value\+\_\+t}} is set to {\ttfamily true}, and you can inspect the {\ttfamily value.\+type} and {\ttfamily value.\+v} members to extract the result.\hypertarget{README.md_autotoc_md190}{}\doxysubsection{\texorpdfstring{Running the Example}{Running the Example}}\label{README.md_autotoc_md190}
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{gcc\ main.c\ -\/o\ complex\_math\ -\/lttak}
-\DoxyCodeLine{./complex\_math}
-
-\end{DoxyCode}
-
-
-Expected output\+: 
-\begin{DoxyCode}{0}
-\DoxyCodeLine{Result:\ 5\ +\ 10i}
-
-\end{DoxyCode}
- 
