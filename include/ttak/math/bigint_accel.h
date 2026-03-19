@@ -11,7 +11,7 @@ extern "C" {
 #endif
 
 #ifndef ATOMIC_VAR_INIT
-#  define ATOMIC_VAR_INIT(x) ((uintptr_t)x)
+#  define ATOMIC_VAR_INIT(x) (x)
 #endif
 
 /**
