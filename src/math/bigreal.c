@@ -55,7 +55,12 @@ _Bool ttak_bigreal_align(ttak_bigreal_t *a, ttak_bigreal_t *b, uint64_t now) {
             ttak_bigint_free(&tmp, now);
             return false;
         }
-        ttak_bigint_mul_u64(&tmp, &a->mantissa, 1ULL << diff, now);
+        
+        // Correct base-10 alignment: multiply by 10^diff
+        ttak_bigint_copy(&tmp, &a->mantissa, now);
+        for (uint64_t i = 0; i < diff; i++) {
+            ttak_bigint_mul_u64(&tmp, &tmp, 10, now);
+        }
         ttak_bigint_copy(&a->mantissa, &tmp, now);
         a->exponent = b->exponent;
     } else {
@@ -65,7 +70,12 @@ _Bool ttak_bigreal_align(ttak_bigreal_t *a, ttak_bigreal_t *b, uint64_t now) {
             ttak_bigint_free(&tmp, now);
             return false;
         }
-        ttak_bigint_mul_u64(&tmp, &b->mantissa, 1ULL << diff, now);
+        
+        // Correct base-10 alignment: multiply by 10^diff
+        ttak_bigint_copy(&tmp, &b->mantissa, now);
+        for (uint64_t i = 0; i < diff; i++) {
+            ttak_bigint_mul_u64(&tmp, &tmp, 10, now);
+        }
         ttak_bigint_copy(&b->mantissa, &tmp, now);
         b->exponent = a->exponent;
     }
@@ -132,15 +142,19 @@ _Bool ttak_bigreal_mul(ttak_bigreal_t *dst, const ttak_bigreal_t *lhs, const tta
 }
 
 _Bool ttak_bigreal_div(ttak_bigreal_t *dst, const ttak_bigreal_t *lhs, const ttak_bigreal_t *rhs, uint64_t now) {
-    // Basic division: q = (l.m / r.m) * 10^(l.e - r.e)
-    // We might want more precision by shifting l.m left first.
-    ttak_bigint_t r_rem;
+    // Improved division: shift left by 10^6 for 6 decimal places of precision
+    ttak_bigint_t r_rem, lhs_shifted;
     ttak_bigint_init(&r_rem, now);
+    ttak_bigint_init(&lhs_shifted, now);
     
-    dst->exponent = lhs->exponent - rhs->exponent;
-    _Bool ok = ttak_bigint_div(&dst->mantissa, &r_rem, &lhs->mantissa, &rhs->mantissa, now);
+    // Multiply lhs by 1,000,000
+    ttak_bigint_mul_u64(&lhs_shifted, &lhs->mantissa, 1000000, now);
+    
+    dst->exponent = lhs->exponent - rhs->exponent - 6;
+    _Bool ok = ttak_bigint_div(&dst->mantissa, &r_rem, &lhs_shifted, &rhs->mantissa, now);
     
     ttak_bigint_free(&r_rem, now);
+    ttak_bigint_free(&lhs_shifted, now);
     return ok;
 }
 

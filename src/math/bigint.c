@@ -484,8 +484,12 @@ _Bool ttak_bigint_mul(ttak_bigint_t *dst, const ttak_bigint_t *lhs, const ttak_b
             t[i+j] = (limb_t)prod;
             carry = prod >> 32;
         }
-        if (carry) {
-            t[i + rhs->used] += (limb_t)carry;
+        size_t k = i + rhs->used;
+        while (carry && k < needed) {
+            uint64_t sum = (uint64_t)t[k] + carry;
+            t[k] = (limb_t)sum;
+            carry = sum >> 32;
+            k++;
         }
     }
 
@@ -626,14 +630,14 @@ _Bool ttak_bigint_mul_u64(ttak_bigint_t *dst, const ttak_bigint_t *lhs, uint64_t
 
     size_t rhs_used = (rhs > 0xFFFFFFFFu) ? 2 : 1;
     size_t needed = lhs->used + rhs_used;
-    if (!ensure_capacity(dst, needed, now)) return false;
-
-    limb_t *d = get_limbs(dst);
-    const limb_t *l = get_const_limbs(lhs);
     
-    limb_t rhs_limbs[2] = {(limb_t)rhs, (limb_t)(rhs >> 32)};
+    // Use a temporary limb buffer to handle in-place multiplication safely
+    limb_t *d = ttak_mem_alloc(needed * sizeof(limb_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
+    if (!d) return false;
+    memset(d, 0, needed * sizeof(limb_t));
 
-    memset(d, 0, dst->capacity * sizeof(limb_t));
+    const limb_t *l = get_const_limbs(lhs);
+    limb_t rhs_limbs[2] = {(limb_t)rhs, (limb_t)(rhs >> 32)};
 
     for (size_t i = 0; i < lhs->used; ++i) {
         uint64_t carry = 0;
@@ -643,7 +647,7 @@ _Bool ttak_bigint_mul_u64(ttak_bigint_t *dst, const ttak_bigint_t *lhs, uint64_t
             carry = prod >> 32;
         }
         size_t k = i + rhs_used;
-        while (carry && k < dst->capacity) {
+        while (carry && k < needed) {
             uint64_t sum = (uint64_t)d[k] + carry;
             d[k] = (limb_t)sum;
             carry = sum >> 32;
@@ -651,9 +655,18 @@ _Bool ttak_bigint_mul_u64(ttak_bigint_t *dst, const ttak_bigint_t *lhs, uint64_t
         }
     }
 
+    if (!ensure_capacity(dst, needed, now)) {
+        ttak_mem_free(d);
+        return false;
+    }
+    
+    limb_t *dst_limbs = get_limbs(dst);
+    memcpy(dst_limbs, d, needed * sizeof(limb_t));
     dst->used = needed;
     dst->is_negative = lhs->is_negative; // rhs is not negative
     trim_unused(dst);
+    
+    ttak_mem_free(d);
     return true;
 }
 
