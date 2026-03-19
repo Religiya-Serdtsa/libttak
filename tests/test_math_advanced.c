@@ -53,7 +53,7 @@ void test_bigreal_add_basic() {
     rhs.exponent = 8;
     ASSERT(ttak_bigreal_add(&dst, &lhs, &rhs, 306));
     ASSERT(dst.exponent == 7);
-    ASSERT(bigint_as_u64(&dst.mantissa) == 200); // 100*2^7 + 50*2^8 = 100*2^7 + 100*2^7 = 200*2^7
+    ASSERT(bigint_as_u64(&dst.mantissa) == 600); // 100*10^7 + 50*10^8 = 100*10^7 + 500*10^7 = 600*10^7
 
     ttak_bigreal_free(&lhs, 307);
     ttak_bigreal_free(&rhs, 308);
@@ -84,7 +84,7 @@ void test_bigcomplex_add_basic() {
     ASSERT(dst.real.exponent == 1);
     ASSERT(dst.imag.exponent == 3);
     ASSERT(bigint_as_u64(&dst.real.mantissa) == 30);
-    ASSERT(bigint_as_u64(&dst.imag.mantissa) == 35); // 5*2^3 + 15*2^4 = 5*2^3 + 30*2^3 = 35*2^3
+    ASSERT(bigint_as_u64(&dst.imag.mantissa) == 155); // 5*10^3 + 15*10^4 = 5*10^3 + 150*10^3 = 155*10^3
 
     ttak_bigcomplex_free(&lhs, 409);
     ttak_bigcomplex_free(&rhs, 410);

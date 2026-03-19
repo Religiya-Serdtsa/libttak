@@ -9,6 +9,10 @@
 extern "C" {
 #endif
 
+#ifndef ATOMIC_VAR_INIT
+#  define ATOMIC_VAR_INIT(x) (x)
+#endif
+
 /**
  * @brief Result codes returned by accelerator backends.
  */
