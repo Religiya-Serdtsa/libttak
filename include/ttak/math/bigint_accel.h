@@ -5,8 +5,13 @@
 #include <stdbool.h>
 #include <ttak/math/bigint.h>
 
+
 #ifdef __cplusplus
 extern "C" {
+#endif
+
+#ifndef ATOMIC_VAR_INIT
+#  define ATOMIC_VAR_INIT(x) ((uintptr_t)x)
 #endif
 
 /**
