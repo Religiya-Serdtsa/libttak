@@ -321,13 +321,13 @@ void TTAK_HOT_PATH *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, ui
     t_reentrancy_guard = true;
 
     // --- Tier 1: Pockets ---
-    if (size > 0 && size <= 128) {
+    if (size > 0 && size <= 128 && lifetime_ticks < TT_MICRO_SECOND(500)) {
         header = ttak_mem_pocket_alloc_internal(size);
         if (header) allocated_tier = TTAK_ALLOC_TIER_POCKET;
     }
 
     // --- Tier 2: VMA ---
-    if (!header && size > 0 && size <= 256) {
+    if (!header && size > 0 && size <= 256 && lifetime_ticks < TT_SECOND(1)) {
         header = ttak_mem_vma_alloc_internal(size);
         if (header) allocated_tier = TTAK_ALLOC_TIER_VMA;
     }

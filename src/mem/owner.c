@@ -8,7 +8,7 @@
 #include <string.h>
 #include <stdio.h>
 
-static _Atomic uint32_t g_owner_id_counter = 0;
+static _Atomic uint32_t g_owner_id_counter = 1;
 
 /**
  * @brief Hashing helper for string keys.
@@ -119,10 +119,9 @@ bool ttak_owner_execute(ttak_owner_t *owner, const char *func_name, const char *
     ttak_rwlock_rdlock(&owner->lock);
 
     // 1. Safety Check: Verify policy
-    // If strict isolation is on, ensure we aren't passing "args" from outside that violates it?
-    // For this prototype, we just proceed.
     
     uintptr_t func_key = _hash_str(func_name);
+    if(func_key == (uintptr_t) NULL) return false;
     size_t func_ptr_val = 0;
     
     // 2. Retrieve Function

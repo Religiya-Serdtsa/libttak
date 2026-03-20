@@ -1,8 +1,8 @@
 /**
  * @file ttak_shared.c
  * @brief Implementation of shared memory resource management with ttak_dynamic_mask_t.
- * @author Gemini
- * @date 2026-02-08
+ * @author Lee Yunjin
+ * @date 2026-03-20
  */
 
 #include <ttak/shared/shared.h>
