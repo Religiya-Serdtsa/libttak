@@ -312,9 +312,11 @@ void TTAK_HOT_PATH *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, ui
     void *user_ptr = NULL;
 
     if (t_reentrancy_guard) {
-        void* fallback_ptr = malloc(size);
-        if (fallback_ptr) ttak_mem_stream_zero(fallback_ptr, size);
-        return fallback_ptr;
+        /* Returning a raw malloc pointer here would create a use-after-free risk
+         * because callers may later pass it to ttak_mem_free(), which reads the
+         * TTAK header that precedes managed allocations.  Return NULL so the
+         * caller can handle the failure safely. */
+        return NULL;
     }
     t_reentrancy_guard = true;
 
@@ -427,6 +429,10 @@ void TTAK_HOT_PATH *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, ui
         ensure_global_map(now);
         tt_map_t *map_handle = (tt_map_t *)global_ptr_map;
         if (global_init_done && !in_mem_init && !in_mem_op && map_handle) {
+            /* Clear the reentrancy guard before map/tree operations so that
+             * internal map resize allocations (non-root) can succeed normally
+             * instead of hitting the NULL fallback path. */
+            t_reentrancy_guard = false;
             pthread_mutex_lock(&global_map_lock); in_mem_op = true;
             ttak_insert_to_map(map_handle, (uintptr_t)user_ptr, (size_t)header, now);
             ttak_mem_tree_add(&global_mem_tree, user_ptr, size, header->expires_tick, is_root);
@@ -446,7 +452,7 @@ void * ttak_fastalloc(ttak_epoch_gc_t *gc, size_t size, uint64_t lifetime_ticks,
 
 void * ttak_fastcalloc(ttak_epoch_gc_t *gc, size_t size, uint64_t lifetime_ticks, uint64_t now) {
     void *ptr = ttak_fastalloc(gc, size, lifetime_ticks, now);
-    memset(ptr, 0, size);
+    if (ptr) memset(ptr, 0, size);
     return ptr;
 }
 

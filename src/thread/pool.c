@@ -64,18 +64,42 @@ ttak_thread_pool_t *ttak_thread_pool_create(size_t num_threads, int default_nice
     ttak_priority_queue_init(&pool->task_queue);
 
     pool->workers = (ttak_worker_t **)ttak_mem_alloc(sizeof(ttak_worker_t *) * num_threads, __TTAK_UNSAFE_MEM_FOREVER__, now);
+    if (!pool->workers) {
+        fprintf(stderr, "[FATAL] Failed to allocate worker array\n");
+        pthread_mutex_destroy(&pool->pool_lock);
+        pthread_cond_destroy(&pool->task_cond);
+        if (attr_for_threads) pthread_attr_destroy(&attr);
+        ttak_mem_free(pool);
+        return NULL;
+    }
 
     for (size_t i = 0; i < num_threads; i++) {
         pool->workers[i] = (ttak_worker_t *)ttak_mem_alloc(sizeof(ttak_worker_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
+        if (!pool->workers[i]) {
+            fprintf(stderr, "[FATAL] Failed to allocate worker %zu\n", i);
+            pool->num_threads = i;
+            pool_force_shutdown(pool);
+            if (attr_for_threads) pthread_attr_destroy(&attr);
+            return NULL;
+        }
         pool->workers[i]->pool = pool;
         pool->workers[i]->should_stop = false;
         pool->workers[i]->exit_code = 0;
-        
+
         pool->workers[i]->wrapper = (ttak_worker_wrapper_t *)ttak_mem_alloc(sizeof(ttak_worker_wrapper_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
+        if (!pool->workers[i]->wrapper) {
+            fprintf(stderr, "[FATAL] Failed to allocate worker wrapper %zu\n", i);
+            ttak_mem_free(pool->workers[i]);
+            pool->workers[i] = NULL;
+            pool->num_threads = i;
+            pool_force_shutdown(pool);
+            if (attr_for_threads) pthread_attr_destroy(&attr);
+            return NULL;
+        }
         pool->workers[i]->wrapper->nice_val = default_nice;
         pool->workers[i]->wrapper->ts = now;
         /* Pre-initialize jump magic so abort checks don't fail before first setjmp */
-        pool->workers[i]->wrapper->jmp_magic = 0; 
+        pool->workers[i]->wrapper->jmp_magic = 0;
         pool->workers[i]->wrapper->jmp_tid = 0;
 
         int rc = pthread_create(&pool->workers[i]->thread, attr_for_threads, ttak_worker_routine, pool->workers[i]);
