@@ -40,6 +40,7 @@ typedef struct ttak_worker {
     ttak_worker_wrapper_t   *wrapper;
     _Bool                   should_stop;
     int                     exit_code;
+    size_t                  preferred_shard; /**< Shard index this worker drains first. */
 } ttak_worker_t;
 
 void *ttak_worker_routine(void *arg);
