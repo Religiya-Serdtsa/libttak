@@ -347,6 +347,10 @@ void TTAK_HOT_PATH *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, ui
         }
 #else
         size_t canary_padding = strict_check_enabled ? sizeof(uint64_t) : 0;
+        if (size > SIZE_MAX - header_size - canary_padding) {
+            t_reentrancy_guard = false;
+            return NULL;
+        }
         size_t total_alloc_size = header_size + canary_padding + size;
         if (flags & TTAK_MEM_HUGE_PAGES) {
 #ifdef _WIN32

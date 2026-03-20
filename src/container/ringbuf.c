@@ -8,6 +8,9 @@
  * @brief Creates ring buffer.
  */
 ttak_ringbuf_t *ttak_ringbuf_create(size_t capacity, size_t item_size) {
+    if (!capacity || !item_size) return NULL;
+    if (capacity > SIZE_MAX / item_size) return NULL;
+
     ttak_ringbuf_t *rb = malloc(sizeof(ttak_ringbuf_t));
     if (!rb) return NULL;
     

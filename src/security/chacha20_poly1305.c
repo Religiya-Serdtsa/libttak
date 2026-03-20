@@ -336,7 +336,7 @@ static void ttak_poly1305_finish(ttak_poly1305_state_t *st,
     ttak_store64_le(mac + 8, high);
 }
 
-static void ttak_copy_from_ctx(const uint8_t *linear,
+static bool ttak_copy_from_ctx(const uint8_t *linear,
                                const uint8_t *const *blocks,
                                size_t block_size,
                                size_t block_count,
@@ -345,12 +345,17 @@ static void ttak_copy_from_ctx(const uint8_t *linear,
                                size_t bytes) {
     if (linear) {
         memcpy(dst, linear + offset, bytes);
-        return;
+        return true;
     }
-    size_t block_idx = block_size ? (offset / block_size) : 0;
-    size_t block_off = block_size ? (offset % block_size) : 0;
-    (void)block_count;
+    if (!block_size) {
+        return false;
+    }
+    size_t block_idx = offset / block_size;
+    size_t block_off = offset % block_size;
     while (bytes) {
+        if (block_idx >= block_count) {
+            return false;
+        }
         size_t chunk = block_size - block_off;
         if (chunk > bytes) {
             chunk = bytes;
@@ -361,9 +366,10 @@ static void ttak_copy_from_ctx(const uint8_t *linear,
         block_idx++;
         block_off = 0;
     }
+    return true;
 }
 
-static void ttak_copy_to_ctx(uint8_t *linear,
+static bool ttak_copy_to_ctx(uint8_t *linear,
                              uint8_t **blocks,
                              size_t block_size,
                              size_t block_count,
@@ -372,12 +378,17 @@ static void ttak_copy_to_ctx(uint8_t *linear,
                              size_t bytes) {
     if (linear) {
         memcpy(linear + offset, src, bytes);
-        return;
+        return true;
     }
-    size_t block_idx = block_size ? (offset / block_size) : 0;
-    size_t block_off = block_size ? (offset % block_size) : 0;
-    (void)block_count;
+    if (!block_size) {
+        return false;
+    }
+    size_t block_idx = offset / block_size;
+    size_t block_off = offset % block_size;
     while (bytes) {
+        if (block_idx >= block_count) {
+            return false;
+        }
         size_t chunk = block_size - block_off;
         if (chunk > bytes) {
             chunk = bytes;
@@ -388,6 +399,7 @@ static void ttak_copy_to_ctx(uint8_t *linear,
         block_idx++;
         block_off = 0;
     }
+    return true;
 }
 
 ttak_io_status_t ttak_chacha20_poly1305_execute(ttak_crypto_ctx_t *ctx,
@@ -479,16 +491,23 @@ ttak_io_status_t ttak_chacha20_poly1305_execute(ttak_crypto_ctx_t *ctx,
         if (chunk > TTAK_CHACHA_BLOCK_BYTES) {
             chunk = TTAK_CHACHA_BLOCK_BYTES;
         }
+        if (counter == 0U) {
+            return TTAK_IO_ERR_RANGE;
+        }
         ttak_chacha20_block(keystream, key_words, counter, nonce_words);
         counter++;
-        ttak_copy_from_ctx(src_linear, in_blocks, block_size, block_count,
-                           offset, buffer, chunk);
+        if (!ttak_copy_from_ctx(src_linear, in_blocks, block_size, block_count,
+                                offset, buffer, chunk)) {
+            return TTAK_IO_ERR_RANGE;
+        }
         for (size_t i = 0; i < chunk; ++i) {
             buffer[i] ^= keystream[i];
         }
         ttak_poly1305_update(&poly, buffer, chunk);
-        ttak_copy_to_ctx(dst_linear, out_blocks, block_size, block_count,
-                         offset, buffer, chunk);
+        if (!ttak_copy_to_ctx(dst_linear, out_blocks, block_size, block_count,
+                              offset, buffer, chunk)) {
+            return TTAK_IO_ERR_RANGE;
+        }
         offset += chunk;
     }
 

@@ -143,12 +143,13 @@ bool ttak_owner_execute(ttak_owner_t *owner, const char *func_name, const char *
 
     ttak_owner_func_t func = (ttak_owner_func_t)func_ptr_val;
 
+    ttak_rwlock_unlock(&owner->lock);
+
     // 4. Execution Boundary
     // Ideally, we would set thread-local storage here to indicate we are inside this owner
     // so that mem_alloc calls check the owner's policy.
-    
+
     func(ctx, args);
 
-    ttak_rwlock_unlock(&owner->lock);
     return true;
 }

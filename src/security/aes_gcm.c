@@ -385,6 +385,9 @@ ttak_io_status_t ttak_aes256_gcm_execute(ttak_crypto_ctx_t *ctx,
     if (!ctx || !ctx->tag) {
         return TTAK_IO_ERR_INVALID_ARGUMENT;
     }
+    if (ctx->aad_len && !ctx->aad) {
+        return TTAK_IO_ERR_INVALID_ARGUMENT;
+    }
 
     const uint8_t *p_src = in ? in : ctx->in;
     uint8_t *p_dst = out ? out : ctx->out;
@@ -437,6 +440,9 @@ ttak_io_status_t ttak_aes256_gcm_execute(ttak_crypto_ctx_t *ctx,
         uint8_t ctr_blk[16];
         uint8_t ks[16];
 
+        if (counter == 0U) {
+            return TTAK_IO_ERR_RANGE;
+        }
         memcpy(ctr_blk, ctx->iv, 12);
         const uint32_t be = ttak_bswap32(counter);
         memcpy(ctr_blk + 12, &be, 4);
@@ -456,6 +462,9 @@ ttak_io_status_t ttak_aes256_gcm_execute(ttak_crypto_ctx_t *ctx,
         uint8_t ks[16];
         uint8_t cpad[16] = {0};
 
+        if (counter == 0U) {
+            return TTAK_IO_ERR_RANGE;
+        }
         memcpy(ctr_blk, ctx->iv, 12);
         const uint32_t be = ttak_bswap32(counter);
         memcpy(ctr_blk + 12, &be, 4);
