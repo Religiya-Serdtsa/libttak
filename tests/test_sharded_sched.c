@@ -153,10 +153,6 @@ void test_work_stealing(void) {
 
     for (int i = 0; i < N; i++) {
         /* hash == 0 → falls back to shard 0 in schedule_task */
-        ttak_task_t *task = ttak_task_create(steal_task, NULL, NULL, now);
-        ASSERT(task != NULL);
-        ttak_task_set_hash(task, 0);
-        /* Manually schedule with hash=0 so it lands on shard 0 */
         ttak_promise_t *promise = ttak_promise_create(now);
         ASSERT(promise != NULL);
         ttak_task_t *ct = ttak_task_create(steal_task, NULL, promise, now);
@@ -165,7 +161,6 @@ void test_work_stealing(void) {
         _Bool ok = ttak_thread_pool_schedule_task(pool, ct, 0, now);
         ASSERT(ok);
         futures[i] = ttak_promise_get_future(promise);
-        ttak_task_destroy(task, now);
     }
 
     for (int i = 0; i < N; i++) {

@@ -39,7 +39,7 @@ static void history_shards_init_once(void) {
     uint64_t now = ttak_get_tick_count();
     for (size_t s = 0; s < TTAK_POOL_SHARD_COUNT; s++) {
         pthread_mutex_init(&history_shards[s].lock, NULL);
-        history_shards[s].map = ttak_create_map(16, now);
+        history_shards[s].map = ttak_create_map(32, now);
         history_shards[s].initialized = (history_shards[s].map != NULL);
     }
 }
