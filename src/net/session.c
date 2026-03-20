@@ -267,7 +267,7 @@ static void ttak_net_session_collect_pending(ttak_net_session_t *node,
 
 void ttak_net_session_mgr_tick(ttak_net_session_mgr_t *mgr, uint64_t now) {
     if (!mgr) return;
-    ttak_rwlock_rdlock(&mgr->lock);
+    ttak_rwlock_wrlock(&mgr->lock);
     ttak_net_session_t *pending = NULL;
     ttak_net_session_collect_pending(mgr->head, now, &pending);
     ttak_rwlock_unlock(&mgr->lock);
