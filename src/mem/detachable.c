@@ -153,6 +153,9 @@ void ttak_detachable_cache_init(ttak_detachable_cache_t *cache, size_t chunk_siz
                             : chunk_size;
     cache->capacity = (capacity == 0) ? TTAK_DETACHABLE_CACHE_SLOTS : capacity;
     cache->slots = calloc(cache->capacity, sizeof(void *));
+    if (cache->slots == NULL) {
+        cache->capacity = 0;
+    }
     pthread_mutex_init(&cache->lock, NULL);
 }
 
@@ -299,6 +302,9 @@ static void ttak_detachable_row_alloc(ttak_detachable_generation_row_t *row) {
     if (!row->columns) {
         row->cap = TTAK_DETACHABLE_GENERATIONS;
         row->columns = calloc(row->cap, sizeof(void *));
+        if (row->columns == NULL) {
+            row->cap = 0;
+        }
         row->len = 0;
     }
 }
@@ -331,6 +337,7 @@ static void ttak_detachable_track_pointer(ttak_detachable_context_t *ctx, void *
         ttak_detachable_row_alloc(row);
     }
 
+    if (row->columns == NULL) return;
     row->columns[row->len++] = ptr;
 }
 

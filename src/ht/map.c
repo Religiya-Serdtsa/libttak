@@ -17,28 +17,49 @@ static size_t next_pow2(size_t n) {
     return n + 1;
 }
 
+/* Internal destructor: release all three backing arrays regardless of NULL state. */
+static void ttak_map_arrays_destroy(tt_map_t *map) {
+    if (map->ctrls)  { ttak_mem_free(map->ctrls);  map->ctrls  = NULL; }
+    if (map->keys)   { ttak_mem_free(map->keys);   map->keys   = NULL; }
+    if (map->values) { ttak_mem_free(map->values); map->values = NULL; }
+}
+
+/* Internal constructor: allocate and zero-initialise all three arrays.
+ * Returns 0 on success, -1 on any allocation failure (arrays freed on error). */
+static int ttak_map_arrays_alloc(tt_map_t *map, size_t padded_cap, uint64_t now) {
+    map->ctrls  = ttak_mem_alloc(padded_cap * sizeof(uint8_t),   __TTAK_UNSAFE_MEM_FOREVER__, now);
+    map->keys   = ttak_mem_alloc(padded_cap * sizeof(uintptr_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
+    map->values = ttak_mem_alloc(padded_cap * sizeof(size_t),    __TTAK_UNSAFE_MEM_FOREVER__, now);
+
+    if (map->ctrls == NULL || map->keys == NULL || map->values == NULL) {
+        ttak_map_arrays_destroy(map);
+        return -1;
+    }
+
+    memset(map->ctrls,  0, padded_cap * sizeof(uint8_t));
+    memset(map->keys,   0, padded_cap * sizeof(uintptr_t));
+    memset(map->values, 0, padded_cap * sizeof(size_t));
+    return 0;
+}
+
 tt_map_t *ttak_create_map(size_t init_cap, uint64_t now) {
     tt_map_t *map = ttak_mem_alloc(sizeof(tt_map_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!map) return NULL;
 
-    map->cap = next_pow2(init_cap);
+    map->cap  = next_pow2(init_cap);
     map->size = 0;
     map->seed = 0xa0761d6478bd642fULL;
+    map->ctrls  = NULL;
+    map->keys   = NULL;
+    map->values = NULL;
 
     // Allocate with padding to allow branchless linear probing
     size_t padded_cap = map->cap + MAX_PROBE;
-    map->ctrls = ttak_mem_alloc(padded_cap * sizeof(uint8_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
-    map->keys = ttak_mem_alloc(padded_cap * sizeof(uintptr_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
-    map->values = ttak_mem_alloc(padded_cap * sizeof(size_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
-
-    if (!map->ctrls || !map->keys || !map->values) {
-        if (map->ctrls) ttak_mem_free(map->ctrls);
-        if (map->keys) ttak_mem_free(map->keys);
+    if (ttak_map_arrays_alloc(map, padded_cap, now) != 0) {
         ttak_mem_free(map);
         return NULL;
     }
 
-    memset(map->ctrls, 0, padded_cap * sizeof(uint8_t));
     return map;
 }
 
