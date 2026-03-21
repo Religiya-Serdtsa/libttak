@@ -5,6 +5,13 @@
  * Each thread runs inside a setjmp recovery frame so that a recoverable
  * fault (SIGSEGV caught by the pool) causes a longjmp back to the frame
  * rather than terminating the whole process.
+ *
+ * Workers use shard-affine dequeuing: each worker has a preferred shard
+ * derived from its index (ttak_shard_for_worker()).  It first tries to pop
+ * from that shard under the shard's own lock.  If the shard is empty the
+ * worker performs work stealing: it scans the remaining shards in rotation
+ * order until it finds a task or determines all shards are empty, at which
+ * point it blocks on its preferred shard's condition variable.
  */
 
 #include <ttak/thread/worker.h>
@@ -25,6 +32,7 @@
 #endif
 #include "../../internal/app_types.h"
 #include "../../internal/tt_jmp.h"
+#include "../../internal/ttak/shard_map.h"
 
 #if defined(__TINYC__)
 static pthread_once_t worker_tls_once = PTHREAD_ONCE_INIT;
@@ -56,6 +64,31 @@ static void threaded_function_wrapper(ttak_worker_t *worker, ttak_task_t *task) 
     }
 }
 
+/**
+ * @brief Try to steal a task from any shard other than @p skip_shard.
+ *
+ * Scans shards in index order (wrapping around @p skip_shard) and returns
+ * the first task found, or NULL if all shards are empty.  Each try-lock
+ * attempt is non-blocking so as not to starve the preferred shard.
+ *
+ * @param pool       Pool to steal from.
+ * @param skip_shard Shard index already tried (the preferred shard).
+ * @param now        Timestamp for queue operations.
+ * @return Stolen task, or NULL.
+ */
+static ttak_task_t *worker_steal_task(ttak_thread_pool_t *pool, size_t skip_shard, uint64_t now) {
+    for (size_t s = 0; s < TTAK_THREAD_POOL_SHARDS; s++) {
+        if (s == skip_shard) continue;
+        ttak_pool_shard_t *shard = &pool->shards[s];
+        if (shard->queue.head == NULL) continue;  /* fast non-atomic pre-check */
+        if (pthread_mutex_trylock(&shard->lock) != 0) continue;
+        ttak_task_t *task = shard->queue.pop(&shard->queue, now);
+        pthread_mutex_unlock(&shard->lock);
+        if (task) return task;
+    }
+    return NULL;
+}
+
 void *ttak_worker_routine(void *arg) {
     ttak_worker_t *self = (ttak_worker_t *)arg;
     ttak_thread_pool_t *pool = self->pool;
@@ -74,13 +107,42 @@ void *ttak_worker_routine(void *arg) {
         setpriority(PRIO_PROCESS, 0, self->wrapper->nice_val);
 #endif
     }
+
+    /* Use the shard assigned at creation time for affinity-first scheduling */
+    size_t pref = self->preferred_shard;
+    ttak_pool_shard_t *pref_shard = &pool->shards[pref];
+
     while (!self->should_stop) {
-        pthread_mutex_lock(&pool->pool_lock);
-        while (pool->task_queue.head == NULL && !self->should_stop && !pool->is_shutdown) pthread_cond_wait(&pool->task_cond, &pool->pool_lock);
-        if (self->should_stop || pool->is_shutdown) { pthread_mutex_unlock(&pool->pool_lock); break; }
-        uint64_t now = ttak_get_tick_count();
-        ttak_task_t *task = pool->task_queue.pop(&pool->task_queue, now);
-        pthread_mutex_unlock(&pool->pool_lock);
+        volatile uint64_t now = ttak_get_tick_count();
+        ttak_task_t *task = NULL;
+
+        /* --- Preferred-shard fast path --- */
+        pthread_mutex_lock(&pref_shard->lock);
+        task = pref_shard->queue.pop(&pref_shard->queue, now);
+        pthread_mutex_unlock(&pref_shard->lock);
+
+        /* --- Work stealing: scan other shards without blocking --- */
+        if (!task) {
+            task = worker_steal_task(pool, pref, now);
+        }
+
+        /* --- Block on preferred shard until work arrives or shutdown --- */
+        if (!task) {
+            pthread_mutex_lock(&pref_shard->lock);
+            while (pref_shard->queue.head == NULL
+                   && !self->should_stop
+                   && !pool->is_shutdown) {
+                pthread_cond_wait(&pref_shard->cond, &pref_shard->lock);
+            }
+            if (self->should_stop || pool->is_shutdown) {
+                pthread_mutex_unlock(&pref_shard->lock);
+                break;
+            }
+            now = ttak_get_tick_count();
+            task = pref_shard->queue.pop(&pref_shard->queue, now);
+            pthread_mutex_unlock(&pref_shard->lock);
+        }
+
         if (task) {
             volatile _Bool epoch_active = 0;
             if (tt_setjmp(self->wrapper->env, &self->wrapper->jmp_magic, &self->wrapper->jmp_tid) == 0) {

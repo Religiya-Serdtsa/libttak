@@ -2,9 +2,12 @@
  * @file scheduler.c
  * @brief Priority scheduler — task history tracking and EWMA prediction.
  *
- * Maintains per-task execution time history in a hash map and uses
- * exponentially weighted moving average (EWMA) to predict the next
- * execution cost, informing the priority queue order.
+ * Maintains per-task execution time history using a sharded hash-map array.
+ * The shard for each task is selected deterministically via the same
+ * Fibonacci-hashing / Latin-square routing used by the thread pool, so that
+ * the same task hash always lands in the same shard.  Each shard has its own
+ * mutex, eliminating the single global hot-lock that previously serialised
+ * all history reads and writes.
  */
 
 #include <ttak/priority/scheduler.h>
@@ -14,49 +17,95 @@
 #include <pthread.h>
 #include <stddef.h>
 #include <string.h>
+#include "../../internal/ttak/shard_map.h"
 
-static tt_map_t *history_map = NULL;
-static pthread_mutex_t history_lock = PTHREAD_MUTEX_INITIALIZER;
-static _Bool history_initialized = 0;
+/* -----------------------------------------------------------------------
+ * Sharded history storage
+ * ----------------------------------------------------------------------- */
+
+/** One independent segment of the execution-history map. */
+typedef struct {
+    tt_map_t       *map;
+    pthread_mutex_t lock;
+    _Bool           initialized;
+} ttak_sched_history_shard_t;
+
+static ttak_sched_history_shard_t history_shards[TTAK_POOL_SHARD_COUNT];
+
+/* One-time global initialisation guard */
+static pthread_once_t history_once = PTHREAD_ONCE_INIT;
+
+static void history_shards_init_once(void) {
+    uint64_t now = ttak_get_tick_count();
+    for (size_t s = 0; s < TTAK_POOL_SHARD_COUNT; s++) {
+        pthread_mutex_init(&history_shards[s].lock, NULL);
+        history_shards[s].map = ttak_create_map(32, now);
+        history_shards[s].initialized = (history_shards[s].map != NULL);
+    }
+}
+
+/* -----------------------------------------------------------------------
+ * Internal helpers
+ * ----------------------------------------------------------------------- */
+
+/**
+ * @brief Select the history shard for @p hash using the routing table.
+ *
+ * Uses ttak_shard_for_hash() so the same hash always maps to the same shard,
+ * matching the routing used in ttak_thread_pool_schedule_task().
+ *
+ * @param hash  Task hash.
+ * @return      Pointer to the corresponding history shard.
+ */
+static inline ttak_sched_history_shard_t *sched_shard_for_hash(uint64_t hash) {
+    return &history_shards[ttak_shard_for_hash(hash)];
+}
+
+/* -----------------------------------------------------------------------
+ * Public API
+ * ----------------------------------------------------------------------- */
 
 void ttak_scheduler_init(void) {
-    pthread_mutex_lock(&history_lock);
-    if (!history_initialized) {
-        history_map = ttak_create_map(128, ttak_get_tick_count());
-        if (history_map) history_initialized = 1;
-    }
-    pthread_mutex_unlock(&history_lock);
+    pthread_once(&history_once, history_shards_init_once);
 }
 
 void ttak_scheduler_record_execution(ttak_task_t *task, uint64_t duration_ms) {
     if (!task) return;
     uint64_t hash = ttak_task_get_hash(task);
     if (hash == 0) return;
+
     uint64_t now = ttak_get_tick_count();
-    pthread_mutex_lock(&history_lock);
-    if (history_map) {
-        size_t old_avg = 0;
-        if (ttak_map_get_key(history_map, (uintptr_t)hash, &old_avg, now)) {
-            size_t new_avg = (size_t)((old_avg * 0.7) + (duration_ms * 0.3));
-            ttak_insert_to_map(history_map, (uintptr_t)hash, new_avg, now);
-        } else {
-            ttak_insert_to_map(history_map, (uintptr_t)hash, (size_t)duration_ms, now);
-        }
+    ttak_sched_history_shard_t *shard = sched_shard_for_hash(hash);
+    if (!shard->initialized) return;
+
+    pthread_mutex_lock(&shard->lock);
+    size_t old_avg = 0;
+    if (ttak_map_get_key(shard->map, (uintptr_t)hash, &old_avg, now)) {
+        size_t new_avg = (size_t)((old_avg * 0.7) + (duration_ms * 0.3));
+        ttak_insert_to_map(shard->map, (uintptr_t)hash, new_avg, now);
+    } else {
+        ttak_insert_to_map(shard->map, (uintptr_t)hash, (size_t)duration_ms, now);
     }
-    pthread_mutex_unlock(&history_lock);
+    pthread_mutex_unlock(&shard->lock);
 }
 
 int ttak_scheduler_get_adjusted_priority(ttak_task_t *task, int base_priority) {
     if (!task) return base_priority;
     uint64_t hash = ttak_task_get_hash(task);
     if (hash == 0) return base_priority;
+
     int adj_priority = base_priority;
     uint64_t now = ttak_get_tick_count();
     size_t avg_runtime = 0;
     _Bool found = 0;
-    pthread_mutex_lock(&history_lock);
-    if (history_map) found = ttak_map_get_key(history_map, (uintptr_t)hash, &avg_runtime, now);
-    pthread_mutex_unlock(&history_lock);
+
+    ttak_sched_history_shard_t *shard = sched_shard_for_hash(hash);
+    if (shard->initialized) {
+        pthread_mutex_lock(&shard->lock);
+        found = ttak_map_get_key(shard->map, (uintptr_t)hash, &avg_runtime, now);
+        pthread_mutex_unlock(&shard->lock);
+    }
+
     if (found) {
         if (avg_runtime < 10) adj_priority += 5;
         else if (avg_runtime < 50) adj_priority += 2;
