@@ -75,11 +75,10 @@ uint64_t ttak_mod_pow(uint64_t base, uint64_t exp, uint64_t mod) {
 }
 
 /**
- * @brief Compute the modular inverse using the Daeyeonguilsul (Dae-yeon-gu-il-sul) method.
+ * @brief Compute the modular inverse using the tabular method described in Daeyeonguilsul (Dae-yeon-gu-il-sul).
  *
- * This implementation is inspired by the traditional Korean mathematical technique
- * for solving systems of linear congruences. It minimizes branch divergence and
- * is optimized for residues commonly encountered in NTT and BigInt operations.
+ * Follows the Yeon-cho reduction order to minimize divisions and branch divergence in NTT and BigInt workloads.
+ * Historical reference: "Dae-yeon-gu-il-sul" (Daeyeonguilsul).
  *
  * @param value Input residue.
  * @param mod   Modulus.
@@ -96,7 +95,7 @@ uint64_t ttak_mod_inverse(uint64_t value, uint64_t mod) {
 
     if (m0 == 1) return 0;
 
-    /* Continuous reduction (Yeon-cho) similar to the tabular Daeyeonguilsul */
+    /* Continuous reduction (Yeon-cho) ordered as in the Daeyeonguilsul tables */
     while (a > 1) {
         if (m0 == 0) return 0; // Should not happen with mod > 1
         q = a / m0;

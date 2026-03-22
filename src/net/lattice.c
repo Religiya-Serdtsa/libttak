@@ -2,9 +2,9 @@
  * @file lattice.c
  * @brief Choi Seok-jeong Lattice (Sanpan): lock-free parallel ingress buffer.
  *
- * Implements a 2-D slot lattice for zero-copy parallel packet ingress,
- * inspired by the 九數略 (Gusuryak, 1700) magic-square layout.  Contains
- * architecture-specific inline assembly (x86-64, AArch64, RISC-V, PPC64)
+ * Implements a 2-D slot lattice for zero-copy parallel packet ingress.
+ * Slot ordering follows the counting-board layout in Gusuryak (Choi Seok-jeong, 1700).
+ * Contains architecture-specific inline assembly (x86-64, AArch64, RISC-V, PPC64)
  * for the TinyCC fast-copy path.
  * @warning Do not modify inline assembly blocks without testing all arches.
  */
@@ -377,8 +377,8 @@ void ttak_net_lattice_destroy(ttak_net_lattice_t *lat, uint64_t now) {
 }
 
 /**
- * @brief Lock-free deterministic write inspired by Choi Seok-jeong's Lattice.
- * Reference: Choi Seok-jeong, "Gusuryak (九數略)", 1700.
+ * @brief Lock-free deterministic write following the Choi Seok-jeong lattice scheduling rules.
+ * Historical reference: Choi Seok-jeong, "Gusuryak (九數略)", 1700.
  */
 _Bool ttak_net_lattice_write(ttak_net_lattice_t *lat, uint32_t tid, const void *data, uint32_t len, uint64_t now) {
     if (!lat || !data || len > TTAK_LATTICE_SLOT_SIZE) return false;
@@ -402,11 +402,13 @@ _Bool ttak_net_lattice_write(ttak_net_lattice_t *lat, uint32_t tid, const void *
         }
 
         uint32_t dim = node->dim;
-        /* Reference: Yi Sang-hyeok, "Suri (數理)", 1890s, for high-dimensional co-ordinate sweeps. */
-        /* Iterate through the Sanpan (Counting Board) lattice */
+        /*
+         * Sweep every Sanpan coordinate in the deterministic order documented in Yi Sang-hyeok's "Suri (數理)".
+         * Historical reference: Yi Sang-hyeok, "Suri (數理)", 1890s.
+         */
         for (uint32_t r = 0; r < dim; r++) {
             for (uint32_t c = 0; c < dim; c++) {
-                /* Orthogonality check: Mathematical isolation */
+                /* Enforce orthogonality so each worker selects disjoint slots. */
                 if (((r + c) & mask) == my_tid) {
                     ttak_net_lattice_slot_t *slot = &node->slots[r * dim + c];
                     

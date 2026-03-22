@@ -183,7 +183,10 @@ _Bool ttak_matrix_set_rotation(tt_shared_matrix_t *m, tt_owner_t *owner, uint8_t
     ttak_bigreal_init(&s, now);
     ttak_bigreal_init(&c, now);
 
-    /* Yussigihae (Nam Byeong-gil) inspired approximations */
+    /*
+     * Apply the sinusoid approximations cataloged in Yussigihae (Nam Byeong-gil) for stable rotation entries.
+     * Historical reference: Nam Byeong-gil, "Yussigihae".
+     */
     ttak_math_approx_sin(&s, angle, now);
     ttak_math_approx_cos(&c, angle, now);
 
