@@ -5,6 +5,7 @@
 #include <ttak/mem/mem.h>
 #include <ttak/mem/epoch.h>
 #include <ttak/timing/timing.h>
+#include <ttak/types/ttak_compiler.h>
 
 #ifndef _MSC_VER
 #include <stdatomic.h>
@@ -36,6 +37,7 @@
 /* --- Configuration --- */
 
 #define OLS_ORDER 16
+#define TTAK_EPOCH_NODE_POOL_LIMIT 16384U
 
 /* --- Cross-compiler attributes and TLS --- */
 
@@ -186,6 +188,12 @@ typedef struct {
 TTAK_VIS_DEFAULT ttak_epoch_manager_t g_epoch_mgr = {0};
 
 /**
+ * @brief Lock-free cache of retired nodes to avoid alloc/free flapping.
+ */
+static ttak_retired_node_t * _Atomic g_retired_node_pool = NULL;
+static uint32_t _Atomic g_retired_node_pool_count = 0;
+
+/**
  * @brief Global OLS plane storage.
  */
 TTAK_VIS_DEFAULT ttak_ols_plane_t g_ols_static_plane = {0};
@@ -242,6 +250,59 @@ TTAK_VIS_DEFAULT ttak_thread_node_t * _Atomic g_thread_list = NULL;
  * @brief Logical thread ID counter (atomic).
  */
 TTAK_VIS_DEFAULT uint32_t _Atomic g_tid_counter = 0;
+
+/* --- Retired node cache helpers --- */
+
+static inline ttak_retired_node_t *epoch_node_pool_acquire(void) {
+    while (1) {
+        ttak_retired_node_t *head =
+            (ttak_retired_node_t *)TT_ATOMIC_LOAD_PTR((void * _Atomic *)&g_retired_node_pool,
+                                                      memory_order_acquire);
+        if (!head) {
+            break;
+        }
+        ttak_retired_node_t *next = head->next;
+        void *expected = head;
+        if (TT_ATOMIC_CAS_WEAK_PTR((void * _Atomic *)&g_retired_node_pool, &expected, next,
+                                   memory_order_acq_rel, memory_order_acquire)) {
+            uint32_t prev = TT_ATOMIC_FETCH_ADD_U32(&g_retired_node_pool_count, (uint32_t)-1,
+                                                    memory_order_relaxed);
+            if (TTAK_UNLIKELY(prev == 0)) {
+                TT_ATOMIC_FETCH_ADD_U32(&g_retired_node_pool_count, 1, memory_order_relaxed);
+            }
+            head->next = NULL;
+            return head;
+        }
+    }
+    return (ttak_retired_node_t *)ttak_dangerous_calloc(1, sizeof(ttak_retired_node_t));
+}
+
+static inline void epoch_node_pool_release(ttak_retired_node_t *node) {
+    if (!node) {
+        return;
+    }
+    node->ptr = NULL;
+    node->cleanup = NULL;
+
+    uint32_t cached = TT_ATOMIC_LOAD_U32(&g_retired_node_pool_count, memory_order_relaxed);
+    if (cached >= TTAK_EPOCH_NODE_POOL_LIMIT) {
+        ttak_dangerous_free(node);
+        return;
+    }
+
+    while (1) {
+        ttak_retired_node_t *head =
+            (ttak_retired_node_t *)TT_ATOMIC_LOAD_PTR((void * _Atomic *)&g_retired_node_pool,
+                                                      memory_order_acquire);
+        node->next = head;
+        void *expected = head;
+        if (TT_ATOMIC_CAS_WEAK_PTR((void * _Atomic *)&g_retired_node_pool, &expected, node,
+                                   memory_order_release, memory_order_acquire)) {
+            TT_ATOMIC_FETCH_ADD_U32(&g_retired_node_pool_count, 1, memory_order_relaxed);
+            return;
+        }
+    }
+}
 
 /* --- Internal helpers --- */
 
@@ -407,7 +468,7 @@ void ttak_epoch_retire(void *ptr, void (*cleanup)(void *)) {
         return;
     }
 
-    ttak_retired_node_t *node = (ttak_retired_node_t *)ttak_dangerous_calloc(1, sizeof(ttak_retired_node_t));
+    ttak_retired_node_t *node = epoch_node_pool_acquire();
     if (!node) {
         return;
     }
@@ -491,7 +552,7 @@ void ttak_epoch_reclaim(void) {
                     if (to_free->cleanup) {
                         to_free->cleanup(to_free->ptr);
                     }
-                    ttak_dangerous_free(to_free);
+                    epoch_node_pool_release(to_free);
                     to_free = next;
                 }
             }

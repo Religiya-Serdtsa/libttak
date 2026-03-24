@@ -8,6 +8,8 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
+#include <limits.h>
 #include <pthread.h>
 #if defined(_MSC_VER)
 #include <intrin.h>
@@ -28,6 +30,11 @@
 #define TTAK_BUDDY_GROWTH_THRESHOLD 80U
 #define TTAK_BUDDY_MIN_GROWTH_BYTES (1ULL << 20)
 #define TTAK_BUDDY_GROWTH_FACTOR 2U
+#define TTAK_BUDDY_THEORETICAL_LIMIT_BYTES \
+    (1000ULL * 1024ULL * 1024ULL * 1024ULL * 1024ULL)
+#define TTAK_BUDDY_CAPACITY_LIMIT_BYTES \
+    ((TTAK_BUDDY_THEORETICAL_LIMIT_BYTES > (size_t)-1) ? \
+         (size_t)-1 : (size_t)TTAK_BUDDY_THEORETICAL_LIMIT_BYTES)
 
 typedef struct ttak_buddy_segment {
     unsigned char *start;
@@ -68,6 +75,8 @@ static inline size_t order_size(uint8_t order);
 static inline uint8_t max_order_for_pool(size_t pool_len);
 static void list_push(uint8_t order, ttak_buddy_block_t *block);
 static inline size_t buddy_capacity(void);
+static inline size_t buddy_capacity_limit(void);
+static inline size_t buddy_align_up(size_t value, size_t alignment);
 
 static int buddy_debug_enabled(void) {
     static int cached = -1;
@@ -282,6 +291,22 @@ static inline size_t buddy_capacity(void) {
     return atomic_load_explicit(&g_zone.pool_len, memory_order_relaxed);
 }
 
+static inline size_t buddy_capacity_limit(void) {
+    return TTAK_BUDDY_CAPACITY_LIMIT_BYTES;
+}
+
+static inline size_t buddy_align_up(size_t value, size_t alignment) {
+    if (alignment <= 1U) {
+        return value;
+    }
+    size_t mask = alignment - 1U;
+    if (value > SIZE_MAX - mask) {
+        return 0;
+    }
+    size_t aligned = (value + mask) & ~mask;
+    return aligned;
+}
+
 static bool buddy_should_grow(size_t upcoming_bytes) {
     if (g_zone.embedded_mode) {
         return false;
@@ -315,17 +340,46 @@ static bool buddy_expand_zone(size_t min_bytes) {
     }
 
     size_t current_capacity = buddy_capacity();
-    size_t grow_size = current_capacity ? (current_capacity / TTAK_BUDDY_GROWTH_FACTOR) : min_bytes;
-    if (grow_size < min_bytes) {
-        grow_size = min_bytes;
-    }
-    if (grow_size < TTAK_BUDDY_MIN_GROWTH_BYTES) {
-        grow_size = TTAK_BUDDY_MIN_GROWTH_BYTES;
+    size_t capacity_limit = buddy_capacity_limit();
+
+    if (current_capacity >= capacity_limit) {
+        if (buddy_debug_enabled()) {
+            fprintf(stderr, "[Buddy] Auto-growth capped at %zu bytes (limit reached).\n", capacity_limit);
+        }
+        return false;
     }
 
-    size_t aligned = (grow_size + (min_block - 1)) & ~(min_block - 1);
-    if (aligned < grow_size) {
-        aligned = grow_size;
+    size_t limit_remaining = capacity_limit - current_capacity;
+    size_t limit_aligned = limit_remaining & ~(min_block - 1U);
+    if (limit_aligned < min_block) {
+        return false;
+    }
+
+    size_t desired = min_bytes;
+    if (current_capacity) {
+        if (current_capacity > limit_aligned / TTAK_BUDDY_GROWTH_FACTOR) {
+            desired = limit_aligned;
+        } else {
+            desired = current_capacity * TTAK_BUDDY_GROWTH_FACTOR;
+        }
+    }
+
+    if (desired < min_bytes) {
+        desired = min_bytes;
+    }
+    if (desired < TTAK_BUDDY_MIN_GROWTH_BYTES) {
+        desired = TTAK_BUDDY_MIN_GROWTH_BYTES;
+    }
+    if (desired > limit_aligned) {
+        desired = limit_aligned;
+    }
+
+    size_t aligned = buddy_align_up(desired, min_block);
+    if (!aligned || aligned > limit_aligned) {
+        aligned = limit_aligned;
+    }
+    if (aligned < min_block) {
+        return false;
     }
 
     void *buffer = buddy_heap_alloc(aligned);
