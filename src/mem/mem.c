@@ -346,6 +346,13 @@ void TTAK_HOT_PATH *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, ui
         if (header) {
             allocated_tier = TTAK_ALLOC_TIER_BUDDY;
             strict_check_enabled = false;
+        } else {
+            /* Buddy pool is fragmented or exhausted. Map from the VMA region
+             * to keep the caller alive instead of surfacing ENOMEM. */
+            header = ttak_mem_vma_alloc_internal(size);
+            if (header) {
+                allocated_tier = TTAK_ALLOC_TIER_VMA;
+            }
         }
 #else
         size_t canary_padding = strict_check_enabled ? sizeof(uint64_t) : 0;
