@@ -28,6 +28,7 @@
 #endif
 #include <string.h>
 #include <stdio.h>
+#include <limits.h>
 
 #include "../../internal/ttak/mem_internal.h"
 #include "../../include/ttak/mem/mem.h"
@@ -69,6 +70,7 @@ static void _init_vma_region(void) {
 
 ttak_mem_header_t* ttak_mem_vma_alloc_internal(size_t user_requested_size) {
     if (user_requested_size == 0) return NULL;
+    if (user_requested_size > SIZE_MAX - sizeof(ttak_mem_header_t)) return NULL;
 
     pthread_once(&vma_init_once, _init_vma_region);
     
@@ -77,6 +79,7 @@ ttak_mem_header_t* ttak_mem_vma_alloc_internal(size_t user_requested_size) {
     }
 
     size_t total_alloc_size = sizeof(ttak_mem_header_t) + user_requested_size;
+    if (total_alloc_size > SIZE_MAX - (TTAK_VMA_ALIGNMENT - 1)) return NULL;
     // Align block to TTAK_VMA_ALIGNMENT (64-byte).
     size_t aligned_total_alloc_size = (total_alloc_size + TTAK_VMA_ALIGNMENT - 1) & ~((size_t)TTAK_VMA_ALIGNMENT - 1);
 
@@ -90,6 +93,7 @@ ttak_mem_header_t* ttak_mem_vma_alloc_internal(size_t user_requested_size) {
             pthread_mutex_unlock(&vma_free_list_lock);
             ttak_mem_header_t *reused_header = (ttak_mem_header_t *)cur;
             ttak_mem_stream_zero(reused_header, aligned_total_alloc_size);
+            pthread_mutex_init(&reused_header->lock, NULL);
             return reused_header;
         }
         prev = cur;
@@ -102,10 +106,14 @@ ttak_mem_header_t* ttak_mem_vma_alloc_internal(size_t user_requested_size) {
 
     do {
         old_cursor = atomic_load(&global_vma_region.current_cursor);
+        if (old_cursor > UINTPTR_MAX - (TTAK_VMA_ALIGNMENT - 1)) return NULL;
         uintptr_t current_aligned_start = (old_cursor + TTAK_VMA_ALIGNMENT - 1) & ~((uintptr_t)TTAK_VMA_ALIGNMENT - 1);
+        if (current_aligned_start > UINTPTR_MAX - aligned_total_alloc_size) return NULL;
         new_cursor = current_aligned_start + aligned_total_alloc_size;
-
-        if (new_cursor > (uintptr_t)global_vma_region.start_addr + TTAK_VMA_REGION_SIZE) {
+        uintptr_t region_start = (uintptr_t)global_vma_region.start_addr;
+        if (region_start > UINTPTR_MAX - TTAK_VMA_REGION_SIZE) return NULL;
+        uintptr_t region_end = region_start + TTAK_VMA_REGION_SIZE;
+        if (new_cursor > region_end) {
             return NULL; 
         }
 
@@ -114,6 +122,7 @@ ttak_mem_header_t* ttak_mem_vma_alloc_internal(size_t user_requested_size) {
 
     ttak_mem_header_t* allocated_header = (ttak_mem_header_t*)((old_cursor + TTAK_VMA_ALIGNMENT - 1) & ~((uintptr_t)TTAK_VMA_ALIGNMENT - 1));
     ttak_mem_stream_zero(allocated_header, aligned_total_alloc_size);
+    pthread_mutex_init(&allocated_header->lock, NULL);
 
     return allocated_header;
 }
