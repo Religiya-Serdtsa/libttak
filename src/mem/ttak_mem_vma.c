@@ -33,6 +33,11 @@
 #include "../../include/ttak/mem/mem.h"
 #include <ttak/mem/fastpath.h>
 
+typedef struct ttak_vma_free_node {
+    struct ttak_vma_free_node *next;
+    size_t size;
+} ttak_vma_free_node_t;
+
 /**
  * @brief Global VMA region instance.
  */
@@ -40,6 +45,9 @@ ttak_mem_vma_region_t global_vma_region = {
     .start_addr = NULL,
     .current_cursor = (uintptr_t)NULL
 };
+
+static pthread_mutex_t vma_free_list_lock = PTHREAD_MUTEX_INITIALIZER;
+static ttak_vma_free_node_t *vma_free_list_head = NULL;
 
 /**
  * @brief Guard for one-time initialization of the VMA region.
@@ -71,6 +79,23 @@ ttak_mem_header_t* ttak_mem_vma_alloc_internal(size_t user_requested_size) {
     size_t total_alloc_size = sizeof(ttak_mem_header_t) + user_requested_size;
     // Align block to TTAK_VMA_ALIGNMENT (64-byte).
     size_t aligned_total_alloc_size = (total_alloc_size + TTAK_VMA_ALIGNMENT - 1) & ~((size_t)TTAK_VMA_ALIGNMENT - 1);
+
+    pthread_mutex_lock(&vma_free_list_lock);
+    ttak_vma_free_node_t *prev = NULL;
+    ttak_vma_free_node_t *cur = vma_free_list_head;
+    while (cur) {
+        if (cur->size >= aligned_total_alloc_size) {
+            if (prev) prev->next = cur->next;
+            else vma_free_list_head = cur->next;
+            pthread_mutex_unlock(&vma_free_list_lock);
+            ttak_mem_header_t *reused_header = (ttak_mem_header_t *)cur;
+            ttak_mem_stream_zero(reused_header, aligned_total_alloc_size);
+            return reused_header;
+        }
+        prev = cur;
+        cur = cur->next;
+    }
+    pthread_mutex_unlock(&vma_free_list_lock);
     
     uintptr_t old_cursor;
     uintptr_t new_cursor;
@@ -94,8 +119,19 @@ ttak_mem_header_t* ttak_mem_vma_alloc_internal(size_t user_requested_size) {
 }
 
 void _vma_free_internal(ttak_mem_header_t* header) {
-    // Bump allocator: individual frees are no-ops.
-    (void)header;
+    if (!header) return;
+
+    size_t total_alloc_size = sizeof(ttak_mem_header_t) + header->size;
+    size_t aligned_total_alloc_size = (total_alloc_size + TTAK_VMA_ALIGNMENT - 1) & ~((size_t)TTAK_VMA_ALIGNMENT - 1);
+
+    pthread_mutex_destroy(&header->lock);
+    ttak_vma_free_node_t *node = (ttak_vma_free_node_t *)header;
+    node->size = aligned_total_alloc_size;
+
+    pthread_mutex_lock(&vma_free_list_lock);
+    node->next = vma_free_list_head;
+    vma_free_list_head = node;
+    pthread_mutex_unlock(&vma_free_list_lock);
 }
 
 /**
@@ -110,4 +146,7 @@ static void _destroy_vma_region(void) {
         global_vma_region.start_addr = NULL;
         atomic_store(&global_vma_region.current_cursor, (uintptr_t)NULL);
     }
+    pthread_mutex_lock(&vma_free_list_lock);
+    vma_free_list_head = NULL;
+    pthread_mutex_unlock(&vma_free_list_lock);
 }
