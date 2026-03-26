@@ -57,8 +57,8 @@
 
 struct ttak_abstract_mem {
     pthread_rwlock_t rwlock;
-    _Atomic(uintptr_t) region_base;
-    _Atomic(size_t) capacity;
+    _Atomic uintptr_t region_base;
+    _Atomic size_t capacity;
     size_t logical_size;
     uint64_t relocation_count;
 };
