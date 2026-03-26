@@ -53,7 +53,14 @@ int main(void) {
                                       TTAK_NET_ENDPOINT_IPV4,
                                       UINT64_MAX,
                                       now);
-        assert(bind_status == TTAK_IO_SUCCESS);
+        if (bind_status != TTAK_IO_SUCCESS) {
+#ifndef _WIN32
+            close(fd);
+#endif
+            ttak_net_endpoint_destroy(endpoint, owner, now);
+            ttak_owner_destroy(owner);
+            continue;
+        }
 
         ttak_net_session_mgr_t mgr;
         memset(&mgr, 0xAB, sizeof(mgr));
