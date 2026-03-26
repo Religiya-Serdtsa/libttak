@@ -112,35 +112,31 @@ void *ttak_worker_routine(void *arg) {
     size_t pref = self->preferred_shard;
     ttak_pool_shard_t *pref_shard = &pool->shards[pref];
 
-    while (!self->should_stop) {
+    while (!self->should_stop && !pool->is_shutdown) {
         volatile uint64_t now = ttak_get_tick_count();
         ttak_task_t *task = NULL;
 
-        /* --- Preferred-shard fast path --- */
-        pthread_mutex_lock(&pref_shard->lock);
-        task = pref_shard->queue.pop(&pref_shard->queue, now);
-        pthread_mutex_unlock(&pref_shard->lock);
-
-        /* --- Work stealing: scan other shards without blocking --- */
-        if (!task) {
-            task = worker_steal_task(pool, pref, now);
-        }
-
-        /* --- Block on preferred shard until work arrives or shutdown --- */
-        if (!task) {
+        /* --- Shard-affine fetch with robust fallback to work stealing --- */
+        while (!task && !self->should_stop && !pool->is_shutdown) {
+            /* 1. Try preferred shard (fast path) */
             pthread_mutex_lock(&pref_shard->lock);
-            while (pref_shard->queue.head == NULL
-                   && !self->should_stop
-                   && !pool->is_shutdown) {
-                pthread_cond_wait(&pref_shard->cond, &pref_shard->lock);
-            }
-            if (self->should_stop || pool->is_shutdown) {
-                pthread_mutex_unlock(&pref_shard->lock);
-                break;
-            }
-            now = ttak_get_tick_count();
             task = pref_shard->queue.pop(&pref_shard->queue, now);
             pthread_mutex_unlock(&pref_shard->lock);
+            if (task) break;
+
+            /* 2. Try stealing from other shards (throughput path) */
+            task = worker_steal_task(pool, pref, now);
+            if (task) break;
+
+            /* 3. Still idle? Block on preferred shard's CV until signaled (wait path) */
+            pthread_mutex_lock(&pref_shard->lock);
+            if (pref_shard->queue.head == NULL && !self->should_stop && !pool->is_shutdown) {
+                pthread_cond_wait(&pref_shard->cond, &pref_shard->lock);
+            }
+            pthread_mutex_unlock(&pref_shard->lock);
+
+            /* Update timestamp for the next attempt */
+            now = ttak_get_tick_count();
         }
 
         if (task) {

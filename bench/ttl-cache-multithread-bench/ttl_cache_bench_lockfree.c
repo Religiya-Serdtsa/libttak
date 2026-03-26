@@ -206,6 +206,7 @@ static stats_t stats;
 static _Atomic uint64_t g_running = 1;
 static _Atomic uint64_t g_start_signal = 0;
 static _Atomic uint64_t g_threads_ready = 0;
+static _Atomic uint64_t g_abort_signal = 0;
 
 static ttak_shared_t *g_cache;
 static cache_table_t *g_table;
@@ -525,7 +526,12 @@ static void *worker_func(void *arg) {
     uint8_t local_checksum = 0;
 
     uint32_t warmup_ops = cfg.warmup_ops ? cfg.warmup_ops : 100000;
+    bool aborting = false;
     for (uint32_t i = 0; i < warmup_ops; ++i) {
+        if (TTAK_FAST_ATOMIC_LOAD_U64(&g_abort_signal)) {
+            aborting = true;
+            break;
+        }
         uint64_t now_ns = bench_now_ns();
         uint64_t key = bench_select_key(ctx);
         ttak_epoch_enter();
@@ -540,6 +546,9 @@ static void *worker_func(void *arg) {
             bench_perform_write(ctx, table, bench_select_key(ctx), write_stamp, &local_evictions, &local_retired);
         }
     }
+    if (aborting) {
+        goto worker_cleanup;
+    }
     local_reads = local_writes = local_hits = local_misses = local_expired = 0;
     local_evictions = local_retired = 0;
     local_ticks = 0;
@@ -547,12 +556,15 @@ static void *worker_func(void *arg) {
 
     TTAK_FAST_ATOMIC_ADD_U64(&g_threads_ready, 1);
     while (TTAK_FAST_ATOMIC_LOAD_U64(&g_start_signal) == 0) {
+        if (TTAK_FAST_ATOMIC_LOAD_U64(&g_abort_signal)) {
+            goto worker_cleanup;
+        }
 #if defined(__x86_64__) || defined(__i386__)
         __asm__ volatile ("pause");
 #endif
     }
 
-    while (TTAK_FAST_ATOMIC_LOAD_U64(&g_running) & 0xFF) {
+    while ((TTAK_FAST_ATOMIC_LOAD_U64(&g_running) & 0xFF) && !TTAK_FAST_ATOMIC_LOAD_U64(&g_abort_signal)) {
         bool sample_tick = ((latency_counter++ & g_latency_mask) == 0);
         uint64_t start = sample_tick ? bench_read_cycles() : 0;
         uint32_t ops_this_batch = 0;
@@ -612,6 +624,7 @@ static void *worker_func(void *arg) {
         }
     }
 
+worker_cleanup:
     if (local_reads || local_writes || local_hits || local_misses || local_expired || local_evictions || local_retired || local_ticks) {
         TTAK_FAST_ATOMIC_ADD_U64(&stats.read_ops, local_reads);
         TTAK_FAST_ATOMIC_ADD_U64(&stats.write_ops, local_writes);
@@ -670,6 +683,7 @@ static int detect_worker_threads(void) {
 }
 
 int main(void) {
+    int exit_code = 0;
     /* Eagerly initialize library subsystems to prevent lazy-init overhead */
     ttak_epoch_subsystem_init();
     
@@ -861,23 +875,55 @@ int main(void) {
     }
     
     ttak_thread_pool_t *pool = ttak_thread_pool_create(cfg.num_threads + 1, 0, 0);
-    
+    if (!pool) {
+        fprintf(stderr, "Failed to create thread pool (workers=%d)\n", cfg.num_threads + 1);
+        return 1;
+    }
+
     /* Pre-warm the shard directory and submit tasks */
     for (int i = 0; i < cfg.num_threads; i++) {
         g_workers[i].owner = ttak_owner_create(TTAK_OWNER_SAFE_DEFAULT);
         g_cache->add_owner(g_cache, g_workers[i].owner);
-        ttak_thread_pool_submit_task(pool, worker_func, &g_workers[i], 0, 0);
+        if (!ttak_thread_pool_submit_task(pool, worker_func, &g_workers[i], 0, 0)) {
+            fprintf(stderr, "Failed to schedule worker %d\n", i);
+            exit_code = 1;
+            goto abort_workers;
+        }
     }
-    ttak_thread_pool_submit_task(pool, maintenance_task, NULL, 0, 0);
+    if (!ttak_thread_pool_submit_task(pool, maintenance_task, NULL, 0, 0)) {
+        fprintf(stderr, "Failed to schedule maintenance task\n");
+        exit_code = 1;
+        goto abort_workers;
+    }
 
     /* 
      * WAIT FOR ALL WORKERS TO BE FULLY WARMED UP 
      * This ensures t=1s starts at full velocity.
      */
-    while (TTAK_FAST_ATOMIC_LOAD_U64(&g_threads_ready) < (uint64_t)cfg.num_threads) {
+    printf("Warming up %d worker threads...\n", cfg.num_threads);
+    const uint64_t warmup_timeout_ns = 60ULL * 1000ULL * 1000ULL * 1000ULL;
+    uint64_t warmup_start_ns = bench_now_ns();
+    uint64_t last_report_ns = warmup_start_ns;
+    while (true) {
+        uint64_t ready = TTAK_FAST_ATOMIC_LOAD_U64(&g_threads_ready);
+        if (ready >= (uint64_t)cfg.num_threads) {
+            break;
+        }
 #if defined(__x86_64__) || defined(__i386__)
         __asm__ volatile ("pause");
 #endif
+        bench_usleep_us(1000);
+        uint64_t now_ns = bench_now_ns();
+        if (now_ns - last_report_ns >= 1000000000ULL) {
+            printf("  warmup: %" PRIu64 "/%d ready\n", ready, cfg.num_threads);
+            fflush(stdout);
+            last_report_ns = now_ns;
+        }
+        if (now_ns - warmup_start_ns > warmup_timeout_ns) {
+            fprintf(stderr, "ERROR: worker warmup timed out (%" PRIu64 "/%d ready)\n", ready, cfg.num_threads);
+            exit_code = 1;
+            goto abort_workers;
+        }
     }
 
     printf("Workers: %d (maintenance threads: 1) | write_pct=%u | ttl_ns=%" PRIu64 " | batch=%u | keyspace=%" PRIu64 " hot=%" PRIu64 " (%u%%)\n",
@@ -916,6 +962,16 @@ int main(void) {
     }
 
     TTAK_FAST_ATOMIC_STORE_BOOL(&g_running, 0);
-    ttak_thread_pool_destroy(pool);
-    return 0;
+    goto cleanup;
+
+abort_workers:
+    TTAK_FAST_ATOMIC_STORE_BOOL(&g_abort_signal, 1);
+    TTAK_FAST_ATOMIC_STORE_BOOL(&g_running, 0);
+    TTAK_FAST_ATOMIC_STORE_BOOL(&g_start_signal, 1);
+
+cleanup:
+    if (pool) {
+        ttak_thread_pool_destroy(pool);
+    }
+    return exit_code;
 }
