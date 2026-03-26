@@ -87,7 +87,7 @@ SRC_DIRS = src/ht src/thread src/timing src/mem src/async src/priority \
            src/atomic src/sync src/math src/tree src/container \
            src/security src/mem_tree src/limit src/stats src/log \
            src/unsafe src/shared src/mask src/phys/dimless src/io \
-           src/net src/phys/mem src/script
+           src/net src/net/core src/phys/mem src/script
 
 SRCS = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
 ifeq ($(BUILD_PROFILE),tcc)
