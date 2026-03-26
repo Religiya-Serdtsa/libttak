@@ -105,6 +105,7 @@ void ttak_net_session_mgr_init(ttak_net_session_mgr_t *mgr, bool async_offload) 
     if (!mgr) return;
     pthread_once(&net_port_once, net_port_bootstrap);
     ttak_rwlock_init(&mgr->lock);
+    mgr->head = NULL;
     mgr->next_id = 1;
     mgr->policy_flags = 0;
     mgr->retire_head = NULL;
