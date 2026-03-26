@@ -130,13 +130,19 @@ void *ttak_worker_routine(void *arg) {
 
             /* 3. Still idle? Block on preferred shard's CV until signaled (wait path) */
             pthread_mutex_lock(&pref_shard->lock);
-            if (pref_shard->queue.head == NULL && !self->should_stop && !pool->is_shutdown) {
+            while (pref_shard->queue.head == NULL
+                   && !self->should_stop
+                   && !pool->is_shutdown) {
                 pthread_cond_wait(&pref_shard->cond, &pref_shard->lock);
             }
-            pthread_mutex_unlock(&pref_shard->lock);
-
-            /* Update timestamp for the next attempt */
+            if (self->should_stop || pool->is_shutdown) {
+                pthread_mutex_unlock(&pref_shard->lock);
+                break;
+            }
             now = ttak_get_tick_count();
+            task = pref_shard->queue.pop(&pref_shard->queue, now);
+            pthread_mutex_unlock(&pref_shard->lock);
+            if (task) break;
         }
 
         if (task) {

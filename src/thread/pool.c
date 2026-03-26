@@ -212,16 +212,17 @@ _Bool ttak_thread_pool_schedule_task(ttak_thread_pool_t *pool, ttak_task_t *task
     }
 
     shard->queue.push(&shard->queue, task, priority, now);
-    
-    /* 
-     * Wake up affinity-bound workers on this shard.
-     * Also signal other shards so that idle workers there can perform work stealing.
-     * This prevents starvation when long-running tasks are unevenly distributed.
+    pthread_cond_signal(&shard->cond);
+    pthread_mutex_unlock(&shard->lock);
+
+    /*
+     * Wake idle workers on other shards as a work-stealing hint without
+     * keeping this shard's mutex locked.
      */
     for (size_t s = 0; s < TTAK_THREAD_POOL_SHARDS; s++) {
+        if (s == shard_idx) continue;
         pthread_cond_signal(&pool->shards[s].cond);
     }
-    pthread_mutex_unlock(&shard->lock);
 
     return 1;
 }
