@@ -16,14 +16,6 @@
     fprintf(stderr, "[PASS] %s\n", message); \
 } while(0)
 
-#if EMBEDDED
-#define EXPECTED_GENERAL_TIER TTAK_ALLOC_TIER_BUDDY
-#define GENERAL_TIER_LABEL "BUDDY"
-#else
-#define EXPECTED_GENERAL_TIER TTAK_ALLOC_TIER_GENERAL
-#define GENERAL_TIER_LABEL "GENERAL"
-#endif
-
 // Function to get a dummy current timestamp
 static uint64_t get_test_tick_count(void) {
     static uint64_t tick = 1;
@@ -87,21 +79,21 @@ void test_vma_allocator(void) {
 }
 
 void test_general_allocator(void) {
-    fprintf(stderr, "\n--- Running General Allocator Tests ---\n");
+    fprintf(stderr, "\n--- Running Large Allocator Routing Tests ---\n");
     size_t sizes[] = {1024 * 64, 1024 * 1024}; // Large sizes
     for (int i = 0; i < sizeof(sizes) / sizeof(sizes[0]); ++i) {
         size_t test_size = sizes[i];
-        fprintf(stderr, "Testing General alloc for size %zu...\n", test_size);
+        fprintf(stderr, "Testing large alloc for size %zu...\n", test_size);
 
         // Allocate
         uint64_t now = get_test_tick_count();
         void* ptr = ttak_mem_alloc_safe(test_size, 100, now, false, false, true, false, TTAK_MEM_DEFAULT);
-        TEST_ASSERT(ptr != NULL, "General alloc returned non-NULL");
+        TEST_ASSERT(ptr != NULL, "Large alloc returned non-NULL");
 
         ttak_mem_header_t* header = (ttak_mem_header_t*)ptr - 1;
         TEST_ASSERT(header->magic == TTAK_MAGIC_NUMBER, "Header magic is correct");
         TEST_ASSERT(header->size == test_size, "Header reports correct user size");
-        TEST_ASSERT(header->allocation_tier == EXPECTED_GENERAL_TIER, "Allocation tier is " GENERAL_TIER_LABEL);
+        TEST_ASSERT(header->allocation_tier == TTAK_ALLOC_TIER_VMA, "Allocation tier is VMA");
         TEST_ASSERT(header->freed == false, "Header reports not freed");
 
         // Write some data
@@ -110,7 +102,7 @@ void test_general_allocator(void) {
 
         // Free
         ttak_mem_free(ptr);
-        fprintf(stderr, "General alloc for size %zu passed.\n", test_size);
+        fprintf(stderr, "Large alloc for size %zu passed.\n", test_size);
     }
 }
 

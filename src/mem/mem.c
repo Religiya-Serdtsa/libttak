@@ -327,7 +327,7 @@ void TTAK_HOT_PATH *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, ui
     }
 
     // --- Tier 2: VMA ---
-    if (!header && size > 0 && size <= 256 && lifetime_ticks < TT_SECOND(1)) {
+    if (!header && size > 0 && lifetime_ticks < TT_SECOND(1)) {
         header = ttak_mem_vma_alloc_internal(size);
         if (header) allocated_tier = TTAK_ALLOC_TIER_VMA;
     }
