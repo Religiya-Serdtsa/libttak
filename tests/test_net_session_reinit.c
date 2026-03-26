@@ -23,12 +23,13 @@ static int make_client_socket(struct sockaddr_in *addr) {
     if (fd < 0) return -1;
     memset(addr, 0, sizeof(*addr));
     addr->sin_family = AF_INET;
-    addr->sin_port = htons(1);
+    addr->sin_port = htons(49152);
     addr->sin_addr.s_addr = htonl(INADDR_LOOPBACK);
     return fd;
 }
 
 int main(void) {
+    enum { FILL_PATTERN = 0xAB };
     for (int i = 0; i < 64; ++i) {
         uint64_t now = ttak_get_tick_count();
         ttak_owner_t *owner = ttak_owner_create(TTAK_OWNER_SAFE_DEFAULT);
@@ -54,7 +55,9 @@ int main(void) {
                                       UINT64_MAX,
                                       now);
         if (bind_status != TTAK_IO_SUCCESS) {
-#ifndef _WIN32
+#ifdef _WIN32
+            closesocket(fd);
+#else
             close(fd);
 #endif
             ttak_net_endpoint_destroy(endpoint, owner, now);
@@ -63,7 +66,7 @@ int main(void) {
         }
 
         ttak_net_session_mgr_t mgr;
-        memset(&mgr, 0xAB, sizeof(mgr));
+        memset(&mgr, FILL_PATTERN, sizeof(mgr));
         ttak_net_session_mgr_init(&mgr, false);
 
         ttak_net_session_t *session =
