@@ -238,7 +238,7 @@ void ttak_set_t_local_state(ttak_thread_state_t *val) {
     pthread_setspecific(g_tls_key, val);
 }
 #else
-_Thread_local ttak_thread_state_t *t_local_state = NULL;
+__attribute__((visibility("default"))) _Thread_local ttak_thread_state_t *t_local_state = NULL;
 #endif
 
 /**
