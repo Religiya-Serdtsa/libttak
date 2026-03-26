@@ -1,0 +1,5 @@
+<map id="ttak_pool_shard_t" name="ttak_pool_shard_t">
+<area shape="rect" id="node1" title="One independent queue shard with its own lock and condition variable." alt="" coords="23,199,148,225"/>
+<area shape="rect" id="node2" href="$struct____internal__ttak__proc__priority__queue__t.html" title=" " alt="" coords="16,95,155,136"/>
+<area shape="rect" id="node3" href="$struct____internal__ttak__qnode__t.html" title=" " alt="" coords="5,5,165,32"/>
+</map>

@@ -1,5 +1,5 @@
-\doxysection{include/ttak/security/sha256.h File Reference}
-\hypertarget{sha256_8h}{}\label{sha256_8h}\index{include/ttak/security/sha256.h@{include/ttak/security/sha256.h}}
+\hypertarget{sha256_8h}{}\doxysection{include/ttak/security/sha256.h File Reference}
+\label{sha256_8h}\index{include/ttak/security/sha256.h@{include/ttak/security/sha256.h}}
 
 
 Minimal SHA-\/256 hash interface.  
@@ -7,31 +7,32 @@ Minimal SHA-\/256 hash interface.
 
 {\ttfamily \#include $<$stddef.\+h$>$}\newline
 {\ttfamily \#include $<$stdint.\+h$>$}\newline
-Include dependency graph for sha256.\+h\+:\nopagebreak
+Include dependency graph for sha256.\+h\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=206pt]{sha256_8h__incl}
+\includegraphics[width=198pt]{sha256_8h__incl}
 \end{center}
 \end{figure}
-\doxysubsubsection*{Classes}
+\doxysubsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
 struct \mbox{\hyperlink{structSHA256__CTX}{SHA256\+\_\+\+CTX}}
 \begin{DoxyCompactList}\small\item\em SHA-\/256 incremental hash context. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\doxysubsubsection*{Macros}
+\doxysubsection*{Macros}
 \begin{DoxyCompactItemize}
 \item 
 \#define \mbox{\hyperlink{sha256_8h_a9c1fe69ad43d4ca74b84303a0ed64f2f}{SHA256\+\_\+\+BLOCK\+\_\+\+SIZE}}~32
 \begin{DoxyCompactList}\small\item\em Output digest length in bytes. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\doxysubsubsection*{Functions}
+\doxysubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \mbox{\hyperlink{sha256_8h_ade6fde6ef9ea137449d72891931c77ef}{sha256\+\_\+init}} (\mbox{\hyperlink{structSHA256__CTX}{SHA256\+\_\+\+CTX}} \texorpdfstring{$\ast$}{*}ctx)
+void \mbox{\hyperlink{sha256_8h_ade6fde6ef9ea137449d72891931c77ef}{sha256\+\_\+init}} (\mbox{\hyperlink{structSHA256__CTX}{SHA256\+\_\+\+CTX}} $\ast$ctx)
 \begin{DoxyCompactList}\small\item\em Initialises a SHA-\/256 context with the standard IV. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{sha256_8h_ad50c7f40296b547daf5b9ebd5d7de32d}{sha256\+\_\+update}} (\mbox{\hyperlink{structSHA256__CTX}{SHA256\+\_\+\+CTX}} \texorpdfstring{$\ast$}{*}ctx, const uint8\+\_\+t data\mbox{[}$\,$\mbox{]}, size\+\_\+t len)
+void \mbox{\hyperlink{sha256_8h_ad50c7f40296b547daf5b9ebd5d7de32d}{sha256\+\_\+update}} (\mbox{\hyperlink{structSHA256__CTX}{SHA256\+\_\+\+CTX}} $\ast$ctx, const uint8\+\_\+t data\mbox{[}$\,$\mbox{]}, size\+\_\+t len)
 \begin{DoxyCompactList}\small\item\em Feeds bytes into an in-\/progress SHA-\/256 computation. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{sha256_8h_a06e2c69855478e4860ba1b82e8b1fbc5}{sha256\+\_\+final}} (\mbox{\hyperlink{structSHA256__CTX}{SHA256\+\_\+\+CTX}} \texorpdfstring{$\ast$}{*}ctx, uint8\+\_\+t hash\mbox{[}$\,$\mbox{]})
+void \mbox{\hyperlink{sha256_8h_a06e2c69855478e4860ba1b82e8b1fbc5}{sha256\+\_\+final}} (\mbox{\hyperlink{structSHA256__CTX}{SHA256\+\_\+\+CTX}} $\ast$ctx, uint8\+\_\+t hash\mbox{[}$\,$\mbox{]})
 \begin{DoxyCompactList}\small\item\em Finalises the digest and writes 32 bytes to {\ttfamily hash}. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
@@ -40,12 +41,8 @@ Minimal SHA-\/256 hash interface.
 
 Provides a standard init/update/final streaming hash API. The output digest is 32 bytes (256 bits) written to the caller-\/supplied array in ttak\+\_\+sha256\+\_\+final(). 
 
-Definition in file \mbox{\hyperlink{sha256_8h_source}{sha256.\+h}}.
-
-
-
 \doxysubsection{Macro Definition Documentation}
-\Hypertarget{sha256_8h_a9c1fe69ad43d4ca74b84303a0ed64f2f}\label{sha256_8h_a9c1fe69ad43d4ca74b84303a0ed64f2f} 
+\mbox{\Hypertarget{sha256_8h_a9c1fe69ad43d4ca74b84303a0ed64f2f}\label{sha256_8h_a9c1fe69ad43d4ca74b84303a0ed64f2f}} 
 \index{sha256.h@{sha256.h}!SHA256\_BLOCK\_SIZE@{SHA256\_BLOCK\_SIZE}}
 \index{SHA256\_BLOCK\_SIZE@{SHA256\_BLOCK\_SIZE}!sha256.h@{sha256.h}}
 \doxysubsubsection{\texorpdfstring{SHA256\_BLOCK\_SIZE}{SHA256\_BLOCK\_SIZE}}
@@ -57,16 +54,16 @@ Output digest length in bytes.
 
 
 
-Definition at line \mbox{\hyperlink{sha256_8h_source_l00021}{21}} of file \mbox{\hyperlink{sha256_8h_source}{sha256.\+h}}.
+Definition at line 21 of file sha256.\+h.
 
 
 
 \doxysubsection{Function Documentation}
-\Hypertarget{sha256_8h_a06e2c69855478e4860ba1b82e8b1fbc5}\label{sha256_8h_a06e2c69855478e4860ba1b82e8b1fbc5} 
+\mbox{\Hypertarget{sha256_8h_a06e2c69855478e4860ba1b82e8b1fbc5}\label{sha256_8h_a06e2c69855478e4860ba1b82e8b1fbc5}} 
 \index{sha256.h@{sha256.h}!sha256\_final@{sha256\_final}}
 \index{sha256\_final@{sha256\_final}!sha256.h@{sha256.h}}
 \doxysubsubsection{\texorpdfstring{sha256\_final()}{sha256\_final()}}
-{\footnotesize\ttfamily void sha256\+\_\+final (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structSHA256__CTX}{SHA256\+\_\+\+CTX}} \texorpdfstring{$\ast$}{*}}]{ctx,  }\item[{uint8\+\_\+t}]{hash\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void sha256\+\_\+final (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structSHA256__CTX}{SHA256\+\_\+\+CTX}} $\ast$}]{ctx,  }\item[{uint8\+\_\+t}]{hash\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
 
 
 
@@ -79,11 +76,11 @@ Finalises the digest and writes 32 bytes to {\ttfamily hash}.
 {\em hash} & Output buffer receiving the 32-\/byte digest. \\
 \hline
 \end{DoxyParams}
-\Hypertarget{sha256_8h_ade6fde6ef9ea137449d72891931c77ef}\label{sha256_8h_ade6fde6ef9ea137449d72891931c77ef} 
+\mbox{\Hypertarget{sha256_8h_ade6fde6ef9ea137449d72891931c77ef}\label{sha256_8h_ade6fde6ef9ea137449d72891931c77ef}} 
 \index{sha256.h@{sha256.h}!sha256\_init@{sha256\_init}}
 \index{sha256\_init@{sha256\_init}!sha256.h@{sha256.h}}
 \doxysubsubsection{\texorpdfstring{sha256\_init()}{sha256\_init()}}
-{\footnotesize\ttfamily void sha256\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structSHA256__CTX}{SHA256\+\_\+\+CTX}} \texorpdfstring{$\ast$}{*}}]{ctx }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void sha256\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structSHA256__CTX}{SHA256\+\_\+\+CTX}} $\ast$}]{ctx }\end{DoxyParamCaption})}
 
 
 
@@ -94,11 +91,11 @@ Initialises a SHA-\/256 context with the standard IV.
 {\em ctx} & Context to initialise. \\
 \hline
 \end{DoxyParams}
-\Hypertarget{sha256_8h_ad50c7f40296b547daf5b9ebd5d7de32d}\label{sha256_8h_ad50c7f40296b547daf5b9ebd5d7de32d} 
+\mbox{\Hypertarget{sha256_8h_ad50c7f40296b547daf5b9ebd5d7de32d}\label{sha256_8h_ad50c7f40296b547daf5b9ebd5d7de32d}} 
 \index{sha256.h@{sha256.h}!sha256\_update@{sha256\_update}}
 \index{sha256\_update@{sha256\_update}!sha256.h@{sha256.h}}
 \doxysubsubsection{\texorpdfstring{sha256\_update()}{sha256\_update()}}
-{\footnotesize\ttfamily void sha256\+\_\+update (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structSHA256__CTX}{SHA256\+\_\+\+CTX}} \texorpdfstring{$\ast$}{*}}]{ctx,  }\item[{const uint8\+\_\+t}]{data\mbox{[}$\,$\mbox{]},  }\item[{size\+\_\+t}]{len }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void sha256\+\_\+update (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structSHA256__CTX}{SHA256\+\_\+\+CTX}} $\ast$}]{ctx,  }\item[{const uint8\+\_\+t}]{data\mbox{[}$\,$\mbox{]},  }\item[{size\+\_\+t}]{len }\end{DoxyParamCaption})}
 
 
 

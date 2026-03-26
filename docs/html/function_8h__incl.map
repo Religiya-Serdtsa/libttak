@@ -1,0 +1,9 @@
+<map id="include/ttak/async/function.h" name="include/ttak/async/function.h">
+<area shape="rect" id="node1" title="Convenience wrappers for fire&#45;and&#45;forget async jobs that return futures." alt="" coords="84,5,211,47"/>
+<area shape="rect" id="node2" href="$future_8h.html" title="Simple blocking future for async task result retrieval." alt="" coords="27,169,158,196"/>
+<area shape="rect" id="node5" href="$promise_8h.html" title="One&#45;shot promise for fulfilling a ttak_future_t from a worker thread." alt="" coords="76,95,219,121"/>
+<area shape="rect" id="node7" href="$task_8h.html" title=" " alt="" coords="243,95,366,121"/>
+<area shape="rect" id="node3" href="$pthread_8h.html" title="POSIX thread compatibility shim." alt="" coords="5,244,81,271"/>
+<area shape="rect" id="node4" title=" " alt="" coords="106,244,181,271"/>
+<area shape="rect" id="node6" title=" " alt="" coords="227,169,291,196"/>
+</map>

@@ -1,0 +1,210 @@
+\hypertarget{shard__map_8h}{}\doxysection{internal/ttak/shard\+\_\+map.h File Reference}
+\label{shard__map_8h}\index{internal/ttak/shard\_map.h@{internal/ttak/shard\_map.h}}
+
+
+Deterministic shard mapping utilities for the concurrent async runtime.  
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+Include dependency graph for shard\+\_\+map.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=198pt]{shard__map_8h__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{shard__map_8h_a98509cc875582955a3cfad6fa65fd49b}{TTAK\+\_\+\+POOL\+\_\+\+SHARD\+\_\+\+COUNT}}~8
+\item 
+\#define \mbox{\hyperlink{shard__map_8h_a74b65aa421e481c48259a3834c409030}{TTAK\+\_\+\+POOL\+\_\+\+SHARD\+\_\+\+LOG2}}~3
+\item 
+\#define \mbox{\hyperlink{shard__map_8h_a602b4d16adcd7ec49d608228cd2c1fd9}{TTAK\+\_\+\+POOL\+\_\+\+SHARD\+\_\+\+MASK}}~(\mbox{\hyperlink{shard__map_8h_a98509cc875582955a3cfad6fa65fd49b}{TTAK\+\_\+\+POOL\+\_\+\+SHARD\+\_\+\+COUNT}} -\/ 1)
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{shard__map_8h_af4f771db1edc0debc5a5162318d21a98}{ttak\+\_\+shard\+\_\+hash\+\_\+to\+\_\+coords}} (uint64\+\_\+t hash, uint32\+\_\+t $\ast$row, uint32\+\_\+t $\ast$col)
+\begin{DoxyCompactList}\small\item\em Convert a task hash into (row, col) shard coordinates. \end{DoxyCompactList}\item 
+static size\+\_\+t \mbox{\hyperlink{shard__map_8h_a8bb467e81c3843e468c99b69388204b5}{ttak\+\_\+shard\+\_\+for\+\_\+hash}} (uint64\+\_\+t hash)
+\begin{DoxyCompactList}\small\item\em Map a task hash to a shard index via the 2D routing table. \end{DoxyCompactList}\item 
+static size\+\_\+t \mbox{\hyperlink{shard__map_8h_a883e8e3731a34abb05d8e59069257496}{ttak\+\_\+shard\+\_\+for\+\_\+worker}} (size\+\_\+t worker\+\_\+idx)
+\begin{DoxyCompactList}\small\item\em Map a worker index to its preferred shard. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+static const uint8\+\_\+t \mbox{\hyperlink{shard__map_8h_af9aed54a211ccb4145390f93c2c1ec12}{shard\+\_\+route\+\_\+table}} \mbox{[}\mbox{\hyperlink{shard__map_8h_a98509cc875582955a3cfad6fa65fd49b}{TTAK\+\_\+\+POOL\+\_\+\+SHARD\+\_\+\+COUNT}}\mbox{]}\mbox{[}\mbox{\hyperlink{shard__map_8h_a98509cc875582955a3cfad6fa65fd49b}{TTAK\+\_\+\+POOL\+\_\+\+SHARD\+\_\+\+COUNT}}\mbox{]}
+\begin{DoxyCompactList}\small\item\em 8×8 Latin-\/square routing table. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Deterministic shard mapping utilities for the concurrent async runtime. 
+
+Implements a deterministic, array-\/based computation model for routing task hashes to shard indices. The mapping pipeline is\+:
+
+task\+\_\+hash → (row, col) coordinates → routing table lookup → shard index
+
+The routing table is pre-\/computed as an 8×8 Latin square, guaranteeing that every shard appears exactly once in each row and each column. This provides uniform dispersion similar in spirit to Orthogonal Latin Square constructions, minimising clustering and collision across shards.
+
+All functions are deterministic, pure, and side-\/effect-\/free. 
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{shard__map_8h_a98509cc875582955a3cfad6fa65fd49b}\label{shard__map_8h_a98509cc875582955a3cfad6fa65fd49b}} 
+\index{shard\_map.h@{shard\_map.h}!TTAK\_POOL\_SHARD\_COUNT@{TTAK\_POOL\_SHARD\_COUNT}}
+\index{TTAK\_POOL\_SHARD\_COUNT@{TTAK\_POOL\_SHARD\_COUNT}!shard\_map.h@{shard\_map.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_POOL\_SHARD\_COUNT}{TTAK\_POOL\_SHARD\_COUNT}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+POOL\+\_\+\+SHARD\+\_\+\+COUNT~8}
+
+Default shard count — must be a power of two, maximum 8. 
+
+Definition at line 25 of file shard\+\_\+map.\+h.
+
+\mbox{\Hypertarget{shard__map_8h_a74b65aa421e481c48259a3834c409030}\label{shard__map_8h_a74b65aa421e481c48259a3834c409030}} 
+\index{shard\_map.h@{shard\_map.h}!TTAK\_POOL\_SHARD\_LOG2@{TTAK\_POOL\_SHARD\_LOG2}}
+\index{TTAK\_POOL\_SHARD\_LOG2@{TTAK\_POOL\_SHARD\_LOG2}!shard\_map.h@{shard\_map.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_POOL\_SHARD\_LOG2}{TTAK\_POOL\_SHARD\_LOG2}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+POOL\+\_\+\+SHARD\+\_\+\+LOG2~3}
+
+Log₂ of TTAK\+\_\+\+POOL\+\_\+\+SHARD\+\_\+\+COUNT (used for bit shifts). 
+
+Definition at line 28 of file shard\+\_\+map.\+h.
+
+\mbox{\Hypertarget{shard__map_8h_a602b4d16adcd7ec49d608228cd2c1fd9}\label{shard__map_8h_a602b4d16adcd7ec49d608228cd2c1fd9}} 
+\index{shard\_map.h@{shard\_map.h}!TTAK\_POOL\_SHARD\_MASK@{TTAK\_POOL\_SHARD\_MASK}}
+\index{TTAK\_POOL\_SHARD\_MASK@{TTAK\_POOL\_SHARD\_MASK}!shard\_map.h@{shard\_map.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_POOL\_SHARD\_MASK}{TTAK\_POOL\_SHARD\_MASK}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+POOL\+\_\+\+SHARD\+\_\+\+MASK~(\mbox{\hyperlink{shard__map_8h_a98509cc875582955a3cfad6fa65fd49b}{TTAK\+\_\+\+POOL\+\_\+\+SHARD\+\_\+\+COUNT}} -\/ 1)}
+
+Mask to reduce a coordinate to \mbox{[}0, TTAK\+\_\+\+POOL\+\_\+\+SHARD\+\_\+\+COUNT). 
+
+Definition at line 31 of file shard\+\_\+map.\+h.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{shard__map_8h_a8bb467e81c3843e468c99b69388204b5}\label{shard__map_8h_a8bb467e81c3843e468c99b69388204b5}} 
+\index{shard\_map.h@{shard\_map.h}!ttak\_shard\_for\_hash@{ttak\_shard\_for\_hash}}
+\index{ttak\_shard\_for\_hash@{ttak\_shard\_for\_hash}!shard\_map.h@{shard\_map.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_shard\_for\_hash()}{ttak\_shard\_for\_hash()}}
+{\footnotesize\ttfamily static size\+\_\+t ttak\+\_\+shard\+\_\+for\+\_\+hash (\begin{DoxyParamCaption}\item[{uint64\+\_\+t}]{hash }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Map a task hash to a shard index via the 2D routing table. 
+
+This is the primary deterministic mapping function. Given any 64-\/bit hash the output is always in \mbox{[}0, TTAK\+\_\+\+POOL\+\_\+\+SHARD\+\_\+\+COUNT) and is reproducible across runs.
+
+
+\begin{DoxyParams}{Parameters}
+{\em hash} & Task identifier hash. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Shard index in \mbox{[}0, TTAK\+\_\+\+POOL\+\_\+\+SHARD\+\_\+\+COUNT). 
+\end{DoxyReturn}
+
+
+Definition at line 89 of file shard\+\_\+map.\+h.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=323pt]{shard__map_8h_a8bb467e81c3843e468c99b69388204b5_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{shard__map_8h_a883e8e3731a34abb05d8e59069257496}\label{shard__map_8h_a883e8e3731a34abb05d8e59069257496}} 
+\index{shard\_map.h@{shard\_map.h}!ttak\_shard\_for\_worker@{ttak\_shard\_for\_worker}}
+\index{ttak\_shard\_for\_worker@{ttak\_shard\_for\_worker}!shard\_map.h@{shard\_map.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_shard\_for\_worker()}{ttak\_shard\_for\_worker()}}
+{\footnotesize\ttfamily static size\+\_\+t ttak\+\_\+shard\+\_\+for\+\_\+worker (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{worker\+\_\+idx }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Map a worker index to its preferred shard. 
+
+Workers are spread across shards using modular arithmetic so that the initial affinity assignment is uniform regardless of thread count.
+
+
+\begin{DoxyParams}{Parameters}
+{\em worker\+\_\+idx} & Zero-\/based worker index. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Preferred shard index. 
+\end{DoxyReturn}
+
+
+Definition at line 105 of file shard\+\_\+map.\+h.
+
+\mbox{\Hypertarget{shard__map_8h_af4f771db1edc0debc5a5162318d21a98}\label{shard__map_8h_af4f771db1edc0debc5a5162318d21a98}} 
+\index{shard\_map.h@{shard\_map.h}!ttak\_shard\_hash\_to\_coords@{ttak\_shard\_hash\_to\_coords}}
+\index{ttak\_shard\_hash\_to\_coords@{ttak\_shard\_hash\_to\_coords}!shard\_map.h@{shard\_map.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_shard\_hash\_to\_coords()}{ttak\_shard\_hash\_to\_coords()}}
+{\footnotesize\ttfamily static void ttak\+\_\+shard\+\_\+hash\+\_\+to\+\_\+coords (\begin{DoxyParamCaption}\item[{uint64\+\_\+t}]{hash,  }\item[{uint32\+\_\+t $\ast$}]{row,  }\item[{uint32\+\_\+t $\ast$}]{col }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Convert a task hash into (row, col) shard coordinates. 
+
+Uses Fibonacci/multiplicative hashing with the 64-\/bit golden-\/ratio constant to project the hash into a bounded 2D coordinate space. The upper and lower halves of the mixed value are used independently to decorrelate the two axes.
+
+
+\begin{DoxyParams}{Parameters}
+{\em hash} & Task hash value. \\
+\hline
+{\em row} & Output\+: row coordinate in \mbox{[}0, TTAK\+\_\+\+POOL\+\_\+\+SHARD\+\_\+\+COUNT). \\
+\hline
+{\em col} & Output\+: column coordinate in \mbox{[}0, TTAK\+\_\+\+POOL\+\_\+\+SHARD\+\_\+\+COUNT). \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 66 of file shard\+\_\+map.\+h.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=323pt]{shard__map_8h_af4f771db1edc0debc5a5162318d21a98_icgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{shard__map_8h_af9aed54a211ccb4145390f93c2c1ec12}\label{shard__map_8h_af9aed54a211ccb4145390f93c2c1ec12}} 
+\index{shard\_map.h@{shard\_map.h}!shard\_route\_table@{shard\_route\_table}}
+\index{shard\_route\_table@{shard\_route\_table}!shard\_map.h@{shard\_map.h}}
+\doxysubsubsection{\texorpdfstring{shard\_route\_table}{shard\_route\_table}}
+{\footnotesize\ttfamily const uint8\+\_\+t shard\+\_\+route\+\_\+table\mbox{[}\mbox{\hyperlink{shard__map_8h_a98509cc875582955a3cfad6fa65fd49b}{TTAK\+\_\+\+POOL\+\_\+\+SHARD\+\_\+\+COUNT}}\mbox{]}\mbox{[}\mbox{\hyperlink{shard__map_8h_a98509cc875582955a3cfad6fa65fd49b}{TTAK\+\_\+\+POOL\+\_\+\+SHARD\+\_\+\+COUNT}}\mbox{]}\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{= \{}
+\DoxyCodeLine{    }
+\DoxyCodeLine{     \{ 0, 1, 2, 3, 4, 5, 6, 7 \},}
+\DoxyCodeLine{     \{ 1, 2, 3, 4, 5, 6, 7, 0 \},}
+\DoxyCodeLine{     \{ 2, 3, 4, 5, 6, 7, 0, 1 \},}
+\DoxyCodeLine{     \{ 3, 4, 5, 6, 7, 0, 1, 2 \},}
+\DoxyCodeLine{     \{ 4, 5, 6, 7, 0, 1, 2, 3 \},}
+\DoxyCodeLine{     \{ 5, 6, 7, 0, 1, 2, 3, 4 \},}
+\DoxyCodeLine{     \{ 6, 7, 0, 1, 2, 3, 4, 5 \},}
+\DoxyCodeLine{     \{ 7, 0, 1, 2, 3, 4, 5, 6 \},}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+8×8 Latin-\/square routing table. 
+
+shard\+\_\+route\+\_\+table\mbox{[}row\mbox{]}\mbox{[}col\mbox{]} gives the shard index for a task whose hash coordinates are (row, col). Each value 0-\/7 appears exactly once per row and once per column, ensuring uniform distribution and avoiding hot-\/shard clustering for structured hash inputs.
+
+Construction\+: entry (r, c) = (r + c) \% 8 (cyclic Latin square). 
+
+Definition at line 43 of file shard\+\_\+map.\+h.
+

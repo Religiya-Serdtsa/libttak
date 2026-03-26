@@ -1,0 +1,100 @@
+Follow these stages sequentially. Each block references the original sources you should imitate, the lesson files to open inside {\ttfamily tutorials/}, and the verification goal you should reach before moving on.\hypertarget{md_tutorials_CLONE_PATH_autotoc_md193}{}\doxysubsection{Orientation – Setup + Helper}\label{md_tutorials_CLONE_PATH_autotoc_md193}
+
+\begin{DoxyItemize}
+\item {\bfseries{Lessons\+:}} \mbox{\hyperlink{README.md_md_tutorials_01_getting_started_README}{01}}–\mbox{\hyperlink{README.md_md_tutorials_02_helper_workflow_README}{02}}
+\item {\bfseries{Goal\+:}} prepare your workspace, branch, and helper tool.
+\item {\bfseries{Checklist\+:}} helper builds cleanly; you have a log ready for “\+What I learned” notes.
+\end{DoxyItemize}\hypertarget{md_tutorials_CLONE_PATH_autotoc_md194}{}\doxysubsection{Stage 1 – Core Data + Logging}\label{md_tutorials_CLONE_PATH_autotoc_md194}
+
+\begin{DoxyItemize}
+\item {\bfseries{Lessons\+:}} \mbox{\hyperlink{README.md_md_tutorials_03_hash_table_buckets_README}{03}}–\mbox{\hyperlink{README.md_md_tutorials_08_logger_basics_README}{08}}
+\item {\bfseries{Goal\+:}} understand hash tables, containers, and logging.
+\item {\bfseries{Clone\+:}} {\ttfamily src/ht/\{hash.\+c,map.\+c,table.\+c\}}, {\ttfamily src/container/\{pool.\+c,ringbuf.\+c,set.\+c\}}, {\ttfamily src/log/logger.\+c}.
+\item {\bfseries{Checklist\+:}} re-\/implement map insert/find/remove; rebuild ring buffer push/pop; ensure {\ttfamily ttak\+\_\+logger\+\_\+log} prints to stderr.
+\end{DoxyItemize}\hypertarget{md_tutorials_CLONE_PATH_autotoc_md195}{}\doxysubsection{Stage 2 – Concurrency Primitives}\label{md_tutorials_CLONE_PATH_autotoc_md195}
+
+\begin{DoxyItemize}
+\item {\bfseries{Lessons\+:}} \mbox{\hyperlink{README.md_md_tutorials_09_mutex_primitives_README}{09}}–\mbox{\hyperlink{README.md_md_tutorials_11_portable_atomics_README}{11}}
+\item {\bfseries{Goal\+:}} rebuild sync + atomic basics.
+\item {\bfseries{Clone\+:}} {\ttfamily src/sync/\{sync.\+c,spinlock.\+c\}}, {\ttfamily src/atomic/atomic.\+c}, {\ttfamily include/stdatomic.\+h}.
+\item {\bfseries{Checklist\+:}} mutexes map directly onto pthreads; spinlock warning-\/free build; portable stdatomic fallback compiles on TCC.
+\end{DoxyItemize}\hypertarget{md_tutorials_CLONE_PATH_autotoc_md196}{}\doxysubsection{Stage 3 – Thread Pool \& Async}\label{md_tutorials_CLONE_PATH_autotoc_md196}
+
+\begin{DoxyItemize}
+\item {\bfseries{Lessons\+:}} \mbox{\hyperlink{README.md_md_tutorials_12_thread_pool_core_README}{12}}–\mbox{\hyperlink{README.md_md_tutorials_16_async_scheduler_README}{16}}
+\item {\bfseries{Goal\+:}} stitch together workers, futures, schedulers.
+\item {\bfseries{Clone\+:}} {\ttfamily src/thread/\{pool.\+c,worker.\+c\}}, {\ttfamily src/async/\{task.\+c,promise.\+c,future.\+c,sched.\+c\}}, {\ttfamily src/priority/\{queue.\+c,heap.\+c,scheduler.\+c\}}.
+\item {\bfseries{Checklist\+:}} submit jobs, complete them in order; understand {\ttfamily ttak\+\_\+owner\+\_\+t} callback usage.
+\end{DoxyItemize}\hypertarget{md_tutorials_CLONE_PATH_autotoc_md197}{}\doxysubsection{Stage 4 – Timing + Limiters + Stats}\label{md_tutorials_CLONE_PATH_autotoc_md197}
+
+\begin{DoxyItemize}
+\item {\bfseries{Lessons\+:}} \mbox{\hyperlink{README.md_md_tutorials_17_timing_services_README}{17}}–\mbox{\hyperlink{README.md_md_tutorials_19_stats_aggregator_README}{19}}
+\item {\bfseries{Goal\+:}} manage timers, rate limits, metrics.
+\item {\bfseries{Clone\+:}} {\ttfamily src/timing/\{timing.\+c,deadline.\+c\}}, {\ttfamily src/limit/limit.\+c}, {\ttfamily src/stats/stats.\+c}.
+\item {\bfseries{Checklist\+:}} {\ttfamily ttak\+\_\+get\+\_\+tick\+\_\+count} millisecond + nanosecond paths; token-\/bucket refill math; stats aggregator resets correctly.
+\end{DoxyItemize}\hypertarget{md_tutorials_CLONE_PATH_autotoc_md198}{}\doxysubsection{Stage 5 – Memory Systems}\label{md_tutorials_CLONE_PATH_autotoc_md198}
+
+\begin{DoxyItemize}
+\item {\bfseries{Lessons\+:}} \mbox{\hyperlink{README.md_md_tutorials_20_owner_subsystem_README}{20}}–\mbox{\hyperlink{README.md_md_tutorials_22_mem_tree_README}{22}}
+\item {\bfseries{Goal\+:}} re-\/create allocation, owners, mem-\/tree GC.
+\item {\bfseries{Clone\+:}} {\ttfamily src/mem/\{mem.\+c,owner.\+c,epoch\+\_\+gc.\+c\}}, {\ttfamily src/mem\+\_\+tree/mem\+\_\+tree.\+c}.
+\item {\bfseries{Checklist\+:}} owner resource register/execute flows; epoch GC rotates safely; {\ttfamily \+\_\+\+Thread\+\_\+local} guards compile.
+\end{DoxyItemize}\hypertarget{md_tutorials_CLONE_PATH_autotoc_md199}{}\doxysubsection{Stage 6 – Math \& Security}\label{md_tutorials_CLONE_PATH_autotoc_md199}
+
+\begin{DoxyItemize}
+\item {\bfseries{Lessons\+:}} \mbox{\hyperlink{README.md_md_tutorials_23_bigint_foundations_README}{23}}–\mbox{\hyperlink{README.md_md_tutorials_28_sha256_README}{28}}
+\item {\bfseries{Goal\+:}} handle big integers, divisors, crypto helpers.
+\item {\bfseries{Clone\+:}} {\ttfamily src/math/\{bigint.\+c,bigmul.\+c,bigreal.\+c,sum\+\_\+divisors.\+c,factor.\+c,ntt.\+c\}}, {\ttfamily src/security/sha256.\+c}.
+\item {\bfseries{Checklist\+:}} big-\/int SSO path, safe-\/mode policy for divisor sums, SHA-\/256 test vectors.
+\end{DoxyItemize}\hypertarget{md_tutorials_CLONE_PATH_autotoc_md200}{}\doxysubsection{Stage 7 – Trees + AST}\label{md_tutorials_CLONE_PATH_autotoc_md200}
+
+\begin{DoxyItemize}
+\item {\bfseries{Lessons\+:}} \mbox{\hyperlink{README.md_md_tutorials_29_ast_walking_README}{29}}–\mbox{\hyperlink{README.md_md_tutorials_31_btree_README}{31}}
+\item {\bfseries{Goal\+:}} practise recursive data structures.
+\item {\bfseries{Clone\+:}} {\ttfamily src/tree/\{ast.\+c,bplus.\+c,btree.\+c\}}.
+\item {\bfseries{Checklist\+:}} b+tree split/merge; AST visitor evaluation.
+\end{DoxyItemize}\hypertarget{md_tutorials_CLONE_PATH_autotoc_md201}{}\doxysubsection{Stage 8 – Application Layer}\label{md_tutorials_CLONE_PATH_autotoc_md201}
+
+\begin{DoxyItemize}
+\item {\bfseries{Lessons\+:}} \mbox{\hyperlink{README.md_md_tutorials_32_aliquot_integration_README}{32}}–\mbox{\hyperlink{README.md_md_tutorials_33_bench_suite_README}{33}}
+\item {\bfseries{Goal\+:}} connect everything inside {\ttfamily apps/immature/aliquot-\/tracker}.
+\item {\bfseries{Clone\+:}} {\ttfamily apps/immature/aliquot-\/tracker/$\ast$} (selected subsystems per section), plus {\ttfamily bench/} as optional exercises.
+\item {\bfseries{Checklist\+:}} job queue, ledger persistence, bigint auto-\/heal logging.
+\end{DoxyItemize}\hypertarget{md_tutorials_CLONE_PATH_autotoc_md202}{}\doxysubsection{Stage 9 – DANGEROUS (\+Unsafe)}\label{md_tutorials_CLONE_PATH_autotoc_md202}
+
+\begin{DoxyItemize}
+\item {\bfseries{Lessons\+:}} \mbox{\hyperlink{README.md_md_tutorials_34_dangerous_primer_README}{34}}–\mbox{\hyperlink{README.md_md_tutorials_35_context_bridge_README}{35}}
+\item {\bfseries{Goal\+:}} opt-\/in study of shared-\/memory bridges.
+\item {\bfseries{Clone\+:}} {\ttfamily src/unsafe/context.\+c}, {\ttfamily \mbox{\hyperlink{context_8h}{include/ttak/unsafe/context.\+h}}}, macros in {\ttfamily include/stdatomic.\+h}, and review {\ttfamily temp\+\_\+include}.
+\item {\bfseries{Checklist\+:}} read {\ttfamily \mbox{\hyperlink{tutorials_2DANGEROUS_2README_8md}{tutorials/\+DANGEROUS/\+README.\+md}}}, use {\ttfamily libttak\+\_\+unsafe.\+hlp}, verify helper program with the unsafe file, and document your understanding of ownership inheritance.
+\end{DoxyItemize}\hypertarget{md_tutorials_CLONE_PATH_autotoc_md203}{}\doxysubsection{Stage 10 – Trace + Shared Memory}\label{md_tutorials_CLONE_PATH_autotoc_md203}
+
+\begin{DoxyItemize}
+\item {\bfseries{Lessons\+:}} \mbox{\hyperlink{README.md_md_tutorials_36_trace_memory_README}{36}}–\mbox{\hyperlink{README.md_md_tutorials_38_ebr_shared_README}{38}}
+\item {\bfseries{Goal\+:}} instrument memory lifetimes, then study shared ownership and epoch-\/based reclamation flows.
+\item {\bfseries{Clone\+:}} {\ttfamily src/shared/shared.\+c}, {\ttfamily \mbox{\hyperlink{shared_8h}{include/ttak/shared/shared.\+h}}}, {\ttfamily src/mem/epoch\+\_\+gc.\+c}, and the sample harnesses under {\ttfamily tutorials/36-\/trace-\/memory}, {\ttfamily tutorials/37-\/shared-\/memory-\/ownership}, and {\ttfamily tutorials/38-\/ebr-\/shared}.
+\item {\bfseries{Checklist\+:}} capture a trace log and visualize it; verify bitmap-\/based owner admission; explain when protected vs. rough-\/share EBR access is safe.
+\end{DoxyItemize}\hypertarget{md_tutorials_CLONE_PATH_autotoc_md204}{}\doxysubsection{Stage 11 – Arena Families \& Signal Guards}\label{md_tutorials_CLONE_PATH_autotoc_md204}
+
+\begin{DoxyItemize}
+\item {\bfseries{Lessons\+:}} \mbox{\hyperlink{README.md_md_tutorials_39_detachable_memory_README}{39}}–\mbox{\hyperlink{README.md_md_tutorials_40_arena_memory_README}{40}}
+\item {\bfseries{Goal\+:}} practice the detachable allocator + cache heuristics, then replay the arena row lifecycle with the mem tree + epoch GC plumbing.
+\item {\bfseries{Clone\+:}} {\ttfamily src/mem/detachable.\+c}, {\ttfamily \mbox{\hyperlink{detachable_8h}{include/ttak/mem/detachable.\+h}}}, {\ttfamily \mbox{\hyperlink{tt__jmp_8h}{internal/tt\+\_\+jmp.\+h}}}, {\ttfamily src/mem/\{mem.\+c,epoch\+\_\+gc.\+c\}}, {\ttfamily src/mem\+\_\+tree/mem\+\_\+tree.\+c}, and the arena portions of {\ttfamily bench/ttl-\/cache-\/multithread-\/bench/ttl\+\_\+cache\+\_\+bench\+\_\+lockfree.\+c}.
+\item {\bfseries{Checklist\+:}} configure a detachable context with epoch protection, watch cache reuse vs. arena flush, wire a tracked arena row that releases its mem-\/tree node, and verify that {\ttfamily ttak\+\_\+epoch\+\_\+gc\+\_\+rotate} frees the retired buffer in the sample.
+\end{DoxyItemize}\hypertarget{md_tutorials_CLONE_PATH_autotoc_md205}{}\doxysubsection{Stage 12 – IO \& Network Stack}\label{md_tutorials_CLONE_PATH_autotoc_md205}
+
+\begin{DoxyItemize}
+\item {\bfseries{Lessons\+:}} \mbox{\hyperlink{README.md_md_tutorials_41_io_network_stack_README}{41}}–\mbox{\hyperlink{README.md_md_tutorials_42_io_guarded_streams_README}{42}}
+\item {\bfseries{Goal\+:}} build the guarded IO layer, zero-\/copy views, shared endpoints, and async poll flows that sit on top of detachable arenas + owners.
+\item {\bfseries{Clone\+:}} {\ttfamily src/io/\{io.\+c,sync.\+c,async.\+c,zerocopy.\+c\}}, {\ttfamily include/ttak/io/$\ast$}, {\ttfamily src/net/\{endpoint.\+c,session.\+c,view.\+c,core/port.\+c\}}, and the matching headers in {\ttfamily include/ttak/net/$\ast$}.
+\item {\bfseries{Checklist\+:}} enforce TTL + ownership via {\ttfamily ttak\+\_\+io\+\_\+guard\+\_\+t}, expose zero-\/copy receive windows, register sockets with {\ttfamily ttak\+\_\+net\+\_\+session\+\_\+mgr\+\_\+t}, and validate that {\ttfamily ttak\+\_\+io\+\_\+async\+\_\+read} callbacks fire once poll workers deliver payloads in Lesson 42.
+\end{DoxyItemize}\hypertarget{md_tutorials_CLONE_PATH_autotoc_md206}{}\doxysubsection{Stage 13 – Big\+Script Language}\label{md_tutorials_CLONE_PATH_autotoc_md206}
+
+\begin{DoxyItemize}
+\item {\bfseries{Lessons\+:}} \mbox{\hyperlink{README.md_md_tutorials_43_bigscript_README}{43}}
+\item {\bfseries{Goal\+:}} explore the embedded mathematical scripting layer built on top of the bigint and runtime subsystems.
+\item {\bfseries{Clone\+:}} {\ttfamily src/script/bigscript.\+c}, {\ttfamily \mbox{\hyperlink{bigscript_8h}{include/ttak/script/bigscript.\+h}}}, and the sample lessons under {\ttfamily tutorials/43-\/bigscript/}.
+\item {\bfseries{Checklist\+:}} run the numbered Big\+Script samples in order; verify variable, control-\/flow, builtin, and complex-\/number scripts all execute through the C host.
+\end{DoxyItemize}
+
+After each stage, summarize what you rebuilt and link to the commit/diff. By the end you will have cloned every module in the project (the flow is also captured visually in {\ttfamily blueprints/09\+\_\+tutorial\+\_\+curriculum.\+puml}). 

@@ -1,27 +1,23 @@
-\chapter{Lib\+TTAK Specification}
-\hypertarget{md_SPECS}{}\label{md_SPECS}\index{LibTTAK Specification@{LibTTAK Specification}}
-\label{md_SPECS_autotoc_md39}%
-\Hypertarget{md_SPECS_autotoc_md39}%
- \hypertarget{md_SPECS_autotoc_md40}{}\doxysection{\texorpdfstring{1. Purpose}{1. Purpose}}\label{md_SPECS_autotoc_md40}
-Lib\+TTAK is a C systems collection purpose-\/built to keep AI-\/generated code predictable by forcing allocations, tasking, and teardown through explicit lifetimes. This document captures the guiding philosophy, architectural contracts, and module-\/level specifications that every contribution must respect.\hypertarget{md_SPECS_autotoc_md41}{}\doxysection{\texorpdfstring{2. Design Philosophy}{2. Design Philosophy}}\label{md_SPECS_autotoc_md41}
+\hypertarget{md_SPECS_autotoc_md40}{}\doxysection{1. Purpose}\label{md_SPECS_autotoc_md40}
+Lib\+TTAK is a C systems collection purpose-\/built to keep AI-\/generated code predictable by forcing allocations, tasking, and teardown through explicit lifetimes. This document captures the guiding philosophy, architectural contracts, and module-\/level specifications that every contribution must respect.\hypertarget{md_SPECS_autotoc_md41}{}\doxysection{2. Design Philosophy}\label{md_SPECS_autotoc_md41}
 
 \begin{DoxyItemize}
-\item {\bfseries{Gentle\+:}} APIs prefer explicit opt-\/in macros and flagged structures over global switches. Every subsystem must provide a safe default path before exposing "{}danger"{} helpers.
+\item {\bfseries{Gentle\+:}} APIs prefer explicit opt-\/in macros and flagged structures over global switches. Every subsystem must provide a safe default path before exposing \char`\"{}danger\char`\"{} helpers.
 \item {\bfseries{Predictable\+:}} Lifetimes are baked into headers, arenas, and epochs. Users can explain every allocation and reclamation step without reading the compiler output.
 \item {\bfseries{Explicit\+:}} Thread binding, owner boundaries, and context bridging require explicit handles ({\ttfamily ttak\+\_\+owner\+\_\+t}, {\ttfamily ttak\+\_\+detachable\+\_\+context\+\_\+t}, etc.). Hidden TLS caches or async helpers are prohibited.
 \item {\bfseries{Memory-\/for-\/\+Speed\+:}} Throughput wins over RSS as long as fragmentation is explainable. Segmented shards, arenas, and bulk reclamation deliberately trade memory for lock-\/free scaling.
 \item {\bfseries{Math-\/grounded\+:}} Core synchronization follows Choi Seok-\/jeong\textquotesingle{}s Orthogonal Latin Square (OLS) principle to minimize contention via deterministic slot isolation.
-\end{DoxyItemize}\hypertarget{md_SPECS_autotoc_md42}{}\doxysection{\texorpdfstring{3. Architectural Overview}{3. Architectural Overview}}\label{md_SPECS_autotoc_md42}
+\end{DoxyItemize}\hypertarget{md_SPECS_autotoc_md42}{}\doxysection{3. Architectural Overview}\label{md_SPECS_autotoc_md42}
 
 \begin{DoxyEnumerate}
 \item {\bfseries{Generational Arenas\+:}} Thread-\/local detachable arenas own all user allocations. Every pointer carries provenance (arena row, tier, lifetime, owner policy).
-\item {\bfseries{Epoch Management\+:}} A three-\/session epoch-\/based reclamation (EBR) manager ({\ttfamily \doxylink{structttak__epoch__manager__t}{ttak\+\_\+epoch\+\_\+manager\+\_\+t}}) coordinates pointer retirement. All cross-\/thread structures must enter/exit epochs explicitly.
+\item {\bfseries{Epoch Management\+:}} A three-\/session epoch-\/based reclamation (EBR) manager ({\ttfamily \mbox{\hyperlink{structttak__epoch__manager__t}{ttak\+\_\+epoch\+\_\+manager\+\_\+t}}}) coordinates pointer retirement. All cross-\/thread structures must enter/exit epochs explicitly.
 \item {\bfseries{Context Bridges\+:}} Owners, unsafe contexts, and worker pools interoperate via {\ttfamily ttak\+\_\+context\+\_\+t} bridges that serialize access between two owners without sharing global state.
-\item {\bfseries{Segmented Shard Table\+:}} Shared resources embed a segmented shard array ({\ttfamily \doxylink{structttak__shard__table__t}{ttak\+\_\+shard\+\_\+table\+\_\+t}}) that maps logical thread IDs to slots so wait-\/free reads remain deterministic.
+\item {\bfseries{Segmented Shard Table\+:}} Shared resources embed a segmented shard array ({\ttfamily \mbox{\hyperlink{structttak__shard__table__t}{ttak\+\_\+shard\+\_\+table\+\_\+t}}}) that maps logical thread IDs to slots so wait-\/free reads remain deterministic.
 \item {\bfseries{Acceleration Plane\+:}} Optional accelerator drivers (CPU, CUDA, Open\+CL, ROCm) are selected at runtime through {\ttfamily ttak\+\_\+execute\+\_\+batch} and {\ttfamily ttak\+\_\+security\+\_\+pick\+\_\+driver}.
 \item {\bfseries{Observability\+:}} Stats, logging, and tracing are integrated into every high-\/level component. Enabling tracing ({\ttfamily ttak\+\_\+mem\+\_\+set\+\_\+trace}) must produce deterministic, owner-\/scoped logs.
-\end{DoxyEnumerate}\hypertarget{md_SPECS_autotoc_md43}{}\doxysection{\texorpdfstring{4. Memory Model}{4. Memory Model}}\label{md_SPECS_autotoc_md43}
-\hypertarget{md_SPECS_autotoc_md44}{}\doxysubsection{\texorpdfstring{4.\+1 Fortress Allocator ($<$tt$>$ttak\+\_\+mem\+\_\+alloc\+\_\+safe$<$/tt$>$)}{4.1 Fortress Allocator (<tt>ttak\_mem\_alloc\_safe</tt>)}}\label{md_SPECS_autotoc_md44}
+\end{DoxyEnumerate}\hypertarget{md_SPECS_autotoc_md43}{}\doxysection{4. Memory Model}\label{md_SPECS_autotoc_md43}
+\hypertarget{md_SPECS_autotoc_md44}{}\doxysubsection{4.\+1 Fortress Allocator ($<$tt$>$ttak\+\_\+mem\+\_\+alloc\+\_\+safe$<$/tt$>$)}\label{md_SPECS_autotoc_md44}
 
 \begin{DoxyItemize}
 \item {\bfseries{Headers\+:}} Every allocation is preceded by a 64-\/byte header recording magic number, checksums, creation/expiration ticks, access counts, pin counts, and security flags (immutable, volatile, root, strict).
@@ -29,24 +25,24 @@ Lib\+TTAK is a C systems collection purpose-\/built to keep AI-\/generated code 
 \item {\bfseries{Lifetime Hints\+:}} Callers pass {\ttfamily lifetime\+\_\+ticks} and {\ttfamily now\+\_\+tick}. Setting {\ttfamily \+\_\+\+\_\+\+TTAK\+\_\+\+UNSAFE\+\_\+\+MEM\+\_\+\+FOREVER\+\_\+\+\_\+} marks immortal buffers subject to manual teardown.
 \item {\bfseries{Safety Flags\+:}} Strict mode enables canary checks; huge pages and cache alignment are opt-\/in with {\ttfamily ttak\+\_\+mem\+\_\+flags\+\_\+t}.
 \item {\bfseries{Fast Paths\+:}} Tiny\+CC builds rely on {\ttfamily ttak\+\_\+mem\+\_\+stream\+\_\+zero/copy} to preserve throughput even when the compiler emits -\/O0 code.
-\end{DoxyItemize}\hypertarget{md_SPECS_autotoc_md45}{}\doxysubsection{\texorpdfstring{4.\+2 Epoch \& Garbage Collection}{4.2 Epoch \& Garbage Collection}}\label{md_SPECS_autotoc_md45}
+\end{DoxyItemize}\hypertarget{md_SPECS_autotoc_md45}{}\doxysubsection{4.\+2 Epoch \& Garbage Collection}\label{md_SPECS_autotoc_md45}
 
 \begin{DoxyItemize}
 \item {\bfseries{Epoch Sessions\+:}} Three rotating queues store retired nodes. Threads must register ({\ttfamily ttak\+\_\+epoch\+\_\+register\+\_\+thread}) before entering epochs.
 \item {\bfseries{Retire Contracts\+:}} Every shared pointer freed outside its owning arena must be passed to {\ttfamily ttak\+\_\+epoch\+\_\+retire} with a cleanup callback.
 \item {\bfseries{Mem Tree\+:}} {\ttfamily ttak\+\_\+mem\+\_\+tree\+\_\+t} tracks active nodes, reference counts, expiration ticks, and drives cleanup threads with adaptive intervals.
-\end{DoxyItemize}\hypertarget{md_SPECS_autotoc_md46}{}\doxysubsection{\texorpdfstring{4.\+3 Detachable Arenas}{4.3 Detachable Arenas}}\label{md_SPECS_autotoc_md46}
+\end{DoxyItemize}\hypertarget{md_SPECS_autotoc_md46}{}\doxysubsection{4.\+3 Detachable Arenas}\label{md_SPECS_autotoc_md46}
 
 \begin{DoxyItemize}
 \item {\bfseries{Context Flags\+:}} Arenas advertise capabilities ({\ttfamily TTAK\+\_\+\+ARENA\+\_\+\+HAS\+\_\+\+OWNER}, {\ttfamily TTAK\+\_\+\+ARENA\+\_\+\+HAS\+\_\+\+EPOCH\+\_\+\+RECLAMATION}, etc.) so callers know which safety rails are active.
 \item {\bfseries{Generation Matrix\+:}} Rows of detachable generations avoid fragmentation and maintain zero-\/cost reuse for ≤16-\/byte chunks via per-\/context caches.
 \item {\bfseries{Detachment Lifecycle\+:}} {\ttfamily ttak\+\_\+detach\+\_\+status\+\_\+t} guarantees status convergence. Writers must mark the status known and call {\ttfamily ttak\+\_\+detachable\+\_\+mem\+\_\+free} to return memory through caches.
-\end{DoxyItemize}\hypertarget{md_SPECS_autotoc_md47}{}\doxysubsection{\texorpdfstring{4.\+4 Ownership}{4.4 Ownership}}\label{md_SPECS_autotoc_md47}
+\end{DoxyItemize}\hypertarget{md_SPECS_autotoc_md47}{}\doxysubsection{4.\+4 Ownership}\label{md_SPECS_autotoc_md47}
 
 \begin{DoxyItemize}
 \item {\bfseries{Owner Records\+:}} {\ttfamily ttak\+\_\+owner\+\_\+t} wraps resources and functions with maps guarded by RW locks. Transfers ({\ttfamily ttak\+\_\+owner\+\_\+transfer\+\_\+resource}) are explicit and logged.
 \item {\bfseries{Safe Execution\+:}} {\ttfamily ttak\+\_\+owner\+\_\+execute} enforces policy bits (deny dangerous mem, deny threading, strict isolation) before invoking registered work.
-\end{DoxyItemize}\hypertarget{md_SPECS_autotoc_md48}{}\doxysection{\texorpdfstring{5. Concurrency Model}{5. Concurrency Model}}\label{md_SPECS_autotoc_md48}
+\end{DoxyItemize}\hypertarget{md_SPECS_autotoc_md48}{}\doxysection{5. Concurrency Model}\label{md_SPECS_autotoc_md48}
 
 \begin{DoxyItemize}
 \item {\bfseries{Workers \& Thread Pool\+:}} {\ttfamily ttak\+\_\+thread\+\_\+pool\+\_\+t} spawns lazily, binding each worker to a {\ttfamily ttak\+\_\+worker\+\_\+wrapper\+\_\+t} that installs {\ttfamily sigsetjmp} recovery points. Abort paths jump back via {\ttfamily ttak\+\_\+worker\+\_\+abort}.
@@ -54,23 +50,23 @@ Lib\+TTAK is a C systems collection purpose-\/built to keep AI-\/generated code 
 \item {\bfseries{Async Tasks\+:}} Promises/futures pair with tasks ({\ttfamily ttak\+\_\+task\+\_\+t}). Hashes, timestamps, and cloning support deduplication and history-\/based scheduling.
 \item {\bfseries{Synchronization\+:}} Standard pthread primitives are wrapped ({\ttfamily ttak\+\_\+mutex\+\_\+t}, {\ttfamily ttak\+\_\+rwlock\+\_\+t}) for clarity, while specialized spinlocks guard small stats/token-\/bucket structures.
 \item {\bfseries{Segmented Shards\+:}} Shared data uses per-\/thread slots to eliminate cache-\/line ping-\/pong. EBR protection is optional per access ({\ttfamily access\+\_\+ebr}/{\ttfamily release\+\_\+ebr}).
-\end{DoxyItemize}\hypertarget{md_SPECS_autotoc_md49}{}\doxysection{\texorpdfstring{6. Data Structures}{6. Data Structures}}\label{md_SPECS_autotoc_md49}
+\end{DoxyItemize}\hypertarget{md_SPECS_autotoc_md49}{}\doxysection{6. Data Structures}\label{md_SPECS_autotoc_md49}
 
 \begin{DoxyItemize}
-\item {\bfseries{Hash Tables\+:}} Struct-\/of-\/arrays integer maps ({\ttfamily \doxylink{structttak__map__t}{ttak\+\_\+map\+\_\+t}}) resize on 1/3 load, shrink under 1/2, and expose wyhash-\/based fingerprints. All operations accept {\ttfamily now} timestamps for auditing.
+\item {\bfseries{Hash Tables\+:}} Struct-\/of-\/arrays integer maps ({\ttfamily \mbox{\hyperlink{structttak__map__t}{ttak\+\_\+map\+\_\+t}}}) resize on 1/3 load, shrink under 1/2, and expose wyhash-\/based fingerprints. All operations accept {\ttfamily now} timestamps for auditing.
 \item {\bfseries{Priority Queues\+:}} Internal queues are exposed through {\ttfamily \+\_\+\+\_\+i\+\_\+tt\+\_\+proc\+\_\+pq\+\_\+t} handles. Scheduling contracts require fairness metrics to stay observable.
 \item {\bfseries{Containers\+:}} Pools, ring buffers, and sets live under {\ttfamily include/ttak/container}. Each must integrate with arenas and expose TTL hooks when they allocate.
 \item {\bfseries{Trees\+:}} AST, B/\+B+ trees, and mem trees are arena-\/allocated. Free hooks must be provided so arenas can collapse without leaks.
-\item {\bfseries{Dynamic Masks\+:}} {\ttfamily \doxylink{structttak__dynamic__mask__t}{ttak\+\_\+dynamic\+\_\+mask\+\_\+t}} offers scalable bitmaps with lock-\/free reads and writer-\/side RW locks, underpinning owner and shard registries.
-\end{DoxyItemize}\hypertarget{md_SPECS_autotoc_md50}{}\doxysection{\texorpdfstring{7. I/\+O Model}{7. I/O Model}}\label{md_SPECS_autotoc_md50}
+\item {\bfseries{Dynamic Masks\+:}} {\ttfamily \mbox{\hyperlink{structttak__dynamic__mask__t}{ttak\+\_\+dynamic\+\_\+mask\+\_\+t}}} offers scalable bitmaps with lock-\/free reads and writer-\/side RW locks, underpinning owner and shard registries.
+\end{DoxyItemize}\hypertarget{md_SPECS_autotoc_md50}{}\doxysection{7. I/\+O Model}\label{md_SPECS_autotoc_md50}
 
 \begin{DoxyItemize}
-\item {\bfseries{Guards\+:}} {\ttfamily ttak\+\_\+io\+\_\+guard\+\_\+t} wraps file descriptors with TTL metadata and owner provenance. Once {\ttfamily expires\+\_\+at} \texorpdfstring{$<$}{<} {\ttfamily now}, all operations must fail with {\ttfamily TTAK\+\_\+\+IO\+\_\+\+ERR\+\_\+\+EXPIRED\+\_\+\+GUARD}.
+\item {\bfseries{Guards\+:}} {\ttfamily ttak\+\_\+io\+\_\+guard\+\_\+t} wraps file descriptors with TTL metadata and owner provenance. Once {\ttfamily expires\+\_\+at} $<$ {\ttfamily now}, all operations must fail with {\ttfamily TTAK\+\_\+\+IO\+\_\+\+ERR\+\_\+\+EXPIRED\+\_\+\+GUARD}.
 \item {\bfseries{Buffers\+:}} {\ttfamily ttak\+\_\+io\+\_\+buffer\+\_\+t} pins user buffers inside detachable arenas so syscalls operate on stable memory. Sync-\/in/out helpers enforce zero-\/copy semantics.
 \item {\bfseries{Zero-\/\+Copy Regions\+:}} {\ttfamily ttak\+\_\+io\+\_\+zerocopy\+\_\+region\+\_\+t} divides detachable buffers into 4 KiB segments, tracking population via bitmasks for efficient scatter/gather loops.
 \item {\bfseries{Polling\+:}} {\ttfamily ttak\+\_\+io\+\_\+poll\+\_\+wait} consults guards, executes callbacks, and optionally schedules async work via the pool when {\ttfamily schedule\+\_\+async} is true.
 \item {\bfseries{Rate Limiting\+:}} {\ttfamily ttak\+\_\+token\+\_\+bucket\+\_\+t} and {\ttfamily ttak\+\_\+ratelimit\+\_\+t} provide spinlock-\/guarded token buckets for user-\/defined throttles.
-\end{DoxyItemize}\hypertarget{md_SPECS_autotoc_md51}{}\doxysection{\texorpdfstring{8. Math \& Scripting}{8. Math \& Scripting}}\label{md_SPECS_autotoc_md51}
+\end{DoxyItemize}\hypertarget{md_SPECS_autotoc_md51}{}\doxysection{8. Math \& Scripting}\label{md_SPECS_autotoc_md51}
 
 \begin{DoxyItemize}
 \item {\bfseries{Bigint Engine\+:}} Portable limb arithmetic (small-\/stack optimization) enables Montgomery math, mersenne reductions, and multi-\/limb operations even under Tiny\+CC.
@@ -78,14 +74,14 @@ Lib\+TTAK is a C systems collection purpose-\/built to keep AI-\/generated code 
 \item {\bfseries{Big\+Script\+:}} The script runtime compiles seeds with resource limits (tokens, AST nodes, stack words). Evaluation requires precomputed sigma values and enforces owner/arena lifetimes.
 \item {\bfseries{Physics Helpers\+:}} Dimensionless transport utilities (Re, Sc, Pe, Sh, Pr, Gr, Ra) enforce domain-\/specific argument validation.
 \item {\bfseries{Accelerators\+:}} {\ttfamily ttak\+\_\+execute\+\_\+batch} and math accelerators use mask/checksum seeds for integrity verification across heterogeneous backends.
-\end{DoxyItemize}\hypertarget{md_SPECS_autotoc_md52}{}\doxysection{\texorpdfstring{9. Security \& Integrity}{9. Security \& Integrity}}\label{md_SPECS_autotoc_md52}
+\end{DoxyItemize}\hypertarget{md_SPECS_autotoc_md52}{}\doxysection{9. Security \& Integrity}\label{md_SPECS_autotoc_md52}
 
 \begin{DoxyItemize}
 \item {\bfseries{Security Engine\+:}} {\ttfamily ttak\+\_\+security\+\_\+execute} dispatches LEA, SEED, AES-\/256-\/\+GCM, Cha\+Cha20-\/\+Poly1305, hashes, and KDFs to scalar, SIMD, or hardware drivers selected at runtime.
 \item {\bfseries{Shared Resource Policies\+:}} Owners, shared resources, and shards must track level requirements ({\ttfamily TTAK\+\_\+\+SHARED\+\_\+\+LEVEL\+\_\+\mbox{[}1-\/3\mbox{]}}) and return precise status codes on validation failure.
 \item {\bfseries{Logging\+:}} {\ttfamily ttak\+\_\+logger\+\_\+t} centralizes logging with optional global memory tracing toggles. Critical paths must log owner IDs, epochs, and shard slots when diagnostics are enabled.
 \item {\bfseries{Net Sessions\+:}} Session managers ({\ttfamily ttak\+\_\+net\+\_\+session\+\_\+mgr\+\_\+t}) keep generation IDs, parent/child graphs, and state flags (ACTIVE, ZOMBIE, IMMORTAL). Policy bits (ALERT, RESTART) govern recovery.
-\end{DoxyItemize}\hypertarget{md_SPECS_autotoc_md53}{}\doxysection{\texorpdfstring{10. Extensibility Rules}{10. Extensibility Rules}}\label{md_SPECS_autotoc_md53}
+\end{DoxyItemize}\hypertarget{md_SPECS_autotoc_md53}{}\doxysection{10. Extensibility Rules}\label{md_SPECS_autotoc_md53}
 
 \begin{DoxyEnumerate}
 \item {\bfseries{New subsystems must declare ownership\+:}} Every public structure requires explicit {\ttfamily ttak\+\_\+owner\+\_\+t} or shard integration.
@@ -94,19 +90,19 @@ Lib\+TTAK is a C systems collection purpose-\/built to keep AI-\/generated code 
 \item {\bfseries{Observability hooks\+:}} All modules should accept timestamps ({\ttfamily uint64\+\_\+t now}) and expose stats/logging entry points.
 \item {\bfseries{Tiny\+CC parity\+:}} Features must build under Tiny\+CC {\ttfamily -\/O0} with the default flag set. If ISA-\/specific optimizations are required, guard them and supply portable fallbacks.
 \item {\bfseries{No implicit threads\+:}} Background threads (cleanup, schedulers) must be registered, named, and tied to owners/arenas for deterministic shutdown.
-\end{DoxyEnumerate}\hypertarget{md_SPECS_autotoc_md54}{}\doxysection{\texorpdfstring{11. Performance Expectations}{11. Performance Expectations}}\label{md_SPECS_autotoc_md54}
+\end{DoxyEnumerate}\hypertarget{md_SPECS_autotoc_md54}{}\doxysection{11. Performance Expectations}\label{md_SPECS_autotoc_md54}
 
 \begin{DoxyItemize}
 \item {\bfseries{Throughput\+:}} Multi-\/threaded TTL cache benchmarks must exceed 30M ops/s on a Ryzen 5600X-\/class CPU when tuned.
-\item {\bfseries{Latency\+:}} Critical lock-\/free paths target \texorpdfstring{$\sim$}{\string~}80 ns latency under load.
+\item {\bfseries{Latency\+:}} Critical lock-\/free paths target $\sim$80 ns latency under load.
 \item {\bfseries{Resource Discipline\+:}} Controlled memory growth is acceptable provided RSS stabilization strategies (manual cleanup, pressure thresholds) remain configurable.
-\end{DoxyItemize}\hypertarget{md_SPECS_autotoc_md55}{}\doxysection{\texorpdfstring{12. Documentation \& Testing}{12. Documentation \& Testing}}\label{md_SPECS_autotoc_md55}
+\end{DoxyItemize}\hypertarget{md_SPECS_autotoc_md55}{}\doxysection{12. Documentation \& Testing}\label{md_SPECS_autotoc_md55}
 
 \begin{DoxyItemize}
-\item {\bfseries{Docs\+:}} Every API addition requires Doxygen comments and, when applicable, blueprint updates. \doxylink{SPECS_8md}{SPECS.\+md} remains the canonical high-\/level reference.
+\item {\bfseries{Docs\+:}} Every API addition requires Doxygen comments and, when applicable, blueprint updates. \mbox{\hyperlink{SPECS_8md}{SPECS.\+md}} remains the canonical high-\/level reference.
 \item {\bfseries{Testing\+:}} CI must cover epoch safety, owner enforcement, zero-\/copy IO loops, hash maps under contention, and security engine correctness. Tiny\+CC build targets must be part of the test matrix.
 \item {\bfseries{Blueprint Alignment\+:}} Architectural diagrams (see {\ttfamily blueprints/png/integration/all.\+png}) must match code wiring; changes that diverge must update both the blueprint and this document.
-\end{DoxyItemize}\hypertarget{md_SPECS_autotoc_md56}{}\doxysection{\texorpdfstring{13. Compliance Checklist}{13. Compliance Checklist}}\label{md_SPECS_autotoc_md56}
+\end{DoxyItemize}\hypertarget{md_SPECS_autotoc_md56}{}\doxysection{13. Compliance Checklist}\label{md_SPECS_autotoc_md56}
 Before merging, confirm\+:
 \begin{DoxyEnumerate}
 \item Allocations go through arenas or detachable contexts with lifetime hints.

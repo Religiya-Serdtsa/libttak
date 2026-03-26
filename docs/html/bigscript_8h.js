@@ -20,11 +20,11 @@ var bigscript_8h =
       [ "TTAK_BIGSCRIPT_VAL_REAL", "bigscript_8h.html#a31a9453da779cb527438fabc056efeaea2c626ad312dd41dfe608dc23182ec528", null ],
       [ "TTAK_BIGSCRIPT_VAL_COMPLEX", "bigscript_8h.html#a31a9453da779cb527438fabc056efeaea880d05619e8bfc83a7e4588a155e9e4b", null ]
     ] ],
-    [ "ttak_bigscript_compile", "bigscript_8h.html#ab8d4d3bd74025ca2b55942c1a1019185", null ],
+    [ "ttak_bigscript_compile", "bigscript_8h.html#a2be83f4306ff2eab2c5dbc78315c79b3", null ],
     [ "ttak_bigscript_eval_seed", "bigscript_8h.html#adfdb337ebc3fab30ccf7ef0b5d2c0abf", null ],
     [ "ttak_bigscript_hash_program", "bigscript_8h.html#aeb0b45abdd4829346feec23561d7a32d", null ],
     [ "ttak_bigscript_program_free", "bigscript_8h.html#a7c1a4eba8463264e803f9f65005f445d", null ],
     [ "ttak_bigscript_value_free", "bigscript_8h.html#ae6aee5e20c0b52b72793ed422dcc5b8e", null ],
-    [ "ttak_bigscript_vm_create", "bigscript_8h.html#a922fb5d037c2b2fbb559ee9eaf352df1", null ],
+    [ "ttak_bigscript_vm_create", "bigscript_8h.html#a8b40669b3f850df39e6f8bf2c5d104f3", null ],
     [ "ttak_bigscript_vm_free", "bigscript_8h.html#a3cc458d490a5bcaddd3cb2a5c456a6d5", null ]
 ];

@@ -1,0 +1,4 @@
+<map id="ttak_shard_hash_to_coords" name="ttak_shard_hash_to_coords">
+<area shape="rect" id="node1" title="Convert a task hash into (row, col) shard coordinates." alt="" coords="193,5,329,47"/>
+<area shape="rect" id="node2" href="$shard__map_8h.html#a8bb467e81c3843e468c99b69388204b5" title="Map a task hash to a shard index via the 2D routing table." alt="" coords="5,13,145,39"/>
+</map>

@@ -1,15 +1,8 @@
 <map id="ttak_io_zerocopy_region" name="ttak_io_zerocopy_region">
-<area shape="rect" id="Node000001" title="Temporary zero&#45;copy receive window allocated in a detachable arena." alt="" coords="244,207,425,234"/>
-<area shape="rect" id="Node000002" href="$structttak__detachable__context.html" title="State holder for detachable memory contexts." alt="" coords="138,106,320,134"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="256,142,322,204,319,208,252,146"/>
-<area shape="rect" id="Node000003" href="$structttak__detach__status.html" title="Tracks the detach lifecycle of a detachable block." alt="" coords="466,5,611,33"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="466,41,425,59,412,72,399,84,361,100,322,111,320,105,359,95,396,80,408,68,422,55,464,36"/>
-<area shape="rect" id="Node000006" href="$structttak__detachable__allocation.html" title="Description of the detachable allocation returned to callers." alt="" coords="344,106,541,134"/>
-<area shape="poly" id="edge6_Node000006_Node000003" title=" " alt="" coords="535,49,528,67,516,84,500,98,482,108,479,103,497,93,513,80,523,64,530,47"/>
-<area shape="rect" id="Node000004" href="$structttak__detachable__cache.html" title="Per&#45;context cache for tiny detachable chunks (&lt;= 16 bytes)." alt="" coords="264,5,435,33"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="275,42,251,59,238,82,233,106,228,105,233,80,248,55,272,37"/>
-<area shape="poly" id="edge7_Node000006_Node000004" title=" " alt="" coords="346,49,347,65,353,81,366,94,383,103,380,108,363,98,349,83,342,67,341,49"/>
-<area shape="rect" id="Node000005" href="$structttak__detachable__generation__row.html" title="Fixed&#45;width arena row descriptor." alt="" coords="5,5,240,33"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="137,46,163,80,198,103,195,108,159,84,133,49"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="419,146,351,208,347,204,416,142"/>
+<area shape="rect" id="node1" title="Temporary zero&#45;copy receive window allocated in a detachable arena." alt="" coords="214,184,377,211"/>
+<area shape="rect" id="node2" href="$structttak__detachable__allocation.html" title="Description of the detachable allocation returned to callers." alt="" coords="306,95,482,121"/>
+<area shape="rect" id="node3" href="$structttak__detachable__cache.html" title="Per&#45;context cache for tiny detachable chunks (&lt;= 16 bytes)." alt="" coords="425,5,581,32"/>
+<area shape="rect" id="node5" href="$structttak__detachable__context.html" title="State holder for detachable memory contexts." alt="" coords="117,95,281,121"/>
+<area shape="rect" id="node4" href="$structttak__detach__status.html" title="Tracks the detach lifecycle of a detachable block." alt="" coords="239,5,373,32"/>
+<area shape="rect" id="node6" href="$structttak__detachable__generation__row.html" title="Fixed&#45;width arena row descriptor." alt="" coords="5,5,215,32"/>
 </map>

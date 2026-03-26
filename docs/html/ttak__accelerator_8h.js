@@ -2,6 +2,7 @@ var ttak__accelerator_8h =
 [
     [ "ttak_accel_config", "structttak__accel__config.html", "structttak__accel__config" ],
     [ "ttak_accel_batch_item", "structttak__accel__batch__item.html", "structttak__accel__batch__item" ],
+    [ "ATOMIC_VAR_INIT", "ttak__accelerator_8h.html#a4ff4b67e9d999a657aabe04ce9263b69", null ],
     [ "ttak_accel_backend_fn", "ttak__accelerator_8h.html#a11800ef93fe7b7bc741b6b7f0ba9e7d4", null ],
     [ "ttak_accel_batch_item_t", "ttak__accelerator_8h.html#aa1689adc22b84a59d14d42050fe255c9", null ],
     [ "ttak_accel_config_t", "ttak__accelerator_8h.html#a5c6a6c6799183f581aa1926cfe76c592", null ],

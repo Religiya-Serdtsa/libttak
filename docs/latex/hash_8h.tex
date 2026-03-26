@@ -1,5 +1,5 @@
-\doxysection{include/ttak/ht/hash.h File Reference}
-\hypertarget{hash_8h}{}\label{hash_8h}\index{include/ttak/ht/hash.h@{include/ttak/ht/hash.h}}
+\hypertarget{hash_8h}{}\doxysection{include/ttak/ht/hash.h File Reference}
+\label{hash_8h}\index{include/ttak/ht/hash.h@{include/ttak/ht/hash.h}}
 
 
 Low-\/level open-\/addressing hash map (SoA layout) with Sip\+Hash/wyhash.  
@@ -9,26 +9,28 @@ Low-\/level open-\/addressing hash map (SoA layout) with Sip\+Hash/wyhash.
 {\ttfamily \#include $<$stddef.\+h$>$}\newline
 {\ttfamily \#include $<$stdalign.\+h$>$}\newline
 {\ttfamily \#include $<$ttak/types/ttak\+\_\+align.\+h$>$}\newline
-Include dependency graph for hash.\+h\+:\nopagebreak
+Include dependency graph for hash.\+h\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=350pt]{hash_8h__incl}
 \end{center}
 \end{figure}
-This graph shows which files directly or indirectly include this file\+:\nopagebreak
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=350pt]{hash_8h__dep__incl}
 \end{center}
 \end{figure}
-\doxysubsubsection*{Classes}
+\doxysubsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
 struct \mbox{\hyperlink{structttak__map__t}{ttak\+\_\+map\+\_\+t}}
 \begin{DoxyCompactList}\small\item\em Map structure using Structure of Arrays (SoA) for cache efficiency. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\doxysubsubsection*{Macros}
+\doxysubsection*{Macros}
 \begin{DoxyCompactItemize}
 \item 
 \#define \mbox{\hyperlink{hash_8h_a2b7cf2a3641be7b89138615764d60ba3}{EMPTY}}~0x00
@@ -37,12 +39,12 @@ struct \mbox{\hyperlink{structttak__map__t}{ttak\+\_\+map\+\_\+t}}
 \begin{DoxyCompactList}\small\item\em Slot was occupied but has been deleted (tombstone). \end{DoxyCompactList}\item 
 \#define \mbox{\hyperlink{hash_8h_a217ad8485de2dcca79110f37d4da9688}{OCCUPIED}}~0x0C
 \begin{DoxyCompactList}\small\item\em Slot holds a live key/value pair. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\doxysubsubsection*{Typedefs}
+\doxysubsection*{Typedefs}
 \begin{DoxyCompactItemize}
 \item 
 typedef \mbox{\hyperlink{structttak__map__t}{ttak\+\_\+map\+\_\+t}} \mbox{\hyperlink{hash_8h_a1f1a8bb38c53fea315e97508c3d66efd}{tt\+\_\+map\+\_\+t}}
 \end{DoxyCompactItemize}
-\doxysubsubsection*{Functions}
+\doxysubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
 uint64\+\_\+t \mbox{\hyperlink{hash_8h_a86c0b717fb0af43c6f5c2232a2efa00f}{gen\+\_\+hash\+\_\+sip24}} (uintptr\+\_\+t key, uint64\+\_\+t k0, uint64\+\_\+t k1)
@@ -54,14 +56,10 @@ uint64\+\_\+t \mbox{\hyperlink{hash_8h_a179c0ac27cec5394397f94cca05cb07d}{gen\+\
 \doxysubsection{Detailed Description}
 Low-\/level open-\/addressing hash map (SoA layout) with Sip\+Hash/wyhash. 
 
-{\ttfamily \doxylink{structttak__map__t}{ttak\+\_\+map\+\_\+t}} is the inner SoA table used by the higher-\/level map and table APIs. Control bytes follow the Swiss-\/table convention\+: {\ttfamily EMPTY} (0x00), {\ttfamily DELETED} (0x\+DE), {\ttfamily OCCUPIED} (0x0C). 
-
-Definition in file \mbox{\hyperlink{hash_8h_source}{hash.\+h}}.
-
-
+{\ttfamily \mbox{\hyperlink{structttak__map__t}{ttak\+\_\+map\+\_\+t}}} is the inner SoA table used by the higher-\/level map and table APIs. Control bytes follow the Swiss-\/table convention\+: {\ttfamily EMPTY} (0x00), {\ttfamily DELETED} (0x\+DE), {\ttfamily OCCUPIED} (0x0C). 
 
 \doxysubsection{Macro Definition Documentation}
-\Hypertarget{hash_8h_ab792dfd97ab00abb6a5fc20191a9e952}\label{hash_8h_ab792dfd97ab00abb6a5fc20191a9e952} 
+\mbox{\Hypertarget{hash_8h_ab792dfd97ab00abb6a5fc20191a9e952}\label{hash_8h_ab792dfd97ab00abb6a5fc20191a9e952}} 
 \index{hash.h@{hash.h}!DELETED@{DELETED}}
 \index{DELETED@{DELETED}!hash.h@{hash.h}}
 \doxysubsubsection{\texorpdfstring{DELETED}{DELETED}}
@@ -73,9 +71,9 @@ Slot was occupied but has been deleted (tombstone).
 
 
 
-Definition at line \mbox{\hyperlink{hash_8h_source_l00021}{21}} of file \mbox{\hyperlink{hash_8h_source}{hash.\+h}}.
+Definition at line 21 of file hash.\+h.
 
-\Hypertarget{hash_8h_a2b7cf2a3641be7b89138615764d60ba3}\label{hash_8h_a2b7cf2a3641be7b89138615764d60ba3} 
+\mbox{\Hypertarget{hash_8h_a2b7cf2a3641be7b89138615764d60ba3}\label{hash_8h_a2b7cf2a3641be7b89138615764d60ba3}} 
 \index{hash.h@{hash.h}!EMPTY@{EMPTY}}
 \index{EMPTY@{EMPTY}!hash.h@{hash.h}}
 \doxysubsubsection{\texorpdfstring{EMPTY}{EMPTY}}
@@ -87,9 +85,9 @@ Slot is empty and was never used.
 
 
 
-Definition at line \mbox{\hyperlink{hash_8h_source_l00019}{19}} of file \mbox{\hyperlink{hash_8h_source}{hash.\+h}}.
+Definition at line 19 of file hash.\+h.
 
-\Hypertarget{hash_8h_a217ad8485de2dcca79110f37d4da9688}\label{hash_8h_a217ad8485de2dcca79110f37d4da9688} 
+\mbox{\Hypertarget{hash_8h_a217ad8485de2dcca79110f37d4da9688}\label{hash_8h_a217ad8485de2dcca79110f37d4da9688}} 
 \index{hash.h@{hash.h}!OCCUPIED@{OCCUPIED}}
 \index{OCCUPIED@{OCCUPIED}!hash.h@{hash.h}}
 \doxysubsubsection{\texorpdfstring{OCCUPIED}{OCCUPIED}}
@@ -101,12 +99,12 @@ Slot holds a live key/value pair.
 
 
 
-Definition at line \mbox{\hyperlink{hash_8h_source_l00023}{23}} of file \mbox{\hyperlink{hash_8h_source}{hash.\+h}}.
+Definition at line 23 of file hash.\+h.
 
 
 
 \doxysubsection{Typedef Documentation}
-\Hypertarget{hash_8h_a1f1a8bb38c53fea315e97508c3d66efd}\label{hash_8h_a1f1a8bb38c53fea315e97508c3d66efd} 
+\mbox{\Hypertarget{hash_8h_a1f1a8bb38c53fea315e97508c3d66efd}\label{hash_8h_a1f1a8bb38c53fea315e97508c3d66efd}} 
 \index{hash.h@{hash.h}!tt\_map\_t@{tt\_map\_t}}
 \index{tt\_map\_t@{tt\_map\_t}!hash.h@{hash.h}}
 \doxysubsubsection{\texorpdfstring{tt\_map\_t}{tt\_map\_t}}
@@ -114,12 +112,12 @@ Definition at line \mbox{\hyperlink{hash_8h_source_l00023}{23}} of file \mbox{\h
 
 
 
-Definition at line \mbox{\hyperlink{hash_8h_source_l00040}{40}} of file \mbox{\hyperlink{hash_8h_source}{hash.\+h}}.
+Definition at line 40 of file hash.\+h.
 
 
 
 \doxysubsection{Function Documentation}
-\Hypertarget{hash_8h_a86c0b717fb0af43c6f5c2232a2efa00f}\label{hash_8h_a86c0b717fb0af43c6f5c2232a2efa00f} 
+\mbox{\Hypertarget{hash_8h_a86c0b717fb0af43c6f5c2232a2efa00f}\label{hash_8h_a86c0b717fb0af43c6f5c2232a2efa00f}} 
 \index{hash.h@{hash.h}!gen\_hash\_sip24@{gen\_hash\_sip24}}
 \index{gen\_hash\_sip24@{gen\_hash\_sip24}!hash.h@{hash.h}}
 \doxysubsubsection{\texorpdfstring{gen\_hash\_sip24()}{gen\_hash\_sip24()}}
@@ -141,7 +139,7 @@ Computes a 64-\/bit Sip\+Hash-\/2-\/4 digest of a single uintptr\+\_\+t key.
 \begin{DoxyReturn}{Returns}
 64-\/bit digest. 
 \end{DoxyReturn}
-\Hypertarget{hash_8h_a179c0ac27cec5394397f94cca05cb07d}\label{hash_8h_a179c0ac27cec5394397f94cca05cb07d} 
+\mbox{\Hypertarget{hash_8h_a179c0ac27cec5394397f94cca05cb07d}\label{hash_8h_a179c0ac27cec5394397f94cca05cb07d}} 
 \index{hash.h@{hash.h}!gen\_hash\_wyhash@{gen\_hash\_wyhash}}
 \index{gen\_hash\_wyhash@{gen\_hash\_wyhash}!hash.h@{hash.h}}
 \doxysubsubsection{\texorpdfstring{gen\_hash\_wyhash()}{gen\_hash\_wyhash()}}

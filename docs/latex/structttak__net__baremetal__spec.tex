@@ -1,5 +1,5 @@
-\doxysection{ttak\+\_\+net\+\_\+baremetal\+\_\+spec Struct Reference}
-\hypertarget{structttak__net__baremetal__spec}{}\label{structttak__net__baremetal__spec}\index{ttak\_net\_baremetal\_spec@{ttak\_net\_baremetal\_spec}}
+\hypertarget{structttak__net__baremetal__spec}{}\doxysection{ttak\+\_\+net\+\_\+baremetal\+\_\+spec Struct Reference}
+\label{structttak__net__baremetal__spec}\index{ttak\_net\_baremetal\_spec@{ttak\_net\_baremetal\_spec}}
 
 
 Hooks for bare-\/metal NIC drivers (used when {\ttfamily os} == TTAK\+\_\+\+NET\+\_\+\+OS\+\_\+\+BAREMETAL).  
@@ -16,81 +16,81 @@ Collaboration diagram for ttak\+\_\+net\+\_\+baremetal\+\_\+spec\+:
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=220pt]{structttak__net__baremetal__spec__coll__graph}
+\includegraphics[width=206pt]{structttak__net__baremetal__spec__coll__graph}
 \end{center}
 \end{figure}
-\doxysubsubsection*{Public Attributes}
+\doxysubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-const \mbox{\hyperlink{port_8h_ad59ba36fb944589606779627fecde245}{ttak\+\_\+net\+\_\+driver\+\_\+ops\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__net__baremetal__spec_a0c95e82665e5855963c4a79ce6ed7f44}{driver\+\_\+ops}}
+const \mbox{\hyperlink{port_8h_ad59ba36fb944589606779627fecde245}{ttak\+\_\+net\+\_\+driver\+\_\+ops\+\_\+t}} $\ast$ \mbox{\hyperlink{structttak__net__baremetal__spec_a0c95e82665e5855963c4a79ce6ed7f44}{driver\+\_\+ops}}
 \item 
-void \texorpdfstring{$\ast$}{*}(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__net__baremetal__spec_a03130c28d9bbba034b9f9881fc565847}{nic\+\_\+map\+\_\+io}} )(uintptr\+\_\+t base, size\+\_\+t len)
+void $\ast$($\ast$ \mbox{\hyperlink{structttak__net__baremetal__spec_af344d3c68f2dd9279194265519a8e697}{nic\+\_\+map\+\_\+io}} )(uintptr\+\_\+t base, size\+\_\+t len)
 \item 
-void(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__net__baremetal__spec_a9cddb49b5f2b38eaab1e85f3d0942545}{nic\+\_\+unmap\+\_\+io}} )(void \texorpdfstring{$\ast$}{*}addr, size\+\_\+t len)
+void($\ast$ \mbox{\hyperlink{structttak__net__baremetal__spec_a9cddb49b5f2b38eaab1e85f3d0942545}{nic\+\_\+unmap\+\_\+io}} )(void $\ast$addr, size\+\_\+t len)
 \item 
-void \texorpdfstring{$\ast$}{*}(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__net__baremetal__spec_aa64c708cf293e2a8651b67cb009f34e5}{buddy\+\_\+alloc}} )(size\+\_\+t bytes)
+void $\ast$($\ast$ \mbox{\hyperlink{structttak__net__baremetal__spec_a59c6828e80dde8b3419d142dd9d1513b}{buddy\+\_\+alloc}} )(size\+\_\+t bytes)
 \item 
-void(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__net__baremetal__spec_a6df6075fd981c3db4f03827a00135fd2}{buddy\+\_\+free}} )(void \texorpdfstring{$\ast$}{*}ptr)
+void($\ast$ \mbox{\hyperlink{structttak__net__baremetal__spec_a6df6075fd981c3db4f03827a00135fd2}{buddy\+\_\+free}} )(void $\ast$ptr)
 \end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
 Hooks for bare-\/metal NIC drivers (used when {\ttfamily os} == TTAK\+\_\+\+NET\+\_\+\+OS\+\_\+\+BAREMETAL). 
 
-Definition at line \mbox{\hyperlink{port_8h_source_l00048}{48}} of file \mbox{\hyperlink{port_8h_source}{port.\+h}}.
+Definition at line 48 of file port.\+h.
 
 
 
 \doxysubsection{Member Data Documentation}
-\Hypertarget{structttak__net__baremetal__spec_aa64c708cf293e2a8651b67cb009f34e5}\label{structttak__net__baremetal__spec_aa64c708cf293e2a8651b67cb009f34e5} 
+\mbox{\Hypertarget{structttak__net__baremetal__spec_a59c6828e80dde8b3419d142dd9d1513b}\label{structttak__net__baremetal__spec_a59c6828e80dde8b3419d142dd9d1513b}} 
 \index{ttak\_net\_baremetal\_spec@{ttak\_net\_baremetal\_spec}!buddy\_alloc@{buddy\_alloc}}
 \index{buddy\_alloc@{buddy\_alloc}!ttak\_net\_baremetal\_spec@{ttak\_net\_baremetal\_spec}}
 \doxysubsubsection{\texorpdfstring{buddy\_alloc}{buddy\_alloc}}
-{\footnotesize\ttfamily void \texorpdfstring{$\ast$}{*}(\texorpdfstring{$\ast$}{*} ttak\+\_\+net\+\_\+baremetal\+\_\+spec\+::buddy\+\_\+alloc) (size\+\_\+t bytes)}
+{\footnotesize\ttfamily void$\ast$($\ast$ ttak\+\_\+net\+\_\+baremetal\+\_\+spec\+::buddy\+\_\+alloc) (size\+\_\+t bytes)}
 
 DMA-\/safe allocator. 
 
-Definition at line \mbox{\hyperlink{port_8h_source_l00052}{52}} of file \mbox{\hyperlink{port_8h_source}{port.\+h}}.
+Definition at line 52 of file port.\+h.
 
-\Hypertarget{structttak__net__baremetal__spec_a6df6075fd981c3db4f03827a00135fd2}\label{structttak__net__baremetal__spec_a6df6075fd981c3db4f03827a00135fd2} 
+\mbox{\Hypertarget{structttak__net__baremetal__spec_a6df6075fd981c3db4f03827a00135fd2}\label{structttak__net__baremetal__spec_a6df6075fd981c3db4f03827a00135fd2}} 
 \index{ttak\_net\_baremetal\_spec@{ttak\_net\_baremetal\_spec}!buddy\_free@{buddy\_free}}
 \index{buddy\_free@{buddy\_free}!ttak\_net\_baremetal\_spec@{ttak\_net\_baremetal\_spec}}
 \doxysubsubsection{\texorpdfstring{buddy\_free}{buddy\_free}}
-{\footnotesize\ttfamily void(\texorpdfstring{$\ast$}{*} ttak\+\_\+net\+\_\+baremetal\+\_\+spec\+::buddy\+\_\+free) (void \texorpdfstring{$\ast$}{*}ptr)}
+{\footnotesize\ttfamily void($\ast$ ttak\+\_\+net\+\_\+baremetal\+\_\+spec\+::buddy\+\_\+free) (void $\ast$ptr)}
 
 DMA-\/safe free. 
 
-Definition at line \mbox{\hyperlink{port_8h_source_l00053}{53}} of file \mbox{\hyperlink{port_8h_source}{port.\+h}}.
+Definition at line 53 of file port.\+h.
 
-\Hypertarget{structttak__net__baremetal__spec_a0c95e82665e5855963c4a79ce6ed7f44}\label{structttak__net__baremetal__spec_a0c95e82665e5855963c4a79ce6ed7f44} 
+\mbox{\Hypertarget{structttak__net__baremetal__spec_a0c95e82665e5855963c4a79ce6ed7f44}\label{structttak__net__baremetal__spec_a0c95e82665e5855963c4a79ce6ed7f44}} 
 \index{ttak\_net\_baremetal\_spec@{ttak\_net\_baremetal\_spec}!driver\_ops@{driver\_ops}}
 \index{driver\_ops@{driver\_ops}!ttak\_net\_baremetal\_spec@{ttak\_net\_baremetal\_spec}}
 \doxysubsubsection{\texorpdfstring{driver\_ops}{driver\_ops}}
-{\footnotesize\ttfamily const \mbox{\hyperlink{port_8h_ad59ba36fb944589606779627fecde245}{ttak\+\_\+net\+\_\+driver\+\_\+ops\+\_\+t}}\texorpdfstring{$\ast$}{*} ttak\+\_\+net\+\_\+baremetal\+\_\+spec\+::driver\+\_\+ops}
+{\footnotesize\ttfamily const \mbox{\hyperlink{port_8h_ad59ba36fb944589606779627fecde245}{ttak\+\_\+net\+\_\+driver\+\_\+ops\+\_\+t}}$\ast$ ttak\+\_\+net\+\_\+baremetal\+\_\+spec\+::driver\+\_\+ops}
 
 Optional override vtable. 
 
-Definition at line \mbox{\hyperlink{port_8h_source_l00049}{49}} of file \mbox{\hyperlink{port_8h_source}{port.\+h}}.
+Definition at line 49 of file port.\+h.
 
-\Hypertarget{structttak__net__baremetal__spec_a03130c28d9bbba034b9f9881fc565847}\label{structttak__net__baremetal__spec_a03130c28d9bbba034b9f9881fc565847} 
+\mbox{\Hypertarget{structttak__net__baremetal__spec_af344d3c68f2dd9279194265519a8e697}\label{structttak__net__baremetal__spec_af344d3c68f2dd9279194265519a8e697}} 
 \index{ttak\_net\_baremetal\_spec@{ttak\_net\_baremetal\_spec}!nic\_map\_io@{nic\_map\_io}}
 \index{nic\_map\_io@{nic\_map\_io}!ttak\_net\_baremetal\_spec@{ttak\_net\_baremetal\_spec}}
 \doxysubsubsection{\texorpdfstring{nic\_map\_io}{nic\_map\_io}}
-{\footnotesize\ttfamily void \texorpdfstring{$\ast$}{*}(\texorpdfstring{$\ast$}{*} ttak\+\_\+net\+\_\+baremetal\+\_\+spec\+::nic\+\_\+map\+\_\+io) (uintptr\+\_\+t base, size\+\_\+t len)}
+{\footnotesize\ttfamily void$\ast$($\ast$ ttak\+\_\+net\+\_\+baremetal\+\_\+spec\+::nic\+\_\+map\+\_\+io) (uintptr\+\_\+t base, size\+\_\+t len)}
 
 Map MMIO region. 
 
-Definition at line \mbox{\hyperlink{port_8h_source_l00050}{50}} of file \mbox{\hyperlink{port_8h_source}{port.\+h}}.
+Definition at line 50 of file port.\+h.
 
-\Hypertarget{structttak__net__baremetal__spec_a9cddb49b5f2b38eaab1e85f3d0942545}\label{structttak__net__baremetal__spec_a9cddb49b5f2b38eaab1e85f3d0942545} 
+\mbox{\Hypertarget{structttak__net__baremetal__spec_a9cddb49b5f2b38eaab1e85f3d0942545}\label{structttak__net__baremetal__spec_a9cddb49b5f2b38eaab1e85f3d0942545}} 
 \index{ttak\_net\_baremetal\_spec@{ttak\_net\_baremetal\_spec}!nic\_unmap\_io@{nic\_unmap\_io}}
 \index{nic\_unmap\_io@{nic\_unmap\_io}!ttak\_net\_baremetal\_spec@{ttak\_net\_baremetal\_spec}}
 \doxysubsubsection{\texorpdfstring{nic\_unmap\_io}{nic\_unmap\_io}}
-{\footnotesize\ttfamily void(\texorpdfstring{$\ast$}{*} ttak\+\_\+net\+\_\+baremetal\+\_\+spec\+::nic\+\_\+unmap\+\_\+io) (void \texorpdfstring{$\ast$}{*}addr, size\+\_\+t len)}
+{\footnotesize\ttfamily void($\ast$ ttak\+\_\+net\+\_\+baremetal\+\_\+spec\+::nic\+\_\+unmap\+\_\+io) (void $\ast$addr, size\+\_\+t len)}
 
 Unmap MMIO region. 
 
-Definition at line \mbox{\hyperlink{port_8h_source_l00051}{51}} of file \mbox{\hyperlink{port_8h_source}{port.\+h}}.
+Definition at line 51 of file port.\+h.
 
 
 

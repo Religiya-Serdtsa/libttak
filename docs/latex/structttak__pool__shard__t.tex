@@ -1,0 +1,80 @@
+\hypertarget{structttak__pool__shard__t}{}\doxysection{ttak\+\_\+pool\+\_\+shard\+\_\+t Struct Reference}
+\label{structttak__pool__shard__t}\index{ttak\_pool\_shard\_t@{ttak\_pool\_shard\_t}}
+
+
+One independent queue shard with its own lock and condition variable.  
+
+
+
+
+{\ttfamily \#include $<$pool.\+h$>$}
+
+
+
+Collaboration diagram for ttak\+\_\+pool\+\_\+shard\+\_\+t\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=240pt]{structttak__pool__shard__t__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{queue_8h_a305e8f16f5a7d4056cda026cc06fdb4c}{\+\_\+\+\_\+i\+\_\+tt\+\_\+proc\+\_\+pq\+\_\+t}} \mbox{\hyperlink{structttak__pool__shard__t_aad1eca3125b2e18eded4e45d26fd850c}{queue}}
+\item 
+pthread\+\_\+mutex\+\_\+t \mbox{\hyperlink{structttak__pool__shard__t_af2c9a3af77ea6d608591bddbcde0acbe}{lock}}
+\item 
+pthread\+\_\+cond\+\_\+t \mbox{\hyperlink{structttak__pool__shard__t_ace2ce21b85f1813e078513425c0914c4}{cond}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+One independent queue shard with its own lock and condition variable. 
+
+Confining push/pop operations to a single shard reduces the probability that two concurrent enqueue/dequeue calls contend on the same mutex. 
+
+Definition at line 35 of file pool.\+h.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{structttak__pool__shard__t_ace2ce21b85f1813e078513425c0914c4}\label{structttak__pool__shard__t_ace2ce21b85f1813e078513425c0914c4}} 
+\index{ttak\_pool\_shard\_t@{ttak\_pool\_shard\_t}!cond@{cond}}
+\index{cond@{cond}!ttak\_pool\_shard\_t@{ttak\_pool\_shard\_t}}
+\doxysubsubsection{\texorpdfstring{cond}{cond}}
+{\footnotesize\ttfamily pthread\+\_\+cond\+\_\+t ttak\+\_\+pool\+\_\+shard\+\_\+t\+::cond}
+
+Condition variable for this shard. ~\newline
+ 
+
+Definition at line 38 of file pool.\+h.
+
+\mbox{\Hypertarget{structttak__pool__shard__t_af2c9a3af77ea6d608591bddbcde0acbe}\label{structttak__pool__shard__t_af2c9a3af77ea6d608591bddbcde0acbe}} 
+\index{ttak\_pool\_shard\_t@{ttak\_pool\_shard\_t}!lock@{lock}}
+\index{lock@{lock}!ttak\_pool\_shard\_t@{ttak\_pool\_shard\_t}}
+\doxysubsubsection{\texorpdfstring{lock}{lock}}
+{\footnotesize\ttfamily pthread\+\_\+mutex\+\_\+t ttak\+\_\+pool\+\_\+shard\+\_\+t\+::lock}
+
+Mutex protecting this shard\textquotesingle{}s queue. ~\newline
+ 
+
+Definition at line 37 of file pool.\+h.
+
+\mbox{\Hypertarget{structttak__pool__shard__t_aad1eca3125b2e18eded4e45d26fd850c}\label{structttak__pool__shard__t_aad1eca3125b2e18eded4e45d26fd850c}} 
+\index{ttak\_pool\_shard\_t@{ttak\_pool\_shard\_t}!queue@{queue}}
+\index{queue@{queue}!ttak\_pool\_shard\_t@{ttak\_pool\_shard\_t}}
+\doxysubsubsection{\texorpdfstring{queue}{queue}}
+{\footnotesize\ttfamily \mbox{\hyperlink{queue_8h_a305e8f16f5a7d4056cda026cc06fdb4c}{\+\_\+\+\_\+i\+\_\+tt\+\_\+proc\+\_\+pq\+\_\+t}} ttak\+\_\+pool\+\_\+shard\+\_\+t\+::queue}
+
+Shard-\/local priority queue. ~\newline
+ 
+
+Definition at line 36 of file pool.\+h.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/ttak/thread/\mbox{\hyperlink{thread_2pool_8h}{pool.\+h}}\end{DoxyCompactItemize}

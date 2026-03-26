@@ -80,7 +80,7 @@ var include_2stdatomic_8h =
     ] ],
     [ "__ttak_atomic_fallback_init", "include_2stdatomic_8h.html#a55f621ad8cd15aed91063387100e197a", null ],
     [ "__ttak_atomic_fallback_thread_fence", "include_2stdatomic_8h.html#a1860fd152001172354ab81c448635e86", null ],
-    [ "__ttak_atomic_lock_for_ptr", "include_2stdatomic_8h.html#a248c1ffe22b3fffab171883328c44fb6", null ],
+    [ "__ttak_atomic_lock_for_ptr", "include_2stdatomic_8h.html#ad4c0e9a11c3a43524825fd47bbf86bcc", null ],
     [ "atomic_flag_clear_explicit", "include_2stdatomic_8h.html#a4154e94db39d792afa138536ccaa0d7e", null ],
     [ "atomic_flag_test_and_set_explicit", "include_2stdatomic_8h.html#aeca7c45606fc2b5e0c8dca53a76f40ac", null ],
     [ "__ttak_atomic_fallback_locks", "include_2stdatomic_8h.html#af2ecc3c589ae5f773acff9298a04dbfc", null ],

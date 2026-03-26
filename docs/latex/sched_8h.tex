@@ -1,5 +1,5 @@
-\doxysection{include/ttak/async/sched.h File Reference}
-\hypertarget{sched_8h}{}\label{sched_8h}\index{include/ttak/async/sched.h@{include/ttak/async/sched.h}}
+\hypertarget{sched_8h}{}\doxysection{include/ttak/async/sched.h File Reference}
+\label{sched_8h}\index{include/ttak/async/sched.h@{include/ttak/async/sched.h}}
 
 
 Async task scheduler — init, shutdown, schedule, and yield.  
@@ -8,28 +8,30 @@ Async task scheduler — init, shutdown, schedule, and yield.
 {\ttfamily \#include $<$ttak/async/task.\+h$>$}\newline
 {\ttfamily \#include $<$stdint.\+h$>$}\newline
 {\ttfamily \#include $<$sched.\+h$>$}\newline
-Include dependency graph for sched.\+h\+:\nopagebreak
+Include dependency graph for sched.\+h\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=240pt]{sched_8h__incl}
+\includegraphics[width=229pt]{sched_8h__incl}
 \end{center}
 \end{figure}
-This graph shows which files directly or indirectly include this file\+:\nopagebreak
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=228pt]{sched_8h__dep__incl}
+\includegraphics[width=212pt]{sched_8h__dep__incl}
 \end{center}
 \end{figure}
-\doxysubsubsection*{Functions}
+\doxysubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
 void \mbox{\hyperlink{sched_8h_a64e1e6f9cf8075c88f2a649f3536646b}{ttak\+\_\+async\+\_\+init}} (int nice)
 \begin{DoxyCompactList}\small\item\em Initialises the global async thread pool. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{sched_8h_a112263ef2013767bdf9edbc34c6672cc}{ttak\+\_\+async\+\_\+shutdown}} (void)
 \begin{DoxyCompactList}\small\item\em Signals all workers to drain their queues and exit. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{sched_8h_ae9db49a4788b2930a8d34216adbe2125}{ttak\+\_\+async\+\_\+schedule}} (\mbox{\hyperlink{task_8h_a6a4c7b4b8f087d53e7b2a92f84db216e}{ttak\+\_\+task\+\_\+t}} \texorpdfstring{$\ast$}{*}task, uint64\+\_\+t now, int priority)
+void \mbox{\hyperlink{sched_8h_ae9db49a4788b2930a8d34216adbe2125}{ttak\+\_\+async\+\_\+schedule}} (\mbox{\hyperlink{task_8h_a6a4c7b4b8f087d53e7b2a92f84db216e}{ttak\+\_\+task\+\_\+t}} $\ast$task, uint64\+\_\+t now, int priority)
 \begin{DoxyCompactList}\small\item\em Submits a task for asynchronous execution. \end{DoxyCompactList}\item 
 static void \mbox{\hyperlink{sched_8h_af9ea1811867a03dbfda35683aeb7d997}{ttak\+\_\+async\+\_\+yield}} (void)
 \begin{DoxyCompactList}\small\item\em Yields the current CPU time slice without sleeping. \end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -38,14 +40,10 @@ static void \mbox{\hyperlink{sched_8h_af9ea1811867a03dbfda35683aeb7d997}{ttak\+\
 \doxysubsection{Detailed Description}
 Async task scheduler — init, shutdown, schedule, and yield. 
 
-Manages the global worker-\/thread pool. Tasks submitted via \doxylink{sched_8h_ae9db49a4788b2930a8d34216adbe2125}{ttak\+\_\+async\+\_\+schedule()} are picked up by threads in priority order. \doxylink{sched_8h_af9ea1811867a03dbfda35683aeb7d997}{ttak\+\_\+async\+\_\+yield()} relinquishes the CPU slice without sleeping. 
-
-Definition in file \mbox{\hyperlink{sched_8h_source}{sched.\+h}}.
-
-
+Manages the global worker-\/thread pool. Tasks submitted via \mbox{\hyperlink{sched_8h_ae9db49a4788b2930a8d34216adbe2125}{ttak\+\_\+async\+\_\+schedule()}} are picked up by threads in priority order. \mbox{\hyperlink{sched_8h_af9ea1811867a03dbfda35683aeb7d997}{ttak\+\_\+async\+\_\+yield()}} relinquishes the CPU slice without sleeping. 
 
 \doxysubsection{Function Documentation}
-\Hypertarget{sched_8h_a64e1e6f9cf8075c88f2a649f3536646b}\label{sched_8h_a64e1e6f9cf8075c88f2a649f3536646b} 
+\mbox{\Hypertarget{sched_8h_a64e1e6f9cf8075c88f2a649f3536646b}\label{sched_8h_a64e1e6f9cf8075c88f2a649f3536646b}} 
 \index{sched.h@{sched.h}!ttak\_async\_init@{ttak\_async\_init}}
 \index{ttak\_async\_init@{ttak\_async\_init}!sched.h@{sched.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_async\_init()}{ttak\_async\_init()}}
@@ -60,11 +58,11 @@ Initialises the global async thread pool.
 {\em nice} & Base nice value applied to worker threads (0 = normal). \\
 \hline
 \end{DoxyParams}
-\Hypertarget{sched_8h_ae9db49a4788b2930a8d34216adbe2125}\label{sched_8h_ae9db49a4788b2930a8d34216adbe2125} 
+\mbox{\Hypertarget{sched_8h_ae9db49a4788b2930a8d34216adbe2125}\label{sched_8h_ae9db49a4788b2930a8d34216adbe2125}} 
 \index{sched.h@{sched.h}!ttak\_async\_schedule@{ttak\_async\_schedule}}
 \index{ttak\_async\_schedule@{ttak\_async\_schedule}!sched.h@{sched.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_async\_schedule()}{ttak\_async\_schedule()}}
-{\footnotesize\ttfamily void ttak\+\_\+async\+\_\+schedule (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{task_8h_a6a4c7b4b8f087d53e7b2a92f84db216e}{ttak\+\_\+task\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{task,  }\item[{uint64\+\_\+t}]{now,  }\item[{int}]{priority }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void ttak\+\_\+async\+\_\+schedule (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{task_8h_a6a4c7b4b8f087d53e7b2a92f84db216e}{ttak\+\_\+task\+\_\+t}} $\ast$}]{task,  }\item[{uint64\+\_\+t}]{now,  }\item[{int}]{priority }\end{DoxyParamCaption})}
 
 
 
@@ -79,7 +77,7 @@ Submits a task for asynchronous execution.
 {\em priority} & Scheduling priority (lower = higher priority). \\
 \hline
 \end{DoxyParams}
-\Hypertarget{sched_8h_a112263ef2013767bdf9edbc34c6672cc}\label{sched_8h_a112263ef2013767bdf9edbc34c6672cc} 
+\mbox{\Hypertarget{sched_8h_a112263ef2013767bdf9edbc34c6672cc}\label{sched_8h_a112263ef2013767bdf9edbc34c6672cc}} 
 \index{sched.h@{sched.h}!ttak\_async\_shutdown@{ttak\_async\_shutdown}}
 \index{ttak\_async\_shutdown@{ttak\_async\_shutdown}!sched.h@{sched.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_async\_shutdown()}{ttak\_async\_shutdown()}}
@@ -89,7 +87,7 @@ Submits a task for asynchronous execution.
 
 Signals all workers to drain their queues and exit. 
 
-\Hypertarget{sched_8h_af9ea1811867a03dbfda35683aeb7d997}\label{sched_8h_af9ea1811867a03dbfda35683aeb7d997} 
+\mbox{\Hypertarget{sched_8h_af9ea1811867a03dbfda35683aeb7d997}\label{sched_8h_af9ea1811867a03dbfda35683aeb7d997}} 
 \index{sched.h@{sched.h}!ttak\_async\_yield@{ttak\_async\_yield}}
 \index{ttak\_async\_yield@{ttak\_async\_yield}!sched.h@{sched.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_async\_yield()}{ttak\_async\_yield()}}
@@ -101,5 +99,5 @@ Yields the current CPU time slice without sleeping.
 
 
 
-Definition at line \mbox{\hyperlink{sched_8h_source_l00044}{44}} of file \mbox{\hyperlink{sched_8h_source}{sched.\+h}}.
+Definition at line 44 of file sched.\+h.
 

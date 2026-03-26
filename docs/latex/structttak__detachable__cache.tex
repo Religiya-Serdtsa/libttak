@@ -1,15 +1,15 @@
-\doxysection{ttak\+\_\+detachable\+\_\+cache Struct Reference}
-\hypertarget{structttak__detachable__cache}{}\label{structttak__detachable__cache}\index{ttak\_detachable\_cache@{ttak\_detachable\_cache}}
+\hypertarget{structttak__detachable__cache}{}\doxysection{ttak\+\_\+detachable\+\_\+cache Struct Reference}
+\label{structttak__detachable__cache}\index{ttak\_detachable\_cache@{ttak\_detachable\_cache}}
 
 
-Per-\/context cache for tiny detachable chunks (\texorpdfstring{$<$}{<}= 16 bytes).  
+Per-\/context cache for tiny detachable chunks ($<$= 16 bytes).  
 
 
 
 
 {\ttfamily \#include $<$detachable.\+h$>$}
 
-\doxysubsubsection*{Public Attributes}
+\doxysubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
 size\+\_\+t \mbox{\hyperlink{structttak__detachable__cache_a88cf12aa3260a7a6e0d36d99a73a908a}{chunk\+\_\+size}}
@@ -22,7 +22,7 @@ size\+\_\+t \mbox{\hyperlink{structttak__detachable__cache_a088bf1ad9d5483433128
 \item 
 size\+\_\+t \mbox{\hyperlink{structttak__detachable__cache_acc6dade0eda25d7ff3352c09192cd77f}{tail}}
 \item 
-void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__detachable__cache_a28f046a68e03e9d349c36e6f4994979e}{slots}}
+void $\ast$$\ast$ \mbox{\hyperlink{structttak__detachable__cache_a28f046a68e03e9d349c36e6f4994979e}{slots}}
 \item 
 uint64\+\_\+t \mbox{\hyperlink{structttak__detachable__cache_aee7eb751a826cd514855549f9c35fc7b}{hits}}
 \item 
@@ -33,16 +33,16 @@ pthread\+\_\+mutex\+\_\+t \mbox{\hyperlink{structttak__detachable__cache_a8a235e
 
 
 \doxysubsection{Detailed Description}
-Per-\/context cache for tiny detachable chunks (\texorpdfstring{$<$}{<}= 16 bytes). 
+Per-\/context cache for tiny detachable chunks ($<$= 16 bytes). 
 
 The cache implements an approximated LRU queue that is biased to favor the active generation. Entries are zeroed before returning to the caller to keep calloc semantics intact. 
 
-Definition at line \mbox{\hyperlink{detachable_8h_source_l00105}{105}} of file \mbox{\hyperlink{detachable_8h_source}{detachable.\+h}}.
+Definition at line 105 of file detachable.\+h.
 
 
 
 \doxysubsection{Member Data Documentation}
-\Hypertarget{structttak__detachable__cache_abbeefbafd46e901a24a0f845a513dcba}\label{structttak__detachable__cache_abbeefbafd46e901a24a0f845a513dcba} 
+\mbox{\Hypertarget{structttak__detachable__cache_abbeefbafd46e901a24a0f845a513dcba}\label{structttak__detachable__cache_abbeefbafd46e901a24a0f845a513dcba}} 
 \index{ttak\_detachable\_cache@{ttak\_detachable\_cache}!capacity@{capacity}}
 \index{capacity@{capacity}!ttak\_detachable\_cache@{ttak\_detachable\_cache}}
 \doxysubsubsection{\texorpdfstring{capacity}{capacity}}
@@ -50,9 +50,9 @@ Definition at line \mbox{\hyperlink{detachable_8h_source_l00105}{105}} of file \
 
 
 
-Definition at line \mbox{\hyperlink{detachable_8h_source_l00107}{107}} of file \mbox{\hyperlink{detachable_8h_source}{detachable.\+h}}.
+Definition at line 107 of file detachable.\+h.
 
-\Hypertarget{structttak__detachable__cache_a88cf12aa3260a7a6e0d36d99a73a908a}\label{structttak__detachable__cache_a88cf12aa3260a7a6e0d36d99a73a908a} 
+\mbox{\Hypertarget{structttak__detachable__cache_a88cf12aa3260a7a6e0d36d99a73a908a}\label{structttak__detachable__cache_a88cf12aa3260a7a6e0d36d99a73a908a}} 
 \index{ttak\_detachable\_cache@{ttak\_detachable\_cache}!chunk\_size@{chunk\_size}}
 \index{chunk\_size@{chunk\_size}!ttak\_detachable\_cache@{ttak\_detachable\_cache}}
 \doxysubsubsection{\texorpdfstring{chunk\_size}{chunk\_size}}
@@ -60,9 +60,9 @@ Definition at line \mbox{\hyperlink{detachable_8h_source_l00107}{107}} of file \
 
 
 
-Definition at line \mbox{\hyperlink{detachable_8h_source_l00106}{106}} of file \mbox{\hyperlink{detachable_8h_source}{detachable.\+h}}.
+Definition at line 106 of file detachable.\+h.
 
-\Hypertarget{structttak__detachable__cache_a66317554f0b4b923aa820ff19cbdd1be}\label{structttak__detachable__cache_a66317554f0b4b923aa820ff19cbdd1be} 
+\mbox{\Hypertarget{structttak__detachable__cache_a66317554f0b4b923aa820ff19cbdd1be}\label{structttak__detachable__cache_a66317554f0b4b923aa820ff19cbdd1be}} 
 \index{ttak\_detachable\_cache@{ttak\_detachable\_cache}!count@{count}}
 \index{count@{count}!ttak\_detachable\_cache@{ttak\_detachable\_cache}}
 \doxysubsubsection{\texorpdfstring{count}{count}}
@@ -70,9 +70,9 @@ Definition at line \mbox{\hyperlink{detachable_8h_source_l00106}{106}} of file \
 
 
 
-Definition at line \mbox{\hyperlink{detachable_8h_source_l00108}{108}} of file \mbox{\hyperlink{detachable_8h_source}{detachable.\+h}}.
+Definition at line 108 of file detachable.\+h.
 
-\Hypertarget{structttak__detachable__cache_a088bf1ad9d5483433128ec74ba689146}\label{structttak__detachable__cache_a088bf1ad9d5483433128ec74ba689146} 
+\mbox{\Hypertarget{structttak__detachable__cache_a088bf1ad9d5483433128ec74ba689146}\label{structttak__detachable__cache_a088bf1ad9d5483433128ec74ba689146}} 
 \index{ttak\_detachable\_cache@{ttak\_detachable\_cache}!head@{head}}
 \index{head@{head}!ttak\_detachable\_cache@{ttak\_detachable\_cache}}
 \doxysubsubsection{\texorpdfstring{head}{head}}
@@ -80,9 +80,9 @@ Definition at line \mbox{\hyperlink{detachable_8h_source_l00108}{108}} of file \
 
 
 
-Definition at line \mbox{\hyperlink{detachable_8h_source_l00109}{109}} of file \mbox{\hyperlink{detachable_8h_source}{detachable.\+h}}.
+Definition at line 109 of file detachable.\+h.
 
-\Hypertarget{structttak__detachable__cache_aee7eb751a826cd514855549f9c35fc7b}\label{structttak__detachable__cache_aee7eb751a826cd514855549f9c35fc7b} 
+\mbox{\Hypertarget{structttak__detachable__cache_aee7eb751a826cd514855549f9c35fc7b}\label{structttak__detachable__cache_aee7eb751a826cd514855549f9c35fc7b}} 
 \index{ttak\_detachable\_cache@{ttak\_detachable\_cache}!hits@{hits}}
 \index{hits@{hits}!ttak\_detachable\_cache@{ttak\_detachable\_cache}}
 \doxysubsubsection{\texorpdfstring{hits}{hits}}
@@ -90,9 +90,9 @@ Definition at line \mbox{\hyperlink{detachable_8h_source_l00109}{109}} of file \
 
 
 
-Definition at line \mbox{\hyperlink{detachable_8h_source_l00112}{112}} of file \mbox{\hyperlink{detachable_8h_source}{detachable.\+h}}.
+Definition at line 112 of file detachable.\+h.
 
-\Hypertarget{structttak__detachable__cache_a8a235e9f7fc2b8060275c1b60d3cf3ff}\label{structttak__detachable__cache_a8a235e9f7fc2b8060275c1b60d3cf3ff} 
+\mbox{\Hypertarget{structttak__detachable__cache_a8a235e9f7fc2b8060275c1b60d3cf3ff}\label{structttak__detachable__cache_a8a235e9f7fc2b8060275c1b60d3cf3ff}} 
 \index{ttak\_detachable\_cache@{ttak\_detachable\_cache}!lock@{lock}}
 \index{lock@{lock}!ttak\_detachable\_cache@{ttak\_detachable\_cache}}
 \doxysubsubsection{\texorpdfstring{lock}{lock}}
@@ -100,9 +100,9 @@ Definition at line \mbox{\hyperlink{detachable_8h_source_l00112}{112}} of file \
 
 
 
-Definition at line \mbox{\hyperlink{detachable_8h_source_l00114}{114}} of file \mbox{\hyperlink{detachable_8h_source}{detachable.\+h}}.
+Definition at line 114 of file detachable.\+h.
 
-\Hypertarget{structttak__detachable__cache_ad2b23550f4d6cce087a22171f988a525}\label{structttak__detachable__cache_ad2b23550f4d6cce087a22171f988a525} 
+\mbox{\Hypertarget{structttak__detachable__cache_ad2b23550f4d6cce087a22171f988a525}\label{structttak__detachable__cache_ad2b23550f4d6cce087a22171f988a525}} 
 \index{ttak\_detachable\_cache@{ttak\_detachable\_cache}!misses@{misses}}
 \index{misses@{misses}!ttak\_detachable\_cache@{ttak\_detachable\_cache}}
 \doxysubsubsection{\texorpdfstring{misses}{misses}}
@@ -110,19 +110,19 @@ Definition at line \mbox{\hyperlink{detachable_8h_source_l00114}{114}} of file \
 
 
 
-Definition at line \mbox{\hyperlink{detachable_8h_source_l00113}{113}} of file \mbox{\hyperlink{detachable_8h_source}{detachable.\+h}}.
+Definition at line 113 of file detachable.\+h.
 
-\Hypertarget{structttak__detachable__cache_a28f046a68e03e9d349c36e6f4994979e}\label{structttak__detachable__cache_a28f046a68e03e9d349c36e6f4994979e} 
+\mbox{\Hypertarget{structttak__detachable__cache_a28f046a68e03e9d349c36e6f4994979e}\label{structttak__detachable__cache_a28f046a68e03e9d349c36e6f4994979e}} 
 \index{ttak\_detachable\_cache@{ttak\_detachable\_cache}!slots@{slots}}
 \index{slots@{slots}!ttak\_detachable\_cache@{ttak\_detachable\_cache}}
 \doxysubsubsection{\texorpdfstring{slots}{slots}}
-{\footnotesize\ttfamily void\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} ttak\+\_\+detachable\+\_\+cache\+::slots}
+{\footnotesize\ttfamily void$\ast$$\ast$ ttak\+\_\+detachable\+\_\+cache\+::slots}
 
 
 
-Definition at line \mbox{\hyperlink{detachable_8h_source_l00111}{111}} of file \mbox{\hyperlink{detachable_8h_source}{detachable.\+h}}.
+Definition at line 111 of file detachable.\+h.
 
-\Hypertarget{structttak__detachable__cache_acc6dade0eda25d7ff3352c09192cd77f}\label{structttak__detachable__cache_acc6dade0eda25d7ff3352c09192cd77f} 
+\mbox{\Hypertarget{structttak__detachable__cache_acc6dade0eda25d7ff3352c09192cd77f}\label{structttak__detachable__cache_acc6dade0eda25d7ff3352c09192cd77f}} 
 \index{ttak\_detachable\_cache@{ttak\_detachable\_cache}!tail@{tail}}
 \index{tail@{tail}!ttak\_detachable\_cache@{ttak\_detachable\_cache}}
 \doxysubsubsection{\texorpdfstring{tail}{tail}}
@@ -130,7 +130,7 @@ Definition at line \mbox{\hyperlink{detachable_8h_source_l00111}{111}} of file \
 
 
 
-Definition at line \mbox{\hyperlink{detachable_8h_source_l00110}{110}} of file \mbox{\hyperlink{detachable_8h_source}{detachable.\+h}}.
+Definition at line 110 of file detachable.\+h.
 
 
 

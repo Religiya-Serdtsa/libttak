@@ -1,6 +1,4 @@
 <map id="ttak_net_lattice" name="ttak_net_lattice">
-<area shape="rect" id="Node000001" title="The Lattice (Sanpan) structure." alt="" coords="21,116,144,144"/>
-<area shape="poly" id="edge2_Node000001_Node000001" title=" " alt="" coords="161,119,171,130,163,139,145,143,144,138,160,135,166,130,158,123"/>
-<area shape="rect" id="Node000002" href="$structttak__net__lattice__slot.html" title="A single data slot in the lattice." alt="" coords="5,5,160,33"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="85,48,85,116,80,116,80,48"/>
+<area shape="rect" id="node1" title="The Lattice (Sanpan) structure." alt="" coords="19,96,130,123"/>
+<area shape="rect" id="node2" href="$structttak__net__lattice__slot.html" title="A single data slot in the lattice." alt="" coords="5,5,144,32"/>
 </map>

@@ -1,0 +1,135 @@
+\hypertarget{function_8h}{}\doxysection{include/ttak/async/function.h File Reference}
+\label{function_8h}\index{include/ttak/async/function.h@{include/ttak/async/function.h}}
+
+
+Convenience wrappers for fire-\/and-\/forget async jobs that return futures.  
+
+
+{\ttfamily \#include $<$ttak/async/future.\+h$>$}\newline
+{\ttfamily \#include $<$ttak/async/promise.\+h$>$}\newline
+{\ttfamily \#include $<$ttak/async/task.\+h$>$}\newline
+Include dependency graph for function.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{function_8h__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structttak__async__future}{ttak\+\_\+async\+\_\+future}}
+\begin{DoxyCompactList}\small\item\em Lightweight handle that bundles a promise and its paired future. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef void($\ast$ \mbox{\hyperlink{function_8h_aa8826aa9d4cb351245c64182f7df2d7c}{ttak\+\_\+async\+\_\+cleanup\+\_\+t}}) (void $\ast$ctx)
+\begin{DoxyCompactList}\small\item\em Cleanup callback invoked if a task fails to start. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structttak__async__future}{ttak\+\_\+async\+\_\+future}} \mbox{\hyperlink{function_8h_a21933ac1a893433944e016684abb4dd0}{ttak\+\_\+async\+\_\+future\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Lightweight handle that bundles a promise and its paired future. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{function_8h_a21933ac1a893433944e016684abb4dd0}{ttak\+\_\+async\+\_\+future\+\_\+t}} \mbox{\hyperlink{function_8h_ac9e0e5fda2fd1ee3d3a862a34187b5ae}{ttak\+\_\+async\+\_\+call}} (\mbox{\hyperlink{task_8h_ad33183ad24e1ddbeef49917c0cf7f376}{ttak\+\_\+task\+\_\+func\+\_\+t}} func, void $\ast$ctx, \mbox{\hyperlink{function_8h_aa8826aa9d4cb351245c64182f7df2d7c}{ttak\+\_\+async\+\_\+cleanup\+\_\+t}} cleanup, int priority)
+\begin{DoxyCompactList}\small\item\em Schedules a task for asynchronous execution and returns its future. \end{DoxyCompactList}\item 
+void $\ast$ \mbox{\hyperlink{function_8h_ae4e8ac16910d3c1fea250a31761f1519}{ttak\+\_\+async\+\_\+await}} (\mbox{\hyperlink{function_8h_a21933ac1a893433944e016684abb4dd0}{ttak\+\_\+async\+\_\+future\+\_\+t}} $\ast$future)
+\begin{DoxyCompactList}\small\item\em Blocks until the async task is resolved and returns the worker result. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{function_8h_a1952287d20df58ab29541aa616b7d01b}{ttak\+\_\+async\+\_\+future\+\_\+cleanup}} (\mbox{\hyperlink{function_8h_a21933ac1a893433944e016684abb4dd0}{ttak\+\_\+async\+\_\+future\+\_\+t}} $\ast$future)
+\begin{DoxyCompactList}\small\item\em Destroys the promise/future pair allocated for the async call. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Convenience wrappers for fire-\/and-\/forget async jobs that return futures. 
+
+Higher level helpers to simplify the pattern of creating a promise/future pair, scheduling a worker task, and awaiting the result. 
+
+\doxysubsection{Typedef Documentation}
+\mbox{\Hypertarget{function_8h_aa8826aa9d4cb351245c64182f7df2d7c}\label{function_8h_aa8826aa9d4cb351245c64182f7df2d7c}} 
+\index{function.h@{function.h}!ttak\_async\_cleanup\_t@{ttak\_async\_cleanup\_t}}
+\index{ttak\_async\_cleanup\_t@{ttak\_async\_cleanup\_t}!function.h@{function.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_async\_cleanup\_t}{ttak\_async\_cleanup\_t}}
+{\footnotesize\ttfamily typedef void($\ast$ ttak\+\_\+async\+\_\+cleanup\+\_\+t) (void $\ast$ctx)}
+
+
+
+Cleanup callback invoked if a task fails to start. 
+
+
+
+Definition at line 23 of file function.\+h.
+
+\mbox{\Hypertarget{function_8h_a21933ac1a893433944e016684abb4dd0}\label{function_8h_a21933ac1a893433944e016684abb4dd0}} 
+\index{function.h@{function.h}!ttak\_async\_future\_t@{ttak\_async\_future\_t}}
+\index{ttak\_async\_future\_t@{ttak\_async\_future\_t}!function.h@{function.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_async\_future\_t}{ttak\_async\_future\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__async__future}{ttak\+\_\+async\+\_\+future}} \mbox{\hyperlink{function_8h_a21933ac1a893433944e016684abb4dd0}{ttak\+\_\+async\+\_\+future\+\_\+t}}}
+
+
+
+Lightweight handle that bundles a promise and its paired future. 
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{function_8h_ae4e8ac16910d3c1fea250a31761f1519}\label{function_8h_ae4e8ac16910d3c1fea250a31761f1519}} 
+\index{function.h@{function.h}!ttak\_async\_await@{ttak\_async\_await}}
+\index{ttak\_async\_await@{ttak\_async\_await}!function.h@{function.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_async\_await()}{ttak\_async\_await()}}
+{\footnotesize\ttfamily void$\ast$ ttak\+\_\+async\+\_\+await (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{function_8h_a21933ac1a893433944e016684abb4dd0}{ttak\+\_\+async\+\_\+future\+\_\+t}} $\ast$}]{future }\end{DoxyParamCaption})}
+
+
+
+Blocks until the async task is resolved and returns the worker result. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em future} & Handle returned from \mbox{\hyperlink{function_8h_ac9e0e5fda2fd1ee3d3a862a34187b5ae}{ttak\+\_\+async\+\_\+call()}}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Result pointer from the worker, or NULL if the handle is invalid. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{function_8h_ac9e0e5fda2fd1ee3d3a862a34187b5ae}\label{function_8h_ac9e0e5fda2fd1ee3d3a862a34187b5ae}} 
+\index{function.h@{function.h}!ttak\_async\_call@{ttak\_async\_call}}
+\index{ttak\_async\_call@{ttak\_async\_call}!function.h@{function.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_async\_call()}{ttak\_async\_call()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{function_8h_a21933ac1a893433944e016684abb4dd0}{ttak\+\_\+async\+\_\+future\+\_\+t}} ttak\+\_\+async\+\_\+call (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{task_8h_ad33183ad24e1ddbeef49917c0cf7f376}{ttak\+\_\+task\+\_\+func\+\_\+t}}}]{func,  }\item[{void $\ast$}]{ctx,  }\item[{\mbox{\hyperlink{function_8h_aa8826aa9d4cb351245c64182f7df2d7c}{ttak\+\_\+async\+\_\+cleanup\+\_\+t}}}]{cleanup,  }\item[{int}]{priority }\end{DoxyParamCaption})}
+
+
+
+Schedules a task for asynchronous execution and returns its future. 
+
+On any failure, {\ttfamily cleanup} is invoked with {\ttfamily ctx} before returning an empty handle to ensure resources aren\textquotesingle{}t leaked.
+
+
+\begin{DoxyParams}{Parameters}
+{\em func} & Worker function to execute. \\
+\hline
+{\em ctx} & Context pointer passed to the worker. \\
+\hline
+{\em cleanup} & Optional cleanup callback for {\ttfamily ctx} when scheduling fails. \\
+\hline
+{\em priority} & Scheduler priority hint (lower == higher priority). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A handle holding the created promise and future (zeroed on failure). 
+\end{DoxyReturn}
+\mbox{\Hypertarget{function_8h_a1952287d20df58ab29541aa616b7d01b}\label{function_8h_a1952287d20df58ab29541aa616b7d01b}} 
+\index{function.h@{function.h}!ttak\_async\_future\_cleanup@{ttak\_async\_future\_cleanup}}
+\index{ttak\_async\_future\_cleanup@{ttak\_async\_future\_cleanup}!function.h@{function.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_async\_future\_cleanup()}{ttak\_async\_future\_cleanup()}}
+{\footnotesize\ttfamily void ttak\+\_\+async\+\_\+future\+\_\+cleanup (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{function_8h_a21933ac1a893433944e016684abb4dd0}{ttak\+\_\+async\+\_\+future\+\_\+t}} $\ast$}]{future }\end{DoxyParamCaption})}
+
+
+
+Destroys the promise/future pair allocated for the async call. 
+
+Safe to call multiple times; subsequent invocations become no-\/ops.
+
+
+\begin{DoxyParams}{Parameters}
+{\em future} & Handle previously obtained via \mbox{\hyperlink{function_8h_ac9e0e5fda2fd1ee3d3a862a34187b5ae}{ttak\+\_\+async\+\_\+call()}}. \\
+\hline
+\end{DoxyParams}

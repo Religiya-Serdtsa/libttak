@@ -1,5 +1,5 @@
-\doxysection{ttak\+\_\+net\+\_\+driver\+\_\+ops Struct Reference}
-\hypertarget{structttak__net__driver__ops}{}\label{structttak__net__driver__ops}\index{ttak\_net\_driver\_ops@{ttak\_net\_driver\_ops}}
+\hypertarget{structttak__net__driver__ops}{}\doxysection{ttak\+\_\+net\+\_\+driver\+\_\+ops Struct Reference}
+\label{structttak__net__driver__ops}\index{ttak\_net\_driver\_ops@{ttak\_net\_driver\_ops}}
 
 
 Vtable of platform socket primitives.  
@@ -9,128 +9,128 @@ Vtable of platform socket primitives.
 
 {\ttfamily \#include $<$port.\+h$>$}
 
-\doxysubsubsection*{Public Attributes}
+\doxysubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-int(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__net__driver__ops_a1c7e790a13c2129e68c376770d04329d}{socket\+\_\+open}} )(int domain, int type, int protocol)
+int($\ast$ \mbox{\hyperlink{structttak__net__driver__ops_a1c7e790a13c2129e68c376770d04329d}{socket\+\_\+open}} )(int domain, int type, int protocol)
 \item 
-int(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__net__driver__ops_ab53acbdbbbca9ee2ef973ca5d3be1dc8}{socket\+\_\+close}} )(int fd)
+int($\ast$ \mbox{\hyperlink{structttak__net__driver__ops_ab53acbdbbbca9ee2ef973ca5d3be1dc8}{socket\+\_\+close}} )(int fd)
 \item 
-int(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__net__driver__ops_ac5ccba835db1805b7ca15db2b66ca8e3}{socket\+\_\+bind}} )(int fd, const void \texorpdfstring{$\ast$}{*}addr, size\+\_\+t len)
+int($\ast$ \mbox{\hyperlink{structttak__net__driver__ops_ac5ccba835db1805b7ca15db2b66ca8e3}{socket\+\_\+bind}} )(int fd, const void $\ast$addr, size\+\_\+t len)
 \item 
-int(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__net__driver__ops_a4f571cd6ca15fcbef4a71df1beffb612}{socket\+\_\+listen}} )(int fd, int backlog)
+int($\ast$ \mbox{\hyperlink{structttak__net__driver__ops_a4f571cd6ca15fcbef4a71df1beffb612}{socket\+\_\+listen}} )(int fd, int backlog)
 \item 
-int(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__net__driver__ops_a572008768f4e5287f11d78fcab837a67}{socket\+\_\+connect}} )(int fd, const void \texorpdfstring{$\ast$}{*}addr, size\+\_\+t len)
+int($\ast$ \mbox{\hyperlink{structttak__net__driver__ops_a572008768f4e5287f11d78fcab837a67}{socket\+\_\+connect}} )(int fd, const void $\ast$addr, size\+\_\+t len)
 \item 
-int(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__net__driver__ops_a5f1c1d1cc97d80a63db2d9426af2e7ad}{socket\+\_\+send}} )(int fd, const void \texorpdfstring{$\ast$}{*}buf, size\+\_\+t len)
+int($\ast$ \mbox{\hyperlink{structttak__net__driver__ops_a5f1c1d1cc97d80a63db2d9426af2e7ad}{socket\+\_\+send}} )(int fd, const void $\ast$buf, size\+\_\+t len)
 \item 
-int(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__net__driver__ops_ab19ba383a2917b7a414abeda442d21e2}{socket\+\_\+recv}} )(int fd, void \texorpdfstring{$\ast$}{*}buf, size\+\_\+t len)
+int($\ast$ \mbox{\hyperlink{structttak__net__driver__ops_ab19ba383a2917b7a414abeda442d21e2}{socket\+\_\+recv}} )(int fd, void $\ast$buf, size\+\_\+t len)
 \item 
-int(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__net__driver__ops_ad16a5686170c0cd9a18666b89fb28f92}{socket\+\_\+setopt}} )(int fd, int opt, const void \texorpdfstring{$\ast$}{*}val, size\+\_\+t len)
+int($\ast$ \mbox{\hyperlink{structttak__net__driver__ops_ad16a5686170c0cd9a18666b89fb28f92}{socket\+\_\+setopt}} )(int fd, int opt, const void $\ast$val, size\+\_\+t len)
 \item 
-int(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__net__driver__ops_a1ba4ffcc0ca4d0af2872f625b7ca0c0f}{poll\+\_\+wait}} )(int fd, uint32\+\_\+t events, int timeout\+\_\+ms)
+int($\ast$ \mbox{\hyperlink{structttak__net__driver__ops_a1ba4ffcc0ca4d0af2872f625b7ca0c0f}{poll\+\_\+wait}} )(int fd, uint32\+\_\+t events, int timeout\+\_\+ms)
 \end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
 Vtable of platform socket primitives. 
 
-Populated by \doxylink{port_8h_a782d7b255df32e840f51eb6230204d56}{ttak\+\_\+net\+\_\+driver\+\_\+detect()}. All function pointers follow the semantics of their POSIX equivalents and return -\/1 on failure. 
+Populated by \mbox{\hyperlink{port_8h_a782d7b255df32e840f51eb6230204d56}{ttak\+\_\+net\+\_\+driver\+\_\+detect()}}. All function pointers follow the semantics of their POSIX equivalents and return -\/1 on failure. 
 
-Definition at line \mbox{\hyperlink{port_8h_source_l00033}{33}} of file \mbox{\hyperlink{port_8h_source}{port.\+h}}.
+Definition at line 33 of file port.\+h.
 
 
 
 \doxysubsection{Member Data Documentation}
-\Hypertarget{structttak__net__driver__ops_a1ba4ffcc0ca4d0af2872f625b7ca0c0f}\label{structttak__net__driver__ops_a1ba4ffcc0ca4d0af2872f625b7ca0c0f} 
+\mbox{\Hypertarget{structttak__net__driver__ops_a1ba4ffcc0ca4d0af2872f625b7ca0c0f}\label{structttak__net__driver__ops_a1ba4ffcc0ca4d0af2872f625b7ca0c0f}} 
 \index{ttak\_net\_driver\_ops@{ttak\_net\_driver\_ops}!poll\_wait@{poll\_wait}}
 \index{poll\_wait@{poll\_wait}!ttak\_net\_driver\_ops@{ttak\_net\_driver\_ops}}
 \doxysubsubsection{\texorpdfstring{poll\_wait}{poll\_wait}}
-{\footnotesize\ttfamily int(\texorpdfstring{$\ast$}{*} ttak\+\_\+net\+\_\+driver\+\_\+ops\+::poll\+\_\+wait) (int fd, uint32\+\_\+t events, int timeout\+\_\+ms)}
+{\footnotesize\ttfamily int($\ast$ ttak\+\_\+net\+\_\+driver\+\_\+ops\+::poll\+\_\+wait) (int fd, uint32\+\_\+t events, int timeout\+\_\+ms)}
 
 Poll/select. 
 
-Definition at line \mbox{\hyperlink{port_8h_source_l00042}{42}} of file \mbox{\hyperlink{port_8h_source}{port.\+h}}.
+Definition at line 42 of file port.\+h.
 
-\Hypertarget{structttak__net__driver__ops_ac5ccba835db1805b7ca15db2b66ca8e3}\label{structttak__net__driver__ops_ac5ccba835db1805b7ca15db2b66ca8e3} 
+\mbox{\Hypertarget{structttak__net__driver__ops_ac5ccba835db1805b7ca15db2b66ca8e3}\label{structttak__net__driver__ops_ac5ccba835db1805b7ca15db2b66ca8e3}} 
 \index{ttak\_net\_driver\_ops@{ttak\_net\_driver\_ops}!socket\_bind@{socket\_bind}}
 \index{socket\_bind@{socket\_bind}!ttak\_net\_driver\_ops@{ttak\_net\_driver\_ops}}
 \doxysubsubsection{\texorpdfstring{socket\_bind}{socket\_bind}}
-{\footnotesize\ttfamily int(\texorpdfstring{$\ast$}{*} ttak\+\_\+net\+\_\+driver\+\_\+ops\+::socket\+\_\+bind) (int fd, const void \texorpdfstring{$\ast$}{*}addr, size\+\_\+t len)}
+{\footnotesize\ttfamily int($\ast$ ttak\+\_\+net\+\_\+driver\+\_\+ops\+::socket\+\_\+bind) (int fd, const void $\ast$addr, size\+\_\+t len)}
 
 Bind address. 
 
-Definition at line \mbox{\hyperlink{port_8h_source_l00036}{36}} of file \mbox{\hyperlink{port_8h_source}{port.\+h}}.
+Definition at line 36 of file port.\+h.
 
-\Hypertarget{structttak__net__driver__ops_ab53acbdbbbca9ee2ef973ca5d3be1dc8}\label{structttak__net__driver__ops_ab53acbdbbbca9ee2ef973ca5d3be1dc8} 
+\mbox{\Hypertarget{structttak__net__driver__ops_ab53acbdbbbca9ee2ef973ca5d3be1dc8}\label{structttak__net__driver__ops_ab53acbdbbbca9ee2ef973ca5d3be1dc8}} 
 \index{ttak\_net\_driver\_ops@{ttak\_net\_driver\_ops}!socket\_close@{socket\_close}}
 \index{socket\_close@{socket\_close}!ttak\_net\_driver\_ops@{ttak\_net\_driver\_ops}}
 \doxysubsubsection{\texorpdfstring{socket\_close}{socket\_close}}
-{\footnotesize\ttfamily int(\texorpdfstring{$\ast$}{*} ttak\+\_\+net\+\_\+driver\+\_\+ops\+::socket\+\_\+close) (int fd)}
+{\footnotesize\ttfamily int($\ast$ ttak\+\_\+net\+\_\+driver\+\_\+ops\+::socket\+\_\+close) (int fd)}
 
 Close socket. 
 
-Definition at line \mbox{\hyperlink{port_8h_source_l00035}{35}} of file \mbox{\hyperlink{port_8h_source}{port.\+h}}.
+Definition at line 35 of file port.\+h.
 
-\Hypertarget{structttak__net__driver__ops_a572008768f4e5287f11d78fcab837a67}\label{structttak__net__driver__ops_a572008768f4e5287f11d78fcab837a67} 
+\mbox{\Hypertarget{structttak__net__driver__ops_a572008768f4e5287f11d78fcab837a67}\label{structttak__net__driver__ops_a572008768f4e5287f11d78fcab837a67}} 
 \index{ttak\_net\_driver\_ops@{ttak\_net\_driver\_ops}!socket\_connect@{socket\_connect}}
 \index{socket\_connect@{socket\_connect}!ttak\_net\_driver\_ops@{ttak\_net\_driver\_ops}}
 \doxysubsubsection{\texorpdfstring{socket\_connect}{socket\_connect}}
-{\footnotesize\ttfamily int(\texorpdfstring{$\ast$}{*} ttak\+\_\+net\+\_\+driver\+\_\+ops\+::socket\+\_\+connect) (int fd, const void \texorpdfstring{$\ast$}{*}addr, size\+\_\+t len)}
+{\footnotesize\ttfamily int($\ast$ ttak\+\_\+net\+\_\+driver\+\_\+ops\+::socket\+\_\+connect) (int fd, const void $\ast$addr, size\+\_\+t len)}
 
 Connect. 
 
-Definition at line \mbox{\hyperlink{port_8h_source_l00038}{38}} of file \mbox{\hyperlink{port_8h_source}{port.\+h}}.
+Definition at line 38 of file port.\+h.
 
-\Hypertarget{structttak__net__driver__ops_a4f571cd6ca15fcbef4a71df1beffb612}\label{structttak__net__driver__ops_a4f571cd6ca15fcbef4a71df1beffb612} 
+\mbox{\Hypertarget{structttak__net__driver__ops_a4f571cd6ca15fcbef4a71df1beffb612}\label{structttak__net__driver__ops_a4f571cd6ca15fcbef4a71df1beffb612}} 
 \index{ttak\_net\_driver\_ops@{ttak\_net\_driver\_ops}!socket\_listen@{socket\_listen}}
 \index{socket\_listen@{socket\_listen}!ttak\_net\_driver\_ops@{ttak\_net\_driver\_ops}}
 \doxysubsubsection{\texorpdfstring{socket\_listen}{socket\_listen}}
-{\footnotesize\ttfamily int(\texorpdfstring{$\ast$}{*} ttak\+\_\+net\+\_\+driver\+\_\+ops\+::socket\+\_\+listen) (int fd, int backlog)}
+{\footnotesize\ttfamily int($\ast$ ttak\+\_\+net\+\_\+driver\+\_\+ops\+::socket\+\_\+listen) (int fd, int backlog)}
 
 Start listening. 
 
-Definition at line \mbox{\hyperlink{port_8h_source_l00037}{37}} of file \mbox{\hyperlink{port_8h_source}{port.\+h}}.
+Definition at line 37 of file port.\+h.
 
-\Hypertarget{structttak__net__driver__ops_a1c7e790a13c2129e68c376770d04329d}\label{structttak__net__driver__ops_a1c7e790a13c2129e68c376770d04329d} 
+\mbox{\Hypertarget{structttak__net__driver__ops_a1c7e790a13c2129e68c376770d04329d}\label{structttak__net__driver__ops_a1c7e790a13c2129e68c376770d04329d}} 
 \index{ttak\_net\_driver\_ops@{ttak\_net\_driver\_ops}!socket\_open@{socket\_open}}
 \index{socket\_open@{socket\_open}!ttak\_net\_driver\_ops@{ttak\_net\_driver\_ops}}
 \doxysubsubsection{\texorpdfstring{socket\_open}{socket\_open}}
-{\footnotesize\ttfamily int(\texorpdfstring{$\ast$}{*} ttak\+\_\+net\+\_\+driver\+\_\+ops\+::socket\+\_\+open) (int domain, int type, int protocol)}
+{\footnotesize\ttfamily int($\ast$ ttak\+\_\+net\+\_\+driver\+\_\+ops\+::socket\+\_\+open) (int domain, int type, int protocol)}
 
 Create socket. 
 
-Definition at line \mbox{\hyperlink{port_8h_source_l00034}{34}} of file \mbox{\hyperlink{port_8h_source}{port.\+h}}.
+Definition at line 34 of file port.\+h.
 
-\Hypertarget{structttak__net__driver__ops_ab19ba383a2917b7a414abeda442d21e2}\label{structttak__net__driver__ops_ab19ba383a2917b7a414abeda442d21e2} 
+\mbox{\Hypertarget{structttak__net__driver__ops_ab19ba383a2917b7a414abeda442d21e2}\label{structttak__net__driver__ops_ab19ba383a2917b7a414abeda442d21e2}} 
 \index{ttak\_net\_driver\_ops@{ttak\_net\_driver\_ops}!socket\_recv@{socket\_recv}}
 \index{socket\_recv@{socket\_recv}!ttak\_net\_driver\_ops@{ttak\_net\_driver\_ops}}
 \doxysubsubsection{\texorpdfstring{socket\_recv}{socket\_recv}}
-{\footnotesize\ttfamily int(\texorpdfstring{$\ast$}{*} ttak\+\_\+net\+\_\+driver\+\_\+ops\+::socket\+\_\+recv) (int fd, void \texorpdfstring{$\ast$}{*}buf, size\+\_\+t len)}
+{\footnotesize\ttfamily int($\ast$ ttak\+\_\+net\+\_\+driver\+\_\+ops\+::socket\+\_\+recv) (int fd, void $\ast$buf, size\+\_\+t len)}
 
 Receive data. 
 
-Definition at line \mbox{\hyperlink{port_8h_source_l00040}{40}} of file \mbox{\hyperlink{port_8h_source}{port.\+h}}.
+Definition at line 40 of file port.\+h.
 
-\Hypertarget{structttak__net__driver__ops_a5f1c1d1cc97d80a63db2d9426af2e7ad}\label{structttak__net__driver__ops_a5f1c1d1cc97d80a63db2d9426af2e7ad} 
+\mbox{\Hypertarget{structttak__net__driver__ops_a5f1c1d1cc97d80a63db2d9426af2e7ad}\label{structttak__net__driver__ops_a5f1c1d1cc97d80a63db2d9426af2e7ad}} 
 \index{ttak\_net\_driver\_ops@{ttak\_net\_driver\_ops}!socket\_send@{socket\_send}}
 \index{socket\_send@{socket\_send}!ttak\_net\_driver\_ops@{ttak\_net\_driver\_ops}}
 \doxysubsubsection{\texorpdfstring{socket\_send}{socket\_send}}
-{\footnotesize\ttfamily int(\texorpdfstring{$\ast$}{*} ttak\+\_\+net\+\_\+driver\+\_\+ops\+::socket\+\_\+send) (int fd, const void \texorpdfstring{$\ast$}{*}buf, size\+\_\+t len)}
+{\footnotesize\ttfamily int($\ast$ ttak\+\_\+net\+\_\+driver\+\_\+ops\+::socket\+\_\+send) (int fd, const void $\ast$buf, size\+\_\+t len)}
 
 Send data. 
 
-Definition at line \mbox{\hyperlink{port_8h_source_l00039}{39}} of file \mbox{\hyperlink{port_8h_source}{port.\+h}}.
+Definition at line 39 of file port.\+h.
 
-\Hypertarget{structttak__net__driver__ops_ad16a5686170c0cd9a18666b89fb28f92}\label{structttak__net__driver__ops_ad16a5686170c0cd9a18666b89fb28f92} 
+\mbox{\Hypertarget{structttak__net__driver__ops_ad16a5686170c0cd9a18666b89fb28f92}\label{structttak__net__driver__ops_ad16a5686170c0cd9a18666b89fb28f92}} 
 \index{ttak\_net\_driver\_ops@{ttak\_net\_driver\_ops}!socket\_setopt@{socket\_setopt}}
 \index{socket\_setopt@{socket\_setopt}!ttak\_net\_driver\_ops@{ttak\_net\_driver\_ops}}
 \doxysubsubsection{\texorpdfstring{socket\_setopt}{socket\_setopt}}
-{\footnotesize\ttfamily int(\texorpdfstring{$\ast$}{*} ttak\+\_\+net\+\_\+driver\+\_\+ops\+::socket\+\_\+setopt) (int fd, int opt, const void \texorpdfstring{$\ast$}{*}val, size\+\_\+t len)}
+{\footnotesize\ttfamily int($\ast$ ttak\+\_\+net\+\_\+driver\+\_\+ops\+::socket\+\_\+setopt) (int fd, int opt, const void $\ast$val, size\+\_\+t len)}
 
 Set option. 
 
-Definition at line \mbox{\hyperlink{port_8h_source_l00041}{41}} of file \mbox{\hyperlink{port_8h_source}{port.\+h}}.
+Definition at line 41 of file port.\+h.
 
 
 

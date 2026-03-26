@@ -1,17 +1,9 @@
 <map id="ttak_net_endpoint_attr" name="ttak_net_endpoint_attr">
-<area shape="rect" id="Node000001" title="Role configuration passed to ttak_net_endpoint_set_role()." alt="" coords="45,450,214,478"/>
-<area shape="rect" id="Node000002" href="$structttak__net__endpoint.html" title="Shared socket wrapper guarded by ttak_io_guard_t and owner policies." alt="" coords="60,349,200,377"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="132,393,132,449,127,449,127,393"/>
-<area shape="poly" id="edge5_Node000002_Node000002" title=" " alt="" coords="216,354,226,363,218,372,201,375,200,370,216,367,221,363,213,359"/>
-<area shape="rect" id="Node000003" href="$structttak__io__guard.html" title="TTL&#45;bounded guard wrapping a file descriptor." alt="" coords="5,239,116,266"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="79,278,124,348,119,350,75,281"/>
-<area shape="rect" id="Node000004" href="$structttak__owner.html" title="The Owner structure." alt="" coords="9,128,104,156"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="60,171,63,238,57,239,55,171"/>
-<area shape="rect" id="Node000005" href="$structttak__map__t.html" title="Map structure using Structure of Arrays (SoA) for cache efficiency." alt="" coords="9,5,104,33"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="59,49,59,128,54,128,54,49"/>
-<area shape="rect" id="Node000006" href="$structttak__net__lattice.html" title="The Lattice (Sanpan) structure." alt="" coords="142,239,265,266"/>
-<area shape="poly" id="edge6_Node000002_Node000006" title=" " alt="" coords="188,281,157,327,141,350,137,347,153,324,184,278"/>
-<area shape="poly" id="edge8_Node000006_Node000006" title=" " alt="" coords="282,242,291,253,283,262,266,266,265,261,281,258,286,253,278,246"/>
-<area shape="rect" id="Node000007" href="$structttak__net__lattice__slot.html" title="A single data slot in the lattice." alt="" coords="127,128,282,156"/>
-<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="207,171,206,239,201,239,201,171"/>
+<area shape="rect" id="node1" title="Role configuration passed to ttak_net_endpoint_set_role()." alt="" coords="90,380,241,407"/>
+<area shape="rect" id="node2" href="$structttak__net__endpoint.html" title="Shared socket wrapper guarded by ttak_io_guard_t and owner policies." alt="" coords="103,291,228,317"/>
+<area shape="rect" id="node3" href="$structttak__net__lattice.html" title="The Lattice (Sanpan) structure." alt="" coords="19,200,130,227"/>
+<area shape="rect" id="node4" href="$structttak__net__lattice__slot.html" title="A single data slot in the lattice." alt="" coords="5,109,144,136"/>
+<area shape="rect" id="node5" href="$structttak__io__guard.html" title="TTL&#45;bounded guard wrapping a file descriptor." alt="" coords="207,200,307,227"/>
+<area shape="rect" id="node6" href="$structttak__owner.html" title="The Owner structure." alt="" coords="214,109,301,136"/>
+<area shape="rect" id="node7" href="$structttak__map__t.html" title="Map structure using Structure of Arrays (SoA) for cache efficiency." alt="" coords="214,5,301,32"/>
 </map>

@@ -1,7 +1,5 @@
 <map id="ttak_net_guard_snapshot" name="ttak_net_guard_snapshot">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,229,191,257"/>
-<area shape="rect" id="Node000002" href="$structttak__owner.html" title="The Owner structure." alt="" coords="51,128,145,156"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="101,172,101,228,95,228,95,172"/>
-<area shape="rect" id="Node000003" href="$structttak__map__t.html" title="Map structure using Structure of Arrays (SoA) for cache efficiency." alt="" coords="50,5,146,33"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="101,49,101,128,95,128,95,49"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,199,173,225"/>
+<area shape="rect" id="node2" href="$structttak__owner.html" title="The Owner structure." alt="" coords="46,109,133,136"/>
+<area shape="rect" id="node3" href="$structttak__map__t.html" title="Map structure using Structure of Arrays (SoA) for cache efficiency." alt="" coords="46,5,133,32"/>
 </map>

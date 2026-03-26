@@ -1,0 +1,5 @@
+<map id="ttak_async_future" name="ttak_async_future">
+<area shape="rect" id="node1" title="Lightweight handle that bundles a promise and its paired future." alt="" coords="5,184,131,211"/>
+<area shape="rect" id="node2" href="$structttak__future.html" title="Blocking future that carries a single void* result." alt="" coords="26,5,110,32"/>
+<area shape="rect" id="node3" href="$structttak__promise.html" title="Promise handle that pairs with exactly one ttak_future_t." alt="" coords="109,95,206,121"/>
+</map>

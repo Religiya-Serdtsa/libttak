@@ -1,11 +1,7 @@
 <map id="include/ttak/types/fixed.h" name="include/ttak/types/fixed.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="71,5,210,50"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,98,76,126"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="116,52,70,90,67,86,113,48"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="100,98,181,126"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="143,50,143,82,138,82,138,50"/>
-<area shape="rect" id="Node000004" href="$ttak__compiler_8h.html" title="Compiler&#45;specific macros and compatibility layer." alt="" coords="206,98,398,126"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="185,48,264,88,261,93,182,53"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="253,174,351,201"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="304,126,304,158,299,158,299,126"/>
+<area shape="rect" id="node1" title=" " alt="" coords="68,5,193,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,95,69,121"/>
+<area shape="rect" id="node3" title=" " alt="" coords="93,95,168,121"/>
+<area shape="rect" id="node4" href="$ttak__compiler_8h.html" title="Compiler&#45;specific macros and compatibility layer." alt="" coords="192,95,365,121"/>
+<area shape="rect" id="node5" title=" " alt="" coords="233,169,324,196"/>
 </map>

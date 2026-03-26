@@ -1,29 +1,30 @@
-\doxysection{include/ttak/security/siphash.h File Reference}
-\hypertarget{siphash_8h}{}\label{siphash_8h}\index{include/ttak/security/siphash.h@{include/ttak/security/siphash.h}}
+\hypertarget{siphash_8h}{}\doxysection{include/ttak/security/siphash.h File Reference}
+\label{siphash_8h}\index{include/ttak/security/siphash.h@{include/ttak/security/siphash.h}}
 {\ttfamily \#include $<$stdint.\+h$>$}\newline
 {\ttfamily \#include $<$stddef.\+h$>$}\newline
-Include dependency graph for siphash.\+h\+:\nopagebreak
+Include dependency graph for siphash.\+h\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=206pt]{siphash_8h__incl}
+\includegraphics[width=198pt]{siphash_8h__incl}
 \end{center}
 \end{figure}
-\doxysubsubsection*{Functions}
+\doxysubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-uint64\+\_\+t \mbox{\hyperlink{siphash_8h_a28b43f1178141e2473e77fa0cd8b655d}{ttak\+\_\+siphash24}} (const void \texorpdfstring{$\ast$}{*}key, size\+\_\+t len, uint64\+\_\+t k0, uint64\+\_\+t k1)
+uint64\+\_\+t \mbox{\hyperlink{siphash_8h_a28b43f1178141e2473e77fa0cd8b655d}{ttak\+\_\+siphash24}} (const void $\ast$key, size\+\_\+t len, uint64\+\_\+t k0, uint64\+\_\+t k1)
 \begin{DoxyCompactList}\small\item\em Sip\+Hash-\/2-\/4 implementation for arbitrary byte arrays. \end{DoxyCompactList}\item 
 uint64\+\_\+t \mbox{\hyperlink{siphash_8h_a0dba5e3d2d5bbcff897653148aa1706b}{ttak\+\_\+siphash24\+\_\+u64}} (uint64\+\_\+t val, uint64\+\_\+t k0, uint64\+\_\+t k1)
 \begin{DoxyCompactList}\small\item\em Compute Sip\+Hash-\/2-\/4 for a single 64-\/bit word. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Function Documentation}
-\Hypertarget{siphash_8h_a28b43f1178141e2473e77fa0cd8b655d}\label{siphash_8h_a28b43f1178141e2473e77fa0cd8b655d} 
+\mbox{\Hypertarget{siphash_8h_a28b43f1178141e2473e77fa0cd8b655d}\label{siphash_8h_a28b43f1178141e2473e77fa0cd8b655d}} 
 \index{siphash.h@{siphash.h}!ttak\_siphash24@{ttak\_siphash24}}
 \index{ttak\_siphash24@{ttak\_siphash24}!siphash.h@{siphash.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_siphash24()}{ttak\_siphash24()}}
-{\footnotesize\ttfamily uint64\+\_\+t ttak\+\_\+siphash24 (\begin{DoxyParamCaption}\item[{const void \texorpdfstring{$\ast$}{*}}]{key,  }\item[{size\+\_\+t}]{len,  }\item[{uint64\+\_\+t}]{k0,  }\item[{uint64\+\_\+t}]{k1 }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily uint64\+\_\+t ttak\+\_\+siphash24 (\begin{DoxyParamCaption}\item[{const void $\ast$}]{key,  }\item[{size\+\_\+t}]{len,  }\item[{uint64\+\_\+t}]{k0,  }\item[{uint64\+\_\+t}]{k1 }\end{DoxyParamCaption})}
 
 
 
@@ -45,7 +46,7 @@ Sip\+Hash is a cryptographically strong PRF (pseudorandom function) optimized fo
 \begin{DoxyReturn}{Returns}
 64-\/bit hash value. 
 \end{DoxyReturn}
-\Hypertarget{siphash_8h_a0dba5e3d2d5bbcff897653148aa1706b}\label{siphash_8h_a0dba5e3d2d5bbcff897653148aa1706b} 
+\mbox{\Hypertarget{siphash_8h_a0dba5e3d2d5bbcff897653148aa1706b}\label{siphash_8h_a0dba5e3d2d5bbcff897653148aa1706b}} 
 \index{siphash.h@{siphash.h}!ttak\_siphash24\_u64@{ttak\_siphash24\_u64}}
 \index{ttak\_siphash24\_u64@{ttak\_siphash24\_u64}!siphash.h@{siphash.h}}
 \doxysubsubsection{\texorpdfstring{ttak\_siphash24\_u64()}{ttak\_siphash24\_u64()}}

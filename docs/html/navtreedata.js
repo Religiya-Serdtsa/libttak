@@ -25,7 +25,14 @@
 var NAVTREE =
 [
   [ "libttak", "index.html", [
-    [ "LibTTAK Benchmark Suite", "index.html", "index" ],
+    [ "LibTTAK Benchmark Suite", "index.html", [
+      [ "Core Benchmarks", "index.html#autotoc_md1", [
+        [ "1. TTL Cache Multi-threaded Benchmark", "index.html#autotoc_md2", null ],
+        [ "2. General Benchmark Hub (<tt>ttak_bench.c</tt>)", "index.html#autotoc_md3", null ]
+      ] ],
+      [ "Architectural Philosophy", "index.html#autotoc_md4", null ],
+      [ "Analysis Tools", "index.html#autotoc_md5", null ]
+    ] ],
     [ "Development History", "md_HISTORY.html", [
       [ "2026-01-30", "md_HISTORY.html#autotoc_md17", [
         [ "Initial Skeleton Creation & Build Stabilization", "md_HISTORY.html#autotoc_md18", null ],
@@ -52,7 +59,7 @@ var NAVTREE =
       [ "12. Documentation & Testing", "md_SPECS.html#autotoc_md55", null ],
       [ "13. Compliance Checklist", "md_SPECS.html#autotoc_md56", null ]
     ] ],
-    [ "Clone Coding Path", "md_tutorials_2CLONE__PATH.html", null ],
+    [ "Clone Coding Path", "md_tutorials_CLONE_PATH.html", null ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
@@ -80,14 +87,14 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "00__overview_8puml.html",
-"context_8h.html#a3ce5ce1f27b068f718459c1316c97bc9",
-"fixed_8h.html#a8fc96f8e7f1d99183873dcfa432f42af",
-"io_8h.html#a4c5731f8c7bf69338c8fba54e58f3109a54de52442b04580a6239efda00de1e3b",
-"port_8h.html#a9c772162be718df750f452ed87452d80a19b0baaa8e6569bfff4c88757aace0d9",
-"structttak__accel__batch__item.html#ab55dab014cfce96fe3e5c9938bcbb1c3",
-"structttak__logger.html#a8489256cafc9961e644cd68e83e86a5f",
-"structttak__shared__s.html#a9bc30781d9d079cd89123f964fc4ef43",
-"ttak__accelerator_8h_source.html"
+"context_8h.html#a2821cd899c198409e01e84b4456dca17",
+"fixed_8h.html#a8efab2f600f17fcb131ed9c647277c81",
+"io_8h.html#a242e3d01cd4a0c1d01c32614c636c318",
+"owner_8h.html#a6c47e6a1c635efb2ad989e927612e94aa55791aa9e8301d023a68a58576bc2291",
+"structSHA256__CTX.html",
+"structttak__heap__tree.html",
+"structttak__ringbuf.html#a391549f9b534e3761e2567ec8e7ba431",
+"timing_8h.html#ac02e371a9ce7c79927fcd1250ad5f082"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
