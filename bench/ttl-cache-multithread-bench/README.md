@@ -13,13 +13,18 @@ We strategically prioritize **explosive throughput (Ops/s)** by utilizing determ
 - **Latency:** ~6-15 ns per access
 - **Memory Efficiency:** Near-zero steady-state RSS overhead after epoch reclamation (GCC/Clang)
 
-## Latest Benchmark Results
+## Latest Benchmark Results (GitHub Copilot CI)
 
-| Compiler | Peak Throughput | Final RSS | Performance Note |
-|----------|-----------------|-----------|------------------|
-| **GCC 14** | **150.5M Ops/s** | 23.0 MB | Excellent reclamation |
-| **Clang 18** | **156.0M Ops/s** | **2.6 MB** | Best memory efficiency |
-| **TCC** | 68.4M Ops/s | 2.9 GB | High throughput, higher RSS |
+| Compiler | Peak Throughput | Avg Throughput (20s) | Final RSS | Performance Note |
+|----------|-----------------|----------------------|-----------|------------------|
+| **GCC** | **13.9M Ops/s** | 10.0M Ops/s | 266.3 MB | 3 vCPU virtual runner baseline |
+
+### CI Environment (Recorded)
+
+- Platform: GitHub Copilot CI runner (Linux, KVM)
+- Kernel: `Linux 6.12.47 x86_64`
+- CPU: `Intel(R) Xeon(R) Platinum 8272CL CPU @ 2.60GHz` (3 vCPU)
+- Memory: 17 GiB RAM, no swap
 
 ## Technical Analysis: TCC Memory Anomaly
 
@@ -33,8 +38,13 @@ The benchmark reveals a significant disparity in RSS (Resident Set Size) between
 
 ```bash
 make
-./ttl_cache_bench_lockfree
+TTAK_BENCH_DURATION_SEC=20 ./ttl_cache_bench_lockfree
 ```
+
+### Useful Environment Overrides
+
+- `TTAK_BENCH_DURATION_SEC`: benchmark run time in seconds.
+- `TTAK_BENCH_THREADS`: worker thread count override.
 
 ## Compiler Comparison
 
