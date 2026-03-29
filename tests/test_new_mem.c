@@ -52,7 +52,7 @@ void test_pocket_allocator(void) {
 
 void test_vma_allocator(void) {
     fprintf(stderr, "\n--- Running VMA Allocator Tests ---\n");
-    size_t sizes[] = {150, 200, 250}; // Medium VMA sizes (above pocket limit of 128, below VMA limit of 256)
+    size_t sizes[] = {600, 1024, 4096}; // Medium VMA sizes (above pocket limit of 512, below large limit of 2MB)
     for (int i = 0; i < sizeof(sizes) / sizeof(sizes[0]); ++i) {
         size_t test_size = sizes[i];
         fprintf(stderr, "Testing VMA alloc for size %zu...\n", test_size);
