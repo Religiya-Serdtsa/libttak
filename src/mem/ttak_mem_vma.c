@@ -1,161 +1,211 @@
 /**
  * @file ttak_mem_vma.c
- * @brief Implementation of the Bare-Metal VMA (Virtual Mapping Area) Tier.
- *
- * This tier provides a lock-free bump allocator for medium-sized objects,
- * utilizing a large pre-mapped virtual address space for rapid allocation.
+ * @brief Region-backed medium and large allocators with split/coalescing.
  */
 
-#ifdef _WIN32
-    #include <windows.h>
-    static inline void *_ttak_mmap_region(size_t size) {
-        return VirtualAlloc(NULL, size, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
-    }
-    static inline void _ttak_munmap_region(void *addr, size_t size) {
-        VirtualFree(addr, size, MEM_DECOMMIT);
-        VirtualFree(addr, 0, MEM_RELEASE);
-    }
-#else
-    #include <sys/mman.h>
-    #include <unistd.h>
-    static inline void *_ttak_mmap_region(size_t size) {
-        void *p = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-        return (p == MAP_FAILED) ? NULL : p;
-    }
-    static inline void _ttak_munmap_region(void *addr, size_t size) {
-        munmap(addr, size);
-    }
-#endif
 #include <string.h>
 #include <stdio.h>
-#include <limits.h>
+#include <stddef.h>
 
 #include "../../internal/ttak/mem_internal.h"
 #include "../../include/ttak/mem/mem.h"
 #include <ttak/mem/fastpath.h>
 
-typedef struct ttak_vma_free_node {
-    struct ttak_vma_free_node *next;
+typedef struct ttak_region_block_t {
     size_t size;
-} ttak_vma_free_node_t;
+    struct ttak_region_block_t *prev;
+    struct ttak_region_block_t *next;
+    struct ttak_region_block_t *free_next;
+    uint8_t is_free;
+} ttak_region_block_t;
 
-/**
- * @brief Global VMA region instance.
- */
-ttak_mem_vma_region_t global_vma_region = {
-    .start_addr = NULL,
-    .current_cursor = (uintptr_t)NULL
+typedef struct ttak_region_allocator_t {
+    uint8_t *base;
+    size_t len;
+    ttak_region_block_t *head;
+    ttak_region_block_t *free_bins[16];
+    pthread_mutex_t lock;
+} ttak_region_allocator_t;
+
+#define TTAK_MIN_SPLIT_BLOCK 256
+#define TTAK_BIN_COUNT 16
+
+static _Alignas(64) uint8_t vma_region_buffer[TTAK_VMA_REGION_SIZE];
+static _Alignas(64) uint8_t large_region_buffer[TTAK_LARGE_REGION_SIZE];
+
+static ttak_region_allocator_t vma_allocator = {
+    .base = vma_region_buffer,
+    .len = sizeof(vma_region_buffer),
+    .head = NULL,
+    .free_bins = {0},
+    .lock = PTHREAD_MUTEX_INITIALIZER,
 };
 
-static pthread_mutex_t vma_free_list_lock = PTHREAD_MUTEX_INITIALIZER;
-static ttak_vma_free_node_t *vma_free_list_head = NULL;
+static ttak_region_allocator_t large_allocator = {
+    .base = large_region_buffer,
+    .len = sizeof(large_region_buffer),
+    .head = NULL,
+    .free_bins = {0},
+    .lock = PTHREAD_MUTEX_INITIALIZER,
+};
 
-/**
- * @brief Guard for one-time initialization of the VMA region.
- */
-static pthread_once_t vma_init_once = PTHREAD_ONCE_INIT;
+ttak_mem_vma_region_t global_vma_region = {
+    .start_addr = vma_region_buffer,
+    .current_cursor = (uintptr_t)vma_region_buffer,
+};
 
-/**
- * @brief Helper function to initialize the VMA region via mmap.
- */
-static void _init_vma_region(void) {
-    void* addr = _ttak_mmap_region(TTAK_VMA_REGION_SIZE);
-    if (addr == NULL) {
+static int size_to_bin(size_t sz) {
+    size_t limit = 512;
+    for (int i = 0; i < TTAK_BIN_COUNT - 1; ++i) {
+        if (sz <= limit) return i;
+        limit <<= 1;
+    }
+    return TTAK_BIN_COUNT - 1;
+}
+
+static inline size_t payload_offset(void) {
+    size_t off = sizeof(ttak_region_block_t);
+    return (off + TTAK_VMA_ALIGNMENT - 1) & ~((size_t)TTAK_VMA_ALIGNMENT - 1);
+}
+
+static void free_bin_insert(ttak_region_allocator_t *alloc, ttak_region_block_t *blk) {
+    int bin = size_to_bin(blk->size);
+    blk->free_next = alloc->free_bins[bin];
+    alloc->free_bins[bin] = blk;
+}
+
+static void free_bin_remove(ttak_region_allocator_t *alloc, ttak_region_block_t *blk) {
+    int bin = size_to_bin(blk->size);
+    ttak_region_block_t *prev = NULL;
+    ttak_region_block_t *cur = alloc->free_bins[bin];
+    while (cur) {
+        if (cur == blk) {
+            if (prev) prev->free_next = cur->free_next;
+            else alloc->free_bins[bin] = cur->free_next;
+            blk->free_next = NULL;
+            return;
+        }
+        prev = cur;
+        cur = cur->free_next;
+    }
+}
+
+static void region_init_once(ttak_region_allocator_t *alloc) {
+    if (alloc->head) return;
+    ttak_region_block_t *head = (ttak_region_block_t *)alloc->base;
+    head->size = alloc->len - payload_offset();
+    head->prev = NULL;
+    head->next = NULL;
+    head->free_next = NULL;
+    head->is_free = 1;
+    alloc->head = head;
+    free_bin_insert(alloc, head);
+}
+
+static ttak_region_block_t *region_find_fit(ttak_region_allocator_t *alloc, size_t req_size) {
+    int bin = size_to_bin(req_size);
+    for (int i = bin; i < TTAK_BIN_COUNT; ++i) {
+        ttak_region_block_t *cur = alloc->free_bins[i];
+        while (cur) {
+            if (cur->is_free && cur->size >= req_size) return cur;
+            cur = cur->free_next;
+        }
+    }
+    return NULL;
+}
+
+static void region_split_block(ttak_region_allocator_t *alloc, ttak_region_block_t *blk, size_t req_size) {
+    if (blk->size < req_size + payload_offset() + TTAK_MIN_SPLIT_BLOCK) {
         return;
     }
 
-    global_vma_region.start_addr = addr;
-    atomic_store(&global_vma_region.current_cursor, (uintptr_t)addr);
+    uint8_t *new_addr = ((uint8_t *)blk + payload_offset() + req_size);
+    ttak_region_block_t *new_blk = (ttak_region_block_t *)new_addr;
+    new_blk->size = blk->size - req_size - payload_offset();
+    new_blk->prev = blk;
+    new_blk->next = blk->next;
+    new_blk->free_next = NULL;
+    new_blk->is_free = 1;
+    if (blk->next) blk->next->prev = new_blk;
+    blk->next = new_blk;
+    blk->size = req_size;
+    free_bin_insert(alloc, new_blk);
 }
 
-ttak_mem_header_t* ttak_mem_vma_alloc_internal(size_t user_requested_size) {
-    if (user_requested_size == 0) return NULL;
-    if (user_requested_size > SIZE_MAX - sizeof(ttak_mem_header_t)) return NULL;
-
-    pthread_once(&vma_init_once, _init_vma_region);
-    
-    if (global_vma_region.start_addr == NULL) {
-        return NULL;
+static ttak_region_block_t *region_coalesce(ttak_region_allocator_t *alloc, ttak_region_block_t *blk) {
+    if (blk->prev && blk->prev->is_free) {
+        ttak_region_block_t *left = blk->prev;
+        free_bin_remove(alloc, left);
+        left->size += payload_offset() + blk->size;
+        left->next = blk->next;
+        if (blk->next) blk->next->prev = left;
+        blk = left;
     }
+
+    if (blk->next && blk->next->is_free) {
+        ttak_region_block_t *right = blk->next;
+        free_bin_remove(alloc, right);
+        blk->size += payload_offset() + right->size;
+        blk->next = right->next;
+        if (right->next) right->next->prev = blk;
+    }
+
+    return blk;
+}
+
+static ttak_mem_header_t *region_alloc(ttak_region_allocator_t *alloc, size_t user_requested_size) {
+    if (user_requested_size == 0 || user_requested_size > SIZE_MAX - sizeof(ttak_mem_header_t)) return NULL;
 
     size_t total_alloc_size = sizeof(ttak_mem_header_t) + user_requested_size;
     if (total_alloc_size > SIZE_MAX - (TTAK_VMA_ALIGNMENT - 1)) return NULL;
-    // Align block to TTAK_VMA_ALIGNMENT (64-byte).
     size_t aligned_total_alloc_size = (total_alloc_size + TTAK_VMA_ALIGNMENT - 1) & ~((size_t)TTAK_VMA_ALIGNMENT - 1);
 
-    pthread_mutex_lock(&vma_free_list_lock);
-    ttak_vma_free_node_t *prev = NULL;
-    ttak_vma_free_node_t *cur = vma_free_list_head;
-    while (cur) {
-        if (cur->size >= aligned_total_alloc_size) {
-            if (prev) prev->next = cur->next;
-            else vma_free_list_head = cur->next;
-            pthread_mutex_unlock(&vma_free_list_lock);
-            ttak_mem_header_t *reused_header = (ttak_mem_header_t *)cur;
-            ttak_mem_stream_zero(reused_header, aligned_total_alloc_size);
-            pthread_mutex_init(&reused_header->lock, NULL);
-            return reused_header;
-        }
-        prev = cur;
-        cur = cur->next;
+    pthread_mutex_lock(&alloc->lock);
+    region_init_once(alloc);
+
+    ttak_region_block_t *blk = region_find_fit(alloc, aligned_total_alloc_size);
+    if (!blk) {
+        pthread_mutex_unlock(&alloc->lock);
+        return NULL;
     }
-    pthread_mutex_unlock(&vma_free_list_lock);
-    
-    uintptr_t old_cursor;
-    uintptr_t new_cursor;
 
-    do {
-        old_cursor = atomic_load(&global_vma_region.current_cursor);
-        if (old_cursor > UINTPTR_MAX - (TTAK_VMA_ALIGNMENT - 1)) return NULL;
-        uintptr_t current_aligned_start = (old_cursor + TTAK_VMA_ALIGNMENT - 1) & ~((uintptr_t)TTAK_VMA_ALIGNMENT - 1);
-        if (current_aligned_start > UINTPTR_MAX - aligned_total_alloc_size) return NULL;
-        new_cursor = current_aligned_start + aligned_total_alloc_size;
-        uintptr_t region_start = (uintptr_t)global_vma_region.start_addr;
-        if (region_start > UINTPTR_MAX - TTAK_VMA_REGION_SIZE) return NULL;
-        uintptr_t region_end = region_start + TTAK_VMA_REGION_SIZE;
-        if (new_cursor > region_end) {
-            return NULL; 
-        }
+    free_bin_remove(alloc, blk);
+    blk->is_free = 0;
+    region_split_block(alloc, blk, aligned_total_alloc_size);
 
-        // Lock-free cursor advancement.
-    } while (!atomic_compare_exchange_weak(&global_vma_region.current_cursor, &old_cursor, new_cursor));
+    ttak_mem_header_t *header = (ttak_mem_header_t *)((uint8_t *)blk + payload_offset());
+    ttak_mem_stream_zero(header, aligned_total_alloc_size);
+    pthread_mutex_init(&header->lock, NULL);
+    pthread_mutex_unlock(&alloc->lock);
+    return header;
+}
 
-    ttak_mem_header_t* allocated_header = (ttak_mem_header_t*)((old_cursor + TTAK_VMA_ALIGNMENT - 1) & ~((uintptr_t)TTAK_VMA_ALIGNMENT - 1));
-    ttak_mem_stream_zero(allocated_header, aligned_total_alloc_size);
-    pthread_mutex_init(&allocated_header->lock, NULL);
+static void region_free(ttak_region_allocator_t *alloc, ttak_mem_header_t *header) {
+    if (!header) return;
 
-    return allocated_header;
+    pthread_mutex_destroy(&header->lock);
+
+    pthread_mutex_lock(&alloc->lock);
+    ttak_region_block_t *blk = (ttak_region_block_t *)((uint8_t *)header - payload_offset());
+    blk->is_free = 1;
+    blk->free_next = NULL;
+    blk = region_coalesce(alloc, blk);
+    free_bin_insert(alloc, blk);
+    pthread_mutex_unlock(&alloc->lock);
+}
+
+ttak_mem_header_t* ttak_mem_vma_alloc_internal(size_t user_requested_size) {
+    return region_alloc(&vma_allocator, user_requested_size);
 }
 
 void _vma_free_internal(ttak_mem_header_t* header) {
-    if (!header) return;
-
-    size_t total_alloc_size = sizeof(ttak_mem_header_t) + header->size;
-    size_t aligned_total_alloc_size = (total_alloc_size + TTAK_VMA_ALIGNMENT - 1) & ~((size_t)TTAK_VMA_ALIGNMENT - 1);
-
-    pthread_mutex_destroy(&header->lock);
-    ttak_vma_free_node_t *node = (ttak_vma_free_node_t *)header;
-    node->size = aligned_total_alloc_size;
-
-    pthread_mutex_lock(&vma_free_list_lock);
-    node->next = vma_free_list_head;
-    vma_free_list_head = node;
-    pthread_mutex_unlock(&vma_free_list_lock);
+    region_free(&vma_allocator, header);
 }
 
-/**
- * @brief Unmaps the entire VMA region on process exit.
- */
-#if defined(__GNUC__) || defined(__clang__)
-__attribute__((destructor))
-#endif
-static void _destroy_vma_region(void) {
-    if (global_vma_region.start_addr) {
-        _ttak_munmap_region(global_vma_region.start_addr, TTAK_VMA_REGION_SIZE);
-        global_vma_region.start_addr = NULL;
-        atomic_store(&global_vma_region.current_cursor, (uintptr_t)NULL);
-    }
-    pthread_mutex_lock(&vma_free_list_lock);
-    vma_free_list_head = NULL;
-    pthread_mutex_unlock(&vma_free_list_lock);
+ttak_mem_header_t* ttak_mem_large_alloc_internal(size_t user_requested_size) {
+    return region_alloc(&large_allocator, user_requested_size);
+}
+
+void _large_free_internal(ttak_mem_header_t* header) {
+    region_free(&large_allocator, header);
 }

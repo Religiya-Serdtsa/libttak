@@ -6,19 +6,6 @@
  * using thread-local freelists to avoid global synchronization.
  */
 
-#ifdef _WIN32
-    #include <windows.h>
-    static inline void *_ttak_mmap_page(size_t size) {
-        return VirtualAlloc(NULL, size, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
-    }
-#else
-    #include <sys/mman.h>
-    #include <unistd.h>
-    static inline void *_ttak_mmap_page(size_t size) {
-        void *p = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-        return (p == MAP_FAILED) ? NULL : p;
-    }
-#endif
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -63,26 +50,42 @@ ttak_mem_pocket_freelist_t *ttak_tls_get_pocket_freelists(void) {
 TTAK_THREAD_LOCAL ttak_mem_pocket_freelist_t ttak_pocket_freelists[TTAK_NUM_POCKET_FREELISTS] = {0};
 #endif
 
-/**
- * @brief Allocates and populates a new 4KB pocket page.
- * @param freelist_idx The size class index for which the page is being allocated.
- * @return Pointer to the allocated page, or NULL on failure.
- */
+typedef struct ttak_pocket_page_meta_t {
+    uint32_t magic_with_idx;
+    uintptr_t owner_thread;
+} ttak_pocket_page_meta_t;
+
+static pthread_mutex_t pocket_page_pool_lock = PTHREAD_MUTEX_INITIALIZER;
+static pthread_mutex_t pocket_remote_lock = PTHREAD_MUTEX_INITIALIZER;
+static void *pocket_remote_freelists[TTAK_NUM_POCKET_FREELISTS] = {0};
+static _Alignas(TTAK_POCKET_ALIGNMENT) uint8_t pocket_page_pool[TTAK_POCKET_PAGE_SIZE * 2048];
+static size_t pocket_page_pool_cursor = 0;
+
+static uintptr_t ttak_thread_identity(void) {
+    return (uintptr_t)pthread_self();
+}
+
 static void* allocate_new_pocket_page(int freelist_idx) {
-    void* page = _ttak_mmap_page(TTAK_POCKET_PAGE_SIZE);
-    if (!page) {
+    pthread_mutex_lock(&pocket_page_pool_lock);
+    if (pocket_page_pool_cursor + TTAK_POCKET_PAGE_SIZE > sizeof(pocket_page_pool)) {
+        pthread_mutex_unlock(&pocket_page_pool_lock);
         fprintf(stderr, "ttak_mem_pocket: Failed to allocate new page\n");
         return NULL;
     }
+    void *page = (void *)(pocket_page_pool + pocket_page_pool_cursor);
+    pocket_page_pool_cursor += TTAK_POCKET_PAGE_SIZE;
+    pthread_mutex_unlock(&pocket_page_pool_lock);
+
     ttak_mem_stream_zero(page, TTAK_POCKET_PAGE_SIZE);
 
-    // Stamp the page-level magic with size class index.
-    ((uint32_t*)page)[0] = POCKET_MAGIC | (freelist_idx & 0xFF); 
+    ttak_pocket_page_meta_t *page_meta = (ttak_pocket_page_meta_t *)page;
+    page_meta->magic_with_idx = POCKET_MAGIC | (freelist_idx & 0xFF);
+    page_meta->owner_thread = ttak_thread_identity();
 
     size_t total_block_size = get_total_block_size_for_freelist(freelist_idx);
     
     // First block starts at 64-byte offset to maintain alignment.
-    char* current_block_ptr = (char*)page + 64; 
+    char* current_block_ptr = (char*)page + 64;
     size_t usable_page_space = TTAK_POCKET_PAGE_SIZE - 64;
     size_t num_blocks = usable_page_space / total_block_size;
 
@@ -97,7 +100,7 @@ static void* allocate_new_pocket_page(int freelist_idx) {
 }
 
 ttak_mem_header_t* ttak_mem_pocket_alloc_internal(size_t user_requested_size) {
-    if (user_requested_size == 0 || user_requested_size > 128) return NULL; 
+    if (user_requested_size == 0 || user_requested_size > 512) return NULL;
 
     // Determined size class index.
     size_t total_block_size = sizeof(ttak_mem_header_t) + user_requested_size;
@@ -110,6 +113,14 @@ ttak_mem_header_t* ttak_mem_pocket_alloc_internal(size_t user_requested_size) {
     if (header_block) {
         ttak_pocket_freelists[idx].head = *(void**)header_block;
     } else {
+        pthread_mutex_lock(&pocket_remote_lock);
+        if (pocket_remote_freelists[idx]) {
+            header_block = (ttak_mem_header_t*)pocket_remote_freelists[idx];
+            pocket_remote_freelists[idx] = *(void **)header_block;
+            pthread_mutex_unlock(&pocket_remote_lock);
+            return header_block;
+        }
+        pthread_mutex_unlock(&pocket_remote_lock);
         if (!allocate_new_pocket_page(idx)) {
             return NULL;
         }
@@ -128,7 +139,8 @@ void _pocket_free_internal(ttak_mem_header_t* header) {
 
     // Determine the page start to extract the size class index.
     uintptr_t page_start_addr = (uintptr_t)header & ~((uintptr_t)TTAK_POCKET_PAGE_SIZE - 1);
-    uint32_t page_magic_val = ((uint32_t*)page_start_addr)[0];
+    ttak_pocket_page_meta_t *page_meta = (ttak_pocket_page_meta_t *)page_start_addr;
+    uint32_t page_magic_val = page_meta->magic_with_idx;
 
     if ((page_magic_val & 0xFFFFFF00) != POCKET_MAGIC) {
         fprintf(stderr, "ttak_mem_pocket: Freeing non-pocket allocated header %p\n", (void*)header);
@@ -141,7 +153,14 @@ void _pocket_free_internal(ttak_mem_header_t* header) {
         return;
     }
 
-    // Push back to the LIFO freelist.
-    *(void**)header = ttak_pocket_freelists[idx].head;
-    ttak_pocket_freelists[idx].head = header;
+    if (page_meta->owner_thread == ttak_thread_identity()) {
+        *(void**)header = ttak_pocket_freelists[idx].head;
+        ttak_pocket_freelists[idx].head = header;
+        return;
+    }
+
+    pthread_mutex_lock(&pocket_remote_lock);
+    *(void**)header = pocket_remote_freelists[idx];
+    pocket_remote_freelists[idx] = header;
+    pthread_mutex_unlock(&pocket_remote_lock);
 }

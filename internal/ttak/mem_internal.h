@@ -64,10 +64,10 @@ extern ttak_mem_friction_matrix_t global_friction_matrix;
 // Forward declare ttak_mem_header_t
 typedef struct ttak_mem_header_t ttak_mem_header_t;
 
-// --- Thread-Local Pockets (Objects <= 128B total block) ---
+// --- Thread-Local Pockets (Objects <= 512B user payload) ---
 #define TTAK_POCKET_PAGE_SIZE 4096 
 #define TTAK_POCKET_ALIGNMENT 4096 
-#define TTAK_NUM_POCKET_FREELISTS 2 
+#define TTAK_NUM_POCKET_FREELISTS 4 
 
 /**
  * @struct ttak_mem_pocket_freelist
@@ -88,9 +88,12 @@ ttak_mem_pocket_freelist_t *ttak_tls_get_pocket_freelists(void);
 extern TTAK_THREAD_LOCAL ttak_mem_pocket_freelist_t ttak_pocket_freelists[TTAK_NUM_POCKET_FREELISTS];
 #endif
 
-// --- Bare-Metal VMA (Virtual Mapping Area) ---
-#define TTAK_VMA_REGION_SIZE (16 * 1024 * 1024) 
+// --- Bare-Metal VMA (Segregated Free-List + Coalescing) ---
+#define TTAK_VMA_REGION_SIZE (64 * 1024 * 1024) 
 #define TTAK_VMA_ALIGNMENT 64 
+
+// --- Dedicated Large Region (>=2MB user payload) ---
+#define TTAK_LARGE_REGION_SIZE (256 * 1024 * 1024)
 
 /**
  * @struct ttak_mem_vma_region
@@ -149,6 +152,19 @@ void _pocket_free_internal(ttak_mem_header_t* header);
 void _vma_free_internal(ttak_mem_header_t* header);
 
 /**
+ * @brief Allocates memory from the dedicated large-allocation region.
+ * @param size Requested user memory size.
+ * @return Pointer to the ttak_mem_header_t of the allocated block, or NULL on failure.
+ */
+ttak_mem_header_t* ttak_mem_large_alloc_internal(size_t size);
+
+/**
+ * @brief Releases a memory block back to the dedicated large tier.
+ * @param header Pointer to the memory header to be freed.
+ */
+void _large_free_internal(ttak_mem_header_t* header);
+
+/**
  * @brief Raw linear VMA allocator (internal use).
  * @param size Total bytes to allocate.
  * @return Start pointer.
@@ -171,6 +187,8 @@ void _slab_free_internal(ttak_mem_header_t* header, uintptr_t slab_page_start_ad
 static inline int get_pocket_size_class_idx(size_t total_block_size) {
     if (total_block_size <= 192) return 0;
     if (total_block_size <= 256) return 1;
+    if (total_block_size <= 384) return 2;
+    if (total_block_size <= 768) return 3;
     return -1;
 }
 
@@ -181,6 +199,8 @@ static inline size_t get_total_block_size_for_freelist(int idx) {
     switch (idx) {
         case 0: return 192;
         case 1: return 256;
+        case 2: return 384;
+        case 3: return 768;
     }
     return 0;
 }

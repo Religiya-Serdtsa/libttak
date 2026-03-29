@@ -41,12 +41,7 @@
     #  define read  _read
     #endif
 #else
-    #include <sys/mman.h>
     #include <unistd.h>
-#endif
-
-#ifndef MAP_HUGETLB
-    #define MAP_HUGETLB 0x0
 #endif
 
 #ifdef _WIN32
@@ -320,19 +315,19 @@ void TTAK_HOT_PATH *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, ui
     }
     t_reentrancy_guard = true;
 
-    // --- Tier 1: Pockets ---
-    if (size > 0 && size <= 128 && lifetime_ticks < TT_MICRO_SECOND(500)) {
+    // --- Tier 1: Pockets (small objects) ---
+    if (size > 0 && size <= 512 && lifetime_ticks < TT_SECOND(1)) {
         header = ttak_mem_pocket_alloc_internal(size);
         if (header) allocated_tier = TTAK_ALLOC_TIER_POCKET;
     }
 
-    // --- Tier 2: VMA ---
-    if (!header && size > 0 && lifetime_ticks < TT_SECOND(1)) {
+    // --- Tier 2: VMA medium region ---
+    if (!header && size > 0 && size < (2 * 1024 * 1024)) {
         header = ttak_mem_vma_alloc_internal(size);
         if (header) allocated_tier = TTAK_ALLOC_TIER_VMA;
     }
 
-    // --- Tier 3: General/Buddy ---
+    // --- Tier 3: Dedicated large region / buddy fallback ---
     if (!header) {
 #if EMBEDDED
         if ((flags & TTAK_MEM_LOW_PRIORITY) &&
@@ -355,40 +350,8 @@ void TTAK_HOT_PATH *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, ui
             }
         }
 #else
-        size_t canary_padding = strict_check_enabled ? sizeof(uint64_t) : 0;
-        if (size > SIZE_MAX - header_size - canary_padding) {
-            t_reentrancy_guard = false;
-            return NULL;
-        }
-        size_t total_alloc_size = header_size + canary_padding + size;
-        if (flags & TTAK_MEM_HUGE_PAGES) {
-#ifdef _WIN32
-            header = VirtualAlloc(NULL, total_alloc_size, MEM_COMMIT | MEM_RESERVE | MEM_LARGE_PAGES, PAGE_READWRITE);
-#else
-            header = mmap(NULL, total_alloc_size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS | MAP_HUGETLB, -1, 0);
-#endif
-            if (header != MAP_FAILED) allocated_tier = TTAK_ALLOC_TIER_GENERAL;
-            else header = NULL;
-        }
-        if (!header) {
-            if (posix_memalign((void **)&header, 64, total_alloc_size) != 0) header = NULL;
-            else allocated_tier = TTAK_ALLOC_TIER_GENERAL;
-        }
-        if (!header && errno == ENOMEM) {
-#if defined(__TINYC__)
-            int *retrying_ptr = ttak_tls_get_retrying_counter();
-#else
-            static TTAK_THREAD_LOCAL int retrying = 0;
-            int *retrying_ptr = &retrying;
-#endif
-            if (retrying_ptr && !*retrying_ptr) {
-                *retrying_ptr = 1; t_reentrancy_guard = false;
-                tt_autoclean_dirty_pointers(now);
-                void *res = ttak_mem_alloc_safe(size, lifetime_ticks, now, is_const, is_volatile, allow_direct, is_root, flags);
-                *retrying_ptr = 0;
-                return res;
-            }
-        }
+        header = ttak_mem_large_alloc_internal(size);
+        if (header) allocated_tier = TTAK_ALLOC_TIER_GENERAL;
 #endif
     }
 
@@ -404,7 +367,7 @@ void TTAK_HOT_PATH *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, ui
     header->is_const = is_const;
     header->is_volatile = is_volatile;
     header->allow_direct_access = allow_direct;
-    header->is_huge = (allocated_tier == TTAK_ALLOC_TIER_GENERAL && (flags & TTAK_MEM_HUGE_PAGES));
+    header->is_huge = false;
     header->should_join = false;
     header->strict_check = strict_check_enabled;
     header->is_root = is_root;
@@ -546,25 +509,18 @@ void TTAK_HOT_PATH ttak_mem_free(void *ptr) {
 #if EMBEDDED
             ttak_mem_buddy_free(header);
 #else
-            pthread_mutex_destroy(&header->lock); free(header);
+            _large_free_internal(header);
 #endif
             break;
         case TTAK_ALLOC_TIER_GENERAL:
-            pthread_mutex_destroy(&header->lock);
-#ifdef _WIN32
-            if (header->is_huge) VirtualFree(header, 0, MEM_RELEASE); else _aligned_free(header);
-#else
-            if (header->is_huge) munmap(header, actual_total_alloc_size); else free(header);
-#endif
+            _large_free_internal(header);
             break;
         default:
             pthread_mutex_destroy(&header->lock);
 #if EMBEDDED
             ttak_mem_buddy_free(header);
-#elif defined(_WIN32)
-            if (header->is_huge) VirtualFree(header, 0, MEM_RELEASE); else _aligned_free(header);
 #else
-            if (header->is_huge) munmap(header, actual_total_alloc_size); else free(header);
+            _large_free_internal(header);
 #endif
             break;
     }
