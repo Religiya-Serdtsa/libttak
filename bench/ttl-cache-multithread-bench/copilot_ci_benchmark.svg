@@ -1,0 +1,16 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='1000' height='520' viewBox='0 0 1000 520'>
+<rect width='100%' height='100%' fill='#0b1020'/>
+<text x='40' y='46' fill='#e6edf3' font-size='28' font-family='Arial' font-weight='700'>LibTTAK TTL Cache Benchmark (GitHub Copilot CI)</text>
+<text x='40' y='78' fill='#9fb0c0' font-size='18' font-family='Arial'>Compiler: GCC | Duration: 20s | Threads: 2 | Runner CPU: Intel Xeon Platinum 8272CL (3 vCPU)</text>
+<line x1='40' y1='460' x2='700' y2='460' stroke='#5b667a' stroke-width='1'/>
+<rect x='90' y='40.0' width='120' height='420.0' fill='#2E7D32' rx='8'/>
+<text x='150' y='488' text-anchor='middle' fill='#c9d6e2' font-size='16' font-family='Arial'>Peak Ops/s</text>
+<text x='150' y='30.0' text-anchor='middle' fill='#e6edf3' font-size='18' font-family='Arial' font-weight='700'>13,912,685</text>
+<rect x='310' y='157.2' width='120' height='302.8' fill='#66BB6A' rx='8'/>
+<text x='370' y='488' text-anchor='middle' fill='#c9d6e2' font-size='16' font-family='Arial'>Avg Ops/s</text>
+<text x='370' y='147.2' text-anchor='middle' fill='#e6edf3' font-size='18' font-family='Arial' font-weight='700'>10,030,947</text>
+<line x1='740' y1='460' x2='940' y2='460' stroke='#5b667a' stroke-width='1'/>
+<rect x='790' y='40.0' width='100' height='420.0' fill='#1565C0' rx='8'/>
+<text x='840' y='488' text-anchor='middle' fill='#c9d6e2' font-size='16' font-family='Arial'>Final RSS (MB)</text>
+<text x='840' y='30.0' text-anchor='middle' fill='#e6edf3' font-size='18' font-family='Arial' font-weight='700'>266.3 MB</text>
+</svg>

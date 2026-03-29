@@ -1,7 +1,6 @@
 ![Memuh the sea rabbit](./mascot.png)
 
-![Compiler Performance Comparison](./bench/ttl-cache-multithread-bench/throughput_comparison.png)
-![Compiler RSS Footprint Comparison](./bench/ttl-cache-multithread-bench/rss_comparison.png)
+![GitHub Copilot CI Benchmark](./bench/ttl-cache-multithread-bench/copilot_ci_benchmark.svg)
 
 # LibTTAK
 
@@ -69,14 +68,22 @@ There are no assembly fast paths or exotic TLS caches. Standard `malloc` plus di
 
 ## Benchmarks
 
-![Compiler Performance Comparison](./bench/ttl-cache-multithread-bench/throughput_comparison.png)
-![Compiler RSS Footprint Comparison](./bench/ttl-cache-multithread-bench/rss_comparison.png)
+![GitHub Copilot CI Benchmark](./bench/ttl-cache-multithread-bench/copilot_ci_benchmark.svg)
 
 ### Benchmark Environment
 
-* OS: Linux x64
-* CPU: Ryzen 5 5600X
-* RAM: 64 GB DDR4 3200 MHz
+* Environment: GitHub Copilot CI (Ubuntu Linux, KVM virtualized runner)
+* Kernel: Linux 6.12.47 (x86_64)
+* CPU: Intel(R) Xeon(R) Platinum 8272CL @ 2.60GHz (3 vCPU)
+* Memory: 17 GiB RAM (no swap)
+
+### Latest CI Run Snapshot
+
+* Benchmark target: `bench/ttl-cache-multithread-bench/ttl_cache_bench_lockfree`
+* Runtime config: `TTAK_BENCH_DURATION_SEC=20`, auto thread detect (2 workers + 1 maintenance thread)
+* Peak throughput: **13,912,685 Ops/s**
+* Average throughput (20s): **10,030,947 Ops/s**
+* Final RSS: **272,712 KB** (~266.3 MB)
 
 ---
 

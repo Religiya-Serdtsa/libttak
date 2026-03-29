@@ -793,6 +793,11 @@ int main(void) {
         int warm = atoi(warm_env);
         if (warm > 0) cfg.warmup_ops = (uint32_t)warm;
     }
+    const char *duration_env = getenv("TTAK_BENCH_DURATION_SEC");
+    if (duration_env && *duration_env) {
+        int duration = atoi(duration_env);
+        if (duration > 0) cfg.duration_sec = duration;
+    }
     if (cfg.ttl_ns == 0) cfg.ttl_ns = 5 * 1000 * 1000ULL;
     if (cfg.key_space == 0) cfg.key_space = 1u << 18;
     if (cfg.hot_key_space == 0 || cfg.hot_key_space > cfg.key_space) {
