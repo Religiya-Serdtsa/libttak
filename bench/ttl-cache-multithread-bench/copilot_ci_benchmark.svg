@@ -1,16 +1,143 @@
-<svg xmlns='http://www.w3.org/2000/svg' width='1000' height='520' viewBox='0 0 1000 520'>
+<svg xmlns='http://www.w3.org/2000/svg' width='1560' height='1360' viewBox='0 0 1560 1360'>
 <rect width='100%' height='100%' fill='#0b1020'/>
-<text x='40' y='46' fill='#e6edf3' font-size='28' font-family='Arial' font-weight='700'>LibTTAK TTL Cache Benchmark (GitHub Copilot CI)</text>
-<text x='40' y='78' fill='#9fb0c0' font-size='18' font-family='Arial'>Compiler: GCC | Duration: 20s | Threads: 2 | Runner CPU: Intel Xeon Platinum 8272CL (3 vCPU)</text>
-<line x1='40' y1='460' x2='700' y2='460' stroke='#5b667a' stroke-width='1'/>
-<rect x='90' y='40.0' width='120' height='420.0' fill='#2E7D32' rx='8'/>
-<text x='150' y='488' text-anchor='middle' fill='#c9d6e2' font-size='16' font-family='Arial'>Peak Ops/s</text>
-<text x='150' y='30.0' text-anchor='middle' fill='#e6edf3' font-size='18' font-family='Arial' font-weight='700'>13,912,685</text>
-<rect x='310' y='157.2' width='120' height='302.8' fill='#66BB6A' rx='8'/>
-<text x='370' y='488' text-anchor='middle' fill='#c9d6e2' font-size='16' font-family='Arial'>Avg Ops/s</text>
-<text x='370' y='147.2' text-anchor='middle' fill='#e6edf3' font-size='18' font-family='Arial' font-weight='700'>10,030,947</text>
-<line x1='740' y1='460' x2='940' y2='460' stroke='#5b667a' stroke-width='1'/>
-<rect x='790' y='40.0' width='100' height='420.0' fill='#1565C0' rx='8'/>
-<text x='840' y='488' text-anchor='middle' fill='#c9d6e2' font-size='16' font-family='Arial'>Final RSS (MB)</text>
-<text x='840' y='30.0' text-anchor='middle' fill='#e6edf3' font-size='18' font-family='Arial' font-weight='700'>266.3 MB</text>
+<text x='50%' y='56' text-anchor='middle' fill='#e6edf3' font-size='34' font-family='Arial' font-weight='700'>LibTTAK TTL Cache Benchmark (GitHub Copilot CI) - Detailed Time-Series Comparison</text>
+<text x='50%' y='92' text-anchor='middle' fill='#9fb0c0' font-size='20' font-family='Arial'>Duration: 20s | Peak Ops/s: 13,912,685 | Avg Ops/s: 10,030,947 | Final RSS: 266.3 MB</text>
+<rect x='48' y='140' width='1464' height='350' rx='12' fill='#11182e' stroke='#4b5872' stroke-width='1'/>
+<text x='72' y='164' fill='#e6edf3' font-size='18' font-family='Arial' font-weight='700'>N-second Throughput Trend</text>
+<line x1='138' y1='166.0' x2='1472' y2='166.0' stroke='#3b465c' stroke-width='1' stroke-dasharray='4 4' opacity='0.5'/>
+<line x1='138' y1='222.0' x2='1472' y2='222.0' stroke='#3b465c' stroke-width='1' stroke-dasharray='4 4' opacity='0.5'/>
+<line x1='138' y1='278.0' x2='1472' y2='278.0' stroke='#3b465c' stroke-width='1' stroke-dasharray='4 4' opacity='0.5'/>
+<line x1='138' y1='334.0' x2='1472' y2='334.0' stroke='#3b465c' stroke-width='1' stroke-dasharray='4 4' opacity='0.5'/>
+<line x1='138' y1='390.0' x2='1472' y2='390.0' stroke='#3b465c' stroke-width='1' stroke-dasharray='4 4' opacity='0.5'/>
+<line x1='138' y1='446.0' x2='1472' y2='446.0' stroke='#3b465c' stroke-width='1' stroke-dasharray='4 4' opacity='0.5'/>
+<line x1='138' y1='446' x2='1472' y2='446' stroke='#8995ac' stroke-width='1.3'/>
+<line x1='138' y1='166' x2='138' y2='446' stroke='#8995ac' stroke-width='1.3'/>
+<text x='138.0' y='470' text-anchor='middle' fill='#c9d6e2' font-size='11' font-family='Arial'>1s</text>
+<text x='278.4' y='470' text-anchor='middle' fill='#c9d6e2' font-size='11' font-family='Arial'>3s</text>
+<text x='418.8' y='470' text-anchor='middle' fill='#c9d6e2' font-size='11' font-family='Arial'>5s</text>
+<text x='559.3' y='470' text-anchor='middle' fill='#c9d6e2' font-size='11' font-family='Arial'>7s</text>
+<text x='699.7' y='470' text-anchor='middle' fill='#c9d6e2' font-size='11' font-family='Arial'>9s</text>
+<text x='840.1' y='470' text-anchor='middle' fill='#c9d6e2' font-size='11' font-family='Arial'>11s</text>
+<text x='980.5' y='470' text-anchor='middle' fill='#c9d6e2' font-size='11' font-family='Arial'>13s</text>
+<text x='1120.9' y='470' text-anchor='middle' fill='#c9d6e2' font-size='11' font-family='Arial'>15s</text>
+<text x='1261.4' y='470' text-anchor='middle' fill='#c9d6e2' font-size='11' font-family='Arial'>17s</text>
+<text x='1401.8' y='470' text-anchor='middle' fill='#c9d6e2' font-size='11' font-family='Arial'>19s</text>
+<text x='1472.0' y='470' text-anchor='middle' fill='#c9d6e2' font-size='11' font-family='Arial'>20s</text>
+<text x='70' y='315.0' fill='#c9d6e2' font-size='12' font-family='Arial' transform='rotate(-90 70,315.0)'>Throughput (Million Ops/s)</text>
+<text x='805.0' y='480' text-anchor='middle' fill='#c9d6e2' font-size='12' font-family='Arial'>Elapsed Time (s)</text>
+<text x='130' y='171' text-anchor='end' fill='#9fb0c0' font-size='11' font-family='Arial'>13.91</text>
+<text x='130' y='450' text-anchor='end' fill='#9fb0c0' font-size='11' font-family='Arial'>7.06</text>
+<polyline points='138.0,166.0 208.2,242.9 278.4,292.8 348.6,339.9 418.8,338.6 489.1,441.8 559.3,431.6 629.5,360.0 699.7,446.0 769.9,436.8 840.1,422.5 910.3,415.5 980.5,335.7 1050.7,261.7 1120.9,247.4 1191.2,247.3 1261.4,249.9 1331.6,261.3 1401.8,252.6 1472.0,302.9' fill='none' stroke='#58a6ff' stroke-width='3' stroke-linejoin='round' stroke-linecap='round'/>
+<circle cx='138.0' cy='166.0' r='4.2' fill='#58a6ff' stroke='#0b1020' stroke-width='1'/>
+<circle cx='208.2' cy='242.9' r='4.2' fill='#58a6ff' stroke='#0b1020' stroke-width='1'/>
+<circle cx='278.4' cy='292.8' r='4.2' fill='#58a6ff' stroke='#0b1020' stroke-width='1'/>
+<circle cx='348.6' cy='339.9' r='4.2' fill='#58a6ff' stroke='#0b1020' stroke-width='1'/>
+<circle cx='418.8' cy='338.6' r='4.2' fill='#58a6ff' stroke='#0b1020' stroke-width='1'/>
+<circle cx='489.1' cy='441.8' r='4.2' fill='#58a6ff' stroke='#0b1020' stroke-width='1'/>
+<circle cx='559.3' cy='431.6' r='4.2' fill='#58a6ff' stroke='#0b1020' stroke-width='1'/>
+<circle cx='629.5' cy='360.0' r='4.2' fill='#58a6ff' stroke='#0b1020' stroke-width='1'/>
+<circle cx='699.7' cy='446.0' r='4.2' fill='#58a6ff' stroke='#0b1020' stroke-width='1'/>
+<circle cx='769.9' cy='436.8' r='4.2' fill='#58a6ff' stroke='#0b1020' stroke-width='1'/>
+<circle cx='840.1' cy='422.5' r='4.2' fill='#58a6ff' stroke='#0b1020' stroke-width='1'/>
+<circle cx='910.3' cy='415.5' r='4.2' fill='#58a6ff' stroke='#0b1020' stroke-width='1'/>
+<circle cx='980.5' cy='335.7' r='4.2' fill='#58a6ff' stroke='#0b1020' stroke-width='1'/>
+<circle cx='1050.7' cy='261.7' r='4.2' fill='#58a6ff' stroke='#0b1020' stroke-width='1'/>
+<circle cx='1120.9' cy='247.4' r='4.2' fill='#58a6ff' stroke='#0b1020' stroke-width='1'/>
+<circle cx='1191.2' cy='247.3' r='4.2' fill='#58a6ff' stroke='#0b1020' stroke-width='1'/>
+<circle cx='1261.4' cy='249.9' r='4.2' fill='#58a6ff' stroke='#0b1020' stroke-width='1'/>
+<circle cx='1331.6' cy='261.3' r='4.2' fill='#58a6ff' stroke='#0b1020' stroke-width='1'/>
+<circle cx='1401.8' cy='252.6' r='4.2' fill='#58a6ff' stroke='#0b1020' stroke-width='1'/>
+<circle cx='1472.0' cy='302.9' r='4.2' fill='#58a6ff' stroke='#0b1020' stroke-width='1'/>
+<rect x='48' y='525' width='1464' height='350' rx='12' fill='#11182e' stroke='#4b5872' stroke-width='1'/>
+<text x='72' y='549' fill='#e6edf3' font-size='18' font-family='Arial' font-weight='700'>N-second RSS Footprint Trend</text>
+<line x1='138' y1='551.0' x2='1472' y2='551.0' stroke='#3b465c' stroke-width='1' stroke-dasharray='4 4' opacity='0.5'/>
+<line x1='138' y1='607.0' x2='1472' y2='607.0' stroke='#3b465c' stroke-width='1' stroke-dasharray='4 4' opacity='0.5'/>
+<line x1='138' y1='663.0' x2='1472' y2='663.0' stroke='#3b465c' stroke-width='1' stroke-dasharray='4 4' opacity='0.5'/>
+<line x1='138' y1='719.0' x2='1472' y2='719.0' stroke='#3b465c' stroke-width='1' stroke-dasharray='4 4' opacity='0.5'/>
+<line x1='138' y1='775.0' x2='1472' y2='775.0' stroke='#3b465c' stroke-width='1' stroke-dasharray='4 4' opacity='0.5'/>
+<line x1='138' y1='831.0' x2='1472' y2='831.0' stroke='#3b465c' stroke-width='1' stroke-dasharray='4 4' opacity='0.5'/>
+<line x1='138' y1='831' x2='1472' y2='831' stroke='#8995ac' stroke-width='1.3'/>
+<line x1='138' y1='551' x2='138' y2='831' stroke='#8995ac' stroke-width='1.3'/>
+<text x='138.0' y='855' text-anchor='middle' fill='#c9d6e2' font-size='11' font-family='Arial'>1s</text>
+<text x='278.4' y='855' text-anchor='middle' fill='#c9d6e2' font-size='11' font-family='Arial'>3s</text>
+<text x='418.8' y='855' text-anchor='middle' fill='#c9d6e2' font-size='11' font-family='Arial'>5s</text>
+<text x='559.3' y='855' text-anchor='middle' fill='#c9d6e2' font-size='11' font-family='Arial'>7s</text>
+<text x='699.7' y='855' text-anchor='middle' fill='#c9d6e2' font-size='11' font-family='Arial'>9s</text>
+<text x='840.1' y='855' text-anchor='middle' fill='#c9d6e2' font-size='11' font-family='Arial'>11s</text>
+<text x='980.5' y='855' text-anchor='middle' fill='#c9d6e2' font-size='11' font-family='Arial'>13s</text>
+<text x='1120.9' y='855' text-anchor='middle' fill='#c9d6e2' font-size='11' font-family='Arial'>15s</text>
+<text x='1261.4' y='855' text-anchor='middle' fill='#c9d6e2' font-size='11' font-family='Arial'>17s</text>
+<text x='1401.8' y='855' text-anchor='middle' fill='#c9d6e2' font-size='11' font-family='Arial'>19s</text>
+<text x='1472.0' y='855' text-anchor='middle' fill='#c9d6e2' font-size='11' font-family='Arial'>20s</text>
+<text x='70' y='700.0' fill='#c9d6e2' font-size='12' font-family='Arial' transform='rotate(-90 70,700.0)'>RSS Footprint (MB)</text>
+<text x='805.0' y='865' text-anchor='middle' fill='#c9d6e2' font-size='12' font-family='Arial'>Elapsed Time (s)</text>
+<text x='130' y='556' text-anchor='end' fill='#9fb0c0' font-size='11' font-family='Arial'>266.32</text>
+<text x='130' y='835' text-anchor='end' fill='#9fb0c0' font-size='11' font-family='Arial'>266.25</text>
+<polyline points='138.0,831.0 208.2,659.9 278.4,659.9 348.6,659.9 418.8,659.9 489.1,659.9 559.3,659.9 629.5,659.9 699.7,659.9 769.9,659.9 840.1,659.9 910.3,659.9 980.5,659.9 1050.7,659.9 1120.9,644.3 1191.2,644.3 1261.4,551.0 1331.6,551.0 1401.8,551.0 1472.0,551.0' fill='none' stroke='#2ea043' stroke-width='3' stroke-linejoin='round' stroke-linecap='round'/>
+<circle cx='138.0' cy='831.0' r='4.2' fill='#2ea043' stroke='#0b1020' stroke-width='1'/>
+<circle cx='208.2' cy='659.9' r='4.2' fill='#2ea043' stroke='#0b1020' stroke-width='1'/>
+<circle cx='278.4' cy='659.9' r='4.2' fill='#2ea043' stroke='#0b1020' stroke-width='1'/>
+<circle cx='348.6' cy='659.9' r='4.2' fill='#2ea043' stroke='#0b1020' stroke-width='1'/>
+<circle cx='418.8' cy='659.9' r='4.2' fill='#2ea043' stroke='#0b1020' stroke-width='1'/>
+<circle cx='489.1' cy='659.9' r='4.2' fill='#2ea043' stroke='#0b1020' stroke-width='1'/>
+<circle cx='559.3' cy='659.9' r='4.2' fill='#2ea043' stroke='#0b1020' stroke-width='1'/>
+<circle cx='629.5' cy='659.9' r='4.2' fill='#2ea043' stroke='#0b1020' stroke-width='1'/>
+<circle cx='699.7' cy='659.9' r='4.2' fill='#2ea043' stroke='#0b1020' stroke-width='1'/>
+<circle cx='769.9' cy='659.9' r='4.2' fill='#2ea043' stroke='#0b1020' stroke-width='1'/>
+<circle cx='840.1' cy='659.9' r='4.2' fill='#2ea043' stroke='#0b1020' stroke-width='1'/>
+<circle cx='910.3' cy='659.9' r='4.2' fill='#2ea043' stroke='#0b1020' stroke-width='1'/>
+<circle cx='980.5' cy='659.9' r='4.2' fill='#2ea043' stroke='#0b1020' stroke-width='1'/>
+<circle cx='1050.7' cy='659.9' r='4.2' fill='#2ea043' stroke='#0b1020' stroke-width='1'/>
+<circle cx='1120.9' cy='644.3' r='4.2' fill='#2ea043' stroke='#0b1020' stroke-width='1'/>
+<circle cx='1191.2' cy='644.3' r='4.2' fill='#2ea043' stroke='#0b1020' stroke-width='1'/>
+<circle cx='1261.4' cy='551.0' r='4.2' fill='#2ea043' stroke='#0b1020' stroke-width='1'/>
+<circle cx='1331.6' cy='551.0' r='4.2' fill='#2ea043' stroke='#0b1020' stroke-width='1'/>
+<circle cx='1401.8' cy='551.0' r='4.2' fill='#2ea043' stroke='#0b1020' stroke-width='1'/>
+<circle cx='1472.0' cy='551.0' r='4.2' fill='#2ea043' stroke='#0b1020' stroke-width='1'/>
+<rect x='48' y='910' width='1464' height='350' rx='12' fill='#11182e' stroke='#4b5872' stroke-width='1'/>
+<text x='72' y='934' fill='#e6edf3' font-size='18' font-family='Arial' font-weight='700'>N-second Memory Reclamation Ratio</text>
+<line x1='138' y1='936.0' x2='1472' y2='936.0' stroke='#3b465c' stroke-width='1' stroke-dasharray='4 4' opacity='0.5'/>
+<line x1='138' y1='992.0' x2='1472' y2='992.0' stroke='#3b465c' stroke-width='1' stroke-dasharray='4 4' opacity='0.5'/>
+<line x1='138' y1='1048.0' x2='1472' y2='1048.0' stroke='#3b465c' stroke-width='1' stroke-dasharray='4 4' opacity='0.5'/>
+<line x1='138' y1='1104.0' x2='1472' y2='1104.0' stroke='#3b465c' stroke-width='1' stroke-dasharray='4 4' opacity='0.5'/>
+<line x1='138' y1='1160.0' x2='1472' y2='1160.0' stroke='#3b465c' stroke-width='1' stroke-dasharray='4 4' opacity='0.5'/>
+<line x1='138' y1='1216.0' x2='1472' y2='1216.0' stroke='#3b465c' stroke-width='1' stroke-dasharray='4 4' opacity='0.5'/>
+<line x1='138' y1='1216' x2='1472' y2='1216' stroke='#8995ac' stroke-width='1.3'/>
+<line x1='138' y1='936' x2='138' y2='1216' stroke='#8995ac' stroke-width='1.3'/>
+<text x='138.0' y='1240' text-anchor='middle' fill='#c9d6e2' font-size='11' font-family='Arial'>1s</text>
+<text x='278.4' y='1240' text-anchor='middle' fill='#c9d6e2' font-size='11' font-family='Arial'>3s</text>
+<text x='418.8' y='1240' text-anchor='middle' fill='#c9d6e2' font-size='11' font-family='Arial'>5s</text>
+<text x='559.3' y='1240' text-anchor='middle' fill='#c9d6e2' font-size='11' font-family='Arial'>7s</text>
+<text x='699.7' y='1240' text-anchor='middle' fill='#c9d6e2' font-size='11' font-family='Arial'>9s</text>
+<text x='840.1' y='1240' text-anchor='middle' fill='#c9d6e2' font-size='11' font-family='Arial'>11s</text>
+<text x='980.5' y='1240' text-anchor='middle' fill='#c9d6e2' font-size='11' font-family='Arial'>13s</text>
+<text x='1120.9' y='1240' text-anchor='middle' fill='#c9d6e2' font-size='11' font-family='Arial'>15s</text>
+<text x='1261.4' y='1240' text-anchor='middle' fill='#c9d6e2' font-size='11' font-family='Arial'>17s</text>
+<text x='1401.8' y='1240' text-anchor='middle' fill='#c9d6e2' font-size='11' font-family='Arial'>19s</text>
+<text x='1472.0' y='1240' text-anchor='middle' fill='#c9d6e2' font-size='11' font-family='Arial'>20s</text>
+<text x='70' y='1085.0' fill='#c9d6e2' font-size='12' font-family='Arial' transform='rotate(-90 70,1085.0)'>Reclamation Ratio (%)</text>
+<text x='805.0' y='1250' text-anchor='middle' fill='#c9d6e2' font-size='12' font-family='Arial'>Elapsed Time (s)</text>
+<text x='130' y='941' text-anchor='end' fill='#9fb0c0' font-size='11' font-family='Arial'>1.00</text>
+<text x='130' y='1220' text-anchor='end' fill='#9fb0c0' font-size='11' font-family='Arial'>0.00</text>
+<polyline points='138.0,1216.0 208.2,1216.0 278.4,1216.0 348.6,1216.0 418.8,1216.0 489.1,1216.0 559.3,1216.0 629.5,1216.0 699.7,1216.0 769.9,1216.0 840.1,1216.0 910.3,1216.0 980.5,1216.0 1050.7,1216.0 1120.9,1216.0 1191.2,1216.0 1261.4,1216.0 1331.6,1216.0 1401.8,1216.0 1472.0,1216.0' fill='none' stroke='#f2cc60' stroke-width='3' stroke-linejoin='round' stroke-linecap='round'/>
+<circle cx='138.0' cy='1216.0' r='4.2' fill='#f2cc60' stroke='#0b1020' stroke-width='1'/>
+<circle cx='208.2' cy='1216.0' r='4.2' fill='#f2cc60' stroke='#0b1020' stroke-width='1'/>
+<circle cx='278.4' cy='1216.0' r='4.2' fill='#f2cc60' stroke='#0b1020' stroke-width='1'/>
+<circle cx='348.6' cy='1216.0' r='4.2' fill='#f2cc60' stroke='#0b1020' stroke-width='1'/>
+<circle cx='418.8' cy='1216.0' r='4.2' fill='#f2cc60' stroke='#0b1020' stroke-width='1'/>
+<circle cx='489.1' cy='1216.0' r='4.2' fill='#f2cc60' stroke='#0b1020' stroke-width='1'/>
+<circle cx='559.3' cy='1216.0' r='4.2' fill='#f2cc60' stroke='#0b1020' stroke-width='1'/>
+<circle cx='629.5' cy='1216.0' r='4.2' fill='#f2cc60' stroke='#0b1020' stroke-width='1'/>
+<circle cx='699.7' cy='1216.0' r='4.2' fill='#f2cc60' stroke='#0b1020' stroke-width='1'/>
+<circle cx='769.9' cy='1216.0' r='4.2' fill='#f2cc60' stroke='#0b1020' stroke-width='1'/>
+<circle cx='840.1' cy='1216.0' r='4.2' fill='#f2cc60' stroke='#0b1020' stroke-width='1'/>
+<circle cx='910.3' cy='1216.0' r='4.2' fill='#f2cc60' stroke='#0b1020' stroke-width='1'/>
+<circle cx='980.5' cy='1216.0' r='4.2' fill='#f2cc60' stroke='#0b1020' stroke-width='1'/>
+<circle cx='1050.7' cy='1216.0' r='4.2' fill='#f2cc60' stroke='#0b1020' stroke-width='1'/>
+<circle cx='1120.9' cy='1216.0' r='4.2' fill='#f2cc60' stroke='#0b1020' stroke-width='1'/>
+<circle cx='1191.2' cy='1216.0' r='4.2' fill='#f2cc60' stroke='#0b1020' stroke-width='1'/>
+<circle cx='1261.4' cy='1216.0' r='4.2' fill='#f2cc60' stroke='#0b1020' stroke-width='1'/>
+<circle cx='1331.6' cy='1216.0' r='4.2' fill='#f2cc60' stroke='#0b1020' stroke-width='1'/>
+<circle cx='1401.8' cy='1216.0' r='4.2' fill='#f2cc60' stroke='#0b1020' stroke-width='1'/>
+<circle cx='1472.0' cy='1216.0' r='4.2' fill='#f2cc60' stroke='#0b1020' stroke-width='1'/>
 </svg>

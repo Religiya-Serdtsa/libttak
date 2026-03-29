@@ -50,3 +50,17 @@ TTAK_BENCH_DURATION_SEC=20 ./ttl_cache_bench_lockfree
 
 ![Throughput Comparison](./throughput_comparison.png)
 ![RSS Comparison](./rss_comparison.png)
+
+## CI Detailed Time-Series Image
+
+The CI artifact `copilot_ci_benchmark.svg` is now rendered as a 3-panel line-chart view with generous spacing to avoid overlap/distortion:
+
+- N-second throughput trend
+- N-second RSS footprint trend
+- N-second memory reclamation ratio trend (`Clean/s ÷ Retire/s`)
+
+Regenerate with:
+
+```bash
+python3 ./generate_ci_benchmark_svg.py
+```
