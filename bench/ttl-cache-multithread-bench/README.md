@@ -55,9 +55,10 @@ TTAK_BENCH_DURATION_SEC=20 ./ttl_cache_bench_lockfree
 
 ## CI Detailed Time-Series Image
 
+<!-- AUTO-CI-BENCHMARK:START -->
 The CI artifact `copilot_ci_benchmark.svg` uses a roomy 3-panel line-chart layout and keeps the 3-compiler comparison format (GCC / Clang / TCC).
 
-For the compiler-comparison section, each compiler is now measured for **60 seconds** (instead of a short 3-second sample) so the trend reflects steady-state behavior better:
+For the compiler-comparison section, each compiler is measured for **60 seconds** to capture steady-state trends:
 
 - N-second throughput trend (compiler overlay)
 - N-second RSS footprint trend (compiler overlay)
@@ -72,7 +73,9 @@ TTAK_BENCH_DURATION_SEC=60 TTAK_BENCH_THREADS=1 make CC=gcc ttl_cache_bench_lock
 TTAK_BENCH_DURATION_SEC=60 TTAK_BENCH_THREADS=1 make CC=clang ttl_cache_bench_lockfree && TTAK_BENCH_DURATION_SEC=60 TTAK_BENCH_THREADS=1 ./ttl_cache_bench_lockfree > ci_benchmark_raw_clang.txt
 TTAK_BENCH_DURATION_SEC=60 TTAK_BENCH_THREADS=1 make CC=tcc ttl_cache_bench_lockfree && TTAK_BENCH_DURATION_SEC=60 TTAK_BENCH_THREADS=1 ./ttl_cache_bench_lockfree > ci_benchmark_raw_tcc.txt
 python3 ./generate_ci_benchmark_svg.py
+python3 ./update_readme_ci_section.py --duration 60
 ```
+<!-- AUTO-CI-BENCHMARK:END -->
 
 Raw inputs (auto-detected):
 
