@@ -73,7 +73,7 @@ Raw inputs (auto-detected):
 
 - `ci_benchmark_raw_gcc.txt` (fallback: `ci_benchmark_raw.txt`)
 - `ci_benchmark_raw_clang.txt`
-- `ci_benchmark_raw_tcc.txt`
+- `ci_benchmark_raw_tcc.txt` (fallback: `ci_benchmark_raw_tcc_compat.txt`)
 
 Embedded allocator section inputs (GCC fixed):
 

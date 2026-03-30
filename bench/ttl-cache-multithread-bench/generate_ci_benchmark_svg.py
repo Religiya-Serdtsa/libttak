@@ -12,10 +12,21 @@ OUT_FILE = BENCH_DIR / "copilot_ci_benchmark.svg"
 RAW_FILES = {
     "gcc": [BENCH_DIR / "ci_benchmark_raw_gcc.txt", BENCH_DIR / "ci_benchmark_raw.txt"],
     "clang": [BENCH_DIR / "ci_benchmark_raw_clang.txt"],
-    "tcc": [BENCH_DIR / "ci_benchmark_raw_tcc.txt"],
+    "tcc": [BENCH_DIR / "ci_benchmark_raw_tcc.txt", BENCH_DIR / "ci_benchmark_raw_tcc_compat.txt"],
 }
 
-COLORS = {"gcc": "#58a6ff", "clang": "#2ea043", "tcc": "#f2cc60"}
+EMBEDDED_FILES = {
+    "EMBEDDED=0": [BENCH_DIR / "ci_benchmark_raw_gcc_embedded0.txt"],
+    "EMBEDDED=1": [BENCH_DIR / "ci_benchmark_raw_gcc_embedded1.txt"],
+}
+
+COLORS = {
+    "gcc": "#58a6ff",
+    "clang": "#2ea043",
+    "tcc": "#f2cc60",
+    "EMBEDDED=0": "#58a6ff",
+    "EMBEDDED=1": "#ff7b72",
+}
 
 LINE_RE = re.compile(
     r"^\s*(\d+)s\s*\|\s*(\d+)\s*\|\s*([\d.]+)\s*\|\s*([\d.]+)\s*\|\s*([\d.]+)"
@@ -71,8 +82,8 @@ def draw_legend(x, y, order, present):
     out = []
     cursor = x
     for name in order:
-        color = COLORS[name] if name in present else "#6a737d"
-        label = name if name in present else f"{name} (N/A)"
+        color = COLORS.get(name, "#9b59b6") if name in present else "#6a737d"
+        label = name if name in present else f"{name} (missing)"
         out.append(f"<line x1='{cursor}' y1='{y}' x2='{cursor+34}' y2='{y}' stroke='{color}' stroke-width='4'/>")
         out.append(f"<text x='{cursor+44}' y='{y+5}' fill='#c9d6e2' font-size='16' font-family='Arial'>{label.upper()}</text>")
         cursor += 250
