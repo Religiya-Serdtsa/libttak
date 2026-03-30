@@ -1,0 +1,80 @@
+name: Copilot CI Benchmark
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "bench/ttl-cache-multithread-bench/**"
+      - ".github/workflows/copilot_ci_benchmark.yml"
+      - "Makefile"
+      - "src/**"
+      - "include/**"
+  schedule:
+    - cron: "0 3 * * *"
+
+permissions:
+  contents: read
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential clang tcc python3
+
+      - name: Build libttak
+        run: make -j"$(nproc)"
+
+      - name: Run 60s compiler benchmark series
+        working-directory: bench/ttl-cache-multithread-bench
+        run: |
+          set -euo pipefail
+          duration=60
+          threads=1
+          for cc in gcc clang tcc; do
+            make clean
+            make CC="$cc" ttl_cache_bench_lockfree
+            TTAK_BENCH_DURATION_SEC="$duration" TTAK_BENCH_THREADS="$threads" ./ttl_cache_bench_lockfree > "ci_benchmark_raw_${cc}.txt"
+          done
+
+      - name: Regenerate SVG + README CI section
+        working-directory: bench/ttl-cache-multithread-bench
+        run: |
+          python3 ./generate_ci_benchmark_svg.py
+          python3 ./update_readme_ci_section.py --duration 60
+
+      - name: Validate 60-point trend data
+        working-directory: bench/ttl-cache-multithread-bench
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          for name in ("gcc", "clang", "tcc"):
+              lines = Path(f"ci_benchmark_raw_{name}.txt").read_text().splitlines()
+              points = [ln for ln in lines if re.match(r"^\s*\d+s\s+\|", ln)]
+              if len(points) != 60:
+                  raise SystemExit(f"{name}: expected 60 points, got {len(points)}")
+              if not any(ln.lstrip().startswith("60s |") for ln in points):
+                  raise SystemExit(f"{name}: missing 60s row")
+          print("validated: 60 data points for gcc/clang/tcc")
+          PY
+
+      - name: Upload benchmark artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: copilot-ci-benchmark
+          path: |
+            bench/ttl-cache-multithread-bench/ci_benchmark_raw_gcc.txt
+            bench/ttl-cache-multithread-bench/ci_benchmark_raw_clang.txt
+            bench/ttl-cache-multithread-bench/ci_benchmark_raw_tcc.txt
+            bench/ttl-cache-multithread-bench/copilot_ci_benchmark.svg
+            bench/ttl-cache-multithread-bench/README.md
+            bench/ttl-cache-multithread-bench/README.ko.md
