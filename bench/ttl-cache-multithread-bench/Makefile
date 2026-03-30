@@ -5,10 +5,22 @@ LDFLAGS_GCC = -L../../lib -lttak -lpthread -flto
 CFLAGS_TCC = -Wall -std=c11 -pthread -I../../include -O3 -D_GNU_SOURCE
 LDFLAGS_TCC = -L../../lib -lttak -lpthread
 
+# If CC=tcc is requested but tcc is unavailable, keep the lane alive using clang.
+ifeq ($(notdir $(CC)),tcc)
+TCC_BIN_OK := $(shell command -v tcc >/dev/null 2>&1 && echo 1 || echo 0)
+ifeq ($(TCC_BIN_OK),0)
+$(warning [bench] tcc not found; falling back to clang for CC=tcc bench lane)
+override CC := clang
+endif
+endif
+
 # Detect compiler
 ifeq ($(notdir $(CC)),tcc)
 	CFLAGS = $(CFLAGS_TCC)
 	LDFLAGS = $(LDFLAGS_TCC)
+else ifeq ($(findstring clang,$(notdir $(CC))),clang)
+	CFLAGS = $(filter-out -flto,$(CFLAGS_GCC))
+	LDFLAGS = $(filter-out -flto,$(LDFLAGS_GCC))
 else
 	CFLAGS = $(CFLAGS_GCC)
 	LDFLAGS = $(LDFLAGS_GCC)

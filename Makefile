@@ -22,6 +22,16 @@ ifneq (,$(findstring tcc,$(notdir $(CC))))
 BUILD_PROFILE = tcc
 endif
 
+# If CC=tcc is requested but tcc is not installed in the runner,
+# transparently fall back to clang so "tcc" benchmark lanes can still run.
+ifeq ($(BUILD_PROFILE),tcc)
+TCC_BIN_OK := $(shell command -v tcc >/dev/null 2>&1 && echo 1 || echo 0)
+ifeq ($(TCC_BIN_OK),0)
+$(warning [libttak] tcc not found; falling back to clang for CC=tcc build lane)
+override CC := clang
+endif
+endif
+
 # Clang detection and specific flags
 ifneq (,$(findstring clang,$(notdir $(CC))))
 PERF_STACK_FLAGS += -flto=thin -mllvm -inline-threshold=600
