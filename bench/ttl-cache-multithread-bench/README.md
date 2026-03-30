@@ -2,6 +2,8 @@
 
 This directory contains the flagship performance benchmark for LibTTAK's lock-free shared memory subsystem.
 
+> Korean doc: [`README.ko.md`](./README.ko.md)
+
 ## Performance Philosophy
 
 LibTTAK utilizes mathematical principles inspired by **Choi Seok-jeong's Orthogonal Latin Square (OLS)** to eliminate hardware-level lock contention.
@@ -50,3 +52,30 @@ TTAK_BENCH_DURATION_SEC=20 ./ttl_cache_bench_lockfree
 
 ![Throughput Comparison](./throughput_comparison.png)
 ![RSS Comparison](./rss_comparison.png)
+
+## CI Detailed Time-Series Image
+
+The CI artifact `copilot_ci_benchmark.svg` uses a roomy 3-panel line-chart layout and keeps the 3-compiler comparison format (GCC / Clang / TCC):
+
+- N-second throughput trend (compiler overlay)
+- N-second RSS footprint trend (compiler overlay)
+- N-second memory reclamation ratio trend (`Clean/s ÷ Retire/s`, compiler overlay)
+
+The layout reserves extra panel/axis/legend margins to prevent overlap or distortion in CI preview renderers.
+
+Regenerate with:
+
+```bash
+python3 ./generate_ci_benchmark_svg.py
+```
+
+Raw inputs (auto-detected):
+
+- `ci_benchmark_raw_gcc.txt` (fallback: `ci_benchmark_raw.txt`)
+- `ci_benchmark_raw_clang.txt`
+- `ci_benchmark_raw_tcc.txt`
+
+Embedded allocator section inputs (GCC fixed):
+
+- `ci_benchmark_raw_gcc_embedded0.txt`
+- `ci_benchmark_raw_gcc_embedded1.txt`
