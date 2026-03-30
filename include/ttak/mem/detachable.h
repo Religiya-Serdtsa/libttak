@@ -38,9 +38,10 @@ extern "C" {
  * hierarchy and avoids pathological page-aligned fragmentation.
  */
 #define TTAK_DETACHABLE_MATRIX_ROWS 8U
-#define TTAK_DETACHABLE_FLIP_WINDOW_NS 100000000ULL
-#define TTAK_DETACHABLE_FLIP_EVENT_THRESHOLD 128U
-#define TTAK_DETACHABLE_FLIP_SMALL_QUARANTINE_BYTES 256U
+#define TTAK_DETACHABLE_FLIP_WINDOW_NS 5000000ULL
+#define TTAK_DETACHABLE_FLIP_MAX_GAP_NS 100000ULL
+#define TTAK_DETACHABLE_FLIP_EVENT_THRESHOLD 512U
+#define TTAK_DETACHABLE_FLIP_SMALL_QUARANTINE_BYTES 64U
 #define TTAK_DETACHABLE_QUARANTINE_BYTE_LIMIT (1U << 20)
 
 /**
@@ -150,8 +151,10 @@ typedef struct ttak_detachable_context {
     pthread_rwlock_t arena_lock;
     atomic_uint_fast64_t global_epoch_hint;
     atomic_uint_fast64_t flip_window_start_ns;
+    atomic_uint_fast64_t flip_last_event_ns;
     atomic_uint_fast64_t flip_event_count;
     uint64_t flip_window_ns;
+    uint64_t flip_max_gap_ns;
     uint32_t flip_event_threshold;
     size_t flip_small_quarantine_bytes;
     size_t quarantine_byte_limit;

@@ -1,5 +1,6 @@
 #include <ttak/mem/detachable.h>
 #include "test_macros.h"
+#include <time.h>
 
 static void test_detached_mode_requires_epoch(void) {
     ttak_detachable_context_t ctx;
@@ -36,8 +37,9 @@ static void test_detached_mode_stays_separate_from_standard(void) {
 static void test_flip_hot_path_bypasses_cache(void) {
     ttak_detachable_context_t ctx;
     ttak_detachable_context_init(&ctx, TTAK_ARENA_USE_LOCKED_ACCESS);
-    ctx.flip_event_threshold = 1;
+    ctx.flip_event_threshold = 2;
     ctx.flip_window_ns = 1000000000ULL;
+    ctx.flip_max_gap_ns = UINT64_MAX;
 
     ttak_detachable_allocation_t alloc1 = ttak_detachable_mem_alloc(&ctx, 8, 0);
     ASSERT(alloc1.data != NULL);
@@ -47,7 +49,29 @@ static void test_flip_hot_path_bypasses_cache(void) {
     ASSERT(alloc2.data != NULL);
     ttak_detachable_mem_free(&ctx, &alloc2);
 
-    ASSERT(ctx.small_cache.count <= 1);
+    ASSERT(ctx.small_cache.count == 0);
+    ttak_detachable_context_destroy(&ctx);
+}
+
+static void test_flip_detection_is_conservative_with_long_gap(void) {
+    ttak_detachable_context_t ctx;
+    ttak_detachable_context_init(&ctx, TTAK_ARENA_USE_LOCKED_ACCESS);
+    ctx.flip_event_threshold = 2;
+    ctx.flip_window_ns = 1000000000ULL;
+    ctx.flip_max_gap_ns = 1;
+
+    ttak_detachable_allocation_t alloc1 = ttak_detachable_mem_alloc(&ctx, 8, 0);
+    ASSERT(alloc1.data != NULL);
+    ttak_detachable_mem_free(&ctx, &alloc1);
+
+    struct timespec ts = {.tv_sec = 0, .tv_nsec = 1000000L};
+    nanosleep(&ts, NULL);
+
+    ttak_detachable_allocation_t alloc2 = ttak_detachable_mem_alloc(&ctx, 8, 0);
+    ASSERT(alloc2.data != NULL);
+    ttak_detachable_mem_free(&ctx, &alloc2);
+
+    ASSERT(ctx.small_cache.count == 1);
     ttak_detachable_context_destroy(&ctx);
 }
 
@@ -55,5 +79,6 @@ int main(void) {
     RUN_TEST(test_detached_mode_requires_epoch);
     RUN_TEST(test_detached_mode_stays_separate_from_standard);
     RUN_TEST(test_flip_hot_path_bypasses_cache);
+    RUN_TEST(test_flip_detection_is_conservative_with_long_gap);
     return 0;
 }

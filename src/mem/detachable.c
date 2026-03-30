@@ -136,10 +136,12 @@ void ttak_detachable_context_init(ttak_detachable_context_t *ctx, uint32_t flags
     ctx->quarantine.cap = 0;
     ctx->quarantine.bytes = 0;
     ctx->flip_window_ns = TTAK_DETACHABLE_FLIP_WINDOW_NS;
+    ctx->flip_max_gap_ns = TTAK_DETACHABLE_FLIP_MAX_GAP_NS;
     ctx->flip_event_threshold = TTAK_DETACHABLE_FLIP_EVENT_THRESHOLD;
     ctx->flip_small_quarantine_bytes = TTAK_DETACHABLE_FLIP_SMALL_QUARANTINE_BYTES;
     ctx->quarantine_byte_limit = TTAK_DETACHABLE_QUARANTINE_BYTE_LIMIT;
     atomic_init(&ctx->flip_window_start_ns, 0);
+    atomic_init(&ctx->flip_last_event_ns, 0);
     atomic_init(&ctx->flip_event_count, 0);
 
     for (size_t i = 0; i < ctx->matrix_rows; ++i) {
@@ -318,7 +320,7 @@ static bool ttak_detachable_flip_should_quarantine(ttak_detachable_context_t *ct
     if (!ctx || size == 0) {
         return false;
     }
-    if (ctx->flip_event_threshold == 0 || ctx->flip_window_ns == 0) {
+    if (ctx->flip_event_threshold == 0 || ctx->flip_window_ns == 0 || ctx->flip_max_gap_ns == 0) {
         return false;
     }
     if (size > ctx->flip_small_quarantine_bytes) {
@@ -330,15 +332,25 @@ static bool ttak_detachable_flip_should_quarantine(ttak_detachable_context_t *ct
 
     uint64_t now_ns = ttak_detachable_now_ns();
     uint64_t window_start = atomic_load_explicit(&ctx->flip_window_start_ns, memory_order_relaxed);
-    uint64_t count = atomic_load_explicit(&ctx->flip_event_count, memory_order_relaxed);
+    uint64_t last_event_ns = atomic_load_explicit(&ctx->flip_last_event_ns, memory_order_relaxed);
 
-    if (window_start == 0 || (now_ns > window_start && (now_ns - window_start) > ctx->flip_window_ns)) {
+    if (window_start == 0 || last_event_ns == 0) {
         atomic_store_explicit(&ctx->flip_window_start_ns, now_ns, memory_order_relaxed);
+        atomic_store_explicit(&ctx->flip_last_event_ns, now_ns, memory_order_relaxed);
         atomic_store_explicit(&ctx->flip_event_count, 1, memory_order_relaxed);
         return false;
     }
 
-    count = atomic_fetch_add_explicit(&ctx->flip_event_count, 1, memory_order_relaxed) + 1;
+    if ((now_ns > window_start && (now_ns - window_start) > ctx->flip_window_ns) ||
+        (now_ns > last_event_ns && (now_ns - last_event_ns) > ctx->flip_max_gap_ns)) {
+        atomic_store_explicit(&ctx->flip_window_start_ns, now_ns, memory_order_relaxed);
+        atomic_store_explicit(&ctx->flip_last_event_ns, now_ns, memory_order_relaxed);
+        atomic_store_explicit(&ctx->flip_event_count, 1, memory_order_relaxed);
+        return false;
+    }
+
+    atomic_store_explicit(&ctx->flip_last_event_ns, now_ns, memory_order_relaxed);
+    uint64_t count = atomic_fetch_add_explicit(&ctx->flip_event_count, 1, memory_order_relaxed) + 1;
     return count >= ctx->flip_event_threshold;
 }
 
