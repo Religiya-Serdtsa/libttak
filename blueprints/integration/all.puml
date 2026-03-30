@@ -66,7 +66,7 @@ package "System Foundation [03, 06]" #F5F5F5 {
     ]
     component Utils [
         <b>Utilities & Services</b>
-        (Timing, Log, Stats)
+        (Timing, Log, Stats, System Usage)
     ]
 }
 
@@ -113,7 +113,7 @@ Safety -down-> Utils : "epoch management"
 Safety -down-> DS : "metadata storage"
 Safety -down-> Detach : "detachable policies"
 Detach -down-> DS : "tracking rows"
-Detach -down-> Foundation : "calloc/thread integration"
+Detach -down-> Foundation : "calloc/thread + flip detector"
 DS -down-> Foundation : "sync primitives"
 Arena -down-> Safety : "owner-guarded rows"
 Arena -down-> DS : "arena bookkeeping"
