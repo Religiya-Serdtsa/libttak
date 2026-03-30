@@ -15,18 +15,7 @@ RAW_FILES = {
     "tcc": [BENCH_DIR / "ci_benchmark_raw_tcc.txt"],
 }
 
-EMBEDDED_FILES = {
-    "EMBEDDED=0": [BENCH_DIR / "ci_benchmark_raw_gcc_embedded0.txt"],
-    "EMBEDDED=1": [BENCH_DIR / "ci_benchmark_raw_gcc_embedded1.txt"],
-}
-
-COLORS = {
-    "gcc": "#58a6ff",
-    "clang": "#2ea043",
-    "tcc": "#f2cc60",
-    "EMBEDDED=0": "#58a6ff",
-    "EMBEDDED=1": "#ff7b72",
-}
+COLORS = {"gcc": "#58a6ff", "clang": "#2ea043", "tcc": "#f2cc60"}
 
 LINE_RE = re.compile(
     r"^\s*(\d+)s\s*\|\s*(\d+)\s*\|\s*([\d.]+)\s*\|\s*([\d.]+)\s*\|\s*([\d.]+)"
