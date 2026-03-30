@@ -2,6 +2,8 @@
 
 This directory contains the flagship performance benchmark for LibTTAK's lock-free shared memory subsystem.
 
+> Korean doc: [`README.ko.md`](./README.ko.md)
+
 ## Performance Philosophy
 
 LibTTAK utilizes mathematical principles inspired by **Choi Seok-jeong's Orthogonal Latin Square (OLS)** to eliminate hardware-level lock contention.
@@ -72,3 +74,8 @@ Raw inputs (auto-detected):
 - `ci_benchmark_raw_gcc.txt` (fallback: `ci_benchmark_raw.txt`)
 - `ci_benchmark_raw_clang.txt`
 - `ci_benchmark_raw_tcc.txt`
+
+Embedded allocator section inputs (GCC fixed):
+
+- `ci_benchmark_raw_gcc_embedded0.txt`
+- `ci_benchmark_raw_gcc_embedded1.txt`
