@@ -67,6 +67,14 @@ static bool ttak_detachable_cache_store(ttak_detachable_context_t *ctx, ttak_det
 static void *ttak_detachable_cache_take(ttak_detachable_cache_t *cache, size_t requested);
 static void ttak_detachable_cache_drain(ttak_detachable_context_t *ctx, ttak_detachable_cache_t *cache, bool release_storage);
 static void ttak_detachable_global_shutdown(_Bool flush_rows);
+typedef enum {
+    TTAK_DETACHABLE_MODE_STANDARD = 0,
+    TTAK_DETACHABLE_MODE_DETACHED = 1
+} ttak_detachable_mode_t;
+static ttak_detachable_mode_t ttak_detachable_mode_for_status(const ttak_detach_status_t *status);
+static bool ttak_detachable_validate_status(ttak_detachable_context_t *ctx,
+                                            ttak_detach_status_t *status,
+                                            ttak_detachable_mode_t *mode_out);
 #ifndef _WIN32
 static void ttak_detachable_signal_handler(int signo);
 static int ttak_hard_kill_configure(sigset_t signals, int *ret, _Bool graceful);
@@ -172,6 +180,11 @@ ttak_detachable_allocation_t ttak_detachable_mem_alloc(ttak_detachable_context_t
     size_t actual_size = size == 0 ? 1 : size;
     ttak_detach_status_t status = ctx->base_status;
     ttak_detach_status_converge(&status);
+    ttak_detachable_mode_t mode = TTAK_DETACHABLE_MODE_STANDARD;
+    if (!ttak_detachable_validate_status(ctx, &status, &mode)) {
+        ttak_detach_status_reset(&status);
+        status.bits |= TTAK_DETACHABLE_ATTACH;
+    }
 
     void *data = NULL;
     bool from_cache = false;
@@ -206,7 +219,9 @@ ttak_detachable_allocation_t ttak_detachable_mem_alloc(ttak_detachable_context_t
 #endif
     }
 
-    status.bits |= TTAK_DETACHABLE_ATTACH;
+    if (mode == TTAK_DETACHABLE_MODE_STANDARD) {
+        status.bits |= TTAK_DETACHABLE_ATTACH;
+    }
     if (from_cache) status.bits |= TTAK_DETACHABLE_PARTIAL_CACHE;
     ttak_detach_status_mark_known(&status);
 
@@ -225,9 +240,15 @@ void ttak_detachable_mem_free(ttak_detachable_context_t *ctx, ttak_detachable_al
     if (!alloc || !alloc->data) return;
     if (!ctx) ctx = ttak_detachable_context_default();
 
+    ttak_detachable_mode_t mode = TTAK_DETACHABLE_MODE_STANDARD;
+    bool status_valid = ttak_detachable_validate_status(ctx, &alloc->detach_status, &mode);
+    if (!status_valid) {
+        mode = TTAK_DETACHABLE_MODE_STANDARD;
+    }
+
     bool stored = false;
     if (alloc->size <= ctx->small_cache.chunk_size &&
-        !(alloc->detach_status.bits & TTAK_DETACHABLE_DETACH_NOCHECK)) {
+        mode == TTAK_DETACHABLE_MODE_STANDARD) {
         stored = ttak_detachable_cache_store(ctx, &ctx->small_cache, alloc->data, alloc->size);
         if (stored) {
             alloc->detach_status.bits |= TTAK_DETACHABLE_PARTIAL_CACHE;
@@ -245,12 +266,7 @@ void ttak_detachable_mem_free(ttak_detachable_context_t *ctx, ttak_detachable_al
             ttak_epoch_retire(alloc->data, free);
             ttak_epoch_exit();
         } else {
-            if ((alloc->detach_status.bits & TTAK_DETACHABLE_DETACH_NOCHECK) ||
-                (ctx->base_status.bits & TTAK_DETACHABLE_DETACH_NOCHECK)) {
-                ttak_epoch_retire(alloc->data, free);
-            } else {
-                free(alloc->data);
-            }
+            free(alloc->data);
         }
     }
 
@@ -258,6 +274,42 @@ void ttak_detachable_mem_free(ttak_detachable_context_t *ctx, ttak_detachable_al
     alloc->size = 0;
     alloc->cache = NULL;
     ttak_detach_status_reset(&alloc->detach_status);
+}
+
+static ttak_detachable_mode_t ttak_detachable_mode_for_status(const ttak_detach_status_t *status) {
+    if (!status) return TTAK_DETACHABLE_MODE_STANDARD;
+    return (status->bits & TTAK_DETACHABLE_DETACH_NOCHECK)
+               ? TTAK_DETACHABLE_MODE_DETACHED
+               : TTAK_DETACHABLE_MODE_STANDARD;
+}
+
+static bool ttak_detachable_validate_status(ttak_detachable_context_t *ctx,
+                                            ttak_detach_status_t *status,
+                                            ttak_detachable_mode_t *mode_out) {
+    if (!ctx || !status || !mode_out) {
+        return false;
+    }
+
+    if (!(status->bits & TTAK_DETACHABLE_STATUS_KNOWN)) {
+        return false;
+    }
+
+    ttak_detachable_mode_t mode = ttak_detachable_mode_for_status(status);
+    if (mode == TTAK_DETACHABLE_MODE_STANDARD) {
+        if (!(status->bits & TTAK_DETACHABLE_ATTACH)) {
+            return false;
+        }
+    } else {
+        if ((status->bits & TTAK_DETACHABLE_ATTACH)) {
+            return false;
+        }
+        if (!(ctx->flags & TTAK_ARENA_HAS_EPOCH_RECLAMATION)) {
+            return false;
+        }
+    }
+
+    *mode_out = mode;
+    return true;
 }
 
 #ifndef _WIN32
