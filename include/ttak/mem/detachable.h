@@ -38,6 +38,10 @@ extern "C" {
  * hierarchy and avoids pathological page-aligned fragmentation.
  */
 #define TTAK_DETACHABLE_MATRIX_ROWS 8U
+#define TTAK_DETACHABLE_FLIP_WINDOW_NS 100000000ULL
+#define TTAK_DETACHABLE_FLIP_EVENT_THRESHOLD 128U
+#define TTAK_DETACHABLE_FLIP_SMALL_QUARANTINE_BYTES 256U
+#define TTAK_DETACHABLE_QUARANTINE_BYTE_LIMIT (1U << 20)
 
 /**
  * @brief Bit flags describing arena level traits.
@@ -123,6 +127,14 @@ typedef struct ttak_detachable_generation_row {
     size_t cap;
 } ttak_detachable_generation_row_t;
 
+typedef struct ttak_detachable_quarantine_row {
+    void **columns;
+    size_t *sizes;
+    size_t len;
+    size_t cap;
+    size_t bytes;
+} ttak_detachable_quarantine_row_t;
+
 /**
  * @brief State holder for detachable memory contexts.
  */
@@ -134,8 +146,15 @@ typedef struct ttak_detachable_context {
     ttak_detach_status_t base_status;
     ttak_detachable_cache_t small_cache;
     ttak_detachable_generation_row_t rows[TTAK_DETACHABLE_MATRIX_ROWS];
+    ttak_detachable_quarantine_row_t quarantine;
     pthread_rwlock_t arena_lock;
     atomic_uint_fast64_t global_epoch_hint;
+    atomic_uint_fast64_t flip_window_start_ns;
+    atomic_uint_fast64_t flip_event_count;
+    uint64_t flip_window_ns;
+    uint32_t flip_event_threshold;
+    size_t flip_small_quarantine_bytes;
+    size_t quarantine_byte_limit;
 } ttak_detachable_context_t;
 
 /**

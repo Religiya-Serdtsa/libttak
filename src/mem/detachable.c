@@ -13,6 +13,7 @@
 #include <stdatomic.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #ifndef _WIN32
 #include <signal.h>
 #include <unistd.h>
@@ -61,6 +62,8 @@ static void ttak_detachable_register_context(ttak_detachable_context_t *ctx);
 static void ttak_detachable_unregister_context(ttak_detachable_context_t *ctx);
 static void ttak_detachable_context_once(void);
 static void ttak_detachable_row_flush(ttak_detachable_context_t *ctx, ttak_detachable_generation_row_t *row);
+static void ttak_detachable_quarantine_flush(ttak_detachable_context_t *ctx);
+static bool ttak_detachable_quarantine_push(ttak_detachable_context_t *ctx, void *ptr, size_t size);
 static void ttak_detachable_track_pointer(ttak_detachable_context_t *ctx, void *ptr);
 static bool ttak_detachable_untrack_pointer(ttak_detachable_context_t *ctx, void *ptr);
 static bool ttak_detachable_cache_store(ttak_detachable_context_t *ctx, ttak_detachable_cache_t *cache, void *ptr, size_t size);
@@ -75,6 +78,8 @@ static ttak_detachable_mode_t ttak_detachable_mode_for_status(const ttak_detach_
 static bool ttak_detachable_validate_status(ttak_detachable_context_t *ctx,
                                             ttak_detach_status_t *status,
                                             ttak_detachable_mode_t *mode_out);
+static uint64_t ttak_detachable_now_ns(void);
+static bool ttak_detachable_flip_should_quarantine(ttak_detachable_context_t *ctx, size_t size);
 #ifndef _WIN32
 static void ttak_detachable_signal_handler(int signo);
 static int ttak_hard_kill_configure(sigset_t signals, int *ret, _Bool graceful);
@@ -125,6 +130,17 @@ void ttak_detachable_context_init(ttak_detachable_context_t *ctx, uint32_t flags
     pthread_rwlockattr_destroy(&attr);
 
     ttak_detachable_cache_init(&ctx->small_cache, TTAK_DETACHABLE_CACHE_MAX_BYTES, TTAK_DETACHABLE_CACHE_SLOTS);
+    ctx->quarantine.columns = NULL;
+    ctx->quarantine.sizes = NULL;
+    ctx->quarantine.len = 0;
+    ctx->quarantine.cap = 0;
+    ctx->quarantine.bytes = 0;
+    ctx->flip_window_ns = TTAK_DETACHABLE_FLIP_WINDOW_NS;
+    ctx->flip_event_threshold = TTAK_DETACHABLE_FLIP_EVENT_THRESHOLD;
+    ctx->flip_small_quarantine_bytes = TTAK_DETACHABLE_FLIP_SMALL_QUARANTINE_BYTES;
+    ctx->quarantine_byte_limit = TTAK_DETACHABLE_QUARANTINE_BYTE_LIMIT;
+    atomic_init(&ctx->flip_window_start_ns, 0);
+    atomic_init(&ctx->flip_event_count, 0);
 
     for (size_t i = 0; i < ctx->matrix_rows; ++i) {
         ctx->rows[i].columns = NULL;
@@ -149,6 +165,14 @@ void ttak_detachable_context_destroy(ttak_detachable_context_t *ctx) {
     }
 
     ttak_detachable_cache_destroy(ctx, &ctx->small_cache);
+    ttak_detachable_quarantine_flush(ctx);
+    free(ctx->quarantine.columns);
+    free(ctx->quarantine.sizes);
+    ctx->quarantine.columns = NULL;
+    ctx->quarantine.sizes = NULL;
+    ctx->quarantine.len = 0;
+    ctx->quarantine.cap = 0;
+    ctx->quarantine.bytes = 0;
     pthread_rwlock_destroy(&ctx->arena_lock);
 }
 
@@ -246,8 +270,10 @@ void ttak_detachable_mem_free(ttak_detachable_context_t *ctx, ttak_detachable_al
         mode = TTAK_DETACHABLE_MODE_STANDARD;
     }
 
+    bool flip_hot = ttak_detachable_flip_should_quarantine(ctx, alloc->size);
     bool stored = false;
     if (alloc->size <= ctx->small_cache.chunk_size &&
+        !flip_hot &&
         mode == TTAK_DETACHABLE_MODE_STANDARD) {
         stored = ttak_detachable_cache_store(ctx, &ctx->small_cache, alloc->data, alloc->size);
         if (stored) {
@@ -274,6 +300,46 @@ void ttak_detachable_mem_free(ttak_detachable_context_t *ctx, ttak_detachable_al
     alloc->size = 0;
     alloc->cache = NULL;
     ttak_detach_status_reset(&alloc->detach_status);
+}
+
+static uint64_t ttak_detachable_now_ns(void) {
+#ifdef _WIN32
+    return 0;
+#else
+    struct timespec ts;
+    if (clock_gettime(CLOCK_MONOTONIC, &ts) != 0) {
+        return 0;
+    }
+    return ((uint64_t)ts.tv_sec * 1000000000ULL) + (uint64_t)ts.tv_nsec;
+#endif
+}
+
+static bool ttak_detachable_flip_should_quarantine(ttak_detachable_context_t *ctx, size_t size) {
+    if (!ctx || size == 0) {
+        return false;
+    }
+    if (ctx->flip_event_threshold == 0 || ctx->flip_window_ns == 0) {
+        return false;
+    }
+    if (size > ctx->flip_small_quarantine_bytes) {
+        return false;
+    }
+    if (ctx->quarantine_byte_limit > 0 && ctx->quarantine.bytes >= ctx->quarantine_byte_limit) {
+        return false;
+    }
+
+    uint64_t now_ns = ttak_detachable_now_ns();
+    uint64_t window_start = atomic_load_explicit(&ctx->flip_window_start_ns, memory_order_relaxed);
+    uint64_t count = atomic_load_explicit(&ctx->flip_event_count, memory_order_relaxed);
+
+    if (window_start == 0 || (now_ns > window_start && (now_ns - window_start) > ctx->flip_window_ns)) {
+        atomic_store_explicit(&ctx->flip_window_start_ns, now_ns, memory_order_relaxed);
+        atomic_store_explicit(&ctx->flip_event_count, 1, memory_order_relaxed);
+        return false;
+    }
+
+    count = atomic_fetch_add_explicit(&ctx->flip_event_count, 1, memory_order_relaxed) + 1;
+    return count >= ctx->flip_event_threshold;
 }
 
 static ttak_detachable_mode_t ttak_detachable_mode_for_status(const ttak_detach_status_t *status) {
@@ -374,6 +440,67 @@ static void ttak_detachable_row_flush(ttak_detachable_context_t *ctx, ttak_detac
         row->columns[i] = NULL;
     }
     row->len = 0;
+}
+
+static void ttak_detachable_quarantine_flush(ttak_detachable_context_t *ctx) {
+    if (!ctx || !ctx->quarantine.columns || !ctx->quarantine.sizes) return;
+    for (size_t i = 0; i < ctx->quarantine.len; ++i) {
+        void *ptr = ctx->quarantine.columns[i];
+        if (!ptr) continue;
+        if (ctx->flags & TTAK_ARENA_HAS_EPOCH_RECLAMATION) {
+            ttak_epoch_retire(ptr, free);
+        } else {
+            free(ptr);
+        }
+        ctx->quarantine.columns[i] = NULL;
+        ctx->quarantine.sizes[i] = 0;
+    }
+    ctx->quarantine.len = 0;
+    ctx->quarantine.bytes = 0;
+}
+
+static bool ttak_detachable_quarantine_push(ttak_detachable_context_t *ctx, void *ptr, size_t size) {
+    if (!ctx || !ptr || size == 0) return false;
+
+    if (ctx->quarantine.cap == 0) {
+        size_t initial_cap = 64;
+        ctx->quarantine.columns = calloc(initial_cap, sizeof(void *));
+        ctx->quarantine.sizes = calloc(initial_cap, sizeof(size_t));
+        if (!ctx->quarantine.columns || !ctx->quarantine.sizes) {
+            free(ctx->quarantine.columns);
+            free(ctx->quarantine.sizes);
+            ctx->quarantine.columns = NULL;
+            ctx->quarantine.sizes = NULL;
+            ctx->quarantine.cap = 0;
+            return false;
+        }
+        ctx->quarantine.cap = initial_cap;
+    } else if (ctx->quarantine.len >= ctx->quarantine.cap) {
+        size_t new_cap = ctx->quarantine.cap * 2;
+        void **new_columns = realloc(ctx->quarantine.columns, new_cap * sizeof(void *));
+        size_t *new_sizes = realloc(ctx->quarantine.sizes, new_cap * sizeof(size_t));
+        if (!new_columns || !new_sizes) {
+            if (new_columns) ctx->quarantine.columns = new_columns;
+            if (new_sizes) ctx->quarantine.sizes = new_sizes;
+            return false;
+        }
+        memset(new_columns + ctx->quarantine.cap, 0, (new_cap - ctx->quarantine.cap) * sizeof(void *));
+        memset(new_sizes + ctx->quarantine.cap, 0, (new_cap - ctx->quarantine.cap) * sizeof(size_t));
+        ctx->quarantine.columns = new_columns;
+        ctx->quarantine.sizes = new_sizes;
+        ctx->quarantine.cap = new_cap;
+    }
+
+    if (ctx->quarantine_byte_limit > 0 &&
+        ctx->quarantine.bytes + size > ctx->quarantine_byte_limit) {
+        return false;
+    }
+
+    ctx->quarantine.columns[ctx->quarantine.len] = ptr;
+    ctx->quarantine.sizes[ctx->quarantine.len] = size;
+    ctx->quarantine.len++;
+    ctx->quarantine.bytes += size;
+    return true;
 }
 
 static void ttak_detachable_track_pointer(ttak_detachable_context_t *ctx, void *ptr) {
