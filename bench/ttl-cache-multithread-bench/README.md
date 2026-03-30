@@ -69,9 +69,7 @@ The layout reserves extra panel/axis/legend margins to prevent overlap or distor
 Regenerate with:
 
 ```bash
-TTAK_BENCH_DURATION_SEC=60 TTAK_BENCH_THREADS=1 make CC=gcc ttl_cache_bench_lockfree && TTAK_BENCH_DURATION_SEC=60 TTAK_BENCH_THREADS=1 ./ttl_cache_bench_lockfree > ci_benchmark_raw_gcc.txt
-TTAK_BENCH_DURATION_SEC=60 TTAK_BENCH_THREADS=1 make CC=clang ttl_cache_bench_lockfree && TTAK_BENCH_DURATION_SEC=60 TTAK_BENCH_THREADS=1 ./ttl_cache_bench_lockfree > ci_benchmark_raw_clang.txt
-TTAK_BENCH_DURATION_SEC=60 TTAK_BENCH_THREADS=1 make CC=tcc ttl_cache_bench_lockfree && TTAK_BENCH_DURATION_SEC=60 TTAK_BENCH_THREADS=1 ./ttl_cache_bench_lockfree > ci_benchmark_raw_tcc.txt
+python3 ./run_ci_benchmark_series.py --duration 60 --threads 1
 python3 ./generate_ci_benchmark_svg.py
 python3 ./update_readme_ci_section.py --duration 60
 ```

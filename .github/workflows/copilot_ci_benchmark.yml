@@ -36,13 +36,7 @@ jobs:
         working-directory: bench/ttl-cache-multithread-bench
         run: |
           set -euo pipefail
-          duration=60
-          threads=1
-          for cc in gcc clang tcc; do
-            make clean
-            make CC="$cc" ttl_cache_bench_lockfree
-            TTAK_BENCH_DURATION_SEC="$duration" TTAK_BENCH_THREADS="$threads" ./ttl_cache_bench_lockfree > "ci_benchmark_raw_${cc}.txt"
-          done
+          python3 ./run_ci_benchmark_series.py --duration 60 --threads 1
 
       - name: Regenerate SVG + README CI section
         working-directory: bench/ttl-cache-multithread-bench
