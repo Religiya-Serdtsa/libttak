@@ -52,11 +52,23 @@ package "Detachable Core" {
         + base_status : ttak_detach_status_t
         + small_cache : ttak_detachable_cache_t
         + rows[8] : ttak_detachable_generation_row_t
+        + quarantine : ttak_detachable_quarantine_row_t
         + arena_lock : pthread_rwlock_t
         + global_epoch_hint : atomic_uint_fast64_t
+        + flip_window_ns : uint64_t
+        + flip_event_threshold : uint32_t
+        + flip_small_quarantine_bytes : size_t
+        + quarantine_byte_limit : size_t
         + context_init(flags)
         + mem_alloc(sz, epoch_hint)
         + mem_free(allocation)
+    }
+
+    class ttak_detachable_quarantine_row_t {
+        + columns : void**
+        + sizes : size_t*
+        + len/cap : size_t
+        + bytes : size_t
     }
 
     class ttak_detachable_allocation_t {
@@ -68,6 +80,7 @@ package "Detachable Core" {
 
     ttak_detachable_context_t o-- ttak_detachable_cache_t : "owns small-cache"
     ttak_detachable_context_t o-- ttak_detachable_generation_row_t : "tracks arena rows"
+    ttak_detachable_context_t o-- ttak_detachable_quarantine_row_t : "flip quarantine"
     ttak_detachable_context_t o-- ttak_detach_status_t : "base status template"
     ttak_detachable_context_t --> ttak_detachable_allocation_t : "produces"
     ttak_detachable_allocation_t o-- ttak_detach_status_t
@@ -108,8 +121,9 @@ legend right
   1. Context initialized (flags define epoch/async rules).
   2. Allocation tries small-cache, else calloc + epoch enter/exit.
   3. Pointer tracked inside 2D arena rows for generation flush.
-  4. Free path caches tiny chunks unless DETACH_NOCHECK is set.
-  5. Signal hooks drain caches; graceful mode also flushes rows.
+  4. Free path routes by mode (standard/detached) invariants.
+  5. Flip detector quarantines small fast-flipping frees.
+  6. Signal hooks drain caches; graceful mode also flushes rows.
 endlegend
 
 @enduml
