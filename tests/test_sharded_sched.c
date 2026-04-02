@@ -97,10 +97,17 @@ void test_latin_square_property(void) {
  *    and verify the shard selection matches ttak_shard_for_hash().
  * ---------------------------------------------------------------------- */
 static _Atomic int routing_counter = 0;
+static _Atomic int routing_counter_urgent = 0;
 
 void *routing_task(void *arg) {
     (void)arg;
     routing_counter++;
+    return NULL;
+}
+
+void *routing_task_urgent(void *arg) {
+    (void)arg;
+    routing_counter_urgent++;
     return NULL;
 }
 
@@ -124,6 +131,36 @@ void test_pool_sharded_routing(void) {
     }
 
     ASSERT(routing_counter == N);
+    ttak_thread_pool_destroy(pool);
+}
+
+void test_pool_sharded_routing_net_urgency(void) {
+    uint64_t now = ttak_get_tick_count();
+    ttak_thread_pool_t *pool = ttak_thread_pool_create(4, 0, now);
+    ASSERT(pool != NULL);
+
+    routing_counter_urgent = 0;
+    const int N = 16;
+    ttak_future_t *futures[16];
+
+    for (int i = 0; i < N; i++) {
+        ttak_promise_t *promise = ttak_promise_create(now);
+        ASSERT(promise != NULL);
+        ttak_task_t *ct = ttak_task_create(routing_task_urgent, NULL, promise, now);
+        ASSERT(ct != NULL);
+        ttak_task_set_domain(ct, TTAK_TASK_DOMAIN_NET);
+        ttak_task_set_urgency(ct, 95);
+        _Bool ok = ttak_thread_pool_schedule_task(pool, ct, 0, now);
+        ASSERT(ok);
+        futures[i] = ttak_promise_get_future(promise);
+        ASSERT(futures[i] != NULL);
+    }
+
+    for (int i = 0; i < N; i++) {
+        ttak_future_get(futures[i]);
+    }
+
+    ASSERT(routing_counter_urgent == N);
     ttak_thread_pool_destroy(pool);
 }
 
@@ -232,6 +269,7 @@ int main(void) {
     RUN_TEST(test_worker_shard_affinity);
     RUN_TEST(test_sharded_scheduler_history);
     RUN_TEST(test_pool_sharded_routing);
+    RUN_TEST(test_pool_sharded_routing_net_urgency);
     RUN_TEST(test_work_stealing);
     return 0;
 }

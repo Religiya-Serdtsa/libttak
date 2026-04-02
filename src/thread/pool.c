@@ -16,6 +16,7 @@
 #define TTAK_BURST_ALPHA_PCT 25U
 #define TTAK_BURST_EWMA_SCALE 1024U
 #define TTAK_BURST_SIMILAR_THRESHOLD_Q10 7U
+#define TTAK_BURST_COOL_DEFAULT_Q10 TTAK_BURST_EWMA_SCALE
 
 typedef struct ttak_burst_tracker {
     _Atomic uint32_t ewma_row[TTAK_POOL_SHARD_COUNT];
@@ -37,23 +38,25 @@ static inline uint32_t ttak_burst_domain_index(ttak_task_domain_t domain) {
 
 static inline void ttak_burst_update_ewma(_Atomic uint32_t *slot, uint32_t sample_q10) {
     uint32_t oldv = atomic_load_explicit(slot, memory_order_relaxed);
-    uint32_t next = (uint32_t)(((uint64_t)oldv * (100U - TTAK_BURST_ALPHA_PCT) +
-                                (uint64_t)sample_q10 * TTAK_BURST_ALPHA_PCT) / 100U);
+    uint64_t next64 = ((uint64_t)oldv * (100U - TTAK_BURST_ALPHA_PCT) +
+                       (uint64_t)sample_q10 * TTAK_BURST_ALPHA_PCT) / 100U;
+    uint32_t next = (next64 > UINT32_MAX) ? UINT32_MAX : (uint32_t)next64;
     atomic_store_explicit(slot, next, memory_order_relaxed);
 }
 
-static inline uint32_t ttak_burst_len_sq(uint32_t x_q10, uint32_t y_q10) {
-    return (uint32_t)((x_q10 * x_q10) + (y_q10 * y_q10));
+static inline uint64_t ttak_burst_len_sq(uint32_t x_q10, uint32_t y_q10) {
+    return ((uint64_t)x_q10 * (uint64_t)x_q10) + ((uint64_t)y_q10 * (uint64_t)y_q10);
 }
 
 static inline _Bool ttak_burst_vectors_similar(uint32_t hx_q10, uint32_t hy_q10,
                                                uint32_t cx_q10, uint32_t cy_q10) {
     uint64_t dot = (uint64_t)hx_q10 * (uint64_t)cx_q10 + (uint64_t)hy_q10 * (uint64_t)cy_q10;
-    uint32_t hlen = ttak_burst_len_sq(hx_q10, hy_q10);
-    uint32_t clen = ttak_burst_len_sq(cx_q10, cy_q10);
-    if (hlen == 0U || clen == 0U) return false;
-    uint64_t lhs = dot * dot * 100ULL;
-    uint64_t rhs = (uint64_t)hlen * (uint64_t)clen * (uint64_t)(TTAK_BURST_SIMILAR_THRESHOLD_Q10 * TTAK_BURST_SIMILAR_THRESHOLD_Q10);
+    uint64_t hlen = ttak_burst_len_sq(hx_q10, hy_q10);
+    uint64_t clen = ttak_burst_len_sq(cx_q10, cy_q10);
+    if (dot == 0U || hlen == 0U || clen == 0U) return false;
+    long double threshold = (long double)TTAK_BURST_SIMILAR_THRESHOLD_Q10 / 10.0L;
+    long double lhs = (long double)dot * (long double)dot;
+    long double rhs = (threshold * threshold) * (long double)hlen * (long double)clen;
     return lhs >= rhs;
 }
 
@@ -61,12 +64,15 @@ static inline size_t ttak_rotate_shard_index(size_t shard_idx,
                                              uint32_t hot_row_q10,
                                              uint32_t hot_col_q10,
                                              uint32_t cool_row_q10,
-                                             uint32_t cool_col_q10) {
-    uint32_t angle_step = TTAK_POOL_SHARD_COUNT / 4U; /* 90° default */
+                                             uint32_t cool_col_q10,
+                                             size_t active_shards) {
+    if (active_shards == 0U) return 0U;
+    uint32_t angle_step = (uint32_t)(active_shards / 4U); /* 90° default */
+    if (angle_step == 0U) angle_step = 1U;
     if (ttak_burst_vectors_similar(hot_row_q10, hot_col_q10, cool_row_q10, cool_col_q10)) {
         angle_step = 1U; /* conservative narrower rotation when similar */
     }
-    return (shard_idx + angle_step) & (size_t)TTAK_POOL_SHARD_MASK;
+    return (shard_idx + angle_step) % active_shards;
 }
 
 static void ttak_pool_burst_record(ttak_thread_pool_t *pool,
@@ -110,10 +116,17 @@ static size_t ttak_pool_select_shard_with_burst(ttak_thread_pool_t *pool, ttak_t
     uint32_t row_w = atomic_load_explicit(&tracker->ewma_row[row], memory_order_relaxed);
     uint32_t col_w = atomic_load_explicit(&tracker->ewma_col[col], memory_order_relaxed);
     uint32_t burst_score = row_w + col_w + urgency_q10;
+    size_t active_shards = pool->num_threads;
+    if (active_shards == 0U || active_shards > TTAK_THREAD_POOL_SHARDS) {
+        active_shards = TTAK_THREAD_POOL_SHARDS;
+    }
     if (burst_score > (total + TTAK_BURST_EWMA_SCALE)) {
-        uint32_t cool_row = TTAK_BURST_EWMA_SCALE;
-        uint32_t cool_col = TTAK_BURST_EWMA_SCALE;
-        shard_idx = ttak_rotate_shard_index(shard_idx, row_w, col_w, cool_row, cool_col);
+        uint32_t cool_row = TTAK_BURST_COOL_DEFAULT_Q10;
+        uint32_t cool_col = TTAK_BURST_COOL_DEFAULT_Q10;
+        shard_idx = ttak_rotate_shard_index(shard_idx, row_w, col_w, cool_row, cool_col, active_shards);
+    }
+    if (shard_idx >= active_shards) {
+        shard_idx %= active_shards;
     }
     return shard_idx;
 }

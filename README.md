@@ -63,6 +63,7 @@ There are no assembly fast paths or exotic TLS caches. Standard `malloc` plus di
 * **Epoch Manager**: Coordinates retire lists and ensures cross-thread reclamation after quiescence.
 * **Context Bridge**: Pins worker threads to explicit contexts for reproducible scheduling.
 * **Segmented Shard Table**: Lock-free version tracking inspired by Choi Seok-jeong's OLS.
+* **Adaptive Burst Prevention (Thread/IO/Net)**: EWMA-based burst weights build a burst vector from hot ingress coordinates; routing rotates the lattice direction by default **90°** to disperse bursts, and narrows that angle conservatively when burst-heavy and burst-cool directions are too similar. Net paths also apply an urgency helper weight so high-urgency packets are preferentially de-bursted.
 
 ---
 
