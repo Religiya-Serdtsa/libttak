@@ -545,11 +545,11 @@ static void *worker_func(void *arg) {
             volatile uint8_t *payload_bytes = (volatile uint8_t *)lookup.item->value.data;
             local_checksum ^= payload_bytes[i & (CACHE_PAYLOAD_BYTES - 1)];
         }
+        ttak_epoch_exit();
         if (bench_consume_ops(ctx, 1)) {
             uint64_t write_stamp = bench_now_ns();
             bench_perform_write(ctx, table, bench_select_key(ctx), write_stamp, &local_evictions, &local_retired);
         }
-        ttak_epoch_exit();
     }
     if (aborting) {
         goto worker_cleanup;

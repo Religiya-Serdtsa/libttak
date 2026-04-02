@@ -74,12 +74,11 @@ def rebuild_libttak(cc: str) -> None:
     """
     nproc = str(max(1, os.cpu_count() or 1))
     print(f"+ rebuilding libttak.a with CC={cc} (repo root)")
-    rc = subprocess.run(["make", "clean"], cwd=REPO_ROOT, check=False, text=True).returncode
-    if rc != 0:
-        raise SystemExit(f"make clean (repo root) failed before {cc} library rebuild")
-    rc = subprocess.run(["make", f"-j{nproc}", f"CC={cc}"], cwd=REPO_ROOT, check=False, text=True).returncode
-    if rc != 0:
-        raise SystemExit(f"Failed to rebuild libttak.a with CC={cc}")
+    try:
+        subprocess.run(["make", "clean"], cwd=REPO_ROOT, check=True)
+        subprocess.run(["make", f"-j{nproc}", f"CC={cc}"], cwd=REPO_ROOT, check=True)
+    except subprocess.CalledProcessError as exc:
+        raise SystemExit(f"Failed to rebuild libttak.a with CC={cc}: {exc}") from exc
 
 
 def build_binary(cc: str) -> None:
