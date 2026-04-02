@@ -12,6 +12,7 @@
  * Injects raw assembly based on the target architecture to prevent undefined
  * symbol errors (__builtin_cas) and ensure atomic integrity.
  */
+#if defined(__TINYC__)
 #if defined(__x86_64__) || defined(__i386__)
 #  define __tcc_arch_cas(ptr, old, new) ({ \
      __typeof__(*(ptr)) __ret; \
@@ -148,9 +149,11 @@
    })
 #else
 #  error "TTAK: Target architecture not supported by TinyCC atomic shim."
-#endif
+#endif /* arch */
+#endif /* __TINYC__ */
 
 /* Intercept standard atomic symbols to prevent linker errors */
+#if defined(__TINYC__)
 #undef __sync_val_compare_and_swap
 #define __sync_val_compare_and_swap(ptr, old, new) __tcc_arch_cas(ptr, old, new)
 
@@ -171,6 +174,7 @@
 
 #undef __sync_lock_test_and_set
 #define __sync_lock_test_and_set(ptr, val) __tcc_arch_xchg(ptr, val)
+#endif /* __TINYC__ intercept */
 
 /** @brief 1 if TinyCC is targeting a non-x86 platform and needs portable fallbacks. */
 #if !defined(TTAK_TINYCC_NEEDS_PORTABLE_FALLBACK)
