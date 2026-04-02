@@ -239,6 +239,12 @@ void ttak_set_t_local_state(ttak_thread_state_t *val) {
 }
 #else
 TTAK_VIS_DEFAULT _Thread_local ttak_thread_state_t *t_local_state = NULL;
+TTAK_VIS_DEFAULT ttak_thread_state_t *ttak_get_t_local_state(void) {
+    return t_local_state;
+}
+TTAK_VIS_DEFAULT void ttak_set_t_local_state(ttak_thread_state_t *val) {
+    t_local_state = val;
+}
 #endif
 
 /**
