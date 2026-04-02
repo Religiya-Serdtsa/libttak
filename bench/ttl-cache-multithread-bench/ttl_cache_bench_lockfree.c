@@ -490,7 +490,9 @@ static bool bench_perform_write(worker_ctx_t *ctx, cache_table_t *table, uint64_
     item->key = key;
     item->expire_ns = now_ns + cfg.ttl_ns;
     bench_fill_payload(item, key, now_ns);
+    ttak_epoch_enter();
     cache_store_result_t store_res = cache_table_store(table, item, now_ns);
+    ttak_epoch_exit();
     if (!store_res.inserted) {
         ttak_object_pool_free(ctx->arena, hdr);
         return false;
