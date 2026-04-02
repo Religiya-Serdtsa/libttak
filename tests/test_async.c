@@ -77,10 +77,30 @@ void test_async_schedule_with_pool() {
     ttak_mem_free(promise);
 }
 
+void test_task_metadata_domain_urgency() {
+    uint64_t now = 5000;
+    ttak_task_t *task = ttak_task_create(my_task_func, NULL, NULL, now);
+    ASSERT(task != NULL);
+
+    ASSERT(ttak_task_get_domain(task) == TTAK_TASK_DOMAIN_THREAD);
+    ASSERT(ttak_task_get_urgency(task) == 0);
+
+    ttak_task_set_domain(task, TTAK_TASK_DOMAIN_NET);
+    ttak_task_set_urgency(task, 77);
+    ASSERT(ttak_task_get_domain(task) == TTAK_TASK_DOMAIN_NET);
+    ASSERT(ttak_task_get_urgency(task) == 77);
+
+    ttak_task_set_urgency(task, 250);
+    ASSERT(ttak_task_get_urgency(task) == 100);
+
+    ttak_task_destroy(task, now + 10);
+}
+
 int main() {
     RUN_TEST(test_task_create_execute);
     RUN_TEST(test_promise_future_basic);
     RUN_TEST(test_async_schedule_fallback);
     RUN_TEST(test_async_schedule_with_pool);
+    RUN_TEST(test_task_metadata_domain_urgency);
     return 0;
 }
