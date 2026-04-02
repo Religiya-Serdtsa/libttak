@@ -369,6 +369,8 @@ static bool ttak_net_session_enqueue_task(ttak_net_session_mgr_t *mgr,
         free(ctx);
         return false;
     }
+    ttak_task_set_domain(task, TTAK_TASK_DOMAIN_NET);
+    ttak_task_set_urgency(task, 85);
     ttak_async_schedule(task, now, 0);
     return true;
 }

@@ -20,6 +20,8 @@ struct ttak_task {
     uint64_t task_hash;      /**< Hash to identify task type. */
     uint64_t start_ts;       /**< Execution start timestamp. */
     int base_priority;       /**< Original user priority. */
+    uint8_t domain;          /**< Task domain metadata. */
+    uint8_t urgency;         /**< Task urgency metadata. */
 };
 
 /**
@@ -52,6 +54,8 @@ ttak_task_t *ttak_task_create(ttak_task_func_t func, void *arg, ttak_promise_t *
         
         task->start_ts = 0;
         task->base_priority = 0;
+        task->domain = (uint8_t)TTAK_TASK_DOMAIN_THREAD;
+        task->urgency = 0;
     }
     return task;
 }
@@ -70,6 +74,27 @@ void ttak_task_set_start_ts(ttak_task_t *task, uint64_t ts) {
 
 uint64_t ttak_task_get_start_ts(const ttak_task_t *task) {
     return task ? task->start_ts : 0;
+}
+
+void ttak_task_set_domain(ttak_task_t *task, ttak_task_domain_t domain) {
+    if (!task) return;
+    task->domain = (uint8_t)domain;
+}
+
+ttak_task_domain_t ttak_task_get_domain(const ttak_task_t *task) {
+    if (!task) return TTAK_TASK_DOMAIN_UNKNOWN;
+    uint8_t domain = task->domain;
+    if (domain > (uint8_t)TTAK_TASK_DOMAIN_NET) return TTAK_TASK_DOMAIN_UNKNOWN;
+    return (ttak_task_domain_t)domain;
+}
+
+void ttak_task_set_urgency(ttak_task_t *task, uint8_t urgency) {
+    if (!task) return;
+    task->urgency = (urgency > 100U) ? 100U : urgency;
+}
+
+uint8_t ttak_task_get_urgency(const ttak_task_t *task) {
+    return task ? task->urgency : 0U;
 }
 
 /**

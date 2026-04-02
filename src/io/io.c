@@ -278,6 +278,7 @@ ttak_io_status_t ttak_io_poll_wait(const ttak_io_guard_t *guard,
         ttak_mem_free(ctx);
         return TTAK_IO_ERR_SYS_FAILURE;
     }
+    ttak_task_set_domain(task, TTAK_TASK_DOMAIN_IO);
     ttak_async_schedule(task, now, 0);
     return TTAK_IO_SUCCESS;
 }
