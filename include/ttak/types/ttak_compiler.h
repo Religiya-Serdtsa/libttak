@@ -6,6 +6,172 @@
 #ifndef TTAK_COMPILER_H
 #define TTAK_COMPILER_H
 
+/**
+ * @brief Low-level CAS implementation for TinyCC.
+ *
+ * Injects raw assembly based on the target architecture to prevent undefined
+ * symbol errors (__builtin_cas) and ensure atomic integrity.
+ */
+#if defined(__x86_64__) || defined(__i386__)
+#  define __tcc_arch_cas(ptr, old, new) ({ \
+     __typeof__(*(ptr)) __ret; \
+     __asm__ __volatile__ ( \
+       "lock; cmpxchg %2, %1" \
+       : "=a"(__ret), "+m"(*(ptr)) \
+       : "r"(new), "a"(old) \
+       : "memory" \
+     ); \
+     __ret; \
+   })
+#  define __tcc_arch_xchg(ptr, val) ({ \
+     __typeof__(*(ptr)) __ret; \
+     __asm__ __volatile__ ( \
+       "xchg %0, %1" \
+       : "=r"(__ret), "+m"(*(ptr)) \
+       : "0"(val) \
+       : "memory" \
+     ); \
+     __ret; \
+   })
+#elif defined(__aarch64__)
+#  define __tcc_arch_cas(ptr, old, new) ({ \
+     __typeof__(*(ptr)) __oldval; int __res; \
+     __asm__ __volatile__ ( \
+       "1: ldxr %0, [%2]\n" \
+       "   cmp %0, %3\n" \
+       "   b.ne 2f\n" \
+       "   stxr %w1, %4, [%2]\n" \
+       "   cbnz %w1, 1b\n" \
+       "2:" \
+       : "=&r"(__oldval), "=&r"(__res) \
+       : "r"(ptr), "r"(old), "r"(new) \
+       : "memory" \
+     ); \
+     __oldval; \
+   })
+#  define __tcc_arch_xchg(ptr, val) ({ \
+     __typeof__(*(ptr)) __oldval; int __res; \
+     __asm__ __volatile__ ( \
+       "1: ldxr %0, [%2]\n" \
+       "   stxr %w1, %3, [%2]\n" \
+       "   cbnz %w1, 1b\n" \
+       : "=&r"(__oldval), "=&r"(__res) \
+       : "r"(ptr), "r"(val) \
+       : "memory" \
+     ); \
+     __oldval; \
+   })
+#elif defined(__mips__) && defined(__LP64__)
+#  define __tcc_arch_cas(ptr, old, new) ({ \
+     __typeof__(*(ptr)) __ret, __tmp; \
+     __asm__ __volatile__ ( \
+       ".set push\n.set mips3\n" \
+       "1: lld %0, %1\n" \
+       "   bne %0, %3, 2f\n" \
+       "   move %2, %4\n" \
+       "   scd %2, %1\n" \
+       "   beqz %2, 1b\n" \
+       "2:\n.set pop" \
+       : "=&r"(__ret), "+m"(*(ptr)), "=&r"(__tmp) \
+       : "r"(old), "r"(new) \
+       : "memory" \
+     ); \
+     __ret; \
+   })
+#  define __tcc_arch_xchg(ptr, val) ({ \
+     __typeof__(*(ptr)) __ret, __tmp; \
+     __asm__ __volatile__ ( \
+       ".set push\n.set mips3\n" \
+       "1: lld %0, %1\n" \
+       "   move %2, %3\n" \
+       "   scd %2, %1\n" \
+       "   beqz %2, 1b\n" \
+       ".set pop" \
+       : "=&r"(__ret), "+m"(*(ptr)), "=&r"(__tmp) \
+       : "r"(val) \
+       : "memory" \
+     ); \
+     __ret; \
+   })
+#elif defined(__PPC64__) && (__BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__)
+#  define __tcc_arch_cas(ptr, old, new) ({ \
+     __typeof__(*(ptr)) __ret; \
+     __asm__ __volatile__ ( \
+       "1: ldarx %0, 0, %2\n" \
+       "   cmpd %0, %3\n" \
+       "   bne 2f\n" \
+       "   stdcx. %4, 0, %2\n" \
+       "   bne 1b\n" \
+       "2:" \
+       : "=&r"(__ret), "=m"(*(ptr)) \
+       : "r"(ptr), "r"(old), "r"(new) \
+       : "cr0", "memory" \
+     ); \
+     __ret; \
+   })
+#  define __tcc_arch_xchg(ptr, val) ({ \
+     __typeof__(*(ptr)) __ret; \
+     __asm__ __volatile__ ( \
+       "1: ldarx %0, 0, %2\n" \
+       "   stdcx. %3, 0, %2\n" \
+       "   bne 1b" \
+       : "=&r"(__ret), "=m"(*(ptr)) \
+       : "r"(ptr), "r"(val) \
+       : "cr0", "memory" \
+     ); \
+     __ret; \
+   })
+#elif defined(__riscv) && (__riscv_xlen == 64)
+#  define __tcc_arch_cas(ptr, old, new) ({ \
+     __typeof__(*(ptr)) __ret; int __tmp; \
+     __asm__ __volatile__ ( \
+       "1: lr.d %0, (%2)\n" \
+       "   bne %0, %3, 2f\n" \
+       "   sc.d %1, %4, (%2)\n" \
+       "   bnez %1, 1b\n" \
+       "2:" \
+       : "=&r"(__ret), "=&r"(__tmp) \
+       : "r"(ptr), "r"(old), "r"(new) \
+       : "memory" \
+     ); \
+     __ret; \
+   })
+#  define __tcc_arch_xchg(ptr, val) ({ \
+     __typeof__(*(ptr)) __ret; \
+     __asm__ __volatile__ ( \
+       "amoswap.d %0, %2, (%1)" \
+       : "=&r"(__ret) \
+       : "r"(ptr), "r"(val) \
+       : "memory" \
+     ); \
+     __ret; \
+   })
+#else
+#  error "TTAK: Target architecture not supported by TinyCC atomic shim."
+#endif
+
+/* Intercept standard atomic symbols to prevent linker errors */
+#undef __sync_val_compare_and_swap
+#define __sync_val_compare_and_swap(ptr, old, new) __tcc_arch_cas(ptr, old, new)
+
+#undef __sync_bool_compare_and_swap
+#define __sync_bool_compare_and_swap(ptr, old, new) (__tcc_arch_cas(ptr, old, new) == (old))
+
+#undef __atomic_compare_exchange_n
+#define __atomic_compare_exchange_n(ptr, p_old, new, weak, success, fail) ({ \
+  __typeof__(*(ptr)) __exp = *(p_old); \
+  __typeof__(*(ptr)) __act = __tcc_arch_cas(ptr, __exp, new); \
+  bool __ok = (__act == __exp); \
+  if (!__ok) *(p_old) = __act; \
+  __ok; \
+})
+
+#undef __atomic_exchange_n
+#define __atomic_exchange_n(ptr, val, mem) __tcc_arch_xchg(ptr, val)
+
+#undef __sync_lock_test_and_set
+#define __sync_lock_test_and_set(ptr, val) __tcc_arch_xchg(ptr, val)
+
 /** @brief 1 if TinyCC is targeting a non-x86 platform and needs portable fallbacks. */
 #if !defined(TTAK_TINYCC_NEEDS_PORTABLE_FALLBACK)
 #  if defined(__TINYC__) && !defined(__x86_64__) && !defined(__i386__)
@@ -63,8 +229,8 @@ static inline int __ttak_clzll(unsigned long long v) {
 #if defined(__TINYC__) && defined(__x86_64__)
 /**
  * Optimized atomic operations for TinyC Compiler on x86_64.
- * 
- * Provides inline assembly implementations to bypass standard library 
+ *
+ * Provides inline assembly implementations to bypass standard library
  * overhead for common atomic patterns.
  */
 #define TTAK_FAST_ATOMIC_ADD_U64(ptr, val) \

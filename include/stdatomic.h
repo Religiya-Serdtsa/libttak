@@ -1,7 +1,7 @@
 #ifndef __cplusplus
 #  ifndef _BOOL_DEFINED
 #    include <stdbool.h>
-     /* GCC/Clang define _Bool as a built-in keyword. 
+     /* GCC/Clang define _Bool as a built-in keyword.
         Only typedef for MSVC or compilers lacking native _Bool support. */
 #    if defined(_MSC_VER) && !defined(__clang__) && _MSC_VER < 1928
 #      ifndef _Bool
@@ -11,7 +11,7 @@
 #    define _BOOL_DEFINED
 #  endif
 #else
-  /* Map _Bool to bool in C++ (CUDA) to ensure type compatibility 
+  /* Map _Bool to bool in C++ (CUDA) to ensure type compatibility
      without redefining reserved keywords. */
 #  ifndef _Bool
 #    define _Bool bool
@@ -277,7 +277,7 @@ extern pthread_mutex_t __ttak_atomic_global_lock;
 #define ATOMIC_FLAG_INIT   {0}
 #define ATOMIC_VAR_INIT(v) (v)
 
-/* Use compiler built-ins for GCC and Clang to guarantee lock-free performance 
+/* Use compiler built-ins for GCC and Clang to guarantee lock-free performance
    and bypass potentially broken system stdatomic.h headers. */
 
 #define atomic_thread_fence(order) __atomic_thread_fence(order)
