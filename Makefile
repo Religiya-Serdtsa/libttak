@@ -12,7 +12,7 @@ USE_ROCM ?= 0
 # GNU (GCC/Clang) is the default on all platforms.
 TOOLCHAIN ?= gnu
 
-COMMON_WARNINGS ?= -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -D_REENTRANT -fPIC
+COMMON_WARNINGS ?= -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -D_REENTRANT
 DEPFLAGS ?= -MD -MF $(@:.o=.d)
 LDFLAGS_BASE = -pthread -lm
 
@@ -55,7 +55,7 @@ PERF_STACK_FLAGS ?= -O3 -march=native -mtune=native -pipe -flto -ffat-lto-object
                    -fvisibility=hidden -DNDEBUG
 
 ifeq ($(BUILD_PROFILE),tcc)
-CFLAGS = $(COMMON_WARNINGS) $(TCC_STACK_FLAGS) -fPIC -ftls-model=global-dynamic
+CFLAGS = $(COMMON_WARNINGS) $(TCC_STACK_FLAGS)
 LDFLAGS = $(LDFLAGS_BASE)
 else
 CFLAGS = $(COMMON_WARNINGS) $(PERF_WARNINGS) $(PERF_STACK_FLAGS)  -fPIC -ftls-model=global-dynamic
