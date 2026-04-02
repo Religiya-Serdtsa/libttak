@@ -292,6 +292,25 @@ static inline int __ttak_clzll(unsigned long long v) {
 #define TTAK_FAST_ATOMIC_XCHG_U64(ptr, val) \
     atomic_exchange_explicit((_Atomic uint64_t *)(ptr), (uint64_t)(val), memory_order_relaxed)
 
+#elif defined(_MSC_VER) && !defined(__clang__)
+/* MSVC: use the portable atomic_* wrappers supplied by include/stdatomic.h.
+ * MSVC does not provide __atomic_* compiler built-ins or the __ATOMIC_*
+ * memory-order constants, so the GCC/Clang #else branch below would produce
+ * undefined-identifier errors when these macros are expanded.              */
+#include <stdatomic.h>
+#define TTAK_FAST_ATOMIC_ADD_U64(ptr, val) \
+    atomic_fetch_add_explicit((_Atomic uint64_t *)(ptr), (uint64_t)(val), memory_order_relaxed)
+#define TTAK_FAST_ATOMIC_ADD_U32(ptr, val) \
+    atomic_fetch_add_explicit((_Atomic uint32_t *)(ptr), (uint32_t)(val), memory_order_relaxed)
+#define TTAK_FAST_ATOMIC_LOAD_U64(ptr) \
+    atomic_load_explicit((_Atomic uint64_t *)(ptr), memory_order_relaxed)
+#define TTAK_FAST_ATOMIC_STORE_U32(ptr, val) \
+    atomic_store_explicit((_Atomic uint32_t *)(ptr), (uint32_t)(val), memory_order_relaxed)
+#define TTAK_FAST_ATOMIC_STORE_BOOL(ptr, val) \
+    atomic_store_explicit((_Atomic _Bool *)(ptr), (_Bool)((val) ? 1 : 0), memory_order_relaxed)
+#define TTAK_FAST_ATOMIC_XCHG_U64(ptr, val) \
+    atomic_exchange_explicit((_Atomic uint64_t *)(ptr), (uint64_t)(val), memory_order_relaxed)
+
 #else
 #include <stdatomic.h>
 #define TTAK_FAST_ATOMIC_ADD_U64(ptr, val) __atomic_fetch_add((ptr), (val), __ATOMIC_RELAXED)
