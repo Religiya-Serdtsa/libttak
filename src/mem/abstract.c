@@ -39,7 +39,7 @@
         if (!addr) return;
         VirtualFree(addr, 0, MEM_RELEASE);
     }
-#else
+#elif __linux__
     #include <sys/mman.h>
     static inline void *_ttak_abstract_map(size_t size) {
         void *p = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
