@@ -49,6 +49,16 @@
         if (!addr || size == 0) return;
         munmap(addr, size);
     }
+#else
+/* Fallback for bare-metal/embedded targets like ESP32 */
+    static inline void *_ttak_abstract_map(size_t size) {
+        if (size == 0) return NULL;
+        return malloc(size);
+    }
+    static inline void _ttak_abstract_unmap(void *addr, size_t size) {
+        (void)size;
+        free(addr);
+    }
 #endif
 
 #define TTAK_ABSTRACT_ALIGNMENT 64u
