@@ -109,11 +109,10 @@ typedef struct {
 typedef ttak_payload_header_local_t cache_entry_t;
 
 typedef struct {
-    cache_item_data_t *ptr;
+    cache_item_data_t * _Atomic ptr;
 } cache_bucket_t;
 
 typedef struct {
-    pthread_mutex_t lock;
     size_t bucket_count;
     size_t bucket_mask;
     cache_bucket_t buckets[];
@@ -332,10 +331,6 @@ static cache_table_t *cache_table_create(size_t desired_buckets) {
     cache_table_t *table = ttak_mem_alloc(bytes, 0, ttak_get_tick_count());
     if (!table) return NULL;
     memset(table, 0, bytes);
-    if (pthread_mutex_init(&table->lock, NULL) != 0) {
-        ttak_mem_free(table);
-        return NULL;
-    }
     table->bucket_count = buckets;
     table->bucket_mask = buckets - 1;
     return table;
@@ -355,16 +350,13 @@ static inline void bench_install_table(cache_table_t *table) {
 static inline cache_lookup_result_t cache_table_lookup(cache_table_t *table, uint64_t key, uint64_t now_ns) {
     cache_lookup_result_t result = { .kind = CACHE_RESULT_MISS, .entry = NULL, .item = NULL };
     if (!table) return result;
-    pthread_mutex_lock(&table->lock);
     size_t mask = table->bucket_mask;
     size_t idx = bench_mix_u64(key) & mask;
     uint32_t max_probe = cfg.max_probe ? cfg.max_probe : 1;
     for (uint32_t probe = 0; probe < max_probe; ++probe) {
-        cache_bucket_t *bucket = &table->buckets[idx];
-        cache_item_data_t *payload = cache_payload_from_ptr((void *)bucket->ptr);
+        cache_item_data_t *payload = atomic_load_explicit(&table->buckets[idx].ptr, memory_order_acquire);
         if (!payload) {
             result.kind = CACHE_RESULT_MISS;
-            pthread_mutex_unlock(&table->lock);
             return result;
         }
         if (payload->key == key) {
@@ -372,79 +364,90 @@ static inline cache_lookup_result_t cache_table_lookup(cache_table_t *table, uin
                 result.kind = CACHE_RESULT_HIT;
                 result.entry = cache_entry_from_payload(payload);
                 result.item = payload;
-                pthread_mutex_unlock(&table->lock);
                 return result;
             }
-            bucket->ptr = NULL;
-            ttak_epoch_retire(payload, retire_payload_cleanup);
-            TTAK_FAST_ATOMIC_ADD_U64(&stats.retirements, 1);
-            result.kind = CACHE_RESULT_EXPIRED;
-            pthread_mutex_unlock(&table->lock);
+            /* Try to clear expired bucket atomically */
+            cache_item_data_t *expected = payload;
+            if (atomic_compare_exchange_strong_explicit(&table->buckets[idx].ptr, &expected, NULL,
+                                                       memory_order_release, memory_order_relaxed)) {
+                ttak_epoch_retire(payload, retire_payload_cleanup);
+                TTAK_FAST_ATOMIC_ADD_U64(&stats.retirements, 1);
+                result.kind = CACHE_RESULT_EXPIRED;
+            } else {
+                /* Someone else replaced/cleared it, retry or treat as miss/expired */
+                result.kind = CACHE_RESULT_MISS;
+            }
             return result;
         }
         idx = (idx + 1) & mask;
     }
-    pthread_mutex_unlock(&table->lock);
     return result;
 }
 
 static cache_store_result_t cache_table_store(cache_table_t *table, cache_item_data_t *payload, uint64_t now_ns) {
     cache_store_result_t result = {0};
     if (!table || !payload) return result;
-    pthread_mutex_lock(&table->lock);
     uint64_t key = payload->key;
     size_t mask = table->bucket_mask;
     size_t idx = bench_mix_u64(key) & mask;
     uint32_t max_probe = cfg.max_probe ? cfg.max_probe : 1;
+    
     for (uint32_t probe = 0; probe < max_probe; ++probe) {
-        cache_bucket_t *bucket = &table->buckets[idx];
-        cache_item_data_t *existing = cache_payload_from_ptr((void *)bucket->ptr);
+        cache_item_data_t *existing = atomic_load_explicit(&table->buckets[idx].ptr, memory_order_acquire);
         if (!existing) {
-            bucket->ptr = payload;
-            result.inserted = true;
-            pthread_mutex_unlock(&table->lock);
-            return result;
+            cache_item_data_t *expected = NULL;
+            if (atomic_compare_exchange_strong_explicit(&table->buckets[idx].ptr, &expected, payload,
+                                                       memory_order_release, memory_order_relaxed)) {
+                result.inserted = true;
+                return result;
+            }
+            /* CAS failed, something else was inserted, retry this bucket */
+            probe--; 
+            continue;
         }
         if (existing->key == key || existing->expire_ns <= now_ns) {
-            bucket->ptr = payload;
-            result.inserted = true;
-            result.replaced = cache_entry_from_payload(existing);
-            result.forced = (existing->key != key);
-            pthread_mutex_unlock(&table->lock);
-            return result;
+            if (atomic_compare_exchange_strong_explicit(&table->buckets[idx].ptr, &existing, payload,
+                                                       memory_order_release, memory_order_relaxed)) {
+                result.inserted = true;
+                result.replaced = cache_entry_from_payload(existing);
+                result.forced = (existing->key != key);
+                return result;
+            }
+            /* CAS failed, retry this bucket */
+            probe--;
+            continue;
         }
         idx = (idx + 1) & mask;
     }
-    cache_bucket_t *bucket = &table->buckets[idx];
-    cache_item_data_t *existing = cache_payload_from_ptr((void *)bucket->ptr);
-    bucket->ptr = payload;
+
+    /* Forced eviction at the end of probe sequence */
+    cache_item_data_t *existing = atomic_exchange_explicit(&table->buckets[idx].ptr, payload, memory_order_acq_rel);
     if (existing) {
         result.replaced = cache_entry_from_payload(existing);
         result.forced = true;
     }
     result.inserted = true;
-    pthread_mutex_unlock(&table->lock);
     return result;
 }
 
 static size_t cache_table_cleanup(cache_table_t *table, size_t cursor, size_t budget, uint64_t now_ns) {
     if (!table || table->bucket_count == 0) return cursor;
-    pthread_mutex_lock(&table->lock);
     size_t mask = table->bucket_mask;
     size_t start = cursor;
     size_t count = table->bucket_count;
     for (size_t i = 0; i < budget; ++i) {
-        cache_bucket_t *bucket = &table->buckets[start];
-        cache_item_data_t *payload = cache_payload_from_ptr((void *)bucket->ptr);
+        cache_item_data_t *payload = atomic_load_explicit(&table->buckets[start].ptr, memory_order_acquire);
         if (payload && payload->expire_ns <= now_ns) {
-            bucket->ptr = NULL;
-            ttak_epoch_retire(payload, retire_payload_cleanup);
-            TTAK_FAST_ATOMIC_ADD_U64(&stats.cleanups, 1);
-            TTAK_FAST_ATOMIC_ADD_U64(&stats.retirements, 1);
+            cache_item_data_t *expected = payload;
+            if (atomic_compare_exchange_strong_explicit(&table->buckets[start].ptr, &expected, NULL,
+                                                       memory_order_release, memory_order_relaxed)) {
+                ttak_epoch_retire(payload, retire_payload_cleanup);
+                TTAK_FAST_ATOMIC_ADD_U64(&stats.cleanups, 1);
+                TTAK_FAST_ATOMIC_ADD_U64(&stats.retirements, 1);
+            }
         }
         start = (start + 1) & mask;
     }
-    pthread_mutex_unlock(&table->lock);
     return start % count;
 }
 
