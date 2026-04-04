@@ -4,6 +4,7 @@ AR ?= ar
 NVCC ?= nvcc
 HIPCC ?= hipcc
 EMBEDDED ?= 0
+USE_NONLINEAR ?= 1
 USE_CUDA ?= 0
 USE_OPENCL ?= 0
 USE_ROCM ?= 0
