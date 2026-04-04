@@ -4,6 +4,7 @@
 
 #include <ttak/mem/mem.h>
 #include <ttak/mem/epoch.h>
+#include <ttak/mols_control.h>
 #include <ttak/timing/timing.h>
 #include <ttak/types/ttak_compiler.h>
 
@@ -323,6 +324,14 @@ static inline void epoch_node_pool_release(ttak_retired_node_t *node) {
 static inline void ttak_get_ols_coords(uint32_t tid, uint32_t gen, int *x, int *y) {
     *x = (int)(tid % OLS_ORDER);
     *y = (int)((tid / OLS_ORDER + gen) % OLS_ORDER);
+    const uint32_t row = (uint32_t)(*x) & (uint32_t)TTAK_MOLS_SYMBOL_MASK;
+    const uint32_t col = (uint32_t)(*y) & (uint32_t)TTAK_MOLS_SYMBOL_MASK;
+    const uint16_t node_id = (uint16_t)((row << TTAK_MOLS_COORD_SHIFT) | col);
+    const uint32_t combined =
+        (row << TTAK_MOLS_COORD_SHIFT) | col;
+    const uint32_t adjusted = ttak_apply_mols_control(node_id, combined);
+    *x = (int)((adjusted >> TTAK_MOLS_COORD_SHIFT) & (uint32_t)(OLS_ORDER - 1));
+    *y = (int)(adjusted & (uint32_t)(OLS_ORDER - 1));
 }
 
 /* --- Initialization --- */
