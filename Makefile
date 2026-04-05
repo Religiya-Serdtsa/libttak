@@ -3,8 +3,7 @@ CXX ?= g++
 AR ?= ar
 NVCC ?= nvcc
 HIPCC ?= hipcc
-EMBEDDED ?= 1
-USE_NONLINEAR ?= 1
+EMBEDDED ?= 0
 USE_CUDA ?= 0
 USE_OPENCL ?= 0
 USE_ROCM ?= 0
@@ -63,7 +62,7 @@ CFLAGS = $(COMMON_WARNINGS) $(PERF_WARNINGS) $(PERF_STACK_FLAGS)  -fPIC -ftls-mo
 LDFLAGS = $(LDFLAGS_BASE) -flto -Wl,--gc-sections
 endif
 
-CFLAGS += $(EXTRA_CFLAGS) -DEMBEDDED=$(EMBEDDED) -DUSE_NONLINEAR=$(USE_NONLINEAR)
+CFLAGS += $(EXTRA_CFLAGS) -DEMBEDDED=$(EMBEDDED)
 LDFLAGS += $(EXTRA_LDFLAGS)
 
 # ---- MSVC toolchain overrides (Windows / cl.exe) -----------------------
@@ -77,7 +76,7 @@ OBJEXT     = obj
 LIBEXT     = lib
 AR_EXTRA   =
 AR_OUTFLAG = /OUT:
-CFLAGS     = /O2 /W4 /GL /DNDEBUG /std:c17 /Iinclude $(EXTRA_CFLAGS) /DEMBEDDED=$(EMBEDDED) /DUSE_NONLINEAR=$(USE_NONLINEAR)
+CFLAGS     = /O2 /W4 /GL /DNDEBUG /std:c17 /Iinclude $(EXTRA_CFLAGS) /DEMBEDDED=$(EMBEDDED)
 LDFLAGS    = /LTCG $(EXTRA_LDFLAGS)
 else
 OBJEXT     = o
