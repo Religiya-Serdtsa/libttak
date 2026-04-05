@@ -15,6 +15,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
+#include <stdatomic.h>
 #include <ttak/async/task.h>
 #include <ttak/thread/worker.h>
 #include <ttak/priority/queue.h>
@@ -51,6 +52,9 @@ struct ttak_thread_pool {
     pthread_cond_t      task_cond;
     uint64_t            creation_ts;
     _Bool               is_shutdown;
+    _Atomic uint32_t    burst_hot_row_q10[4];
+    _Atomic uint32_t    burst_hot_col_q10[4];
+    _Atomic uint32_t    burst_mag_q10[4];
 
     /**
      * @brief Kills all sub-threads.

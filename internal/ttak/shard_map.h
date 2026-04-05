@@ -20,6 +20,7 @@
 
 #include <stdint.h>
 #include <stddef.h>
+#include <ttak/mols_control.h>
 
 /** Default shard count — must be a power of two, maximum 8. */
 #define TTAK_POOL_SHARD_COUNT 8
@@ -70,10 +71,17 @@ static inline void ttak_shard_hash_to_coords(uint64_t hash,
     /* 64-bit golden-ratio constant (⌊2^64 / φ⌋) for Fibonacci hashing */
     const uint64_t GOLDEN = UINT64_C(0x9e3779b97f4a7c15);
     uint64_t mixed = hash * GOLDEN;
-    /* Upper 32 bits → row; lower 32 bits → col.
-     * Both are masked to [0, TTAK_POOL_SHARD_COUNT). */
     *row = (uint32_t)(mixed >> 32) & (uint32_t)TTAK_POOL_SHARD_MASK;
     *col = (uint32_t)(mixed & UINT32_MAX) & (uint32_t)TTAK_POOL_SHARD_MASK;
+    const uint32_t row_bits = *row & (uint32_t)TTAK_MOLS_SYMBOL_MASK;
+    const uint32_t col_bits = *col & (uint32_t)TTAK_MOLS_SYMBOL_MASK;
+    const uint16_t node_id =
+        (uint16_t)((row_bits << TTAK_MOLS_COORD_SHIFT) | col_bits);
+    const uint32_t combined =
+        (row_bits << TTAK_MOLS_COORD_SHIFT) | col_bits;
+    const uint32_t adjusted = ttak_apply_mols_control(node_id, combined);
+    *row = (adjusted >> TTAK_MOLS_COORD_SHIFT) & (uint32_t)TTAK_POOL_SHARD_MASK;
+    *col = adjusted & (uint32_t)TTAK_POOL_SHARD_MASK;
 }
 
 /**

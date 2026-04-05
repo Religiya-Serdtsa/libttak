@@ -26,6 +26,15 @@ package "Utilities" {
             + mean() : double
             + print_ascii()
         }
+
+        class ttak_system_usage {
+            + ttak_get_cpu_usage_total() : double
+            + ttak_get_cpu_usage_per_core(core) : double
+            + ttak_get_gpu_usage_total() : double
+            + ttak_get_gpu_usage_per_cu(cu) : double
+            + ttak_get_rss_footprint() : size_t
+            + ttak_get_rss_footprint_full() : char*
+        }
     }
 
     package "Timing (timing/)" {

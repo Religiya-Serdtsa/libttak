@@ -39,7 +39,7 @@
         if (!addr) return;
         VirtualFree(addr, 0, MEM_RELEASE);
     }
-#else
+#elif __linux__
     #include <sys/mman.h>
     static inline void *_ttak_abstract_map(size_t size) {
         void *p = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
@@ -48,6 +48,16 @@
     static inline void _ttak_abstract_unmap(void *addr, size_t size) {
         if (!addr || size == 0) return;
         munmap(addr, size);
+    }
+#else
+/* Fallback for bare-metal/embedded targets like ESP32 */
+    static inline void *_ttak_abstract_map(size_t size) {
+        if (size == 0) return NULL;
+        return malloc(size);
+    }
+    static inline void _ttak_abstract_unmap(void *addr, size_t size) {
+        (void)size;
+        free(addr);
     }
 #endif
 

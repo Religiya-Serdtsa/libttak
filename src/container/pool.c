@@ -1,4 +1,5 @@
 #include <ttak/container/pool.h>
+#include <ttak/mols_control.h>
 #include <ttak/sync/spinlock.h>
 #include <stdlib.h>
 #include <string.h>
@@ -129,6 +130,13 @@ void *ttak_object_pool_alloc(ttak_object_pool_t *pool) {
     while (probed < pool->capacity) {
         size_t idx = (chunk << TTAK_POOL_OLS_AREA_SHIFT) + ttak_pool_ols_lane(lane);
         lane = ttak_pool_ols_lane_advance(lane, stride);
+        const uint16_t node_id = (uint16_t)(idx & (size_t)(TTAK_MOLS_NODE_COUNT - 1U));
+        const uint32_t damp = ttak_apply_mols_control(node_id, (uint32_t)idx);
+        const uint32_t jitter = damp ^ (uint32_t)idx;
+        const uint8_t extra = (uint8_t)(jitter & TTAK_POOL_OLS_AREA_MASK);
+        if (extra != 0U) {
+            lane = ttak_pool_ols_lane_advance(lane, extra);
+        }
         if (lane == guard) {
             chunk++;
             if (chunk >= chunk_count) chunk = 0;

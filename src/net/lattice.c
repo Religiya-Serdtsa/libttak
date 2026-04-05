@@ -11,6 +11,7 @@
 
 #include <ttak/net/lattice.h>
 #include <ttak/mem/mem.h>
+#include <ttak/mols_control.h>
 #include <ttak/atomic/atomic.h>
 #include <ttak/timing/timing.h>
 #include <ttak/types/ttak_compiler.h>
@@ -408,8 +409,12 @@ _Bool ttak_net_lattice_write(ttak_net_lattice_t *lat, uint32_t tid, const void *
          */
         for (uint32_t r = 0; r < dim; r++) {
             for (uint32_t c = 0; c < dim; c++) {
+                const uint16_t node_id =
+                    (uint16_t)(((r & (uint32_t)TTAK_MOLS_SYMBOL_MASK) << TTAK_MOLS_COORD_SHIFT) |
+                               (c & (uint32_t)TTAK_MOLS_SYMBOL_MASK));
+                uint32_t lane = ttak_apply_mols_control(node_id, my_tid) & mask;
                 /* Enforce orthogonality so each worker selects disjoint slots. */
-                if (((r + c) & mask) == my_tid) {
+                if (((r + c) & mask) == lane) {
                     ttak_net_lattice_slot_t *slot = &node->slots[r * dim + c];
                     
                     if (ttak_atomic_read64(&slot->state) == 0) {
@@ -464,7 +469,11 @@ _Bool ttak_net_lattice_read(ttak_net_lattice_t *lat, uint32_t tid, void *dst, ui
         /* Reference: Yi Sang-hyeok, "Suri (數理)", 1890s, for high-dimensional co-ordinate sweeps. */
         for (uint32_t r = 0; r < dim; r++) {
             for (uint32_t c = 0; c < dim; c++) {
-                if (((r + c) & mask) == my_tid) {
+                const uint16_t node_id =
+                    (uint16_t)(((r & (uint32_t)TTAK_MOLS_SYMBOL_MASK) << TTAK_MOLS_COORD_SHIFT) |
+                               (c & (uint32_t)TTAK_MOLS_SYMBOL_MASK));
+                uint32_t lane = ttak_apply_mols_control(node_id, my_tid) & mask;
+                if (((r + c) & mask) == lane) {
                     ttak_net_lattice_slot_t *slot = &node->slots[r * dim + c];
                     
                     if (ttak_atomic_read64(&slot->state) == 2) {

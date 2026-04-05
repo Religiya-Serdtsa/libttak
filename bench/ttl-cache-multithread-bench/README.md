@@ -2,6 +2,8 @@
 
 This directory contains the flagship performance benchmark for LibTTAK's lock-free shared memory subsystem.
 
+> Korean doc: [`README.ko.md`](./README.ko.md)
+
 ## Performance Philosophy
 
 LibTTAK utilizes mathematical principles inspired by **Choi Seok-jeong's Orthogonal Latin Square (OLS)** to eliminate hardware-level lock contention.
@@ -13,13 +15,18 @@ We strategically prioritize **explosive throughput (Ops/s)** by utilizing determ
 - **Latency:** ~6-15 ns per access
 - **Memory Efficiency:** Near-zero steady-state RSS overhead after epoch reclamation (GCC/Clang)
 
-## Latest Benchmark Results
+## Latest Benchmark Results (GitHub Copilot CI)
 
-| Compiler | Peak Throughput | Final RSS | Performance Note |
-|----------|-----------------|-----------|------------------|
-| **GCC 14** | **150.5M Ops/s** | 23.0 MB | Excellent reclamation |
-| **Clang 18** | **156.0M Ops/s** | **2.6 MB** | Best memory efficiency |
-| **TCC** | 68.4M Ops/s | 2.9 GB | High throughput, higher RSS |
+| Compiler | Peak Throughput | Avg Throughput (20s) | Final RSS | Performance Note |
+|----------|-----------------|----------------------|-----------|------------------|
+| **GCC** | **13.9M Ops/s** | 10.0M Ops/s | 266.3 MB | 3 vCPU virtual runner baseline |
+
+### CI Environment (Recorded)
+
+- Platform: GitHub Copilot CI runner (Linux, KVM)
+- Kernel: `Linux 6.12.47 x86_64`
+- CPU: `Intel(R) Xeon(R) Platinum 8272CL CPU @ 2.60GHz` (3 vCPU)
+- Memory: 17 GiB RAM, no swap
 
 ## Technical Analysis: TCC Memory Anomaly
 
@@ -33,10 +40,48 @@ The benchmark reveals a significant disparity in RSS (Resident Set Size) between
 
 ```bash
 make
-./ttl_cache_bench_lockfree
+TTAK_BENCH_DURATION_SEC=20 ./ttl_cache_bench_lockfree
 ```
+
+### Useful Environment Overrides
+
+- `TTAK_BENCH_DURATION_SEC`: benchmark run time in seconds.
+- `TTAK_BENCH_THREADS`: worker thread count override.
 
 ## Compiler Comparison
 
 ![Throughput Comparison](./throughput_comparison.png)
 ![RSS Comparison](./rss_comparison.png)
+
+## CI Detailed Time-Series Image
+
+<!-- AUTO-CI-BENCHMARK:START -->
+The CI artifact `copilot_ci_benchmark.svg` uses a roomy 3-panel line-chart layout and keeps the 3-compiler comparison format (GCC / Clang / TCC).
+
+For the compiler-comparison section, each compiler is measured for **60 seconds** to capture steady-state trends:
+
+- N-second throughput trend (compiler overlay)
+- N-second RSS footprint trend (compiler overlay)
+- N-second memory reclamation ratio trend (`Clean/s ÷ Retire/s`, compiler overlay)
+
+The layout reserves extra panel/axis/legend margins to prevent overlap or distortion in CI preview renderers.
+
+Regenerate with:
+
+```bash
+python3 ./run_ci_benchmark_series.py --duration 60 --threads 1
+python3 ./generate_ci_benchmark_svg.py
+python3 ./update_readme_ci_section.py --duration 60
+```
+<!-- AUTO-CI-BENCHMARK:END -->
+
+Raw inputs (auto-detected):
+
+- `ci_benchmark_raw_gcc.txt` (fallback: `ci_benchmark_raw.txt`)
+- `ci_benchmark_raw_clang.txt`
+- `ci_benchmark_raw_tcc.txt` (fallback: `ci_benchmark_raw_tcc_compat.txt`)
+
+Embedded allocator section inputs (GCC fixed):
+
+- `ci_benchmark_raw_gcc_embedded0.txt`
+- `ci_benchmark_raw_gcc_embedded1.txt`

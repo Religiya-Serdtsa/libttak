@@ -109,7 +109,7 @@ typedef struct {
 typedef ttak_payload_header_local_t cache_entry_t;
 
 typedef struct {
-    _Atomic uintptr_t ptr;
+    cache_item_data_t * _Atomic ptr;
 } cache_bucket_t;
 
 typedef struct {
@@ -354,8 +354,7 @@ static inline cache_lookup_result_t cache_table_lookup(cache_table_t *table, uin
     size_t idx = bench_mix_u64(key) & mask;
     uint32_t max_probe = cfg.max_probe ? cfg.max_probe : 1;
     for (uint32_t probe = 0; probe < max_probe; ++probe) {
-        cache_bucket_t *bucket = &table->buckets[idx];
-        cache_item_data_t *payload = cache_payload_from_ptr((void *)(uintptr_t)atomic_load_explicit(&bucket->ptr, memory_order_acquire));
+        cache_item_data_t *payload = atomic_load_explicit(&table->buckets[idx].ptr, memory_order_acquire);
         if (!payload) {
             result.kind = CACHE_RESULT_MISS;
             return result;
@@ -367,12 +366,17 @@ static inline cache_lookup_result_t cache_table_lookup(cache_table_t *table, uin
                 result.item = payload;
                 return result;
             }
-            uintptr_t expected = (uintptr_t)payload;
-            if (atomic_compare_exchange_strong_explicit(&bucket->ptr, &expected, 0, memory_order_acq_rel, memory_order_relaxed)) {
+            /* Try to clear expired bucket atomically */
+            cache_item_data_t *expected = payload;
+            if (atomic_compare_exchange_strong_explicit(&table->buckets[idx].ptr, &expected, NULL,
+                                                       memory_order_release, memory_order_relaxed)) {
                 ttak_epoch_retire(payload, retire_payload_cleanup);
                 TTAK_FAST_ATOMIC_ADD_U64(&stats.retirements, 1);
+                result.kind = CACHE_RESULT_EXPIRED;
+            } else {
+                /* Someone else replaced/cleared it, retry or treat as miss/expired */
+                result.kind = CACHE_RESULT_MISS;
             }
-            result.kind = CACHE_RESULT_EXPIRED;
             return result;
         }
         idx = (idx + 1) & mask;
@@ -387,33 +391,37 @@ static cache_store_result_t cache_table_store(cache_table_t *table, cache_item_d
     size_t mask = table->bucket_mask;
     size_t idx = bench_mix_u64(key) & mask;
     uint32_t max_probe = cfg.max_probe ? cfg.max_probe : 1;
+    
     for (uint32_t probe = 0; probe < max_probe; ++probe) {
-        cache_bucket_t *bucket = &table->buckets[idx];
-        cache_item_data_t *existing = cache_payload_from_ptr((void *)(uintptr_t)atomic_load_explicit(&bucket->ptr, memory_order_acquire));
+        cache_item_data_t *existing = atomic_load_explicit(&table->buckets[idx].ptr, memory_order_acquire);
         if (!existing) {
-            uintptr_t expected = 0;
-            if (atomic_compare_exchange_strong_explicit(&bucket->ptr, &expected, (uintptr_t)payload,
-                                                        memory_order_release, memory_order_relaxed)) {
+            cache_item_data_t *expected = NULL;
+            if (atomic_compare_exchange_strong_explicit(&table->buckets[idx].ptr, &expected, payload,
+                                                       memory_order_release, memory_order_relaxed)) {
                 result.inserted = true;
                 return result;
             }
+            /* CAS failed, something else was inserted, retry this bucket */
+            probe--; 
             continue;
         }
         if (existing->key == key || existing->expire_ns <= now_ns) {
-            uintptr_t expected = (uintptr_t)existing;
-            if (atomic_compare_exchange_strong_explicit(&bucket->ptr, &expected, (uintptr_t)payload,
-                                                        memory_order_acq_rel, memory_order_relaxed)) {
+            if (atomic_compare_exchange_strong_explicit(&table->buckets[idx].ptr, &existing, payload,
+                                                       memory_order_release, memory_order_relaxed)) {
                 result.inserted = true;
                 result.replaced = cache_entry_from_payload(existing);
                 result.forced = (existing->key != key);
                 return result;
             }
+            /* CAS failed, retry this bucket */
+            probe--;
             continue;
         }
         idx = (idx + 1) & mask;
     }
-    cache_bucket_t *bucket = &table->buckets[idx];
-    cache_item_data_t *existing = cache_payload_from_ptr((void *)(uintptr_t)atomic_exchange_explicit(&bucket->ptr, (uintptr_t)payload, memory_order_acq_rel));
+
+    /* Forced eviction at the end of probe sequence */
+    cache_item_data_t *existing = atomic_exchange_explicit(&table->buckets[idx].ptr, payload, memory_order_acq_rel);
     if (existing) {
         result.replaced = cache_entry_from_payload(existing);
         result.forced = true;
@@ -428,11 +436,11 @@ static size_t cache_table_cleanup(cache_table_t *table, size_t cursor, size_t bu
     size_t start = cursor;
     size_t count = table->bucket_count;
     for (size_t i = 0; i < budget; ++i) {
-        cache_bucket_t *bucket = &table->buckets[start];
-        cache_item_data_t *payload = cache_payload_from_ptr((void *)(uintptr_t)atomic_load_explicit(&bucket->ptr, memory_order_acquire));
+        cache_item_data_t *payload = atomic_load_explicit(&table->buckets[start].ptr, memory_order_acquire);
         if (payload && payload->expire_ns <= now_ns) {
-            uintptr_t expected = (uintptr_t)payload;
-            if (atomic_compare_exchange_strong_explicit(&bucket->ptr, &expected, 0, memory_order_acq_rel, memory_order_relaxed)) {
+            cache_item_data_t *expected = payload;
+            if (atomic_compare_exchange_strong_explicit(&table->buckets[start].ptr, &expected, NULL,
+                                                       memory_order_release, memory_order_relaxed)) {
                 ttak_epoch_retire(payload, retire_payload_cleanup);
                 TTAK_FAST_ATOMIC_ADD_U64(&stats.cleanups, 1);
                 TTAK_FAST_ATOMIC_ADD_U64(&stats.retirements, 1);
@@ -792,6 +800,11 @@ int main(void) {
     if (warm_env && *warm_env) {
         int warm = atoi(warm_env);
         if (warm > 0) cfg.warmup_ops = (uint32_t)warm;
+    }
+    const char *duration_env = getenv("TTAK_BENCH_DURATION_SEC");
+    if (duration_env && *duration_env) {
+        int duration = atoi(duration_env);
+        if (duration > 0) cfg.duration_sec = duration;
     }
     if (cfg.ttl_ns == 0) cfg.ttl_ns = 5 * 1000 * 1000ULL;
     if (cfg.key_space == 0) cfg.key_space = 1u << 18;

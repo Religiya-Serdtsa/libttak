@@ -1,4 +1,5 @@
 #include <ttak/net/view.h>
+#include <ttak/mols_control.h>
 #include <ttak/io/io.h>
 #ifdef _WIN32
 #include <winsock2.h>
@@ -72,7 +73,11 @@ ttak_io_status_t ttak_net_view_from_endpoint(ttak_net_view_t *view,
             uint32_t dim = node->dim;
             for (uint32_t r = 0; r < dim; r++) {
                 for (uint32_t c = 0; c < dim; c++) {
-                    if (((r + c) & mask) == my_tid) {
+                    const uint16_t node_id =
+                        (uint16_t)(((r & (uint32_t)TTAK_MOLS_SYMBOL_MASK) << TTAK_MOLS_COORD_SHIFT) |
+                                   (c & (uint32_t)TTAK_MOLS_SYMBOL_MASK));
+                    uint32_t lane = ttak_apply_mols_control(node_id, my_tid) & mask;
+                    if (((r + c) & mask) == lane) {
                         ttak_net_lattice_slot_t *slot = &node->slots[r * dim + c];
                         if (ttak_atomic_read64(&slot->state) == 0) {
                             ttak_atomic_write64(&slot->state, 1);

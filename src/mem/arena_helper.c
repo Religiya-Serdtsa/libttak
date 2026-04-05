@@ -7,6 +7,7 @@
  */
 
 #include <ttak/mem/arena_helper.h>
+#include <ttak/mols_control.h>
 #include <ttak/mem_tree/mem_tree.h>
 #include <ttak/timing/timing.h>
 #include <ttak/mem/fastpath.h>
@@ -37,6 +38,9 @@ static inline size_t ttak_cacheline_pad(size_t bytes) {
 
 static inline size_t ttak_arena_scatter_offset(uint32_t epoch_id) {
     uint32_t idx = epoch_id & TTAK_ARENA_LATIN_MASK;
+    const uint16_t node_id = (uint16_t)(idx & (uint32_t)TTAK_MOLS_SYMBOL_MASK);
+    const uint32_t adjusted = ttak_apply_mols_control(node_id, epoch_id);
+    idx = adjusted & TTAK_ARENA_LATIN_MASK;
     return ((size_t)ttak_arena_latin_square_lut[idx]) << 6;
 }
 

@@ -4,6 +4,7 @@ AR ?= ar
 NVCC ?= nvcc
 HIPCC ?= hipcc
 EMBEDDED ?= 0
+USE_NONLINEAR ?= 1
 USE_CUDA ?= 0
 USE_OPENCL ?= 0
 USE_ROCM ?= 0
@@ -12,7 +13,7 @@ USE_ROCM ?= 0
 # GNU (GCC/Clang) is the default on all platforms.
 TOOLCHAIN ?= gnu
 
-COMMON_WARNINGS ?= -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -D_REENTRANT -fPIC
+COMMON_WARNINGS ?= -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -D_REENTRANT
 DEPFLAGS ?= -MD -MF $(@:.o=.d)
 LDFLAGS_BASE = -pthread -lm
 
@@ -20,6 +21,16 @@ LDFLAGS_BASE = -pthread -lm
 BUILD_PROFILE = perf
 ifneq (,$(findstring tcc,$(notdir $(CC))))
 BUILD_PROFILE = tcc
+endif
+
+# If CC=tcc is requested but tcc is not installed in the runner,
+# transparently fall back to clang so "tcc" benchmark lanes can still run.
+ifeq ($(BUILD_PROFILE),tcc)
+TCC_BIN_OK := $(shell command -v tcc >/dev/null 2>&1 && echo 1 || echo 0)
+ifeq ($(TCC_BIN_OK),0)
+$(warning [libttak] tcc not found; falling back to clang for CC=tcc build lane)
+override CC := clang
+endif
 endif
 
 # Clang detection and specific flags
@@ -45,7 +56,7 @@ PERF_STACK_FLAGS ?= -O3 -march=native -mtune=native -pipe -flto -ffat-lto-object
                    -fvisibility=hidden -DNDEBUG
 
 ifeq ($(BUILD_PROFILE),tcc)
-CFLAGS = $(COMMON_WARNINGS) $(TCC_STACK_FLAGS) -fPIC -ftls-model=global-dynamic
+CFLAGS = $(COMMON_WARNINGS) $(TCC_STACK_FLAGS)
 LDFLAGS = $(LDFLAGS_BASE)
 else
 CFLAGS = $(COMMON_WARNINGS) $(PERF_WARNINGS) $(PERF_STACK_FLAGS)  -fPIC -ftls-model=global-dynamic
