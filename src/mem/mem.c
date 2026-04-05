@@ -306,6 +306,19 @@ void TTAK_HOT_PATH *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, ui
     ttak_allocation_tier_t allocated_tier = TTAK_ALLOC_TIER_UNKNOWN;
     void *user_ptr = NULL;
 
+    size_t guard_extra = header_size;
+    if (strict_check_enabled) {
+        guard_extra += sizeof(uint64_t);
+    }
+    size_t align_overhead = (TTAK_VMA_ALIGNMENT > 0) ? (TTAK_VMA_ALIGNMENT - 1) : 0;
+    if (guard_extra > SIZE_MAX - align_overhead) {
+        return NULL;
+    }
+    guard_extra += align_overhead;
+    if (size > SIZE_MAX - guard_extra) {
+        return NULL;
+    }
+
     if (t_reentrancy_guard) {
         /* Returning a raw malloc pointer here would create a use-after-free risk
          * because callers may later pass it to ttak_mem_free(), which reads the
