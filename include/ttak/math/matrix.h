@@ -56,11 +56,12 @@ _Bool ttak_matrix_set_shearing(tt_shared_matrix_t *m, tt_owner_t *owner, uint8_t
 _Bool ttak_matrix_set_flip(tt_shared_matrix_t *m, tt_owner_t *owner, uint8_t axis, uint64_t now);
 
 /**
- * @brief Initializes the matrix as a 4x4 Orthogonal Latin Square.
+ * @brief Initializes the matrix as a 4x4 Orthogonal Latin Square with magic sums.
  *
- * Inspired by Choi Seok-jeong's Gusuryak, this creates a pattern that
- * minimizes collisions in grid-based data placement.
+ * Inspired by Choi Seok-jeong's Gusuryak, this packs two mutually orthogonal
+ * Latin squares (upper and lower 2-bit fields) whose combined values form a
+ * 0-15 magic square (rows, columns, diagonals all sum to 30).
  */
-_Bool ttak_matrix_set_gusuryak_4x4(tt_shared_matrix_t *m, tt_owner_t *owner, uint64_t now);
+_Bool ttak_matrix_set_ols_magic_square_4x4(tt_shared_matrix_t *m, tt_owner_t *owner, uint64_t now);
 
 #endif // TTAK_MATH_MATRIX_H
