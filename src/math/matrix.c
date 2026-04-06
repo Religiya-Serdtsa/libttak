@@ -241,27 +241,40 @@ _Bool ttak_matrix_set_flip(tt_shared_matrix_t *m, tt_owner_t *owner, uint8_t axi
     return true;
 }
 
-_Bool ttak_matrix_set_gusuryak_4x4(tt_shared_matrix_t *m, tt_owner_t *owner, uint64_t now) {
+_Bool ttak_matrix_set_ols_magic_square_4x4(tt_shared_matrix_t *m, tt_owner_t *owner, uint64_t now) {
     ttak_shared_result_t res;
     ttak_matrix_t *mat = (ttak_matrix_t *)m->base.access(&m->base, owner, &res);
     if (!mat) return false;
 
-    /* A 4x4 Latin Square pattern:
-       0 1 2 3
-       1 0 3 2
-       2 3 0 1
-       3 2 1 0 */
-    uint8_t pattern[16] = {
+    /* Two mutually orthogonal 4x4 Latin squares.  The upper two bits encode
+     * the first square and the lower two bits encode the second square.
+     * When composed (value = (primary << 2) | secondary) the grid becomes a
+     * normal 0-15 magic square whose rows, columns, and both diagonals sum to 30.
+     *
+     *   Primary (Latin A)        Secondary (Latin B)       Packed magic square
+     *   0 1 2 3                  0 1 3 2                  0  5 11 14
+     *   2 3 0 1                  2 3 1 0                  10 15 1  4
+     *   1 0 3 2                  3 2 0 1                  7  2 12  9
+     *   3 2 1 0                  1 0 2 3                  13 8 6  3
+     */
+    static const uint8_t latin_primary[16] = {
         0, 1, 2, 3,
-        1, 0, 3, 2,
         2, 3, 0, 1,
+        1, 0, 3, 2,
         3, 2, 1, 0
+    };
+    static const uint8_t latin_secondary[16] = {
+        0, 1, 3, 2,
+        2, 3, 1, 0,
+        3, 2, 0, 1,
+        1, 0, 2, 3
     };
 
     mat->rows = 4;
     mat->cols = 4;
     for (int i = 0; i < 16; i++) {
-        ttak_bigint_set_u64(&mat->elements[i].mantissa, pattern[i], now);
+        uint8_t val = (latin_primary[i] << 2) | latin_secondary[i];
+        ttak_bigint_set_u64(&mat->elements[i].mantissa, val, now);
         mat->elements[i].exponent = 0;
     }
 

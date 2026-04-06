@@ -5,18 +5,15 @@
 
 /**
  * @file mols_control.h
- * @brief Congestion control helpers built on Mutually Orthogonal Latin Squares.
+ * @brief Congestion control helpers built on Reverse Siamese Latin squares.
  *
  * The helper exposes a single entry point that redistributes load across a
- * 64×64 mesh.  The routine leverages the existing linear (cyclic-shift) Latin
- * square when USE_NONLINEAR is disabled.  When enabled, the routine applies a
- * fixed-point inverse mapping table to dampen hot nodes via a non-linear curve
- * f(x) = 1/(1+x) without evaluating expensive math functions at runtime.
+ * 64×64 mesh.  Each node's coordinates feed a matched pair of Latin squares:
+ * the traditional Siamese traversal and its reverse (column reflection followed
+ * by the complement transformation).  The pair is XOR-mixed with the caller's
+ * seed so every subsystem observes the same Reverse Siamese shuffling without
+ * branching on compile-time knobs.
  */
-
-#ifndef USE_NONLINEAR
-#define USE_NONLINEAR 0
-#endif
 
 #define TTAK_MOLS_GRID_ORDER          (64U)
 #define TTAK_MOLS_COORD_SHIFT         (6U)
@@ -34,7 +31,7 @@ extern "C" {
  *
  * @param node_id      Linearized node identifier in [0, 4096).
  * @param current_load Arbitrary load metric (fixed-point friendly).
- * @return Adjusted load after linear or non-linear redistribution.
+ * @return Reverse-Siamese mixed load coordinate.
  */
 uint32_t ttak_apply_mols_control(uint16_t node_id, uint32_t current_load);
 
