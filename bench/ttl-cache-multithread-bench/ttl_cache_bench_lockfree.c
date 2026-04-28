@@ -23,6 +23,7 @@ static long get_rss_kb(void) {
 }
 #else
 #  include <unistd.h>
+#  include <pthread.h>
 #  define bench_sleep_s(s)    sleep((unsigned)(s))
 #  define bench_usleep_us(us) usleep((useconds_t)(us))
 static long get_rss_kb(void) {
@@ -44,7 +45,6 @@ static long get_rss_kb(void) {
 #include <ttak/shared/shared.h>
 #include <ttak/container/pool.h>
 #include <ttak/timing/timing.h>
-#include <ttak/thread/pool.h>
 #include <ttak/types/ttak_compiler.h>
 
 #if defined(__x86_64__) || defined(__i386__)
@@ -156,6 +156,7 @@ typedef struct {
     uint32_t max_probe;
     uint32_t maintenance_scan;
     uint32_t warmup_ops;
+    uint64_t warmup_budget_ns;
 } config_t;
 
 static config_t cfg = { 
@@ -182,7 +183,8 @@ static config_t cfg = {
     .table_size = 1u << 20,
     .max_probe = 8,
     .maintenance_scan = 4096,
-    .warmup_ops = 100000
+    .warmup_ops = 5000,
+    .warmup_budget_ns = 2ULL * 1000ULL * 1000ULL * 1000ULL
 };
 static const size_t kMaxArenaBudgetBytes = 1024ULL * 1024ULL * 1024ULL;
 
@@ -401,8 +403,7 @@ static cache_store_result_t cache_table_store(cache_table_t *table, cache_item_d
                 result.inserted = true;
                 return result;
             }
-            /* CAS failed, something else was inserted, retry this bucket */
-            probe--; 
+            /* Another writer won this slot; keep probing instead of spinning forever. */
             continue;
         }
         if (existing->key == key || existing->expire_ns <= now_ns) {
@@ -413,8 +414,7 @@ static cache_store_result_t cache_table_store(cache_table_t *table, cache_item_d
                 result.forced = (existing->key != key);
                 return result;
             }
-            /* CAS failed, retry this bucket */
-            probe--;
+            /* Contended replace path: advance so hot buckets cannot stall progress. */
             continue;
         }
         idx = (idx + 1) & mask;
@@ -533,11 +533,16 @@ static void *worker_func(void *arg) {
     uint32_t latency_counter = 0;
     uint8_t local_checksum = 0;
 
-    uint32_t warmup_ops = cfg.warmup_ops ? cfg.warmup_ops : 100000;
+    uint32_t warmup_ops = cfg.warmup_ops ? cfg.warmup_ops : 5000;
+    uint64_t warmup_deadline_ns = cfg.warmup_budget_ns;
+    uint64_t warmup_start_ns = bench_now_ns();
     bool aborting = false;
     for (uint32_t i = 0; i < warmup_ops; ++i) {
         if (TTAK_FAST_ATOMIC_LOAD_U64(&g_abort_signal)) {
             aborting = true;
+            break;
+        }
+        if (warmup_deadline_ns > 0 && (bench_now_ns() - warmup_start_ns) >= warmup_deadline_ns) {
             break;
         }
         uint64_t now_ns = bench_now_ns();
@@ -692,6 +697,10 @@ static int detect_worker_threads(void) {
 
 int main(void) {
     int exit_code = 0;
+    pthread_t *worker_threads = NULL;
+    int workers_started = 0;
+    pthread_t maintenance_thread;
+    bool maintenance_started = false;
     /* Eagerly initialize library subsystems to prevent lazy-init overhead */
     ttak_epoch_subsystem_init();
     
@@ -801,6 +810,11 @@ int main(void) {
         int warm = atoi(warm_env);
         if (warm > 0) cfg.warmup_ops = (uint32_t)warm;
     }
+    const char *warm_ms_env = getenv("TTAK_BENCH_WARMUP_MS");
+    if (warm_ms_env && *warm_ms_env) {
+        long long warm_ms = atoll(warm_ms_env);
+        if (warm_ms >= 0) cfg.warmup_budget_ns = (uint64_t)warm_ms * 1000000ULL;
+    }
     const char *duration_env = getenv("TTAK_BENCH_DURATION_SEC");
     if (duration_env && *duration_env) {
         int duration = atoi(duration_env);
@@ -817,7 +831,8 @@ int main(void) {
     if (cfg.max_probe == 0) cfg.max_probe = 8;
     if (cfg.maintenance_scan == 0) cfg.maintenance_scan = 4096;
     if (cfg.hot_key_pct > 100) cfg.hot_key_pct = 100;
-    if (cfg.warmup_ops == 0) cfg.warmup_ops = 100000;
+    if (cfg.warmup_ops == 0) cfg.warmup_ops = 5000;
+    if (cfg.warmup_budget_ns == 0) cfg.warmup_budget_ns = 2ULL * 1000ULL * 1000ULL * 1000ULL;
     if (cfg.write_pct > 100) cfg.write_pct = 100;
     bench_refresh_write_mask();
     bench_refresh_latency_mask();
@@ -887,27 +902,28 @@ int main(void) {
         g_workers[i].table = g_table;
     }
     
-    ttak_thread_pool_t *pool = ttak_thread_pool_create(cfg.num_threads + 1, 0, 0);
-    if (!pool) {
-        fprintf(stderr, "Failed to create thread pool (workers=%d)\n", cfg.num_threads + 1);
+    worker_threads = calloc((size_t)cfg.num_threads, sizeof(*worker_threads));
+    if (!worker_threads) {
+        fprintf(stderr, "Failed to allocate pthread handles for %d workers\n", cfg.num_threads);
         return 1;
     }
 
-    /* Pre-warm the shard directory and submit tasks */
     for (int i = 0; i < cfg.num_threads; i++) {
         g_workers[i].owner = ttak_owner_create(TTAK_OWNER_SAFE_DEFAULT);
         g_cache->add_owner(g_cache, g_workers[i].owner);
-        if (!ttak_thread_pool_submit_task(pool, worker_func, &g_workers[i], 0, 0)) {
-            fprintf(stderr, "Failed to schedule worker %d\n", i);
+        if (pthread_create(&worker_threads[i], NULL, worker_func, &g_workers[i]) != 0) {
+            fprintf(stderr, "Failed to create worker thread %d\n", i);
             exit_code = 1;
             goto abort_workers;
         }
+        workers_started++;
     }
-    if (!ttak_thread_pool_submit_task(pool, maintenance_task, NULL, 0, 0)) {
-        fprintf(stderr, "Failed to schedule maintenance task\n");
+    if (pthread_create(&maintenance_thread, NULL, maintenance_task, NULL) != 0) {
+        fprintf(stderr, "Failed to create maintenance thread\n");
         exit_code = 1;
         goto abort_workers;
     }
+    maintenance_started = true;
 
     /* 
      * WAIT FOR ALL WORKERS TO BE FULLY WARMED UP 
@@ -983,8 +999,12 @@ abort_workers:
     TTAK_FAST_ATOMIC_STORE_BOOL(&g_start_signal, 1);
 
 cleanup:
-    if (pool) {
-        ttak_thread_pool_destroy(pool);
+    if (maintenance_started) {
+        pthread_join(maintenance_thread, NULL);
     }
+    for (int i = 0; i < workers_started; ++i) {
+        pthread_join(worker_threads[i], NULL);
+    }
+    free(worker_threads);
     return exit_code;
 }
