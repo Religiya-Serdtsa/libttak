@@ -1,30 +1,16 @@
 /**
  * @file abstract.h
- * @brief Pointer-stable abstract memory built on relocatable VMA-backed regions.
+ * @brief Pointer-stable logical memory with segmented backing and scoped maps.
  *
- * This API provides a "logical pointer" abstraction for callers that want stable
- * object identity while allowing the runtime to move backing storage internally.
+ * This API exposes a stable logical handle while allowing the implementation to
+ * manage the physical backing as one or more internal segments.
  *
  * Core model:
- * - The handle pointer returned by ttak_abstract_alloc() is the stable identity.
- * - The byte region behind that identity is movable and may be replaced.
- * - Callers must use read/write helpers, not raw backing pointers.
- *
- * Why this exists:
- * - Control fragmentation and compaction internally.
- * - Keep user-visible identity stable.
- * - Allow memcpy-based migration and old-region scrubbing.
- *
- * Relocation safety policy:
- * - New backing is always allocated as a disjoint virtual region.
- * - Data is copied old->new with memcpy.
- * - Publication of the new region is atomic.
- * - Old region is explicitly zero-filled before unmap/release.
- *
- * Concurrency policy:
- * - No epoch scheme is used.
- * - Read/write API calls are synchronized with rwlock barriers.
- * - Relocation is serialized with writers and blocks concurrent readers briefly.
+ * - The handle returned by ttak_abstract_alloc() is the stable identity.
+ * - Logical bytes may be backed by multiple internal segments.
+ * - Callers can use read/write helpers or temporarily map a logical window.
+ * - A mapped window is contiguous from the caller's perspective even when the
+ *   implementation must stage it behind the scenes.
  */
 #ifndef TTAK_MEM_ABSTRACT_H
 #define TTAK_MEM_ABSTRACT_H
@@ -38,6 +24,28 @@ extern "C" {
 
 /** Opaque pointer-stable logical memory object. */
 typedef struct ttak_abstract_mem ttak_abstract_mem_t;
+
+typedef enum ttak_abstract_access {
+    TTAK_ABSTRACT_ACCESS_READ = 0,
+    TTAK_ABSTRACT_ACCESS_WRITE = 1,
+} ttak_abstract_access_t;
+
+/**
+ * @brief Scoped mapping of a logical byte window in an abstract object.
+ *
+ * A map pins relocation behind the object's synchronization boundary and
+ * exposes a contiguous byte window for direct indexed access. The mapping is
+ * valid only until ttak_abstract_unmap() is called.
+ */
+typedef struct ttak_abstract_map {
+    void *data;
+    size_t size;
+    size_t offset;
+    const ttak_abstract_mem_t *mem;
+    ttak_abstract_access_t access;
+    void *opaque;
+    uint32_t flags;
+} ttak_abstract_map_t;
 
 /**
  * @brief Allocate a pointer-stable abstract memory object.
@@ -119,6 +127,34 @@ int ttak_abstract_resize(ttak_abstract_mem_t *mem, size_t new_size);
  * @return 0 on success, -1 on failure.
  */
 int ttak_abstract_compact(ttak_abstract_mem_t *mem);
+
+/**
+ * @brief Map a logical byte window for direct access.
+ *
+ * The map stays valid until ttak_abstract_unmap() is called. READ maps allow
+ * inspection; WRITE maps additionally permit mutation and block relocation for
+ * the duration of the mapping.
+ *
+ * @param mem Handle.
+ * @param offset Start offset in logical bytes.
+ * @param len Number of bytes requested.
+ * @param access Requested access mode.
+ * @param map Output map token.
+ * @return 0 on success, -1 on invalid input/range.
+ */
+int ttak_abstract_map(ttak_abstract_mem_t *mem, size_t offset, size_t len,
+                      ttak_abstract_access_t access,
+                      ttak_abstract_map_t *map);
+
+/**
+ * @brief Release a previously mapped logical window.
+ *
+ * Safe to call on a zero-initialized map. Resets the token to its canonical
+ * empty state.
+ *
+ * @param map Map token returned by ttak_abstract_map().
+ */
+void ttak_abstract_unmap(ttak_abstract_map_t *map);
 
 #ifdef __cplusplus
 }
