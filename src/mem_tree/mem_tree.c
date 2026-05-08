@@ -38,6 +38,7 @@ void ttak_mem_tree_init(ttak_mem_tree_t *tree) {
     atomic_store(&tree->pressure_threshold, 1024 * 1024); // Default 1MB
     atomic_store(&tree->use_manual_cleanup, false);
     atomic_store(&tree->shutdown_requested, false);
+    atomic_store(&tree->pending_hints, 0);
 
     // Launch the background cleanup thread
     if (pthread_create(&tree->cleanup_thread, NULL, cleanup_thread_func, tree) != 0) {
@@ -251,7 +252,33 @@ void ttak_mem_tree_report_pressure(ttak_mem_tree_t *tree, size_t pressure_amount
  */
 void ttak_mem_tree_set_manual_cleanup(ttak_mem_tree_t *tree, _Bool manual_cleanup_enabled) {
     if (!tree) return;
-    atomic_store(&tree->use_manual_cleanup, manual_cleanup_enabled);
+    _Bool prev = atomic_exchange(&tree->use_manual_cleanup, manual_cleanup_enabled);
+    if (prev == manual_cleanup_enabled) return;
+
+    if (manual_cleanup_enabled) {
+        // Transition to manual: stop the auto-cleanup thread.
+        if (tree->cleanup_thread) {
+            atomic_store(&tree->shutdown_requested, true);
+            pthread_mutex_lock(&tree->lock);
+            pthread_cond_signal(&tree->cond);
+            pthread_mutex_unlock(&tree->lock);
+            pthread_join(tree->cleanup_thread, NULL);
+            tree->cleanup_thread = 0;
+            atomic_store(&tree->shutdown_requested, false);
+        }
+    } else {
+        // Transition to auto: start the auto-cleanup thread if not already running.
+        if (!tree->cleanup_thread) {
+            atomic_store(&tree->shutdown_requested, false);
+            if (pthread_create(&tree->cleanup_thread, NULL, cleanup_thread_func, tree) != 0) {
+                fprintf(stderr, "[TTAK_MEM_TREE] Failed to create cleanup thread.\n");
+            } else {
+                pthread_mutex_lock(&tree->lock);
+                pthread_cond_signal(&tree->cond);
+                pthread_mutex_unlock(&tree->lock);
+            }
+        }
+    }
 }
 
 /**
@@ -378,24 +405,34 @@ static void *cleanup_thread_func(void *arg) {
 
     while (!atomic_load(&tree->shutdown_requested)) {
         _Bool manual_cleanup_enabled = atomic_load(&tree->use_manual_cleanup);
+        uint32_t hints = atomic_exchange(&tree->pending_hints, 0);
+
+        if (hints & TTAK_MEM_TREE_HINT_SHUTDOWN) {
+            atomic_store(&tree->shutdown_requested, true);
+            break;
+        }
 
         if (!manual_cleanup_enabled) {
             size_t pressure = atomic_load(&tree->garbage_pressure);
-            
-            if (pressure > 0) {
+
+            if (pressure > 0 || (hints & (TTAK_MEM_TREE_HINT_ALLOC | TTAK_MEM_TREE_HINT_FREE | TTAK_MEM_TREE_HINT_PRESSURE))) {
                 ttak_mem_tree_perform_cleanup(tree, ttak_get_tick_count());
-                // Reset sleep interval to min after work is done
+                // Reset sleep interval to min after productive work.
                 current_sleep_ns = atomic_load(&tree->min_cleanup_interval_ns);
             } else {
-                // No pressure: Adaptive backoff
-                current_sleep_ns *= 2;
+                // No work to do: gracefully back off.
+                if (hints & TTAK_MEM_TREE_HINT_IDLE) {
+                    current_sleep_ns += atomic_load(&tree->max_cleanup_interval_ns) / 4;
+                } else {
+                    current_sleep_ns += atomic_load(&tree->min_cleanup_interval_ns);
+                }
                 uint64_t max_ns = atomic_load(&tree->max_cleanup_interval_ns);
                 if (current_sleep_ns > max_ns) {
                     current_sleep_ns = max_ns;
                 }
             }
         } else {
-            // Manual cleanup: sleep for max interval or until signaled
+            // Manual cleanup: sleep for max interval or until signaled.
             current_sleep_ns = atomic_load(&tree->max_cleanup_interval_ns);
         }
 
@@ -405,14 +442,11 @@ static void *cleanup_thread_func(void *arg) {
 #ifdef _WIN32
             clock_gettime_win(&ts);
 #else
-            clock_gettime(CLOCK_REALTIME, &ts);
+            clock_gettime(CLOCK_MONOTONIC, &ts);
 #endif
-            ts.tv_sec += current_sleep_ns / 1000000000ULL;
-            ts.tv_nsec += current_sleep_ns % 1000000000ULL;
-            if ((unsigned long long int) ts.tv_nsec >= 1000000000ULL) {
-                ts.tv_sec++;
-                ts.tv_nsec -= 1000000000ULL;
-            }
+            uint64_t total_ns = (uint64_t)ts.tv_sec * 1000000000ULL + (uint64_t)ts.tv_nsec + current_sleep_ns;
+            ts.tv_sec = (time_t)(total_ns / 1000000000ULL);
+            ts.tv_nsec = (long)(total_ns % 1000000000ULL);
             pthread_cond_timedwait(&tree->cond, &tree->lock, &ts);
         }
         pthread_mutex_unlock(&tree->lock);
@@ -445,4 +479,15 @@ ttak_mem_node_t *ttak_mem_tree_find_node(ttak_mem_tree_t *tree, void *ptr) {
     }
     pthread_mutex_unlock(&tree->lock);
     return NULL;
+}
+
+void ttak_mem_tree_hint(ttak_mem_tree_t *tree, ttak_mem_tree_hint_t hint) {
+    if (!tree) return;
+    atomic_fetch_or(&tree->pending_hints, (uint32_t)hint);
+    // Wake the cleanup thread for urgent hints.
+    if (hint == TTAK_MEM_TREE_HINT_SHUTDOWN || hint == TTAK_MEM_TREE_HINT_PRESSURE) {
+        pthread_mutex_lock(&tree->lock);
+        pthread_cond_signal(&tree->cond);
+        pthread_mutex_unlock(&tree->lock);
+    }
 }

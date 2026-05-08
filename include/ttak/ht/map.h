@@ -66,4 +66,11 @@ _Bool ttak_map_get_key(tt_map_t *map, uintptr_t key, size_t *out, uint64_t now);
 /** @brief Trigger shrink when load drops below 1/2 of capacity. */
 #define __TT_MAP_SHRINK__ 2
 
+/**
+ * @brief Destroys a map and frees all of its backing arrays.
+ *
+ * @param map Map to destroy.  No-op if NULL.
+ */
+void ttak_destroy_map(tt_map_t *map);
+
 #endif // __TTAK_MAP_H__

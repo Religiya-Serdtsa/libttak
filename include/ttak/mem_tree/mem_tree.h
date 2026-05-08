@@ -47,6 +47,7 @@ struct ttak_mem_tree {
     _Atomic _Bool use_manual_cleanup;   /**< Flag to disable automatic cleanup (1 for manual, 0 for auto). */
     pthread_t cleanup_thread;           /**< Thread ID for the background automatic cleanup process. */
     _Atomic _Bool shutdown_requested;   /**< Flag to signal the cleanup thread to terminate. */
+    _Atomic uint32_t pending_hints;     /**< Bitmask of pending hints from the memory manager. */
 };
 
 /**
@@ -163,5 +164,27 @@ void ttak_mem_tree_perform_cleanup(ttak_mem_tree_t *tree, uint64_t now);
  * @return A pointer to the found mem node, or NULL if not found.
  */
 ttak_mem_node_t *ttak_mem_tree_find_node(ttak_mem_tree_t *tree, void *ptr);
+
+/**
+ * @brief Hints for the mem tree cleanup thread to adapt its behaviour.
+ */
+typedef enum {
+    TTAK_MEM_TREE_HINT_ALLOC      = (1U << 0), /**< A new allocation was made. */
+    TTAK_MEM_TREE_HINT_FREE       = (1U << 1), /**< A block was freed or released. */
+    TTAK_MEM_TREE_HINT_PRESSURE   = (1U << 2), /**< A pressure burst was reported. */
+    TTAK_MEM_TREE_HINT_IDLE       = (1U << 3), /**< The system is idle; back off aggressively. */
+    TTAK_MEM_TREE_HINT_SHUTDOWN   = (1U << 4), /**< Shutdown is imminent; clean up eagerly. */
+} ttak_mem_tree_hint_t;
+
+/**
+ * @brief Deliver a hint to the mem tree's background cleanup thread.
+ *
+ * The thread uses hints to decide whether to stay awake, batch work, or
+ * back off to longer sleep intervals.  This avoids CPU-busy polling.
+ *
+ * @param tree Pointer to the mem tree.
+ * @param hint One of @c ttak_mem_tree_hint_t values.
+ */
+void ttak_mem_tree_hint(ttak_mem_tree_t *tree, ttak_mem_tree_hint_t hint);
 
 #endif // TTAK_HEAP_TREE_H

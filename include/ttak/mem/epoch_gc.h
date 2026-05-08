@@ -24,6 +24,7 @@ typedef struct ttak_epoch_gc {
     _Atomic uint64_t min_rotate_ns;   /**< Minimum wait interval (ns) between auto rotations. */
     _Atomic uint64_t max_rotate_ns;   /**< Maximum backoff interval (ns) between auto rotations. */
     _Bool rotate_thread_started;      /**< Tracks whether the rotate thread was launched. */
+    _Atomic uint32_t pending_hints;   /**< Bitmask of pending hints from the memory manager. */
 } ttak_epoch_gc_t;
 
 typedef ttak_epoch_gc_t tt_epoch_gc_t;
@@ -72,5 +73,27 @@ void ttak_epoch_gc_rotate(ttak_epoch_gc_t *gc);
  * @param manual_mode True to disable the auto-rotator, false to re-enable it.
  */
 void ttak_epoch_gc_manual_rotate(ttak_epoch_gc_t *gc, _Bool manual_mode);
+
+/**
+ * @brief Hints for the epoch GC rotate thread to adapt its cadence.
+ */
+typedef enum {
+    TTAK_EPOCH_GC_HINT_ALLOC        = (1U << 0), /**< A new allocation was made. */
+    TTAK_EPOCH_GC_HINT_FREE         = (1U << 1), /**< A block was freed or released. */
+    TTAK_EPOCH_GC_HINT_REALLOC      = (1U << 2), /**< A realloc occurred. */
+    TTAK_EPOCH_GC_HINT_IDLE         = (1U << 3), /**< The system is idle; back off. */
+    TTAK_EPOCH_GC_HINT_COLLECT_NOW  = (1U << 4), /**< Immediate collection requested. */
+} ttak_epoch_gc_hint_t;
+
+/**
+ * @brief Deliver a hint to the epoch GC's background rotate thread.
+ *
+ * The rotate thread uses hints to decide whether to reclaim immediately,
+ * reset its sleep timer, or back off to longer intervals.
+ *
+ * @param gc Pointer to the GC structure.
+ * @param hint One of @c ttak_epoch_gc_hint_t values.
+ */
+void ttak_epoch_gc_hint(ttak_epoch_gc_t *gc, ttak_epoch_gc_hint_t hint);
 
 #endif // TTAK_MEM_EPOCH_GC_H

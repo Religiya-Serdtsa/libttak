@@ -147,3 +147,9 @@ void ttak_delete_from_map(tt_map_t *map, uintptr_t key, uint64_t now) {
         if (idx >= map->cap + MAX_PROBE - 1) idx = 0;
     }
 }
+
+void ttak_destroy_map(tt_map_t *map) {
+    if (!map) return;
+    ttak_map_arrays_destroy(map);
+    ttak_mem_free(map);
+}

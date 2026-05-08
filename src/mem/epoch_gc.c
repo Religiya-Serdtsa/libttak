@@ -17,12 +17,13 @@ static inline void epoch_gc_clock_gettime(struct timespec *spec) {
     spec->tv_nsec = (long)((tim % 1000000000ULL) * 100);
 }
 #else
-#  define epoch_gc_clock_gettime(spec) clock_gettime(CLOCK_REALTIME, (spec))
+#  define epoch_gc_clock_gettime(spec) clock_gettime(CLOCK_MONOTONIC, (spec))
 #endif
 
-/* Target ~4 kHz wakeups by default but keep within typical embedded timer limits. */
-#define TTAK_EPOCH_GC_MIN_ROTATE_NS TT_MICRO_SECOND(100)
-#define TTAK_EPOCH_GC_MAX_ROTATE_NS TT_MILLI_SECOND(1)
+/* Relaxed cadence: 20 Hz min, 0.5 Hz max.  The memory manager provides
+ * hints (alloc/free/realloc/idle) so the thread does not have to spin. */
+#define TTAK_EPOCH_GC_MIN_ROTATE_NS TT_MILLI_SECOND(50)
+#define TTAK_EPOCH_GC_MAX_ROTATE_NS TT_SECOND(2)
 
 static void *epoch_gc_rotate_thread(void *arg) {
     ttak_epoch_gc_t *gc = (ttak_epoch_gc_t *)arg;
@@ -31,10 +32,28 @@ static void *epoch_gc_rotate_thread(void *arg) {
     uint64_t sleep_ns = atomic_load(&gc->min_rotate_ns);
 
     while (!atomic_load(&gc->shutdown_requested)) {
-        if (!atomic_load(&gc->manual_rotation)) {
-            ttak_epoch_gc_rotate(gc);
-            ttak_epoch_reclaim();
-            sleep_ns = atomic_load(&gc->min_rotate_ns);
+        uint32_t hints = atomic_exchange(&gc->pending_hints, 0);
+        _Bool manual = atomic_load(&gc->manual_rotation);
+
+        if (!manual) {
+            if (hints & TTAK_EPOCH_GC_HINT_COLLECT_NOW) {
+                ttak_epoch_gc_rotate(gc);
+                ttak_epoch_reclaim();
+                sleep_ns = atomic_load(&gc->min_rotate_ns);
+            } else if (hints & (TTAK_EPOCH_GC_HINT_ALLOC | TTAK_EPOCH_GC_HINT_FREE | TTAK_EPOCH_GC_HINT_REALLOC)) {
+                ttak_epoch_gc_rotate(gc);
+                ttak_epoch_reclaim();
+                sleep_ns = atomic_load(&gc->min_rotate_ns);
+            } else {
+                // Idle: back off gracefully, but still rotate/reclaim at
+                // the current (possibly elongated) interval.
+                sleep_ns += atomic_load(&gc->min_rotate_ns);
+                uint64_t max_ns = atomic_load(&gc->max_rotate_ns);
+                if (sleep_ns > max_ns) sleep_ns = max_ns;
+
+                ttak_epoch_gc_rotate(gc);
+                ttak_epoch_reclaim();
+            }
         } else {
             sleep_ns = atomic_load(&gc->max_rotate_ns);
         }
@@ -43,12 +62,9 @@ static void *epoch_gc_rotate_thread(void *arg) {
         if (!atomic_load(&gc->shutdown_requested)) {
             struct timespec ts;
             epoch_gc_clock_gettime(&ts);
-            ts.tv_sec += (time_t)(sleep_ns / 1000000000ULL);
-            ts.tv_nsec += (long)(sleep_ns % 1000000000ULL);
-            if (ts.tv_nsec >= 1000000000L) {
-                ts.tv_sec++;
-                ts.tv_nsec -= 1000000000L;
-            }
+            uint64_t total_ns = (uint64_t)ts.tv_sec * 1000000000ULL + (uint64_t)ts.tv_nsec + sleep_ns;
+            ts.tv_sec = (time_t)(total_ns / 1000000000ULL);
+            ts.tv_nsec = (long)(total_ns % 1000000000ULL);
             pthread_cond_timedwait(&gc->rotate_cond, &gc->rotate_lock, &ts);
         }
         pthread_mutex_unlock(&gc->rotate_lock);
@@ -67,9 +83,11 @@ static void *epoch_gc_rotate_thread(void *arg) {
  */
 void ttak_epoch_gc_init(ttak_epoch_gc_t *gc) {
     ttak_mem_tree_init(&gc->tree);
-    // Enable manual cleanup to prevent automatic background threads from interfering
-    // with the user-controlled periodic cycle.
+    // The epoch GC rotate thread drives cleanup manually via
+    // ttak_mem_tree_perform_cleanup.  Suppress the mem_tree's own
+    // background thread so we do not spawn two threads per context.
     ttak_mem_tree_set_manual_cleanup(&gc->tree, true);
+
     atomic_store(&gc->current_epoch, 0);
     atomic_store(&gc->last_cleanup_ts, ttak_get_tick_count());
 
@@ -79,6 +97,7 @@ void ttak_epoch_gc_init(ttak_epoch_gc_t *gc) {
     atomic_store(&gc->manual_rotation, false);
     atomic_store(&gc->min_rotate_ns, TTAK_EPOCH_GC_MIN_ROTATE_NS);
     atomic_store(&gc->max_rotate_ns, TTAK_EPOCH_GC_MAX_ROTATE_NS);
+    atomic_store(&gc->pending_hints, 0);
     gc->rotate_thread_started = false;
 
     if (pthread_create(&gc->rotate_thread, NULL, epoch_gc_rotate_thread, gc) == 0) {
@@ -156,4 +175,14 @@ void ttak_epoch_gc_manual_rotate(ttak_epoch_gc_t *gc, _Bool manual_mode) {
     pthread_mutex_lock(&gc->rotate_lock);
     pthread_cond_signal(&gc->rotate_cond);
     pthread_mutex_unlock(&gc->rotate_lock);
+}
+
+void ttak_epoch_gc_hint(ttak_epoch_gc_t *gc, ttak_epoch_gc_hint_t hint) {
+    if (!gc) return;
+    atomic_fetch_or(&gc->pending_hints, (uint32_t)hint);
+    if (hint == TTAK_EPOCH_GC_HINT_COLLECT_NOW) {
+        pthread_mutex_lock(&gc->rotate_lock);
+        pthread_cond_signal(&gc->rotate_cond);
+        pthread_mutex_unlock(&gc->rotate_lock);
+    }
 }
