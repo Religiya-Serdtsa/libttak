@@ -93,11 +93,15 @@ PREFIX ?= /usr/local
 LIBDIR = $(PREFIX)/lib
 INCDIR = $(PREFIX)/include
 
-SRC_DIRS = src/ht src/thread src/timing src/mem src/async src/priority \
-           src/atomic src/sync src/math src/tree src/container \
-           src/security src/mem_tree src/limit src/stats src/log \
-           src/unsafe src/shared src/mask src/phys/dimless src/io \
-           src/net src/net/core src/phys/mem src/script
+DEFAULT_SRC_DIRS = src/ht src/thread src/timing src/mem src/async src/priority \
+                   src/atomic src/sync src/math src/tree src/container \
+                   src/security src/mem_tree src/limit src/stats src/log \
+                   src/unsafe src/shared src/mask src/phys/dimless src/io \
+                   src/net src/net/core src/phys/mem src/script
+
+# Allow callers (e.g. embedded/board builds) to restrict the compilation
+# surface by overriding SRC_DIRS on the make command line.
+SRC_DIRS ?= $(DEFAULT_SRC_DIRS)
 
 SRCS = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
 ifeq ($(BUILD_PROFILE),tcc)

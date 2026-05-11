@@ -1,14 +1,24 @@
 #include "ttak/ttak_accelerator.h"
 
+#if !defined(__SIZEOF_INT128__) && !defined(_MSC_VER)
+
+ttak_result_t ttak_accel_run_cpu(
+    const ttak_accel_batch_item_t *items,
+    size_t item_count,
+    const ttak_accel_config_t *config) {
+    (void)items;
+    (void)item_count;
+    (void)config;
+    return TTAK_RESULT_ERR_UNSUPPORTED;
+}
+
+#else
+
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdatomic.h>
 #include <string.h>
-
-#if !defined(__SIZEOF_INT128__) && !defined(_MSC_VER)
-#error "libttak acceleration CPU backend requires __int128 support."
-#endif
 
 #define TTAK_ACCEL_FACTOR_MAX 64
 
@@ -516,3 +526,5 @@ ttak_result_t ttak_accel_run_cpu(
 
     return TTAK_RESULT_OK;
 }
+
+#endif /* __SIZEOF_INT128__ or _MSC_VER */

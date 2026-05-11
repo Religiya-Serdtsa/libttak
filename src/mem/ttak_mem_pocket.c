@@ -58,7 +58,7 @@ typedef struct ttak_pocket_page_meta_t {
 static pthread_mutex_t pocket_page_pool_lock = PTHREAD_MUTEX_INITIALIZER;
 static pthread_mutex_t pocket_remote_lock = PTHREAD_MUTEX_INITIALIZER;
 static void *pocket_remote_freelists[TTAK_NUM_POCKET_FREELISTS] = {0};
-static _Alignas(TTAK_POCKET_ALIGNMENT) uint8_t pocket_page_pool[TTAK_POCKET_PAGE_SIZE * 2048];
+static _Alignas(TTAK_POCKET_ALIGNMENT) uint8_t pocket_page_pool[TTAK_POCKET_POOL_SIZE];
 static size_t pocket_page_pool_cursor = 0;
 
 static uintptr_t ttak_thread_identity(void) {
