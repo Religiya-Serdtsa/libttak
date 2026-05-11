@@ -13,9 +13,15 @@
 extern "C" {
 #endif
 
+/* ICMPv4 Constants */
 #define TTAK_ICMP_ECHO_REQUEST 8
 #define TTAK_ICMP_ECHO_REPLY   0
 #define TTAK_ICMP_TIME_EXCEEDED 11
+
+/* ICMPv6 Constants */
+#define TTAK_ICMP6_ECHO_REQUEST 128
+#define TTAK_ICMP6_ECHO_REPLY   129
+#define TTAK_ICMP6_TIME_EXCEEDED 3
 
 /**
  * @brief ICMPv4 Header structure.
@@ -30,21 +36,33 @@ typedef struct ttak_net_icmpv4_hdr {
             uint16_t sequence;
         } echo;
         uint32_t gateway;
-        struct {
-            uint16_t unused;
-            uint16_t mtu;
-        } frag;
     } un;
 } ttak_net_icmpv4_hdr_t;
 
 /**
+ * @brief ICMPv6 Header structure.
+ */
+typedef struct ttak_net_icmpv6_hdr {
+    uint8_t  type;
+    uint8_t  code;
+    uint16_t checksum;
+    union {
+        struct {
+            uint16_t id;
+            uint16_t sequence;
+        } echo;
+    } un;
+} ttak_net_icmpv6_hdr_t;
+
+/**
  * @brief Calculates RFC 1071 standard checksum.
- * 
- * @param data Data buffer to check.
- * @param len Length in bytes.
- * @return Calculated 16-bit checksum.
  */
 __attribute__((visibility("default"))) uint16_t ttak_net_icmp_calculate_checksum(const void *data, size_t len);
+
+/**
+ * @brief Calculates ICMPv6 checksum with pseudo-header.
+ */
+__attribute__((visibility("default"))) uint16_t ttak_net_icmp6_calculate_checksum(const void *src, const void *dst, const void *data, size_t len);
 
 #ifdef __cplusplus
 }

@@ -274,7 +274,16 @@ void ttak_detachable_mem_free(ttak_detachable_context_t *ctx, ttak_detachable_al
 
     bool flip_hot = ttak_detachable_flip_should_quarantine(ctx, alloc->size);
     bool stored = false;
-    if (alloc->size <= ctx->small_cache.chunk_size &&
+    bool quarantined = false;
+
+    if (flip_hot) {
+        ttak_detachable_wrlock(ctx);
+        quarantined = ttak_detachable_quarantine_push(ctx, alloc->data, alloc->size);
+        ttak_detachable_unlock(ctx);
+    }
+
+    if (!quarantined && 
+        alloc->size <= ctx->small_cache.chunk_size &&
         !flip_hot &&
         mode == TTAK_DETACHABLE_MODE_STANDARD) {
         stored = ttak_detachable_cache_store(ctx, &ctx->small_cache, alloc->data, alloc->size);
@@ -288,7 +297,7 @@ void ttak_detachable_mem_free(ttak_detachable_context_t *ctx, ttak_detachable_al
     ttak_detachable_unlock(ctx);
     bool skip_retire = (!was_tracked) && (ctx->flags & TTAK_ARENA_HAS_EPOCH_RECLAMATION);
 
-    if (!stored && !skip_retire) {
+    if (!stored && !quarantined && !skip_retire) {
         if (ctx->flags & TTAK_ARENA_HAS_EPOCH_RECLAMATION) {
             ttak_epoch_enter();
             ttak_epoch_retire(alloc->data, free);
@@ -505,7 +514,7 @@ static bool ttak_detachable_quarantine_push(ttak_detachable_context_t *ctx, void
 
     if (ctx->quarantine_byte_limit > 0 &&
         ctx->quarantine.bytes + size > ctx->quarantine_byte_limit) {
-        return false;
+        ttak_detachable_quarantine_flush(ctx);
     }
 
     ctx->quarantine.columns[ctx->quarantine.len] = ptr;
