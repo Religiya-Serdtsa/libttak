@@ -1,5 +1,8 @@
 # libttak
 
+![Memuh the sea rabbit](./mascot.png)
+![GitHub Copilot CI Benchmark](./bench/ttl-cache-multithread-bench/copilot_ci_benchmark.svg)
+
 **Deterministic systems runtime for C.**
 
 libttak is a low-level runtime focused on predictable memory behavior,
