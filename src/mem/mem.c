@@ -388,12 +388,13 @@ void TTAK_HOT_PATH *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, ui
     header->canary_end = strict_check_enabled ? TTAK_CANARY_END_MAGIC : 0;
     pthread_mutex_init(&header->lock, NULL);
     header->allocation_tier = allocated_tier;
-    header->checksum = ttak_calc_header_checksum(header);
 
     size_t actual_total_alloc_size;
     if (allocated_tier == TTAK_ALLOC_TIER_POCKET) actual_total_alloc_size = get_total_block_size_for_freelist(get_pocket_size_class_idx(header_size + size));
     else if (allocated_tier == TTAK_ALLOC_TIER_VMA) actual_total_alloc_size = (header_size + size + TTAK_VMA_ALIGNMENT - 1) & ~((size_t)TTAK_VMA_ALIGNMENT - 1);
     else actual_total_alloc_size = header_size + size + (strict_check_enabled ? sizeof(uint64_t) : 0);
+    header->mapped_size = actual_total_alloc_size;
+    header->checksum = ttak_calc_header_checksum(header);
 
     ttak_atomic_add64(&global_mem_usage, actual_total_alloc_size);
     user_ptr = (char *)header + header_size;
@@ -494,16 +495,7 @@ void TTAK_HOT_PATH ttak_mem_free(void *ptr) {
     }
 
     size_t header_size = sizeof(ttak_mem_header_t);
-    size_t actual_total_alloc_size;
-    bool strict_check_enabled = header->strict_check;
-
-    switch (header->allocation_tier) {
-        case TTAK_ALLOC_TIER_POCKET: actual_total_alloc_size = get_total_block_size_for_freelist(get_pocket_size_class_idx(header_size + header->size)); break;
-        case TTAK_ALLOC_TIER_VMA: actual_total_alloc_size = (header_size + header->size + TTAK_VMA_ALIGNMENT - 1) & ~((size_t)TTAK_VMA_ALIGNMENT - 1); break;
-        case TTAK_ALLOC_TIER_BUDDY: actual_total_alloc_size = header_size + header->size; break;
-        case TTAK_ALLOC_TIER_GENERAL: actual_total_alloc_size = header_size + header->size + (strict_check_enabled ? sizeof(uint64_t) : 0); break;
-        default: actual_total_alloc_size = header_size + header->size + (strict_check_enabled ? sizeof(uint64_t) : 0); break;
-    }
+    size_t actual_total_alloc_size = header->mapped_size;
 
     if (header->is_root && (header->allocation_tier == TTAK_ALLOC_TIER_GENERAL || header->allocation_tier == TTAK_ALLOC_TIER_BUDDY)) {
         pthread_mutex_lock(&global_map_lock); in_mem_op = 1;

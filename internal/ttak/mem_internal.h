@@ -14,6 +14,37 @@
 #include <stdbool.h>
 #include <stdatomic.h>
 #include <pthread.h>
+
+#if !defined(EMBEDDED) && (defined(_WIN32) || defined(__unix__) || defined(__APPLE__) || defined(__linux__))
+#define TTAK_OS_MANAGED_MEMORY 1
+#else
+#define TTAK_OS_MANAGED_MEMORY 0
+#endif
+
+#if TTAK_OS_MANAGED_MEMORY
+#ifdef _WIN32
+#ifndef _WIN32_WINNT
+#define _WIN32_WINNT 0x0602
+#endif
+#include <windows.h>
+static inline void *ttak_os_mem_alloc(size_t size) {
+    return VirtualAlloc(NULL, size, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
+}
+static inline void ttak_os_mem_free(void *ptr, size_t size) {
+    (void)size;
+    if (ptr) VirtualFree(ptr, 0, MEM_RELEASE);
+}
+#else
+#include <sys/mman.h>
+static inline void *ttak_os_mem_alloc(size_t size) {
+    void *p = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+    return p == MAP_FAILED ? NULL : p;
+}
+static inline void ttak_os_mem_free(void *ptr, size_t size) {
+    if (ptr) munmap(ptr, size);
+}
+#endif
+#endif
 #include "../../internal/app_types.h"
 #include <ttak/mem/mem.h>
 #include <ttak/types/ttak_compiler.h>

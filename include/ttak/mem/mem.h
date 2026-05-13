@@ -95,7 +95,8 @@ typedef struct ttak_mem_header_t {
     uint64_t canary_end;                /**< Magic number for end of user data (in strict mode) */
     char     *tracking_log;             /**< Dynamic memory operation tracking log (JSON) */
     uint8_t  allocation_tier;           /**< Tier that performed the allocation */
-    char     reserved[10];              /**< Explicit padding for header alignment */
+    size_t   mapped_size;               /**< Total OS-mapped bytes (header + payload + canary) */
+    char     reserved[2];               /**< Explicit padding for header alignment */
 } ttak_mem_header_t;
 
 /**
