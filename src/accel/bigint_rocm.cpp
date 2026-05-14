@@ -9,11 +9,15 @@
 
 #include <ttak/math/bigint.h>
 
+#ifdef ENABLE_ROCM
 #include <hip/hip_runtime.h>
+#endif
 
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
+
+#ifdef ENABLE_ROCM
 
 __global__ static void ttak_bigint_hip_add_kernel(const limb_t *lhs,
                                                   uint32_t lhs_len,
@@ -161,6 +165,7 @@ extern "C" bool ttak_bigint_accel_rocm_add(limb_t *dst,
     return true;
 }
 
+
 extern "C" bool ttak_bigint_accel_rocm_mul(limb_t *dst,
                                            size_t dst_capacity,
                                            size_t *out_used,
@@ -223,3 +228,4 @@ extern "C" bool ttak_bigint_accel_rocm_mul(limb_t *dst,
     }
     return true;
 }
+#endif /* ENABLE_ROCM */
