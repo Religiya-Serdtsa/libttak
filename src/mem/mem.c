@@ -494,7 +494,6 @@ void TTAK_HOT_PATH ttak_mem_free(void *ptr) {
         free(header->tracking_log); header->tracking_log = NULL;
     }
 
-    size_t header_size = sizeof(ttak_mem_header_t);
     size_t actual_total_alloc_size = header->mapped_size;
 
     if (header->is_root && (header->allocation_tier == TTAK_ALLOC_TIER_GENERAL || header->allocation_tier == TTAK_ALLOC_TIER_BUDDY)) {
