@@ -42,6 +42,9 @@
     #endif
 #else
     #include <unistd.h>
+    #if EMBEDDED
+        #include <sys/mman.h>
+    #endif
 #endif
 
 #ifdef _WIN32
@@ -140,6 +143,8 @@ static pthread_mutex_t global_init_lock = PTHREAD_MUTEX_INITIALIZER;
 #endif
 static _Alignas(64) uint8_t buddy_pool[TTAK_EMBEDDED_POOL_SIZE];
 static pthread_once_t buddy_once = PTHREAD_ONCE_INIT;
+static void *embedded_pool_start = buddy_pool;
+static size_t embedded_pool_len = sizeof(buddy_pool);
 
 #ifndef TTAK_BUDDY_DEFAULT_EMBEDDED_MODE
 #define TTAK_BUDDY_DEFAULT_EMBEDDED_MODE 0 /* override to 1 for strict embedded builds */
@@ -167,6 +172,41 @@ static int ttak_detect_embedded_pool_mode(void) {
  */
 static void buddy_bootstrap(void) {
     ttak_mem_buddy_init(buddy_pool, sizeof(buddy_pool), ttak_detect_embedded_pool_mode());
+    embedded_pool_start = buddy_pool;
+    embedded_pool_len = sizeof(buddy_pool);
+}
+
+static bool ttak_embedded_ptr_in_pool(const void *ptr) {
+    const uintptr_t addr = (uintptr_t)ptr;
+    const uintptr_t start = (uintptr_t)embedded_pool_start;
+    const uintptr_t end = start + embedded_pool_len;
+    return embedded_pool_start && embedded_pool_len && addr >= start && addr < end;
+}
+
+static void *ttak_embedded_os_alloc(size_t size) {
+#if defined(_WIN32)
+    return VirtualAlloc(NULL, size, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
+#elif defined(__linux__) || defined(__APPLE__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__) || defined(__unix__)
+    void *os_ptr = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+    if (os_ptr == MAP_FAILED) os_ptr = NULL;
+    return os_ptr;
+#else
+    (void)size;
+    return NULL;
+#endif
+}
+
+static void ttak_embedded_os_free(void *ptr, size_t size) {
+    if (!ptr || size == 0) return;
+#if defined(_WIN32)
+    (void)size;
+    VirtualFree(ptr, 0, MEM_RELEASE);
+#elif defined(__linux__) || defined(__APPLE__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__) || defined(__unix__)
+    munmap(ptr, size);
+#else
+    (void)ptr;
+    (void)size;
+#endif
 }
 #endif
 
@@ -239,7 +279,17 @@ void *ttak_dangerous_alloc(size_t size) {
     pthread_once(&buddy_once, buddy_bootstrap);
     ttak_mem_req_t req = { .size_bytes = size, .priority = 0, .owner_tag = 0, .call_safety = 0, .flags = 0 };
     ptr = ttak_mem_buddy_alloc(&req);
-    if (ptr) ttak_mem_stream_zero(ptr, size);
+    if (!ptr) {
+        size_t mapped_size;
+        void *os_ptr;
+        if (size > SIZE_MAX - sizeof(size_t)) return NULL;
+        mapped_size = size + sizeof(size_t);
+        os_ptr = ttak_embedded_os_alloc(mapped_size);
+        if (!os_ptr) return NULL;
+        *((size_t *)os_ptr) = mapped_size;
+        ptr = (char *)os_ptr + sizeof(size_t);
+    }
+    ttak_mem_stream_zero(ptr, size);
 #else
     if (posix_memalign(&ptr, 64, size) != 0) return NULL;
     ttak_mem_stream_zero(ptr, size);
@@ -262,7 +312,13 @@ void *ttak_dangerous_calloc(size_t nmemb, size_t size) {
 void ttak_dangerous_free(void *ptr) {
     if (!ptr) return;
 #if EMBEDDED
-    ttak_mem_buddy_free(ptr);
+    if (ttak_embedded_ptr_in_pool(ptr)) {
+        ttak_mem_buddy_free(ptr);
+    } else {
+        void *os_ptr = (char *)ptr - sizeof(size_t);
+        size_t mapped_size = *((size_t *)os_ptr);
+        ttak_embedded_os_free(os_ptr, mapped_size);
+    }
 #else
     posix_memfree(ptr);
 #endif
@@ -355,11 +411,11 @@ void TTAK_HOT_PATH *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, ui
             allocated_tier = TTAK_ALLOC_TIER_BUDDY;
             strict_check_enabled = false;
         } else {
-            /* Buddy pool is fragmented or exhausted. Map from the VMA region
-             * to keep the caller alive instead of surfacing ENOMEM. */
-            header = ttak_mem_vma_alloc_internal(size);
+            size_t mapped_size = size + sizeof(ttak_mem_header_t);
+            header = ttak_embedded_os_alloc(mapped_size);
             if (header) {
-                allocated_tier = TTAK_ALLOC_TIER_VMA;
+                allocated_tier = TTAK_ALLOC_TIER_BUDDY;
+                strict_check_enabled = false;
             }
         }
 #else
@@ -511,7 +567,12 @@ void TTAK_HOT_PATH ttak_mem_free(void *ptr) {
         case TTAK_ALLOC_TIER_VMA: _vma_free_internal(header); break;
         case TTAK_ALLOC_TIER_BUDDY:
 #if EMBEDDED
-            ttak_mem_buddy_free(header);
+            if (ttak_embedded_ptr_in_pool(header)) {
+                ttak_mem_buddy_free(header);
+            } else {
+                pthread_mutex_destroy(&header->lock);
+                ttak_embedded_os_free(header, header->mapped_size);
+            }
 #else
             _large_free_internal(header);
 #endif
@@ -619,6 +680,8 @@ void save_current_progress(const char *filename, const void *data, size_t size) 
 void ttak_mem_set_embedded_pool(void *pool_start, size_t pool_len) {
     if (!pool_start || pool_len == 0) return;
     pthread_once(&buddy_once, buddy_bootstrap);
+    embedded_pool_start = pool_start;
+    embedded_pool_len = pool_len;
     ttak_mem_buddy_set_pool(pool_start, pool_len);
 }
 #endif
