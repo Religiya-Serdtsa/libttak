@@ -237,6 +237,7 @@ void _vma_free_internal(ttak_mem_header_t* header) {
 ttak_mem_header_t* ttak_mem_large_alloc_internal(size_t user_requested_size) {
 #if TTAK_OS_MANAGED_MEMORY
     size_t total = sizeof(ttak_mem_header_t) + user_requested_size;
+    total = (total + TTAK_VMA_ALIGNMENT - 1) & ~((size_t)TTAK_VMA_ALIGNMENT - 1);
     ttak_mem_header_t *header = (ttak_mem_header_t *)ttak_os_mem_alloc(total);
     if (header) {
         memset(header, 0, total);

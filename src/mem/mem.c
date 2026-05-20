@@ -135,7 +135,11 @@ static pthread_mutex_t global_init_lock = PTHREAD_MUTEX_INITIALIZER;
 #if EMBEDDED
 #include <ttak/phys/mem/buddy.h>
 #ifndef TTAK_EMBEDDED_POOL_ORDER
+#if defined(__LP64__) || defined(_WIN64)
+#define TTAK_EMBEDDED_POOL_ORDER 28
+#else
 #define TTAK_EMBEDDED_POOL_ORDER 24
+#endif
 #endif
 #define TTAK_EMBEDDED_POOL_SIZE (1ULL << TTAK_EMBEDDED_POOL_ORDER)
 #if TTAK_EMBEDDED_POOL_ORDER >= 63
@@ -393,24 +397,11 @@ void TTAK_HOT_PATH *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, ui
     // --- Tier 2: VMA medium region ---
     if (!header && size > 0 && size < (2 * 1024 * 1024)) {
         header = ttak_mem_vma_alloc_internal(size);
-        if (header) allocated_tier = TTAK_ALLOC_TIER_VMA;
-    }
-
-    // --- Tier 3: Dedicated large region / buddy fallback ---
-    if (!header) {
-#if EMBEDDED
-        if ((flags & TTAK_MEM_LOW_PRIORITY) &&
-            atomic_load(&global_friction_matrix.global_friction) > atomic_load(&global_friction_matrix.pressure_threshold)) {
-            t_reentrancy_guard = false;
-            return NULL;
-        }
-        pthread_once(&buddy_once, buddy_bootstrap);
-        ttak_mem_req_t req = { .size_bytes = size + sizeof(ttak_mem_header_t), .priority = 1, .owner_tag = 0, .call_safety = 0, .flags = 0 };
-        header = ttak_mem_buddy_alloc(&req);
         if (header) {
-            allocated_tier = TTAK_ALLOC_TIER_BUDDY;
-            strict_check_enabled = false;
-        } else {
+            allocated_tier = TTAK_ALLOC_TIER_VMA;
+        }
+#if EMBEDDED
+        else {
             size_t mapped_size = size + sizeof(ttak_mem_header_t);
             header = ttak_embedded_os_alloc(mapped_size);
             if (header) {
@@ -418,8 +409,41 @@ void TTAK_HOT_PATH *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, ui
                 strict_check_enabled = false;
             }
         }
+#endif
+    }
+
+    // --- Tier 3: Dedicated large region / buddy fallback ---
+    if (!header) {
+        size_t tier3_size = size;
+        if (strict_check_enabled) {
+            if (tier3_size > SIZE_MAX - sizeof(uint64_t)) {
+                t_reentrancy_guard = false;
+                return NULL;
+            }
+            tier3_size += sizeof(uint64_t);
+        }
+#if EMBEDDED
+        if ((flags & TTAK_MEM_LOW_PRIORITY) &&
+            atomic_load(&global_friction_matrix.global_friction) > atomic_load(&global_friction_matrix.pressure_threshold)) {
+            t_reentrancy_guard = false;
+            return NULL;
+        }
+        pthread_once(&buddy_once, buddy_bootstrap);
+        ttak_mem_req_t req = { .size_bytes = tier3_size + sizeof(ttak_mem_header_t), .priority = 1, .owner_tag = 0, .call_safety = 0, .flags = 0 };
+        header = ttak_mem_buddy_alloc(&req);
+        if (header) {
+            allocated_tier = TTAK_ALLOC_TIER_BUDDY;
+            strict_check_enabled = false;
+        } else {
+            size_t mapped_size = tier3_size + sizeof(ttak_mem_header_t);
+            header = ttak_embedded_os_alloc(mapped_size);
+            if (header) {
+                allocated_tier = TTAK_ALLOC_TIER_BUDDY;
+                strict_check_enabled = false;
+            }
+        }
 #else
-        header = ttak_mem_large_alloc_internal(size);
+        header = ttak_mem_large_alloc_internal(tier3_size);
         if (header) allocated_tier = TTAK_ALLOC_TIER_GENERAL;
 #endif
     }
@@ -448,7 +472,10 @@ void TTAK_HOT_PATH *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, ui
     size_t actual_total_alloc_size;
     if (allocated_tier == TTAK_ALLOC_TIER_POCKET) actual_total_alloc_size = get_total_block_size_for_freelist(get_pocket_size_class_idx(header_size + size));
     else if (allocated_tier == TTAK_ALLOC_TIER_VMA) actual_total_alloc_size = (header_size + size + TTAK_VMA_ALIGNMENT - 1) & ~((size_t)TTAK_VMA_ALIGNMENT - 1);
-    else actual_total_alloc_size = header_size + size + (strict_check_enabled ? sizeof(uint64_t) : 0);
+    else if (allocated_tier == TTAK_ALLOC_TIER_GENERAL) {
+        size_t raw = header_size + size + (strict_check_enabled ? sizeof(uint64_t) : 0);
+        actual_total_alloc_size = (raw + TTAK_VMA_ALIGNMENT - 1) & ~((size_t)TTAK_VMA_ALIGNMENT - 1);
+    } else actual_total_alloc_size = header_size + size + (strict_check_enabled ? sizeof(uint64_t) : 0);
     header->mapped_size = actual_total_alloc_size;
     header->checksum = ttak_calc_header_checksum(header);
 

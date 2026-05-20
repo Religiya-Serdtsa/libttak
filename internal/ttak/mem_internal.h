@@ -15,7 +15,7 @@
 #include <stdatomic.h>
 #include <pthread.h>
 
-#if !defined(EMBEDDED) && (defined(_WIN32) || defined(__unix__) || defined(__APPLE__) || defined(__linux__))
+#if (!defined(EMBEDDED) || EMBEDDED == 0) && (defined(_WIN32) || defined(__unix__) || defined(__APPLE__) || defined(__linux__))
 #define TTAK_OS_MANAGED_MEMORY 1
 #else
 #define TTAK_OS_MANAGED_MEMORY 0
@@ -36,6 +36,9 @@ static inline void ttak_os_mem_free(void *ptr, size_t size) {
 }
 #else
 #include <sys/mman.h>
+#if !defined(MAP_ANONYMOUS) && defined(MAP_ANON)
+#define MAP_ANONYMOUS MAP_ANON
+#endif
 static inline void *ttak_os_mem_alloc(size_t size) {
     void *p = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
     return p == MAP_FAILED ? NULL : p;
@@ -120,8 +123,8 @@ extern TTAK_THREAD_LOCAL ttak_mem_pocket_freelist_t ttak_pocket_freelists[TTAK_N
 #endif
 
 // --- Bare-Metal VMA (Segregated Free-List + Coalescing) ---
-#define TTAK_VMA_REGION_SIZE (64 * 1024 * 1024) 
-#define TTAK_VMA_ALIGNMENT 64 
+#define TTAK_VMA_REGION_SIZE (64 * 1024 * 1024)
+#define TTAK_VMA_ALIGNMENT 64
 
 // --- Dedicated Large Region (>=2MB user payload) ---
 #define TTAK_LARGE_REGION_SIZE (256 * 1024 * 1024)
