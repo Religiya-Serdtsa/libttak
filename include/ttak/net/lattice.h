@@ -14,7 +14,7 @@
  * @note Reference: Choi Seok-jeong, "Gusuryak (九數略)", 1700.
  */
 
-#define TTAK_LATTICE_SLOT_SIZE 2048
+#define TTAK_LATTICE_SLOT_SIZE 16384
 #define TTAK_LATTICE_MAX_DIM 16
 
 /**
