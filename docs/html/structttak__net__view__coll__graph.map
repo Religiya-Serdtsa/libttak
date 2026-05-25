@@ -1,11 +1,25 @@
 <map id="ttak_net_view" name="ttak_net_view">
-<area shape="rect" id="node1" title="Read&#45;only zero&#45;copy snapshot returned by ttak_net_view_from_endpoint()." alt="" coords="167,276,269,303"/>
-<area shape="rect" id="node2" href="$structttak__net__lattice.html" title="The Lattice (Sanpan) structure." alt="" coords="5,185,116,212"/>
-<area shape="rect" id="node3" href="$structttak__net__lattice__slot.html" title="A single data slot in the lattice." alt="" coords="25,95,163,121"/>
-<area shape="rect" id="node4" href="$structttak__io__zerocopy__region.html" title="Temporary zero&#45;copy receive window allocated in a detachable arena." alt="" coords="267,185,430,212"/>
-<area shape="rect" id="node5" href="$structttak__detachable__allocation.html" title="Description of the detachable allocation returned to callers." alt="" coords="193,95,369,121"/>
-<area shape="rect" id="node6" href="$structttak__detachable__cache.html" title="Per&#45;context cache for tiny detachable chunks (&lt;= 16 bytes)." alt="" coords="120,5,276,32"/>
-<area shape="rect" id="node8" href="$structttak__detachable__context.html" title="State holder for detachable memory contexts." alt="" coords="393,95,557,121"/>
-<area shape="rect" id="node7" href="$structttak__detach__status.html" title="Tracks the detach lifecycle of a detachable block." alt="" coords="305,5,438,32"/>
-<area shape="rect" id="node9" href="$structttak__detachable__generation__row.html" title="Fixed&#45;width arena row descriptor." alt="" coords="477,5,687,32"/>
+<area shape="rect" id="Node000001" title="Read&#45;only zero&#45;copy snapshot returned by ttak_net_view_from_endpoint()." alt="" coords="1007,171,1121,197"/>
+<area shape="rect" id="Node000002" href="$structttak__io__zerocopy__region.html" title="Temporary zero&#45;copy receive window allocated in a detachable arena." alt="" coords="700,119,881,145"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="884,144,983,163,1011,169,1010,174,982,168,883,150"/>
+<area shape="rect" id="Node000003" href="$structttak__detachable__context.html" title="State holder for detachable memory contexts." alt="" coords="392,125,575,150"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="588,133,700,131,700,136,589,138"/>
+<area shape="rect" id="Node000004" href="$structttak__detach__status.html" title="Tracks the detach lifecycle of a detachable block." alt="" coords="49,21,196,46"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="210,38,298,50,335,60,362,71,371,81,375,92,378,101,386,110,409,122,406,127,382,114,373,104,370,93,366,84,358,76,333,65,297,56,209,43"/>
+<area shape="rect" id="Node000008" href="$structttak__detachable__allocation.html" title="Description of the detachable allocation returned to callers." alt="" coords="384,75,583,101"/>
+<area shape="poly" id="edge8_Node000008_Node000004" title=" " alt="" coords="210,19,284,16,323,19,361,25,419,47,464,73,462,78,416,52,359,31,322,24,284,22,210,24"/>
+<area shape="rect" id="Node000005" href="$structttak__detachable__cache.html" title="Per&#45;context cache for tiny detachable chunks (&lt;= 16 bytes)." alt="" coords="37,89,209,114"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="222,109,264,113,392,126,392,131,264,119,222,114"/>
+<area shape="poly" id="edge9_Node000008_Node000005" title=" " alt="" coords="223,95,384,89,384,94,223,100"/>
+<area shape="rect" id="Node000006" href="$structttak__detachable__generation__row.html" title="Fixed&#45;width arena row descriptor." alt="" coords="5,167,240,193"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="244,163,391,145,392,151,244,168"/>
+<area shape="rect" id="Node000007" href="$structttak__detachable__quarantine__row.html" title=" " alt="" coords="5,217,240,242"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="219,212,289,198,359,180,383,171,446,148,448,153,385,176,361,185,290,203,220,217"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="586,100,702,117,701,122,586,105"/>
+<area shape="rect" id="Node000009" href="$structttak__net__lattice__slot.html" title="A single data slot in the lattice." alt="" coords="406,186,561,211"/>
+<area shape="poly" id="edge10_Node000001_Node000009" title=" " alt="" coords="574,194,1006,183,1006,188,574,199"/>
+<area shape="rect" id="Node000010" href="$structttak__net__lattice.html" title="The lattice structure." alt="" coords="729,286,853,311"/>
+<area shape="poly" id="edge12_Node000010_Node000009" title=" " alt="" coords="537,213,751,283,749,288,536,218"/>
+<area shape="poly" id="edge11_Node000001_Node000010" title=" " alt="" coords="833,278,1031,194,1034,199,835,283"/>
+<area shape="poly" id="edge13_Node000010_Node000010" title=" " alt="" coords="761,271,770,263,791,259,808,262,818,268,821,278,816,287,811,285,816,277,814,271,806,267,791,265,773,268,765,275"/>
 </map>

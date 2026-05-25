@@ -25,41 +25,63 @@
 var NAVTREE =
 [
   [ "libttak", "index.html", [
-    [ "LibTTAK Benchmark Suite", "index.html", [
-      [ "Core Benchmarks", "index.html#autotoc_md1", [
-        [ "1. TTL Cache Multi-threaded Benchmark", "index.html#autotoc_md2", null ],
-        [ "2. General Benchmark Hub (<tt>ttak_bench.c</tt>)", "index.html#autotoc_md3", null ]
-      ] ],
-      [ "Architectural Philosophy", "index.html#autotoc_md4", null ],
-      [ "Analysis Tools", "index.html#autotoc_md5", null ]
+    [ "LibTTAK Benchmark Suite", "index.html", "index" ],
+    [ "멀티스레드 TTL 캐시 벤치마크 (한국어)", "md_bench_2ttl-cache-multithread-bench_2README_8ko.html", [
+      [ "핵심 지표", "md_bench_2ttl-cache-multithread-bench_2README_8ko.html#autotoc_md7", null ],
+      [ "CI 상세 이미지", "md_bench_2ttl-cache-multithread-bench_2README_8ko.html#autotoc_md8", null ],
+      [ "입력 raw 파일", "md_bench_2ttl-cache-multithread-bench_2README_8ko.html#autotoc_md9", null ],
+      [ "참고", "md_bench_2ttl-cache-multithread-bench_2README_8ko.html#autotoc_md10", null ]
     ] ],
     [ "Development History", "md_HISTORY.html", [
-      [ "2026-01-30", "md_HISTORY.html#autotoc_md17", [
-        [ "Initial Skeleton Creation & Build Stabilization", "md_HISTORY.html#autotoc_md18", null ],
-        [ "Key Diffs Overview", "md_HISTORY.html#autotoc_md19", null ]
+      [ "2026-01-30", "md_HISTORY.html#autotoc_md27", [
+        [ "Initial Skeleton Creation & Build Stabilization", "md_HISTORY.html#autotoc_md28", null ],
+        [ "Key Diffs Overview", "md_HISTORY.html#autotoc_md29", null ]
       ] ]
     ] ],
-    [ "LibTTAK Specification", "md_SPECS.html", [
-      [ "1. Purpose", "md_SPECS.html#autotoc_md40", null ],
-      [ "2. Design Philosophy", "md_SPECS.html#autotoc_md41", null ],
-      [ "3. Architectural Overview", "md_SPECS.html#autotoc_md42", null ],
-      [ "4. Memory Model", "md_SPECS.html#autotoc_md43", [
-        [ "4.1 Fortress Allocator (<tt>ttak_mem_alloc_safe</tt>)", "md_SPECS.html#autotoc_md44", null ],
-        [ "4.2 Epoch & Garbage Collection", "md_SPECS.html#autotoc_md45", null ],
-        [ "4.3 Detachable Arenas", "md_SPECS.html#autotoc_md46", null ],
-        [ "4.4 Ownership", "md_SPECS.html#autotoc_md47", null ]
-      ] ],
-      [ "5. Concurrency Model", "md_SPECS.html#autotoc_md48", null ],
-      [ "6. Data Structures", "md_SPECS.html#autotoc_md49", null ],
-      [ "7. I/O Model", "md_SPECS.html#autotoc_md50", null ],
-      [ "8. Math & Scripting", "md_SPECS.html#autotoc_md51", null ],
-      [ "9. Security & Integrity", "md_SPECS.html#autotoc_md52", null ],
-      [ "10. Extensibility Rules", "md_SPECS.html#autotoc_md53", null ],
-      [ "11. Performance Expectations", "md_SPECS.html#autotoc_md54", null ],
-      [ "12. Documentation & Testing", "md_SPECS.html#autotoc_md55", null ],
-      [ "13. Compliance Checklist", "md_SPECS.html#autotoc_md56", null ]
+    [ "RAII in LibTTAK: How It Differs from Traditional Resource Management", "md_RAII.html", [
+      [ "Overview", "md_RAII.html#autotoc_md31", null ],
+      [ "1. Explicit Lifetimes Instead of Implicit Destructors", "md_RAII.html#autotoc_md33", null ],
+      [ "2. Owner-Based Sandboxing (<tt>ttak_owner_t</tt>)", "md_RAII.html#autotoc_md35", null ],
+      [ "3. Detachable Generational Arenas (<tt>ttak_detachable_context_t</tt>)", "md_RAII.html#autotoc_md37", null ],
+      [ "4. Epoch-Based Reclamation (EBR) Instead of Immediate Free", "md_RAII.html#autotoc_md39", null ],
+      [ "5. Signal-Aware Graceful Teardown", "md_RAII.html#autotoc_md41", null ],
+      [ "6. No Hidden Global State or TLS Caches", "md_RAII.html#autotoc_md43", null ],
+      [ "Summary", "md_RAII.html#autotoc_md45", null ],
+      [ "Why Network, Math, and More Live Inside a Single Systems Library", "md_RAII.html#autotoc_md47", [
+        [ "Overview", "md_RAII.html#autotoc_md48", null ],
+        [ "1. One Lifetime Model for Every Subsystem", "md_RAII.html#autotoc_md50", null ],
+        [ "2. Zero-Copy and Scheduling Co-Design", "md_RAII.html#autotoc_md52", null ],
+        [ "3. Deterministic Scheduling Across Domains", "md_RAII.html#autotoc_md54", null ],
+        [ "4. A Single Allocator Contract", "md_RAII.html#autotoc_md56", null ],
+        [ "5. Unified Observability", "md_RAII.html#autotoc_md58", null ],
+        [ "6. TinyCC Parity and ABI Stability", "md_RAII.html#autotoc_md60", null ],
+        [ "Summary", "md_RAII.html#autotoc_md62", null ]
+      ] ]
     ] ],
-    [ "Clone Coding Path", "md_tutorials_CLONE_PATH.html", null ],
+    [ "LibTTAK (한국어 안내)", "md_README_8ko.html", [
+      [ "벤치마크(한국어)", "md_README_8ko.html#autotoc_md64", null ]
+    ] ],
+    [ "LibTTAK Specification", "md_SPECS.html", [
+      [ "1. Purpose", "md_SPECS.html#autotoc_md102", null ],
+      [ "2. Design Philosophy", "md_SPECS.html#autotoc_md103", null ],
+      [ "3. Architectural Overview", "md_SPECS.html#autotoc_md104", null ],
+      [ "4. Memory Model", "md_SPECS.html#autotoc_md105", [
+        [ "4.1 Fortress Allocator (<tt>ttak_mem_alloc_safe</tt>)", "md_SPECS.html#autotoc_md106", null ],
+        [ "4.2 Epoch & Garbage Collection", "md_SPECS.html#autotoc_md107", null ],
+        [ "4.3 Detachable Arenas", "md_SPECS.html#autotoc_md108", null ],
+        [ "4.4 Ownership", "md_SPECS.html#autotoc_md109", null ]
+      ] ],
+      [ "5. Concurrency Model", "md_SPECS.html#autotoc_md110", null ],
+      [ "6. Data Structures", "md_SPECS.html#autotoc_md111", null ],
+      [ "7. I/O Model", "md_SPECS.html#autotoc_md112", null ],
+      [ "8. Math & Scripting", "md_SPECS.html#autotoc_md113", null ],
+      [ "9. Security & Integrity", "md_SPECS.html#autotoc_md114", null ],
+      [ "10. Extensibility Rules", "md_SPECS.html#autotoc_md115", null ],
+      [ "11. Performance Expectations", "md_SPECS.html#autotoc_md116", null ],
+      [ "12. Documentation & Testing", "md_SPECS.html#autotoc_md117", null ],
+      [ "13. Compliance Checklist", "md_SPECS.html#autotoc_md118", null ]
+    ] ],
+    [ "Clone Coding Path", "md_tutorials_2CLONE__PATH.html", null ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
@@ -87,14 +109,15 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "00__overview_8puml.html",
-"context_8h.html#a2821cd899c198409e01e84b4456dca17",
-"fixed_8h.html#a8efab2f600f17fcb131ed9c647277c81",
-"io_8h.html#a242e3d01cd4a0c1d01c32614c636c318",
-"owner_8h.html#a6c47e6a1c635efb2ad989e927612e94aa55791aa9e8301d023a68a58576bc2291",
-"structSHA256__CTX.html",
-"structttak__heap__tree.html",
-"structttak__ringbuf.html#a391549f9b534e3761e2567ec8e7ba431",
-"timing_8h.html#ac02e371a9ce7c79927fcd1250ad5f082"
+"calculus_8h.html#af5ab65970ac1f025b3795157144fb68f",
+"factor_8h_source.html",
+"include_2ttak_2math_2ntt_8h.html#a3372a84ab2ae3592b9f69d2389320880",
+"mem__internal_8h.html#a2d580a873c45f7b039612c0a816a4e07",
+"shared_8h.html#aa61738cdd0322bee3972eb1e4b9134b9",
+"structttak__crt__term.html#aea1e8f16579f89002fb1fdb8b856bd34",
+"structttak__net__endpoint.html#a96667effbe7d4467e6b783cc9525c31f",
+"structttak__thread__pool.html#ab6f0dc625cc83c204a3ad9964fe955d3",
+"wyhash_8h.html#a3c7655cae4aaf843a2a13ce57d76a565"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

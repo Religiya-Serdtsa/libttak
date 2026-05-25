@@ -1,0 +1,77 @@
+\doxysection{function.\+h}
+\hypertarget{function_8h_source}{}\label{function_8h_source}\index{include/ttak/async/function.h@{include/ttak/async/function.h}}
+\mbox{\hyperlink{function_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00001}00001\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00002}00002\ \textcolor{comment}{\ *\ @file\ function.h}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00003}00003\ \textcolor{comment}{\ *\ @brief\ Convenience\ wrappers\ for\ fire-\/and-\/forget\ async\ jobs\ that\ return\ futures.}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00004}00004\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00005}00005\ \textcolor{comment}{\ *\ Higher\ level\ helpers\ to\ simplify\ the\ pattern\ of\ creating\ a\ promise/future}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00006}00006\ \textcolor{comment}{\ *\ pair,\ scheduling\ a\ worker\ task,\ and\ awaiting\ the\ result.}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00007}00007\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00009}00009\ \textcolor{preprocessor}{\#ifndef\ TTAK\_ASYNC\_FUNCTION\_H}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00010}00010\ \textcolor{preprocessor}{\#define\ TTAK\_ASYNC\_FUNCTION\_H}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{future_8h}{ttak/async/future.h}}>}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{promise_8h}{ttak/async/promise.h}}>}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00014}00014\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{task_8h}{ttak/async/task.h}}>}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00016}00016\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00017}00017\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00018}00018\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00019}00019\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00020}00020\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00021}00021\ \textcolor{comment}{\ *\ @brief\ Cleanup\ callback\ invoked\ if\ a\ task\ fails\ to\ start.}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00022}00022\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00023}\mbox{\hyperlink{function_8h_aa8826aa9d4cb351245c64182f7df2d7c}{00023}}\ \textcolor{keyword}{typedef}\ void\ (*\mbox{\hyperlink{function_8h_aa8826aa9d4cb351245c64182f7df2d7c}{ttak\_async\_cleanup\_t}})(\textcolor{keywordtype}{void}\ *ctx);}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00024}00024\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00025}00025\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00026}00026\ \textcolor{comment}{\ *\ @brief\ Lightweight\ handle\ that\ bundles\ a\ promise\ and\ its\ paired\ future.}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00027}00027\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00028}\mbox{\hyperlink{structttak__async__future}{00028}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__async__future}{ttak\_async\_future}}\ \{}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00029}\mbox{\hyperlink{structttak__async__future_a088d640e4d41e30198eb84bc6a05d9e6}{00029}}\ \ \ \ \ \mbox{\hyperlink{structttak__promise}{ttak\_promise\_t}}\ *\mbox{\hyperlink{structttak__async__future_a088d640e4d41e30198eb84bc6a05d9e6}{promise}};\ \textcolor{comment}{/**<\ Promise\ populated\ by\ the\ worker.\ */}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00030}\mbox{\hyperlink{structttak__async__future_abc1f954c19cc170eaa3540cdb27c0ab4}{00030}}\ \ \ \ \ \mbox{\hyperlink{structttak__future}{ttak\_future\_t}}\ \ *\mbox{\hyperlink{structttak__async__future_abc1f954c19cc170eaa3540cdb27c0ab4}{future}};\ \ \textcolor{comment}{/**<\ Blocking\ future\ returned\ to\ callers.\ */}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00031}\mbox{\hyperlink{function_8h_a21933ac1a893433944e016684abb4dd0}{00031}}\ \}\ \mbox{\hyperlink{function_8h_a21933ac1a893433944e016684abb4dd0}{ttak\_async\_future\_t}};}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00032}00032\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00033}00033\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00034}00034\ \textcolor{comment}{\ *\ @brief\ Schedules\ a\ task\ for\ asynchronous\ execution\ and\ returns\ its\ future.}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00035}00035\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00036}00036\ \textcolor{comment}{\ *\ On\ any\ failure,\ @p\ cleanup\ is\ invoked\ with\ @p\ ctx\ before\ returning\ an\ empty}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00037}00037\ \textcolor{comment}{\ *\ handle\ to\ ensure\ resources\ aren't\ leaked.}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00038}00038\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00039}00039\ \textcolor{comment}{\ *\ @param\ func\ \ \ \ \ Worker\ function\ to\ execute.}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00040}00040\ \textcolor{comment}{\ *\ @param\ ctx\ \ \ \ \ \ Context\ pointer\ passed\ to\ the\ worker.}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00041}00041\ \textcolor{comment}{\ *\ @param\ cleanup\ \ Optional\ cleanup\ callback\ for\ @p\ ctx\ when\ scheduling\ fails.}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00042}00042\ \textcolor{comment}{\ *\ @param\ priority\ Scheduler\ priority\ hint\ (lower\ ==\ higher\ priority).}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00043}00043\ \textcolor{comment}{\ *\ @return\ A\ handle\ holding\ the\ created\ promise\ and\ future\ (zeroed\ on\ failure).}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00044}00044\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00045}\mbox{\hyperlink{function_8h_ac9e0e5fda2fd1ee3d3a862a34187b5ae}{00045}}\ \mbox{\hyperlink{structttak__async__future}{ttak\_async\_future\_t}}\ \mbox{\hyperlink{function_8h_ac9e0e5fda2fd1ee3d3a862a34187b5ae}{ttak\_async\_call}}(\mbox{\hyperlink{task_8h_aef94bfb234ab18af239e4a15f8366480}{ttak\_task\_func\_t}}\ func,}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ *ctx,}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{function_8h_aa8826aa9d4cb351245c64182f7df2d7c}{ttak\_async\_cleanup\_t}}\ cleanup,}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ priority);}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00049}00049\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00050}00050\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00051}00051\ \textcolor{comment}{\ *\ @brief\ Blocks\ until\ the\ async\ task\ is\ resolved\ and\ returns\ the\ worker\ result.}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00052}00052\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00053}00053\ \textcolor{comment}{\ *\ @param\ future\ Handle\ returned\ from\ ttak\_async\_call().}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00054}00054\ \textcolor{comment}{\ *\ @return\ Result\ pointer\ from\ the\ worker,\ or\ NULL\ if\ the\ handle\ is\ invalid.}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00055}00055\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00056}\mbox{\hyperlink{function_8h_ae26072e975cd81388dc88f9fe50a346b}{00056}}\ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{function_8h_ae26072e975cd81388dc88f9fe50a346b}{ttak\_async\_await}}(\mbox{\hyperlink{structttak__async__future}{ttak\_async\_future\_t}}\ *future);}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00057}00057\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00058}00058\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00059}00059\ \textcolor{comment}{\ *\ @brief\ Destroys\ the\ promise/future\ pair\ allocated\ for\ the\ async\ call.}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00060}00060\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00061}00061\ \textcolor{comment}{\ *\ Safe\ to\ call\ multiple\ times;\ subsequent\ invocations\ become\ no-\/ops.}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00062}00062\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00063}00063\ \textcolor{comment}{\ *\ @param\ future\ Handle\ previously\ obtained\ via\ ttak\_async\_call().}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00064}00064\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00065}\mbox{\hyperlink{function_8h_a1952287d20df58ab29541aa616b7d01b}{00065}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{function_8h_a1952287d20df58ab29541aa616b7d01b}{ttak\_async\_future\_cleanup}}(\mbox{\hyperlink{structttak__async__future}{ttak\_async\_future\_t}}\ *future);}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00067}00067\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00068}00068\ \}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00069}00069\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{function_8h_source_l00071}00071\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_ASYNC\_FUNCTION\_H}}
+
+\end{DoxyCode}

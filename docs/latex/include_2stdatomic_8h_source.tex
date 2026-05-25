@@ -5,7 +5,7 @@
 \DoxyCodeLine{\Hypertarget{include_2stdatomic_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ \_\_cplusplus}}
 \DoxyCodeLine{\Hypertarget{include_2stdatomic_8h_source_l00002}00002\ \textcolor{preprocessor}{\#\ \ ifndef\ \_BOOL\_DEFINED}}
 \DoxyCodeLine{\Hypertarget{include_2stdatomic_8h_source_l00003}00003\ \textcolor{preprocessor}{\#\ \ \ \ include\ <stdbool.h>}}
-\DoxyCodeLine{\Hypertarget{include_2stdatomic_8h_source_l00004}00004\ \ \ \ \ \ \textcolor{comment}{/*\ GCC/Clang\ define\ \_Bool\ as\ a\ built-\/in\ keyword.\ }}
+\DoxyCodeLine{\Hypertarget{include_2stdatomic_8h_source_l00004}00004\ \ \ \ \ \ \textcolor{comment}{/*\ GCC/Clang\ define\ \_Bool\ as\ a\ built-\/in\ keyword.}}
 \DoxyCodeLine{\Hypertarget{include_2stdatomic_8h_source_l00005}00005\ \textcolor{comment}{\ \ \ \ \ \ \ \ Only\ typedef\ for\ MSVC\ or\ compilers\ lacking\ native\ \_Bool\ support.\ */}}
 \DoxyCodeLine{\Hypertarget{include_2stdatomic_8h_source_l00006}00006\ \textcolor{preprocessor}{\#\ \ \ \ if\ defined(\_MSC\_VER)\ \&\&\ !defined(\_\_clang\_\_)\ \&\&\ \_MSC\_VER\ <\ 1928}}
 \DoxyCodeLine{\Hypertarget{include_2stdatomic_8h_source_l00007}00007\ \textcolor{preprocessor}{\#\ \ \ \ \ \ ifndef\ \_Bool}}
@@ -15,7 +15,7 @@
 \DoxyCodeLine{\Hypertarget{include_2stdatomic_8h_source_l00011}\mbox{\hyperlink{include_2stdatomic_8h_ad87ea8b8e6e5edd21da6ea973b847b22}{00011}}\ \textcolor{preprocessor}{\#\ \ \ \ define\ \_BOOL\_DEFINED}}
 \DoxyCodeLine{\Hypertarget{include_2stdatomic_8h_source_l00012}00012\ \textcolor{preprocessor}{\#\ \ endif}}
 \DoxyCodeLine{\Hypertarget{include_2stdatomic_8h_source_l00013}00013\ \textcolor{preprocessor}{\#else}}
-\DoxyCodeLine{\Hypertarget{include_2stdatomic_8h_source_l00014}00014\ \ \ \textcolor{comment}{/*\ Map\ \_Bool\ to\ bool\ in\ C++\ (CUDA)\ to\ ensure\ type\ compatibility\ }}
+\DoxyCodeLine{\Hypertarget{include_2stdatomic_8h_source_l00014}00014\ \ \ \textcolor{comment}{/*\ Map\ \_Bool\ to\ bool\ in\ C++\ (CUDA)\ to\ ensure\ type\ compatibility}}
 \DoxyCodeLine{\Hypertarget{include_2stdatomic_8h_source_l00015}00015\ \textcolor{comment}{\ \ \ \ \ without\ redefining\ reserved\ keywords.\ */}}
 \DoxyCodeLine{\Hypertarget{include_2stdatomic_8h_source_l00016}00016\ \textcolor{preprocessor}{\#\ \ ifndef\ \_Bool}}
 \DoxyCodeLine{\Hypertarget{include_2stdatomic_8h_source_l00017}00017\ \textcolor{preprocessor}{\#\ \ \ \ define\ \_Bool\ bool}}
@@ -281,7 +281,7 @@
 \DoxyCodeLine{\Hypertarget{include_2stdatomic_8h_source_l00277}00277\ \textcolor{preprocessor}{\#define\ ATOMIC\_FLAG\_INIT\ \ \ \{0\}}}
 \DoxyCodeLine{\Hypertarget{include_2stdatomic_8h_source_l00278}00278\ \textcolor{preprocessor}{\#define\ ATOMIC\_VAR\_INIT(v)\ (v)}}
 \DoxyCodeLine{\Hypertarget{include_2stdatomic_8h_source_l00279}00279\ }
-\DoxyCodeLine{\Hypertarget{include_2stdatomic_8h_source_l00280}00280\ \textcolor{comment}{/*\ Use\ compiler\ built-\/ins\ for\ GCC\ and\ Clang\ to\ guarantee\ lock-\/free\ performance\ }}
+\DoxyCodeLine{\Hypertarget{include_2stdatomic_8h_source_l00280}00280\ \textcolor{comment}{/*\ Use\ compiler\ built-\/ins\ for\ GCC\ and\ Clang\ to\ guarantee\ lock-\/free\ performance}}
 \DoxyCodeLine{\Hypertarget{include_2stdatomic_8h_source_l00281}00281\ \textcolor{comment}{\ \ \ and\ bypass\ potentially\ broken\ system\ stdatomic.h\ headers.\ */}}
 \DoxyCodeLine{\Hypertarget{include_2stdatomic_8h_source_l00282}00282\ }
 \DoxyCodeLine{\Hypertarget{include_2stdatomic_8h_source_l00283}00283\ \textcolor{preprocessor}{\#define\ atomic\_thread\_fence(order)\ \_\_atomic\_thread\_fence(order)}}

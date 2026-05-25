@@ -11,7 +11,7 @@
 #define TTAK_POOL_OLS_AREA_MASK    (TTAK_POOL_OLS_AREA - 1U)
 #define TTAK_POOL_OLS_AREA_SHIFT   6U
 #define TTAK_POOL_GF8_PRIMITIVE    0x3U /* x^3 + x + 1 polynomial */
-/* Reference: Choi Seok-jeong, "Gusuryak (九數略)", 1700, for orthogonal Latin lattice selection. */
+/* Orthogonal Latin lattice selection for deterministic slot traversal. */
 
 #ifndef TTAK_POOL_HAVE_ARCH_OLS
 #define TTAK_POOL_HAVE_ARCH_OLS 0

@@ -1,0 +1,77 @@
+\doxysection{icmp.\+h}
+\hypertarget{icmp_8h_source}{}\label{icmp_8h_source}\index{include/ttak/net/core/icmp.h@{include/ttak/net/core/icmp.h}}
+\mbox{\hyperlink{icmp_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00001}00001\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00002}00002\ \textcolor{comment}{\ *\ @file\ icmp.h}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00003}00003\ \textcolor{comment}{\ *\ @brief\ Standard\ ICMPv4/v6\ header\ definitions\ and\ utilities\ for\ LibTTAK.}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00004}00004\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00006}00006\ \textcolor{preprocessor}{\#ifndef\ TTAK\_NET\_CORE\_ICMP\_H}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00007}00007\ \textcolor{preprocessor}{\#define\ TTAK\_NET\_CORE\_ICMP\_H}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00012}00012\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00013}00013\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00014}00014\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00016}00016\ \textcolor{comment}{/*\ ICMPv4\ Constants\ */}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00017}\mbox{\hyperlink{icmp_8h_aa1dd12a911072019f7eed81da8c5d6c4}{00017}}\ \textcolor{preprocessor}{\#define\ TTAK\_ICMP\_ECHO\_REQUEST\ 8}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00018}\mbox{\hyperlink{icmp_8h_a56d38fa3169a5f3d9ccf2d21392d67fe}{00018}}\ \textcolor{preprocessor}{\#define\ TTAK\_ICMP\_ECHO\_REPLY\ \ \ 0}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00019}\mbox{\hyperlink{icmp_8h_a5b85ff31b208d9cf78a09cb069cd9cd1}{00019}}\ \textcolor{preprocessor}{\#define\ TTAK\_ICMP\_TIME\_EXCEEDED\ 11}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00021}00021\ \textcolor{comment}{/*\ ICMPv6\ Constants\ */}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00022}\mbox{\hyperlink{icmp_8h_a53db2bc92b56801190ea90352fc83107}{00022}}\ \textcolor{preprocessor}{\#define\ TTAK\_ICMP6\_ECHO\_REQUEST\ 128}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00023}\mbox{\hyperlink{icmp_8h_aa9cc205f9d19cf09b8b6b86f1479648f}{00023}}\ \textcolor{preprocessor}{\#define\ TTAK\_ICMP6\_ECHO\_REPLY\ \ \ 129}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00024}\mbox{\hyperlink{icmp_8h_a7e847f14a69efff259c4afdbb9533cc6}{00024}}\ \textcolor{preprocessor}{\#define\ TTAK\_ICMP6\_TIME\_EXCEEDED\ 3}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00025}00025\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00026}00026\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00027}00027\ \textcolor{comment}{\ *\ @brief\ ICMPv4\ Header\ structure.}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00028}00028\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00029}\mbox{\hyperlink{structttak__net__icmpv4__hdr}{00029}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__net__icmpv4__hdr}{ttak\_net\_icmpv4\_hdr}}\ \{}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00030}\mbox{\hyperlink{structttak__net__icmpv4__hdr_a861a910ad99aa497749ce17149f7ed66}{00030}}\ \ \ \ \ uint8\_t\ \ \mbox{\hyperlink{structttak__net__icmpv4__hdr_a861a910ad99aa497749ce17149f7ed66}{type}};}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00031}\mbox{\hyperlink{structttak__net__icmpv4__hdr_a9e07c0c9621150f95898f5b58a595350}{00031}}\ \ \ \ \ uint8\_t\ \ \mbox{\hyperlink{structttak__net__icmpv4__hdr_a9e07c0c9621150f95898f5b58a595350}{code}};}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00032}\mbox{\hyperlink{structttak__net__icmpv4__hdr_a162d3c3ae23e7bd3092535ff4352effe}{00032}}\ \ \ \ \ uint16\_t\ \mbox{\hyperlink{structttak__net__icmpv4__hdr_a162d3c3ae23e7bd3092535ff4352effe}{checksum}};}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00033}00033\ \ \ \ \ \textcolor{keyword}{union\ }\{}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00034}00034\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00035}\mbox{\hyperlink{structttak__net__icmpv4__hdr_af025b59c651480b3e4c11d94d1e4f21e}{00035}}\ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ \mbox{\hyperlink{structttak__net__icmpv4__hdr_af025b59c651480b3e4c11d94d1e4f21e}{id}};}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00036}\mbox{\hyperlink{structttak__net__icmpv4__hdr_af857194165bebfe24dd61044bda84933}{00036}}\ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ \mbox{\hyperlink{structttak__net__icmpv4__hdr_af857194165bebfe24dd61044bda84933}{sequence}};}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00037}\mbox{\hyperlink{structttak__net__icmpv4__hdr_a31d36d0369e5aa5cc8e71feb7b4c7af9}{00037}}\ \ \ \ \ \ \ \ \ \}\ \mbox{\hyperlink{structttak__net__icmpv4__hdr_a31d36d0369e5aa5cc8e71feb7b4c7af9}{echo}};}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00038}\mbox{\hyperlink{structttak__net__icmpv4__hdr_a29c9751e185732ff163582da3364201d}{00038}}\ \ \ \ \ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structttak__net__icmpv4__hdr_a29c9751e185732ff163582da3364201d}{gateway}};}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00039}\mbox{\hyperlink{structttak__net__icmpv4__hdr_a05d04cf597c2a948f4ff232fa294e425}{00039}}\ \ \ \ \ \}\ \mbox{\hyperlink{structttak__net__icmpv4__hdr_a05d04cf597c2a948f4ff232fa294e425}{un}};}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00040}\mbox{\hyperlink{icmp_8h_a136f3fd2dd09e4b6266bb6132fb44520}{00040}}\ \}\ \mbox{\hyperlink{icmp_8h_a136f3fd2dd09e4b6266bb6132fb44520}{ttak\_net\_icmpv4\_hdr\_t}};}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00041}00041\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00042}00042\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00043}00043\ \textcolor{comment}{\ *\ @brief\ ICMPv6\ Header\ structure.}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00044}00044\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00045}\mbox{\hyperlink{structttak__net__icmpv6__hdr}{00045}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__net__icmpv6__hdr}{ttak\_net\_icmpv6\_hdr}}\ \{}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00046}\mbox{\hyperlink{structttak__net__icmpv6__hdr_a4ad93f19d8ca1e4b942e347e3309622b}{00046}}\ \ \ \ \ uint8\_t\ \ \mbox{\hyperlink{structttak__net__icmpv6__hdr_a4ad93f19d8ca1e4b942e347e3309622b}{type}};}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00047}\mbox{\hyperlink{structttak__net__icmpv6__hdr_ae70f53ef62654ec8db14b202ff80e6e3}{00047}}\ \ \ \ \ uint8\_t\ \ \mbox{\hyperlink{structttak__net__icmpv6__hdr_ae70f53ef62654ec8db14b202ff80e6e3}{code}};}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00048}\mbox{\hyperlink{structttak__net__icmpv6__hdr_a559478e8416f6616bb81cffdfb8fd58d}{00048}}\ \ \ \ \ uint16\_t\ \mbox{\hyperlink{structttak__net__icmpv6__hdr_a559478e8416f6616bb81cffdfb8fd58d}{checksum}};}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00049}00049\ \ \ \ \ \textcolor{keyword}{union\ }\{}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00050}00050\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00051}\mbox{\hyperlink{structttak__net__icmpv6__hdr_a5185ebaea719beb82b7355c111080a3e}{00051}}\ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ \mbox{\hyperlink{structttak__net__icmpv6__hdr_a5185ebaea719beb82b7355c111080a3e}{id}};}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00052}\mbox{\hyperlink{structttak__net__icmpv6__hdr_ad83848e3be827f635451db5b22818442}{00052}}\ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ \mbox{\hyperlink{structttak__net__icmpv6__hdr_ad83848e3be827f635451db5b22818442}{sequence}};}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00053}\mbox{\hyperlink{structttak__net__icmpv6__hdr_aaa6ab6ddd9484e2d1b70d196e0b78712}{00053}}\ \ \ \ \ \ \ \ \ \}\ \mbox{\hyperlink{structttak__net__icmpv6__hdr_aaa6ab6ddd9484e2d1b70d196e0b78712}{echo}};}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00054}\mbox{\hyperlink{structttak__net__icmpv6__hdr_aa8da48e344a9015ea9df532fb5d1a9b2}{00054}}\ \ \ \ \ \}\ \mbox{\hyperlink{structttak__net__icmpv6__hdr_aa8da48e344a9015ea9df532fb5d1a9b2}{un}};}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00055}\mbox{\hyperlink{icmp_8h_af9e071bb848399d102f113fb505fe41d}{00055}}\ \}\ \mbox{\hyperlink{icmp_8h_af9e071bb848399d102f113fb505fe41d}{ttak\_net\_icmpv6\_hdr\_t}};}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00056}00056\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00057}00057\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00058}00058\ \textcolor{comment}{\ *\ @brief\ Calculates\ RFC\ 1071\ standard\ checksum.}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00059}00059\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00060}\mbox{\hyperlink{icmp_8h_a8c1a2783a4757d09a92df9c4894260e6}{00060}}\ \mbox{\hyperlink{icmp_8h_a8c1a2783a4757d09a92df9c4894260e6}{\_\_attribute\_\_}}((visibility(\textcolor{stringliteral}{"{}default"{}})))\ uint16\_t\ ttak\_net\_icmp\_calculate\_checksum(const\ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{icmp_8h_a9f2760a3f37301e10305d3349b5d4980}{data}},\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{icmp_8h_a5356a3645c29875208316ab4b277c1ae}{len}});}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00061}00061\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00062}00062\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00063}00063\ \textcolor{comment}{\ *\ @brief\ Calculates\ ICMPv6\ checksum\ with\ pseudo-\/header.}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00064}00064\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00065}\mbox{\hyperlink{icmp_8h_a9f2760a3f37301e10305d3349b5d4980}{00065}}\ \mbox{\hyperlink{icmp_8h_a8c1a2783a4757d09a92df9c4894260e6}{\_\_attribute\_\_}}((visibility("{}default"{})))\ uint16\_t\ ttak\_net\_icmp6\_calculate\_checksum(const\ \textcolor{keywordtype}{void}\ *src,\ const\ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{icmp_8h_a9037f54b05f8331e7594be9144926217}{dst}},\ const\ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{icmp_8h_a9f2760a3f37301e10305d3349b5d4980}{data}},\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{icmp_8h_a5356a3645c29875208316ab4b277c1ae}{len}});}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00067}00067\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00068}00068\ \}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00069}00069\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00071}00071\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ TTAK\_NET\_CORE\_ICMP\_H\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

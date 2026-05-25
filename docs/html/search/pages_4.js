@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['libttak_20benchmark_20suite_0',['LibTTAK Benchmark Suite',['../index.html',1,'']]],
-  ['libttak_20specification_1',['LibTTAK Specification',['../md_SPECS.html',1,'']]]
+  ['history_0',['Development History',['../md_HISTORY.html',1,'']]],
+  ['how_20it_20differs_20from_20traditional_20resource_20management_1',['RAII in LibTTAK: How It Differs from Traditional Resource Management',['../md_RAII.html',1,'']]]
 ];

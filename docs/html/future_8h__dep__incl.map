@@ -1,7 +1,12 @@
 <map id="include/ttak/async/future.h" name="include/ttak/async/future.h">
-<area shape="rect" id="node1" title="Simple blocking future for async task result retrieval." alt="" coords="56,5,183,47"/>
-<area shape="rect" id="node2" href="$function_8h.html" title="Convenience wrappers for fire&#45;and&#45;forget async jobs that return futures." alt="" coords="5,184,132,225"/>
-<area shape="rect" id="node3" href="$promise_8h.html" title="One&#45;shot promise for fulfilling a ttak_future_t from a worker thread." alt="" coords="107,95,233,136"/>
-<area shape="rect" id="node4" href="$worker_8h.html" title="Resilient worker&#45;thread wrapper with fault isolation via setjmp." alt="" coords="156,184,285,225"/>
-<area shape="rect" id="node5" href="$thread_2pool_8h.html" title="Managed thread pool built on top of the async task scheduler." alt="" coords="156,273,285,315"/>
+<area shape="rect" id="Node000001" title="Simple blocking future for async task result retrieval." alt="" coords="59,5,200,45"/>
+<area shape="rect" id="Node000002" href="$function_8h.html" title="Convenience wrappers for fire&#45;and&#45;forget async jobs that return futures." alt="" coords="5,181,147,221"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="117,59,104,94,82,182,77,181,99,93,112,57"/>
+<area shape="rect" id="Node000003" href="$promise_8h.html" title="One&#45;shot promise for fulfilling a ttak_future_t from a worker thread." alt="" coords="113,93,255,133"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="151,56,174,92,170,95,147,58"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="151,144,102,183,98,179,148,140"/>
+<area shape="rect" id="Node000004" href="$worker_8h.html" title="Resilient worker&#45;thread wrapper with fault isolation via setjmp." alt="" coords="171,181,317,221"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="207,143,233,180,229,183,203,146"/>
+<area shape="rect" id="Node000005" href="$thread_2pool_8h.html" title="Managed thread pool built on top of the async task scheduler." alt="" coords="171,269,317,309"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="247,235,247,269,241,269,241,235"/>
 </map>

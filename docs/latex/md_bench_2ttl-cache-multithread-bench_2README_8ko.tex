@@ -1,0 +1,48 @@
+\chapter{멀티스레드 TTL 캐시 벤치마크 (한국어)}
+\hypertarget{md_bench_2ttl-cache-multithread-bench_2README_8ko}{}\label{md_bench_2ttl-cache-multithread-bench_2README_8ko}\index{멀티스레드 TTL 캐시 벤치마크 (한국어)@{멀티스레드 TTL 캐시 벤치마크 (한국어)}}
+\label{md_bench_2ttl-cache-multithread-bench_2README_8ko_autotoc_md6}%
+\Hypertarget{md_bench_2ttl-cache-multithread-bench_2README_8ko_autotoc_md6}%
+ 이 디렉터리는 Lib\+TTAK lock-\/free shared memory 성능 벤치마크를 제공합니다.\hypertarget{md_bench_2ttl-cache-multithread-bench_2README_8ko_autotoc_md7}{}\doxysection{\texorpdfstring{핵심 지표}{핵심 지표}}\label{md_bench_2ttl-cache-multithread-bench_2README_8ko_autotoc_md7}
+
+\begin{DoxyItemize}
+\item N초 처리량 (Ops/s)
+\item N초 RSS footprint (MB)
+\item N초 메모리 reclamation ratio ({\ttfamily Clean/s ÷ Retire/s})
+\end{DoxyItemize}\hypertarget{md_bench_2ttl-cache-multithread-bench_2README_8ko_autotoc_md8}{}\doxysection{\texorpdfstring{CI 상세 이미지}{CI 상세 이미지}}\label{md_bench_2ttl-cache-multithread-bench_2README_8ko_autotoc_md8}
+{\ttfamily copilot\+\_\+ci\+\_\+benchmark.\+svg}는 다음 2개 섹션으로 생성됩니다.
+
+
+\begin{DoxyEnumerate}
+\item {\bfseries{컴파일러 3종 비교 섹션}}\+: GCC / Clang / TCC 오버레이 라인 차트
+\item {\bfseries{Embedded Allocator 섹션}}\+: GCC 고정 + {\ttfamily EMBEDDED=0} vs {\ttfamily EMBEDDED=1} 비교
+\end{DoxyEnumerate}
+
+컴파일러 3종 비교 섹션은 각 컴파일러를 \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}60초\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}씩 측정해 생성합니다.
+
+이미지 재생성\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{python3\ ./run\_ci\_benchmark\_series.py\ -\/-\/duration\ 60\ -\/-\/threads\ 1}
+\DoxyCodeLine{python3\ ./generate\_ci\_benchmark\_svg.py}
+\DoxyCodeLine{python3\ ./update\_readme\_ci\_section.py\ -\/-\/duration\ 60}
+
+\end{DoxyCode}
+\hypertarget{md_bench_2ttl-cache-multithread-bench_2README_8ko_autotoc_md9}{}\doxysection{\texorpdfstring{입력 raw 파일}{입력 raw 파일}}\label{md_bench_2ttl-cache-multithread-bench_2README_8ko_autotoc_md9}
+컴파일러 비교\+:
+
+
+\begin{DoxyItemize}
+\item {\ttfamily ci\+\_\+benchmark\+\_\+raw\+\_\+gcc.\+txt} (없으면 {\ttfamily ci\+\_\+benchmark\+\_\+raw.\+txt} 사용)
+\item {\ttfamily ci\+\_\+benchmark\+\_\+raw\+\_\+clang.\+txt}
+\item {\ttfamily ci\+\_\+benchmark\+\_\+raw\+\_\+tcc.\+txt}
+\end{DoxyItemize}
+
+Embedded 비교\+:
+
+
+\begin{DoxyItemize}
+\item {\ttfamily ci\+\_\+benchmark\+\_\+raw\+\_\+gcc\+\_\+embedded0.\+txt}
+\item {\ttfamily ci\+\_\+benchmark\+\_\+raw\+\_\+gcc\+\_\+embedded1.\+txt}
+\end{DoxyItemize}\hypertarget{md_bench_2ttl-cache-multithread-bench_2README_8ko_autotoc_md10}{}\doxysection{\texorpdfstring{참고}{참고}}\label{md_bench_2ttl-cache-multithread-bench_2README_8ko_autotoc_md10}
+환경에 따라 TCC 설치가 불가능할 수 있습니다. 이 경우에도 CI/로컬 벤치 lane이 깨지지 않도록 {\ttfamily CC=tcc} 요청 시 {\ttfamily clang} 호환 빌드로 자동 폴백할 수 있습니다. 

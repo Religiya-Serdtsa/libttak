@@ -5,12 +5,10 @@
 #include <math.h>
 
 /**
- * Multivariate System: Dawonsul (Hong Jeong-ha et al.)
- * Logic: Independent lane processing for multivariate linear systems.
- * Uses hardware-accelerated FMA for each lane to maximize throughput.
- * Reference: Hong Jeong-ha, "Guiljip (九一集)", 1660s.
+ * Matrix-vector lane multiplication using independent lane processing.
+ * Each variable lane is processed independently to maximize throughput.
  */
-static void ttak_math_dawonsul_lane_mul(ttak_bigreal_t *res, const ttak_bigreal_t *mat_elements, const ttak_vector_t *vec, uint8_t cols, uint64_t now) {
+static void ttak_math_lane_mul(ttak_bigreal_t *res, const ttak_bigreal_t *mat_elements, const ttak_vector_t *vec, uint8_t cols, uint64_t now) {
     ttak_bigreal_t sum, prod;
     ttak_bigreal_init_u64(&sum, 0, now);
     ttak_bigreal_init(&prod, now);
@@ -115,8 +113,8 @@ _Bool ttak_matrix_multiply_vec(tt_shared_vector_t *res, tt_shared_matrix_t *m, t
     }
     
     for (uint8_t i = 0; i < mat->rows; i++) {
-        /* Dawonsul: Independent lane processing */
-        ttak_math_dawonsul_lane_mul(&v_res->elements[i], &mat->elements[i * mat->cols], vec, mat->cols, now);
+        /* Independent lane processing for matrix-vector multiply */
+        ttak_math_lane_mul(&v_res->elements[i], &mat->elements[i * mat->cols], vec, mat->cols, now);
     }
     
     m->base.release(&m->base);
@@ -183,10 +181,7 @@ _Bool ttak_matrix_set_rotation(tt_shared_matrix_t *m, tt_owner_t *owner, uint8_t
     ttak_bigreal_init(&s, now);
     ttak_bigreal_init(&c, now);
 
-    /*
-     * Apply the sinusoid approximations cataloged in Yussigihae (Nam Byeong-gil) for stable rotation entries.
-     * Historical reference: Nam Byeong-gil, "Yussigihae".
-     */
+    /* Compute sine and cosine approximations for stable rotation entries */
     ttak_math_approx_sin(&s, angle, now);
     ttak_math_approx_cos(&c, angle, now);
 

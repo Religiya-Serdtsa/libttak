@@ -54,7 +54,7 @@ bool ttak_vector_cross(tt_shared_vector_t *res, tt_shared_vector_t *a, tt_shared
 bool ttak_vector_magnitude(ttak_bigreal_t *res, tt_shared_vector_t *v, tt_owner_t *owner, uint64_t now);
 
 /**
- * @brief Approximate sine function using Yussigihae-inspired polynomial expansion.
+ * @brief Approximate sine function using a polynomial expansion.
  *
  * @param res Result bigreal.
  * @param angle Angle in radians.
@@ -64,7 +64,7 @@ bool ttak_vector_magnitude(ttak_bigreal_t *res, tt_shared_vector_t *v, tt_owner_
 bool ttak_math_approx_sin(ttak_bigreal_t *res, const ttak_bigreal_t *angle, uint64_t now);
 
 /**
- * @brief Approximate cosine function using Yussigihae-inspired polynomial expansion.
+ * @brief Approximate cosine function using a polynomial expansion.
  *
  * @param res Result bigreal.
  * @param angle Angle in radians.

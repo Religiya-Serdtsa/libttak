@@ -1,13 +1,25 @@
 <map id="include/ttak/async/task.h" name="include/ttak/async/task.h">
-<area shape="rect" id="node1" title=" " alt="" coords="333,5,460,47"/>
-<area shape="rect" id="node2" href="$function_8h.html" title="Convenience wrappers for fire&#45;and&#45;forget async jobs that return futures." alt="" coords="5,95,132,136"/>
-<area shape="rect" id="node3" href="$sched_8h.html" title="Async task scheduler — init, shutdown, schedule, and yield." alt="" coords="156,95,283,136"/>
-<area shape="rect" id="node6" href="$internal_2queue_8h.html" title="Internal priority&#45;queue node and vtable types." alt="" coords="331,95,463,136"/>
-<area shape="rect" id="node8" href="$thread_2pool_8h.html" title="Managed thread pool built on top of the async task scheduler." alt="" coords="384,273,513,315"/>
-<area shape="rect" id="node9" href="$scheduler_8h.html" title="Priority&#45;aware task scheduler that maps nice values to run queues." alt="" coords="565,95,697,136"/>
-<area shape="rect" id="node4" href="$include_2ttak_2thread_2thread__compat_8h.html" title="Minimal cross&#45;platform thread wrappers exposed by libttak." alt="" coords="155,184,284,225"/>
-<area shape="rect" id="node5" href="$examples_2mersenne-prime_2thread__compat_8h.html" title=" " alt="" coords="131,273,307,315"/>
-<area shape="rect" id="node7" href="$queue_8h.html" title="Public short&#45;hand aliases for the internal priority&#45;queue types." alt="" coords="331,184,463,225"/>
-<area shape="rect" id="node10" href="$calculus_8h.html" title=" " alt="" coords="539,191,724,218"/>
-<area shape="rect" id="node11" href="$stats__ext_8h.html" title=" " alt="" coords="749,184,871,225"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="365,5,507,45"/>
+<area shape="rect" id="Node000002" href="$function_8h.html" title="Convenience wrappers for fire&#45;and&#45;forget async jobs that return futures." alt="" coords="5,93,147,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="353,49,148,98,147,93,351,44"/>
+<area shape="rect" id="Node000003" href="$sched_8h.html" title="Async task scheduler — init, shutdown, schedule, and yield." alt="" coords="171,93,312,133"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="382,53,285,96,283,91,380,48"/>
+<area shape="rect" id="Node000006" href="$internal_2queue_8h.html" title="Internal priority&#45;queue node and vtable types." alt="" coords="361,93,511,133"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="439,59,439,93,433,93,433,59"/>
+<area shape="rect" id="Node000008" href="$thread_2pool_8h.html" title="Managed thread pool built on top of the async task scheduler." alt="" coords="421,269,566,309"/>
+<area shape="poly" id="edge12_Node000001_Node000008" title=" " alt="" coords="488,51,510,69,526,92,539,126,541,156,527,222,518,248,507,270,502,268,513,246,521,221,535,155,534,128,522,95,506,73,485,55"/>
+<area shape="rect" id="Node000009" href="$scheduler_8h.html" title="Priority&#45;aware task scheduler that maps nice values to run queues." alt="" coords="615,93,766,133"/>
+<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="506,47,636,91,634,96,504,52"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="327,99,335,104,339,114,331,126,313,132,312,127,328,122,333,113,331,108,324,103"/>
+<area shape="rect" id="Node000004" href="$include_2ttak_2thread_2thread__compat_8h.html" title="Minimal cross&#45;platform thread wrappers exposed by libttak." alt="" coords="169,181,314,221"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="244,147,244,181,239,181,239,147"/>
+<area shape="rect" id="Node000005" href="$examples_2mersenne-prime_2thread__compat_8h.html" title=" " alt="" coords="142,269,341,309"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="244,235,244,269,239,269,239,235"/>
+<area shape="rect" id="Node000007" href="$queue_8h.html" title="Public short&#45;hand aliases for the internal priority&#45;queue types." alt="" coords="361,181,511,221"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="439,147,439,181,433,181,433,147"/>
+<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="459,232,483,268,478,271,454,234"/>
+<area shape="rect" id="Node000010" href="$calculus_8h.html" title=" " alt="" coords="587,189,794,214"/>
+<area shape="poly" id="edge10_Node000009_Node000010" title=" " alt="" coords="693,147,693,188,688,188,688,147"/>
+<area shape="rect" id="Node000011" href="$stats__ext_8h.html" title=" " alt="" coords="818,181,953,221"/>
+<area shape="poly" id="edge11_Node000009_Node000011" title=" " alt="" coords="747,136,844,179,842,184,745,141"/>
 </map>

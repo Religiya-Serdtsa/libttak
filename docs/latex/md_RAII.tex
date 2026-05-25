@@ -1,0 +1,230 @@
+\chapter{RAII in Lib\+TTAK\+: How It Differs from Traditional Resource Management}
+\hypertarget{md_RAII}{}\label{md_RAII}\index{RAII in LibTTAK: How It Differs from Traditional Resource Management@{RAII in LibTTAK: How It Differs from Traditional Resource Management}}
+\label{md_RAII_autotoc_md30}%
+\Hypertarget{md_RAII_autotoc_md30}%
+ \hypertarget{md_RAII_autotoc_md31}{}\doxysection{\texorpdfstring{Overview}{Overview}}\label{md_RAII_autotoc_md31}
+Lib\+TTAK is a C systems library. It does {\bfseries{not}} adopt the classic C++-\/style RAII pattern—where resources are acquired in a constructor and automatically released by an implicit destructor when a stack object goes out of scope. Instead, Lib\+TTAK defines a {\bfseries{predictable, explicit lifetime model}} built on owners, detachable arenas, and epoch-\/based reclamation. Every allocation, teardown step, and cross-\/thread transfer is observable and caller-\/driven.
+
+\DoxyHorRuler{0}
+\hypertarget{md_RAII_autotoc_md33}{}\doxysection{\texorpdfstring{1. Explicit Lifetimes Instead of Implicit Destructors}{1. Explicit Lifetimes Instead of Implicit Destructors}}\label{md_RAII_autotoc_md33}
+{\bfseries{Traditional RAII}} relies on compiler-\/generated destructor calls tied to variable scope. The programmer does not write the release code; it happens automatically.
+
+{\bfseries{Lib\+TTAK}} requires callers to pass a {\ttfamily lifetime\+\_\+ticks} hint at allocation time ({\ttfamily ttak\+\_\+mem\+\_\+alloc\+\_\+safe}, {\ttfamily ttak\+\_\+fastalloc}). The memory header records creation and expiration ticks. The block may become {\itshape dirty} when {\ttfamily now\+\_\+tick \texorpdfstring{$>$}{>} expires\+\_\+tick}, but it is {\bfseries{not}} freed automatically. Callers must invoke {\ttfamily ttak\+\_\+mem\+\_\+free}, {\ttfamily tt\+\_\+autoclean\+\_\+dirty\+\_\+pointers}, or an owner teardown explicitly. There are no hidden destructor calls.
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Traditional RAII   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Lib\+TTAK    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Traditional RAII   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Lib\+TTAK    }\\\cline{1-2}
+\endhead
+Scope-\/bound automatic destruction   &Tick-\/based expiration with explicit cleanup    \\\cline{1-2}
+{\ttfamily \texorpdfstring{$\sim$}{\string~}\+T()} called by the runtime   &{\ttfamily \doxylink{mem_8h_afdcd75479e1ca4dde197214d0430de65}{ttak\+\_\+mem\+\_\+free()}} or owner destruction called by the user    \\\cline{1-2}
+Stack object owns the resource   &{\ttfamily ttak\+\_\+owner\+\_\+t} or {\ttfamily ttak\+\_\+detachable\+\_\+context\+\_\+t} owns the resource   \\\cline{1-2}
+\end{longtabu}
+
+
+\DoxyHorRuler{0}
+\hypertarget{md_RAII_autotoc_md35}{}\doxysection{\texorpdfstring{2. Owner-\/\+Based Sandboxing ($<$tt$>$ttak\+\_\+owner\+\_\+t$<$/tt$>$)}{2. Owner-Based Sandboxing (<tt>ttak\_owner\_t</tt>)}}\label{md_RAII_autotoc_md35}
+Lib\+TTAK introduces {\bfseries{owners}} as first-\/class containers for resources and functions. An owner ({\ttfamily ttak\+\_\+owner\+\_\+t}) is an explicit sandbox that\+:
+
+
+\begin{DoxyItemize}
+\item Registers resources and functions inside isolated maps.
+\item Enforces safety policies ({\ttfamily TTAK\+\_\+\+OWNER\+\_\+\+DENY\+\_\+\+DANGEROUS\+\_\+\+MEM}, {\ttfamily TTAK\+\_\+\+OWNER\+\_\+\+STRICT\+\_\+\+ISOLATION}).
+\item Requires explicit {\ttfamily \doxylink{owner_8h_a73e3bd2628d53ed3e2b168de4f999c16}{ttak\+\_\+owner\+\_\+destroy()}} to release everything inside it.
+\end{DoxyItemize}
+
+Unlike traditional RAII, where a single smart pointer owns one heap object, an owner owns {\bfseries{a graph of resources}}. Destruction of the owner releases the entire graph, but the programmer decides {\bfseries{when}} to trigger it.
+
+\DoxyHorRuler{0}
+\hypertarget{md_RAII_autotoc_md37}{}\doxysection{\texorpdfstring{3. Detachable Generational Arenas ($<$tt$>$ttak\+\_\+detachable\+\_\+context\+\_\+t$<$/tt$>$)}{3. Detachable Generational Arenas (<tt>ttak\_detachable\_context\_t</tt>)}}\label{md_RAII_autotoc_md37}
+Lib\+TTAK allocates through {\bfseries{detachable arenas}}, not a global {\ttfamily malloc}/{\ttfamily free} pair. Each arena maintains\+:
+
+
+\begin{DoxyItemize}
+\item A 2D generation matrix ({\ttfamily rows\mbox{[}TTAK\+\_\+\+DETACHABLE\+\_\+\+MATRIX\+\_\+\+ROWS\mbox{]}}) that tracks active allocations.
+\item A small-\/cache for chunks ≤ 16 bytes.
+\item A quarantine row for fast-\/flipping allocations.
+\item A status byte ({\ttfamily ttak\+\_\+detach\+\_\+status\+\_\+t}) that converges to {\ttfamily UNKNOWN} unless explicitly marked {\ttfamily KNOWN}.
+\end{DoxyItemize}
+
+This means memory is {\bfseries{not}} returned to the OS immediately upon {\ttfamily free}. Instead, it may be cached inside the arena or quarantined until the generation flips. Traditional RAII frees memory deterministically at scope exit; Lib\+TTAK frees it {\bfseries{deterministically through arena teardown}} or {\bfseries{lazily through epoch rotation}}, depending on the context flags.
+
+\DoxyHorRuler{0}
+\hypertarget{md_RAII_autotoc_md39}{}\doxysection{\texorpdfstring{4. Epoch-\/\+Based Reclamation (\+EBR) Instead of Immediate Free}{4. Epoch-Based Reclamation (EBR) Instead of Immediate Free}}\label{md_RAII_autotoc_md39}
+Shared mutable state in Lib\+TTAK is protected by {\bfseries{Epoch-\/\+Based Reclamation (EBR)}}.
+
+
+\begin{DoxyItemize}
+\item Threads must {\bfseries{explicitly}} call {\ttfamily \doxylink{epoch_8h_a8366f378a77c7d52db1e8f02f099a88d}{ttak\+\_\+epoch\+\_\+enter()}} before accessing shared data and {\ttfamily \doxylink{epoch_8h_ac346c8d9bda60303dcac37eacdb5117e}{ttak\+\_\+epoch\+\_\+exit()}} afterward.
+\item Retired pointers are deferred via {\ttfamily ttak\+\_\+epoch\+\_\+retire(ptr, cleanup)}.
+\item Reclamation ({\ttfamily \doxylink{epoch_8h_aa6be6071c276481154cceb40f5720f32}{ttak\+\_\+epoch\+\_\+reclaim()}}) is deferred until all active threads have passed the current epoch.
+\end{DoxyItemize}
+
+However, Lib\+TTAK does {\bfseries{not}} force the caller to trigger every reclamation pass manually. The {\ttfamily ttak\+\_\+epoch\+\_\+gc\+\_\+t} context launches a {\bfseries{background rotate thread}} by default. This thread automatically advances epochs and performs non-\/blocking cleanup passes at adaptive intervals ({\ttfamily min\+\_\+rotate\+\_\+ns} / {\ttfamily max\+\_\+rotate\+\_\+ns}). Callers can influence its cadence through hints ({\ttfamily ttak\+\_\+epoch\+\_\+gc\+\_\+hint}) such as {\ttfamily TTAK\+\_\+\+EPOCH\+\_\+\+GC\+\_\+\+HINT\+\_\+\+ALLOC}, {\ttfamily TTAK\+\_\+\+EPOCH\+\_\+\+GC\+\_\+\+HINT\+\_\+\+IDLE}, or {\ttfamily TTAK\+\_\+\+EPOCH\+\_\+\+GC\+\_\+\+HINT\+\_\+\+COLLECT\+\_\+\+NOW}. If deterministic, caller-\/controlled timing is required, {\ttfamily \doxylink{epoch__gc_8h_a78ff9f44d1919ebb90542bfdd87f946e}{ttak\+\_\+epoch\+\_\+gc\+\_\+manual\+\_\+rotate()}} disables the auto-\/rotator so that {\ttfamily \doxylink{epoch__gc_8h_a2c9fb90ed22fe61eea9bbcafddf53625}{ttak\+\_\+epoch\+\_\+gc\+\_\+rotate()}} and {\ttfamily \doxylink{epoch_8h_aa6be6071c276481154cceb40f5720f32}{ttak\+\_\+epoch\+\_\+reclaim()}} are invoked explicitly.
+
+This is fundamentally different from traditional RAII, where a {\ttfamily shared\+\_\+ptr} reference count drops to zero and the object is destroyed immediately. In Lib\+TTAK, even when the last logical owner releases a pointer, the physical memory may stay alive across an epoch boundary to protect concurrent readers, and the decision of {\itshape when} to advance that boundary can be either {\bfseries{automated}} or {\bfseries{manually orchestrated}}.
+
+\DoxyHorRuler{0}
+\hypertarget{md_RAII_autotoc_md41}{}\doxysection{\texorpdfstring{5. Signal-\/\+Aware Graceful Teardown}{5. Signal-Aware Graceful Teardown}}\label{md_RAII_autotoc_md41}
+Lib\+TTAK provides signal hooks ({\ttfamily ttak\+\_\+hard\+\_\+kill\+\_\+graceful\+\_\+exit}, {\ttfamily ttak\+\_\+hard\+\_\+kill\+\_\+exit}) that interact with detachable arenas\+:
+
+
+\begin{DoxyItemize}
+\item {\bfseries{Graceful mode}} flushes arena caches and rows, then exits.
+\item {\bfseries{Immediate mode}} exits without cleanup.
+\end{DoxyItemize}
+
+Traditional RAII runs destructors during normal stack unwinding (e.\+g., C++ exceptions), but signal handlers are not part of that unwinding model. Lib\+TTAK makes teardown {\bfseries{explicit at the signal boundary}}, ensuring arenas do not leak without logging their final state.
+
+\DoxyHorRuler{0}
+\hypertarget{md_RAII_autotoc_md43}{}\doxysection{\texorpdfstring{6. No Hidden Global State or TLS Caches}{6. No Hidden Global State or TLS Caches}}\label{md_RAII_autotoc_md43}
+Traditional RAII frameworks (and some C allocators) rely on hidden thread-\/local caches or global free lists to amortize allocation costs. Lib\+TTAK {\bfseries{prohibits}} hidden TLS caches\+:
+
+
+\begin{DoxyItemize}
+\item {\ttfamily TTAK\+\_\+\+ARENA\+\_\+\+IS\+\_\+\+SINGLE\+\_\+\+THREAD}, {\ttfamily TTAK\+\_\+\+ARENA\+\_\+\+HAS\+\_\+\+OWNER}, and other flags are advertised explicitly.
+\item Every thread must register with the epoch manager ({\ttfamily ttak\+\_\+epoch\+\_\+register\+\_\+thread}).
+\item Arena flags, cache sizes, and quarantine limits are visible to the caller.
+\end{DoxyItemize}
+
+If a subsystem does not need EBR, it must document why. Nothing is implicit.
+
+\DoxyHorRuler{0}
+\hypertarget{md_RAII_autotoc_md45}{}\doxysection{\texorpdfstring{Summary}{Summary}}\label{md_RAII_autotoc_md45}
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{3}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Aspect   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Traditional RAII   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Lib\+TTAK Approach    }\\\cline{1-3}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Aspect   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Traditional RAII   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Lib\+TTAK Approach    }\\\cline{1-3}
+\endhead
+{\bfseries{Binding}}   &Tied to stack scope / object lifetime   &Tied to explicit owners, arenas, and epochs    \\\cline{1-3}
+{\bfseries{Destruction trigger}}   &Compiler-\/generated destructor   &Caller-\/driven {\ttfamily destroy}, arena flush, or epoch reclaim    \\\cline{1-3}
+{\bfseries{Shared data}}   &{\ttfamily shared\+\_\+ptr} reference counting   &EBR with explicit enter/exit/reclaim    \\\cline{1-3}
+{\bfseries{Teardown under signals}}   &Exception unwinding (C++)   &Explicit signal hooks with graceful/immediate modes    \\\cline{1-3}
+{\bfseries{Caching / deferral}}   &Usually hidden in allocator TLS   &Explicit arena caches and quarantine rows    \\\cline{1-3}
+{\bfseries{Observability}}   &Often opaque   &Header ticks, access counts, checksums, JSON tracing   \\\cline{1-3}
+\end{longtabu}
+
+
+Lib\+TTAK trades the convenience of implicit destruction for {\bfseries{predictability}}. You can explain every byte’s provenance, every deferral, and every cleanup step without reading compiler output. This is RAII reimagined for C systems programming\+: not automatic, but {\bfseries{accountable}}.
+
+\DoxyHorRuler{0}
+\hypertarget{md_RAII_autotoc_md47}{}\doxysection{\texorpdfstring{Why Network, Math, and More Live Inside a Single Systems Library}{Why Network, Math, and More Live Inside a Single Systems Library}}\label{md_RAII_autotoc_md47}
+\hypertarget{md_RAII_autotoc_md48}{}\doxysubsection{\texorpdfstring{Overview}{Overview}}\label{md_RAII_autotoc_md48}
+Lib\+TTAK bundles networking, math, cryptography, I/O, scripting, tree structures, and physics utilities into one C systems library. This is not "{}batteries included"{} for convenience. It is a {\bfseries{structural decision}} to keep every subsystem under the same deterministic substrate—one allocator, one ownership model, one epoch reclamation contract, and one observability plane.
+
+\DoxyHorRuler{0}
+\hypertarget{md_RAII_autotoc_md50}{}\doxysubsection{\texorpdfstring{1. One Lifetime Model for Every Subsystem}{1. One Lifetime Model for Every Subsystem}}\label{md_RAII_autotoc_md50}
+When networking packets, mathematical matrices, and cryptographic buffers all allocate through {\ttfamily ttak\+\_\+mem\+\_\+alloc\+\_\+safe} and live inside {\ttfamily ttak\+\_\+owner\+\_\+t} sandboxes, there is {\bfseries{no semantic gap}} between domains.
+
+
+\begin{DoxyItemize}
+\item A network session manager ({\ttfamily ttak\+\_\+net\+\_\+session\+\_\+mgr\+\_\+t}) registers its connection table as an owner resource.
+\item A bigint limb array is allocated with the same {\ttfamily lifetime\+\_\+ticks} and tier hints as a socket buffer.
+\item A detached arena can hold AST nodes, ring-\/buffer segments, and zero-\/copy I/O regions side by side.
+\end{DoxyItemize}
+
+Splitting these into separate libraries would force the caller to bridge mismatched allocators, ownership idioms, and reclamation strategies. Inside Lib\+TTAK, they share the exact same provenance rules.
+
+\DoxyHorRuler{0}
+\hypertarget{md_RAII_autotoc_md52}{}\doxysubsection{\texorpdfstring{2. Zero-\/\+Copy and Scheduling Co-\/\+Design}{2. Zero-Copy and Scheduling Co-Design}}\label{md_RAII_autotoc_md52}
+Lib\+TTAK’s I/O layer ({\ttfamily ttak\+\_\+io\+\_\+zerocopy\+\_\+region\+\_\+t}) divides detachable buffers into 4 KiB segments for scatter/gather syscalls. Math accelerators ({\ttfamily ttak\+\_\+execute\+\_\+batch}) and security engines ({\ttfamily ttak\+\_\+security\+\_\+execute}) operate on the same detachable arenas.
+
+This means\+:
+
+
+\begin{DoxyItemize}
+\item A network packet can be decrypted in-\/place by the security engine without copying into a separate crypto library’s buffer.
+\item A math kernel can read matrix data straight from a zero-\/copy I/O region mapped into an arena.
+\item The scheduler ({\ttfamily ttak\+\_\+scheduler\+\_\+record\+\_\+execution}) sees work items from networking, math, and scripting as {\bfseries{uniform tasks}} with identical NICEness budgets and epoch registration.
+\end{DoxyItemize}
+
+Co-\/design is only possible when every participant speaks the same buffer and scheduling language.
+
+\DoxyHorRuler{0}
+\hypertarget{md_RAII_autotoc_md54}{}\doxysubsection{\texorpdfstring{3. Deterministic Scheduling Across Domains}{3. Deterministic Scheduling Across Domains}}\label{md_RAII_autotoc_md54}
+Lib\+TTAK’s concurrency model is grounded in {\bfseries{orthogonal Latin square (OLS)}} principles\+: deterministic slot isolation minimizes contention. This is not limited to one subsystem.
+
+
+\begin{DoxyItemize}
+\item {\bfseries{Networking\+:}} The lattice scheduler uses OLS-\/inspired coordinate selection for parallel ingress balancing and burst dispersion.
+\item {\bfseries{Math\+:}} The NTT and matrix modules align work units to the same segmented shard table ({\ttfamily \doxylink{structttak__shard__table__t}{ttak\+\_\+shard\+\_\+table\+\_\+t}}) to avoid cache-\/line ping-\/pong.
+\item {\bfseries{Execution\+:}} The async task pool and priority heap apply the same contention-\/minimizing slot logic to worker threads.
+\end{DoxyItemize}
+
+Extracting any of these domains into an external library would fracture the scheduling semantics. Keeping them together ensures that a network router, a math kernel, and a background GC thread all obey the same deterministic isolation rules.
+
+\DoxyHorRuler{0}
+\hypertarget{md_RAII_autotoc_md56}{}\doxysubsection{\texorpdfstring{4. A Single Allocator Contract}{4. A Single Allocator Contract}}\label{md_RAII_autotoc_md56}
+Lib\+TTAK enforces an {\bfseries{arena-\/first allocation rule}}\+: no subsystem may call {\ttfamily malloc} directly.
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ External Ecosystem   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Lib\+TTAK    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ External Ecosystem   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Lib\+TTAK    }\\\cline{1-2}
+\endhead
+Math library brings its own pool   &Big\+Int uses {\ttfamily ttak\+\_\+mem\+\_\+alloc\+\_\+safe} with tier hints    \\\cline{1-2}
+Crypto library manages its own secure heap   &LEA/\+SEED/\+Cha\+Cha20 operates on detachable arenas with header checksums    \\\cline{1-2}
+Network framework hides buffer pools   &{\ttfamily ttak\+\_\+io\+\_\+buffer\+\_\+t} pins into arenas provenance    \\\cline{1-2}
+Scripting runtime uses custom GC   &Big\+Script registers AST nodes into the same {\ttfamily ttak\+\_\+epoch\+\_\+gc\+\_\+t}   \\\cline{1-2}
+\end{longtabu}
+
+
+Unifying allocation eliminates hidden fragmentation, makes RSS growth explainable, and lets pressure thresholds ({\ttfamily ttak\+\_\+mem\+\_\+configure\+\_\+gc}) govern the entire process—not just one library.
+
+\DoxyHorRuler{0}
+\hypertarget{md_RAII_autotoc_md58}{}\doxysubsection{\texorpdfstring{5. Unified Observability}{5. Unified Observability}}\label{md_RAII_autotoc_md58}
+Every subsystem accepts a {\ttfamily uint64\+\_\+t now} timestamp and exposes stats/logging entry points.
+
+
+\begin{DoxyItemize}
+\item A network session logs its generation ID and owner ID through {\ttfamily ttak\+\_\+logger\+\_\+t}.
+\item A math accelerator logs checksum seeds and driver selection through the same tracing path.
+\item Memory headers store JSON tracking logs ({\ttfamily tracking\+\_\+log}) that span all domains.
+\end{DoxyItemize}
+
+If networking lived in one library, math in another, and memory in a third, the operator would need three different tracing conventions to answer a single question\+: \texorpdfstring{$\ast$}{*}"{}\+Where did this byte come from, and who touched it last?"{}\texorpdfstring{$\ast$}{*} Lib\+TTAK answers that question with one log format and one epoch counter.
+
+\DoxyHorRuler{0}
+\hypertarget{md_RAII_autotoc_md60}{}\doxysubsection{\texorpdfstring{6. Tiny\+CC Parity and ABI Stability}{6. TinyCC Parity and ABI Stability}}\label{md_RAII_autotoc_md60}
+All modules—including network, math, and security—must build under Tiny\+CC {\ttfamily -\/O0} with portable fallbacks. They share the same compiler-\/abstraction macros ({\ttfamily TTAK\+\_\+\+FORCE\+\_\+\+INLINE}, {\ttfamily TTAK\+\_\+\+UNLIKELY}, {\ttfamily TTAK\+\_\+\+ATOMIC\+\_\+\+FETCH\+\_\+\+ADD\+\_\+\+U64}) and the same header-\/layout stability guarantees ({\ttfamily TTAK\+\_\+\+MEM\+\_\+\+FORCE\+\_\+\+ACCESS\+\_\+\+BRIDGE}).
+
+Splitting the project would force each library to reinvent Tiny\+CC compatibility, atomic fallbacks, and ABI bridges. Inside Lib\+TTAK, one compatibility layer covers every domain.
+
+\DoxyHorRuler{0}
+\hypertarget{md_RAII_autotoc_md62}{}\doxysubsection{\texorpdfstring{Summary}{Summary}}\label{md_RAII_autotoc_md62}
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ If Split Apart   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Inside Lib\+TTAK    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ If Split Apart   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Inside Lib\+TTAK    }\\\cline{1-2}
+\endhead
+Allocator bridges and fragmentation hidden in glue code   &One arena-\/first contract for packets, bigints, and AST nodes    \\\cline{1-2}
+Network crypto copies into foreign secure heaps   &Security engine decrypts inside detachable zero-\/copy arenas    \\\cline{1-2}
+Math kernels fight the network stack for cache lines   &Both use the same OLS-\/based segmented shard isolation    \\\cline{1-2}
+Multiple tracing formats and GC heuristics   &One epoch manager, one logger, one {\ttfamily now\+\_\+tick} audit trail    \\\cline{1-2}
+Separate Tiny\+CC/\+ABI compatibility shims   &Single compatibility layer for all domains   \\\cline{1-2}
+\end{longtabu}
+
+
+Lib\+TTAK is not a collection of unrelated features. It is a {\bfseries{single deterministic substrate}} where networking, math, cryptography, and concurrency are co-\/designed under explicit lifetimes. The goal is narrower than a generic toolkit\+: build infrastructure primitives that remain stable under sustained load, regardless of which domain is on top.
+
+{\bfseries{Predictability matters more than modularity for its own sake.}} 

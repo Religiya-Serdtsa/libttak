@@ -1,0 +1,147 @@
+\doxysection{include/ttak/mols\+\_\+control.h File Reference}
+\hypertarget{mols__control_8h}{}\label{mols__control_8h}\index{include/ttak/mols\_control.h@{include/ttak/mols\_control.h}}
+
+
+Congestion control helpers built on mutually orthogonal Latin squares (MOLS).  
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+Include dependency graph for mols\+\_\+control.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=229pt]{mols__control_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=229pt]{mols__control_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{mols__control_8h_aa5d25431e846e78a430e2e1a98334473}{TTAK\+\_\+\+MOLS\+\_\+\+GRID\+\_\+\+ORDER}}~(64U)
+\item 
+\#define \mbox{\hyperlink{mols__control_8h_a3e1232cb62920b45e0e97256e166914b}{TTAK\+\_\+\+MOLS\+\_\+\+COORD\+\_\+\+SHIFT}}~(6U)
+\item 
+\#define \mbox{\hyperlink{mols__control_8h_ac654603a18a1cdb890a1e1f532645690}{TTAK\+\_\+\+MOLS\+\_\+\+SYMBOL\+\_\+\+MASK}}~(\mbox{\hyperlink{mols__control_8h_aa5d25431e846e78a430e2e1a98334473}{TTAK\+\_\+\+MOLS\+\_\+\+GRID\+\_\+\+ORDER}} -\/ 1U)
+\item 
+\#define \mbox{\hyperlink{mols__control_8h_a6d1b77963f28d753b4c9b68d9425a904}{TTAK\+\_\+\+MOLS\+\_\+\+NODE\+\_\+\+COUNT}}~(\mbox{\hyperlink{mols__control_8h_aa5d25431e846e78a430e2e1a98334473}{TTAK\+\_\+\+MOLS\+\_\+\+GRID\+\_\+\+ORDER}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{mols__control_8h_aa5d25431e846e78a430e2e1a98334473}{TTAK\+\_\+\+MOLS\+\_\+\+GRID\+\_\+\+ORDER}})
+\item 
+\#define \mbox{\hyperlink{mols__control_8h_a52acb795513e6854aef55eaa1d32150a}{TTAK\+\_\+\+MOLS\+\_\+\+LUT\+\_\+\+BITS}}~(8U)
+\item 
+\#define \mbox{\hyperlink{mols__control_8h_a4b8566108b074f1a06f3ead3e8dc3156}{TTAK\+\_\+\+MOLS\+\_\+\+LUT\+\_\+\+SIZE}}~(1U $<$$<$ \mbox{\hyperlink{mols__control_8h_a52acb795513e6854aef55eaa1d32150a}{TTAK\+\_\+\+MOLS\+\_\+\+LUT\+\_\+\+BITS}})
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{mols__control_8h_ae070b9e05900410ed31898abf4a9a0ab}{ttak\+\_\+apply\+\_\+mols\+\_\+control}} (uint16\+\_\+t node\+\_\+id, uint32\+\_\+t current\+\_\+load)
+\begin{DoxyCompactList}\small\item\em Apply MOLS-\/based congestion control on a 64×64 mesh node. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Congestion control helpers built on mutually orthogonal Latin squares (MOLS). 
+
+Exposes a single entry point that redistributes load across a 64×64 mesh. Each node\textquotesingle{}s coordinates feed a matched pair of Latin squares whose values are XOR-\/mixed with the caller\textquotesingle{}s seed so every subsystem observes the same deterministic shuffling without branching on compile-\/time knobs. 
+
+Definition in file \mbox{\hyperlink{mols__control_8h_source}{mols\+\_\+control.\+h}}.
+
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{mols__control_8h_a3e1232cb62920b45e0e97256e166914b}\label{mols__control_8h_a3e1232cb62920b45e0e97256e166914b} 
+\index{mols\_control.h@{mols\_control.h}!TTAK\_MOLS\_COORD\_SHIFT@{TTAK\_MOLS\_COORD\_SHIFT}}
+\index{TTAK\_MOLS\_COORD\_SHIFT@{TTAK\_MOLS\_COORD\_SHIFT}!mols\_control.h@{mols\_control.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_MOLS\_COORD\_SHIFT}{TTAK\_MOLS\_COORD\_SHIFT}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+MOLS\+\_\+\+COORD\+\_\+\+SHIFT~(6U)}
+
+
+
+Definition at line \mbox{\hyperlink{mols__control_8h_source_l00017}{17}} of file \mbox{\hyperlink{mols__control_8h_source}{mols\+\_\+control.\+h}}.
+
+\Hypertarget{mols__control_8h_aa5d25431e846e78a430e2e1a98334473}\label{mols__control_8h_aa5d25431e846e78a430e2e1a98334473} 
+\index{mols\_control.h@{mols\_control.h}!TTAK\_MOLS\_GRID\_ORDER@{TTAK\_MOLS\_GRID\_ORDER}}
+\index{TTAK\_MOLS\_GRID\_ORDER@{TTAK\_MOLS\_GRID\_ORDER}!mols\_control.h@{mols\_control.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_MOLS\_GRID\_ORDER}{TTAK\_MOLS\_GRID\_ORDER}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+MOLS\+\_\+\+GRID\+\_\+\+ORDER~(64U)}
+
+
+
+Definition at line \mbox{\hyperlink{mols__control_8h_source_l00016}{16}} of file \mbox{\hyperlink{mols__control_8h_source}{mols\+\_\+control.\+h}}.
+
+\Hypertarget{mols__control_8h_a52acb795513e6854aef55eaa1d32150a}\label{mols__control_8h_a52acb795513e6854aef55eaa1d32150a} 
+\index{mols\_control.h@{mols\_control.h}!TTAK\_MOLS\_LUT\_BITS@{TTAK\_MOLS\_LUT\_BITS}}
+\index{TTAK\_MOLS\_LUT\_BITS@{TTAK\_MOLS\_LUT\_BITS}!mols\_control.h@{mols\_control.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_MOLS\_LUT\_BITS}{TTAK\_MOLS\_LUT\_BITS}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+MOLS\+\_\+\+LUT\+\_\+\+BITS~(8U)}
+
+
+
+Definition at line \mbox{\hyperlink{mols__control_8h_source_l00020}{20}} of file \mbox{\hyperlink{mols__control_8h_source}{mols\+\_\+control.\+h}}.
+
+\Hypertarget{mols__control_8h_a4b8566108b074f1a06f3ead3e8dc3156}\label{mols__control_8h_a4b8566108b074f1a06f3ead3e8dc3156} 
+\index{mols\_control.h@{mols\_control.h}!TTAK\_MOLS\_LUT\_SIZE@{TTAK\_MOLS\_LUT\_SIZE}}
+\index{TTAK\_MOLS\_LUT\_SIZE@{TTAK\_MOLS\_LUT\_SIZE}!mols\_control.h@{mols\_control.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_MOLS\_LUT\_SIZE}{TTAK\_MOLS\_LUT\_SIZE}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+MOLS\+\_\+\+LUT\+\_\+\+SIZE~(1U $<$$<$ \mbox{\hyperlink{mols__control_8h_a52acb795513e6854aef55eaa1d32150a}{TTAK\+\_\+\+MOLS\+\_\+\+LUT\+\_\+\+BITS}})}
+
+
+
+Definition at line \mbox{\hyperlink{mols__control_8h_source_l00021}{21}} of file \mbox{\hyperlink{mols__control_8h_source}{mols\+\_\+control.\+h}}.
+
+\Hypertarget{mols__control_8h_a6d1b77963f28d753b4c9b68d9425a904}\label{mols__control_8h_a6d1b77963f28d753b4c9b68d9425a904} 
+\index{mols\_control.h@{mols\_control.h}!TTAK\_MOLS\_NODE\_COUNT@{TTAK\_MOLS\_NODE\_COUNT}}
+\index{TTAK\_MOLS\_NODE\_COUNT@{TTAK\_MOLS\_NODE\_COUNT}!mols\_control.h@{mols\_control.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_MOLS\_NODE\_COUNT}{TTAK\_MOLS\_NODE\_COUNT}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+MOLS\+\_\+\+NODE\+\_\+\+COUNT~(\mbox{\hyperlink{mols__control_8h_aa5d25431e846e78a430e2e1a98334473}{TTAK\+\_\+\+MOLS\+\_\+\+GRID\+\_\+\+ORDER}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{mols__control_8h_aa5d25431e846e78a430e2e1a98334473}{TTAK\+\_\+\+MOLS\+\_\+\+GRID\+\_\+\+ORDER}})}
+
+
+
+Definition at line \mbox{\hyperlink{mols__control_8h_source_l00019}{19}} of file \mbox{\hyperlink{mols__control_8h_source}{mols\+\_\+control.\+h}}.
+
+\Hypertarget{mols__control_8h_ac654603a18a1cdb890a1e1f532645690}\label{mols__control_8h_ac654603a18a1cdb890a1e1f532645690} 
+\index{mols\_control.h@{mols\_control.h}!TTAK\_MOLS\_SYMBOL\_MASK@{TTAK\_MOLS\_SYMBOL\_MASK}}
+\index{TTAK\_MOLS\_SYMBOL\_MASK@{TTAK\_MOLS\_SYMBOL\_MASK}!mols\_control.h@{mols\_control.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_MOLS\_SYMBOL\_MASK}{TTAK\_MOLS\_SYMBOL\_MASK}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+MOLS\+\_\+\+SYMBOL\+\_\+\+MASK~(\mbox{\hyperlink{mols__control_8h_aa5d25431e846e78a430e2e1a98334473}{TTAK\+\_\+\+MOLS\+\_\+\+GRID\+\_\+\+ORDER}} -\/ 1U)}
+
+
+
+Definition at line \mbox{\hyperlink{mols__control_8h_source_l00018}{18}} of file \mbox{\hyperlink{mols__control_8h_source}{mols\+\_\+control.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{mols__control_8h_ae070b9e05900410ed31898abf4a9a0ab}\label{mols__control_8h_ae070b9e05900410ed31898abf4a9a0ab} 
+\index{mols\_control.h@{mols\_control.h}!ttak\_apply\_mols\_control@{ttak\_apply\_mols\_control}}
+\index{ttak\_apply\_mols\_control@{ttak\_apply\_mols\_control}!mols\_control.h@{mols\_control.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_apply\_mols\_control()}{ttak\_apply\_mols\_control()}}
+{\footnotesize\ttfamily uint32\+\_\+t ttak\+\_\+apply\+\_\+mols\+\_\+control (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{node\+\_\+id,  }\item[{uint32\+\_\+t}]{current\+\_\+load }\end{DoxyParamCaption})}
+
+
+
+Apply MOLS-\/based congestion control on a 64×64 mesh node. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node\+\_\+id} & Linearized node identifier in \mbox{[}0, 4096). \\
+\hline
+{\em current\+\_\+load} & Arbitrary load metric (fixed-\/point friendly). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Deterministically mixed load coordinate. 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{mols__control_8h_ae070b9e05900410ed31898abf4a9a0ab_icgraph}
+\end{center}
+\end{figure}

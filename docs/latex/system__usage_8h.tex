@@ -1,0 +1,65 @@
+\doxysection{include/ttak/stats/system\+\_\+usage.h File Reference}
+\hypertarget{system__usage_8h}{}\label{system__usage_8h}\index{include/ttak/stats/system\_usage.h@{include/ttak/stats/system\_usage.h}}
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+Include dependency graph for system\+\_\+usage.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=181pt]{system__usage_8h__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+double \mbox{\hyperlink{system__usage_8h_a613952f1033368d1be763012ceee3faa}{ttak\+\_\+get\+\_\+cpu\+\_\+usage\+\_\+total}} (void)
+\item 
+double \mbox{\hyperlink{system__usage_8h_a7c148bd052389ef9346ceca77b096ff3}{ttak\+\_\+get\+\_\+cpu\+\_\+usage\+\_\+per\+\_\+core}} (int core)
+\item 
+double \mbox{\hyperlink{system__usage_8h_a216dd394a23c165dfa003d4385f90848}{ttak\+\_\+get\+\_\+gpu\+\_\+usage\+\_\+total}} (void)
+\item 
+double \mbox{\hyperlink{system__usage_8h_aa1cdb3f335c95e46db6cc170544f5434}{ttak\+\_\+get\+\_\+gpu\+\_\+usage\+\_\+per\+\_\+cu}} (int cu)
+\item 
+size\+\_\+t \mbox{\hyperlink{system__usage_8h_aaba4c1df1b7087c463d58e6545c6556e}{ttak\+\_\+get\+\_\+rss\+\_\+footprint}} (void)
+\item 
+char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{system__usage_8h_a9c227fccf38aaca7203c26c1b0c9f1c1}{ttak\+\_\+get\+\_\+rss\+\_\+footprint\+\_\+full}} (void)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{system__usage_8h_a7c148bd052389ef9346ceca77b096ff3}\label{system__usage_8h_a7c148bd052389ef9346ceca77b096ff3} 
+\index{system\_usage.h@{system\_usage.h}!ttak\_get\_cpu\_usage\_per\_core@{ttak\_get\_cpu\_usage\_per\_core}}
+\index{ttak\_get\_cpu\_usage\_per\_core@{ttak\_get\_cpu\_usage\_per\_core}!system\_usage.h@{system\_usage.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_get\_cpu\_usage\_per\_core()}{ttak\_get\_cpu\_usage\_per\_core()}}
+{\footnotesize\ttfamily double ttak\+\_\+get\+\_\+cpu\+\_\+usage\+\_\+per\+\_\+core (\begin{DoxyParamCaption}\item[{int}]{core }\end{DoxyParamCaption})}
+
+\Hypertarget{system__usage_8h_a613952f1033368d1be763012ceee3faa}\label{system__usage_8h_a613952f1033368d1be763012ceee3faa} 
+\index{system\_usage.h@{system\_usage.h}!ttak\_get\_cpu\_usage\_total@{ttak\_get\_cpu\_usage\_total}}
+\index{ttak\_get\_cpu\_usage\_total@{ttak\_get\_cpu\_usage\_total}!system\_usage.h@{system\_usage.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_get\_cpu\_usage\_total()}{ttak\_get\_cpu\_usage\_total()}}
+{\footnotesize\ttfamily double ttak\+\_\+get\+\_\+cpu\+\_\+usage\+\_\+total (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{system__usage_8h_aa1cdb3f335c95e46db6cc170544f5434}\label{system__usage_8h_aa1cdb3f335c95e46db6cc170544f5434} 
+\index{system\_usage.h@{system\_usage.h}!ttak\_get\_gpu\_usage\_per\_cu@{ttak\_get\_gpu\_usage\_per\_cu}}
+\index{ttak\_get\_gpu\_usage\_per\_cu@{ttak\_get\_gpu\_usage\_per\_cu}!system\_usage.h@{system\_usage.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_get\_gpu\_usage\_per\_cu()}{ttak\_get\_gpu\_usage\_per\_cu()}}
+{\footnotesize\ttfamily double ttak\+\_\+get\+\_\+gpu\+\_\+usage\+\_\+per\+\_\+cu (\begin{DoxyParamCaption}\item[{int}]{cu }\end{DoxyParamCaption})}
+
+\Hypertarget{system__usage_8h_a216dd394a23c165dfa003d4385f90848}\label{system__usage_8h_a216dd394a23c165dfa003d4385f90848} 
+\index{system\_usage.h@{system\_usage.h}!ttak\_get\_gpu\_usage\_total@{ttak\_get\_gpu\_usage\_total}}
+\index{ttak\_get\_gpu\_usage\_total@{ttak\_get\_gpu\_usage\_total}!system\_usage.h@{system\_usage.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_get\_gpu\_usage\_total()}{ttak\_get\_gpu\_usage\_total()}}
+{\footnotesize\ttfamily double ttak\+\_\+get\+\_\+gpu\+\_\+usage\+\_\+total (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{system__usage_8h_aaba4c1df1b7087c463d58e6545c6556e}\label{system__usage_8h_aaba4c1df1b7087c463d58e6545c6556e} 
+\index{system\_usage.h@{system\_usage.h}!ttak\_get\_rss\_footprint@{ttak\_get\_rss\_footprint}}
+\index{ttak\_get\_rss\_footprint@{ttak\_get\_rss\_footprint}!system\_usage.h@{system\_usage.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_get\_rss\_footprint()}{ttak\_get\_rss\_footprint()}}
+{\footnotesize\ttfamily size\+\_\+t ttak\+\_\+get\+\_\+rss\+\_\+footprint (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{system__usage_8h_a9c227fccf38aaca7203c26c1b0c9f1c1}\label{system__usage_8h_a9c227fccf38aaca7203c26c1b0c9f1c1} 
+\index{system\_usage.h@{system\_usage.h}!ttak\_get\_rss\_footprint\_full@{ttak\_get\_rss\_footprint\_full}}
+\index{ttak\_get\_rss\_footprint\_full@{ttak\_get\_rss\_footprint\_full}!system\_usage.h@{system\_usage.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_get\_rss\_footprint\_full()}{ttak\_get\_rss\_footprint\_full()}}
+{\footnotesize\ttfamily char \texorpdfstring{$\ast$}{*} ttak\+\_\+get\+\_\+rss\+\_\+footprint\+\_\+full (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+

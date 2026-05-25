@@ -10,8 +10,7 @@
 
 /**
  * @file lattice.h
- * @brief Choi Seok-jeong's Lattice (Sanpan) for Lock-Free Parallel Ingress.
- * @note Reference: Choi Seok-jeong, "Gusuryak (九數略)", 1700.
+ * @brief Lock-free parallel ingress buffer using a 2-D slot lattice.
  */
 
 #define TTAK_LATTICE_SLOT_SIZE 16384
@@ -30,7 +29,7 @@ typedef struct ttak_net_lattice_slot {
 } ttak_net_lattice_slot_t;
 
 /**
- * @brief The Lattice (Sanpan) structure.
+ * @brief The lattice structure.
  */
 typedef struct ttak_net_lattice {
     uint32_t dim;      /* Dimension of the square (must be power of 2) */
@@ -58,8 +57,7 @@ ttak_net_lattice_t* ttak_net_lattice_create(uint32_t dim, uint64_t now);
 void ttak_net_lattice_destroy(ttak_net_lattice_t *lat, uint64_t now);
 
 /**
- * @brief Lock-free deterministic write inspired by Choi Seok-jeong's Lattice.
- * @note Reference: Choi Seok-jeong, "Gusuryak (九數略)", 1700.
+ * @brief Lock-free deterministic write into the lattice.
  */
 _Bool ttak_net_lattice_write(ttak_net_lattice_t *lat, uint32_t tid, const void *data, uint32_t len, uint64_t now);
 

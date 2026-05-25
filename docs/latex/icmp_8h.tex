@@ -1,0 +1,201 @@
+\doxysection{include/ttak/net/core/icmp.h File Reference}
+\hypertarget{icmp_8h}{}\label{icmp_8h}\index{include/ttak/net/core/icmp.h@{include/ttak/net/core/icmp.h}}
+
+
+Standard ICMPv4/v6 header definitions and utilities for Lib\+TTAK.  
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+Include dependency graph for icmp.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=208pt]{icmp_8h__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structttak__net__icmpv4__hdr}{ttak\+\_\+net\+\_\+icmpv4\+\_\+hdr}}
+\begin{DoxyCompactList}\small\item\em ICMPv4 Header structure. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structttak__net__icmpv6__hdr}{ttak\+\_\+net\+\_\+icmpv6\+\_\+hdr}}
+\begin{DoxyCompactList}\small\item\em ICMPv6 Header structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{icmp_8h_aa1dd12a911072019f7eed81da8c5d6c4}{TTAK\+\_\+\+ICMP\+\_\+\+ECHO\+\_\+\+REQUEST}}~8
+\item 
+\#define \mbox{\hyperlink{icmp_8h_a56d38fa3169a5f3d9ccf2d21392d67fe}{TTAK\+\_\+\+ICMP\+\_\+\+ECHO\+\_\+\+REPLY}}~0
+\item 
+\#define \mbox{\hyperlink{icmp_8h_a5b85ff31b208d9cf78a09cb069cd9cd1}{TTAK\+\_\+\+ICMP\+\_\+\+TIME\+\_\+\+EXCEEDED}}~11
+\item 
+\#define \mbox{\hyperlink{icmp_8h_a53db2bc92b56801190ea90352fc83107}{TTAK\+\_\+\+ICMP6\+\_\+\+ECHO\+\_\+\+REQUEST}}~128
+\item 
+\#define \mbox{\hyperlink{icmp_8h_aa9cc205f9d19cf09b8b6b86f1479648f}{TTAK\+\_\+\+ICMP6\+\_\+\+ECHO\+\_\+\+REPLY}}~129
+\item 
+\#define \mbox{\hyperlink{icmp_8h_a7e847f14a69efff259c4afdbb9533cc6}{TTAK\+\_\+\+ICMP6\+\_\+\+TIME\+\_\+\+EXCEEDED}}~3
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \mbox{\hyperlink{structttak__net__icmpv4__hdr}{ttak\+\_\+net\+\_\+icmpv4\+\_\+hdr}} \mbox{\hyperlink{icmp_8h_a136f3fd2dd09e4b6266bb6132fb44520}{ttak\+\_\+net\+\_\+icmpv4\+\_\+hdr\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em ICMPv4 Header structure. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structttak__net__icmpv6__hdr}{ttak\+\_\+net\+\_\+icmpv6\+\_\+hdr}} \mbox{\hyperlink{icmp_8h_af9e071bb848399d102f113fb505fe41d}{ttak\+\_\+net\+\_\+icmpv6\+\_\+hdr\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em ICMPv6 Header structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{icmp_8h_a8c1a2783a4757d09a92df9c4894260e6}{\+\_\+\+\_\+attribute\+\_\+\+\_\+}} ((visibility("{}default"{}))) uint16\+\_\+t ttak\+\_\+net\+\_\+icmp\+\_\+calculate\+\_\+checksum(const void \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{icmp_8h_a9f2760a3f37301e10305d3349b5d4980}{data}}
+\begin{DoxyCompactList}\small\item\em Calculates RFC 1071 standard checksum. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+size\+\_\+t \mbox{\hyperlink{icmp_8h_a5356a3645c29875208316ab4b277c1ae}{len}}
+\item 
+const void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{icmp_8h_a9037f54b05f8331e7594be9144926217}{dst}}
+\item 
+const void const void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{icmp_8h_a9f2760a3f37301e10305d3349b5d4980}{data}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Standard ICMPv4/v6 header definitions and utilities for Lib\+TTAK. 
+
+
+
+Definition in file \mbox{\hyperlink{icmp_8h_source}{icmp.\+h}}.
+
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{icmp_8h_aa9cc205f9d19cf09b8b6b86f1479648f}\label{icmp_8h_aa9cc205f9d19cf09b8b6b86f1479648f} 
+\index{icmp.h@{icmp.h}!TTAK\_ICMP6\_ECHO\_REPLY@{TTAK\_ICMP6\_ECHO\_REPLY}}
+\index{TTAK\_ICMP6\_ECHO\_REPLY@{TTAK\_ICMP6\_ECHO\_REPLY}!icmp.h@{icmp.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_ICMP6\_ECHO\_REPLY}{TTAK\_ICMP6\_ECHO\_REPLY}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+ICMP6\+\_\+\+ECHO\+\_\+\+REPLY~129}
+
+
+
+Definition at line \mbox{\hyperlink{icmp_8h_source_l00023}{23}} of file \mbox{\hyperlink{icmp_8h_source}{icmp.\+h}}.
+
+\Hypertarget{icmp_8h_a53db2bc92b56801190ea90352fc83107}\label{icmp_8h_a53db2bc92b56801190ea90352fc83107} 
+\index{icmp.h@{icmp.h}!TTAK\_ICMP6\_ECHO\_REQUEST@{TTAK\_ICMP6\_ECHO\_REQUEST}}
+\index{TTAK\_ICMP6\_ECHO\_REQUEST@{TTAK\_ICMP6\_ECHO\_REQUEST}!icmp.h@{icmp.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_ICMP6\_ECHO\_REQUEST}{TTAK\_ICMP6\_ECHO\_REQUEST}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+ICMP6\+\_\+\+ECHO\+\_\+\+REQUEST~128}
+
+
+
+Definition at line \mbox{\hyperlink{icmp_8h_source_l00022}{22}} of file \mbox{\hyperlink{icmp_8h_source}{icmp.\+h}}.
+
+\Hypertarget{icmp_8h_a7e847f14a69efff259c4afdbb9533cc6}\label{icmp_8h_a7e847f14a69efff259c4afdbb9533cc6} 
+\index{icmp.h@{icmp.h}!TTAK\_ICMP6\_TIME\_EXCEEDED@{TTAK\_ICMP6\_TIME\_EXCEEDED}}
+\index{TTAK\_ICMP6\_TIME\_EXCEEDED@{TTAK\_ICMP6\_TIME\_EXCEEDED}!icmp.h@{icmp.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_ICMP6\_TIME\_EXCEEDED}{TTAK\_ICMP6\_TIME\_EXCEEDED}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+ICMP6\+\_\+\+TIME\+\_\+\+EXCEEDED~3}
+
+
+
+Definition at line \mbox{\hyperlink{icmp_8h_source_l00024}{24}} of file \mbox{\hyperlink{icmp_8h_source}{icmp.\+h}}.
+
+\Hypertarget{icmp_8h_a56d38fa3169a5f3d9ccf2d21392d67fe}\label{icmp_8h_a56d38fa3169a5f3d9ccf2d21392d67fe} 
+\index{icmp.h@{icmp.h}!TTAK\_ICMP\_ECHO\_REPLY@{TTAK\_ICMP\_ECHO\_REPLY}}
+\index{TTAK\_ICMP\_ECHO\_REPLY@{TTAK\_ICMP\_ECHO\_REPLY}!icmp.h@{icmp.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_ICMP\_ECHO\_REPLY}{TTAK\_ICMP\_ECHO\_REPLY}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+ICMP\+\_\+\+ECHO\+\_\+\+REPLY~0}
+
+
+
+Definition at line \mbox{\hyperlink{icmp_8h_source_l00018}{18}} of file \mbox{\hyperlink{icmp_8h_source}{icmp.\+h}}.
+
+\Hypertarget{icmp_8h_aa1dd12a911072019f7eed81da8c5d6c4}\label{icmp_8h_aa1dd12a911072019f7eed81da8c5d6c4} 
+\index{icmp.h@{icmp.h}!TTAK\_ICMP\_ECHO\_REQUEST@{TTAK\_ICMP\_ECHO\_REQUEST}}
+\index{TTAK\_ICMP\_ECHO\_REQUEST@{TTAK\_ICMP\_ECHO\_REQUEST}!icmp.h@{icmp.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_ICMP\_ECHO\_REQUEST}{TTAK\_ICMP\_ECHO\_REQUEST}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+ICMP\+\_\+\+ECHO\+\_\+\+REQUEST~8}
+
+
+
+Definition at line \mbox{\hyperlink{icmp_8h_source_l00017}{17}} of file \mbox{\hyperlink{icmp_8h_source}{icmp.\+h}}.
+
+\Hypertarget{icmp_8h_a5b85ff31b208d9cf78a09cb069cd9cd1}\label{icmp_8h_a5b85ff31b208d9cf78a09cb069cd9cd1} 
+\index{icmp.h@{icmp.h}!TTAK\_ICMP\_TIME\_EXCEEDED@{TTAK\_ICMP\_TIME\_EXCEEDED}}
+\index{TTAK\_ICMP\_TIME\_EXCEEDED@{TTAK\_ICMP\_TIME\_EXCEEDED}!icmp.h@{icmp.h}}
+\doxysubsubsection{\texorpdfstring{TTAK\_ICMP\_TIME\_EXCEEDED}{TTAK\_ICMP\_TIME\_EXCEEDED}}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+ICMP\+\_\+\+TIME\+\_\+\+EXCEEDED~11}
+
+
+
+Definition at line \mbox{\hyperlink{icmp_8h_source_l00019}{19}} of file \mbox{\hyperlink{icmp_8h_source}{icmp.\+h}}.
+
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{icmp_8h_a136f3fd2dd09e4b6266bb6132fb44520}\label{icmp_8h_a136f3fd2dd09e4b6266bb6132fb44520} 
+\index{icmp.h@{icmp.h}!ttak\_net\_icmpv4\_hdr\_t@{ttak\_net\_icmpv4\_hdr\_t}}
+\index{ttak\_net\_icmpv4\_hdr\_t@{ttak\_net\_icmpv4\_hdr\_t}!icmp.h@{icmp.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_net\_icmpv4\_hdr\_t}{ttak\_net\_icmpv4\_hdr\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__net__icmpv4__hdr}{ttak\+\_\+net\+\_\+icmpv4\+\_\+hdr}} \mbox{\hyperlink{icmp_8h_a136f3fd2dd09e4b6266bb6132fb44520}{ttak\+\_\+net\+\_\+icmpv4\+\_\+hdr\+\_\+t}}}
+
+
+
+ICMPv4 Header structure. 
+
+\Hypertarget{icmp_8h_af9e071bb848399d102f113fb505fe41d}\label{icmp_8h_af9e071bb848399d102f113fb505fe41d} 
+\index{icmp.h@{icmp.h}!ttak\_net\_icmpv6\_hdr\_t@{ttak\_net\_icmpv6\_hdr\_t}}
+\index{ttak\_net\_icmpv6\_hdr\_t@{ttak\_net\_icmpv6\_hdr\_t}!icmp.h@{icmp.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_net\_icmpv6\_hdr\_t}{ttak\_net\_icmpv6\_hdr\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__net__icmpv6__hdr}{ttak\+\_\+net\+\_\+icmpv6\+\_\+hdr}} \mbox{\hyperlink{icmp_8h_af9e071bb848399d102f113fb505fe41d}{ttak\+\_\+net\+\_\+icmpv6\+\_\+hdr\+\_\+t}}}
+
+
+
+ICMPv6 Header structure. 
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{icmp_8h_a8c1a2783a4757d09a92df9c4894260e6}\label{icmp_8h_a8c1a2783a4757d09a92df9c4894260e6} 
+\index{icmp.h@{icmp.h}!\_\_attribute\_\_@{\_\_attribute\_\_}}
+\index{\_\_attribute\_\_@{\_\_attribute\_\_}!icmp.h@{icmp.h}}
+\doxysubsubsection{\texorpdfstring{\_\_attribute\_\_()}{\_\_attribute\_\_()}}
+{\footnotesize\ttfamily \+\_\+\+\_\+attribute\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{(visibility("{}default"{}))}]{ }\end{DoxyParamCaption}) const}
+
+
+
+Calculates RFC 1071 standard checksum. 
+
+Calculates ICMPv6 checksum with pseudo-\/header. 
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{icmp_8h_a9f2760a3f37301e10305d3349b5d4980}\label{icmp_8h_a9f2760a3f37301e10305d3349b5d4980} 
+\index{icmp.h@{icmp.h}!data@{data}}
+\index{data@{data}!icmp.h@{icmp.h}}
+\doxysubsubsection{\texorpdfstring{data}{data}}
+{\footnotesize\ttfamily const void const void\texorpdfstring{$\ast$}{*} data}
+
+
+
+Definition at line \mbox{\hyperlink{icmp_8h_source_l00065}{65}} of file \mbox{\hyperlink{icmp_8h_source}{icmp.\+h}}.
+
+\Hypertarget{icmp_8h_a9037f54b05f8331e7594be9144926217}\label{icmp_8h_a9037f54b05f8331e7594be9144926217} 
+\index{icmp.h@{icmp.h}!dst@{dst}}
+\index{dst@{dst}!icmp.h@{icmp.h}}
+\doxysubsubsection{\texorpdfstring{dst}{dst}}
+{\footnotesize\ttfamily const void\texorpdfstring{$\ast$}{*} dst}
+
+
+
+Definition at line \mbox{\hyperlink{icmp_8h_source_l00065}{65}} of file \mbox{\hyperlink{icmp_8h_source}{icmp.\+h}}.
+
+\Hypertarget{icmp_8h_a5356a3645c29875208316ab4b277c1ae}\label{icmp_8h_a5356a3645c29875208316ab4b277c1ae} 
+\index{icmp.h@{icmp.h}!len@{len}}
+\index{len@{len}!icmp.h@{icmp.h}}
+\doxysubsubsection{\texorpdfstring{len}{len}}
+{\footnotesize\ttfamily const void const void size\+\_\+t len}
+
+
+
+Definition at line \mbox{\hyperlink{icmp_8h_source_l00060}{60}} of file \mbox{\hyperlink{icmp_8h_source}{icmp.\+h}}.
+

@@ -1,8 +1,16 @@
 <map id="include/ttak/ht/map.h" name="include/ttak/ht/map.h">
-<area shape="rect" id="node1" title="Public API for the SoA open&#45;addressing integer&#45;keyed hash map." alt="" coords="5,5,149,32"/>
-<area shape="rect" id="node2" title=" " alt="" coords="122,229,190,256"/>
-<area shape="rect" id="node3" title=" " alt="" coords="55,155,119,181"/>
-<area shape="rect" id="node4" href="$hash_8h.html" title="Low&#45;level open&#45;addressing hash map (SoA layout) with SipHash/wyhash." alt="" coords="115,80,218,107"/>
-<area shape="rect" id="node5" title=" " alt="" coords="194,155,273,181"/>
-<area shape="rect" id="node6" href="$ttak__align_8h.html" title="Alignment utilities and compatibility helpers." alt="" coords="297,155,447,181"/>
+<area shape="rect" id="Node000001" title="Public API for the SoA open&#45;addressing integer&#45;keyed hash map." alt="" coords="5,5,167,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="133,225,207,251"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="80,32,63,60,47,97,41,138,43,158,51,176,64,192,81,205,120,223,118,228,79,210,61,196,46,179,38,159,35,138,42,96,59,58,75,30"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="61,152,132,177"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="90,31,97,138,92,138,84,31"/>
+<area shape="rect" id="Node000004" href="$hash_8h.html" title="Low&#45;level open&#45;addressing hash map (SoA layout) with SipHash/wyhash." alt="" coords="123,79,235,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="103,29,155,68,152,72,99,33"/>
+<area shape="poly" id="edge5_Node000004_Node000002" title=" " alt="" coords="181,105,174,212,169,211,176,104"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="168,106,122,145,119,141,164,102"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="208,152,295,177"/>
+<area shape="poly" id="edge6_Node000004_Node000005" title=" " alt="" coords="193,102,232,140,228,144,189,106"/>
+<area shape="rect" id="Node000006" href="$ttak__align_8h.html" title="Alignment utilities and compatibility helpers." alt="" coords="319,152,488,177"/>
+<area shape="poly" id="edge7_Node000004_Node000006" title=" " alt="" coords="216,101,355,145,353,150,215,107"/>
+<area shape="poly" id="edge8_Node000006_Node000002" title=" " alt="" coords="367,180,221,224,220,219,365,175"/>
 </map>

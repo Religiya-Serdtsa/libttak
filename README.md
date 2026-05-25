@@ -99,9 +99,8 @@ Explicit worker orchestration without hiding scheduling behavior.
 
 This is one of libttak's experimental scheduling layers.
 
-It uses deterministic coordinate selection inspired by historical
-Latin-square construction methods documented in
-**Choi Seok-jeong's GuSuRyak (九數略)**.
+It uses deterministic coordinate selection inspired by
+orthogonal Latin square (OLS) constructions.
 
 This is used for:
 

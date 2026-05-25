@@ -17,3 +17,4 @@ bench/*.core
 core.*
 vgcore.*
 a.out
+fly.board.zip

@@ -24,5 +24,6 @@ var dir_7a2c8205fba441b5c418ae46ad48eaae =
     [ "tree", "dir_2882d03c691174216d8600853f119947.html", "dir_2882d03c691174216d8600853f119947" ],
     [ "types", "dir_c619a2efc7e1f9a0cba0d403b376f987.html", "dir_c619a2efc7e1f9a0cba0d403b376f987" ],
     [ "unsafe", "dir_1ee65210972bccae71ca507b55fd7fc2.html", "dir_1ee65210972bccae71ca507b55fd7fc2" ],
+    [ "mols_control.h", "mols__control_8h.html", "mols__control_8h" ],
     [ "ttak_accelerator.h", "ttak__accelerator_8h.html", "ttak__accelerator_8h" ]
 ];

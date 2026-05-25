@@ -1,6 +1,9 @@
 <map id="include/ttak/async/promise.h" name="include/ttak/async/promise.h">
-<area shape="rect" id="node1" title="One&#45;shot promise for fulfilling a ttak_future_t from a worker thread." alt="" coords="81,5,208,47"/>
-<area shape="rect" id="node2" href="$function_8h.html" title="Convenience wrappers for fire&#45;and&#45;forget async jobs that return futures." alt="" coords="5,95,132,136"/>
-<area shape="rect" id="node3" href="$worker_8h.html" title="Resilient worker&#45;thread wrapper with fault isolation via setjmp." alt="" coords="156,95,285,136"/>
-<area shape="rect" id="node4" href="$thread_2pool_8h.html" title="Managed thread pool built on top of the async task scheduler." alt="" coords="156,184,285,225"/>
+<area shape="rect" id="Node000001" title="One&#45;shot promise for fulfilling a ttak_future_t from a worker thread." alt="" coords="89,5,231,45"/>
+<area shape="rect" id="Node000002" href="$function_8h.html" title="Convenience wrappers for fire&#45;and&#45;forget async jobs that return futures." alt="" coords="5,93,147,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="134,57,96,95,93,91,130,53"/>
+<area shape="rect" id="Node000003" href="$worker_8h.html" title="Resilient worker&#45;thread wrapper with fault isolation via setjmp." alt="" coords="171,93,317,133"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="190,53,227,91,224,95,186,57"/>
+<area shape="rect" id="Node000004" href="$thread_2pool_8h.html" title="Managed thread pool built on top of the async task scheduler." alt="" coords="171,181,317,221"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="247,147,247,181,241,181,241,147"/>
 </map>

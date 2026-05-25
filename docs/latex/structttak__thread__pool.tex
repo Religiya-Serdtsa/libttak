@@ -1,5 +1,5 @@
-\hypertarget{structttak__thread__pool}{}\doxysection{ttak\+\_\+thread\+\_\+pool Struct Reference}
-\label{structttak__thread__pool}\index{ttak\_thread\_pool@{ttak\_thread\_pool}}
+\doxysection{ttak\+\_\+thread\+\_\+pool Struct Reference}
+\hypertarget{structttak__thread__pool}{}\label{structttak__thread__pool}\index{ttak\_thread\_pool@{ttak\_thread\_pool}}
 
 
 {\ttfamily \#include $<$pool.\+h$>$}
@@ -14,12 +14,12 @@ Collaboration diagram for ttak\+\_\+thread\+\_\+pool\+:
 \includegraphics[width=350pt]{structttak__thread__pool__coll__graph}
 \end{center}
 \end{figure}
-\doxysubsection*{Public Attributes}
+\doxysubsubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
 size\+\_\+t \mbox{\hyperlink{structttak__thread__pool_a1002801580411b0d5394db3e66b854a8}{num\+\_\+threads}}
 \item 
-\mbox{\hyperlink{thread_2pool_8h_a0003749eead12470661f5e9d7d4cc842}{ttak\+\_\+worker\+\_\+t}} $\ast$$\ast$ \mbox{\hyperlink{structttak__thread__pool_ab6f0dc625cc83c204a3ad9964fe955d3}{workers}}
+\mbox{\hyperlink{thread_2pool_8h_a0003749eead12470661f5e9d7d4cc842}{ttak\+\_\+worker\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__thread__pool_ab6f0dc625cc83c204a3ad9964fe955d3}{workers}}
 \item 
 \mbox{\hyperlink{structttak__pool__shard__t}{ttak\+\_\+pool\+\_\+shard\+\_\+t}} \mbox{\hyperlink{structttak__thread__pool_ae8d8d450d36ac81afa761693ad4e5c12}{shards}} \mbox{[}\mbox{\hyperlink{thread_2pool_8h_a789e77824badfc7948cbc10c78c44d4f}{TTAK\+\_\+\+THREAD\+\_\+\+POOL\+\_\+\+SHARDS}}\mbox{]}
 \item 
@@ -31,19 +31,55 @@ uint64\+\_\+t \mbox{\hyperlink{structttak__thread__pool_a3e5f0e7aff5c7d8d3c98f66
 \item 
 \+\_\+\+Bool \mbox{\hyperlink{structttak__thread__pool_ae11c409b6317364d0d6c9d68a823bdb6}{is\+\_\+shutdown}}
 \item 
-void($\ast$ \mbox{\hyperlink{structttak__thread__pool_aae32bd8dbffd90e3da8049b02541dc61}{force\+\_\+shutdown}} )(\mbox{\hyperlink{thread_2pool_8h_afedf2714ff1312529485b3643582ca0c}{ttak\+\_\+thread\+\_\+pool\+\_\+t}} $\ast$pool)
+\mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\+\_\+\+Atomic}} uint32\+\_\+t \mbox{\hyperlink{structttak__thread__pool_a3963893335bae3b4883aafa8c1eb9439}{burst\+\_\+hot\+\_\+row\+\_\+q10}} \mbox{[}4\mbox{]}
+\item 
+\mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\+\_\+\+Atomic}} uint32\+\_\+t \mbox{\hyperlink{structttak__thread__pool_ae0b12bc020ecc9c2de47a15371b5db3a}{burst\+\_\+hot\+\_\+col\+\_\+q10}} \mbox{[}4\mbox{]}
+\item 
+\mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\+\_\+\+Atomic}} uint32\+\_\+t \mbox{\hyperlink{structttak__thread__pool_a3b423b801b8f95d119617ad683dcdfca}{burst\+\_\+mag\+\_\+q10}} \mbox{[}4\mbox{]}
+\item 
+void(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__thread__pool_aae32bd8dbffd90e3da8049b02541dc61}{force\+\_\+shutdown}} )(\mbox{\hyperlink{thread_2pool_8h_afedf2714ff1312529485b3643582ca0c}{ttak\+\_\+thread\+\_\+pool\+\_\+t}} \texorpdfstring{$\ast$}{*}pool)
 \begin{DoxyCompactList}\small\item\em Kills all sub-\/threads. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
 
 
-Definition at line 41 of file pool.\+h.
+Definition at line \mbox{\hyperlink{thread_2pool_8h_source_l00042}{42}} of file \mbox{\hyperlink{thread_2pool_8h_source}{pool.\+h}}.
 
 
 
 \doxysubsection{Member Data Documentation}
-\mbox{\Hypertarget{structttak__thread__pool_a3e5f0e7aff5c7d8d3c98f6614cafa405}\label{structttak__thread__pool_a3e5f0e7aff5c7d8d3c98f6614cafa405}} 
+\Hypertarget{structttak__thread__pool_ae0b12bc020ecc9c2de47a15371b5db3a}\label{structttak__thread__pool_ae0b12bc020ecc9c2de47a15371b5db3a} 
+\index{ttak\_thread\_pool@{ttak\_thread\_pool}!burst\_hot\_col\_q10@{burst\_hot\_col\_q10}}
+\index{burst\_hot\_col\_q10@{burst\_hot\_col\_q10}!ttak\_thread\_pool@{ttak\_thread\_pool}}
+\doxysubsubsection{\texorpdfstring{burst\_hot\_col\_q10}{burst\_hot\_col\_q10}}
+{\footnotesize\ttfamily \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\+\_\+\+Atomic}} uint32\+\_\+t ttak\+\_\+thread\+\_\+pool\+::burst\+\_\+hot\+\_\+col\+\_\+q10\mbox{[}4\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{thread_2pool_8h_source_l00056}{56}} of file \mbox{\hyperlink{thread_2pool_8h_source}{pool.\+h}}.
+
+\Hypertarget{structttak__thread__pool_a3963893335bae3b4883aafa8c1eb9439}\label{structttak__thread__pool_a3963893335bae3b4883aafa8c1eb9439} 
+\index{ttak\_thread\_pool@{ttak\_thread\_pool}!burst\_hot\_row\_q10@{burst\_hot\_row\_q10}}
+\index{burst\_hot\_row\_q10@{burst\_hot\_row\_q10}!ttak\_thread\_pool@{ttak\_thread\_pool}}
+\doxysubsubsection{\texorpdfstring{burst\_hot\_row\_q10}{burst\_hot\_row\_q10}}
+{\footnotesize\ttfamily \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\+\_\+\+Atomic}} uint32\+\_\+t ttak\+\_\+thread\+\_\+pool\+::burst\+\_\+hot\+\_\+row\+\_\+q10\mbox{[}4\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{thread_2pool_8h_source_l00055}{55}} of file \mbox{\hyperlink{thread_2pool_8h_source}{pool.\+h}}.
+
+\Hypertarget{structttak__thread__pool_a3b423b801b8f95d119617ad683dcdfca}\label{structttak__thread__pool_a3b423b801b8f95d119617ad683dcdfca} 
+\index{ttak\_thread\_pool@{ttak\_thread\_pool}!burst\_mag\_q10@{burst\_mag\_q10}}
+\index{burst\_mag\_q10@{burst\_mag\_q10}!ttak\_thread\_pool@{ttak\_thread\_pool}}
+\doxysubsubsection{\texorpdfstring{burst\_mag\_q10}{burst\_mag\_q10}}
+{\footnotesize\ttfamily \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\+\_\+\+Atomic}} uint32\+\_\+t ttak\+\_\+thread\+\_\+pool\+::burst\+\_\+mag\+\_\+q10\mbox{[}4\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{thread_2pool_8h_source_l00057}{57}} of file \mbox{\hyperlink{thread_2pool_8h_source}{pool.\+h}}.
+
+\Hypertarget{structttak__thread__pool_a3e5f0e7aff5c7d8d3c98f6614cafa405}\label{structttak__thread__pool_a3e5f0e7aff5c7d8d3c98f6614cafa405} 
 \index{ttak\_thread\_pool@{ttak\_thread\_pool}!creation\_ts@{creation\_ts}}
 \index{creation\_ts@{creation\_ts}!ttak\_thread\_pool@{ttak\_thread\_pool}}
 \doxysubsubsection{\texorpdfstring{creation\_ts}{creation\_ts}}
@@ -51,13 +87,13 @@ Definition at line 41 of file pool.\+h.
 
 
 
-Definition at line 52 of file pool.\+h.
+Definition at line \mbox{\hyperlink{thread_2pool_8h_source_l00053}{53}} of file \mbox{\hyperlink{thread_2pool_8h_source}{pool.\+h}}.
 
-\mbox{\Hypertarget{structttak__thread__pool_aae32bd8dbffd90e3da8049b02541dc61}\label{structttak__thread__pool_aae32bd8dbffd90e3da8049b02541dc61}} 
+\Hypertarget{structttak__thread__pool_aae32bd8dbffd90e3da8049b02541dc61}\label{structttak__thread__pool_aae32bd8dbffd90e3da8049b02541dc61} 
 \index{ttak\_thread\_pool@{ttak\_thread\_pool}!force\_shutdown@{force\_shutdown}}
 \index{force\_shutdown@{force\_shutdown}!ttak\_thread\_pool@{ttak\_thread\_pool}}
 \doxysubsubsection{\texorpdfstring{force\_shutdown}{force\_shutdown}}
-{\footnotesize\ttfamily void($\ast$ ttak\+\_\+thread\+\_\+pool\+::force\+\_\+shutdown) (\mbox{\hyperlink{thread_2pool_8h_afedf2714ff1312529485b3643582ca0c}{ttak\+\_\+thread\+\_\+pool\+\_\+t}} $\ast$pool)}
+{\footnotesize\ttfamily void(\texorpdfstring{$\ast$}{*} ttak\+\_\+thread\+\_\+pool\+::force\+\_\+shutdown) (\mbox{\hyperlink{thread_2pool_8h_afedf2714ff1312529485b3643582ca0c}{ttak\+\_\+thread\+\_\+pool\+\_\+t}} \texorpdfstring{$\ast$}{*}pool)}
 
 
 
@@ -65,9 +101,9 @@ Kills all sub-\/threads.
 
 
 
-Definition at line 58 of file pool.\+h.
+Definition at line \mbox{\hyperlink{thread_2pool_8h_source_l00062}{62}} of file \mbox{\hyperlink{thread_2pool_8h_source}{pool.\+h}}.
 
-\mbox{\Hypertarget{structttak__thread__pool_ae11c409b6317364d0d6c9d68a823bdb6}\label{structttak__thread__pool_ae11c409b6317364d0d6c9d68a823bdb6}} 
+\Hypertarget{structttak__thread__pool_ae11c409b6317364d0d6c9d68a823bdb6}\label{structttak__thread__pool_ae11c409b6317364d0d6c9d68a823bdb6} 
 \index{ttak\_thread\_pool@{ttak\_thread\_pool}!is\_shutdown@{is\_shutdown}}
 \index{is\_shutdown@{is\_shutdown}!ttak\_thread\_pool@{ttak\_thread\_pool}}
 \doxysubsubsection{\texorpdfstring{is\_shutdown}{is\_shutdown}}
@@ -75,9 +111,9 @@ Definition at line 58 of file pool.\+h.
 
 
 
-Definition at line 53 of file pool.\+h.
+Definition at line \mbox{\hyperlink{thread_2pool_8h_source_l00054}{54}} of file \mbox{\hyperlink{thread_2pool_8h_source}{pool.\+h}}.
 
-\mbox{\Hypertarget{structttak__thread__pool_a1002801580411b0d5394db3e66b854a8}\label{structttak__thread__pool_a1002801580411b0d5394db3e66b854a8}} 
+\Hypertarget{structttak__thread__pool_a1002801580411b0d5394db3e66b854a8}\label{structttak__thread__pool_a1002801580411b0d5394db3e66b854a8} 
 \index{ttak\_thread\_pool@{ttak\_thread\_pool}!num\_threads@{num\_threads}}
 \index{num\_threads@{num\_threads}!ttak\_thread\_pool@{ttak\_thread\_pool}}
 \doxysubsubsection{\texorpdfstring{num\_threads}{num\_threads}}
@@ -85,9 +121,9 @@ Definition at line 53 of file pool.\+h.
 
 
 
-Definition at line 42 of file pool.\+h.
+Definition at line \mbox{\hyperlink{thread_2pool_8h_source_l00043}{43}} of file \mbox{\hyperlink{thread_2pool_8h_source}{pool.\+h}}.
 
-\mbox{\Hypertarget{structttak__thread__pool_a7a896c31172e54ba5b8c541955ce3061}\label{structttak__thread__pool_a7a896c31172e54ba5b8c541955ce3061}} 
+\Hypertarget{structttak__thread__pool_a7a896c31172e54ba5b8c541955ce3061}\label{structttak__thread__pool_a7a896c31172e54ba5b8c541955ce3061} 
 \index{ttak\_thread\_pool@{ttak\_thread\_pool}!pool\_lock@{pool\_lock}}
 \index{pool\_lock@{pool\_lock}!ttak\_thread\_pool@{ttak\_thread\_pool}}
 \doxysubsubsection{\texorpdfstring{pool\_lock}{pool\_lock}}
@@ -95,9 +131,9 @@ Definition at line 42 of file pool.\+h.
 
 Coarse-\/grained lock used only during shutdown signalling. 
 
-Definition at line 49 of file pool.\+h.
+Definition at line \mbox{\hyperlink{thread_2pool_8h_source_l00050}{50}} of file \mbox{\hyperlink{thread_2pool_8h_source}{pool.\+h}}.
 
-\mbox{\Hypertarget{structttak__thread__pool_ae8d8d450d36ac81afa761693ad4e5c12}\label{structttak__thread__pool_ae8d8d450d36ac81afa761693ad4e5c12}} 
+\Hypertarget{structttak__thread__pool_ae8d8d450d36ac81afa761693ad4e5c12}\label{structttak__thread__pool_ae8d8d450d36ac81afa761693ad4e5c12} 
 \index{ttak\_thread\_pool@{ttak\_thread\_pool}!shards@{shards}}
 \index{shards@{shards}!ttak\_thread\_pool@{ttak\_thread\_pool}}
 \doxysubsubsection{\texorpdfstring{shards}{shards}}
@@ -105,9 +141,9 @@ Definition at line 49 of file pool.\+h.
 
 Sharded queues — tasks are routed here via the deterministic mapping. 
 
-Definition at line 46 of file pool.\+h.
+Definition at line \mbox{\hyperlink{thread_2pool_8h_source_l00047}{47}} of file \mbox{\hyperlink{thread_2pool_8h_source}{pool.\+h}}.
 
-\mbox{\Hypertarget{structttak__thread__pool_aa6e30915da487a76011244421eae819b}\label{structttak__thread__pool_aa6e30915da487a76011244421eae819b}} 
+\Hypertarget{structttak__thread__pool_aa6e30915da487a76011244421eae819b}\label{structttak__thread__pool_aa6e30915da487a76011244421eae819b} 
 \index{ttak\_thread\_pool@{ttak\_thread\_pool}!task\_cond@{task\_cond}}
 \index{task\_cond@{task\_cond}!ttak\_thread\_pool@{ttak\_thread\_pool}}
 \doxysubsubsection{\texorpdfstring{task\_cond}{task\_cond}}
@@ -115,17 +151,17 @@ Definition at line 46 of file pool.\+h.
 
 Condition variable broadcast on shutdown so all workers wake. 
 
-Definition at line 51 of file pool.\+h.
+Definition at line \mbox{\hyperlink{thread_2pool_8h_source_l00052}{52}} of file \mbox{\hyperlink{thread_2pool_8h_source}{pool.\+h}}.
 
-\mbox{\Hypertarget{structttak__thread__pool_ab6f0dc625cc83c204a3ad9964fe955d3}\label{structttak__thread__pool_ab6f0dc625cc83c204a3ad9964fe955d3}} 
+\Hypertarget{structttak__thread__pool_ab6f0dc625cc83c204a3ad9964fe955d3}\label{structttak__thread__pool_ab6f0dc625cc83c204a3ad9964fe955d3} 
 \index{ttak\_thread\_pool@{ttak\_thread\_pool}!workers@{workers}}
 \index{workers@{workers}!ttak\_thread\_pool@{ttak\_thread\_pool}}
 \doxysubsubsection{\texorpdfstring{workers}{workers}}
-{\footnotesize\ttfamily \mbox{\hyperlink{thread_2pool_8h_a0003749eead12470661f5e9d7d4cc842}{ttak\+\_\+worker\+\_\+t}}$\ast$$\ast$ ttak\+\_\+thread\+\_\+pool\+::workers}
+{\footnotesize\ttfamily \mbox{\hyperlink{thread_2pool_8h_a0003749eead12470661f5e9d7d4cc842}{ttak\+\_\+worker\+\_\+t}}\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} ttak\+\_\+thread\+\_\+pool\+::workers}
 
 
 
-Definition at line 43 of file pool.\+h.
+Definition at line \mbox{\hyperlink{thread_2pool_8h_source_l00044}{44}} of file \mbox{\hyperlink{thread_2pool_8h_source}{pool.\+h}}.
 
 
 

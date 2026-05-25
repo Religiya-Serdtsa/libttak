@@ -4,11 +4,10 @@
 #include <stdalign.h>
 
 /**
- * Cheonwonsul (reinterpreting Tian Yuan Shu per Hong Jeong-ha et al.)
- * Logic: Aligned limb processing to map to cache lines.
- * Reference: Hong Jeong-ha, "Guiljip (九一集)", 1660s.
+ * Aligned-limb add/sub helper for bigreal operations.
+ * Operates on mantissas after exponent alignment.
  */
-static _Bool ttak_bigreal_op_cheonwonsul(ttak_bigreal_t *dst, const ttak_bigreal_t *lhs, const ttak_bigreal_t *rhs, _Bool is_sub, uint64_t now) {
+static _Bool ttak_bigreal_op_aligned_addsub(ttak_bigreal_t *dst, const ttak_bigreal_t *lhs, const ttak_bigreal_t *rhs, _Bool is_sub, uint64_t now) {
     if (is_sub) {
         return ttak_bigint_sub(&dst->mantissa, &lhs->mantissa, &rhs->mantissa, now);
     } else {
@@ -106,8 +105,8 @@ _Bool ttak_bigreal_add(ttak_bigreal_t *dst, const ttak_bigreal_t *lhs, const tta
     }
     
     dst->exponent = l.exponent;
-    /* Cheonwonsul: Aligned internal limb processing */
-    _Bool ok = ttak_bigreal_op_cheonwonsul(dst, &l, &r, false, now);
+    /* Aligned internal limb processing */
+    _Bool ok = ttak_bigreal_op_aligned_addsub(dst, &l, &r, false, now);
     
     ttak_bigreal_free(&l, now);
     ttak_bigreal_free(&r, now);
@@ -128,8 +127,8 @@ _Bool ttak_bigreal_sub(ttak_bigreal_t *dst, const ttak_bigreal_t *lhs, const tta
     }
     
     dst->exponent = l.exponent;
-    /* Cheonwonsul: Aligned internal limb processing */
-    _Bool ok = ttak_bigreal_op_cheonwonsul(dst, &l, &r, true, now);
+    /* Aligned internal limb processing */
+    _Bool ok = ttak_bigreal_op_aligned_addsub(dst, &l, &r, true, now);
     
     ttak_bigreal_free(&l, now);
     ttak_bigreal_free(&r, now);
