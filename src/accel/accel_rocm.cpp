@@ -12,6 +12,18 @@
 typedef unsigned char _Bool;
 #endif
 
+/* Provide __forceinline__ for host compilers that do not define it
+   (e.g. MSVC or plain GCC/Clang when not using nvcc/hipcc). */
+#ifndef __forceinline__
+#if defined(_MSC_VER)
+#define __forceinline__ __forceinline
+#elif defined(__GNUC__) || defined(__clang__)
+#define __forceinline__ __attribute__((always_inline)) inline
+#else
+#define __forceinline__ inline
+#endif
+#endif
+
 #define TTAK_ACCEL_FACTOR_MAX 64
 #define TTAK_HIP_SMALL_PRIME_COUNT 168
 #define TTAK_HIP_POLLARD_STACK_MAX 64

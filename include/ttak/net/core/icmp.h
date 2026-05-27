@@ -54,15 +54,21 @@ typedef struct ttak_net_icmpv6_hdr {
     } un;
 } ttak_net_icmpv6_hdr_t;
 
+#ifdef _MSC_VER
+#define TTAK_ICMP_API
+#else
+#define TTAK_ICMP_API __attribute__((visibility("default")))
+#endif
+
 /**
  * @brief Calculates RFC 1071 standard checksum.
  */
-__attribute__((visibility("default"))) uint16_t ttak_net_icmp_calculate_checksum(const void *data, size_t len);
+TTAK_ICMP_API uint16_t ttak_net_icmp_calculate_checksum(const void *data, size_t len);
 
 /**
  * @brief Calculates ICMPv6 checksum with pseudo-header.
  */
-__attribute__((visibility("default"))) uint16_t ttak_net_icmp6_calculate_checksum(const void *src, const void *dst, const void *data, size_t len);
+TTAK_ICMP_API uint16_t ttak_net_icmp6_calculate_checksum(const void *src, const void *dst, const void *data, size_t len);
 
 #ifdef __cplusplus
 }
