@@ -27,16 +27,22 @@ __global__ static void ttak_bigint_cuda_mul_kernel(const limb_t *lhs,
                                                    uint32_t lhs_len,
                                                    const limb_t *rhs,
                                                    uint32_t rhs_len,
-                                                   unsigned __int128 *temp,
+                                                   ttak_u128_t *temp,
                                                    uint32_t temp_len) {
     uint32_t k = blockIdx.x * blockDim.x + threadIdx.x;
     if (k >= temp_len) return;
 
-    unsigned __int128 sum = 0;
+    ttak_u128_t sum;
+    sum.lo = 0;
+    sum.hi = 0;
     for (uint32_t i = 0; i < lhs_len && i <= k; ++i) {
         uint32_t j = k - i;
         if (j >= rhs_len) continue;
-        sum += (unsigned __int128)((uint64_t)lhs[i] * (uint64_t)rhs[j]);
+        uint64_t prod = (uint64_t)lhs[i] * (uint64_t)rhs[j];
+        uint64_t new_lo = sum.lo + prod;
+        uint64_t carry = (new_lo < sum.lo) ? 1ULL : 0ULL;
+        sum.lo = new_lo;
+        sum.hi += carry;
     }
     temp[k] = sum;
 }
@@ -161,7 +167,7 @@ extern "C" bool ttak_bigint_accel_cuda_mul(limb_t *dst,
 
     limb_t *d_lhs = NULL;
     limb_t *d_rhs = NULL;
-    unsigned __int128 *d_temp = NULL;
+    ttak_u128_t *d_temp = NULL;
 
     if (!ttak_bigint_cuda_copy_to_device(lhs, lhs_used, &d_lhs)) {
         return false;
@@ -170,12 +176,12 @@ extern "C" bool ttak_bigint_accel_cuda_mul(limb_t *dst,
         ttak_bigint_cuda_free_all(d_lhs, NULL, NULL);
         return false;
     }
-    cudaError_t err = cudaMalloc((void **)&d_temp, result_len * sizeof(unsigned __int128));
+    cudaError_t err = cudaMalloc((void **)&d_temp, result_len * sizeof(ttak_u128_t));
     if (err != cudaSuccess) {
         ttak_bigint_cuda_free_all(d_lhs, d_rhs, NULL);
         return false;
     }
-    err = cudaMemset(d_temp, 0, result_len * sizeof(unsigned __int128));
+    err = cudaMemset(d_temp, 0, result_len * sizeof(ttak_u128_t));
     if (err != cudaSuccess) {
         ttak_bigint_cuda_free_all(d_lhs, d_rhs, d_temp);
         return false;
@@ -192,12 +198,12 @@ extern "C" bool ttak_bigint_accel_cuda_mul(limb_t *dst,
         return false;
     }
 
-    unsigned __int128 *temp = (unsigned __int128 *)malloc(result_len * sizeof(unsigned __int128));
+    ttak_u128_t *temp = (ttak_u128_t *)malloc(result_len * sizeof(ttak_u128_t));
     if (!temp) {
         ttak_bigint_cuda_free_all(d_lhs, d_rhs, d_temp);
         return false;
     }
-    err = cudaMemcpy(temp, d_temp, result_len * sizeof(unsigned __int128), cudaMemcpyDeviceToHost);
+    err = cudaMemcpy(temp, d_temp, result_len * sizeof(ttak_u128_t), cudaMemcpyDeviceToHost);
     ttak_bigint_cuda_free_all(d_lhs, d_rhs, d_temp);
     if (err != cudaSuccess) {
         free(temp);
@@ -206,9 +212,9 @@ extern "C" bool ttak_bigint_accel_cuda_mul(limb_t *dst,
 
     uint64_t carry = 0;
     for (size_t i = 0; i < result_len; ++i) {
-        unsigned __int128 v = temp[i] + carry;
-        dst[i] = (limb_t)(uint64_t)(v & 0xFFFFFFFF);
-        carry = (uint64_t)(v >> 32);
+        ttak_u128_t v = ttak_u128_add64(temp[i], carry);
+        dst[i] = (limb_t)(ttak_u128_get_lo(v) & 0xFFFFFFFFULL);
+        carry = ttak_u128_get_lo(ttak_u128_shr(v, 32));
     }
     free(temp);
 
