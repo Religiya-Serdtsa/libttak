@@ -27,9 +27,9 @@ static void ttak_map_arrays_destroy(tt_map_t *map) {
 /* Internal constructor: allocate and zero-initialise all three arrays.
  * Returns 0 on success, -1 on any allocation failure (arrays freed on error). */
 static int ttak_map_arrays_alloc(tt_map_t *map, size_t padded_cap, uint64_t now) {
-    map->ctrls  = ttak_mem_alloc(padded_cap * sizeof(uint8_t),   __TTAK_UNSAFE_MEM_FOREVER__, now);
-    map->keys   = ttak_mem_alloc(padded_cap * sizeof(uintptr_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
-    map->values = ttak_mem_alloc(padded_cap * sizeof(size_t),    __TTAK_UNSAFE_MEM_FOREVER__, now);
+    map->ctrls  = ttak_mem_alloc_raw(padded_cap * sizeof(uint8_t),   __TTAK_UNSAFE_MEM_FOREVER__, now);
+    map->keys   = ttak_mem_alloc_raw(padded_cap * sizeof(uintptr_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
+    map->values = ttak_mem_alloc_raw(padded_cap * sizeof(size_t),    __TTAK_UNSAFE_MEM_FOREVER__, now);
 
     if (map->ctrls == NULL || map->keys == NULL || map->values == NULL) {
         ttak_map_arrays_destroy(map);
@@ -43,7 +43,7 @@ static int ttak_map_arrays_alloc(tt_map_t *map, size_t padded_cap, uint64_t now)
 }
 
 tt_map_t *ttak_create_map(size_t init_cap, uint64_t now) {
-    tt_map_t *map = ttak_mem_alloc(sizeof(tt_map_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
+    tt_map_t *map = ttak_mem_alloc_raw(sizeof(tt_map_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!map) return NULL;
 
     map->cap  = next_pow2(init_cap);

@@ -16,7 +16,7 @@ int main(void) {
     printf("Requesting allocation at tick %" PRIu64 " with lifetime %" PRIu64 " ticks\n",
            now, lifetime);
 
-    char *message = ttak_mem_alloc(128, lifetime, now);
+    char *message = ttak_mem_alloc_raw(128, lifetime, now);
     if (!message) {
         printf("LibTTAK fails to allocate a memory.\n");
         return 1;

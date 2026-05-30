@@ -15,7 +15,7 @@ static uint64_t bigint_as_u64(const ttak_bigint_t *bi) {
 }
 
 void test_bigint_init() {
-    ttak_bigint_t *bi = ttak_mem_alloc(sizeof(ttak_bigint_t), __TTAK_UNSAFE_MEM_FOREVER__, 0);
+    ttak_bigint_t *bi = ttak_mem_alloc_raw(sizeof(ttak_bigint_t), __TTAK_UNSAFE_MEM_FOREVER__, 0);
     ASSERT(bi != NULL);
     ttak_bigint_init(bi, 0);
     
@@ -29,7 +29,7 @@ void test_bigint_init() {
 }
 
 void test_bigint_mersenne_mod_basic() {
-    ttak_bigint_t *bi = ttak_mem_alloc(sizeof(ttak_bigint_t), __TTAK_UNSAFE_MEM_FOREVER__, 0);
+    ttak_bigint_t *bi = ttak_mem_alloc_raw(sizeof(ttak_bigint_t), __TTAK_UNSAFE_MEM_FOREVER__, 0);
     ASSERT(bi != NULL);
     ttak_bigint_init(bi, 0);
     
@@ -40,7 +40,7 @@ void test_bigint_mersenne_mod_basic() {
 }
 
 void test_bigmul_init() {
-    tt_big_mul_t *bm = ttak_mem_alloc(sizeof(tt_big_mul_t), __TTAK_UNSAFE_MEM_FOREVER__, 4);
+    tt_big_mul_t *bm = ttak_mem_alloc_raw(sizeof(tt_big_mul_t), __TTAK_UNSAFE_MEM_FOREVER__, 4);
     ASSERT(bm != NULL);
 
     ttak_bigmul_init(bm, 4);

@@ -11,7 +11,7 @@
  * @return Pointer to the node or NULL on failure.
  */
 static ttak_btree_node_t *create_node(int t, bool leaf, uint64_t now) {
-    ttak_btree_node_t *node = (ttak_btree_node_t *)ttak_mem_alloc(sizeof(ttak_btree_node_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
+    ttak_btree_node_t *node = (ttak_btree_node_t *)ttak_mem_alloc_raw(sizeof(ttak_btree_node_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!node) return NULL;
 
     node->leaf = leaf;
@@ -21,9 +21,9 @@ static ttak_btree_node_t *create_node(int t, bool leaf, uint64_t now) {
     size_t max_keys = 2 * t - 1;
     size_t max_children = 2 * t;
 
-    node->keys = (void **)ttak_mem_alloc(sizeof(void *) * max_keys, __TTAK_UNSAFE_MEM_FOREVER__, now);
-    node->values = (void **)ttak_mem_alloc(sizeof(void *) * max_keys, __TTAK_UNSAFE_MEM_FOREVER__, now);
-    node->children = (struct ttak_btree_node **)ttak_mem_alloc(sizeof(struct ttak_btree_node *) * max_children, __TTAK_UNSAFE_MEM_FOREVER__, now);
+    node->keys = (void **)ttak_mem_alloc_raw(sizeof(void *) * max_keys, __TTAK_UNSAFE_MEM_FOREVER__, now);
+    node->values = (void **)ttak_mem_alloc_raw(sizeof(void *) * max_keys, __TTAK_UNSAFE_MEM_FOREVER__, now);
+    node->children = (struct ttak_btree_node **)ttak_mem_alloc_raw(sizeof(struct ttak_btree_node *) * max_children, __TTAK_UNSAFE_MEM_FOREVER__, now);
 
     if (!node->keys || !node->values || !node->children) {
         // Cleanup if partial alloc failed (simplified: just return null, leaking partials in this simplified prototype)

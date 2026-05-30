@@ -21,7 +21,7 @@ void test_worker_dirty_recovery() {
     uint64_t now = ttak_get_tick_count();
     
     // 1. Allocate some memory that will expire soon (10ms)
-    void *dirty_ptr = ttak_mem_alloc(1024, 10000000, now); // 10ms in ns? 
+    void *dirty_ptr = ttak_mem_alloc_raw(1024, 10000000, now); // 10ms in ns? 
     // Wait, ttak_get_tick_count() returns ns or ticks.
     // Let's check timing.h
     

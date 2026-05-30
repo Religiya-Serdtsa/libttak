@@ -13,11 +13,11 @@
  */
 
 ttak_promise_t *ttak_promise_create(uint64_t now) {
-    ttak_promise_t *promise = (ttak_promise_t *)ttak_mem_alloc(sizeof(ttak_promise_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
+    ttak_promise_t *promise = (ttak_promise_t *)ttak_mem_alloc_raw(sizeof(ttak_promise_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!promise) return NULL;
     memset(promise, 0, sizeof(*promise));
 
-    promise->future = (ttak_future_t *)ttak_mem_alloc(sizeof(ttak_future_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
+    promise->future = (ttak_future_t *)ttak_mem_alloc_raw(sizeof(ttak_future_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!promise->future) {
         ttak_mem_free(promise);
         return NULL;

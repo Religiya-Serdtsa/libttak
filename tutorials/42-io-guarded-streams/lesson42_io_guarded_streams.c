@@ -102,8 +102,8 @@ int main(void) {
 
     const size_t slot_capacity = 256;
     uint64_t buffer_lifetime = TT_SECOND(5);
-    write_slot = ttak_mem_alloc(slot_capacity, buffer_lifetime, ttak_get_tick_count());
-    read_slot = ttak_mem_alloc(slot_capacity, buffer_lifetime, ttak_get_tick_count());
+    write_slot = ttak_mem_alloc_raw(slot_capacity, buffer_lifetime, ttak_get_tick_count());
+    read_slot = ttak_mem_alloc_raw(slot_capacity, buffer_lifetime, ttak_get_tick_count());
     if (!write_slot || !read_slot) {
         fprintf(stderr, "[lesson42] failed to allocate IO buffers\n");
         goto cleanup;

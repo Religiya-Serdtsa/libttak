@@ -18,7 +18,7 @@ static uint64_t bigint_as_u64(const ttak_bigint_t *bi) {
 }
 
 void test_bigreal_init() {
-    ttak_bigreal_t *br = ttak_mem_alloc(sizeof(ttak_bigreal_t), __TTAK_UNSAFE_MEM_FOREVER__, 100);
+    ttak_bigreal_t *br = ttak_mem_alloc_raw(sizeof(ttak_bigreal_t), __TTAK_UNSAFE_MEM_FOREVER__, 100);
     ASSERT(br != NULL);
     ttak_bigreal_init(br, 100);
     ASSERT(br->exponent == 0);
@@ -27,7 +27,7 @@ void test_bigreal_init() {
 }
 
 void test_bigcomplex_init() {
-    ttak_bigcomplex_t *bc = ttak_mem_alloc(sizeof(ttak_bigcomplex_t), __TTAK_UNSAFE_MEM_FOREVER__, 200);
+    ttak_bigcomplex_t *bc = ttak_mem_alloc_raw(sizeof(ttak_bigcomplex_t), __TTAK_UNSAFE_MEM_FOREVER__, 200);
     ASSERT(bc != NULL);
     ttak_bigcomplex_init(bc, 200);
     ASSERT(bc->real.exponent == 0);

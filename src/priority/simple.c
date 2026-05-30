@@ -25,7 +25,7 @@ void ttak_simple_queue_init(ttak_simple_queue_t *q) {
  */
 void ttak_simple_queue_push(ttak_simple_queue_t *q, void *data, uint64_t now) {
     if (!q) return;
-    ttak_simple_node_t *node = (ttak_simple_node_t *)ttak_mem_alloc(sizeof(ttak_simple_node_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
+    ttak_simple_node_t *node = (ttak_simple_node_t *)ttak_mem_alloc_raw(sizeof(ttak_simple_node_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!node) return;
 
     node->data = data;
@@ -133,7 +133,7 @@ void ttak_simple_stack_init(ttak_simple_stack_t *s) {
  */
 void ttak_simple_stack_push(ttak_simple_stack_t *s, void *data, uint64_t now) {
     if (!s) return;
-    ttak_simple_node_t *node = (ttak_simple_node_t *)ttak_mem_alloc(sizeof(ttak_simple_node_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
+    ttak_simple_node_t *node = (ttak_simple_node_t *)ttak_mem_alloc_raw(sizeof(ttak_simple_node_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!node) return;
 
     node->data = data;

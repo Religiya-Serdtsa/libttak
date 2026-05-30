@@ -78,6 +78,31 @@ void test_vma_allocator(void) {
     }
 }
 
+#if defined(__GNUC__) || defined(__clang__)
+void test_scoped_allocator(void) {
+    fprintf(stderr, "\n--- Running Scoped Allocator Tests ---\n");
+    uint64_t now = get_test_tick_count();
+    void *ptr = NULL;
+
+    {
+        ttak_mem_alloc(sp, void *, 256, 1000, now);
+        ptr = sp;
+        TEST_ASSERT(ptr != NULL, "Scoped alloc returned non-NULL");
+        ttak_mem_header_t* header = (ttak_mem_header_t*)ptr - 1;
+        TEST_ASSERT(header->magic == TTAK_MAGIC_NUMBER, "Scoped alloc header magic is correct");
+        TEST_ASSERT(header->freed == false, "Scoped alloc not freed inside scope");
+    }
+
+    // After scope exit, the memory should have been automatically freed.
+    TEST_ASSERT(ttak_mem_access(ptr, now) == NULL, "Scoped alloc automatically freed after scope exit");
+    fprintf(stderr, "Scoped allocator test passed.\n");
+}
+#else
+void test_scoped_allocator(void) {
+    fprintf(stderr, "\n--- Skipping Scoped Allocator Tests (GCC/Clang only) ---\n");
+}
+#endif
+
 void test_general_allocator(void) {
     fprintf(stderr, "\n--- Running Large Allocator Routing Tests ---\n");
     size_t sizes[] = {1024 * 64, 1024 * 1024}; // Large sizes
@@ -114,6 +139,7 @@ int main(void) {
     test_pocket_allocator();
     test_vma_allocator();
     test_general_allocator();
+    test_scoped_allocator();
 
     fprintf(stderr, "\nAll new memory module tests completed.\n");
     return 0;

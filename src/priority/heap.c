@@ -15,7 +15,7 @@ void ttak_heap_tree_init(ttak_heap_tree_t *heap, size_t initial_cap, int (*cmp)(
     heap->cmp = cmp;
     heap->size = 0;
     heap->capacity = initial_cap > 0 ? initial_cap : 16;
-    heap->data = (void **)ttak_mem_alloc(sizeof(void *) * heap->capacity, __TTAK_UNSAFE_MEM_FOREVER__, 0);
+    heap->data = (void **)ttak_mem_alloc_raw(sizeof(void *) * heap->capacity, __TTAK_UNSAFE_MEM_FOREVER__, 0);
 }
 
 static void swap(void **a, void **b) {
@@ -77,7 +77,7 @@ void ttak_heap_tree_push(ttak_heap_tree_t *heap, void *element, uint64_t now) {
 
     if (heap->size >= heap->capacity) {
         size_t new_cap = heap->capacity * 2;
-        void **new_data = (void **)ttak_mem_realloc(heap->data, sizeof(void *) * new_cap, __TTAK_UNSAFE_MEM_FOREVER__, now);
+        void **new_data = (void **)ttak_mem_realloc_raw(heap->data, sizeof(void *) * new_cap, __TTAK_UNSAFE_MEM_FOREVER__, now);
         if (!new_data) return; // Allocation failed
         heap->data = new_data;
         heap->capacity = new_cap;

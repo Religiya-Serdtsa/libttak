@@ -97,6 +97,39 @@ LibTTAK trades the convenience of implicit destruction for **predictability**. Y
 
 ---
 
+## Traditional Scope-Bound RAII (GCC/Clang)
+
+LibTTAK's default public allocation macros are backed by `__attribute__((cleanup))` on GCC and Clang. This means the default `ttak_mem_alloc` behaves like traditional RAII: the memory is automatically freed when the variable goes out of scope.
+
+```c
+void example(uint64_t now_tick) {
+    ttak_mem_alloc(ptr, void *, 1024, 1000, now_tick);
+    // ptr is automatically freed when it goes out of scope
+}
+```
+
+On compilers that do not support the cleanup attribute (e.g., MSVC, TinyCC), the macros degrade to plain allocation without automatic cleanup, preserving portability. Library internals and code that requires explicit lifetime management can use the `_raw` variants, which return a plain pointer just like the old macros:
+
+```c
+void *ptr = ttak_mem_alloc_raw(1024, 1000, now_tick); // caller must free explicitly
+```
+
+Available scoped macros (auto-free on scope exit where supported):
+- `ttak_mem_alloc(var, cast, size, lifetime, now_tick)`
+- `ttak_root_alloc(var, cast, size, lifetime, now_tick)`
+- `ttak_mem_alloc_with_flags(var, cast, size, lifetime, now_tick, flags)`
+- `ttak_root_alloc_with_flags(var, cast, size, lifetime, now_tick, flags)`
+
+Raw variants (plain pointer, caller-driven lifetime):
+- `ttak_mem_alloc_raw(size, lifetime, now_tick)`
+- `ttak_root_alloc_raw(size, lifetime, now_tick)`
+- `ttak_mem_alloc_with_flags_raw(size, lifetime, now_tick, flags)`
+- `ttak_root_alloc_with_flags_raw(size, lifetime, now_tick, flags)`
+- `ttak_mem_realloc_raw(ptr, size, lifetime, now_tick)`
+- `ttak_mem_dup_raw(src, size, lifetime, now_tick)`
+
+---
+
 # Why Network, Math, and More Live Inside a Single Systems Library
 
 ## Overview

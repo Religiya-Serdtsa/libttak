@@ -263,7 +263,7 @@ ttak_io_status_t ttak_io_poll_wait(const ttak_io_guard_t *guard,
         return TTAK_IO_SUCCESS;
     }
 
-    ttak_io_poll_task_ctx_t *ctx = ttak_mem_alloc(sizeof(*ctx), __TTAK_UNSAFE_MEM_FOREVER__, now);
+    ttak_io_poll_task_ctx_t *ctx = ttak_mem_alloc_raw(sizeof(*ctx), __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!ctx) {
         return TTAK_IO_ERR_SYS_FAILURE;
     }

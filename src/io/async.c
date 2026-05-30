@@ -80,7 +80,7 @@ ttak_io_status_t ttak_io_async_read(ttak_io_guard_t *guard,
         return TTAK_IO_ERR_INVALID_ARGUMENT;
     }
 
-    ttak_io_async_ctx_t *ctx = ttak_mem_alloc(sizeof(*ctx), __TTAK_UNSAFE_MEM_FOREVER__, now);
+    ttak_io_async_ctx_t *ctx = ttak_mem_alloc_raw(sizeof(*ctx), __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!ctx) return TTAK_IO_ERR_SYS_FAILURE;
     ctx->guard = guard;
     ctx->buffer = dst;
@@ -115,7 +115,7 @@ ttak_io_status_t ttak_io_async_write(ttak_io_guard_t *guard,
         return TTAK_IO_ERR_INVALID_ARGUMENT;
     }
 
-    ttak_io_async_ctx_t *ctx = ttak_mem_alloc(sizeof(*ctx), __TTAK_UNSAFE_MEM_FOREVER__, now);
+    ttak_io_async_ctx_t *ctx = ttak_mem_alloc_raw(sizeof(*ctx), __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!ctx) return TTAK_IO_ERR_SYS_FAILURE;
     ctx->guard = guard;
     ctx->buffer = (void *)src;

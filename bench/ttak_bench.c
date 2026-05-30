@@ -156,7 +156,7 @@ static int u64_deref_cmp(const void *a, const void *b) {
 static bool table_init_sanity(ttak_table_t *tbl, size_t capacity, uint64_t now) {
     ttak_table_init(tbl, capacity, NULL, u64_deref_cmp, ttak_mem_free, NULL);
 
-    uint64_t *k = ttak_mem_alloc(8, __TTAK_UNSAFE_MEM_FOREVER__, now);
+    uint64_t *k = ttak_mem_alloc_raw(8, __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!k) {
         ttak_table_destroy(tbl, now);
         return false;
@@ -186,7 +186,7 @@ static void run_mem(void) {
     uint64_t ts = ttak_get_tick_count();
     uint64_t sink = 0;
 
-    void **ptrs = ttak_mem_alloc(N * sizeof(void *), __TTAK_UNSAFE_MEM_FOREVER__, ts);
+    void **ptrs = ttak_mem_alloc_raw(N * sizeof(void *), __TTAK_UNSAFE_MEM_FOREVER__, ts);
     if (!ptrs) {
         fprintf(stderr, "ptrs alloc failed\n");
         return;
@@ -194,7 +194,7 @@ static void run_mem(void) {
 
     uint64_t t = ttak_get_tick_count_ns();
     for (size_t i = 0; i < N; i++) {
-        ptrs[i] = ttak_mem_alloc(64, __TTAK_UNSAFE_MEM_FOREVER__, ts);
+        ptrs[i] = ttak_mem_alloc_raw(64, __TTAK_UNSAFE_MEM_FOREVER__, ts);
         if (ptrs[i]) {
             touch_bytes((uint8_t *)ptrs[i], 64, (uint8_t)i, &sink);
         } else {
@@ -210,7 +210,7 @@ static void run_mem(void) {
     }
     print_res("mem_free", N, dur_u64(t, ttak_get_tick_count_ns()));
 
-    void *p = ttak_mem_alloc(128, __TTAK_UNSAFE_MEM_FOREVER__, ts);
+    void *p = ttak_mem_alloc_raw(128, __TTAK_UNSAFE_MEM_FOREVER__, ts);
     if (!p) {
         fprintf(stderr, "mem_access base alloc failed\n");
         ttak_mem_free(ptrs);
@@ -254,7 +254,7 @@ static void run_epoch(void) {
     t = ttak_get_tick_count_ns();
     for (size_t i = 0; i < N; i++) {
         ttak_epoch_enter();
-        void *obj = ttak_mem_alloc(32, __TTAK_UNSAFE_MEM_FOREVER__, ts);
+        void *obj = ttak_mem_alloc_raw(32, __TTAK_UNSAFE_MEM_FOREVER__, ts);
         if (obj) touch_bytes((uint8_t *)obj, 32, (uint8_t)(i ^ 0xA5u), &sink);
         ttak_epoch_exit();
         if (obj) ttak_epoch_retire(obj, ttak_mem_free);
@@ -272,7 +272,7 @@ static void run_epoch(void) {
 
     t = ttak_get_tick_count_ns();
     for (size_t i = 0; i < 10000; i++) {
-        void *obj = ttak_mem_alloc(64, __TTAK_UNSAFE_MEM_FOREVER__, ts);
+        void *obj = ttak_mem_alloc_raw(64, __TTAK_UNSAFE_MEM_FOREVER__, ts);
         if (obj) touch_bytes((uint8_t *)obj, 64, (uint8_t)i, &sink);
         ttak_epoch_gc_register(&gc, obj, 64);
         KEEP(obj);
@@ -298,7 +298,7 @@ static void run_detachable(void) {
     uint64_t sink = 0;
 
     ttak_detachable_context_t *ctx = ttak_detachable_context_default();
-    ttak_detachable_allocation_t *allocs = ttak_mem_alloc(N * sizeof(*allocs),
+    ttak_detachable_allocation_t *allocs = ttak_mem_alloc_raw(N * sizeof(*allocs),
                                                           __TTAK_UNSAFE_MEM_FOREVER__, ts);
     if (!ctx || !allocs) {
         fprintf(stderr, "detachable init failed\n");
@@ -482,7 +482,7 @@ static void run_containers(void) {
     uint64_t sink = 0;
 
     ttak_object_pool_t *op = ttak_object_pool_create(N, 64);
-    void **items = ttak_mem_alloc(N * sizeof(void *), __TTAK_UNSAFE_MEM_FOREVER__, ts0);
+    void **items = ttak_mem_alloc_raw(N * sizeof(void *), __TTAK_UNSAFE_MEM_FOREVER__, ts0);
     if (!op || !items) {
         fprintf(stderr, "object_pool init failed\n");
         return;
@@ -535,8 +535,8 @@ static void run_containers(void) {
             return;
         }
 
-        uintptr_t *keys = ttak_mem_alloc(N * sizeof(uintptr_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
-        size_t *vals = ttak_mem_alloc(N * sizeof(size_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
+        uintptr_t *keys = ttak_mem_alloc_raw(N * sizeof(uintptr_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
+        size_t *vals = ttak_mem_alloc_raw(N * sizeof(size_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
         if (!keys || !vals) {
             fprintf(stderr, "map kv alloc failed\n");
             return;
@@ -587,8 +587,8 @@ static void run_containers(void) {
             return;
         }
 
-        uint64_t **tkeys = ttak_mem_alloc(N * sizeof(uint64_t *), __TTAK_UNSAFE_MEM_FOREVER__, now);
-        void **tvals = ttak_mem_alloc(N * sizeof(void *), __TTAK_UNSAFE_MEM_FOREVER__, now);
+        uint64_t **tkeys = ttak_mem_alloc_raw(N * sizeof(uint64_t *), __TTAK_UNSAFE_MEM_FOREVER__, now);
+        void **tvals = ttak_mem_alloc_raw(N * sizeof(void *), __TTAK_UNSAFE_MEM_FOREVER__, now);
         if (!tkeys || !tvals) {
             fprintf(stderr, "table kv alloc failed\n");
             ttak_table_destroy(&tbl, now);
@@ -599,7 +599,7 @@ static void run_containers(void) {
 
         t = ttak_get_tick_count_ns();
         for (size_t i = 0; i < N; i++) {
-            uint64_t *k = ttak_mem_alloc(8, __TTAK_UNSAFE_MEM_FOREVER__, now);
+            uint64_t *k = ttak_mem_alloc_raw(8, __TTAK_UNSAFE_MEM_FOREVER__, now);
             if (!k) {
                 tkeys[i] = NULL;
                 tvals[i] = NULL;

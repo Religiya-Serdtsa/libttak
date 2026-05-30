@@ -298,16 +298,55 @@ static inline uint32_t ttak_calc_header_checksum(const ttak_mem_header_t *h) {
     return sum1 ^ sum2;
 }
 
-/* Compatibility macros */
+/* Raw compatibility macros (non-scoped, return plain pointer) */
 typedef void ttak_lifecycle_obj_t;
-#define ttak_mem_alloc(size, lifetime, now_tick) ttak_mem_alloc_safe(size, lifetime, now_tick, false, false, true, false, TTAK_MEM_DEFAULT)
-#define ttak_root_alloc(size, lifetime, now_tick) ttak_mem_alloc_safe(size, lifetime, now_tick, true, true, true, true, TTAK_MEM_DEFAULT)
-#define ttak_mem_alloc_with_flags(size, lifetime, now_tick, flags) ttak_mem_alloc_safe(size, lifetime, now_tick, false, false, true, false, flags)
-#define ttak_root_alloc_with_flags(size, lifetime, now_tick, flags) ttak_mem_alloc_safe(size, lifetime, now_tick, true, true, true, true, flags)
-#define ttak_mem_realloc(ptr, size, lifetime, now_tick) ttak_mem_realloc_safe(ptr, size, lifetime, now_tick, false, TTAK_MEM_DEFAULT)
-#define ttak_mem_realloc_with_flags(ptr, size, lifetime, now_tick, flags) ttak_mem_realloc_safe(ptr, size, lifetime, now_tick, false, flags)
-#define ttak_mem_dup(src, size, lifetime, now_tick) ttak_mem_dup_safe(src, size, lifetime, now_tick, false, TTAK_MEM_DEFAULT)
-#define ttak_mem_dup_with_flags(src, size, lifetime, now_tick, flags) ttak_mem_dup_safe(src, size, lifetime, now_tick, false, flags)
+#define ttak_mem_alloc_raw(size, lifetime, now_tick) ttak_mem_alloc_safe(size, lifetime, now_tick, false, false, true, false, TTAK_MEM_DEFAULT)
+#define ttak_root_alloc_raw(size, lifetime, now_tick) ttak_mem_alloc_safe(size, lifetime, now_tick, true, true, true, true, TTAK_MEM_DEFAULT)
+#define ttak_mem_alloc_with_flags_raw(size, lifetime, now_tick, flags) ttak_mem_alloc_safe(size, lifetime, now_tick, false, false, true, false, flags)
+#define ttak_root_alloc_with_flags_raw(size, lifetime, now_tick, flags) ttak_mem_alloc_safe(size, lifetime, now_tick, true, true, true, true, flags)
+#define ttak_mem_realloc_raw(ptr, size, lifetime, now_tick) ttak_mem_realloc_safe(ptr, size, lifetime, now_tick, false, TTAK_MEM_DEFAULT)
+#define ttak_mem_realloc_with_flags_raw(ptr, size, lifetime, now_tick, flags) ttak_mem_realloc_safe(ptr, size, lifetime, now_tick, false, flags)
+#define ttak_mem_dup_raw(src, size, lifetime, now_tick) ttak_mem_dup_safe(src, size, lifetime, now_tick, false, TTAK_MEM_DEFAULT)
+#define ttak_mem_dup_with_flags_raw(src, size, lifetime, now_tick, flags) ttak_mem_dup_safe(src, size, lifetime, now_tick, false, flags)
+
+#if defined(__GNUC__) || defined(__clang__)
+/**
+ * @brief Cleanup handler for scoped ttak memory allocations.
+ *
+ * Invoked automatically when a variable declared with the cleanup attribute
+ * goes out of scope. Pass a pointer to the variable (which holds a void*).
+ */
+static inline void ttak_mem_cleanup(void *p) {
+    void **pp = (void **)p;
+    if (*pp) {
+        ttak_mem_free(*pp);
+    }
+}
+#endif
+
+/**
+ * @brief Default scoped memory allocation macros (GCC/Clang only).
+ *
+ * These macros declare a variable that is automatically freed when it goes
+ * out of scope using the compiler's cleanup attribute. The raw variants
+ * above are provided for code that needs a plain pointer (e.g. persistent
+ * allocations inside library code or explicit free patterns).
+ */
+#define ttak_mem_alloc(var, cast, size, lifetime, now_tick) \
+    void *_ttak_scoped_##var TTAK_ATTRIBUTE_CLEANUP(ttak_mem_cleanup) = ttak_mem_alloc_safe(size, lifetime, now_tick, false, false, true, false, TTAK_MEM_DEFAULT); \
+    cast var = (cast)_ttak_scoped_##var
+
+#define ttak_root_alloc(var, cast, size, lifetime, now_tick) \
+    void *_ttak_scoped_##var TTAK_ATTRIBUTE_CLEANUP(ttak_mem_cleanup) = ttak_mem_alloc_safe(size, lifetime, now_tick, true, true, true, true, TTAK_MEM_DEFAULT); \
+    cast var = (cast)_ttak_scoped_##var
+
+#define ttak_mem_alloc_with_flags(var, cast, size, lifetime, now_tick, flags) \
+    void *_ttak_scoped_##var TTAK_ATTRIBUTE_CLEANUP(ttak_mem_cleanup) = ttak_mem_alloc_safe(size, lifetime, now_tick, false, false, true, false, flags); \
+    cast var = (cast)_ttak_scoped_##var
+
+#define ttak_root_alloc_with_flags(var, cast, size, lifetime, now_tick, flags) \
+    void *_ttak_scoped_##var TTAK_ATTRIBUTE_CLEANUP(ttak_mem_cleanup) = ttak_mem_alloc_safe(size, lifetime, now_tick, true, true, true, true, flags); \
+    cast var = (cast)_ttak_scoped_##var
 
 #ifndef EMBEDDED
 #define EMBEDDED 0

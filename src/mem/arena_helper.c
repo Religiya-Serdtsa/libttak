@@ -126,7 +126,7 @@ bool ttak_arena_generation_begin(ttak_arena_env_t *env, ttak_arena_generation_t 
 
     uint64_t now = ttak_get_tick_count();
     size_t buffer_bytes = env->config.generation_bytes;
-    void *buffer = ttak_mem_alloc_with_flags(buffer_bytes, env->config.lifetime_ticks, now, env->config.alloc_flags);
+    void *buffer = ttak_mem_alloc_with_flags_raw(buffer_bytes, env->config.lifetime_ticks, now, env->config.alloc_flags);
     if (!buffer) {
         return false;
     }

@@ -184,7 +184,7 @@ static void test_mem_alloc_size_overflow_rejected(void) {
     /* Requesting SIZE_MAX bytes must not succeed — the header+canary
      * arithmetic would overflow, and the allocator must detect that
      * and return NULL rather than corrupting memory. */
-    void *p = ttak_mem_alloc(SIZE_MAX, 0, 0);
+    void *p = ttak_mem_alloc_raw(SIZE_MAX, 0, 0);
     ASSERT_MSG(p == NULL, "Expected NULL for SIZE_MAX allocation (overflow guard)");
 }
 

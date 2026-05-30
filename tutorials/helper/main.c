@@ -107,7 +107,7 @@ static char *trim_spaces(char *s) {
 static char *dup_string(const char *src) {
     if (!src) return NULL;
     size_t len = strlen(src) + 1;
-    char *copy = ttak_mem_alloc(len, __TTAK_UNSAFE_MEM_FOREVER__, ttak_get_tick_count_ns());
+    char *copy = ttak_mem_alloc_raw(len, __TTAK_UNSAFE_MEM_FOREVER__, ttak_get_tick_count_ns());
     if (!copy) return NULL;
     memcpy(copy, src, len);
     return copy;
@@ -119,7 +119,7 @@ static bool append_text(char **buf, size_t *cap, size_t *len, const char *src) {
     if (*len + need + 1 >= *cap) {
         size_t new_cap = (*cap == 0) ? 256 : *cap * 2;
         while (new_cap <= *len + need + 1) new_cap *= 2;
-        char *tmp = ttak_mem_realloc(*buf, new_cap, __TTAK_UNSAFE_MEM_FOREVER__, ttak_get_tick_count_ns());
+        char *tmp = ttak_mem_realloc_raw(*buf, new_cap, __TTAK_UNSAFE_MEM_FOREVER__, ttak_get_tick_count_ns());
         if (!tmp) return false;
         *buf = tmp;
         *cap = new_cap;
@@ -133,7 +133,7 @@ static bool append_text(char **buf, size_t *cap, size_t *len, const char *src) {
 static bool add_section(help_doc_t *doc, char *title, char *body) {
     if (!doc || !title || !body) return false;
     help_section_t *tmp =
-        ttak_mem_realloc(doc->items, (doc->count + 1) * sizeof(help_section_t), __TTAK_UNSAFE_MEM_FOREVER__, ttak_get_tick_count_ns());
+        ttak_mem_realloc_raw(doc->items, (doc->count + 1) * sizeof(help_section_t), __TTAK_UNSAFE_MEM_FOREVER__, ttak_get_tick_count_ns());
     if (!tmp) return false;
     doc->items = tmp;
     doc->items[doc->count].title = title;
@@ -177,7 +177,7 @@ static bool load_help_file(const char *path, help_doc_t *doc) {
         }
         if (current_title) {
             if (!current_body) {
-                current_body = ttak_mem_alloc(1, __TTAK_UNSAFE_MEM_FOREVER__, ttak_get_tick_count_ns());
+                current_body = ttak_mem_alloc_raw(1, __TTAK_UNSAFE_MEM_FOREVER__, ttak_get_tick_count_ns());
                 if (!current_body) {
                     fclose(fp);
                     return false;
@@ -255,7 +255,7 @@ static char *read_entire_file(const char *path) {
         return NULL;
     }
     rewind(fp);
-    char *buf = ttak_mem_alloc((size_t)len + 1, __TTAK_UNSAFE_MEM_FOREVER__, ttak_get_tick_count_ns());
+    char *buf = ttak_mem_alloc_raw((size_t)len + 1, __TTAK_UNSAFE_MEM_FOREVER__, ttak_get_tick_count_ns());
     if (!buf) {
         fclose(fp);
         return NULL;
@@ -297,7 +297,7 @@ static bool append_tutorial_entry(tutorial_index_t *index,
                                   bool missing) {
     if (!index || !key || !title) return false;
     tutorial_entry_t *tmp =
-        ttak_mem_realloc(index->items, (index->count + 1) * sizeof(*index->items), __TTAK_UNSAFE_MEM_FOREVER__, ttak_get_tick_count_ns());
+        ttak_mem_realloc_raw(index->items, (index->count + 1) * sizeof(*index->items), __TTAK_UNSAFE_MEM_FOREVER__, ttak_get_tick_count_ns());
     if (!tmp) return false;
     index->items = tmp;
     tutorial_entry_t *entry = &index->items[index->count];

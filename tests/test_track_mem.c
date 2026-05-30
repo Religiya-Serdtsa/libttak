@@ -7,7 +7,7 @@ int main() {
     uint64_t now = ttak_get_tick_count();
     
     // 1. Allocation
-    void *ptr = ttak_mem_alloc(1024, TT_SECOND(10), now);
+    void *ptr = ttak_mem_alloc_raw(1024, TT_SECOND(10), now);
     
     // 2. Access
     ttak_mem_access(ptr, now + 100);

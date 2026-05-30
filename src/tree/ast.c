@@ -23,7 +23,7 @@ void ttak_ast_tree_init(ttak_ast_tree_t *tree, void (*free_value)(void*)) {
  * @return Pointer to the node or NULL on allocation failure.
  */
 ttak_ast_node_t *ttak_ast_create_node(int type, void *value, uint64_t now) {
-    ttak_ast_node_t *node = (ttak_ast_node_t *)ttak_mem_alloc(sizeof(ttak_ast_node_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
+    ttak_ast_node_t *node = (ttak_ast_node_t *)ttak_mem_alloc_raw(sizeof(ttak_ast_node_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!node) return NULL;
     
     node->type = type;
@@ -49,7 +49,7 @@ void ttak_ast_add_child(ttak_ast_node_t *parent, ttak_ast_node_t *child, uint64_
     // Check if we need to resize children array
     if (parent->num_children >= parent->cap_children) {
         size_t new_cap = (parent->cap_children == 0) ? 4 : parent->cap_children * 2;
-        ttak_ast_node_t **new_children = (ttak_ast_node_t **)ttak_mem_realloc(
+        ttak_ast_node_t **new_children = (ttak_ast_node_t **)ttak_mem_realloc_raw(
             parent->children, 
             sizeof(ttak_ast_node_t *) * new_cap, 
             __TTAK_UNSAFE_MEM_FOREVER__, 

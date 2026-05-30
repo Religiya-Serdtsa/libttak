@@ -216,7 +216,7 @@ static _Bool ttak_net_lattice_rehydrate(ttak_net_lattice_t *lat, uint32_t dim, u
     }
 
     size_t slots_count = (size_t)dim * (size_t)dim;
-    ttak_net_lattice_slot_t *slots = ttak_mem_alloc(slots_count * sizeof(ttak_net_lattice_slot_t),
+    ttak_net_lattice_slot_t *slots = ttak_mem_alloc_raw(slots_count * sizeof(ttak_net_lattice_slot_t),
                                                     __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!slots) {
         return false;
@@ -332,11 +332,11 @@ ttak_net_lattice_t* ttak_net_lattice_create(uint32_t dim, uint64_t now) {
     /* Ensure dim is power of 2 for masking */
     if (dim == 0 || (dim & (dim - 1)) != 0 || dim > TTAK_LATTICE_MAX_DIM) return NULL;
 
-    ttak_net_lattice_t *lat = ttak_mem_alloc(sizeof(ttak_net_lattice_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
+    ttak_net_lattice_t *lat = ttak_mem_alloc_raw(sizeof(ttak_net_lattice_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!lat) return NULL;
 
     size_t slots_count = (size_t)dim * (size_t)dim;
-    lat->slots = ttak_mem_alloc(slots_count * sizeof(ttak_net_lattice_slot_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
+    lat->slots = ttak_mem_alloc_raw(slots_count * sizeof(ttak_net_lattice_slot_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!lat->slots) {
         ttak_mem_free(lat);
         return NULL;

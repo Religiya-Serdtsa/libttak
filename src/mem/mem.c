@@ -512,7 +512,7 @@ void TTAK_HOT_PATH *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, ui
 }
 
 void * ttak_fastalloc(ttak_epoch_gc_t *gc, size_t size, uint64_t lifetime_ticks, uint64_t now) {
-    void *ptr = ttak_mem_alloc(size, lifetime_ticks, now);
+    void *ptr = ttak_mem_alloc_raw(size, lifetime_ticks, now);
     ttak_epoch_gc_register(gc, ptr, size);
     return ptr;
 }
