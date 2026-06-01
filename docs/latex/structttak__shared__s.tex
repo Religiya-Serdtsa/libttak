@@ -6,8 +6,7 @@
 
 
 
-Collaboration diagram for ttak\+\_\+shared\+\_\+s\+:
-\nopagebreak
+Collaboration diagram for ttak\+\_\+shared\+\_\+s\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -41,7 +40,7 @@ bool \mbox{\hyperlink{structttak__shared__s_a5545262c3ef21dce6c7eab22473c61a7}{i
 \item 
 void \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\+\_\+\+Atomic}} \mbox{\hyperlink{structttak__shared__s_ad93816a1c214aad98415fc92fea6a9f1}{retired\+\_\+ptr}}
 \item 
-void(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__shared__s_aeeb9302b804cc0eb54209d52313b6059}{cleanup}} )(void \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{icmp_8h_a9f2760a3f37301e10305d3349b5d4980}{data}})
+void(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__shared__s_aeeb9302b804cc0eb54209d52313b6059}{cleanup}} )(void \texorpdfstring{$\ast$}{*}data)
 \begin{DoxyCompactList}\small\item\em Custom destructor for the shared payload. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{shared_8h_a9e87115c8ab89cdc85a268b523179cef}{ttak\+\_\+shared\+\_\+result\+\_\+t}}(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__shared__s_a8a74b0b7c836d561d50adb7c2fad0324}{allocate}} )(struct \mbox{\hyperlink{structttak__shared__s}{ttak\+\_\+shared\+\_\+s}} \texorpdfstring{$\ast$}{*}self, size\+\_\+t \mbox{\hyperlink{structttak__shared__s_a651cb63b390a7507b0596d63cb108acb}{size}}, \mbox{\hyperlink{shared_8h_ae6eb27b055588903d427f15cc0cec6f5}{ttak\+\_\+shared\+\_\+level\+\_\+t}} \mbox{\hyperlink{structttak__shared__s_ac1587dc550d76c0aa66b5634f3952227}{level}})
 \begin{DoxyCompactList}\small\item\em Initializes and allocates the shared resource. \end{DoxyCompactList}\item 
@@ -213,7 +212,7 @@ Definition at line \mbox{\hyperlink{shared_8h_source_l00112}{112}} of file \mbox
 \index{ttak\_shared\_s@{ttak\_shared\_s}!cleanup@{cleanup}}
 \index{cleanup@{cleanup}!ttak\_shared\_s@{ttak\_shared\_s}}
 \doxysubsubsection{\texorpdfstring{cleanup}{cleanup}}
-{\footnotesize\ttfamily void(\texorpdfstring{$\ast$}{*} ttak\+\_\+shared\+\_\+s\+::cleanup) (void \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{icmp_8h_a9f2760a3f37301e10305d3349b5d4980}{data}})}
+{\footnotesize\ttfamily void(\texorpdfstring{$\ast$}{*} ttak\+\_\+shared\+\_\+s\+::cleanup) (void \texorpdfstring{$\ast$}{*}data)}
 
 
 

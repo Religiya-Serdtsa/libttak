@@ -11,16 +11,14 @@ Lock-\/free parallel ingress buffer using a 2-\/D slot lattice.
 {\ttfamily \#include $<$ttak/mem/mem.\+h$>$}\newline
 {\ttfamily \#include $<$ttak/sync/sync.\+h$>$}\newline
 {\ttfamily \#include $<$ttak/atomic/atomic.\+h$>$}\newline
-Include dependency graph for lattice.\+h\+:
-\nopagebreak
+Include dependency graph for lattice.\+h\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=350pt]{lattice_8h__incl}
 \end{center}
 \end{figure}
-This graph shows which files directly or indirectly include this file\+:
-\nopagebreak
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -37,7 +35,7 @@ struct \mbox{\hyperlink{structttak__net__lattice}{ttak\+\_\+net\+\_\+lattice}}
 \doxysubsubsection*{Macros}
 \begin{DoxyCompactItemize}
 \item 
-\#define \mbox{\hyperlink{lattice_8h_a55d733080fe1b18ca6182102984352a8}{TTAK\+\_\+\+LATTICE\+\_\+\+SLOT\+\_\+\+SIZE}}~2048
+\#define \mbox{\hyperlink{lattice_8h_a55d733080fe1b18ca6182102984352a8}{TTAK\+\_\+\+LATTICE\+\_\+\+SLOT\+\_\+\+SIZE}}~16384
 \item 
 \#define \mbox{\hyperlink{lattice_8h_af97afc326396ee21f8005d0ed7d2e2ea}{TTAK\+\_\+\+LATTICE\+\_\+\+MAX\+\_\+\+DIM}}~16
 \end{DoxyCompactItemize}
@@ -55,9 +53,9 @@ typedef struct \mbox{\hyperlink{structttak__net__lattice}{ttak\+\_\+net\+\_\+lat
 \begin{DoxyCompactList}\small\item\em Initializes a net lattice with given dimension. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{lattice_8h_a36f5af36a2290901e95849ec07882968}{ttak\+\_\+net\+\_\+lattice\+\_\+destroy}} (\mbox{\hyperlink{lattice_8h_af961e989c213033a7a2cf8a755297de9}{ttak\+\_\+net\+\_\+lattice\+\_\+t}} \texorpdfstring{$\ast$}{*}lat, uint64\+\_\+t now)
 \begin{DoxyCompactList}\small\item\em Destroys the lattice. \end{DoxyCompactList}\item 
-\+\_\+\+Bool \mbox{\hyperlink{lattice_8h_a4ae199b6c2aa0c066794e1e693f0f8b0}{ttak\+\_\+net\+\_\+lattice\+\_\+write}} (\mbox{\hyperlink{lattice_8h_af961e989c213033a7a2cf8a755297de9}{ttak\+\_\+net\+\_\+lattice\+\_\+t}} \texorpdfstring{$\ast$}{*}lat, uint32\+\_\+t tid, const void \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{icmp_8h_a9f2760a3f37301e10305d3349b5d4980}{data}}, uint32\+\_\+t \mbox{\hyperlink{icmp_8h_a5356a3645c29875208316ab4b277c1ae}{len}}, uint64\+\_\+t now)
+\+\_\+\+Bool \mbox{\hyperlink{lattice_8h_a4ae199b6c2aa0c066794e1e693f0f8b0}{ttak\+\_\+net\+\_\+lattice\+\_\+write}} (\mbox{\hyperlink{lattice_8h_af961e989c213033a7a2cf8a755297de9}{ttak\+\_\+net\+\_\+lattice\+\_\+t}} \texorpdfstring{$\ast$}{*}lat, uint32\+\_\+t tid, const void \texorpdfstring{$\ast$}{*}data, uint32\+\_\+t len, uint64\+\_\+t now)
 \begin{DoxyCompactList}\small\item\em Lock-\/free deterministic write into the lattice. \end{DoxyCompactList}\item 
-\+\_\+\+Bool \mbox{\hyperlink{lattice_8h_a7a8d76fae63c7f543507ef1397a85b2f}{ttak\+\_\+net\+\_\+lattice\+\_\+read}} (\mbox{\hyperlink{lattice_8h_af961e989c213033a7a2cf8a755297de9}{ttak\+\_\+net\+\_\+lattice\+\_\+t}} \texorpdfstring{$\ast$}{*}lat, uint32\+\_\+t tid, void \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{icmp_8h_a9037f54b05f8331e7594be9144926217}{dst}}, uint32\+\_\+t \texorpdfstring{$\ast$}{*}len\+\_\+out, uint64\+\_\+t now)
+\+\_\+\+Bool \mbox{\hyperlink{lattice_8h_a7a8d76fae63c7f543507ef1397a85b2f}{ttak\+\_\+net\+\_\+lattice\+\_\+read}} (\mbox{\hyperlink{lattice_8h_af961e989c213033a7a2cf8a755297de9}{ttak\+\_\+net\+\_\+lattice\+\_\+t}} \texorpdfstring{$\ast$}{*}lat, uint32\+\_\+t tid, void \texorpdfstring{$\ast$}{*}dst, uint32\+\_\+t \texorpdfstring{$\ast$}{*}len\+\_\+out, uint64\+\_\+t now)
 \begin{DoxyCompactList}\small\item\em Reads data from a designated slot in the lattice for a specific worker (tid). \end{DoxyCompactList}\item 
 \mbox{\hyperlink{lattice_8h_af961e989c213033a7a2cf8a755297de9}{ttak\+\_\+net\+\_\+lattice\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{lattice_8h_ad012111b9da5e6695858eadc3c7fe3be}{ttak\+\_\+net\+\_\+lattice\+\_\+get\+\_\+default}} (void)
 \begin{DoxyCompactList}\small\item\em Returns the global default lattice. \end{DoxyCompactList}\item 
@@ -97,7 +95,7 @@ Definition at line \mbox{\hyperlink{lattice_8h_source_l00017}{17}} of file \mbox
 \index{lattice.h@{lattice.h}!TTAK\_LATTICE\_SLOT\_SIZE@{TTAK\_LATTICE\_SLOT\_SIZE}}
 \index{TTAK\_LATTICE\_SLOT\_SIZE@{TTAK\_LATTICE\_SLOT\_SIZE}!lattice.h@{lattice.h}}
 \doxysubsubsection{\texorpdfstring{TTAK\_LATTICE\_SLOT\_SIZE}{TTAK\_LATTICE\_SLOT\_SIZE}}
-{\footnotesize\ttfamily \#define TTAK\+\_\+\+LATTICE\+\_\+\+SLOT\+\_\+\+SIZE~2048}
+{\footnotesize\ttfamily \#define TTAK\+\_\+\+LATTICE\+\_\+\+SLOT\+\_\+\+SIZE~16384}
 
 
 

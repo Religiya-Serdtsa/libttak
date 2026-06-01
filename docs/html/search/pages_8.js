@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['path_0',['Clone Coding Path',['../md_tutorials_2CLONE__PATH.html',1,'']]]
+  ['management_0',['RAII in LibTTAK: How It Differs from Traditional Resource Management',['../md_RAII.html',1,'']]],
+  ['mathematical_20and_20historical_20references_20for_20libttak_20algorithms_1',['Mathematical and Historical References for libttak Algorithms',['../md_REFERENCES.html',1,'']]]
 ];

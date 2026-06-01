@@ -47,41 +47,54 @@ var NAVTREE =
       [ "5. Signal-Aware Graceful Teardown", "md_RAII.html#autotoc_md41", null ],
       [ "6. No Hidden Global State or TLS Caches", "md_RAII.html#autotoc_md43", null ],
       [ "Summary", "md_RAII.html#autotoc_md45", null ],
-      [ "Why Network, Math, and More Live Inside a Single Systems Library", "md_RAII.html#autotoc_md47", [
-        [ "Overview", "md_RAII.html#autotoc_md48", null ],
-        [ "1. One Lifetime Model for Every Subsystem", "md_RAII.html#autotoc_md50", null ],
-        [ "2. Zero-Copy and Scheduling Co-Design", "md_RAII.html#autotoc_md52", null ],
-        [ "3. Deterministic Scheduling Across Domains", "md_RAII.html#autotoc_md54", null ],
-        [ "4. A Single Allocator Contract", "md_RAII.html#autotoc_md56", null ],
-        [ "5. Unified Observability", "md_RAII.html#autotoc_md58", null ],
-        [ "6. TinyCC Parity and ABI Stability", "md_RAII.html#autotoc_md60", null ],
-        [ "Summary", "md_RAII.html#autotoc_md62", null ]
+      [ "Traditional Scope-Bound RAII (GCC/Clang)", "md_RAII.html#autotoc_md47", null ],
+      [ "Why Network, Math, and More Live Inside a Single Systems Library", "md_RAII.html#autotoc_md49", [
+        [ "Overview", "md_RAII.html#autotoc_md50", null ],
+        [ "1. One Lifetime Model for Every Subsystem", "md_RAII.html#autotoc_md52", null ],
+        [ "2. Zero-Copy and Scheduling Co-Design", "md_RAII.html#autotoc_md54", null ],
+        [ "3. Deterministic Scheduling Across Domains", "md_RAII.html#autotoc_md56", null ],
+        [ "4. A Single Allocator Contract", "md_RAII.html#autotoc_md58", null ],
+        [ "5. Unified Observability", "md_RAII.html#autotoc_md60", null ],
+        [ "6. TinyCC Parity and ABI Stability", "md_RAII.html#autotoc_md62", null ],
+        [ "Summary", "md_RAII.html#autotoc_md64", null ]
       ] ]
     ] ],
     [ "LibTTAK (한국어 안내)", "md_README_8ko.html", [
-      [ "벤치마크(한국어)", "md_README_8ko.html#autotoc_md64", null ]
+      [ "벤치마크(한국어)", "md_README_8ko.html#autotoc_md66", null ]
+    ] ],
+    [ "Mathematical and Historical References for libttak Algorithms", "md_REFERENCES.html", [
+      [ "<tt>ttak_math_lane_mul</tt> (formerly <tt>ttak_math_dawonsul_lane_mul</tt>)", "md_REFERENCES.html#autotoc_md105", null ],
+      [ "<tt>ttak_matrix_set_ols_magic_square_4x4</tt> (formerly <tt>ttak_matrix_set_gusuryak_4x4</tt>)", "md_REFERENCES.html#autotoc_md107", null ],
+      [ "<tt>ttak_math_approx_sin</tt> and <tt>ttak_math_approx_cos</tt>", "md_REFERENCES.html#autotoc_md109", null ],
+      [ "<tt>ttak_bigreal_op_aligned_addsub</tt> (formerly <tt>ttak_bigreal_op_cheonwonsul</tt>)", "md_REFERENCES.html#autotoc_md111", null ],
+      [ "Latin-Square Scatter LUT in <tt>src/mem/arena_helper.c</tt>", "md_REFERENCES.html#autotoc_md113", null ],
+      [ "OLS Traversal in <tt>src/container/pool.c</tt>", "md_REFERENCES.html#autotoc_md115", null ],
+      [ "Lock-Free Lattice Ingress in <tt>src/net/lattice.c</tt>", "md_REFERENCES.html#autotoc_md117", null ],
+      [ "<tt>ttak_apply_mols_control</tt> in <tt>include/ttak/mols_control.h</tt>", "md_REFERENCES.html#autotoc_md119", null ],
+      [ "Buddy Allocator Residue Lookup in <tt>src/phys/mem/buddy.c</tt>", "md_REFERENCES.html#autotoc_md121", null ]
     ] ],
     [ "LibTTAK Specification", "md_SPECS.html", [
-      [ "1. Purpose", "md_SPECS.html#autotoc_md102", null ],
-      [ "2. Design Philosophy", "md_SPECS.html#autotoc_md103", null ],
-      [ "3. Architectural Overview", "md_SPECS.html#autotoc_md104", null ],
-      [ "4. Memory Model", "md_SPECS.html#autotoc_md105", [
-        [ "4.1 Fortress Allocator (<tt>ttak_mem_alloc_safe</tt>)", "md_SPECS.html#autotoc_md106", null ],
-        [ "4.2 Epoch & Garbage Collection", "md_SPECS.html#autotoc_md107", null ],
-        [ "4.3 Detachable Arenas", "md_SPECS.html#autotoc_md108", null ],
-        [ "4.4 Ownership", "md_SPECS.html#autotoc_md109", null ]
+      [ "1. Purpose", "md_SPECS.html#autotoc_md123", null ],
+      [ "2. Design Philosophy", "md_SPECS.html#autotoc_md124", null ],
+      [ "3. Architectural Overview", "md_SPECS.html#autotoc_md125", null ],
+      [ "4. Memory Model", "md_SPECS.html#autotoc_md126", [
+        [ "4.1 Fortress Allocator (<tt>ttak_mem_alloc_safe</tt>)", "md_SPECS.html#autotoc_md127", null ],
+        [ "4.2 Epoch & Garbage Collection", "md_SPECS.html#autotoc_md128", null ],
+        [ "4.3 Detachable Arenas", "md_SPECS.html#autotoc_md129", null ],
+        [ "4.4 Ownership", "md_SPECS.html#autotoc_md130", null ]
       ] ],
-      [ "5. Concurrency Model", "md_SPECS.html#autotoc_md110", null ],
-      [ "6. Data Structures", "md_SPECS.html#autotoc_md111", null ],
-      [ "7. I/O Model", "md_SPECS.html#autotoc_md112", null ],
-      [ "8. Math & Scripting", "md_SPECS.html#autotoc_md113", null ],
-      [ "9. Security & Integrity", "md_SPECS.html#autotoc_md114", null ],
-      [ "10. Extensibility Rules", "md_SPECS.html#autotoc_md115", null ],
-      [ "11. Performance Expectations", "md_SPECS.html#autotoc_md116", null ],
-      [ "12. Documentation & Testing", "md_SPECS.html#autotoc_md117", null ],
-      [ "13. Compliance Checklist", "md_SPECS.html#autotoc_md118", null ]
+      [ "5. Concurrency Model", "md_SPECS.html#autotoc_md131", null ],
+      [ "6. Data Structures", "md_SPECS.html#autotoc_md132", null ],
+      [ "7. I/O Model", "md_SPECS.html#autotoc_md133", null ],
+      [ "8. Math & Scripting", "md_SPECS.html#autotoc_md134", null ],
+      [ "9. Security & Integrity", "md_SPECS.html#autotoc_md135", null ],
+      [ "10. Extensibility Rules", "md_SPECS.html#autotoc_md136", null ],
+      [ "11. Performance Expectations", "md_SPECS.html#autotoc_md137", null ],
+      [ "12. Documentation & Testing", "md_SPECS.html#autotoc_md138", null ],
+      [ "13. Compliance Checklist", "md_SPECS.html#autotoc_md139", null ]
     ] ],
     [ "Clone Coding Path", "md_tutorials_2CLONE__PATH.html", null ],
+    [ "Topics", "topics.html", "topics" ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
@@ -100,7 +113,7 @@ var NAVTREE =
         [ "Typedefs", "globals_type.html", null ],
         [ "Enumerations", "globals_enum.html", null ],
         [ "Enumerator", "globals_eval.html", null ],
-        [ "Macros", "globals_defs.html", null ]
+        [ "Macros", "globals_defs.html", "globals_defs" ]
       ] ]
     ] ]
   ] ]
@@ -109,15 +122,15 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "00__overview_8puml.html",
-"calculus_8h.html#af5ab65970ac1f025b3795157144fb68f",
-"factor_8h_source.html",
-"include_2ttak_2math_2ntt_8h.html#a3372a84ab2ae3592b9f69d2389320880",
-"mem__internal_8h.html#a2d580a873c45f7b039612c0a816a4e07",
-"shared_8h.html#aa61738cdd0322bee3972eb1e4b9134b9",
-"structttak__crt__term.html#aea1e8f16579f89002fb1fdb8b856bd34",
-"structttak__net__endpoint.html#a96667effbe7d4467e6b783cc9525c31f",
-"structttak__thread__pool.html#ab6f0dc625cc83c204a3ad9964fe955d3",
-"wyhash_8h.html#a3c7655cae4aaf843a2a13ce57d76a565"
+"calculus_8h.html#acda4cb3a1a24ae48f1e988b6b458c80f",
+"factor_8h.html#ae6b18eac3f9615ae93f70bbe09218716",
+"include_2stdatomic_8h.html#a753852398c578c7b0e671ebe39a5a099",
+"mem_8h.html#a000835e8881250f937ecebbde55ff0dd",
+"session_8h.html#a7d232d0409f2d48425cc50bdc099c9ac",
+"structttak__bigscript__limits__t.html#ae1739a95e602bf880bd3e49ada3b1914",
+"structttak__mem__node.html#adeba8cfc20ec3186ab1f360d7eaf098a",
+"structttak__slab__t.html#a7bbf6e9431f3bf03d7d3303e955e0376",
+"ttak__align_8h.html#a57fbdeca2fdfd0ec356c5d1fa8aba7e3"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

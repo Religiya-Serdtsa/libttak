@@ -1,0 +1,210 @@
+\doxysection{Convenience Allocation Macros}
+\hypertarget{group__MemConvenienceMacros}{}\label{group__MemConvenienceMacros}\index{Convenience Allocation Macros@{Convenience Allocation Macros}}
+
+
+Simplified macros that return a plain pointer for caller-\/driven lifetime.  
+
+
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{group__MemConvenienceMacros_gac5d995333f6871240af3fda323f9114f}{ttak\+\_\+mem\+\_\+alloc}}(size,  lifetime,  now\+\_\+tick)~\mbox{\hyperlink{mem_8h_acd407700ef90ad55bcec5ae7cf8b94b7}{ttak\+\_\+mem\+\_\+alloc\+\_\+safe}}(size, lifetime, now\+\_\+tick, false, false, true, false, \mbox{\hyperlink{mem_8h_a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a}{TTAK\+\_\+\+MEM\+\_\+\+DEFAULT}})
+\begin{DoxyCompactList}\small\item\em Allocate memory with default flags. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__MemConvenienceMacros_ga5d8a79f36fb4bd204046ea8834977297}{ttak\+\_\+root\+\_\+alloc}}(size,  lifetime,  now\+\_\+tick)~\mbox{\hyperlink{mem_8h_acd407700ef90ad55bcec5ae7cf8b94b7}{ttak\+\_\+mem\+\_\+alloc\+\_\+safe}}(size, lifetime, now\+\_\+tick, true, true, true, true, \mbox{\hyperlink{mem_8h_a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a}{TTAK\+\_\+\+MEM\+\_\+\+DEFAULT}})
+\begin{DoxyCompactList}\small\item\em Allocate root memory with default flags. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__MemConvenienceMacros_gaebbfb88cdba4d11a524cae2a66972070}{ttak\+\_\+mem\+\_\+alloc\+\_\+with\+\_\+flags}}(size,  lifetime,  now\+\_\+tick,  flags)~\mbox{\hyperlink{mem_8h_acd407700ef90ad55bcec5ae7cf8b94b7}{ttak\+\_\+mem\+\_\+alloc\+\_\+safe}}(size, lifetime, now\+\_\+tick, false, false, true, false, flags)
+\begin{DoxyCompactList}\small\item\em Allocate memory with custom flags. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__MemConvenienceMacros_ga7f181fe8f133af55c3e2bf6e86b53c56}{ttak\+\_\+root\+\_\+alloc\+\_\+with\+\_\+flags}}(size,  lifetime,  now\+\_\+tick,  flags)~\mbox{\hyperlink{mem_8h_acd407700ef90ad55bcec5ae7cf8b94b7}{ttak\+\_\+mem\+\_\+alloc\+\_\+safe}}(size, lifetime, now\+\_\+tick, true, true, true, true, flags)
+\begin{DoxyCompactList}\small\item\em Allocate root memory with custom flags. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__MemConvenienceMacros_ga97f451049eaeaf30598a37e13069c15d}{ttak\+\_\+mem\+\_\+realloc}}(ptr,  size,  lifetime,  now\+\_\+tick)~\mbox{\hyperlink{mem_8h_a3ecf5a43780a4a7f1c923b4bc3579464}{ttak\+\_\+mem\+\_\+realloc\+\_\+safe}}(ptr, size, lifetime, now\+\_\+tick, false, \mbox{\hyperlink{mem_8h_a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a}{TTAK\+\_\+\+MEM\+\_\+\+DEFAULT}})
+\begin{DoxyCompactList}\small\item\em Reallocate memory with default flags. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__MemConvenienceMacros_ga3cfaa1c3c47232e6a5ed7ea54356fcf9}{ttak\+\_\+root\+\_\+realloc}}(ptr,  size,  lifetime,  now\+\_\+tick)~\mbox{\hyperlink{mem_8h_a3ecf5a43780a4a7f1c923b4bc3579464}{ttak\+\_\+mem\+\_\+realloc\+\_\+safe}}(ptr, size, lifetime, now\+\_\+tick, true, \mbox{\hyperlink{mem_8h_a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a}{TTAK\+\_\+\+MEM\+\_\+\+DEFAULT}})
+\begin{DoxyCompactList}\small\item\em Reallocate root memory with default flags. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__MemConvenienceMacros_ga6deb46577a7ecf9a5c3178f438da0d5a}{ttak\+\_\+mem\+\_\+realloc\+\_\+with\+\_\+flags}}(ptr,  size,  lifetime,  now\+\_\+tick,  flags)~\mbox{\hyperlink{mem_8h_a3ecf5a43780a4a7f1c923b4bc3579464}{ttak\+\_\+mem\+\_\+realloc\+\_\+safe}}(ptr, size, lifetime, now\+\_\+tick, false, flags)
+\begin{DoxyCompactList}\small\item\em Reallocate memory with custom flags. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__MemConvenienceMacros_ga8a78434539eb9996746248ad3a1d437a}{ttak\+\_\+root\+\_\+realloc\+\_\+with\+\_\+flags}}(ptr,  size,  lifetime,  now\+\_\+tick,  flags)~\mbox{\hyperlink{mem_8h_a3ecf5a43780a4a7f1c923b4bc3579464}{ttak\+\_\+mem\+\_\+realloc\+\_\+safe}}(ptr, size, lifetime, now\+\_\+tick, true, flags)
+\begin{DoxyCompactList}\small\item\em Reallocate root memory with custom flags. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__MemConvenienceMacros_ga45976fd9be92932992d660f0c2d8255b}{ttak\+\_\+mem\+\_\+dup}}(src,  size,  lifetime,  now\+\_\+tick)~\mbox{\hyperlink{mem_8h_a9017be27d7753e502ed5097ee61fd6c5}{ttak\+\_\+mem\+\_\+dup\+\_\+safe}}(src, size, lifetime, now\+\_\+tick, false, \mbox{\hyperlink{mem_8h_a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a}{TTAK\+\_\+\+MEM\+\_\+\+DEFAULT}})
+\begin{DoxyCompactList}\small\item\em Duplicate memory with default flags. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__MemConvenienceMacros_ga436c9e15152c0dc28b66027804b1a8a0}{ttak\+\_\+root\+\_\+dup}}(src,  size,  lifetime,  now\+\_\+tick)~\mbox{\hyperlink{mem_8h_a9017be27d7753e502ed5097ee61fd6c5}{ttak\+\_\+mem\+\_\+dup\+\_\+safe}}(src, size, lifetime, now\+\_\+tick, true, \mbox{\hyperlink{mem_8h_a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a}{TTAK\+\_\+\+MEM\+\_\+\+DEFAULT}})
+\begin{DoxyCompactList}\small\item\em Duplicate root memory with default flags. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__MemConvenienceMacros_ga7c0d648c72e9fc2d35932b78f7d08f09}{ttak\+\_\+mem\+\_\+dup\+\_\+with\+\_\+flags}}(src,  size,  lifetime,  now\+\_\+tick,  flags)~\mbox{\hyperlink{mem_8h_a9017be27d7753e502ed5097ee61fd6c5}{ttak\+\_\+mem\+\_\+dup\+\_\+safe}}(src, size, lifetime, now\+\_\+tick, false, flags)
+\begin{DoxyCompactList}\small\item\em Duplicate memory with custom flags. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__MemConvenienceMacros_ga17974c90727c52630f602367b95eae31}{ttak\+\_\+root\+\_\+dup\+\_\+with\+\_\+flags}}(src,  size,  lifetime,  now\+\_\+tick,  flags)~\mbox{\hyperlink{mem_8h_a9017be27d7753e502ed5097ee61fd6c5}{ttak\+\_\+mem\+\_\+dup\+\_\+safe}}(src, size, lifetime, now\+\_\+tick, true, flags)
+\begin{DoxyCompactList}\small\item\em Duplicate root memory with custom flags. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Simplified macros that return a plain pointer for caller-\/driven lifetime. 
+
+These macros wrap the underlying {\ttfamily \+\_\+safe} functions with sensible defaults for everyday use. The caller is responsible for freeing the returned memory. 
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{group__MemConvenienceMacros_gac5d995333f6871240af3fda323f9114f}\label{group__MemConvenienceMacros_gac5d995333f6871240af3fda323f9114f} 
+\index{Convenience Allocation Macros@{Convenience Allocation Macros}!ttak\_mem\_alloc@{ttak\_mem\_alloc}}
+\index{ttak\_mem\_alloc@{ttak\_mem\_alloc}!Convenience Allocation Macros@{Convenience Allocation Macros}}
+\doxysubsubsection{\texorpdfstring{ttak\_mem\_alloc}{ttak\_mem\_alloc}}
+{\footnotesize\ttfamily \#define ttak\+\_\+mem\+\_\+alloc(\begin{DoxyParamCaption}\item[{}]{size,  }\item[{}]{lifetime,  }\item[{}]{now\+\_\+tick }\end{DoxyParamCaption})~\mbox{\hyperlink{mem_8h_acd407700ef90ad55bcec5ae7cf8b94b7}{ttak\+\_\+mem\+\_\+alloc\+\_\+safe}}(size, lifetime, now\+\_\+tick, false, false, true, false, \mbox{\hyperlink{mem_8h_a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a}{TTAK\+\_\+\+MEM\+\_\+\+DEFAULT}})}
+
+
+
+Allocate memory with default flags. 
+
+
+
+Definition at line \mbox{\hyperlink{mem_8h_source_l00448}{448}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+
+\Hypertarget{group__MemConvenienceMacros_gaebbfb88cdba4d11a524cae2a66972070}\label{group__MemConvenienceMacros_gaebbfb88cdba4d11a524cae2a66972070} 
+\index{Convenience Allocation Macros@{Convenience Allocation Macros}!ttak\_mem\_alloc\_with\_flags@{ttak\_mem\_alloc\_with\_flags}}
+\index{ttak\_mem\_alloc\_with\_flags@{ttak\_mem\_alloc\_with\_flags}!Convenience Allocation Macros@{Convenience Allocation Macros}}
+\doxysubsubsection{\texorpdfstring{ttak\_mem\_alloc\_with\_flags}{ttak\_mem\_alloc\_with\_flags}}
+{\footnotesize\ttfamily \#define ttak\+\_\+mem\+\_\+alloc\+\_\+with\+\_\+flags(\begin{DoxyParamCaption}\item[{}]{size,  }\item[{}]{lifetime,  }\item[{}]{now\+\_\+tick,  }\item[{}]{flags }\end{DoxyParamCaption})~\mbox{\hyperlink{mem_8h_acd407700ef90ad55bcec5ae7cf8b94b7}{ttak\+\_\+mem\+\_\+alloc\+\_\+safe}}(size, lifetime, now\+\_\+tick, false, false, true, false, flags)}
+
+
+
+Allocate memory with custom flags. 
+
+
+
+Definition at line \mbox{\hyperlink{mem_8h_source_l00452}{452}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+
+\Hypertarget{group__MemConvenienceMacros_ga45976fd9be92932992d660f0c2d8255b}\label{group__MemConvenienceMacros_ga45976fd9be92932992d660f0c2d8255b} 
+\index{Convenience Allocation Macros@{Convenience Allocation Macros}!ttak\_mem\_dup@{ttak\_mem\_dup}}
+\index{ttak\_mem\_dup@{ttak\_mem\_dup}!Convenience Allocation Macros@{Convenience Allocation Macros}}
+\doxysubsubsection{\texorpdfstring{ttak\_mem\_dup}{ttak\_mem\_dup}}
+{\footnotesize\ttfamily \#define ttak\+\_\+mem\+\_\+dup(\begin{DoxyParamCaption}\item[{}]{src,  }\item[{}]{size,  }\item[{}]{lifetime,  }\item[{}]{now\+\_\+tick }\end{DoxyParamCaption})~\mbox{\hyperlink{mem_8h_a9017be27d7753e502ed5097ee61fd6c5}{ttak\+\_\+mem\+\_\+dup\+\_\+safe}}(src, size, lifetime, now\+\_\+tick, false, \mbox{\hyperlink{mem_8h_a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a}{TTAK\+\_\+\+MEM\+\_\+\+DEFAULT}})}
+
+
+
+Duplicate memory with default flags. 
+
+
+
+Definition at line \mbox{\hyperlink{mem_8h_source_l00464}{464}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+
+\Hypertarget{group__MemConvenienceMacros_ga7c0d648c72e9fc2d35932b78f7d08f09}\label{group__MemConvenienceMacros_ga7c0d648c72e9fc2d35932b78f7d08f09} 
+\index{Convenience Allocation Macros@{Convenience Allocation Macros}!ttak\_mem\_dup\_with\_flags@{ttak\_mem\_dup\_with\_flags}}
+\index{ttak\_mem\_dup\_with\_flags@{ttak\_mem\_dup\_with\_flags}!Convenience Allocation Macros@{Convenience Allocation Macros}}
+\doxysubsubsection{\texorpdfstring{ttak\_mem\_dup\_with\_flags}{ttak\_mem\_dup\_with\_flags}}
+{\footnotesize\ttfamily \#define ttak\+\_\+mem\+\_\+dup\+\_\+with\+\_\+flags(\begin{DoxyParamCaption}\item[{}]{src,  }\item[{}]{size,  }\item[{}]{lifetime,  }\item[{}]{now\+\_\+tick,  }\item[{}]{flags }\end{DoxyParamCaption})~\mbox{\hyperlink{mem_8h_a9017be27d7753e502ed5097ee61fd6c5}{ttak\+\_\+mem\+\_\+dup\+\_\+safe}}(src, size, lifetime, now\+\_\+tick, false, flags)}
+
+
+
+Duplicate memory with custom flags. 
+
+
+
+Definition at line \mbox{\hyperlink{mem_8h_source_l00468}{468}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+
+\Hypertarget{group__MemConvenienceMacros_ga97f451049eaeaf30598a37e13069c15d}\label{group__MemConvenienceMacros_ga97f451049eaeaf30598a37e13069c15d} 
+\index{Convenience Allocation Macros@{Convenience Allocation Macros}!ttak\_mem\_realloc@{ttak\_mem\_realloc}}
+\index{ttak\_mem\_realloc@{ttak\_mem\_realloc}!Convenience Allocation Macros@{Convenience Allocation Macros}}
+\doxysubsubsection{\texorpdfstring{ttak\_mem\_realloc}{ttak\_mem\_realloc}}
+{\footnotesize\ttfamily \#define ttak\+\_\+mem\+\_\+realloc(\begin{DoxyParamCaption}\item[{}]{ptr,  }\item[{}]{size,  }\item[{}]{lifetime,  }\item[{}]{now\+\_\+tick }\end{DoxyParamCaption})~\mbox{\hyperlink{mem_8h_a3ecf5a43780a4a7f1c923b4bc3579464}{ttak\+\_\+mem\+\_\+realloc\+\_\+safe}}(ptr, size, lifetime, now\+\_\+tick, false, \mbox{\hyperlink{mem_8h_a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a}{TTAK\+\_\+\+MEM\+\_\+\+DEFAULT}})}
+
+
+
+Reallocate memory with default flags. 
+
+
+
+Definition at line \mbox{\hyperlink{mem_8h_source_l00456}{456}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+
+\Hypertarget{group__MemConvenienceMacros_ga6deb46577a7ecf9a5c3178f438da0d5a}\label{group__MemConvenienceMacros_ga6deb46577a7ecf9a5c3178f438da0d5a} 
+\index{Convenience Allocation Macros@{Convenience Allocation Macros}!ttak\_mem\_realloc\_with\_flags@{ttak\_mem\_realloc\_with\_flags}}
+\index{ttak\_mem\_realloc\_with\_flags@{ttak\_mem\_realloc\_with\_flags}!Convenience Allocation Macros@{Convenience Allocation Macros}}
+\doxysubsubsection{\texorpdfstring{ttak\_mem\_realloc\_with\_flags}{ttak\_mem\_realloc\_with\_flags}}
+{\footnotesize\ttfamily \#define ttak\+\_\+mem\+\_\+realloc\+\_\+with\+\_\+flags(\begin{DoxyParamCaption}\item[{}]{ptr,  }\item[{}]{size,  }\item[{}]{lifetime,  }\item[{}]{now\+\_\+tick,  }\item[{}]{flags }\end{DoxyParamCaption})~\mbox{\hyperlink{mem_8h_a3ecf5a43780a4a7f1c923b4bc3579464}{ttak\+\_\+mem\+\_\+realloc\+\_\+safe}}(ptr, size, lifetime, now\+\_\+tick, false, flags)}
+
+
+
+Reallocate memory with custom flags. 
+
+
+
+Definition at line \mbox{\hyperlink{mem_8h_source_l00460}{460}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+
+\Hypertarget{group__MemConvenienceMacros_ga5d8a79f36fb4bd204046ea8834977297}\label{group__MemConvenienceMacros_ga5d8a79f36fb4bd204046ea8834977297} 
+\index{Convenience Allocation Macros@{Convenience Allocation Macros}!ttak\_root\_alloc@{ttak\_root\_alloc}}
+\index{ttak\_root\_alloc@{ttak\_root\_alloc}!Convenience Allocation Macros@{Convenience Allocation Macros}}
+\doxysubsubsection{\texorpdfstring{ttak\_root\_alloc}{ttak\_root\_alloc}}
+{\footnotesize\ttfamily \#define ttak\+\_\+root\+\_\+alloc(\begin{DoxyParamCaption}\item[{}]{size,  }\item[{}]{lifetime,  }\item[{}]{now\+\_\+tick }\end{DoxyParamCaption})~\mbox{\hyperlink{mem_8h_acd407700ef90ad55bcec5ae7cf8b94b7}{ttak\+\_\+mem\+\_\+alloc\+\_\+safe}}(size, lifetime, now\+\_\+tick, true, true, true, true, \mbox{\hyperlink{mem_8h_a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a}{TTAK\+\_\+\+MEM\+\_\+\+DEFAULT}})}
+
+
+
+Allocate root memory with default flags. 
+
+
+
+Definition at line \mbox{\hyperlink{mem_8h_source_l00450}{450}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+
+\Hypertarget{group__MemConvenienceMacros_ga7f181fe8f133af55c3e2bf6e86b53c56}\label{group__MemConvenienceMacros_ga7f181fe8f133af55c3e2bf6e86b53c56} 
+\index{Convenience Allocation Macros@{Convenience Allocation Macros}!ttak\_root\_alloc\_with\_flags@{ttak\_root\_alloc\_with\_flags}}
+\index{ttak\_root\_alloc\_with\_flags@{ttak\_root\_alloc\_with\_flags}!Convenience Allocation Macros@{Convenience Allocation Macros}}
+\doxysubsubsection{\texorpdfstring{ttak\_root\_alloc\_with\_flags}{ttak\_root\_alloc\_with\_flags}}
+{\footnotesize\ttfamily \#define ttak\+\_\+root\+\_\+alloc\+\_\+with\+\_\+flags(\begin{DoxyParamCaption}\item[{}]{size,  }\item[{}]{lifetime,  }\item[{}]{now\+\_\+tick,  }\item[{}]{flags }\end{DoxyParamCaption})~\mbox{\hyperlink{mem_8h_acd407700ef90ad55bcec5ae7cf8b94b7}{ttak\+\_\+mem\+\_\+alloc\+\_\+safe}}(size, lifetime, now\+\_\+tick, true, true, true, true, flags)}
+
+
+
+Allocate root memory with custom flags. 
+
+
+
+Definition at line \mbox{\hyperlink{mem_8h_source_l00454}{454}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+
+\Hypertarget{group__MemConvenienceMacros_ga436c9e15152c0dc28b66027804b1a8a0}\label{group__MemConvenienceMacros_ga436c9e15152c0dc28b66027804b1a8a0} 
+\index{Convenience Allocation Macros@{Convenience Allocation Macros}!ttak\_root\_dup@{ttak\_root\_dup}}
+\index{ttak\_root\_dup@{ttak\_root\_dup}!Convenience Allocation Macros@{Convenience Allocation Macros}}
+\doxysubsubsection{\texorpdfstring{ttak\_root\_dup}{ttak\_root\_dup}}
+{\footnotesize\ttfamily \#define ttak\+\_\+root\+\_\+dup(\begin{DoxyParamCaption}\item[{}]{src,  }\item[{}]{size,  }\item[{}]{lifetime,  }\item[{}]{now\+\_\+tick }\end{DoxyParamCaption})~\mbox{\hyperlink{mem_8h_a9017be27d7753e502ed5097ee61fd6c5}{ttak\+\_\+mem\+\_\+dup\+\_\+safe}}(src, size, lifetime, now\+\_\+tick, true, \mbox{\hyperlink{mem_8h_a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a}{TTAK\+\_\+\+MEM\+\_\+\+DEFAULT}})}
+
+
+
+Duplicate root memory with default flags. 
+
+
+
+Definition at line \mbox{\hyperlink{mem_8h_source_l00466}{466}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+
+\Hypertarget{group__MemConvenienceMacros_ga17974c90727c52630f602367b95eae31}\label{group__MemConvenienceMacros_ga17974c90727c52630f602367b95eae31} 
+\index{Convenience Allocation Macros@{Convenience Allocation Macros}!ttak\_root\_dup\_with\_flags@{ttak\_root\_dup\_with\_flags}}
+\index{ttak\_root\_dup\_with\_flags@{ttak\_root\_dup\_with\_flags}!Convenience Allocation Macros@{Convenience Allocation Macros}}
+\doxysubsubsection{\texorpdfstring{ttak\_root\_dup\_with\_flags}{ttak\_root\_dup\_with\_flags}}
+{\footnotesize\ttfamily \#define ttak\+\_\+root\+\_\+dup\+\_\+with\+\_\+flags(\begin{DoxyParamCaption}\item[{}]{src,  }\item[{}]{size,  }\item[{}]{lifetime,  }\item[{}]{now\+\_\+tick,  }\item[{}]{flags }\end{DoxyParamCaption})~\mbox{\hyperlink{mem_8h_a9017be27d7753e502ed5097ee61fd6c5}{ttak\+\_\+mem\+\_\+dup\+\_\+safe}}(src, size, lifetime, now\+\_\+tick, true, flags)}
+
+
+
+Duplicate root memory with custom flags. 
+
+
+
+Definition at line \mbox{\hyperlink{mem_8h_source_l00470}{470}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+
+\Hypertarget{group__MemConvenienceMacros_ga3cfaa1c3c47232e6a5ed7ea54356fcf9}\label{group__MemConvenienceMacros_ga3cfaa1c3c47232e6a5ed7ea54356fcf9} 
+\index{Convenience Allocation Macros@{Convenience Allocation Macros}!ttak\_root\_realloc@{ttak\_root\_realloc}}
+\index{ttak\_root\_realloc@{ttak\_root\_realloc}!Convenience Allocation Macros@{Convenience Allocation Macros}}
+\doxysubsubsection{\texorpdfstring{ttak\_root\_realloc}{ttak\_root\_realloc}}
+{\footnotesize\ttfamily \#define ttak\+\_\+root\+\_\+realloc(\begin{DoxyParamCaption}\item[{}]{ptr,  }\item[{}]{size,  }\item[{}]{lifetime,  }\item[{}]{now\+\_\+tick }\end{DoxyParamCaption})~\mbox{\hyperlink{mem_8h_a3ecf5a43780a4a7f1c923b4bc3579464}{ttak\+\_\+mem\+\_\+realloc\+\_\+safe}}(ptr, size, lifetime, now\+\_\+tick, true, \mbox{\hyperlink{mem_8h_a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a}{TTAK\+\_\+\+MEM\+\_\+\+DEFAULT}})}
+
+
+
+Reallocate root memory with default flags. 
+
+
+
+Definition at line \mbox{\hyperlink{mem_8h_source_l00458}{458}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+
+\Hypertarget{group__MemConvenienceMacros_ga8a78434539eb9996746248ad3a1d437a}\label{group__MemConvenienceMacros_ga8a78434539eb9996746248ad3a1d437a} 
+\index{Convenience Allocation Macros@{Convenience Allocation Macros}!ttak\_root\_realloc\_with\_flags@{ttak\_root\_realloc\_with\_flags}}
+\index{ttak\_root\_realloc\_with\_flags@{ttak\_root\_realloc\_with\_flags}!Convenience Allocation Macros@{Convenience Allocation Macros}}
+\doxysubsubsection{\texorpdfstring{ttak\_root\_realloc\_with\_flags}{ttak\_root\_realloc\_with\_flags}}
+{\footnotesize\ttfamily \#define ttak\+\_\+root\+\_\+realloc\+\_\+with\+\_\+flags(\begin{DoxyParamCaption}\item[{}]{ptr,  }\item[{}]{size,  }\item[{}]{lifetime,  }\item[{}]{now\+\_\+tick,  }\item[{}]{flags }\end{DoxyParamCaption})~\mbox{\hyperlink{mem_8h_a3ecf5a43780a4a7f1c923b4bc3579464}{ttak\+\_\+mem\+\_\+realloc\+\_\+safe}}(ptr, size, lifetime, now\+\_\+tick, true, flags)}
+
+
+
+Reallocate root memory with custom flags. 
+
+
+
+Definition at line \mbox{\hyperlink{mem_8h_source_l00462}{462}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+

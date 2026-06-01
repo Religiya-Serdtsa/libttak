@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['traditional_20resource_20management_0',['RAII in LibTTAK: How It Differs from Traditional Resource Management',['../md_RAII.html',1,'']]],
-  ['ttl_20캐시_20벤치마크_20한국어_1',['멀티스레드 TTL 캐시 벤치마크 (한국어)',['../md_bench_2ttl-cache-multithread-bench_2README_8ko.html',1,'']]]
+  ['specification_0',['LibTTAK Specification',['../md_SPECS.html',1,'']]],
+  ['suite_1',['LibTTAK Benchmark Suite',['../index.html',1,'']]]
 ];

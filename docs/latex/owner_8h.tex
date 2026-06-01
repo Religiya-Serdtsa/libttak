@@ -4,16 +4,14 @@
 {\ttfamily \#include $<$ttak/sync/sync.\+h$>$}\newline
 {\ttfamily \#include $<$stdbool.\+h$>$}\newline
 {\ttfamily \#include $<$stdint.\+h$>$}\newline
-Include dependency graph for owner.\+h\+:
-\nopagebreak
+Include dependency graph for owner.\+h\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=350pt]{owner_8h__incl}
 \end{center}
 \end{figure}
-This graph shows which files directly or indirectly include this file\+:
-\nopagebreak
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -52,7 +50,7 @@ void \mbox{\hyperlink{owner_8h_a73e3bd2628d53ed3e2b168de4f999c16}{ttak\+\_\+owne
 \begin{DoxyCompactList}\small\item\em Destroys the Owner and releases all registered resources. \end{DoxyCompactList}\item 
 bool \mbox{\hyperlink{owner_8h_ac4a9d4c89369dd2c3c208633fb41d9a8}{ttak\+\_\+owner\+\_\+register\+\_\+func}} (\mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}owner, const char \texorpdfstring{$\ast$}{*}name, \mbox{\hyperlink{owner_8h_a0b143e19f7925443babcbe9e98b7bd7c}{ttak\+\_\+owner\+\_\+func\+\_\+t}} func)
 \begin{DoxyCompactList}\small\item\em Registers a function into the owner\textquotesingle{}s isolated context. \end{DoxyCompactList}\item 
-bool \mbox{\hyperlink{owner_8h_ae74497f47054f5c3204578fa163dc942}{ttak\+\_\+owner\+\_\+register\+\_\+resource}} (\mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}owner, const char \texorpdfstring{$\ast$}{*}name, void \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{icmp_8h_a9f2760a3f37301e10305d3349b5d4980}{data}})
+bool \mbox{\hyperlink{owner_8h_ae74497f47054f5c3204578fa163dc942}{ttak\+\_\+owner\+\_\+register\+\_\+resource}} (\mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}owner, const char \texorpdfstring{$\ast$}{*}name, void \texorpdfstring{$\ast$}{*}data)
 \begin{DoxyCompactList}\small\item\em Registers a resource (variable) into the owner\textquotesingle{}s isolated context. \end{DoxyCompactList}\item 
 bool \mbox{\hyperlink{owner_8h_a25bcde8cc2013baf360122bd7ccd078f}{ttak\+\_\+owner\+\_\+transfer\+\_\+resource}} (\mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}from, \mbox{\hyperlink{owner_8h_a8e92d0c2dff13d75471e19a1596d4b9c}{ttak\+\_\+owner\+\_\+t}} \texorpdfstring{$\ast$}{*}to, const char \texorpdfstring{$\ast$}{*}name)
 \begin{DoxyCompactList}\small\item\em Transfers a resource from one owner to another. \end{DoxyCompactList}\item 

@@ -9,8 +9,7 @@ Non-\/blocking I/O read/write operations with completion callbacks.
 {\ttfamily \#include $<$stddef.\+h$>$}\newline
 {\ttfamily \#include $<$stdint.\+h$>$}\newline
 {\ttfamily \#include $<$ttak/io/io.\+h$>$}\newline
-Include dependency graph for async.\+h\+:
-\nopagebreak
+Include dependency graph for async.\+h\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -25,9 +24,9 @@ typedef void(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{async_8h_a08998c317cf2d
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} \mbox{\hyperlink{async_8h_a35165e3907e4077fc1ced27159b1faf6}{ttak\+\_\+io\+\_\+async\+\_\+read}} (\mbox{\hyperlink{io_8h_aca20f4767510d423ee88de501eb72575}{ttak\+\_\+io\+\_\+guard\+\_\+t}} \texorpdfstring{$\ast$}{*}guard, void \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{icmp_8h_a9037f54b05f8331e7594be9144926217}{dst}}, size\+\_\+t \mbox{\hyperlink{icmp_8h_a5356a3645c29875208316ab4b277c1ae}{len}}, int timeout\+\_\+ms, \mbox{\hyperlink{async_8h_a08998c317cf2de79c5c5e9ab434f9992}{ttak\+\_\+io\+\_\+async\+\_\+result\+\_\+cb}} cb, void \texorpdfstring{$\ast$}{*}user, uint64\+\_\+t now)
+\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} \mbox{\hyperlink{async_8h_a35165e3907e4077fc1ced27159b1faf6}{ttak\+\_\+io\+\_\+async\+\_\+read}} (\mbox{\hyperlink{io_8h_aca20f4767510d423ee88de501eb72575}{ttak\+\_\+io\+\_\+guard\+\_\+t}} \texorpdfstring{$\ast$}{*}guard, void \texorpdfstring{$\ast$}{*}dst, size\+\_\+t len, int timeout\+\_\+ms, \mbox{\hyperlink{async_8h_a08998c317cf2de79c5c5e9ab434f9992}{ttak\+\_\+io\+\_\+async\+\_\+result\+\_\+cb}} cb, void \texorpdfstring{$\ast$}{*}user, uint64\+\_\+t now)
 \begin{DoxyCompactList}\small\item\em Enqueues an asynchronous read from the guarded descriptor. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} \mbox{\hyperlink{async_8h_a4bdf06bfb55ebdfe1f5352bcd5552ed8}{ttak\+\_\+io\+\_\+async\+\_\+write}} (\mbox{\hyperlink{io_8h_aca20f4767510d423ee88de501eb72575}{ttak\+\_\+io\+\_\+guard\+\_\+t}} \texorpdfstring{$\ast$}{*}guard, const void \texorpdfstring{$\ast$}{*}src, size\+\_\+t \mbox{\hyperlink{icmp_8h_a5356a3645c29875208316ab4b277c1ae}{len}}, int timeout\+\_\+ms, \mbox{\hyperlink{async_8h_a08998c317cf2de79c5c5e9ab434f9992}{ttak\+\_\+io\+\_\+async\+\_\+result\+\_\+cb}} cb, void \texorpdfstring{$\ast$}{*}user, uint64\+\_\+t now)
+\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} \mbox{\hyperlink{async_8h_a4bdf06bfb55ebdfe1f5352bcd5552ed8}{ttak\+\_\+io\+\_\+async\+\_\+write}} (\mbox{\hyperlink{io_8h_aca20f4767510d423ee88de501eb72575}{ttak\+\_\+io\+\_\+guard\+\_\+t}} \texorpdfstring{$\ast$}{*}guard, const void \texorpdfstring{$\ast$}{*}src, size\+\_\+t len, int timeout\+\_\+ms, \mbox{\hyperlink{async_8h_a08998c317cf2de79c5c5e9ab434f9992}{ttak\+\_\+io\+\_\+async\+\_\+result\+\_\+cb}} cb, void \texorpdfstring{$\ast$}{*}user, uint64\+\_\+t now)
 \begin{DoxyCompactList}\small\item\em Enqueues an asynchronous write to the guarded descriptor. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 

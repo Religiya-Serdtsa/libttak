@@ -244,6 +244,9 @@ Macros</h2></td></tr>
 <tr class="separator:ad7643c1ada5cdb5ad3ee1a144bf9a9ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9b4039c7fdcd18fc5d6f0183a78052c6" id="r_a9b4039c7fdcd18fc5d6f0183a78052c6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ttak__compiler_8h.html#a9b4039c7fdcd18fc5d6f0183a78052c6">TTAK_FAST_ATOMIC_XCHG_U64</a>(ptr,  val)&#160;&#160;&#160;__atomic_exchange_n((ptr), (val), __ATOMIC_RELAXED)</td></tr>
 <tr class="separator:a9b4039c7fdcd18fc5d6f0183a78052c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa103fd0a6e458cbd4a89543905d68927" id="r_aa103fd0a6e458cbd4a89543905d68927"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ttak__compiler_8h.html#aa103fd0a6e458cbd4a89543905d68927">TTAK_ATTRIBUTE_CLEANUP</a>(func)</td></tr>
+<tr class="memdesc:aa103fd0a6e458cbd4a89543905d68927"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable cleanup attribute for GCC/Clang; no-op on others.  <br /></td></tr>
+<tr class="separator:aa103fd0a6e458cbd4a89543905d68927"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -294,6 +297,28 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="ttak__compiler_8h_source.html#l00229">229</a> of file <a class="el" href="ttak__compiler_8h_source.html">ttak_compiler.h</a>.</p>
+
+</div>
+</div>
+<a id="aa103fd0a6e458cbd4a89543905d68927" name="aa103fd0a6e458cbd4a89543905d68927"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa103fd0a6e458cbd4a89543905d68927">&#9670;&#160;</a></span>TTAK_ATTRIBUTE_CLEANUP</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TTAK_ATTRIBUTE_CLEANUP</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">func</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Variable cleanup attribute for GCC/Clang; no-op on others. </p>
+
+<p class="definition">Definition at line <a class="el" href="ttak__compiler_8h_source.html#l00328">328</a> of file <a class="el" href="ttak__compiler_8h_source.html">ttak_compiler.h</a>.</p>
 
 </div>
 </div>

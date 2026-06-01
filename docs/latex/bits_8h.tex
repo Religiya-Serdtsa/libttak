@@ -8,8 +8,7 @@ Lightweight FNV-\/32 checksum utilities for buffer integrity checks.
 {\ttfamily \#include $<$stddef.\+h$>$}\newline
 {\ttfamily \#include $<$stdint.\+h$>$}\newline
 {\ttfamily \#include $<$ttak/io/io.\+h$>$}\newline
-Include dependency graph for bits.\+h\+:
-\nopagebreak
+Include dependency graph for bits.\+h\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -19,11 +18,11 @@ Include dependency graph for bits.\+h\+:
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-uint32\+\_\+t \mbox{\hyperlink{bits_8h_af5e2db2228526f9fbd89df757329057c}{ttak\+\_\+io\+\_\+bits\+\_\+fnv32}} (const void \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{icmp_8h_a9f2760a3f37301e10305d3349b5d4980}{data}}, size\+\_\+t \mbox{\hyperlink{icmp_8h_a5356a3645c29875208316ab4b277c1ae}{len}})
+uint32\+\_\+t \mbox{\hyperlink{bits_8h_af5e2db2228526f9fbd89df757329057c}{ttak\+\_\+io\+\_\+bits\+\_\+fnv32}} (const void \texorpdfstring{$\ast$}{*}data, size\+\_\+t len)
 \begin{DoxyCompactList}\small\item\em Computes a 32-\/bit FNV-\/1a checksum over a byte buffer. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} \mbox{\hyperlink{bits_8h_a929a8b4f967cefefc9fb2880b125b416}{ttak\+\_\+io\+\_\+bits\+\_\+verify}} (const void \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{icmp_8h_a9f2760a3f37301e10305d3349b5d4980}{data}}, size\+\_\+t \mbox{\hyperlink{icmp_8h_a5356a3645c29875208316ab4b277c1ae}{len}}, uint32\+\_\+t expected\+\_\+checksum)
+\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} \mbox{\hyperlink{bits_8h_a929a8b4f967cefefc9fb2880b125b416}{ttak\+\_\+io\+\_\+bits\+\_\+verify}} (const void \texorpdfstring{$\ast$}{*}data, size\+\_\+t len, uint32\+\_\+t expected\+\_\+checksum)
 \begin{DoxyCompactList}\small\item\em Verifies that a buffer\textquotesingle{}s FNV-\/32 checksum matches an expected value. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} \mbox{\hyperlink{bits_8h_a55749dbca0d218da2532c1d5d1715548}{ttak\+\_\+io\+\_\+bits\+\_\+recover}} (const void \texorpdfstring{$\ast$}{*}snapshot, size\+\_\+t \mbox{\hyperlink{icmp_8h_a5356a3645c29875208316ab4b277c1ae}{len}}, void \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{icmp_8h_a9037f54b05f8331e7594be9144926217}{dst}}, uint32\+\_\+t expected\+\_\+checksum)
+\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} \mbox{\hyperlink{bits_8h_a55749dbca0d218da2532c1d5d1715548}{ttak\+\_\+io\+\_\+bits\+\_\+recover}} (const void \texorpdfstring{$\ast$}{*}snapshot, size\+\_\+t len, void \texorpdfstring{$\ast$}{*}dst, uint32\+\_\+t expected\+\_\+checksum)
 \begin{DoxyCompactList}\small\item\em Copies {\ttfamily snapshot} into {\ttfamily dst} only when the checksum is valid. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 

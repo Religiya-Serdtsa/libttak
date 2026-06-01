@@ -87,7 +87,7 @@
 \DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00083}00083\ \ \ \ \ \textcolor{keywordflow}{if}\ (tmp)\ hipFree(tmp);}
 \DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00084}00084\ \}}
 \DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00085}00085\ }
-\DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00086}00086\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \textcolor{keywordtype}{bool}\ ttak\_bigint\_accel\_rocm\_add(\mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\_t}}\ *\mbox{\hyperlink{icmp_8h_a9037f54b05f8331e7594be9144926217}{dst}},}
+\DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00086}00086\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \textcolor{keywordtype}{bool}\ ttak\_bigint\_accel\_rocm\_add(\mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\_t}}\ *dst,}
 \DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ dst\_capacity,}
 \DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ *out\_used,}
 \DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\_t}}\ *lhs,}
@@ -149,13 +149,13 @@
 \DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00145}00145\ \ \ \ \ uint64\_t\ carry\ =\ 0;}
 \DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00146}00146\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ result\_len;\ ++i)\ \{}
 \DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00147}00147\ \ \ \ \ \ \ \ \ uint64\_t\ v\ =\ temp[i]\ +\ carry;}
-\DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00148}00148\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{icmp_8h_a9037f54b05f8331e7594be9144926217}{dst}}[i]\ =\ (\mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\_t}})v;}
+\DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00148}00148\ \ \ \ \ \ \ \ \ dst[i]\ =\ (\mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\_t}})v;}
 \DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00149}00149\ \ \ \ \ \ \ \ \ carry\ =\ v\ >>\ 32;}
 \DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00150}00150\ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00151}00151\ \ \ \ \ free(temp);}
 \DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00152}00152\ }
 \DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00153}00153\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ used\ =\ result\_len;}
-\DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00154}00154\ \ \ \ \ \textcolor{keywordflow}{while}\ (used\ >\ 0\ \&\&\ \mbox{\hyperlink{icmp_8h_a9037f54b05f8331e7594be9144926217}{dst}}[used\ -\/\ 1]\ ==\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00154}00154\ \ \ \ \ \textcolor{keywordflow}{while}\ (used\ >\ 0\ \&\&\ dst[used\ -\/\ 1]\ ==\ 0)\ \{}
 \DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00155}00155\ \ \ \ \ \ \ \ \ -\/-\/used;}
 \DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00156}00156\ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00157}00157\ \ \ \ \ \textcolor{keywordflow}{if}\ (out\_used)\ \{}
@@ -164,7 +164,7 @@
 \DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00160}00160\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
 \DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00161}00161\ \}}
 \DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00162}00162\ }
-\DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00163}00163\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \textcolor{keywordtype}{bool}\ ttak\_bigint\_accel\_rocm\_mul(\mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\_t}}\ *\mbox{\hyperlink{icmp_8h_a9037f54b05f8331e7594be9144926217}{dst}},}
+\DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00163}00163\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \textcolor{keywordtype}{bool}\ ttak\_bigint\_accel\_rocm\_mul(\mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\_t}}\ *dst,}
 \DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ dst\_capacity,}
 \DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ *out\_used,}
 \DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\_t}}\ *lhs,}
@@ -224,13 +224,13 @@
 \DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00220}00220\ \ \ \ \ uint64\_t\ carry\ =\ 0;}
 \DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00221}00221\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ result\_len;\ ++i)\ \{}
 \DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00222}00222\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \_\_int128\ v\ =\ temp[i]\ +\ carry;}
-\DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00223}00223\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{icmp_8h_a9037f54b05f8331e7594be9144926217}{dst}}[i]\ =\ (\mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\_t}})(uint64\_t)(v\ \&\ 0xFFFFFFFF);}
+\DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00223}00223\ \ \ \ \ \ \ \ \ dst[i]\ =\ (\mbox{\hyperlink{bigint_8h_acafc7a71d36f6ca978e58bcb3bdad870}{limb\_t}})(uint64\_t)(v\ \&\ 0xFFFFFFFF);}
 \DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00224}00224\ \ \ \ \ \ \ \ \ carry\ =\ (uint64\_t)(v\ >>\ 32);}
 \DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00225}00225\ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00226}00226\ \ \ \ \ free(temp);}
 \DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00227}00227\ }
 \DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00228}00228\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ used\ =\ result\_len;}
-\DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00229}00229\ \ \ \ \ \textcolor{keywordflow}{while}\ (used\ >\ 0\ \&\&\ \mbox{\hyperlink{icmp_8h_a9037f54b05f8331e7594be9144926217}{dst}}[used\ -\/\ 1]\ ==\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00229}00229\ \ \ \ \ \textcolor{keywordflow}{while}\ (used\ >\ 0\ \&\&\ dst[used\ -\/\ 1]\ ==\ 0)\ \{}
 \DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00230}00230\ \ \ \ \ \ \ \ \ -\/-\/used;}
 \DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00231}00231\ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{bigint__rocm_8cpp_source_l00232}00232\ \ \ \ \ \textcolor{keywordflow}{if}\ (out\_used)\ \{}

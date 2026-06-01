@@ -185,12 +185,52 @@ Summary</h1>
 <p>LibTTAK trades the convenience of implicit destruction for <b>predictability</b>. You can explain every byte’s provenance, every deferral, and every cleanup step without reading compiler output. This is RAII reimagined for C systems programming: not automatic, but <b>accountable</b>.</p>
 <hr  />
 <h1><a class="anchor" id="autotoc_md47"></a>
+Traditional Scope-Bound RAII (GCC/Clang)</h1>
+<p>LibTTAK provides scoped allocation macros backed by <code>__attribute__((cleanup))</code> on GCC and Clang. These <code>_scoped</code> variants behave like traditional RAII: the memory is automatically freed when the variable goes out of scope.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> example(uint64_t now_tick) {</div>
+<div class="line">    <a class="code hl_define" href="group__MemScopedMacros.html#ga8b61d054082cd32ab60ad17c25d5f537">ttak_mem_alloc_scoped</a>(ptr, <span class="keywordtype">void</span> *, 1024, 1000, now_tick);</div>
+<div class="line">    <span class="comment">// ptr is automatically freed when it goes out of scope</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__MemScopedMacros_html_ga8b61d054082cd32ab60ad17c25d5f537"><div class="ttname"><a href="group__MemScopedMacros.html#ga8b61d054082cd32ab60ad17c25d5f537">ttak_mem_alloc_scoped</a></div><div class="ttdeci">#define ttak_mem_alloc_scoped(var, cast, size, lifetime, now_tick)</div><div class="ttdoc">Scoped allocation with default flags.</div><div class="ttdef"><b>Definition</b> <a href="mem_8h_source.html#l00339">mem.h:339</a></div></div>
+</div><!-- fragment --><p>On compilers that do not support the cleanup attribute (e.g., MSVC, TinyCC), the <code>_scoped</code> macros degrade to plain allocation without automatic cleanup, preserving portability. Library internals and code that requires explicit lifetime management should use the default macros or <code>_raw</code> variants, which return a plain pointer:</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> *ptr = <a class="code hl_define" href="group__MemConvenienceMacros.html#gac5d995333f6871240af3fda323f9114f">ttak_mem_alloc</a>(1024, 1000, now_tick); <span class="comment">// caller must free explicitly</span></div>
+<div class="ttc" id="agroup__MemConvenienceMacros_html_gac5d995333f6871240af3fda323f9114f"><div class="ttname"><a href="group__MemConvenienceMacros.html#gac5d995333f6871240af3fda323f9114f">ttak_mem_alloc</a></div><div class="ttdeci">#define ttak_mem_alloc(size, lifetime, now_tick)</div><div class="ttdoc">Allocate memory with default flags.</div><div class="ttdef"><b>Definition</b> <a href="mem_8h_source.html#l00448">mem.h:448</a></div></div>
+</div><!-- fragment --><p>Available scoped macros (auto-free on scope exit where supported):</p><ul>
+<li><code><a class="el" href="group__MemScopedMacros.html#ga8b61d054082cd32ab60ad17c25d5f537" title="Scoped allocation with default flags.">ttak_mem_alloc_scoped(var, cast, size, lifetime, now_tick)</a></code></li>
+<li><code><a class="el" href="group__MemScopedMacros.html#gac25cf572bc503953d7630e5e17ff4d28" title="Scoped root allocation with default flags.">ttak_root_alloc_scoped(var, cast, size, lifetime, now_tick)</a></code></li>
+<li><code><a class="el" href="group__MemScopedMacros.html#ga09b6fce19fd4057870959c6038da4c3e" title="Scoped allocation with custom flags.">ttak_mem_alloc_with_flags_scoped(var, cast, size, lifetime, now_tick, flags)</a></code></li>
+<li><code><a class="el" href="group__MemScopedMacros.html#ga30d4ba528024ec26d9cb30ad8089c898" title="Scoped root allocation with custom flags.">ttak_root_alloc_with_flags_scoped(var, cast, size, lifetime, now_tick, flags)</a></code></li>
+<li><code><a class="el" href="group__MemScopedMacros.html#ga4ef4b6b3e0b2ee1777104ff1a2f55c79" title="Scoped reallocation with default flags.">ttak_mem_realloc_scoped(var, cast, ptr, size, lifetime, now_tick)</a></code></li>
+<li><code><a class="el" href="group__MemScopedMacros.html#gaeb24d50d34a68b601e81f7b11d33a1b3" title="Scoped root reallocation with default flags.">ttak_root_realloc_scoped(var, cast, ptr, size, lifetime, now_tick)</a></code></li>
+<li><code><a class="el" href="group__MemScopedMacros.html#ga08a1dda86e70651780333f5d954116d6" title="Scoped reallocation with custom flags.">ttak_mem_realloc_with_flags_scoped(var, cast, ptr, size, lifetime, now_tick, flags)</a></code></li>
+<li><code><a class="el" href="group__MemScopedMacros.html#ga1c088e8132a69b61a6b4edeb11299170" title="Scoped root reallocation with custom flags.">ttak_root_realloc_with_flags_scoped(var, cast, ptr, size, lifetime, now_tick, flags)</a></code></li>
+<li><code><a class="el" href="group__MemScopedMacros.html#ga7535c4d38ee0011302f15f0647cfe27d" title="Scoped duplication with default flags.">ttak_mem_dup_scoped(var, cast, src, size, lifetime, now_tick)</a></code></li>
+<li><code><a class="el" href="group__MemScopedMacros.html#gaa604dd705a14284053076c47d7482655" title="Scoped root duplication with default flags.">ttak_root_dup_scoped(var, cast, src, size, lifetime, now_tick)</a></code></li>
+<li><code><a class="el" href="group__MemScopedMacros.html#gab5d0b7208d8427baa909fbda342e1e47" title="Scoped duplication with custom flags.">ttak_mem_dup_with_flags_scoped(var, cast, src, size, lifetime, now_tick, flags)</a></code></li>
+<li><code><a class="el" href="group__MemScopedMacros.html#ga6644c6ef27696a81737ba16603d50c01" title="Scoped root duplication with custom flags.">ttak_root_dup_with_flags_scoped(var, cast, src, size, lifetime, now_tick, flags)</a></code></li>
+</ul>
+<p>Raw variants (plain pointer, caller-driven lifetime):</p><ul>
+<li><code><a class="el" href="group__MemRawMacros.html#gaf8bae2e2fd8a56233d1620fa3d7d23c6">ttak_mem_alloc_raw(size, lifetime, now_tick)</a></code></li>
+<li><code><a class="el" href="group__MemRawMacros.html#ga188db9e54f3930fe60cfaf2b933336b3">ttak_root_alloc_raw(size, lifetime, now_tick)</a></code></li>
+<li><code><a class="el" href="group__MemRawMacros.html#gabbb2002027a0c174f18f27e55c5255af">ttak_mem_alloc_with_flags_raw(size, lifetime, now_tick, flags)</a></code></li>
+<li><code><a class="el" href="group__MemRawMacros.html#gadc85f04aee9a8c8d54282692653646cc">ttak_root_alloc_with_flags_raw(size, lifetime, now_tick, flags)</a></code></li>
+<li><code><a class="el" href="group__MemRawMacros.html#ga6bfb5c3b8d45c23d316c931a4b19f2d5">ttak_mem_realloc_raw(ptr, size, lifetime, now_tick)</a></code></li>
+<li><code><a class="el" href="group__MemRawMacros.html#ga9346f26386172b45fad2499434b38b8c">ttak_root_realloc_raw(ptr, size, lifetime, now_tick)</a></code></li>
+<li><code><a class="el" href="group__MemRawMacros.html#ga16eb751df4790c5363984331a81927a3">ttak_mem_realloc_with_flags_raw(ptr, size, lifetime, now_tick, flags)</a></code></li>
+<li><code><a class="el" href="group__MemRawMacros.html#ga9b6e9a4e835fc109523bc467b540ac83">ttak_root_realloc_with_flags_raw(ptr, size, lifetime, now_tick, flags)</a></code></li>
+<li><code><a class="el" href="group__MemRawMacros.html#ga084c0d278b2eb99f07547de114873797">ttak_mem_dup_raw(src, size, lifetime, now_tick)</a></code></li>
+<li><code><a class="el" href="group__MemRawMacros.html#gaefb1f2bc79da704349333f0cfee81608">ttak_root_dup_raw(src, size, lifetime, now_tick)</a></code></li>
+<li><code><a class="el" href="group__MemRawMacros.html#ga02f41e6a1cb5d4badec06092f9355aac">ttak_mem_dup_with_flags_raw(src, size, lifetime, now_tick, flags)</a></code></li>
+<li><code><a class="el" href="group__MemRawMacros.html#ga7980094ec8c5180ce4bd7914acbbe7d6">ttak_root_dup_with_flags_raw(src, size, lifetime, now_tick, flags)</a></code></li>
+</ul>
+<hr  />
+<h1><a class="anchor" id="autotoc_md49"></a>
 Why Network, Math, and More Live Inside a Single Systems Library</h1>
-<h2><a class="anchor" id="autotoc_md48"></a>
+<h2><a class="anchor" id="autotoc_md50"></a>
 Overview</h2>
 <p>LibTTAK bundles networking, math, cryptography, I/O, scripting, tree structures, and physics utilities into one C systems library. This is not "batteries included" for convenience. It is a <b>structural decision</b> to keep every subsystem under the same deterministic substrate—one allocator, one ownership model, one epoch reclamation contract, and one observability plane.</p>
 <hr  />
-<h2><a class="anchor" id="autotoc_md50"></a>
+<h2><a class="anchor" id="autotoc_md52"></a>
 1. One Lifetime Model for Every Subsystem</h2>
 <p>When networking packets, mathematical matrices, and cryptographic buffers all allocate through <code>ttak_mem_alloc_safe</code> and live inside <code>ttak_owner_t</code> sandboxes, there is <b>no semantic gap</b> between domains.</p>
 <ul>
@@ -200,7 +240,7 @@ Overview</h2>
 </ul>
 <p>Splitting these into separate libraries would force the caller to bridge mismatched allocators, ownership idioms, and reclamation strategies. Inside LibTTAK, they share the exact same provenance rules.</p>
 <hr  />
-<h2><a class="anchor" id="autotoc_md52"></a>
+<h2><a class="anchor" id="autotoc_md54"></a>
 2. Zero-Copy and Scheduling Co-Design</h2>
 <p>LibTTAK’s I/O layer (<code>ttak_io_zerocopy_region_t</code>) divides detachable buffers into 4 KiB segments for scatter/gather syscalls. Math accelerators (<code>ttak_execute_batch</code>) and security engines (<code>ttak_security_execute</code>) operate on the same detachable arenas.</p>
 <p>This means:</p>
@@ -211,7 +251,7 @@ Overview</h2>
 </ul>
 <p>Co-design is only possible when every participant speaks the same buffer and scheduling language.</p>
 <hr  />
-<h2><a class="anchor" id="autotoc_md54"></a>
+<h2><a class="anchor" id="autotoc_md56"></a>
 3. Deterministic Scheduling Across Domains</h2>
 <p>LibTTAK’s concurrency model is grounded in <b>orthogonal Latin square (OLS)</b> principles: deterministic slot isolation minimizes contention. This is not limited to one subsystem.</p>
 <ul>
@@ -221,7 +261,7 @@ Overview</h2>
 </ul>
 <p>Extracting any of these domains into an external library would fracture the scheduling semantics. Keeping them together ensures that a network router, a math kernel, and a background GC thread all obey the same deterministic isolation rules.</p>
 <hr  />
-<h2><a class="anchor" id="autotoc_md56"></a>
+<h2><a class="anchor" id="autotoc_md58"></a>
 4. A Single Allocator Contract</h2>
 <p>LibTTAK enforces an <b>arena-first allocation rule</b>: no subsystem may call <code>malloc</code> directly.</p>
 <table class="markdownTable">
@@ -238,7 +278,7 @@ Overview</h2>
 </table>
 <p>Unifying allocation eliminates hidden fragmentation, makes RSS growth explainable, and lets pressure thresholds (<code>ttak_mem_configure_gc</code>) govern the entire process—not just one library.</p>
 <hr  />
-<h2><a class="anchor" id="autotoc_md58"></a>
+<h2><a class="anchor" id="autotoc_md60"></a>
 5. Unified Observability</h2>
 <p>Every subsystem accepts a <code>uint64_t now</code> timestamp and exposes stats/logging entry points.</p>
 <ul>
@@ -248,12 +288,12 @@ Overview</h2>
 </ul>
 <p>If networking lived in one library, math in another, and memory in a third, the operator would need three different tracing conventions to answer a single question: *"Where did this byte come from, and who touched it last?"* LibTTAK answers that question with one log format and one epoch counter.</p>
 <hr  />
-<h2><a class="anchor" id="autotoc_md60"></a>
+<h2><a class="anchor" id="autotoc_md62"></a>
 6. TinyCC Parity and ABI Stability</h2>
 <p>All modules—including network, math, and security—must build under TinyCC <code>-O0</code> with portable fallbacks. They share the same compiler-abstraction macros (<code>TTAK_FORCE_INLINE</code>, <code>TTAK_UNLIKELY</code>, <code>TTAK_ATOMIC_FETCH_ADD_U64</code>) and the same header-layout stability guarantees (<code>TTAK_MEM_FORCE_ACCESS_BRIDGE</code>).</p>
 <p>Splitting the project would force each library to reinvent TinyCC compatibility, atomic fallbacks, and ABI bridges. Inside LibTTAK, one compatibility layer covers every domain.</p>
 <hr  />
-<h2><a class="anchor" id="autotoc_md62"></a>
+<h2><a class="anchor" id="autotoc_md64"></a>
 Summary</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">

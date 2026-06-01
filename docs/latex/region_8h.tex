@@ -8,8 +8,7 @@ Unsafe raw memory region manager (no ownership tracking).
 {\ttfamily \#include $<$stddef.\+h$>$}\newline
 {\ttfamily \#include $<$stdint.\+h$>$}\newline
 {\ttfamily \#include $<$stdbool.\+h$>$}\newline
-Include dependency graph for region.\+h\+:
-\nopagebreak
+Include dependency graph for region.\+h\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -46,13 +45,13 @@ bool \mbox{\hyperlink{region_8h_a29e3622b42d82ad3421db4f5f3932d11}{ttak\+\_\+uns
 \begin{DoxyCompactList}\small\item\em Increments the pin counter to signal an active borrow. \end{DoxyCompactList}\item 
 bool \mbox{\hyperlink{region_8h_a7dc7d1fafdd11d1d88d6c4a2cf65ec14}{ttak\+\_\+unsafe\+\_\+region\+\_\+unpin}} (\mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}region)
 \begin{DoxyCompactList}\small\item\em Decrements the pin counter. \end{DoxyCompactList}\item 
-bool \mbox{\hyperlink{region_8h_a61f666927f8e71f34e08a93551146e57}{ttak\+\_\+unsafe\+\_\+region\+\_\+move}} (\mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{icmp_8h_a9037f54b05f8331e7594be9144926217}{dst}}, \mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}src)
+bool \mbox{\hyperlink{region_8h_a61f666927f8e71f34e08a93551146e57}{ttak\+\_\+unsafe\+\_\+region\+\_\+move}} (\mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}dst, \mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}src)
 \begin{DoxyCompactList}\small\item\em Moves memory from src to dst within the same context/allocator. \end{DoxyCompactList}\item 
-bool \mbox{\hyperlink{region_8h_accc23f89515395bd88dde530d37a208c}{ttak\+\_\+unsafe\+\_\+region\+\_\+move\+\_\+cross\+\_\+ctx}} (\mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{icmp_8h_a9037f54b05f8331e7594be9144926217}{dst}}, \mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}src, uint32\+\_\+t new\+\_\+ctx\+\_\+id, const char \texorpdfstring{$\ast$}{*}new\+\_\+allocator\+\_\+tag)
+bool \mbox{\hyperlink{region_8h_accc23f89515395bd88dde530d37a208c}{ttak\+\_\+unsafe\+\_\+region\+\_\+move\+\_\+cross\+\_\+ctx}} (\mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}dst, \mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}src, uint32\+\_\+t new\+\_\+ctx\+\_\+id, const char \texorpdfstring{$\ast$}{*}new\+\_\+allocator\+\_\+tag)
 \begin{DoxyCompactList}\small\item\em Moves memory across contexts, overriding ownership metadata. \end{DoxyCompactList}\item 
-bool \mbox{\hyperlink{region_8h_a9ae4ea2db72b9156fb12e38a0a99255a}{ttak\+\_\+unsafe\+\_\+region\+\_\+adopt}} (\mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{icmp_8h_a9037f54b05f8331e7594be9144926217}{dst}}, void \texorpdfstring{$\ast$}{*}ptr, size\+\_\+t size, size\+\_\+t capacity, const char \texorpdfstring{$\ast$}{*}allocator\+\_\+tag, uint32\+\_\+t ctx\+\_\+id)
+bool \mbox{\hyperlink{region_8h_a9ae4ea2db72b9156fb12e38a0a99255a}{ttak\+\_\+unsafe\+\_\+region\+\_\+adopt}} (\mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}dst, void \texorpdfstring{$\ast$}{*}ptr, size\+\_\+t size, size\+\_\+t capacity, const char \texorpdfstring{$\ast$}{*}allocator\+\_\+tag, uint32\+\_\+t ctx\+\_\+id)
 \begin{DoxyCompactList}\small\item\em Adopts an externally allocated span. \end{DoxyCompactList}\item 
-bool \mbox{\hyperlink{region_8h_abbaa0de0a3dcf0eb15a4126ba301a8f5}{ttak\+\_\+unsafe\+\_\+region\+\_\+steal}} (\mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{icmp_8h_a9037f54b05f8331e7594be9144926217}{dst}}, \mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}src)
+bool \mbox{\hyperlink{region_8h_abbaa0de0a3dcf0eb15a4126ba301a8f5}{ttak\+\_\+unsafe\+\_\+region\+\_\+steal}} (\mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}dst, \mbox{\hyperlink{region_8h_ae5defc2542cbc73f73d7e08a623b354d}{ttak\+\_\+unsafe\+\_\+region\+\_\+t}} \texorpdfstring{$\ast$}{*}src)
 \begin{DoxyCompactList}\small\item\em Steals ownership from src regardless of prior dst state. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 

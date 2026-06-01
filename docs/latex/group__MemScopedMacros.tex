@@ -1,0 +1,308 @@
+\doxysection{Scoped RAII Allocation Macros}
+\hypertarget{group__MemScopedMacros}{}\label{group__MemScopedMacros}\index{Scoped RAII Allocation Macros@{Scoped RAII Allocation Macros}}
+
+
+Scope-\/bound allocation macros that auto-\/free on scope exit (GCC/\+Clang).  
+
+
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{group__MemScopedMacros_ga8b61d054082cd32ab60ad17c25d5f537}{ttak\+\_\+mem\+\_\+alloc\+\_\+scoped}}(var,  cast,  size,  lifetime,  now\+\_\+tick)
+\begin{DoxyCompactList}\small\item\em Scoped allocation with default flags. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__MemScopedMacros_gac25cf572bc503953d7630e5e17ff4d28}{ttak\+\_\+root\+\_\+alloc\+\_\+scoped}}(var,  cast,  size,  lifetime,  now\+\_\+tick)
+\begin{DoxyCompactList}\small\item\em Scoped root allocation with default flags. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__MemScopedMacros_ga09b6fce19fd4057870959c6038da4c3e}{ttak\+\_\+mem\+\_\+alloc\+\_\+with\+\_\+flags\+\_\+scoped}}(var,  cast,  size,  lifetime,  now\+\_\+tick,  flags)
+\begin{DoxyCompactList}\small\item\em Scoped allocation with custom flags. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__MemScopedMacros_ga30d4ba528024ec26d9cb30ad8089c898}{ttak\+\_\+root\+\_\+alloc\+\_\+with\+\_\+flags\+\_\+scoped}}(var,  cast,  size,  lifetime,  now\+\_\+tick,  flags)
+\begin{DoxyCompactList}\small\item\em Scoped root allocation with custom flags. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__MemScopedMacros_ga4ef4b6b3e0b2ee1777104ff1a2f55c79}{ttak\+\_\+mem\+\_\+realloc\+\_\+scoped}}(var,  cast,  ptr,  size,  lifetime,  now\+\_\+tick)
+\begin{DoxyCompactList}\small\item\em Scoped reallocation with default flags. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__MemScopedMacros_gaeb24d50d34a68b601e81f7b11d33a1b3}{ttak\+\_\+root\+\_\+realloc\+\_\+scoped}}(var,  cast,  ptr,  size,  lifetime,  now\+\_\+tick)
+\begin{DoxyCompactList}\small\item\em Scoped root reallocation with default flags. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__MemScopedMacros_ga08a1dda86e70651780333f5d954116d6}{ttak\+\_\+mem\+\_\+realloc\+\_\+with\+\_\+flags\+\_\+scoped}}(var,  cast,  ptr,  size,  lifetime,  now\+\_\+tick,  flags)
+\begin{DoxyCompactList}\small\item\em Scoped reallocation with custom flags. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__MemScopedMacros_ga1c088e8132a69b61a6b4edeb11299170}{ttak\+\_\+root\+\_\+realloc\+\_\+with\+\_\+flags\+\_\+scoped}}(var,  cast,  ptr,  size,  lifetime,  now\+\_\+tick,  flags)
+\begin{DoxyCompactList}\small\item\em Scoped root reallocation with custom flags. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__MemScopedMacros_ga7535c4d38ee0011302f15f0647cfe27d}{ttak\+\_\+mem\+\_\+dup\+\_\+scoped}}(var,  cast,  src,  size,  lifetime,  now\+\_\+tick)
+\begin{DoxyCompactList}\small\item\em Scoped duplication with default flags. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__MemScopedMacros_gaa604dd705a14284053076c47d7482655}{ttak\+\_\+root\+\_\+dup\+\_\+scoped}}(var,  cast,  src,  size,  lifetime,  now\+\_\+tick)
+\begin{DoxyCompactList}\small\item\em Scoped root duplication with default flags. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__MemScopedMacros_gab5d0b7208d8427baa909fbda342e1e47}{ttak\+\_\+mem\+\_\+dup\+\_\+with\+\_\+flags\+\_\+scoped}}(var,  cast,  src,  size,  lifetime,  now\+\_\+tick,  flags)
+\begin{DoxyCompactList}\small\item\em Scoped duplication with custom flags. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__MemScopedMacros_ga6644c6ef27696a81737ba16603d50c01}{ttak\+\_\+root\+\_\+dup\+\_\+with\+\_\+flags\+\_\+scoped}}(var,  cast,  src,  size,  lifetime,  now\+\_\+tick,  flags)
+\begin{DoxyCompactList}\small\item\em Scoped root duplication with custom flags. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Scope-\/bound allocation macros that auto-\/free on scope exit (GCC/\+Clang). 
+
+These macros declare a variable that is automatically freed when it goes out of scope using the compiler\textquotesingle{}s {\ttfamily cleanup} attribute. On compilers that do not support this attribute they degrade to plain allocation. 
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{group__MemScopedMacros_ga8b61d054082cd32ab60ad17c25d5f537}\label{group__MemScopedMacros_ga8b61d054082cd32ab60ad17c25d5f537} 
+\index{Scoped RAII Allocation Macros@{Scoped RAII Allocation Macros}!ttak\_mem\_alloc\_scoped@{ttak\_mem\_alloc\_scoped}}
+\index{ttak\_mem\_alloc\_scoped@{ttak\_mem\_alloc\_scoped}!Scoped RAII Allocation Macros@{Scoped RAII Allocation Macros}}
+\doxysubsubsection{\texorpdfstring{ttak\_mem\_alloc\_scoped}{ttak\_mem\_alloc\_scoped}}
+{\footnotesize\ttfamily \#define ttak\+\_\+mem\+\_\+alloc\+\_\+scoped(\begin{DoxyParamCaption}\item[{}]{var,  }\item[{}]{cast,  }\item[{}]{size,  }\item[{}]{lifetime,  }\item[{}]{now\+\_\+tick }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ *\_ttak\_scoped\_\#\#var\ \mbox{\hyperlink{ttak__compiler_8h_aa103fd0a6e458cbd4a89543905d68927}{TTAK\_ATTRIBUTE\_CLEANUP}}(ttak\_mem\_cleanup)\ =\ \mbox{\hyperlink{mem_8h_acd407700ef90ad55bcec5ae7cf8b94b7}{ttak\_mem\_alloc\_safe}}(size,\ lifetime,\ now\_tick,\ \textcolor{keyword}{false},\ \textcolor{keyword}{false},\ \textcolor{keyword}{true},\ \textcolor{keyword}{false},\ \mbox{\hyperlink{mem_8h_a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a}{TTAK\_MEM\_DEFAULT}});\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ cast\ var\ =\ (cast)\_ttak\_scoped\_\#\#var}
+
+\end{DoxyCode}
+
+
+Scoped allocation with default flags. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em var} & Variable name to declare. \\
+\hline
+{\em cast} & Type to cast the resulting pointer to. \\
+\hline
+{\em size} & Number of bytes to allocate. \\
+\hline
+{\em lifetime} & Lifetime hint in ticks. \\
+\hline
+{\em now\+\_\+tick} & Current timestamp in ticks. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{mem_8h_source_l00339}{339}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+
+\Hypertarget{group__MemScopedMacros_ga09b6fce19fd4057870959c6038da4c3e}\label{group__MemScopedMacros_ga09b6fce19fd4057870959c6038da4c3e} 
+\index{Scoped RAII Allocation Macros@{Scoped RAII Allocation Macros}!ttak\_mem\_alloc\_with\_flags\_scoped@{ttak\_mem\_alloc\_with\_flags\_scoped}}
+\index{ttak\_mem\_alloc\_with\_flags\_scoped@{ttak\_mem\_alloc\_with\_flags\_scoped}!Scoped RAII Allocation Macros@{Scoped RAII Allocation Macros}}
+\doxysubsubsection{\texorpdfstring{ttak\_mem\_alloc\_with\_flags\_scoped}{ttak\_mem\_alloc\_with\_flags\_scoped}}
+{\footnotesize\ttfamily \#define ttak\+\_\+mem\+\_\+alloc\+\_\+with\+\_\+flags\+\_\+scoped(\begin{DoxyParamCaption}\item[{}]{var,  }\item[{}]{cast,  }\item[{}]{size,  }\item[{}]{lifetime,  }\item[{}]{now\+\_\+tick,  }\item[{}]{flags }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ *\_ttak\_scoped\_\#\#var\ \mbox{\hyperlink{ttak__compiler_8h_aa103fd0a6e458cbd4a89543905d68927}{TTAK\_ATTRIBUTE\_CLEANUP}}(ttak\_mem\_cleanup)\ =\ \mbox{\hyperlink{mem_8h_acd407700ef90ad55bcec5ae7cf8b94b7}{ttak\_mem\_alloc\_safe}}(size,\ lifetime,\ now\_tick,\ \textcolor{keyword}{false},\ \textcolor{keyword}{false},\ \textcolor{keyword}{true},\ \textcolor{keyword}{false},\ flags);\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ cast\ var\ =\ (cast)\_ttak\_scoped\_\#\#var}
+
+\end{DoxyCode}
+
+
+Scoped allocation with custom flags. 
+
+
+
+Definition at line \mbox{\hyperlink{mem_8h_source_l00360}{360}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+
+\Hypertarget{group__MemScopedMacros_ga7535c4d38ee0011302f15f0647cfe27d}\label{group__MemScopedMacros_ga7535c4d38ee0011302f15f0647cfe27d} 
+\index{Scoped RAII Allocation Macros@{Scoped RAII Allocation Macros}!ttak\_mem\_dup\_scoped@{ttak\_mem\_dup\_scoped}}
+\index{ttak\_mem\_dup\_scoped@{ttak\_mem\_dup\_scoped}!Scoped RAII Allocation Macros@{Scoped RAII Allocation Macros}}
+\doxysubsubsection{\texorpdfstring{ttak\_mem\_dup\_scoped}{ttak\_mem\_dup\_scoped}}
+{\footnotesize\ttfamily \#define ttak\+\_\+mem\+\_\+dup\+\_\+scoped(\begin{DoxyParamCaption}\item[{}]{var,  }\item[{}]{cast,  }\item[{}]{src,  }\item[{}]{size,  }\item[{}]{lifetime,  }\item[{}]{now\+\_\+tick }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ *\_ttak\_scoped\_\#\#var\ \mbox{\hyperlink{ttak__compiler_8h_aa103fd0a6e458cbd4a89543905d68927}{TTAK\_ATTRIBUTE\_CLEANUP}}(ttak\_mem\_cleanup)\ =\ \mbox{\hyperlink{mem_8h_a9017be27d7753e502ed5097ee61fd6c5}{ttak\_mem\_dup\_safe}}(src,\ size,\ lifetime,\ now\_tick,\ \textcolor{keyword}{false},\ \mbox{\hyperlink{mem_8h_a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a}{TTAK\_MEM\_DEFAULT}});\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ cast\ var\ =\ (cast)\_ttak\_scoped\_\#\#var}
+
+\end{DoxyCode}
+
+
+Scoped duplication with default flags. 
+
+
+
+Definition at line \mbox{\hyperlink{mem_8h_source_l00408}{408}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+
+\Hypertarget{group__MemScopedMacros_gab5d0b7208d8427baa909fbda342e1e47}\label{group__MemScopedMacros_gab5d0b7208d8427baa909fbda342e1e47} 
+\index{Scoped RAII Allocation Macros@{Scoped RAII Allocation Macros}!ttak\_mem\_dup\_with\_flags\_scoped@{ttak\_mem\_dup\_with\_flags\_scoped}}
+\index{ttak\_mem\_dup\_with\_flags\_scoped@{ttak\_mem\_dup\_with\_flags\_scoped}!Scoped RAII Allocation Macros@{Scoped RAII Allocation Macros}}
+\doxysubsubsection{\texorpdfstring{ttak\_mem\_dup\_with\_flags\_scoped}{ttak\_mem\_dup\_with\_flags\_scoped}}
+{\footnotesize\ttfamily \#define ttak\+\_\+mem\+\_\+dup\+\_\+with\+\_\+flags\+\_\+scoped(\begin{DoxyParamCaption}\item[{}]{var,  }\item[{}]{cast,  }\item[{}]{src,  }\item[{}]{size,  }\item[{}]{lifetime,  }\item[{}]{now\+\_\+tick,  }\item[{}]{flags }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ *\_ttak\_scoped\_\#\#var\ \mbox{\hyperlink{ttak__compiler_8h_aa103fd0a6e458cbd4a89543905d68927}{TTAK\_ATTRIBUTE\_CLEANUP}}(ttak\_mem\_cleanup)\ =\ \mbox{\hyperlink{mem_8h_a9017be27d7753e502ed5097ee61fd6c5}{ttak\_mem\_dup\_safe}}(src,\ size,\ lifetime,\ now\_tick,\ \textcolor{keyword}{false},\ flags);\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ cast\ var\ =\ (cast)\_ttak\_scoped\_\#\#var}
+
+\end{DoxyCode}
+
+
+Scoped duplication with custom flags. 
+
+
+
+Definition at line \mbox{\hyperlink{mem_8h_source_l00424}{424}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+
+\Hypertarget{group__MemScopedMacros_ga4ef4b6b3e0b2ee1777104ff1a2f55c79}\label{group__MemScopedMacros_ga4ef4b6b3e0b2ee1777104ff1a2f55c79} 
+\index{Scoped RAII Allocation Macros@{Scoped RAII Allocation Macros}!ttak\_mem\_realloc\_scoped@{ttak\_mem\_realloc\_scoped}}
+\index{ttak\_mem\_realloc\_scoped@{ttak\_mem\_realloc\_scoped}!Scoped RAII Allocation Macros@{Scoped RAII Allocation Macros}}
+\doxysubsubsection{\texorpdfstring{ttak\_mem\_realloc\_scoped}{ttak\_mem\_realloc\_scoped}}
+{\footnotesize\ttfamily \#define ttak\+\_\+mem\+\_\+realloc\+\_\+scoped(\begin{DoxyParamCaption}\item[{}]{var,  }\item[{}]{cast,  }\item[{}]{ptr,  }\item[{}]{size,  }\item[{}]{lifetime,  }\item[{}]{now\+\_\+tick }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ *\_ttak\_scoped\_\#\#var\ \mbox{\hyperlink{ttak__compiler_8h_aa103fd0a6e458cbd4a89543905d68927}{TTAK\_ATTRIBUTE\_CLEANUP}}(ttak\_mem\_cleanup)\ =\ \mbox{\hyperlink{mem_8h_a3ecf5a43780a4a7f1c923b4bc3579464}{ttak\_mem\_realloc\_safe}}(ptr,\ size,\ lifetime,\ now\_tick,\ \textcolor{keyword}{false},\ \mbox{\hyperlink{mem_8h_a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a}{TTAK\_MEM\_DEFAULT}});\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ cast\ var\ =\ (cast)\_ttak\_scoped\_\#\#var}
+
+\end{DoxyCode}
+
+
+Scoped reallocation with default flags. 
+
+
+
+Definition at line \mbox{\hyperlink{mem_8h_source_l00376}{376}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+
+\Hypertarget{group__MemScopedMacros_ga08a1dda86e70651780333f5d954116d6}\label{group__MemScopedMacros_ga08a1dda86e70651780333f5d954116d6} 
+\index{Scoped RAII Allocation Macros@{Scoped RAII Allocation Macros}!ttak\_mem\_realloc\_with\_flags\_scoped@{ttak\_mem\_realloc\_with\_flags\_scoped}}
+\index{ttak\_mem\_realloc\_with\_flags\_scoped@{ttak\_mem\_realloc\_with\_flags\_scoped}!Scoped RAII Allocation Macros@{Scoped RAII Allocation Macros}}
+\doxysubsubsection{\texorpdfstring{ttak\_mem\_realloc\_with\_flags\_scoped}{ttak\_mem\_realloc\_with\_flags\_scoped}}
+{\footnotesize\ttfamily \#define ttak\+\_\+mem\+\_\+realloc\+\_\+with\+\_\+flags\+\_\+scoped(\begin{DoxyParamCaption}\item[{}]{var,  }\item[{}]{cast,  }\item[{}]{ptr,  }\item[{}]{size,  }\item[{}]{lifetime,  }\item[{}]{now\+\_\+tick,  }\item[{}]{flags }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ *\_ttak\_scoped\_\#\#var\ \mbox{\hyperlink{ttak__compiler_8h_aa103fd0a6e458cbd4a89543905d68927}{TTAK\_ATTRIBUTE\_CLEANUP}}(ttak\_mem\_cleanup)\ =\ \mbox{\hyperlink{mem_8h_a3ecf5a43780a4a7f1c923b4bc3579464}{ttak\_mem\_realloc\_safe}}(ptr,\ size,\ lifetime,\ now\_tick,\ \textcolor{keyword}{false},\ flags);\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ cast\ var\ =\ (cast)\_ttak\_scoped\_\#\#var}
+
+\end{DoxyCode}
+
+
+Scoped reallocation with custom flags. 
+
+
+
+Definition at line \mbox{\hyperlink{mem_8h_source_l00392}{392}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+
+\Hypertarget{group__MemScopedMacros_gac25cf572bc503953d7630e5e17ff4d28}\label{group__MemScopedMacros_gac25cf572bc503953d7630e5e17ff4d28} 
+\index{Scoped RAII Allocation Macros@{Scoped RAII Allocation Macros}!ttak\_root\_alloc\_scoped@{ttak\_root\_alloc\_scoped}}
+\index{ttak\_root\_alloc\_scoped@{ttak\_root\_alloc\_scoped}!Scoped RAII Allocation Macros@{Scoped RAII Allocation Macros}}
+\doxysubsubsection{\texorpdfstring{ttak\_root\_alloc\_scoped}{ttak\_root\_alloc\_scoped}}
+{\footnotesize\ttfamily \#define ttak\+\_\+root\+\_\+alloc\+\_\+scoped(\begin{DoxyParamCaption}\item[{}]{var,  }\item[{}]{cast,  }\item[{}]{size,  }\item[{}]{lifetime,  }\item[{}]{now\+\_\+tick }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ *\_ttak\_scoped\_\#\#var\ \mbox{\hyperlink{ttak__compiler_8h_aa103fd0a6e458cbd4a89543905d68927}{TTAK\_ATTRIBUTE\_CLEANUP}}(ttak\_mem\_cleanup)\ =\ \mbox{\hyperlink{mem_8h_acd407700ef90ad55bcec5ae7cf8b94b7}{ttak\_mem\_alloc\_safe}}(size,\ lifetime,\ now\_tick,\ \textcolor{keyword}{true},\ \textcolor{keyword}{true},\ \textcolor{keyword}{true},\ \textcolor{keyword}{true},\ \mbox{\hyperlink{mem_8h_a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a}{TTAK\_MEM\_DEFAULT}});\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ cast\ var\ =\ (cast)\_ttak\_scoped\_\#\#var}
+
+\end{DoxyCode}
+
+
+Scoped root allocation with default flags. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em var} & Variable name to declare. \\
+\hline
+{\em cast} & Type to cast the resulting pointer to. \\
+\hline
+{\em size} & Number of bytes to allocate. \\
+\hline
+{\em lifetime} & Lifetime hint in ticks. \\
+\hline
+{\em now\+\_\+tick} & Current timestamp in ticks. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{mem_8h_source_l00352}{352}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+
+\Hypertarget{group__MemScopedMacros_ga30d4ba528024ec26d9cb30ad8089c898}\label{group__MemScopedMacros_ga30d4ba528024ec26d9cb30ad8089c898} 
+\index{Scoped RAII Allocation Macros@{Scoped RAII Allocation Macros}!ttak\_root\_alloc\_with\_flags\_scoped@{ttak\_root\_alloc\_with\_flags\_scoped}}
+\index{ttak\_root\_alloc\_with\_flags\_scoped@{ttak\_root\_alloc\_with\_flags\_scoped}!Scoped RAII Allocation Macros@{Scoped RAII Allocation Macros}}
+\doxysubsubsection{\texorpdfstring{ttak\_root\_alloc\_with\_flags\_scoped}{ttak\_root\_alloc\_with\_flags\_scoped}}
+{\footnotesize\ttfamily \#define ttak\+\_\+root\+\_\+alloc\+\_\+with\+\_\+flags\+\_\+scoped(\begin{DoxyParamCaption}\item[{}]{var,  }\item[{}]{cast,  }\item[{}]{size,  }\item[{}]{lifetime,  }\item[{}]{now\+\_\+tick,  }\item[{}]{flags }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ *\_ttak\_scoped\_\#\#var\ \mbox{\hyperlink{ttak__compiler_8h_aa103fd0a6e458cbd4a89543905d68927}{TTAK\_ATTRIBUTE\_CLEANUP}}(ttak\_mem\_cleanup)\ =\ \mbox{\hyperlink{mem_8h_acd407700ef90ad55bcec5ae7cf8b94b7}{ttak\_mem\_alloc\_safe}}(size,\ lifetime,\ now\_tick,\ \textcolor{keyword}{true},\ \textcolor{keyword}{true},\ \textcolor{keyword}{true},\ \textcolor{keyword}{true},\ flags);\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ cast\ var\ =\ (cast)\_ttak\_scoped\_\#\#var}
+
+\end{DoxyCode}
+
+
+Scoped root allocation with custom flags. 
+
+
+
+Definition at line \mbox{\hyperlink{mem_8h_source_l00368}{368}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+
+\Hypertarget{group__MemScopedMacros_gaa604dd705a14284053076c47d7482655}\label{group__MemScopedMacros_gaa604dd705a14284053076c47d7482655} 
+\index{Scoped RAII Allocation Macros@{Scoped RAII Allocation Macros}!ttak\_root\_dup\_scoped@{ttak\_root\_dup\_scoped}}
+\index{ttak\_root\_dup\_scoped@{ttak\_root\_dup\_scoped}!Scoped RAII Allocation Macros@{Scoped RAII Allocation Macros}}
+\doxysubsubsection{\texorpdfstring{ttak\_root\_dup\_scoped}{ttak\_root\_dup\_scoped}}
+{\footnotesize\ttfamily \#define ttak\+\_\+root\+\_\+dup\+\_\+scoped(\begin{DoxyParamCaption}\item[{}]{var,  }\item[{}]{cast,  }\item[{}]{src,  }\item[{}]{size,  }\item[{}]{lifetime,  }\item[{}]{now\+\_\+tick }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ *\_ttak\_scoped\_\#\#var\ \mbox{\hyperlink{ttak__compiler_8h_aa103fd0a6e458cbd4a89543905d68927}{TTAK\_ATTRIBUTE\_CLEANUP}}(ttak\_mem\_cleanup)\ =\ \mbox{\hyperlink{mem_8h_a9017be27d7753e502ed5097ee61fd6c5}{ttak\_mem\_dup\_safe}}(src,\ size,\ lifetime,\ now\_tick,\ \textcolor{keyword}{true},\ \mbox{\hyperlink{mem_8h_a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a}{TTAK\_MEM\_DEFAULT}});\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ cast\ var\ =\ (cast)\_ttak\_scoped\_\#\#var}
+
+\end{DoxyCode}
+
+
+Scoped root duplication with default flags. 
+
+
+
+Definition at line \mbox{\hyperlink{mem_8h_source_l00416}{416}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+
+\Hypertarget{group__MemScopedMacros_ga6644c6ef27696a81737ba16603d50c01}\label{group__MemScopedMacros_ga6644c6ef27696a81737ba16603d50c01} 
+\index{Scoped RAII Allocation Macros@{Scoped RAII Allocation Macros}!ttak\_root\_dup\_with\_flags\_scoped@{ttak\_root\_dup\_with\_flags\_scoped}}
+\index{ttak\_root\_dup\_with\_flags\_scoped@{ttak\_root\_dup\_with\_flags\_scoped}!Scoped RAII Allocation Macros@{Scoped RAII Allocation Macros}}
+\doxysubsubsection{\texorpdfstring{ttak\_root\_dup\_with\_flags\_scoped}{ttak\_root\_dup\_with\_flags\_scoped}}
+{\footnotesize\ttfamily \#define ttak\+\_\+root\+\_\+dup\+\_\+with\+\_\+flags\+\_\+scoped(\begin{DoxyParamCaption}\item[{}]{var,  }\item[{}]{cast,  }\item[{}]{src,  }\item[{}]{size,  }\item[{}]{lifetime,  }\item[{}]{now\+\_\+tick,  }\item[{}]{flags }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ *\_ttak\_scoped\_\#\#var\ \mbox{\hyperlink{ttak__compiler_8h_aa103fd0a6e458cbd4a89543905d68927}{TTAK\_ATTRIBUTE\_CLEANUP}}(ttak\_mem\_cleanup)\ =\ \mbox{\hyperlink{mem_8h_a9017be27d7753e502ed5097ee61fd6c5}{ttak\_mem\_dup\_safe}}(src,\ size,\ lifetime,\ now\_tick,\ \textcolor{keyword}{true},\ flags);\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ cast\ var\ =\ (cast)\_ttak\_scoped\_\#\#var}
+
+\end{DoxyCode}
+
+
+Scoped root duplication with custom flags. 
+
+
+
+Definition at line \mbox{\hyperlink{mem_8h_source_l00432}{432}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+
+\Hypertarget{group__MemScopedMacros_gaeb24d50d34a68b601e81f7b11d33a1b3}\label{group__MemScopedMacros_gaeb24d50d34a68b601e81f7b11d33a1b3} 
+\index{Scoped RAII Allocation Macros@{Scoped RAII Allocation Macros}!ttak\_root\_realloc\_scoped@{ttak\_root\_realloc\_scoped}}
+\index{ttak\_root\_realloc\_scoped@{ttak\_root\_realloc\_scoped}!Scoped RAII Allocation Macros@{Scoped RAII Allocation Macros}}
+\doxysubsubsection{\texorpdfstring{ttak\_root\_realloc\_scoped}{ttak\_root\_realloc\_scoped}}
+{\footnotesize\ttfamily \#define ttak\+\_\+root\+\_\+realloc\+\_\+scoped(\begin{DoxyParamCaption}\item[{}]{var,  }\item[{}]{cast,  }\item[{}]{ptr,  }\item[{}]{size,  }\item[{}]{lifetime,  }\item[{}]{now\+\_\+tick }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ *\_ttak\_scoped\_\#\#var\ \mbox{\hyperlink{ttak__compiler_8h_aa103fd0a6e458cbd4a89543905d68927}{TTAK\_ATTRIBUTE\_CLEANUP}}(ttak\_mem\_cleanup)\ =\ \mbox{\hyperlink{mem_8h_a3ecf5a43780a4a7f1c923b4bc3579464}{ttak\_mem\_realloc\_safe}}(ptr,\ size,\ lifetime,\ now\_tick,\ \textcolor{keyword}{true},\ \mbox{\hyperlink{mem_8h_a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a}{TTAK\_MEM\_DEFAULT}});\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ cast\ var\ =\ (cast)\_ttak\_scoped\_\#\#var}
+
+\end{DoxyCode}
+
+
+Scoped root reallocation with default flags. 
+
+
+
+Definition at line \mbox{\hyperlink{mem_8h_source_l00384}{384}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+
+\Hypertarget{group__MemScopedMacros_ga1c088e8132a69b61a6b4edeb11299170}\label{group__MemScopedMacros_ga1c088e8132a69b61a6b4edeb11299170} 
+\index{Scoped RAII Allocation Macros@{Scoped RAII Allocation Macros}!ttak\_root\_realloc\_with\_flags\_scoped@{ttak\_root\_realloc\_with\_flags\_scoped}}
+\index{ttak\_root\_realloc\_with\_flags\_scoped@{ttak\_root\_realloc\_with\_flags\_scoped}!Scoped RAII Allocation Macros@{Scoped RAII Allocation Macros}}
+\doxysubsubsection{\texorpdfstring{ttak\_root\_realloc\_with\_flags\_scoped}{ttak\_root\_realloc\_with\_flags\_scoped}}
+{\footnotesize\ttfamily \#define ttak\+\_\+root\+\_\+realloc\+\_\+with\+\_\+flags\+\_\+scoped(\begin{DoxyParamCaption}\item[{}]{var,  }\item[{}]{cast,  }\item[{}]{ptr,  }\item[{}]{size,  }\item[{}]{lifetime,  }\item[{}]{now\+\_\+tick,  }\item[{}]{flags }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ *\_ttak\_scoped\_\#\#var\ \mbox{\hyperlink{ttak__compiler_8h_aa103fd0a6e458cbd4a89543905d68927}{TTAK\_ATTRIBUTE\_CLEANUP}}(ttak\_mem\_cleanup)\ =\ \mbox{\hyperlink{mem_8h_a3ecf5a43780a4a7f1c923b4bc3579464}{ttak\_mem\_realloc\_safe}}(ptr,\ size,\ lifetime,\ now\_tick,\ \textcolor{keyword}{true},\ flags);\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ cast\ var\ =\ (cast)\_ttak\_scoped\_\#\#var}
+
+\end{DoxyCode}
+
+
+Scoped root reallocation with custom flags. 
+
+
+
+Definition at line \mbox{\hyperlink{mem_8h_source_l00400}{400}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+

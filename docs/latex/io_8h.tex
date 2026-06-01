@@ -11,16 +11,14 @@ Core I/O types\+: status codes, buffers, TTL guards, and poll helpers.
 {\ttfamily \#include $<$ttak/mem/owner.\+h$>$}\newline
 {\ttfamily \#include $<$ttak/mem/detachable.\+h$>$}\newline
 {\ttfamily \#include $<$ttak/timing/timing.\+h$>$}\newline
-Include dependency graph for io.\+h\+:
-\nopagebreak
+Include dependency graph for io.\+h\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=350pt]{io_8h__incl}
 \end{center}
 \end{figure}
-This graph shows which files directly or indirectly include this file\+:
-\nopagebreak
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -75,7 +73,7 @@ enum \mbox{\hyperlink{io_8h_a4b16199a2071984f634a8da16869da1a}{ttak\+\_\+io\+\_\
 \item 
 bool \mbox{\hyperlink{io_8h_a7cd44036a34402d6b84d35539a4c1ed2}{ttak\+\_\+io\+\_\+guard\+\_\+valid}} (const \mbox{\hyperlink{io_8h_aca20f4767510d423ee88de501eb72575}{ttak\+\_\+io\+\_\+guard\+\_\+t}} \texorpdfstring{$\ast$}{*}guard, uint64\+\_\+t now)
 \item 
-\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} \mbox{\hyperlink{io_8h_a37257227b6a468f1d428d3cf15d0b6a5}{ttak\+\_\+io\+\_\+buffer\+\_\+acquire}} (\mbox{\hyperlink{io_8h_a13577555a348473d37e420b72805a261}{ttak\+\_\+io\+\_\+buffer\+\_\+t}} \texorpdfstring{$\ast$}{*}buffer, void \texorpdfstring{$\ast$}{*}user\+\_\+ptr, size\+\_\+t \mbox{\hyperlink{icmp_8h_a5356a3645c29875208316ab4b277c1ae}{len}}, \mbox{\hyperlink{io_8h_a3df6d51462672ec9a7b6d89fedd141c7}{ttak\+\_\+io\+\_\+buffer\+\_\+mode\+\_\+t}} mode, uint64\+\_\+t now)
+\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} \mbox{\hyperlink{io_8h_a37257227b6a468f1d428d3cf15d0b6a5}{ttak\+\_\+io\+\_\+buffer\+\_\+acquire}} (\mbox{\hyperlink{io_8h_a13577555a348473d37e420b72805a261}{ttak\+\_\+io\+\_\+buffer\+\_\+t}} \texorpdfstring{$\ast$}{*}buffer, void \texorpdfstring{$\ast$}{*}user\+\_\+ptr, size\+\_\+t len, \mbox{\hyperlink{io_8h_a3df6d51462672ec9a7b6d89fedd141c7}{ttak\+\_\+io\+\_\+buffer\+\_\+mode\+\_\+t}} mode, uint64\+\_\+t now)
 \item 
 void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{io_8h_a0df4b1af2ebb99d24a6d3f2d63070e11}{ttak\+\_\+io\+\_\+buffer\+\_\+data}} (\mbox{\hyperlink{io_8h_a13577555a348473d37e420b72805a261}{ttak\+\_\+io\+\_\+buffer\+\_\+t}} \texorpdfstring{$\ast$}{*}buffer)
 \item 

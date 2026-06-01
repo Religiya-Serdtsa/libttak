@@ -118,9 +118,9 @@ $(document).ready(function(){initNavTree('structttak__net__baremetal__spec.html'
 Public Attributes</h2></td></tr>
 <tr class="memitem:a0c95e82665e5855963c4a79ce6ed7f44" id="r_a0c95e82665e5855963c4a79ce6ed7f44"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="port_8h.html#ad59ba36fb944589606779627fecde245">ttak_net_driver_ops_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__net__baremetal__spec.html#a0c95e82665e5855963c4a79ce6ed7f44">driver_ops</a></td></tr>
 <tr class="separator:a0c95e82665e5855963c4a79ce6ed7f44"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a03130c28d9bbba034b9f9881fc565847" id="r_a03130c28d9bbba034b9f9881fc565847"><td class="memItemLeft" align="right" valign="top">void *(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__net__baremetal__spec.html#a03130c28d9bbba034b9f9881fc565847">nic_map_io</a> )(uintptr_t base, size_t <a class="el" href="icmp_8h.html#a5356a3645c29875208316ab4b277c1ae">len</a>)</td></tr>
+<tr class="memitem:a03130c28d9bbba034b9f9881fc565847" id="r_a03130c28d9bbba034b9f9881fc565847"><td class="memItemLeft" align="right" valign="top">void *(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__net__baremetal__spec.html#a03130c28d9bbba034b9f9881fc565847">nic_map_io</a> )(uintptr_t base, size_t len)</td></tr>
 <tr class="separator:a03130c28d9bbba034b9f9881fc565847"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9cddb49b5f2b38eaab1e85f3d0942545" id="r_a9cddb49b5f2b38eaab1e85f3d0942545"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__net__baremetal__spec.html#a9cddb49b5f2b38eaab1e85f3d0942545">nic_unmap_io</a> )(void *addr, size_t <a class="el" href="icmp_8h.html#a5356a3645c29875208316ab4b277c1ae">len</a>)</td></tr>
+<tr class="memitem:a9cddb49b5f2b38eaab1e85f3d0942545" id="r_a9cddb49b5f2b38eaab1e85f3d0942545"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__net__baremetal__spec.html#a9cddb49b5f2b38eaab1e85f3d0942545">nic_unmap_io</a> )(void *addr, size_t len)</td></tr>
 <tr class="separator:a9cddb49b5f2b38eaab1e85f3d0942545"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa64c708cf293e2a8651b67cb009f34e5" id="r_aa64c708cf293e2a8651b67cb009f34e5"><td class="memItemLeft" align="right" valign="top">void *(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__net__baremetal__spec.html#aa64c708cf293e2a8651b67cb009f34e5">buddy_alloc</a> )(size_t bytes)</td></tr>
 <tr class="separator:aa64c708cf293e2a8651b67cb009f34e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -190,7 +190,7 @@ Public Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void *(* ttak_net_baremetal_spec::nic_map_io) (uintptr_t base, size_t <a class="el" href="icmp_8h.html#a5356a3645c29875208316ab4b277c1ae">len</a>)</td>
+          <td class="memname">void *(* ttak_net_baremetal_spec::nic_map_io) (uintptr_t base, size_t len)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -207,7 +207,7 @@ Public Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void(* ttak_net_baremetal_spec::nic_unmap_io) (void *addr, size_t <a class="el" href="icmp_8h.html#a5356a3645c29875208316ab4b277c1ae">len</a>)</td>
+          <td class="memname">void(* ttak_net_baremetal_spec::nic_unmap_io) (void *addr, size_t len)</td>
         </tr>
       </table>
 </div><div class="memdoc">

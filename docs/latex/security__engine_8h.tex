@@ -9,16 +9,14 @@ Unified cryptographic dispatch engine for Lib\+TTAK.
 {\ttfamily \#include $<$stdint.\+h$>$}\newline
 {\ttfamily \#include $<$stdalign.\+h$>$}\newline
 {\ttfamily \#include $<$ttak/io/io.\+h$>$}\newline
-Include dependency graph for security\+\_\+engine.\+h\+:
-\nopagebreak
+Include dependency graph for security\+\_\+engine.\+h\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=350pt]{security__engine_8h__incl}
 \end{center}
 \end{figure}
-This graph shows which files directly or indirectly include this file\+:
-\nopagebreak
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -69,9 +67,9 @@ enum \mbox{\hyperlink{security__engine_8h_ab9de941d814c6649fe343e2b77ec2b4e}{tta
 \begin{DoxyCompactList}\small\item\em Dispatches a cryptographic operation to the selected backend. \end{DoxyCompactList}\item 
 const \mbox{\hyperlink{security__engine_8h_a0a2faa157fed8910f71a319d2ea04f4d}{ttak\+\_\+security\+\_\+driver\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{security__engine_8h_a106f7f3363646dd4da144a19c070f515}{ttak\+\_\+security\+\_\+pick\+\_\+driver}} (\mbox{\hyperlink{security__engine_8h_a2dcd4881b6fd9e46e1c03c6de2e05b07}{ttak\+\_\+security\+\_\+op\+\_\+t}} op)
 \begin{DoxyCompactList}\small\item\em Returns the best driver for the given operation at runtime. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} \mbox{\hyperlink{security__engine_8h_a1a60e4a8d56872201c875ea93dc26beb}{ttak\+\_\+aes256\+\_\+gcm\+\_\+execute}} (\mbox{\hyperlink{security__engine_8h_ab35679fcbd68d19ad05f01ff21fe7825}{ttak\+\_\+crypto\+\_\+ctx\+\_\+t}} \texorpdfstring{$\ast$}{*}ctx, const uint8\+\_\+t \texorpdfstring{$\ast$}{*}in, uint8\+\_\+t \texorpdfstring{$\ast$}{*}out, size\+\_\+t \mbox{\hyperlink{icmp_8h_a5356a3645c29875208316ab4b277c1ae}{len}})
+\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} \mbox{\hyperlink{security__engine_8h_a1a60e4a8d56872201c875ea93dc26beb}{ttak\+\_\+aes256\+\_\+gcm\+\_\+execute}} (\mbox{\hyperlink{security__engine_8h_ab35679fcbd68d19ad05f01ff21fe7825}{ttak\+\_\+crypto\+\_\+ctx\+\_\+t}} \texorpdfstring{$\ast$}{*}ctx, const uint8\+\_\+t \texorpdfstring{$\ast$}{*}in, uint8\+\_\+t \texorpdfstring{$\ast$}{*}out, size\+\_\+t len)
 \begin{DoxyCompactList}\small\item\em Low-\/level AES-\/256-\/\+GCM encrypt/decrypt helper. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} \mbox{\hyperlink{security__engine_8h_a74e20562d152be4b5e9c90acc5129226}{ttak\+\_\+chacha20\+\_\+poly1305\+\_\+execute}} (\mbox{\hyperlink{security__engine_8h_ab35679fcbd68d19ad05f01ff21fe7825}{ttak\+\_\+crypto\+\_\+ctx\+\_\+t}} \texorpdfstring{$\ast$}{*}ctx, const uint8\+\_\+t \texorpdfstring{$\ast$}{*}in, uint8\+\_\+t \texorpdfstring{$\ast$}{*}out, size\+\_\+t \mbox{\hyperlink{icmp_8h_a5356a3645c29875208316ab4b277c1ae}{len}})
+\mbox{\hyperlink{io_8h_aae21536ea73a59f5c3f8864a321297a4}{ttak\+\_\+io\+\_\+status\+\_\+t}} \mbox{\hyperlink{security__engine_8h_a74e20562d152be4b5e9c90acc5129226}{ttak\+\_\+chacha20\+\_\+poly1305\+\_\+execute}} (\mbox{\hyperlink{security__engine_8h_ab35679fcbd68d19ad05f01ff21fe7825}{ttak\+\_\+crypto\+\_\+ctx\+\_\+t}} \texorpdfstring{$\ast$}{*}ctx, const uint8\+\_\+t \texorpdfstring{$\ast$}{*}in, uint8\+\_\+t \texorpdfstring{$\ast$}{*}out, size\+\_\+t len)
 \begin{DoxyCompactList}\small\item\em Low-\/level Cha\+Cha20-\/\+Poly1305 AEAD helper. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 

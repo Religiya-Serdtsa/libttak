@@ -57,21 +57,27 @@
 \DoxyCodeLine{\Hypertarget{icmp_8h_source_l00053}\mbox{\hyperlink{structttak__net__icmpv6__hdr_aaa6ab6ddd9484e2d1b70d196e0b78712}{00053}}\ \ \ \ \ \ \ \ \ \}\ \mbox{\hyperlink{structttak__net__icmpv6__hdr_aaa6ab6ddd9484e2d1b70d196e0b78712}{echo}};}
 \DoxyCodeLine{\Hypertarget{icmp_8h_source_l00054}\mbox{\hyperlink{structttak__net__icmpv6__hdr_aa8da48e344a9015ea9df532fb5d1a9b2}{00054}}\ \ \ \ \ \}\ \mbox{\hyperlink{structttak__net__icmpv6__hdr_aa8da48e344a9015ea9df532fb5d1a9b2}{un}};}
 \DoxyCodeLine{\Hypertarget{icmp_8h_source_l00055}\mbox{\hyperlink{icmp_8h_af9e071bb848399d102f113fb505fe41d}{00055}}\ \}\ \mbox{\hyperlink{icmp_8h_af9e071bb848399d102f113fb505fe41d}{ttak\_net\_icmpv6\_hdr\_t}};}
-\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00056}00056\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00057}00057\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00058}00058\ \textcolor{comment}{\ *\ @brief\ Calculates\ RFC\ 1071\ standard\ checksum.}}
-\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00059}00059\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00060}\mbox{\hyperlink{icmp_8h_a8c1a2783a4757d09a92df9c4894260e6}{00060}}\ \mbox{\hyperlink{icmp_8h_a8c1a2783a4757d09a92df9c4894260e6}{\_\_attribute\_\_}}((visibility(\textcolor{stringliteral}{"{}default"{}})))\ uint16\_t\ ttak\_net\_icmp\_calculate\_checksum(const\ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{icmp_8h_a9f2760a3f37301e10305d3349b5d4980}{data}},\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{icmp_8h_a5356a3645c29875208316ab4b277c1ae}{len}});}
-\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00061}00061\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00062}00062\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00063}00063\ \textcolor{comment}{\ *\ @brief\ Calculates\ ICMPv6\ checksum\ with\ pseudo-\/header.}}
-\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00064}00064\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00065}\mbox{\hyperlink{icmp_8h_a9f2760a3f37301e10305d3349b5d4980}{00065}}\ \mbox{\hyperlink{icmp_8h_a8c1a2783a4757d09a92df9c4894260e6}{\_\_attribute\_\_}}((visibility("{}default"{})))\ uint16\_t\ ttak\_net\_icmp6\_calculate\_checksum(const\ \textcolor{keywordtype}{void}\ *src,\ const\ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{icmp_8h_a9037f54b05f8331e7594be9144926217}{dst}},\ const\ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{icmp_8h_a9f2760a3f37301e10305d3349b5d4980}{data}},\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{icmp_8h_a5356a3645c29875208316ab4b277c1ae}{len}});}
-\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00066}00066\ }
-\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00067}00067\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
-\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00068}00068\ \}}
-\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00069}00069\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00070}00070\ }
-\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00071}00071\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ TTAK\_NET\_CORE\_ICMP\_H\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00057}00057\ \textcolor{preprocessor}{\#ifdef\ \_MSC\_VER}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00058}00058\ \textcolor{preprocessor}{\#define\ TTAK\_ICMP\_API}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00059}00059\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00060}\mbox{\hyperlink{icmp_8h_a55f36af091323c543dddeb5386cca82a}{00060}}\ \textcolor{preprocessor}{\#define\ TTAK\_ICMP\_API\ \_\_attribute\_\_((visibility("{}default"{})))}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00061}00061\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00062}00062\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00063}00063\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00064}00064\ \textcolor{comment}{\ *\ @brief\ Calculates\ RFC\ 1071\ standard\ checksum.}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00065}00065\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00066}\mbox{\hyperlink{icmp_8h_a4486c529d87bdd26fe75fd097fd639ce}{00066}}\ \mbox{\hyperlink{icmp_8h_a55f36af091323c543dddeb5386cca82a}{TTAK\_ICMP\_API}}\ uint16\_t\ \mbox{\hyperlink{icmp_8h_a4486c529d87bdd26fe75fd097fd639ce}{ttak\_net\_icmp\_calculate\_checksum}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *data,\ \textcolor{keywordtype}{size\_t}\ len);}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00067}00067\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00068}00068\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00069}00069\ \textcolor{comment}{\ *\ @brief\ Calculates\ ICMPv6\ checksum\ with\ pseudo-\/header.}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00070}00070\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00071}\mbox{\hyperlink{icmp_8h_adaba61961b2da5877cadda781c003af2}{00071}}\ \mbox{\hyperlink{icmp_8h_a55f36af091323c543dddeb5386cca82a}{TTAK\_ICMP\_API}}\ uint16\_t\ \mbox{\hyperlink{icmp_8h_adaba61961b2da5877cadda781c003af2}{ttak\_net\_icmp6\_calculate\_checksum}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *src,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *dst,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *data,\ \textcolor{keywordtype}{size\_t}\ len);}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00073}00073\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00074}00074\ \}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00075}00075\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00076}00076\ }
+\DoxyCodeLine{\Hypertarget{icmp_8h_source_l00077}00077\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ TTAK\_NET\_CORE\_ICMP\_H\ */}\textcolor{preprocessor}{}}
 
 \end{DoxyCode}

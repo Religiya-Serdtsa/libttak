@@ -94,8 +94,7 @@ $(document).ready(function(){initNavTree('icmp_8h.html',''); initResizable(); })
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">icmp.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
@@ -144,6 +143,8 @@ Macros</h2></td></tr>
 <tr class="separator:aa9cc205f9d19cf09b8b6b86f1479648f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7e847f14a69efff259c4afdbb9533cc6" id="r_a7e847f14a69efff259c4afdbb9533cc6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="icmp_8h.html#a7e847f14a69efff259c4afdbb9533cc6">TTAK_ICMP6_TIME_EXCEEDED</a>&#160;&#160;&#160;3</td></tr>
 <tr class="separator:a7e847f14a69efff259c4afdbb9533cc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55f36af091323c543dddeb5386cca82a" id="r_a55f36af091323c543dddeb5386cca82a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="icmp_8h.html#a55f36af091323c543dddeb5386cca82a">TTAK_ICMP_API</a>&#160;&#160;&#160;__attribute__((visibility(&quot;default&quot;)))</td></tr>
+<tr class="separator:a55f36af091323c543dddeb5386cca82a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -156,18 +157,12 @@ Typedefs</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a8c1a2783a4757d09a92df9c4894260e6" id="r_a8c1a2783a4757d09a92df9c4894260e6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="icmp_8h.html#a8c1a2783a4757d09a92df9c4894260e6">__attribute__</a> ((visibility(&quot;default&quot;))) uint16_t ttak_net_icmp_calculate_checksum(const void *<a class="el" href="icmp_8h.html#a9f2760a3f37301e10305d3349b5d4980">data</a></td></tr>
-<tr class="memdesc:a8c1a2783a4757d09a92df9c4894260e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates RFC 1071 standard checksum.  <br /></td></tr>
-<tr class="separator:a8c1a2783a4757d09a92df9c4894260e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:a5356a3645c29875208316ab4b277c1ae" id="r_a5356a3645c29875208316ab4b277c1ae"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="icmp_8h.html#a5356a3645c29875208316ab4b277c1ae">len</a></td></tr>
-<tr class="separator:a5356a3645c29875208316ab4b277c1ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9037f54b05f8331e7594be9144926217" id="r_a9037f54b05f8331e7594be9144926217"><td class="memItemLeft" align="right" valign="top">const void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="icmp_8h.html#a9037f54b05f8331e7594be9144926217">dst</a></td></tr>
-<tr class="separator:a9037f54b05f8331e7594be9144926217"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9f2760a3f37301e10305d3349b5d4980" id="r_a9f2760a3f37301e10305d3349b5d4980"><td class="memItemLeft" align="right" valign="top">const void const void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="icmp_8h.html#a9f2760a3f37301e10305d3349b5d4980">data</a></td></tr>
-<tr class="separator:a9f2760a3f37301e10305d3349b5d4980"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4486c529d87bdd26fe75fd097fd639ce" id="r_a4486c529d87bdd26fe75fd097fd639ce"><td class="memItemLeft" align="right" valign="top"><a class="el" href="icmp_8h.html#a55f36af091323c543dddeb5386cca82a">TTAK_ICMP_API</a> uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="icmp_8h.html#a4486c529d87bdd26fe75fd097fd639ce">ttak_net_icmp_calculate_checksum</a> (const void *data, size_t len)</td></tr>
+<tr class="memdesc:a4486c529d87bdd26fe75fd097fd639ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates RFC 1071 standard checksum.  <br /></td></tr>
+<tr class="separator:a4486c529d87bdd26fe75fd097fd639ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adaba61961b2da5877cadda781c003af2" id="r_adaba61961b2da5877cadda781c003af2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="icmp_8h.html#a55f36af091323c543dddeb5386cca82a">TTAK_ICMP_API</a> uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="icmp_8h.html#adaba61961b2da5877cadda781c003af2">ttak_net_icmp6_calculate_checksum</a> (const void *src, const void *dst, const void *data, size_t len)</td></tr>
+<tr class="memdesc:adaba61961b2da5877cadda781c003af2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates ICMPv6 checksum with pseudo-header.  <br /></td></tr>
+<tr class="separator:adaba61961b2da5877cadda781c003af2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Standard ICMPv4/v6 header definitions and utilities for LibTTAK. </p>
@@ -219,6 +214,22 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="icmp_8h_source.html#l00024">24</a> of file <a class="el" href="icmp_8h_source.html">icmp.h</a>.</p>
+
+</div>
+</div>
+<a id="a55f36af091323c543dddeb5386cca82a" name="a55f36af091323c543dddeb5386cca82a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a55f36af091323c543dddeb5386cca82a">&#9670;&#160;</a></span>TTAK_ICMP_API</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TTAK_ICMP_API&#160;&#160;&#160;__attribute__((visibility(&quot;default&quot;)))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="icmp_8h_source.html#l00060">60</a> of file <a class="el" href="icmp_8h_source.html">icmp.h</a>.</p>
 
 </div>
 </div>
@@ -304,73 +315,75 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a8c1a2783a4757d09a92df9c4894260e6" name="a8c1a2783a4757d09a92df9c4894260e6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8c1a2783a4757d09a92df9c4894260e6">&#9670;&#160;</a></span>__attribute__()</h2>
+<a id="adaba61961b2da5877cadda781c003af2" name="adaba61961b2da5877cadda781c003af2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adaba61961b2da5877cadda781c003af2">&#9670;&#160;</a></span>ttak_net_icmp6_calculate_checksum()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">__attribute__ </td>
+          <td class="memname"><a class="el" href="icmp_8h.html#a55f36af091323c543dddeb5386cca82a">TTAK_ICMP_API</a> uint16_t ttak_net_icmp6_calculate_checksum </td>
           <td>(</td>
-          <td class="paramtype">(visibility(&quot;default&quot;))&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
+          <td class="paramtype">const void *&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const void *&#160;</td>
+          <td class="paramname"><em>dst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const void *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates ICMPv6 checksum with pseudo-header. </p>
+
+</div>
+</div>
+<a id="a4486c529d87bdd26fe75fd097fd639ce" name="a4486c529d87bdd26fe75fd097fd639ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4486c529d87bdd26fe75fd097fd639ce">&#9670;&#160;</a></span>ttak_net_icmp_calculate_checksum()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="icmp_8h.html#a55f36af091323c543dddeb5386cca82a">TTAK_ICMP_API</a> uint16_t ttak_net_icmp_calculate_checksum </td>
+          <td>(</td>
+          <td class="paramtype">const void *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Calculates RFC 1071 standard checksum. </p>
-<p>Calculates ICMPv6 checksum with pseudo-header. </p>
-
-</div>
-</div>
-<h2 class="groupheader">Variable Documentation</h2>
-<a id="a9f2760a3f37301e10305d3349b5d4980" name="a9f2760a3f37301e10305d3349b5d4980"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9f2760a3f37301e10305d3349b5d4980">&#9670;&#160;</a></span>data</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const void const void* data</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="icmp_8h_source.html#l00065">65</a> of file <a class="el" href="icmp_8h_source.html">icmp.h</a>.</p>
-
-</div>
-</div>
-<a id="a9037f54b05f8331e7594be9144926217" name="a9037f54b05f8331e7594be9144926217"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9037f54b05f8331e7594be9144926217">&#9670;&#160;</a></span>dst</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const void* dst</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="icmp_8h_source.html#l00065">65</a> of file <a class="el" href="icmp_8h_source.html">icmp.h</a>.</p>
-
-</div>
-</div>
-<a id="a5356a3645c29875208316ab4b277c1ae" name="a5356a3645c29875208316ab4b277c1ae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5356a3645c29875208316ab4b277c1ae">&#9670;&#160;</a></span>len</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const void const void size_t len</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="icmp_8h_source.html#l00060">60</a> of file <a class="el" href="icmp_8h_source.html">icmp.h</a>.</p>
 
 </div>
 </div>

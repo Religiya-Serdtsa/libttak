@@ -7,8 +7,7 @@ Minimal SHA-\/256 hash interface.
 
 {\ttfamily \#include $<$stddef.\+h$>$}\newline
 {\ttfamily \#include $<$stdint.\+h$>$}\newline
-Include dependency graph for sha256.\+h\+:
-\nopagebreak
+Include dependency graph for sha256.\+h\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -30,7 +29,7 @@ struct \mbox{\hyperlink{structSHA256__CTX}{SHA256\+\_\+\+CTX}}
 \item 
 void \mbox{\hyperlink{sha256_8h_ade6fde6ef9ea137449d72891931c77ef}{sha256\+\_\+init}} (\mbox{\hyperlink{structSHA256__CTX}{SHA256\+\_\+\+CTX}} \texorpdfstring{$\ast$}{*}ctx)
 \begin{DoxyCompactList}\small\item\em Initialises a SHA-\/256 context with the standard IV. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{sha256_8h_ad50c7f40296b547daf5b9ebd5d7de32d}{sha256\+\_\+update}} (\mbox{\hyperlink{structSHA256__CTX}{SHA256\+\_\+\+CTX}} \texorpdfstring{$\ast$}{*}ctx, const uint8\+\_\+t \mbox{\hyperlink{icmp_8h_a9f2760a3f37301e10305d3349b5d4980}{data}}\mbox{[}$\,$\mbox{]}, size\+\_\+t \mbox{\hyperlink{icmp_8h_a5356a3645c29875208316ab4b277c1ae}{len}})
+void \mbox{\hyperlink{sha256_8h_ad50c7f40296b547daf5b9ebd5d7de32d}{sha256\+\_\+update}} (\mbox{\hyperlink{structSHA256__CTX}{SHA256\+\_\+\+CTX}} \texorpdfstring{$\ast$}{*}ctx, const uint8\+\_\+t data\mbox{[}$\,$\mbox{]}, size\+\_\+t len)
 \begin{DoxyCompactList}\small\item\em Feeds bytes into an in-\/progress SHA-\/256 computation. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{sha256_8h_a06e2c69855478e4860ba1b82e8b1fbc5}{sha256\+\_\+final}} (\mbox{\hyperlink{structSHA256__CTX}{SHA256\+\_\+\+CTX}} \texorpdfstring{$\ast$}{*}ctx, uint8\+\_\+t hash\mbox{[}$\,$\mbox{]})
 \begin{DoxyCompactList}\small\item\em Finalises the digest and writes 32 bytes to {\ttfamily hash}. \end{DoxyCompactList}\end{DoxyCompactItemize}

@@ -324,7 +324,14 @@
 \DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00320}\mbox{\hyperlink{ttak__compiler_8h_ad7643c1ada5cdb5ad3ee1a144bf9a9ed}{00320}}\ \textcolor{preprocessor}{\#define\ TTAK\_FAST\_ATOMIC\_STORE\_BOOL(ptr,\ val)\ \_\_atomic\_store\_n((ptr),\ (val),\ \_\_ATOMIC\_RELAXED)}}
 \DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00321}\mbox{\hyperlink{ttak__compiler_8h_a9b4039c7fdcd18fc5d6f0183a78052c6}{00321}}\ \textcolor{preprocessor}{\#define\ TTAK\_FAST\_ATOMIC\_XCHG\_U64(ptr,\ val)\ \_\_atomic\_exchange\_n((ptr),\ (val),\ \_\_ATOMIC\_RELAXED)}}
 \DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00322}00322\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00323}00323\ }
-\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00324}00324\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ TTAK\_COMPILER\_H\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00323}00323\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00324}00324\ \textcolor{comment}{/**\ @brief\ Variable\ cleanup\ attribute\ for\ GCC/Clang;\ no-\/op\ on\ others.\ */}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00325}00325\ \textcolor{preprocessor}{\#if\ defined(\_\_GNUC\_\_)\ ||\ defined(\_\_clang\_\_)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00326}00326\ \textcolor{preprocessor}{\#\ \ define\ TTAK\_ATTRIBUTE\_CLEANUP(func)\ \_\_attribute\_\_((cleanup(func)))}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00327}00327\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00328}\mbox{\hyperlink{ttak__compiler_8h_aa103fd0a6e458cbd4a89543905d68927}{00328}}\ \textcolor{preprocessor}{\#\ \ define\ TTAK\_ATTRIBUTE\_CLEANUP(func)}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00329}00329\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00330}00330\ }
+\DoxyCodeLine{\Hypertarget{ttak__compiler_8h_source_l00331}00331\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ TTAK\_COMPILER\_H\ */}\textcolor{preprocessor}{}}
 
 \end{DoxyCode}

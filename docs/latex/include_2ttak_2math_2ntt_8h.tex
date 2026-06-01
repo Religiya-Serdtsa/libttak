@@ -9,8 +9,7 @@ Number-\/\+Theoretic Transform (NTT) and Montgomery arithmetic.
 {\ttfamily \#include $<$stdint.\+h$>$}\newline
 {\ttfamily \#include $<$stdbool.\+h$>$}\newline
 {\ttfamily \#include $<$ttak/types/fixed.\+h$>$}\newline
-Include dependency graph for ntt.\+h\+:
-\nopagebreak
+Include dependency graph for ntt.\+h\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -55,11 +54,11 @@ uint64\+\_\+t \mbox{\hyperlink{include_2ttak_2math_2ntt_8h_ac3dac3e8b60b32bfde33
 \begin{DoxyCompactList}\small\item\em Montgomery multiplication\+: returns (lhs \texorpdfstring{$\ast$}{*} rhs \texorpdfstring{$\ast$}{*} R\texorpdfstring{$^\wedge$}{\string^}-\/1) mod p. \end{DoxyCompactList}\item 
 uint64\+\_\+t \mbox{\hyperlink{include_2ttak_2math_2ntt_8h_ae3dc9c710e3c7c90784df382a1502795}{ttak\+\_\+montgomery\+\_\+convert}} (uint64\+\_\+t value, const \mbox{\hyperlink{include_2ttak_2math_2ntt_8h_ae62e3373c925615a3883c0c6c0ad4ed2}{ttak\+\_\+ntt\+\_\+prime\+\_\+t}} \texorpdfstring{$\ast$}{*}prime)
 \begin{DoxyCompactList}\small\item\em Converts a field element into Montgomery form (multiplies by R\texorpdfstring{$^\wedge$}{\string^}2). \end{DoxyCompactList}\item 
-\+\_\+\+Bool \mbox{\hyperlink{include_2ttak_2math_2ntt_8h_a3372a84ab2ae3592b9f69d2389320880}{ttak\+\_\+ntt\+\_\+transform}} (uint64\+\_\+t \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{icmp_8h_a9f2760a3f37301e10305d3349b5d4980}{data}}, size\+\_\+t n, const \mbox{\hyperlink{include_2ttak_2math_2ntt_8h_ae62e3373c925615a3883c0c6c0ad4ed2}{ttak\+\_\+ntt\+\_\+prime\+\_\+t}} \texorpdfstring{$\ast$}{*}prime, \+\_\+\+Bool inverse)
+\+\_\+\+Bool \mbox{\hyperlink{include_2ttak_2math_2ntt_8h_a3372a84ab2ae3592b9f69d2389320880}{ttak\+\_\+ntt\+\_\+transform}} (uint64\+\_\+t \texorpdfstring{$\ast$}{*}data, size\+\_\+t n, const \mbox{\hyperlink{include_2ttak_2math_2ntt_8h_ae62e3373c925615a3883c0c6c0ad4ed2}{ttak\+\_\+ntt\+\_\+prime\+\_\+t}} \texorpdfstring{$\ast$}{*}prime, \+\_\+\+Bool inverse)
 \begin{DoxyCompactList}\small\item\em Performs a forward or inverse NTT on {\ttfamily data} in-\/place. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{include_2ttak_2math_2ntt_8h_aca4e392874373caf51b01fe0bd52a04f}{ttak\+\_\+ntt\+\_\+pointwise\+\_\+mul}} (uint64\+\_\+t \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{icmp_8h_a9037f54b05f8331e7594be9144926217}{dst}}, const uint64\+\_\+t \texorpdfstring{$\ast$}{*}lhs, const uint64\+\_\+t \texorpdfstring{$\ast$}{*}rhs, size\+\_\+t n, const \mbox{\hyperlink{include_2ttak_2math_2ntt_8h_ae62e3373c925615a3883c0c6c0ad4ed2}{ttak\+\_\+ntt\+\_\+prime\+\_\+t}} \texorpdfstring{$\ast$}{*}prime)
+void \mbox{\hyperlink{include_2ttak_2math_2ntt_8h_aca4e392874373caf51b01fe0bd52a04f}{ttak\+\_\+ntt\+\_\+pointwise\+\_\+mul}} (uint64\+\_\+t \texorpdfstring{$\ast$}{*}dst, const uint64\+\_\+t \texorpdfstring{$\ast$}{*}lhs, const uint64\+\_\+t \texorpdfstring{$\ast$}{*}rhs, size\+\_\+t n, const \mbox{\hyperlink{include_2ttak_2math_2ntt_8h_ae62e3373c925615a3883c0c6c0ad4ed2}{ttak\+\_\+ntt\+\_\+prime\+\_\+t}} \texorpdfstring{$\ast$}{*}prime)
 \begin{DoxyCompactList}\small\item\em Point-\/wise multiplication\+: dst\mbox{[}i\mbox{]} = lhs\mbox{[}i\mbox{]} \texorpdfstring{$\ast$}{*} rhs\mbox{[}i\mbox{]} mod p. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{include_2ttak_2math_2ntt_8h_a5987151d8bbc95394224bfdf2ea2b0a9}{ttak\+\_\+ntt\+\_\+pointwise\+\_\+square}} (uint64\+\_\+t \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{icmp_8h_a9037f54b05f8331e7594be9144926217}{dst}}, const uint64\+\_\+t \texorpdfstring{$\ast$}{*}src, size\+\_\+t n, const \mbox{\hyperlink{include_2ttak_2math_2ntt_8h_ae62e3373c925615a3883c0c6c0ad4ed2}{ttak\+\_\+ntt\+\_\+prime\+\_\+t}} \texorpdfstring{$\ast$}{*}prime)
+void \mbox{\hyperlink{include_2ttak_2math_2ntt_8h_a5987151d8bbc95394224bfdf2ea2b0a9}{ttak\+\_\+ntt\+\_\+pointwise\+\_\+square}} (uint64\+\_\+t \texorpdfstring{$\ast$}{*}dst, const uint64\+\_\+t \texorpdfstring{$\ast$}{*}src, size\+\_\+t n, const \mbox{\hyperlink{include_2ttak_2math_2ntt_8h_ae62e3373c925615a3883c0c6c0ad4ed2}{ttak\+\_\+ntt\+\_\+prime\+\_\+t}} \texorpdfstring{$\ast$}{*}prime)
 \begin{DoxyCompactList}\small\item\em Point-\/wise squaring\+: dst\mbox{[}i\mbox{]} = src\mbox{[}i\mbox{]}\texorpdfstring{$^\wedge$}{\string^}2 mod p. \end{DoxyCompactList}\item 
 size\+\_\+t \mbox{\hyperlink{include_2ttak_2math_2ntt_8h_a26f3bdf570043a69c628318d3ff96117}{ttak\+\_\+next\+\_\+power\+\_\+of\+\_\+two}} (size\+\_\+t value)
 \begin{DoxyCompactList}\small\item\em Returns the smallest power of two ≥ {\ttfamily value}. \end{DoxyCompactList}\item 

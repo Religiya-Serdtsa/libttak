@@ -139,7 +139,7 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a5545262c3ef21dce6c7eab22473c61a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad93816a1c214aad98415fc92fea6a9f1" id="r_ad93816a1c214aad98415fc92fea6a9f1"><td class="memItemLeft" align="right" valign="top">void *<a class="el" href="include_2stdatomic_8h.html#a94674db2fe3c7496dfdcaa9b81486e79">_Atomic</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__shared__s.html#ad93816a1c214aad98415fc92fea6a9f1">retired_ptr</a></td></tr>
 <tr class="separator:ad93816a1c214aad98415fc92fea6a9f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeeb9302b804cc0eb54209d52313b6059" id="r_aeeb9302b804cc0eb54209d52313b6059"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__shared__s.html#aeeb9302b804cc0eb54209d52313b6059">cleanup</a> )(void *<a class="el" href="icmp_8h.html#a9f2760a3f37301e10305d3349b5d4980">data</a>)</td></tr>
+<tr class="memitem:aeeb9302b804cc0eb54209d52313b6059" id="r_aeeb9302b804cc0eb54209d52313b6059"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__shared__s.html#aeeb9302b804cc0eb54209d52313b6059">cleanup</a> )(void *data)</td></tr>
 <tr class="memdesc:aeeb9302b804cc0eb54209d52313b6059"><td class="mdescLeft">&#160;</td><td class="mdescRight">Custom destructor for the shared payload.  <br /></td></tr>
 <tr class="separator:aeeb9302b804cc0eb54209d52313b6059"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8a74b0b7c836d561d50adb7c2fad0324" id="r_a8a74b0b7c836d561d50adb7c2fad0324"><td class="memItemLeft" align="right" valign="top"><a class="el" href="shared_8h.html#a9e87115c8ab89cdc85a268b523179cef">ttak_shared_result_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structttak__shared__s.html#a8a74b0b7c836d561d50adb7c2fad0324">allocate</a> )(struct <a class="el" href="structttak__shared__s.html">ttak_shared_s</a> *self, size_t <a class="el" href="structttak__shared__s.html#a651cb63b390a7507b0596d63cb108acb">size</a>, <a class="el" href="shared_8h.html#ae6eb27b055588903d427f15cc0cec6f5">ttak_shared_level_t</a> <a class="el" href="structttak__shared__s.html#ac1587dc550d76c0aa66b5634f3952227">level</a>)</td></tr>
@@ -326,7 +326,7 @@ Public Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void(* ttak_shared_s::cleanup) (void *<a class="el" href="icmp_8h.html#a9f2760a3f37301e10305d3349b5d4980">data</a>)</td>
+          <td class="memname">void(* ttak_shared_s::cleanup) (void *data)</td>
         </tr>
       </table>
 </div><div class="memdoc">

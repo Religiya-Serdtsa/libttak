@@ -196,22 +196,102 @@ Macros</h2></td></tr>
 <tr class="memitem:ac5b096c74969e7dbd5e24d44a446c015" id="r_ac5b096c74969e7dbd5e24d44a446c015"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem_8h.html#ac5b096c74969e7dbd5e24d44a446c015">SAFE_NULL</a>&#160;&#160;&#160;NULL</td></tr>
 <tr class="memdesc:ac5b096c74969e7dbd5e24d44a446c015"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sentinel for invalidated references.  <br /></td></tr>
 <tr class="separator:ac5b096c74969e7dbd5e24d44a446c015"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac5d995333f6871240af3fda323f9114f" id="r_ac5d995333f6871240af3fda323f9114f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem_8h.html#ac5d995333f6871240af3fda323f9114f">ttak_mem_alloc</a>(size,  lifetime,  now_tick)&#160;&#160;&#160;<a class="el" href="mem_8h.html#acd407700ef90ad55bcec5ae7cf8b94b7">ttak_mem_alloc_safe</a>(size, lifetime, now_tick, false, false, true, false, <a class="el" href="mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a">TTAK_MEM_DEFAULT</a>)</td></tr>
-<tr class="separator:ac5d995333f6871240af3fda323f9114f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d8a79f36fb4bd204046ea8834977297" id="r_a5d8a79f36fb4bd204046ea8834977297"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem_8h.html#a5d8a79f36fb4bd204046ea8834977297">ttak_root_alloc</a>(size,  lifetime,  now_tick)&#160;&#160;&#160;<a class="el" href="mem_8h.html#acd407700ef90ad55bcec5ae7cf8b94b7">ttak_mem_alloc_safe</a>(size, lifetime, now_tick, true, true, true, true, <a class="el" href="mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a">TTAK_MEM_DEFAULT</a>)</td></tr>
-<tr class="separator:a5d8a79f36fb4bd204046ea8834977297"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aebbfb88cdba4d11a524cae2a66972070" id="r_aebbfb88cdba4d11a524cae2a66972070"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem_8h.html#aebbfb88cdba4d11a524cae2a66972070">ttak_mem_alloc_with_flags</a>(size,  lifetime,  now_tick,  flags)&#160;&#160;&#160;<a class="el" href="mem_8h.html#acd407700ef90ad55bcec5ae7cf8b94b7">ttak_mem_alloc_safe</a>(size, lifetime, now_tick, false, false, true, false, flags)</td></tr>
-<tr class="separator:aebbfb88cdba4d11a524cae2a66972070"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f181fe8f133af55c3e2bf6e86b53c56" id="r_a7f181fe8f133af55c3e2bf6e86b53c56"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem_8h.html#a7f181fe8f133af55c3e2bf6e86b53c56">ttak_root_alloc_with_flags</a>(size,  lifetime,  now_tick,  flags)&#160;&#160;&#160;<a class="el" href="mem_8h.html#acd407700ef90ad55bcec5ae7cf8b94b7">ttak_mem_alloc_safe</a>(size, lifetime, now_tick, true, true, true, true, flags)</td></tr>
-<tr class="separator:a7f181fe8f133af55c3e2bf6e86b53c56"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a97f451049eaeaf30598a37e13069c15d" id="r_a97f451049eaeaf30598a37e13069c15d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem_8h.html#a97f451049eaeaf30598a37e13069c15d">ttak_mem_realloc</a>(ptr,  size,  lifetime,  now_tick)&#160;&#160;&#160;<a class="el" href="mem_8h.html#a3ecf5a43780a4a7f1c923b4bc3579464">ttak_mem_realloc_safe</a>(ptr, size, lifetime, now_tick, false, <a class="el" href="mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a">TTAK_MEM_DEFAULT</a>)</td></tr>
-<tr class="separator:a97f451049eaeaf30598a37e13069c15d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6deb46577a7ecf9a5c3178f438da0d5a" id="r_a6deb46577a7ecf9a5c3178f438da0d5a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem_8h.html#a6deb46577a7ecf9a5c3178f438da0d5a">ttak_mem_realloc_with_flags</a>(ptr,  size,  lifetime,  now_tick,  flags)&#160;&#160;&#160;<a class="el" href="mem_8h.html#a3ecf5a43780a4a7f1c923b4bc3579464">ttak_mem_realloc_safe</a>(ptr, size, lifetime, now_tick, false, flags)</td></tr>
-<tr class="separator:a6deb46577a7ecf9a5c3178f438da0d5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45976fd9be92932992d660f0c2d8255b" id="r_a45976fd9be92932992d660f0c2d8255b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem_8h.html#a45976fd9be92932992d660f0c2d8255b">ttak_mem_dup</a>(src,  size,  lifetime,  now_tick)&#160;&#160;&#160;<a class="el" href="mem_8h.html#a9017be27d7753e502ed5097ee61fd6c5">ttak_mem_dup_safe</a>(src, size, lifetime, now_tick, false, <a class="el" href="mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a">TTAK_MEM_DEFAULT</a>)</td></tr>
-<tr class="separator:a45976fd9be92932992d660f0c2d8255b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7c0d648c72e9fc2d35932b78f7d08f09" id="r_a7c0d648c72e9fc2d35932b78f7d08f09"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem_8h.html#a7c0d648c72e9fc2d35932b78f7d08f09">ttak_mem_dup_with_flags</a>(src,  size,  lifetime,  now_tick,  flags)&#160;&#160;&#160;<a class="el" href="mem_8h.html#a9017be27d7753e502ed5097ee61fd6c5">ttak_mem_dup_safe</a>(src, size, lifetime, now_tick, false, flags)</td></tr>
-<tr class="separator:a7c0d648c72e9fc2d35932b78f7d08f09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8b61d054082cd32ab60ad17c25d5f537" id="r_ga8b61d054082cd32ab60ad17c25d5f537"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MemScopedMacros.html#ga8b61d054082cd32ab60ad17c25d5f537">ttak_mem_alloc_scoped</a>(var,  cast,  size,  lifetime,  now_tick)</td></tr>
+<tr class="memdesc:ga8b61d054082cd32ab60ad17c25d5f537"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scoped allocation with default flags.  <br /></td></tr>
+<tr class="separator:ga8b61d054082cd32ab60ad17c25d5f537"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac25cf572bc503953d7630e5e17ff4d28" id="r_gac25cf572bc503953d7630e5e17ff4d28"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MemScopedMacros.html#gac25cf572bc503953d7630e5e17ff4d28">ttak_root_alloc_scoped</a>(var,  cast,  size,  lifetime,  now_tick)</td></tr>
+<tr class="memdesc:gac25cf572bc503953d7630e5e17ff4d28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scoped root allocation with default flags.  <br /></td></tr>
+<tr class="separator:gac25cf572bc503953d7630e5e17ff4d28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga09b6fce19fd4057870959c6038da4c3e" id="r_ga09b6fce19fd4057870959c6038da4c3e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MemScopedMacros.html#ga09b6fce19fd4057870959c6038da4c3e">ttak_mem_alloc_with_flags_scoped</a>(var,  cast,  size,  lifetime,  now_tick,  flags)</td></tr>
+<tr class="memdesc:ga09b6fce19fd4057870959c6038da4c3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scoped allocation with custom flags.  <br /></td></tr>
+<tr class="separator:ga09b6fce19fd4057870959c6038da4c3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga30d4ba528024ec26d9cb30ad8089c898" id="r_ga30d4ba528024ec26d9cb30ad8089c898"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MemScopedMacros.html#ga30d4ba528024ec26d9cb30ad8089c898">ttak_root_alloc_with_flags_scoped</a>(var,  cast,  size,  lifetime,  now_tick,  flags)</td></tr>
+<tr class="memdesc:ga30d4ba528024ec26d9cb30ad8089c898"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scoped root allocation with custom flags.  <br /></td></tr>
+<tr class="separator:ga30d4ba528024ec26d9cb30ad8089c898"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4ef4b6b3e0b2ee1777104ff1a2f55c79" id="r_ga4ef4b6b3e0b2ee1777104ff1a2f55c79"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MemScopedMacros.html#ga4ef4b6b3e0b2ee1777104ff1a2f55c79">ttak_mem_realloc_scoped</a>(var,  cast,  ptr,  size,  lifetime,  now_tick)</td></tr>
+<tr class="memdesc:ga4ef4b6b3e0b2ee1777104ff1a2f55c79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scoped reallocation with default flags.  <br /></td></tr>
+<tr class="separator:ga4ef4b6b3e0b2ee1777104ff1a2f55c79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeb24d50d34a68b601e81f7b11d33a1b3" id="r_gaeb24d50d34a68b601e81f7b11d33a1b3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MemScopedMacros.html#gaeb24d50d34a68b601e81f7b11d33a1b3">ttak_root_realloc_scoped</a>(var,  cast,  ptr,  size,  lifetime,  now_tick)</td></tr>
+<tr class="memdesc:gaeb24d50d34a68b601e81f7b11d33a1b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scoped root reallocation with default flags.  <br /></td></tr>
+<tr class="separator:gaeb24d50d34a68b601e81f7b11d33a1b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga08a1dda86e70651780333f5d954116d6" id="r_ga08a1dda86e70651780333f5d954116d6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MemScopedMacros.html#ga08a1dda86e70651780333f5d954116d6">ttak_mem_realloc_with_flags_scoped</a>(var,  cast,  ptr,  size,  lifetime,  now_tick,  flags)</td></tr>
+<tr class="memdesc:ga08a1dda86e70651780333f5d954116d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scoped reallocation with custom flags.  <br /></td></tr>
+<tr class="separator:ga08a1dda86e70651780333f5d954116d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1c088e8132a69b61a6b4edeb11299170" id="r_ga1c088e8132a69b61a6b4edeb11299170"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MemScopedMacros.html#ga1c088e8132a69b61a6b4edeb11299170">ttak_root_realloc_with_flags_scoped</a>(var,  cast,  ptr,  size,  lifetime,  now_tick,  flags)</td></tr>
+<tr class="memdesc:ga1c088e8132a69b61a6b4edeb11299170"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scoped root reallocation with custom flags.  <br /></td></tr>
+<tr class="separator:ga1c088e8132a69b61a6b4edeb11299170"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7535c4d38ee0011302f15f0647cfe27d" id="r_ga7535c4d38ee0011302f15f0647cfe27d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MemScopedMacros.html#ga7535c4d38ee0011302f15f0647cfe27d">ttak_mem_dup_scoped</a>(var,  cast,  src,  size,  lifetime,  now_tick)</td></tr>
+<tr class="memdesc:ga7535c4d38ee0011302f15f0647cfe27d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scoped duplication with default flags.  <br /></td></tr>
+<tr class="separator:ga7535c4d38ee0011302f15f0647cfe27d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa604dd705a14284053076c47d7482655" id="r_gaa604dd705a14284053076c47d7482655"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MemScopedMacros.html#gaa604dd705a14284053076c47d7482655">ttak_root_dup_scoped</a>(var,  cast,  src,  size,  lifetime,  now_tick)</td></tr>
+<tr class="memdesc:gaa604dd705a14284053076c47d7482655"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scoped root duplication with default flags.  <br /></td></tr>
+<tr class="separator:gaa604dd705a14284053076c47d7482655"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab5d0b7208d8427baa909fbda342e1e47" id="r_gab5d0b7208d8427baa909fbda342e1e47"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MemScopedMacros.html#gab5d0b7208d8427baa909fbda342e1e47">ttak_mem_dup_with_flags_scoped</a>(var,  cast,  src,  size,  lifetime,  now_tick,  flags)</td></tr>
+<tr class="memdesc:gab5d0b7208d8427baa909fbda342e1e47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scoped duplication with custom flags.  <br /></td></tr>
+<tr class="separator:gab5d0b7208d8427baa909fbda342e1e47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6644c6ef27696a81737ba16603d50c01" id="r_ga6644c6ef27696a81737ba16603d50c01"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MemScopedMacros.html#ga6644c6ef27696a81737ba16603d50c01">ttak_root_dup_with_flags_scoped</a>(var,  cast,  src,  size,  lifetime,  now_tick,  flags)</td></tr>
+<tr class="memdesc:ga6644c6ef27696a81737ba16603d50c01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scoped root duplication with custom flags.  <br /></td></tr>
+<tr class="separator:ga6644c6ef27696a81737ba16603d50c01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac5d995333f6871240af3fda323f9114f" id="r_gac5d995333f6871240af3fda323f9114f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MemConvenienceMacros.html#gac5d995333f6871240af3fda323f9114f">ttak_mem_alloc</a>(size,  lifetime,  now_tick)&#160;&#160;&#160;<a class="el" href="mem_8h.html#acd407700ef90ad55bcec5ae7cf8b94b7">ttak_mem_alloc_safe</a>(size, lifetime, now_tick, false, false, true, false, <a class="el" href="mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a">TTAK_MEM_DEFAULT</a>)</td></tr>
+<tr class="memdesc:gac5d995333f6871240af3fda323f9114f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate memory with default flags.  <br /></td></tr>
+<tr class="separator:gac5d995333f6871240af3fda323f9114f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5d8a79f36fb4bd204046ea8834977297" id="r_ga5d8a79f36fb4bd204046ea8834977297"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MemConvenienceMacros.html#ga5d8a79f36fb4bd204046ea8834977297">ttak_root_alloc</a>(size,  lifetime,  now_tick)&#160;&#160;&#160;<a class="el" href="mem_8h.html#acd407700ef90ad55bcec5ae7cf8b94b7">ttak_mem_alloc_safe</a>(size, lifetime, now_tick, true, true, true, true, <a class="el" href="mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a">TTAK_MEM_DEFAULT</a>)</td></tr>
+<tr class="memdesc:ga5d8a79f36fb4bd204046ea8834977297"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate root memory with default flags.  <br /></td></tr>
+<tr class="separator:ga5d8a79f36fb4bd204046ea8834977297"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaebbfb88cdba4d11a524cae2a66972070" id="r_gaebbfb88cdba4d11a524cae2a66972070"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MemConvenienceMacros.html#gaebbfb88cdba4d11a524cae2a66972070">ttak_mem_alloc_with_flags</a>(size,  lifetime,  now_tick,  flags)&#160;&#160;&#160;<a class="el" href="mem_8h.html#acd407700ef90ad55bcec5ae7cf8b94b7">ttak_mem_alloc_safe</a>(size, lifetime, now_tick, false, false, true, false, flags)</td></tr>
+<tr class="memdesc:gaebbfb88cdba4d11a524cae2a66972070"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate memory with custom flags.  <br /></td></tr>
+<tr class="separator:gaebbfb88cdba4d11a524cae2a66972070"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7f181fe8f133af55c3e2bf6e86b53c56" id="r_ga7f181fe8f133af55c3e2bf6e86b53c56"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MemConvenienceMacros.html#ga7f181fe8f133af55c3e2bf6e86b53c56">ttak_root_alloc_with_flags</a>(size,  lifetime,  now_tick,  flags)&#160;&#160;&#160;<a class="el" href="mem_8h.html#acd407700ef90ad55bcec5ae7cf8b94b7">ttak_mem_alloc_safe</a>(size, lifetime, now_tick, true, true, true, true, flags)</td></tr>
+<tr class="memdesc:ga7f181fe8f133af55c3e2bf6e86b53c56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate root memory with custom flags.  <br /></td></tr>
+<tr class="separator:ga7f181fe8f133af55c3e2bf6e86b53c56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga97f451049eaeaf30598a37e13069c15d" id="r_ga97f451049eaeaf30598a37e13069c15d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MemConvenienceMacros.html#ga97f451049eaeaf30598a37e13069c15d">ttak_mem_realloc</a>(ptr,  size,  lifetime,  now_tick)&#160;&#160;&#160;<a class="el" href="mem_8h.html#a3ecf5a43780a4a7f1c923b4bc3579464">ttak_mem_realloc_safe</a>(ptr, size, lifetime, now_tick, false, <a class="el" href="mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a">TTAK_MEM_DEFAULT</a>)</td></tr>
+<tr class="memdesc:ga97f451049eaeaf30598a37e13069c15d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reallocate memory with default flags.  <br /></td></tr>
+<tr class="separator:ga97f451049eaeaf30598a37e13069c15d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3cfaa1c3c47232e6a5ed7ea54356fcf9" id="r_ga3cfaa1c3c47232e6a5ed7ea54356fcf9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MemConvenienceMacros.html#ga3cfaa1c3c47232e6a5ed7ea54356fcf9">ttak_root_realloc</a>(ptr,  size,  lifetime,  now_tick)&#160;&#160;&#160;<a class="el" href="mem_8h.html#a3ecf5a43780a4a7f1c923b4bc3579464">ttak_mem_realloc_safe</a>(ptr, size, lifetime, now_tick, true, <a class="el" href="mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a">TTAK_MEM_DEFAULT</a>)</td></tr>
+<tr class="memdesc:ga3cfaa1c3c47232e6a5ed7ea54356fcf9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reallocate root memory with default flags.  <br /></td></tr>
+<tr class="separator:ga3cfaa1c3c47232e6a5ed7ea54356fcf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6deb46577a7ecf9a5c3178f438da0d5a" id="r_ga6deb46577a7ecf9a5c3178f438da0d5a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MemConvenienceMacros.html#ga6deb46577a7ecf9a5c3178f438da0d5a">ttak_mem_realloc_with_flags</a>(ptr,  size,  lifetime,  now_tick,  flags)&#160;&#160;&#160;<a class="el" href="mem_8h.html#a3ecf5a43780a4a7f1c923b4bc3579464">ttak_mem_realloc_safe</a>(ptr, size, lifetime, now_tick, false, flags)</td></tr>
+<tr class="memdesc:ga6deb46577a7ecf9a5c3178f438da0d5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reallocate memory with custom flags.  <br /></td></tr>
+<tr class="separator:ga6deb46577a7ecf9a5c3178f438da0d5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8a78434539eb9996746248ad3a1d437a" id="r_ga8a78434539eb9996746248ad3a1d437a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MemConvenienceMacros.html#ga8a78434539eb9996746248ad3a1d437a">ttak_root_realloc_with_flags</a>(ptr,  size,  lifetime,  now_tick,  flags)&#160;&#160;&#160;<a class="el" href="mem_8h.html#a3ecf5a43780a4a7f1c923b4bc3579464">ttak_mem_realloc_safe</a>(ptr, size, lifetime, now_tick, true, flags)</td></tr>
+<tr class="memdesc:ga8a78434539eb9996746248ad3a1d437a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reallocate root memory with custom flags.  <br /></td></tr>
+<tr class="separator:ga8a78434539eb9996746248ad3a1d437a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga45976fd9be92932992d660f0c2d8255b" id="r_ga45976fd9be92932992d660f0c2d8255b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MemConvenienceMacros.html#ga45976fd9be92932992d660f0c2d8255b">ttak_mem_dup</a>(src,  size,  lifetime,  now_tick)&#160;&#160;&#160;<a class="el" href="mem_8h.html#a9017be27d7753e502ed5097ee61fd6c5">ttak_mem_dup_safe</a>(src, size, lifetime, now_tick, false, <a class="el" href="mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a">TTAK_MEM_DEFAULT</a>)</td></tr>
+<tr class="memdesc:ga45976fd9be92932992d660f0c2d8255b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Duplicate memory with default flags.  <br /></td></tr>
+<tr class="separator:ga45976fd9be92932992d660f0c2d8255b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga436c9e15152c0dc28b66027804b1a8a0" id="r_ga436c9e15152c0dc28b66027804b1a8a0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MemConvenienceMacros.html#ga436c9e15152c0dc28b66027804b1a8a0">ttak_root_dup</a>(src,  size,  lifetime,  now_tick)&#160;&#160;&#160;<a class="el" href="mem_8h.html#a9017be27d7753e502ed5097ee61fd6c5">ttak_mem_dup_safe</a>(src, size, lifetime, now_tick, true, <a class="el" href="mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a">TTAK_MEM_DEFAULT</a>)</td></tr>
+<tr class="memdesc:ga436c9e15152c0dc28b66027804b1a8a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Duplicate root memory with default flags.  <br /></td></tr>
+<tr class="separator:ga436c9e15152c0dc28b66027804b1a8a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7c0d648c72e9fc2d35932b78f7d08f09" id="r_ga7c0d648c72e9fc2d35932b78f7d08f09"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MemConvenienceMacros.html#ga7c0d648c72e9fc2d35932b78f7d08f09">ttak_mem_dup_with_flags</a>(src,  size,  lifetime,  now_tick,  flags)&#160;&#160;&#160;<a class="el" href="mem_8h.html#a9017be27d7753e502ed5097ee61fd6c5">ttak_mem_dup_safe</a>(src, size, lifetime, now_tick, false, flags)</td></tr>
+<tr class="memdesc:ga7c0d648c72e9fc2d35932b78f7d08f09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Duplicate memory with custom flags.  <br /></td></tr>
+<tr class="separator:ga7c0d648c72e9fc2d35932b78f7d08f09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga17974c90727c52630f602367b95eae31" id="r_ga17974c90727c52630f602367b95eae31"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MemConvenienceMacros.html#ga17974c90727c52630f602367b95eae31">ttak_root_dup_with_flags</a>(src,  size,  lifetime,  now_tick,  flags)&#160;&#160;&#160;<a class="el" href="mem_8h.html#a9017be27d7753e502ed5097ee61fd6c5">ttak_mem_dup_safe</a>(src, size, lifetime, now_tick, true, flags)</td></tr>
+<tr class="memdesc:ga17974c90727c52630f602367b95eae31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Duplicate root memory with custom flags.  <br /></td></tr>
+<tr class="separator:ga17974c90727c52630f602367b95eae31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf8bae2e2fd8a56233d1620fa3d7d23c6" id="r_gaf8bae2e2fd8a56233d1620fa3d7d23c6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MemRawMacros.html#gaf8bae2e2fd8a56233d1620fa3d7d23c6">ttak_mem_alloc_raw</a>(size,  lifetime,  now_tick)&#160;&#160;&#160;<a class="el" href="mem_8h.html#acd407700ef90ad55bcec5ae7cf8b94b7">ttak_mem_alloc_safe</a>(size, lifetime, now_tick, false, false, true, false, <a class="el" href="mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a">TTAK_MEM_DEFAULT</a>)</td></tr>
+<tr class="separator:gaf8bae2e2fd8a56233d1620fa3d7d23c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga188db9e54f3930fe60cfaf2b933336b3" id="r_ga188db9e54f3930fe60cfaf2b933336b3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MemRawMacros.html#ga188db9e54f3930fe60cfaf2b933336b3">ttak_root_alloc_raw</a>(size,  lifetime,  now_tick)&#160;&#160;&#160;<a class="el" href="mem_8h.html#acd407700ef90ad55bcec5ae7cf8b94b7">ttak_mem_alloc_safe</a>(size, lifetime, now_tick, true, true, true, true, <a class="el" href="mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a">TTAK_MEM_DEFAULT</a>)</td></tr>
+<tr class="separator:ga188db9e54f3930fe60cfaf2b933336b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabbb2002027a0c174f18f27e55c5255af" id="r_gabbb2002027a0c174f18f27e55c5255af"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MemRawMacros.html#gabbb2002027a0c174f18f27e55c5255af">ttak_mem_alloc_with_flags_raw</a>(size,  lifetime,  now_tick,  flags)&#160;&#160;&#160;<a class="el" href="mem_8h.html#acd407700ef90ad55bcec5ae7cf8b94b7">ttak_mem_alloc_safe</a>(size, lifetime, now_tick, false, false, true, false, flags)</td></tr>
+<tr class="separator:gabbb2002027a0c174f18f27e55c5255af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadc85f04aee9a8c8d54282692653646cc" id="r_gadc85f04aee9a8c8d54282692653646cc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MemRawMacros.html#gadc85f04aee9a8c8d54282692653646cc">ttak_root_alloc_with_flags_raw</a>(size,  lifetime,  now_tick,  flags)&#160;&#160;&#160;<a class="el" href="mem_8h.html#acd407700ef90ad55bcec5ae7cf8b94b7">ttak_mem_alloc_safe</a>(size, lifetime, now_tick, true, true, true, true, flags)</td></tr>
+<tr class="separator:gadc85f04aee9a8c8d54282692653646cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6bfb5c3b8d45c23d316c931a4b19f2d5" id="r_ga6bfb5c3b8d45c23d316c931a4b19f2d5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MemRawMacros.html#ga6bfb5c3b8d45c23d316c931a4b19f2d5">ttak_mem_realloc_raw</a>(ptr,  size,  lifetime,  now_tick)&#160;&#160;&#160;<a class="el" href="mem_8h.html#a3ecf5a43780a4a7f1c923b4bc3579464">ttak_mem_realloc_safe</a>(ptr, size, lifetime, now_tick, false, <a class="el" href="mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a">TTAK_MEM_DEFAULT</a>)</td></tr>
+<tr class="separator:ga6bfb5c3b8d45c23d316c931a4b19f2d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9346f26386172b45fad2499434b38b8c" id="r_ga9346f26386172b45fad2499434b38b8c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MemRawMacros.html#ga9346f26386172b45fad2499434b38b8c">ttak_root_realloc_raw</a>(ptr,  size,  lifetime,  now_tick)&#160;&#160;&#160;<a class="el" href="mem_8h.html#a3ecf5a43780a4a7f1c923b4bc3579464">ttak_mem_realloc_safe</a>(ptr, size, lifetime, now_tick, true, <a class="el" href="mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a">TTAK_MEM_DEFAULT</a>)</td></tr>
+<tr class="separator:ga9346f26386172b45fad2499434b38b8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga16eb751df4790c5363984331a81927a3" id="r_ga16eb751df4790c5363984331a81927a3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MemRawMacros.html#ga16eb751df4790c5363984331a81927a3">ttak_mem_realloc_with_flags_raw</a>(ptr,  size,  lifetime,  now_tick,  flags)&#160;&#160;&#160;<a class="el" href="mem_8h.html#a3ecf5a43780a4a7f1c923b4bc3579464">ttak_mem_realloc_safe</a>(ptr, size, lifetime, now_tick, false, flags)</td></tr>
+<tr class="separator:ga16eb751df4790c5363984331a81927a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9b6e9a4e835fc109523bc467b540ac83" id="r_ga9b6e9a4e835fc109523bc467b540ac83"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MemRawMacros.html#ga9b6e9a4e835fc109523bc467b540ac83">ttak_root_realloc_with_flags_raw</a>(ptr,  size,  lifetime,  now_tick,  flags)&#160;&#160;&#160;<a class="el" href="mem_8h.html#a3ecf5a43780a4a7f1c923b4bc3579464">ttak_mem_realloc_safe</a>(ptr, size, lifetime, now_tick, true, flags)</td></tr>
+<tr class="separator:ga9b6e9a4e835fc109523bc467b540ac83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga084c0d278b2eb99f07547de114873797" id="r_ga084c0d278b2eb99f07547de114873797"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MemRawMacros.html#ga084c0d278b2eb99f07547de114873797">ttak_mem_dup_raw</a>(src,  size,  lifetime,  now_tick)&#160;&#160;&#160;<a class="el" href="mem_8h.html#a9017be27d7753e502ed5097ee61fd6c5">ttak_mem_dup_safe</a>(src, size, lifetime, now_tick, false, <a class="el" href="mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a">TTAK_MEM_DEFAULT</a>)</td></tr>
+<tr class="separator:ga084c0d278b2eb99f07547de114873797"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaefb1f2bc79da704349333f0cfee81608" id="r_gaefb1f2bc79da704349333f0cfee81608"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MemRawMacros.html#gaefb1f2bc79da704349333f0cfee81608">ttak_root_dup_raw</a>(src,  size,  lifetime,  now_tick)&#160;&#160;&#160;<a class="el" href="mem_8h.html#a9017be27d7753e502ed5097ee61fd6c5">ttak_mem_dup_safe</a>(src, size, lifetime, now_tick, true, <a class="el" href="mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a">TTAK_MEM_DEFAULT</a>)</td></tr>
+<tr class="separator:gaefb1f2bc79da704349333f0cfee81608"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga02f41e6a1cb5d4badec06092f9355aac" id="r_ga02f41e6a1cb5d4badec06092f9355aac"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MemRawMacros.html#ga02f41e6a1cb5d4badec06092f9355aac">ttak_mem_dup_with_flags_raw</a>(src,  size,  lifetime,  now_tick,  flags)&#160;&#160;&#160;<a class="el" href="mem_8h.html#a9017be27d7753e502ed5097ee61fd6c5">ttak_mem_dup_safe</a>(src, size, lifetime, now_tick, false, flags)</td></tr>
+<tr class="separator:ga02f41e6a1cb5d4badec06092f9355aac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7980094ec8c5180ce4bd7914acbbe7d6" id="r_ga7980094ec8c5180ce4bd7914acbbe7d6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MemRawMacros.html#ga7980094ec8c5180ce4bd7914acbbe7d6">ttak_root_dup_with_flags_raw</a>(src,  size,  lifetime,  now_tick,  flags)&#160;&#160;&#160;<a class="el" href="mem_8h.html#a9017be27d7753e502ed5097ee61fd6c5">ttak_mem_dup_safe</a>(src, size, lifetime, now_tick, true, flags)</td></tr>
+<tr class="separator:ga7980094ec8c5180ce4bd7914acbbe7d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae47a1cb6076cec70cf9ea8efc1d5f3ff" id="r_ae47a1cb6076cec70cf9ea8efc1d5f3ff"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem_8h.html#ae47a1cb6076cec70cf9ea8efc1d5f3ff">EMBEDDED</a>&#160;&#160;&#160;0</td></tr>
 <tr class="separator:ae47a1cb6076cec70cf9ea8efc1d5f3ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -344,7 +424,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mem_8h_source.html#l00313">313</a> of file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mem_8h_source.html#l00495">495</a> of file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
 
 </div>
 </div>
@@ -429,342 +509,6 @@ Functions</h2></td></tr>
 <p>"Fortress" Magic Number for header validation. </p>
 
 <p class="definition">Definition at line <a class="el" href="mem_8h_source.html#l00063">63</a> of file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
-
-</div>
-</div>
-<a id="ac5d995333f6871240af3fda323f9114f" name="ac5d995333f6871240af3fda323f9114f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac5d995333f6871240af3fda323f9114f">&#9670;&#160;</a></span>ttak_mem_alloc</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ttak_mem_alloc</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">size, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">lifetime, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">now_tick&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td>&#160;&#160;&#160;<a class="el" href="mem_8h.html#acd407700ef90ad55bcec5ae7cf8b94b7">ttak_mem_alloc_safe</a>(size, lifetime, now_tick, false, false, true, false, <a class="el" href="mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a">TTAK_MEM_DEFAULT</a>)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="mem_8h_source.html#l00303">303</a> of file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
-
-</div>
-</div>
-<a id="aebbfb88cdba4d11a524cae2a66972070" name="aebbfb88cdba4d11a524cae2a66972070"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aebbfb88cdba4d11a524cae2a66972070">&#9670;&#160;</a></span>ttak_mem_alloc_with_flags</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ttak_mem_alloc_with_flags</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">size, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">lifetime, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">now_tick, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">flags&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td>&#160;&#160;&#160;<a class="el" href="mem_8h.html#acd407700ef90ad55bcec5ae7cf8b94b7">ttak_mem_alloc_safe</a>(size, lifetime, now_tick, false, false, true, false, flags)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="mem_8h_source.html#l00305">305</a> of file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
-
-</div>
-</div>
-<a id="a45976fd9be92932992d660f0c2d8255b" name="a45976fd9be92932992d660f0c2d8255b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a45976fd9be92932992d660f0c2d8255b">&#9670;&#160;</a></span>ttak_mem_dup</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ttak_mem_dup</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">src, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">size, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">lifetime, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">now_tick&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td>&#160;&#160;&#160;<a class="el" href="mem_8h.html#a9017be27d7753e502ed5097ee61fd6c5">ttak_mem_dup_safe</a>(src, size, lifetime, now_tick, false, <a class="el" href="mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a">TTAK_MEM_DEFAULT</a>)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="mem_8h_source.html#l00309">309</a> of file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
-
-</div>
-</div>
-<a id="a7c0d648c72e9fc2d35932b78f7d08f09" name="a7c0d648c72e9fc2d35932b78f7d08f09"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7c0d648c72e9fc2d35932b78f7d08f09">&#9670;&#160;</a></span>ttak_mem_dup_with_flags</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ttak_mem_dup_with_flags</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">src, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">size, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">lifetime, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">now_tick, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">flags&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td>&#160;&#160;&#160;<a class="el" href="mem_8h.html#a9017be27d7753e502ed5097ee61fd6c5">ttak_mem_dup_safe</a>(src, size, lifetime, now_tick, false, flags)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="mem_8h_source.html#l00310">310</a> of file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
-
-</div>
-</div>
-<a id="a97f451049eaeaf30598a37e13069c15d" name="a97f451049eaeaf30598a37e13069c15d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a97f451049eaeaf30598a37e13069c15d">&#9670;&#160;</a></span>ttak_mem_realloc</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ttak_mem_realloc</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">ptr, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">size, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">lifetime, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">now_tick&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td>&#160;&#160;&#160;<a class="el" href="mem_8h.html#a3ecf5a43780a4a7f1c923b4bc3579464">ttak_mem_realloc_safe</a>(ptr, size, lifetime, now_tick, false, <a class="el" href="mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a">TTAK_MEM_DEFAULT</a>)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="mem_8h_source.html#l00307">307</a> of file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
-
-</div>
-</div>
-<a id="a6deb46577a7ecf9a5c3178f438da0d5a" name="a6deb46577a7ecf9a5c3178f438da0d5a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6deb46577a7ecf9a5c3178f438da0d5a">&#9670;&#160;</a></span>ttak_mem_realloc_with_flags</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ttak_mem_realloc_with_flags</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">ptr, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">size, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">lifetime, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">now_tick, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">flags&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td>&#160;&#160;&#160;<a class="el" href="mem_8h.html#a3ecf5a43780a4a7f1c923b4bc3579464">ttak_mem_realloc_safe</a>(ptr, size, lifetime, now_tick, false, flags)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="mem_8h_source.html#l00308">308</a> of file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
-
-</div>
-</div>
-<a id="a5d8a79f36fb4bd204046ea8834977297" name="a5d8a79f36fb4bd204046ea8834977297"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5d8a79f36fb4bd204046ea8834977297">&#9670;&#160;</a></span>ttak_root_alloc</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ttak_root_alloc</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">size, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">lifetime, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">now_tick&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td>&#160;&#160;&#160;<a class="el" href="mem_8h.html#acd407700ef90ad55bcec5ae7cf8b94b7">ttak_mem_alloc_safe</a>(size, lifetime, now_tick, true, true, true, true, <a class="el" href="mem_8h.html#a05020ce7df6068f7d7f515ee4ea9cdadab57ac5f60f1170e17ecfe853611ac80a">TTAK_MEM_DEFAULT</a>)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="mem_8h_source.html#l00304">304</a> of file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
-
-</div>
-</div>
-<a id="a7f181fe8f133af55c3e2bf6e86b53c56" name="a7f181fe8f133af55c3e2bf6e86b53c56"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7f181fe8f133af55c3e2bf6e86b53c56">&#9670;&#160;</a></span>ttak_root_alloc_with_flags</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ttak_root_alloc_with_flags</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">size, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">lifetime, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">now_tick, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">flags&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td>&#160;&#160;&#160;<a class="el" href="mem_8h.html#acd407700ef90ad55bcec5ae7cf8b94b7">ttak_mem_alloc_safe</a>(size, lifetime, now_tick, true, true, true, true, flags)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="mem_8h_source.html#l00306">306</a> of file <a class="el" href="mem_8h_source.html">mem.h</a>.</p>
 
 </div>
 </div>

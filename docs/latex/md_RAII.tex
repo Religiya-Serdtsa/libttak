@@ -118,12 +118,67 @@ If a subsystem does not need EBR, it must document why. Nothing is implicit.
 Lib\+TTAK trades the convenience of implicit destruction for {\bfseries{predictability}}. You can explain every byte’s provenance, every deferral, and every cleanup step without reading compiler output. This is RAII reimagined for C systems programming\+: not automatic, but {\bfseries{accountable}}.
 
 \DoxyHorRuler{0}
-\hypertarget{md_RAII_autotoc_md47}{}\doxysection{\texorpdfstring{Why Network, Math, and More Live Inside a Single Systems Library}{Why Network, Math, and More Live Inside a Single Systems Library}}\label{md_RAII_autotoc_md47}
-\hypertarget{md_RAII_autotoc_md48}{}\doxysubsection{\texorpdfstring{Overview}{Overview}}\label{md_RAII_autotoc_md48}
+\hypertarget{md_RAII_autotoc_md47}{}\doxysection{\texorpdfstring{Traditional Scope-\/\+Bound RAII (\+GCC/\+Clang)}{Traditional Scope-Bound RAII (GCC/Clang)}}\label{md_RAII_autotoc_md47}
+Lib\+TTAK provides scoped allocation macros backed by {\ttfamily \+\_\+\+\_\+attribute\+\_\+\+\_\+((cleanup))} on GCC and Clang. These {\ttfamily \+\_\+scoped} variants behave like traditional RAII\+: the memory is automatically freed when the variable goes out of scope.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ example(uint64\_t\ now\_tick)\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__MemScopedMacros_ga8b61d054082cd32ab60ad17c25d5f537}{ttak\_mem\_alloc\_scoped}}(ptr,\ \textcolor{keywordtype}{void}\ *,\ 1024,\ 1000,\ now\_tick);}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ ptr\ is\ automatically\ freed\ when\ it\ goes\ out\ of\ scope}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+On compilers that do not support the cleanup attribute (e.\+g., MSVC, Tiny\+CC), the {\ttfamily \+\_\+scoped} macros degrade to plain allocation without automatic cleanup, preserving portability. Library internals and code that requires explicit lifetime management should use the default macros or {\ttfamily \+\_\+raw} variants, which return a plain pointer\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ *ptr\ =\ \mbox{\hyperlink{group__MemConvenienceMacros_gac5d995333f6871240af3fda323f9114f}{ttak\_mem\_alloc}}(1024,\ 1000,\ now\_tick);\ \textcolor{comment}{//\ caller\ must\ free\ explicitly}}
+
+\end{DoxyCode}
+
+
+Available scoped macros (auto-\/free on scope exit where supported)\+:
+\begin{DoxyItemize}
+\item {\ttfamily \doxylink{group__MemScopedMacros_ga8b61d054082cd32ab60ad17c25d5f537}{ttak\+\_\+mem\+\_\+alloc\+\_\+scoped(var, cast, size, lifetime, now\+\_\+tick)}}
+\item {\ttfamily \doxylink{group__MemScopedMacros_gac25cf572bc503953d7630e5e17ff4d28}{ttak\+\_\+root\+\_\+alloc\+\_\+scoped(var, cast, size, lifetime, now\+\_\+tick)}}
+\item {\ttfamily \doxylink{group__MemScopedMacros_ga09b6fce19fd4057870959c6038da4c3e}{ttak\+\_\+mem\+\_\+alloc\+\_\+with\+\_\+flags\+\_\+scoped(var, cast, size, lifetime, now\+\_\+tick, flags)}}
+\item {\ttfamily \doxylink{group__MemScopedMacros_ga30d4ba528024ec26d9cb30ad8089c898}{ttak\+\_\+root\+\_\+alloc\+\_\+with\+\_\+flags\+\_\+scoped(var, cast, size, lifetime, now\+\_\+tick, flags)}}
+\item {\ttfamily \doxylink{group__MemScopedMacros_ga4ef4b6b3e0b2ee1777104ff1a2f55c79}{ttak\+\_\+mem\+\_\+realloc\+\_\+scoped(var, cast, ptr, size, lifetime, now\+\_\+tick)}}
+\item {\ttfamily \doxylink{group__MemScopedMacros_gaeb24d50d34a68b601e81f7b11d33a1b3}{ttak\+\_\+root\+\_\+realloc\+\_\+scoped(var, cast, ptr, size, lifetime, now\+\_\+tick)}}
+\item {\ttfamily \doxylink{group__MemScopedMacros_ga08a1dda86e70651780333f5d954116d6}{ttak\+\_\+mem\+\_\+realloc\+\_\+with\+\_\+flags\+\_\+scoped(var, cast, ptr, size, lifetime, now\+\_\+tick, flags)}}
+\item {\ttfamily \doxylink{group__MemScopedMacros_ga1c088e8132a69b61a6b4edeb11299170}{ttak\+\_\+root\+\_\+realloc\+\_\+with\+\_\+flags\+\_\+scoped(var, cast, ptr, size, lifetime, now\+\_\+tick, flags)}}
+\item {\ttfamily \doxylink{group__MemScopedMacros_ga7535c4d38ee0011302f15f0647cfe27d}{ttak\+\_\+mem\+\_\+dup\+\_\+scoped(var, cast, src, size, lifetime, now\+\_\+tick)}}
+\item {\ttfamily \doxylink{group__MemScopedMacros_gaa604dd705a14284053076c47d7482655}{ttak\+\_\+root\+\_\+dup\+\_\+scoped(var, cast, src, size, lifetime, now\+\_\+tick)}}
+\item {\ttfamily \doxylink{group__MemScopedMacros_gab5d0b7208d8427baa909fbda342e1e47}{ttak\+\_\+mem\+\_\+dup\+\_\+with\+\_\+flags\+\_\+scoped(var, cast, src, size, lifetime, now\+\_\+tick, flags)}}
+\item {\ttfamily \doxylink{group__MemScopedMacros_ga6644c6ef27696a81737ba16603d50c01}{ttak\+\_\+root\+\_\+dup\+\_\+with\+\_\+flags\+\_\+scoped(var, cast, src, size, lifetime, now\+\_\+tick, flags)}}
+\end{DoxyItemize}
+
+Raw variants (plain pointer, caller-\/driven lifetime)\+:
+\begin{DoxyItemize}
+\item {\ttfamily \doxylink{group__MemRawMacros_gaf8bae2e2fd8a56233d1620fa3d7d23c6}{ttak\+\_\+mem\+\_\+alloc\+\_\+raw(size, lifetime, now\+\_\+tick)}}
+\item {\ttfamily \doxylink{group__MemRawMacros_ga188db9e54f3930fe60cfaf2b933336b3}{ttak\+\_\+root\+\_\+alloc\+\_\+raw(size, lifetime, now\+\_\+tick)}}
+\item {\ttfamily \doxylink{group__MemRawMacros_gabbb2002027a0c174f18f27e55c5255af}{ttak\+\_\+mem\+\_\+alloc\+\_\+with\+\_\+flags\+\_\+raw(size, lifetime, now\+\_\+tick, flags)}}
+\item {\ttfamily \doxylink{group__MemRawMacros_gadc85f04aee9a8c8d54282692653646cc}{ttak\+\_\+root\+\_\+alloc\+\_\+with\+\_\+flags\+\_\+raw(size, lifetime, now\+\_\+tick, flags)}}
+\item {\ttfamily \doxylink{group__MemRawMacros_ga6bfb5c3b8d45c23d316c931a4b19f2d5}{ttak\+\_\+mem\+\_\+realloc\+\_\+raw(ptr, size, lifetime, now\+\_\+tick)}}
+\item {\ttfamily \doxylink{group__MemRawMacros_ga9346f26386172b45fad2499434b38b8c}{ttak\+\_\+root\+\_\+realloc\+\_\+raw(ptr, size, lifetime, now\+\_\+tick)}}
+\item {\ttfamily \doxylink{group__MemRawMacros_ga16eb751df4790c5363984331a81927a3}{ttak\+\_\+mem\+\_\+realloc\+\_\+with\+\_\+flags\+\_\+raw(ptr, size, lifetime, now\+\_\+tick, flags)}}
+\item {\ttfamily \doxylink{group__MemRawMacros_ga9b6e9a4e835fc109523bc467b540ac83}{ttak\+\_\+root\+\_\+realloc\+\_\+with\+\_\+flags\+\_\+raw(ptr, size, lifetime, now\+\_\+tick, flags)}}
+\item {\ttfamily \doxylink{group__MemRawMacros_ga084c0d278b2eb99f07547de114873797}{ttak\+\_\+mem\+\_\+dup\+\_\+raw(src, size, lifetime, now\+\_\+tick)}}
+\item {\ttfamily \doxylink{group__MemRawMacros_gaefb1f2bc79da704349333f0cfee81608}{ttak\+\_\+root\+\_\+dup\+\_\+raw(src, size, lifetime, now\+\_\+tick)}}
+\item {\ttfamily \doxylink{group__MemRawMacros_ga02f41e6a1cb5d4badec06092f9355aac}{ttak\+\_\+mem\+\_\+dup\+\_\+with\+\_\+flags\+\_\+raw(src, size, lifetime, now\+\_\+tick, flags)}}
+\item {\ttfamily \doxylink{group__MemRawMacros_ga7980094ec8c5180ce4bd7914acbbe7d6}{ttak\+\_\+root\+\_\+dup\+\_\+with\+\_\+flags\+\_\+raw(src, size, lifetime, now\+\_\+tick, flags)}}
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md_RAII_autotoc_md49}{}\doxysection{\texorpdfstring{Why Network, Math, and More Live Inside a Single Systems Library}{Why Network, Math, and More Live Inside a Single Systems Library}}\label{md_RAII_autotoc_md49}
+\hypertarget{md_RAII_autotoc_md50}{}\doxysubsection{\texorpdfstring{Overview}{Overview}}\label{md_RAII_autotoc_md50}
 Lib\+TTAK bundles networking, math, cryptography, I/O, scripting, tree structures, and physics utilities into one C systems library. This is not "{}batteries included"{} for convenience. It is a {\bfseries{structural decision}} to keep every subsystem under the same deterministic substrate—one allocator, one ownership model, one epoch reclamation contract, and one observability plane.
 
 \DoxyHorRuler{0}
-\hypertarget{md_RAII_autotoc_md50}{}\doxysubsection{\texorpdfstring{1. One Lifetime Model for Every Subsystem}{1. One Lifetime Model for Every Subsystem}}\label{md_RAII_autotoc_md50}
+\hypertarget{md_RAII_autotoc_md52}{}\doxysubsection{\texorpdfstring{1. One Lifetime Model for Every Subsystem}{1. One Lifetime Model for Every Subsystem}}\label{md_RAII_autotoc_md52}
 When networking packets, mathematical matrices, and cryptographic buffers all allocate through {\ttfamily ttak\+\_\+mem\+\_\+alloc\+\_\+safe} and live inside {\ttfamily ttak\+\_\+owner\+\_\+t} sandboxes, there is {\bfseries{no semantic gap}} between domains.
 
 
@@ -136,7 +191,7 @@ When networking packets, mathematical matrices, and cryptographic buffers all al
 Splitting these into separate libraries would force the caller to bridge mismatched allocators, ownership idioms, and reclamation strategies. Inside Lib\+TTAK, they share the exact same provenance rules.
 
 \DoxyHorRuler{0}
-\hypertarget{md_RAII_autotoc_md52}{}\doxysubsection{\texorpdfstring{2. Zero-\/\+Copy and Scheduling Co-\/\+Design}{2. Zero-Copy and Scheduling Co-Design}}\label{md_RAII_autotoc_md52}
+\hypertarget{md_RAII_autotoc_md54}{}\doxysubsection{\texorpdfstring{2. Zero-\/\+Copy and Scheduling Co-\/\+Design}{2. Zero-Copy and Scheduling Co-Design}}\label{md_RAII_autotoc_md54}
 Lib\+TTAK’s I/O layer ({\ttfamily ttak\+\_\+io\+\_\+zerocopy\+\_\+region\+\_\+t}) divides detachable buffers into 4 KiB segments for scatter/gather syscalls. Math accelerators ({\ttfamily ttak\+\_\+execute\+\_\+batch}) and security engines ({\ttfamily ttak\+\_\+security\+\_\+execute}) operate on the same detachable arenas.
 
 This means\+:
@@ -151,7 +206,7 @@ This means\+:
 Co-\/design is only possible when every participant speaks the same buffer and scheduling language.
 
 \DoxyHorRuler{0}
-\hypertarget{md_RAII_autotoc_md54}{}\doxysubsection{\texorpdfstring{3. Deterministic Scheduling Across Domains}{3. Deterministic Scheduling Across Domains}}\label{md_RAII_autotoc_md54}
+\hypertarget{md_RAII_autotoc_md56}{}\doxysubsection{\texorpdfstring{3. Deterministic Scheduling Across Domains}{3. Deterministic Scheduling Across Domains}}\label{md_RAII_autotoc_md56}
 Lib\+TTAK’s concurrency model is grounded in {\bfseries{orthogonal Latin square (OLS)}} principles\+: deterministic slot isolation minimizes contention. This is not limited to one subsystem.
 
 
@@ -164,7 +219,7 @@ Lib\+TTAK’s concurrency model is grounded in {\bfseries{orthogonal Latin squar
 Extracting any of these domains into an external library would fracture the scheduling semantics. Keeping them together ensures that a network router, a math kernel, and a background GC thread all obey the same deterministic isolation rules.
 
 \DoxyHorRuler{0}
-\hypertarget{md_RAII_autotoc_md56}{}\doxysubsection{\texorpdfstring{4. A Single Allocator Contract}{4. A Single Allocator Contract}}\label{md_RAII_autotoc_md56}
+\hypertarget{md_RAII_autotoc_md58}{}\doxysubsection{\texorpdfstring{4. A Single Allocator Contract}{4. A Single Allocator Contract}}\label{md_RAII_autotoc_md58}
 Lib\+TTAK enforces an {\bfseries{arena-\/first allocation rule}}\+: no subsystem may call {\ttfamily malloc} directly.
 
 \tabulinesep=1mm
@@ -187,7 +242,7 @@ Scripting runtime uses custom GC   &Big\+Script registers AST nodes into the sam
 Unifying allocation eliminates hidden fragmentation, makes RSS growth explainable, and lets pressure thresholds ({\ttfamily ttak\+\_\+mem\+\_\+configure\+\_\+gc}) govern the entire process—not just one library.
 
 \DoxyHorRuler{0}
-\hypertarget{md_RAII_autotoc_md58}{}\doxysubsection{\texorpdfstring{5. Unified Observability}{5. Unified Observability}}\label{md_RAII_autotoc_md58}
+\hypertarget{md_RAII_autotoc_md60}{}\doxysubsection{\texorpdfstring{5. Unified Observability}{5. Unified Observability}}\label{md_RAII_autotoc_md60}
 Every subsystem accepts a {\ttfamily uint64\+\_\+t now} timestamp and exposes stats/logging entry points.
 
 
@@ -200,13 +255,13 @@ Every subsystem accepts a {\ttfamily uint64\+\_\+t now} timestamp and exposes st
 If networking lived in one library, math in another, and memory in a third, the operator would need three different tracing conventions to answer a single question\+: \texorpdfstring{$\ast$}{*}"{}\+Where did this byte come from, and who touched it last?"{}\texorpdfstring{$\ast$}{*} Lib\+TTAK answers that question with one log format and one epoch counter.
 
 \DoxyHorRuler{0}
-\hypertarget{md_RAII_autotoc_md60}{}\doxysubsection{\texorpdfstring{6. Tiny\+CC Parity and ABI Stability}{6. TinyCC Parity and ABI Stability}}\label{md_RAII_autotoc_md60}
+\hypertarget{md_RAII_autotoc_md62}{}\doxysubsection{\texorpdfstring{6. Tiny\+CC Parity and ABI Stability}{6. TinyCC Parity and ABI Stability}}\label{md_RAII_autotoc_md62}
 All modules—including network, math, and security—must build under Tiny\+CC {\ttfamily -\/O0} with portable fallbacks. They share the same compiler-\/abstraction macros ({\ttfamily TTAK\+\_\+\+FORCE\+\_\+\+INLINE}, {\ttfamily TTAK\+\_\+\+UNLIKELY}, {\ttfamily TTAK\+\_\+\+ATOMIC\+\_\+\+FETCH\+\_\+\+ADD\+\_\+\+U64}) and the same header-\/layout stability guarantees ({\ttfamily TTAK\+\_\+\+MEM\+\_\+\+FORCE\+\_\+\+ACCESS\+\_\+\+BRIDGE}).
 
 Splitting the project would force each library to reinvent Tiny\+CC compatibility, atomic fallbacks, and ABI bridges. Inside Lib\+TTAK, one compatibility layer covers every domain.
 
 \DoxyHorRuler{0}
-\hypertarget{md_RAII_autotoc_md62}{}\doxysubsection{\texorpdfstring{Summary}{Summary}}\label{md_RAII_autotoc_md62}
+\hypertarget{md_RAII_autotoc_md64}{}\doxysubsection{\texorpdfstring{Summary}{Summary}}\label{md_RAII_autotoc_md64}
 \tabulinesep=1mm
 \begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
 \hline

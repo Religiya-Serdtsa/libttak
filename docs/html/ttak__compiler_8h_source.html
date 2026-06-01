@@ -424,8 +424,15 @@ $(document).ready(function(){initNavTree('ttak__compiler_8h_source.html',''); in
 <div class="line"><a id="l00320" name="l00320"></a><span class="lineno"><a class="line" href="ttak__compiler_8h.html#ad7643c1ada5cdb5ad3ee1a144bf9a9ed">  320</a></span><span class="preprocessor">#define TTAK_FAST_ATOMIC_STORE_BOOL(ptr, val) __atomic_store_n((ptr), (val), __ATOMIC_RELAXED)</span></div>
 <div class="line"><a id="l00321" name="l00321"></a><span class="lineno"><a class="line" href="ttak__compiler_8h.html#a9b4039c7fdcd18fc5d6f0183a78052c6">  321</a></span><span class="preprocessor">#define TTAK_FAST_ATOMIC_XCHG_U64(ptr, val) __atomic_exchange_n((ptr), (val), __ATOMIC_RELAXED)</span></div>
 <div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span> </div>
-<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span><span class="preprocessor">#endif </span><span class="comment">/* TTAK_COMPILER_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span><span class="comment"></span> </div>
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span><span class="comment">/** @brief Variable cleanup attribute for GCC/Clang; no-op on others. */</span></div>
+<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span><span class="preprocessor">#if defined(__GNUC__) || defined(__clang__)</span></div>
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span><span class="preprocessor">#  define TTAK_ATTRIBUTE_CLEANUP(func) __attribute__((cleanup(func)))</span></div>
+<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00328" name="l00328"></a><span class="lineno"><a class="line" href="ttak__compiler_8h.html#aa103fd0a6e458cbd4a89543905d68927">  328</a></span><span class="preprocessor">#  define TTAK_ATTRIBUTE_CLEANUP(func)</span></div>
+<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span> </div>
+<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span><span class="preprocessor">#endif </span><span class="comment">/* TTAK_COMPILER_H */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="attak__compiler_8h_html_a57c438c3efdb8824d6f208df9c25d47e"><div class="ttname"><a href="ttak__compiler_8h.html#a57c438c3efdb8824d6f208df9c25d47e">__ttak_ctzll</a></div><div class="ttdeci">static int __ttak_ctzll(unsigned long long v)</div><div class="ttdef"><b>Definition</b> <a href="ttak__compiler_8h_source.html#l00214">ttak_compiler.h:214</a></div></div>
 <div class="ttc" id="attak__compiler_8h_html_a973a1217d00a575f1d04db14c4ad3298"><div class="ttname"><a href="ttak__compiler_8h.html#a973a1217d00a575f1d04db14c4ad3298">__ttak_clzll</a></div><div class="ttdeci">static int __ttak_clzll(unsigned long long v)</div><div class="ttdef"><b>Definition</b> <a href="ttak__compiler_8h_source.html#l00220">ttak_compiler.h:220</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
