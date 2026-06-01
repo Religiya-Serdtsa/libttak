@@ -396,7 +396,11 @@ void TTAK_HOT_PATH *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, ui
 
     // --- Tier 2: VMA medium region ---
     if (!header && size > 0 && size < (2 * 1024 * 1024)) {
-        header = ttak_mem_vma_alloc_internal(size);
+        size_t vma_size = size;
+        if (strict_check_enabled) {
+            vma_size += sizeof(uint64_t);
+        }
+        header = ttak_mem_vma_alloc_internal(vma_size);
         if (header) {
             allocated_tier = TTAK_ALLOC_TIER_VMA;
         }
@@ -471,7 +475,7 @@ void TTAK_HOT_PATH *ttak_mem_alloc_safe(size_t size, uint64_t lifetime_ticks, ui
 
     size_t actual_total_alloc_size;
     if (allocated_tier == TTAK_ALLOC_TIER_POCKET) actual_total_alloc_size = get_total_block_size_for_freelist(get_pocket_size_class_idx(header_size + size));
-    else if (allocated_tier == TTAK_ALLOC_TIER_VMA) actual_total_alloc_size = (header_size + size + TTAK_VMA_ALIGNMENT - 1) & ~((size_t)TTAK_VMA_ALIGNMENT - 1);
+    else if (allocated_tier == TTAK_ALLOC_TIER_VMA) actual_total_alloc_size = (header_size + size + (strict_check_enabled ? sizeof(uint64_t) : 0) + TTAK_VMA_ALIGNMENT - 1) & ~((size_t)TTAK_VMA_ALIGNMENT - 1);
     else if (allocated_tier == TTAK_ALLOC_TIER_GENERAL) {
         size_t raw = header_size + size + (strict_check_enabled ? sizeof(uint64_t) : 0);
         actual_total_alloc_size = (raw + TTAK_VMA_ALIGNMENT - 1) & ~((size_t)TTAK_VMA_ALIGNMENT - 1);
