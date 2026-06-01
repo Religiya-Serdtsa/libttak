@@ -85,7 +85,7 @@ void test_scoped_allocator(void) {
     void *ptr = NULL;
 
     {
-        ttak_mem_alloc(sp, void *, 256, 1000, now);
+        ttak_mem_alloc_scoped(sp, void *, 256, 1000, now);
         ptr = sp;
         TEST_ASSERT(ptr != NULL, "Scoped alloc returned non-NULL");
         ttak_mem_header_t* header = (ttak_mem_header_t*)ptr - 1;
@@ -95,6 +95,35 @@ void test_scoped_allocator(void) {
 
     // After scope exit, the memory should have been automatically freed.
     TEST_ASSERT(ttak_mem_access(ptr, now) == NULL, "Scoped alloc automatically freed after scope exit");
+
+    // Test scoped realloc
+    void *realloc_ptr = NULL;
+    {
+        void *base = ttak_mem_alloc(64, 1000, now);
+        TEST_ASSERT(base != NULL, "Base alloc for realloc non-NULL");
+        ttak_mem_realloc_scoped(rp, void *, base, 256, 1000, now);
+        realloc_ptr = rp;
+        TEST_ASSERT(realloc_ptr != NULL, "Scoped realloc returned non-NULL");
+        ttak_mem_header_t* header = (ttak_mem_header_t*)realloc_ptr - 1;
+        TEST_ASSERT(header->magic == TTAK_MAGIC_NUMBER, "Scoped realloc header magic is correct");
+        TEST_ASSERT(header->freed == false, "Scoped realloc not freed inside scope");
+    }
+    TEST_ASSERT(ttak_mem_access(realloc_ptr, now) == NULL, "Scoped realloc automatically freed after scope exit");
+
+    // Test scoped dup
+    void *dup_ptr = NULL;
+    {
+        char src[32] = "scoped-dup-test";
+        ttak_mem_dup_scoped(dp, void *, src, 32, 1000, now);
+        dup_ptr = dp;
+        TEST_ASSERT(dup_ptr != NULL, "Scoped dup returned non-NULL");
+        TEST_ASSERT(memcmp(dup_ptr, src, 32) == 0, "Scoped dup data matches source");
+        ttak_mem_header_t* header = (ttak_mem_header_t*)dup_ptr - 1;
+        TEST_ASSERT(header->magic == TTAK_MAGIC_NUMBER, "Scoped dup header magic is correct");
+        TEST_ASSERT(header->freed == false, "Scoped dup not freed inside scope");
+    }
+    TEST_ASSERT(ttak_mem_access(dup_ptr, now) == NULL, "Scoped dup automatically freed after scope exit");
+
     fprintf(stderr, "Scoped allocator test passed.\n");
 }
 #else

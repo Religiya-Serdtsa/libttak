@@ -99,26 +99,34 @@ LibTTAK trades the convenience of implicit destruction for **predictability**. Y
 
 ## Traditional Scope-Bound RAII (GCC/Clang)
 
-LibTTAK's default public allocation macros are backed by `__attribute__((cleanup))` on GCC and Clang. This means the default `ttak_mem_alloc` behaves like traditional RAII: the memory is automatically freed when the variable goes out of scope.
+LibTTAK provides scoped allocation macros backed by `__attribute__((cleanup))` on GCC and Clang. These `_scoped` variants behave like traditional RAII: the memory is automatically freed when the variable goes out of scope.
 
 ```c
 void example(uint64_t now_tick) {
-    ttak_mem_alloc(ptr, void *, 1024, 1000, now_tick);
+    ttak_mem_alloc_scoped(ptr, void *, 1024, 1000, now_tick);
     // ptr is automatically freed when it goes out of scope
 }
 ```
 
-On compilers that do not support the cleanup attribute (e.g., MSVC, TinyCC), the macros degrade to plain allocation without automatic cleanup, preserving portability. Library internals and code that requires explicit lifetime management can use the `_raw` variants, which return a plain pointer just like the old macros:
+On compilers that do not support the cleanup attribute (e.g., MSVC, TinyCC), the `_scoped` macros degrade to plain allocation without automatic cleanup, preserving portability. Library internals and code that requires explicit lifetime management should use the default macros or `_raw` variants, which return a plain pointer:
 
 ```c
-void *ptr = ttak_mem_alloc_raw(1024, 1000, now_tick); // caller must free explicitly
+void *ptr = ttak_mem_alloc(1024, 1000, now_tick); // caller must free explicitly
 ```
 
 Available scoped macros (auto-free on scope exit where supported):
-- `ttak_mem_alloc(var, cast, size, lifetime, now_tick)`
-- `ttak_root_alloc(var, cast, size, lifetime, now_tick)`
-- `ttak_mem_alloc_with_flags(var, cast, size, lifetime, now_tick, flags)`
-- `ttak_root_alloc_with_flags(var, cast, size, lifetime, now_tick, flags)`
+- `ttak_mem_alloc_scoped(var, cast, size, lifetime, now_tick)`
+- `ttak_root_alloc_scoped(var, cast, size, lifetime, now_tick)`
+- `ttak_mem_alloc_with_flags_scoped(var, cast, size, lifetime, now_tick, flags)`
+- `ttak_root_alloc_with_flags_scoped(var, cast, size, lifetime, now_tick, flags)`
+- `ttak_mem_realloc_scoped(var, cast, ptr, size, lifetime, now_tick)`
+- `ttak_root_realloc_scoped(var, cast, ptr, size, lifetime, now_tick)`
+- `ttak_mem_realloc_with_flags_scoped(var, cast, ptr, size, lifetime, now_tick, flags)`
+- `ttak_root_realloc_with_flags_scoped(var, cast, ptr, size, lifetime, now_tick, flags)`
+- `ttak_mem_dup_scoped(var, cast, src, size, lifetime, now_tick)`
+- `ttak_root_dup_scoped(var, cast, src, size, lifetime, now_tick)`
+- `ttak_mem_dup_with_flags_scoped(var, cast, src, size, lifetime, now_tick, flags)`
+- `ttak_root_dup_with_flags_scoped(var, cast, src, size, lifetime, now_tick, flags)`
 
 Raw variants (plain pointer, caller-driven lifetime):
 - `ttak_mem_alloc_raw(size, lifetime, now_tick)`
@@ -126,7 +134,13 @@ Raw variants (plain pointer, caller-driven lifetime):
 - `ttak_mem_alloc_with_flags_raw(size, lifetime, now_tick, flags)`
 - `ttak_root_alloc_with_flags_raw(size, lifetime, now_tick, flags)`
 - `ttak_mem_realloc_raw(ptr, size, lifetime, now_tick)`
+- `ttak_root_realloc_raw(ptr, size, lifetime, now_tick)`
+- `ttak_mem_realloc_with_flags_raw(ptr, size, lifetime, now_tick, flags)`
+- `ttak_root_realloc_with_flags_raw(ptr, size, lifetime, now_tick, flags)`
 - `ttak_mem_dup_raw(src, size, lifetime, now_tick)`
+- `ttak_root_dup_raw(src, size, lifetime, now_tick)`
+- `ttak_mem_dup_with_flags_raw(src, size, lifetime, now_tick, flags)`
+- `ttak_root_dup_with_flags_raw(src, size, lifetime, now_tick, flags)`
 
 ---
 
