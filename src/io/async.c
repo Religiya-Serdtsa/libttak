@@ -15,9 +15,20 @@
 #include <ttak/timing/timing.h>
 
 #ifdef _WIN32
-#include <winsock2.h>
+#  include <winsock2.h>
+#  include <sys/poll.h>
+#elif (defined(EMBEDDED_BAREMETAL) && (EMBEDDED_BAREMETAL == 0))
+#  include <poll.h>
 #else
-#include <poll.h>
+struct pollfd {
+    int fd;
+    short events;
+    short revents;
+};
+
+#  define POLLIN  0x0001
+#  define POLLOUT 0x0002
+#  define POLLERR 0x0003
 #endif
 
 typedef struct ttak_io_async_ctx {

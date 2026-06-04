@@ -18,13 +18,36 @@
 #include <string.h>
 
 #ifdef _WIN32
-#include <io.h>
-#include <winsock2.h>
-#define ttak_io_close_handle _close
+#  include <io.h>
+#  include <winsock2.h>
+#  define ttak_io_close_handle _close
 #else
-#include <poll.h>
-#include <unistd.h>
-#define ttak_io_close_handle close
+#  if defined(TTAK_TARGET_ESP32) || (defined(EMBEDDED_BAREMETAL) && (EMBEDDED_BAREMETAL == 1))
+     /* Portable Stub for ESP32/Baremetal which lacks poll.h */
+     struct pollfd {
+         int fd;
+         short events;
+         short revents;
+     };
+#    define POLLIN   0x0001
+#    define POLLPRI  0x0002
+#    define POLLOUT  0x0004
+#    define POLLERR  0x0008
+#    define POLLHUP  0x0010
+#    define POLLNVAL 0x0020
+     
+     /* Inline stub to prevent link errors if poll() is not provided by RTOS */
+     static inline int poll(struct pollfd *fds, unsigned long nfds, int timeout) {
+         (void)fds; (void)nfds; (void)timeout;
+         return -1; 
+     }
+#    include <unistd.h>
+#    define ttak_io_close_handle close
+#  else
+#    include <poll.h>
+#    include <unistd.h>
+#    define ttak_io_close_handle close
+#  endif
 #endif
 
 typedef struct ttak_io_poll_task_ctx {

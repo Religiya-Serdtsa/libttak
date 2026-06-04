@@ -20,10 +20,22 @@
 #include <ws2tcpip.h>
 #pragma comment(lib, "ws2_32.lib")
 #else
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <unistd.h>
+#  if defined(EMBEDDED_BAREMETAL) && (EMBEDDED_BAREMETAL == 1)
+     /* Stub types for environments lacking sys/socket.h */
+     #include <stdint.h>
+     typedef uint16_t sa_family_t;
+     struct sockaddr {
+         sa_family_t sa_family;
+         char        sa_data[14];
+     };
+     /* These are typically provided by the stub above or common headers */
+#  else
+#    include <sys/socket.h>
+#    include <netinet/in.h>
+#    include <arpa/inet.h>
+#  endif
+#  include <unistd.h>
+#endif
 #endif
 #include <ttak/net/core/port.h>
 #include <ttak/net/core/port.h>

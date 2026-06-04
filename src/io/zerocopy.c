@@ -19,10 +19,36 @@
 #include <winsock2.h>
 typedef int ttak_io_ssize_t;
 #else
-#include <sys/socket.h>
-#include <sys/uio.h>
-#include <unistd.h>
-typedef ssize_t ttak_io_ssize_t;
+/* POSIX-like environment */
+#  if defined(EMBEDDED_BAREMETAL) && (EMBEDDED_BAREMETAL == 1)
+     /* Minimal stubs for environments lacking sys/socket.h */
+     #include <sys/types.h>
+     struct iovec {
+         void  *iov_base;
+         size_t iov_len;
+     };
+     struct msghdr {
+         void         *msg_name;
+         unsigned int  msg_namelen;
+         struct iovec *msg_iov;
+         int           msg_iovlen;
+         void         *msg_control;
+         unsigned int  msg_controllen;
+         int           msg_flags;
+     };
+     typedef int ttak_io_ssize_t;
+
+     /* Inline stub to satisfy implicit declarations */
+     static inline int recvmsg(int sockfd, struct msghdr *msg, int flags) {
+         (void)sockfd; (void)msg; (void)flags;
+         return -1;
+     }
+#else
+     #include <sys/socket.h>
+     #include <sys/uio.h>
+     typedef ssize_t ttak_io_ssize_t;
+#  endif
+#  include <unistd.h>
 #endif
 
 void ttak_io_zerocopy_region_init(ttak_io_zerocopy_region_t *region) {

@@ -20,10 +20,14 @@
 #define TTAK_ERR_FATAL_EXIT      -103
 
 typedef struct ttak_worker_wrapper {
-#ifdef _WIN32
+#if defined(_WIN32) || (defined(EMBEDDED) && (EMBEDDED == 1) && (EMBEDDED_BAREMETAL == 1))
     jmp_buf         env;
 #else
+#  ifdef sigjmp_buf
     sigjmp_buf      env;
+#  else
+    jmp_buf         env;
+#endif
 #endif
     void            *(*func)(void *);
     void            *arg;

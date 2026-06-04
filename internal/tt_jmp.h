@@ -53,6 +53,14 @@ do {                                         \
 *(tid_ptr) = (uint64_t)pthread_self(), \
 sigsetjmp(env, 0) )
 
+#  include <setjmp.h>
+#ifndef siglongjmp
+#  define siglongjmp longjmp
+#endif
+#ifndef sigsetjmp
+#  define sigsetjmp(env, savemask) setjmp(env)
+#endif
+
 #define tt_longjmp(env, magic_ptr, tid_ptr, val) \
 do {                                         \
 	if (*(magic_ptr) != TT_JMP_MAGIC) {      \

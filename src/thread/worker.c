@@ -103,7 +103,9 @@ void *ttak_worker_routine(void *arg) {
         else if (self->wrapper->nice_val > 10) p = THREAD_PRIORITY_LOWEST;
         else if (self->wrapper->nice_val > 0) p = THREAD_PRIORITY_BELOW_NORMAL;
         SetThreadPriority(GetCurrentThread(), p);
-#else
+#ifndef setpriority
+#  define setpriority(a,b,c)
+#endif
         setpriority(PRIO_PROCESS, 0, self->wrapper->nice_val);
 #endif
     }

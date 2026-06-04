@@ -3,7 +3,8 @@ CXX ?= g++
 AR ?= ar
 NVCC ?= nvcc
 HIPCC ?= hipcc
-EMBEDDED ?= 0
+EMBEDDED ?= 1
+EMBEDDED_BAREMETAL ?= 1
 USE_CUDA ?= 0
 USE_OPENCL ?= 0
 USE_ROCM ?= 0
@@ -12,9 +13,9 @@ USE_ROCM ?= 0
 # GNU (GCC/Clang) is the default on all platforms.
 TOOLCHAIN ?= gnu
 
-COMMON_WARNINGS ?= -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -D_REENTRANT
+COMMON_WARNINGS ?= -Wall -std=c17 -fpthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -D_REENTRANT
 DEPFLAGS ?= -MD -MF $(@:.o=.d)
-LDFLAGS_BASE = -pthread -lm
+LDFLAGS_BASE = -fpthread -lm
 
 # Detect which compiler family we are using.
 BUILD_PROFILE = perf
