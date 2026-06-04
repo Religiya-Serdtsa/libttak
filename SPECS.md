@@ -8,7 +8,7 @@ LibTTAK is a C systems collection purpose-built to keep AI-generated code predic
 - **Predictable:** Lifetimes are baked into headers, arenas, and epochs. Users can explain every allocation and reclamation step without reading the compiler output.
 - **Explicit:** Thread binding, owner boundaries, and context bridging require explicit handles (`ttak_owner_t`, `ttak_detachable_context_t`, etc.). Hidden TLS caches or async helpers are prohibited.
 - **Memory-for-Speed:** Throughput wins over RSS as long as fragmentation is explainable. Segmented shards, arenas, and bulk reclamation deliberately trade memory for lock-free scaling.
-- **Math-grounded:** Core synchronization follows Choi Seok-jeong's Orthogonal Latin Square (OLS) principle to minimize contention via deterministic slot isolation.
+- **Math-grounded:** Core synchronization is grounded in orthogonal Latin square (OLS) principles to minimize contention via deterministic slot isolation.
 
 ## 3. Architectural Overview
 1. **Generational Arenas:** Thread-local detachable arenas own all user allocations. Every pointer carries provenance (arena row, tier, lifetime, owner policy).

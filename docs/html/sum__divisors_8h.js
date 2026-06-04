@@ -14,7 +14,7 @@ var sum__divisors_8h =
     [ "ttak_sum_divisors_get_limits", "sum__divisors_8h.html#a0a2e6a914b8fd6513ce4796feaddf8d8", null ],
     [ "ttak_sum_divisors_set_limits", "sum__divisors_8h.html#ac29d849aa7e1bde2cfda31494116e6cb", null ],
     [ "ttak_sum_proper_divisors_big", "sum__divisors_8h.html#af34288a320578a37a35a1843a4ac9c62", null ],
-    [ "ttak_sum_proper_divisors_big_error_name", "sum__divisors_8h.html#aa410c5045704a1d689ec66131e06a188", null ],
+    [ "ttak_sum_proper_divisors_big_error_name", "sum__divisors_8h.html#ad2b7aa6679870a9c5d324fe3ede48a8b", null ],
     [ "ttak_sum_proper_divisors_big_last_error", "sum__divisors_8h.html#ac4c9df7049416035314d7e29c8cf8cd0", null ],
     [ "ttak_sum_proper_divisors_u64", "sum__divisors_8h.html#aa36d7c4d87b8d15c5bd59820d55dedc9", null ]
 ];

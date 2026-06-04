@@ -258,7 +258,7 @@ static void parse_function(parser_t *p) {
 static void parse_program(parser_t *p) { while (p->curr.type != TOK_EOF) { if (p->curr.type == TOK_FN) { parse_function(p); } else { set_err(p->err, TTAK_BIGSCRIPT_ERR_SYNTAX, "Only fns allowed at top level"); return; } if (p->err->code != TTAK_BIGSCRIPT_ERR_NONE) { return; } } }
 
 ttak_bigscript_program_t *ttak_bigscript_compile(const char *source, ttak_bigscript_loader_t *loader, const ttak_bigscript_limits_t *limits, ttak_bigscript_error_t *err, uint64_t now) {
-    (void)loader; ttak_bigscript_program_t *prog = (ttak_bigscript_program_t*)ttak_mem_alloc(sizeof(ttak_bigscript_program_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
+    (void)loader; ttak_bigscript_program_t *prog = (ttak_bigscript_program_t*)ttak_mem_alloc_raw(sizeof(ttak_bigscript_program_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!prog) { return NULL; }
     memset(prog, 0, sizeof(ttak_bigscript_program_t)); if (limits) { prog->limits = *limits; }
     lexer_t lex = { source, 1, 0, prog->limits, err }; parser_t p = { &lex, {TOK_EOF,NULL,0,0}, {TOK_EOF,NULL,0,0}, prog, err, {{{0},0,0}}, 0, 0, now };
@@ -271,12 +271,12 @@ ttak_bigscript_program_t *ttak_bigscript_compile(const char *source, ttak_bigscr
 void ttak_bigscript_program_free(ttak_bigscript_program_t *prog, uint64_t now) { if (prog) { for (uint32_t i = 0; i < prog->constants_len; i++) { variant_free(&prog->constants[i].value, now); } ttak_mem_free(prog); } }
 
 ttak_bigscript_vm_t *ttak_bigscript_vm_create(const ttak_bigscript_limits_t *limits, uint64_t now) {
-    ttak_bigscript_vm_t *vm = (ttak_bigscript_vm_t*)ttak_mem_alloc(sizeof(ttak_bigscript_vm_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
+    ttak_bigscript_vm_t *vm = (ttak_bigscript_vm_t*)ttak_mem_alloc_raw(sizeof(ttak_bigscript_vm_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!vm) { return NULL; }
     memset(vm, 0, sizeof(ttak_bigscript_vm_t)); if (limits) { vm->limits = *limits; }
-    vm->stack_cap = 1024; vm->stack = (ttak_bigscript_variant_t*)ttak_mem_alloc(sizeof(ttak_bigscript_variant_t) * 1024, __TTAK_UNSAFE_MEM_FOREVER__, now);
+    vm->stack_cap = 1024; vm->stack = (ttak_bigscript_variant_t*)ttak_mem_alloc_raw(sizeof(ttak_bigscript_variant_t) * 1024, __TTAK_UNSAFE_MEM_FOREVER__, now);
     for (uint32_t i = 0; i < 1024; i++) { variant_init(&vm->stack[i], now); }
-    vm->locals_cap = 1024; vm->locals = (ttak_bigscript_variant_t*)ttak_mem_alloc(sizeof(ttak_bigscript_variant_t) * 1024, __TTAK_UNSAFE_MEM_FOREVER__, now);
+    vm->locals_cap = 1024; vm->locals = (ttak_bigscript_variant_t*)ttak_mem_alloc_raw(sizeof(ttak_bigscript_variant_t) * 1024, __TTAK_UNSAFE_MEM_FOREVER__, now);
     for (uint32_t i = 0; i < 1024; i++) { variant_init(&vm->locals[i], now); }
     return vm;
 }

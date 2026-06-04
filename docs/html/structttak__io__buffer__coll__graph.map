@@ -1,8 +1,17 @@
 <map id="ttak_io_buffer" name="ttak_io_buffer">
-<area shape="rect" id="node1" title="Staging buffer that pins a user pointer into a detachable arena." alt="" coords="245,184,345,211"/>
-<area shape="rect" id="node2" href="$structttak__detachable__allocation.html" title="Description of the detachable allocation returned to callers." alt="" coords="306,95,482,121"/>
-<area shape="rect" id="node3" href="$structttak__detachable__cache.html" title="Per&#45;context cache for tiny detachable chunks (&lt;= 16 bytes)." alt="" coords="425,5,581,32"/>
-<area shape="rect" id="node5" href="$structttak__detachable__context.html" title="State holder for detachable memory contexts." alt="" coords="117,95,281,121"/>
-<area shape="rect" id="node4" href="$structttak__detach__status.html" title="Tracks the detach lifecycle of a detachable block." alt="" coords="239,5,373,32"/>
-<area shape="rect" id="node6" href="$structttak__detachable__generation__row.html" title="Fixed&#45;width arena row descriptor." alt="" coords="5,5,215,32"/>
+<area shape="rect" id="Node000001" title="Staging buffer that pins a user pointer into a detachable arena." alt="" coords="684,101,796,126"/>
+<area shape="rect" id="Node000002" href="$structttak__detachable__context.html" title="State holder for detachable memory contexts." alt="" coords="392,125,575,150"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="589,136,660,131,696,123,697,129,660,136,589,141"/>
+<area shape="rect" id="Node000003" href="$structttak__detach__status.html" title="Tracks the detach lifecycle of a detachable block." alt="" coords="49,21,196,46"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="210,38,298,50,335,60,362,71,371,81,375,92,378,101,386,110,409,122,406,127,382,114,373,104,370,93,366,84,358,76,333,65,297,56,209,43"/>
+<area shape="rect" id="Node000007" href="$structttak__detachable__allocation.html" title="Description of the detachable allocation returned to callers." alt="" coords="384,75,583,101"/>
+<area shape="poly" id="edge7_Node000007_Node000003" title=" " alt="" coords="210,19,284,16,323,19,361,25,419,47,464,73,462,78,416,52,359,31,322,24,284,22,210,24"/>
+<area shape="rect" id="Node000004" href="$structttak__detachable__cache.html" title="Per&#45;context cache for tiny detachable chunks (&lt;= 16 bytes)." alt="" coords="37,89,209,114"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="222,109,264,113,392,126,392,131,264,119,222,114"/>
+<area shape="poly" id="edge8_Node000007_Node000004" title=" " alt="" coords="223,95,384,89,384,94,223,100"/>
+<area shape="rect" id="Node000005" href="$structttak__detachable__generation__row.html" title="Fixed&#45;width arena row descriptor." alt="" coords="5,167,240,193"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="244,163,391,145,392,151,244,168"/>
+<area shape="rect" id="Node000006" href="$structttak__detachable__quarantine__row.html" title=" " alt="" coords="5,217,240,242"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="218,212,288,198,359,180,451,148,453,153,361,185,289,203,219,217"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="596,96,684,105,683,110,596,102"/>
 </map>

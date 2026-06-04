@@ -226,7 +226,7 @@ static char *core_seed_to_decimal(const core_seed_t *n, uint64_t now) {
     size_t len = strlen(s);
     if (i >= len) {
         ttak_mem_free(s);
-        char *z = (char *)ttak_mem_alloc(2, __TTAK_UNSAFE_MEM_FOREVER__, now);
+        char *z = (char *)ttak_mem_alloc_raw(2, __TTAK_UNSAFE_MEM_FOREVER__, now);
         if (!z) return NULL;
         z[0] = '0';
         z[1] = '\0';
@@ -234,7 +234,7 @@ static char *core_seed_to_decimal(const core_seed_t *n, uint64_t now) {
     }
 
     size_t new_len = len - i;
-    char *out = (char *)ttak_mem_alloc(new_len + 1, __TTAK_UNSAFE_MEM_FOREVER__, now);
+    char *out = (char *)ttak_mem_alloc_raw(new_len + 1, __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!out) {
         ttak_mem_free(s);
         return NULL;
@@ -511,7 +511,7 @@ static bool str_map_init(str_map_t *m, size_t cap_pow2) {
     if (cap_pow2 < 1024) cap_pow2 = 1024;
     while (cap < cap_pow2) cap <<= 1;
 
-    m->tab = (str_entry_t *)ttak_mem_alloc(cap * sizeof(str_entry_t),
+    m->tab = (str_entry_t *)ttak_mem_alloc_raw(cap * sizeof(str_entry_t),
                                            __TTAK_UNSAFE_MEM_FOREVER__,
                                            monotonic_millis());
     if (!m->tab) return false;
@@ -574,7 +574,7 @@ static str_entry_t *str_map_get_or_insert(str_map_t *m, const char *key) {
     }
 
     size_t klen = strlen(key);
-    char *dup = (char *)ttak_mem_alloc(klen + 1, __TTAK_UNSAFE_MEM_FOREVER__, monotonic_millis());
+    char *dup = (char *)ttak_mem_alloc_raw(klen + 1, __TTAK_UNSAFE_MEM_FOREVER__, monotonic_millis());
     if (!dup) return NULL;
     memcpy(dup, key, klen + 1);
 
@@ -613,7 +613,7 @@ static pthread_mutex_t g_progress_lock = PTHREAD_MUTEX_INITIALIZER;
 
 static bool progress_slots_init(size_t count, uint64_t now) {
     if (count == 0) return false;
-    g_progress_slots = (progress_slot_t *)ttak_mem_alloc(count * sizeof(progress_slot_t),
+    g_progress_slots = (progress_slot_t *)ttak_mem_alloc_raw(count * sizeof(progress_slot_t),
                                                          __TTAK_UNSAFE_MEM_FOREVER__,
                                                          now);
     if (!g_progress_slots) return false;
@@ -675,7 +675,7 @@ typedef struct seed_node_t {
 static seed_node_t *g_requeue_head = NULL;
 
 static bool requeue_push_copy(const core_seed_t *v, uint64_t now) {
-    seed_node_t *n = (seed_node_t *)ttak_mem_alloc(sizeof(seed_node_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
+    seed_node_t *n = (seed_node_t *)ttak_mem_alloc_raw(sizeof(seed_node_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!n) return false;
     core_seed_init_zero(&n->v, now);
     if (!ttak_bigint_copy(&n->v.big, &v->big, now)) {
@@ -1443,7 +1443,7 @@ static bool dispatch_one(ttak_thread_pool_t *pool, const core_seed_t *range_star
 
     pthread_mutex_unlock(&g_state_lock);
 
-    scan_task_t *task = (scan_task_t *)ttak_mem_alloc(sizeof(scan_task_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
+    scan_task_t *task = (scan_task_t *)ttak_mem_alloc_raw(sizeof(scan_task_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!task) {
         pthread_mutex_lock(&g_state_lock);
         str_entry_t *rb = str_map_lookup(&g_inflight_state, start_s);

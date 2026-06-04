@@ -126,7 +126,7 @@ ttak_net_session_t *ttak_net_session_mgr_create(ttak_net_session_mgr_t *mgr,
                                                 uint64_t now) {
     if (!mgr || !endpoint || !owner) return NULL;
 
-    ttak_net_session_t *session = ttak_mem_alloc(sizeof(*session), __TTAK_UNSAFE_MEM_FOREVER__, now);
+    ttak_net_session_t *session = ttak_mem_alloc_raw(sizeof(*session), __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!session) return NULL;
     memset(session, 0, sizeof(*session));
     session->endpoint = endpoint;

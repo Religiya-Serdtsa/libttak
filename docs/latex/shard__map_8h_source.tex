@@ -1,0 +1,124 @@
+\doxysection{shard\+\_\+map.\+h}
+\hypertarget{shard__map_8h_source}{}\label{shard__map_8h_source}\index{internal/ttak/shard\_map.h@{internal/ttak/shard\_map.h}}
+\mbox{\hyperlink{shard__map_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00001}00001\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00002}00002\ \textcolor{comment}{\ *\ @file\ shard\_map.h}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00003}00003\ \textcolor{comment}{\ *\ @brief\ Deterministic\ shard\ mapping\ utilities\ for\ the\ concurrent\ async\ runtime.}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00004}00004\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00005}00005\ \textcolor{comment}{\ *\ Implements\ a\ deterministic,\ array-\/based\ computation\ model\ for\ routing\ task}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00006}00006\ \textcolor{comment}{\ *\ hashes\ to\ shard\ indices.\ \ The\ mapping\ pipeline\ is:}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00007}00007\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00008}00008\ \textcolor{comment}{\ *\ \ \ task\_hash\ \ →\ \ (row,\ col)\ coordinates\ \ →\ \ routing\ table\ lookup\ \ →\ \ shard\ index}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00009}00009\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00010}00010\ \textcolor{comment}{\ *\ The\ routing\ table\ is\ pre-\/computed\ as\ an\ 8×8\ Latin\ square,\ guaranteeing\ that}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00011}00011\ \textcolor{comment}{\ *\ every\ shard\ appears\ exactly\ once\ in\ each\ row\ and\ each\ column.\ \ This\ provides}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00012}00012\ \textcolor{comment}{\ *\ uniform\ dispersion\ similar\ in\ spirit\ to\ Orthogonal\ Latin\ Square\ constructions,}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00013}00013\ \textcolor{comment}{\ *\ minimising\ clustering\ and\ collision\ across\ shards.}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00014}00014\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00015}00015\ \textcolor{comment}{\ *\ All\ functions\ are\ deterministic,\ pure,\ and\ side-\/effect-\/free.}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00016}00016\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00018}00018\ \textcolor{preprocessor}{\#ifndef\ TTAK\_INTERNAL\_SHARD\_MAP\_H}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00019}00019\ \textcolor{preprocessor}{\#define\ TTAK\_INTERNAL\_SHARD\_MAP\_H}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00021}00021\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00022}00022\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00023}00023\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{mols__control_8h}{ttak/mols\_control.h}}>}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00024}00024\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00025}00025\ \textcolor{comment}{/**\ Default\ shard\ count\ —\ must\ be\ a\ power\ of\ two,\ maximum\ 8.\ */}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00026}\mbox{\hyperlink{shard__map_8h_a98509cc875582955a3cfad6fa65fd49b}{00026}}\ \textcolor{preprocessor}{\#define\ TTAK\_POOL\_SHARD\_COUNT\ 8}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00027}00027\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00028}00028\ \textcolor{comment}{/**\ Log₂\ of\ TTAK\_POOL\_SHARD\_COUNT\ (used\ for\ bit\ shifts).\ */}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00029}\mbox{\hyperlink{shard__map_8h_a74b65aa421e481c48259a3834c409030}{00029}}\ \textcolor{preprocessor}{\#define\ TTAK\_POOL\_SHARD\_LOG2\ \ 3}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00030}00030\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00031}00031\ \textcolor{comment}{/**\ Mask\ to\ reduce\ a\ coordinate\ to\ [0,\ TTAK\_POOL\_SHARD\_COUNT).\ */}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00032}\mbox{\hyperlink{shard__map_8h_a602b4d16adcd7ec49d608228cd2c1fd9}{00032}}\ \textcolor{preprocessor}{\#define\ TTAK\_POOL\_SHARD\_MASK\ \ (TTAK\_POOL\_SHARD\_COUNT\ -\/\ 1)}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00033}00033\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00034}00034\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00035}00035\ \textcolor{comment}{\ *\ @brief\ 8×8\ Latin-\/square\ routing\ table.}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00036}00036\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00037}00037\ \textcolor{comment}{\ *\ shard\_route\_table[row][col]\ gives\ the\ shard\ index\ for\ a\ task\ whose}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00038}00038\ \textcolor{comment}{\ *\ hash\ coordinates\ are\ (row,\ col).\ \ Each\ value\ 0-\/7\ appears\ exactly\ once}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00039}00039\ \textcolor{comment}{\ *\ per\ row\ and\ once\ per\ column,\ ensuring\ uniform\ distribution\ and\ avoiding}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00040}00040\ \textcolor{comment}{\ *\ hot-\/shard\ clustering\ for\ structured\ hash\ inputs.}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00041}00041\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00042}00042\ \textcolor{comment}{\ *\ Construction:\ entry\ (r,\ c)\ =\ (r\ +\ c)\ \%\ 8\ \ (cyclic\ Latin\ square).}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00043}00043\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00044}\mbox{\hyperlink{shard__map_8h_af9aed54a211ccb4145390f93c2c1ec12}{00044}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ uint8\_t\ \mbox{\hyperlink{shard__map_8h_af9aed54a211ccb4145390f93c2c1ec12}{shard\_route\_table}}[\mbox{\hyperlink{shard__map_8h_a98509cc875582955a3cfad6fa65fd49b}{TTAK\_POOL\_SHARD\_COUNT}}][\mbox{\hyperlink{shard__map_8h_a98509cc875582955a3cfad6fa65fd49b}{TTAK\_POOL\_SHARD\_COUNT}}]\ =\ \{}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00045}00045\ \ \ \ \ \textcolor{comment}{/*\ col:\ 0\ \ 1\ \ 2\ \ 3\ \ 4\ \ 5\ \ 6\ \ 7\ */}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00046}00046\ \ \ \ \ \textcolor{comment}{/*\ r=0\ */}\ \{\ 0,\ 1,\ 2,\ 3,\ 4,\ 5,\ 6,\ 7\ \},}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00047}00047\ \ \ \ \ \textcolor{comment}{/*\ r=1\ */}\ \{\ 1,\ 2,\ 3,\ 4,\ 5,\ 6,\ 7,\ 0\ \},}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00048}00048\ \ \ \ \ \textcolor{comment}{/*\ r=2\ */}\ \{\ 2,\ 3,\ 4,\ 5,\ 6,\ 7,\ 0,\ 1\ \},}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00049}00049\ \ \ \ \ \textcolor{comment}{/*\ r=3\ */}\ \{\ 3,\ 4,\ 5,\ 6,\ 7,\ 0,\ 1,\ 2\ \},}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00050}00050\ \ \ \ \ \textcolor{comment}{/*\ r=4\ */}\ \{\ 4,\ 5,\ 6,\ 7,\ 0,\ 1,\ 2,\ 3\ \},}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00051}00051\ \ \ \ \ \textcolor{comment}{/*\ r=5\ */}\ \{\ 5,\ 6,\ 7,\ 0,\ 1,\ 2,\ 3,\ 4\ \},}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00052}00052\ \ \ \ \ \textcolor{comment}{/*\ r=6\ */}\ \{\ 6,\ 7,\ 0,\ 1,\ 2,\ 3,\ 4,\ 5\ \},}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00053}00053\ \ \ \ \ \textcolor{comment}{/*\ r=7\ */}\ \{\ 7,\ 0,\ 1,\ 2,\ 3,\ 4,\ 5,\ 6\ \},}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00054}00054\ \};}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00055}00055\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00056}00056\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00057}00057\ \textcolor{comment}{\ *\ @brief\ Convert\ a\ task\ hash\ into\ (row,\ col)\ shard\ coordinates.}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00058}00058\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00059}00059\ \textcolor{comment}{\ *\ Uses\ Fibonacci/multiplicative\ hashing\ with\ the\ 64-\/bit\ golden-\/ratio\ constant}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00060}00060\ \textcolor{comment}{\ *\ to\ project\ the\ hash\ into\ a\ bounded\ 2D\ coordinate\ space.\ \ The\ upper\ and\ lower}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00061}00061\ \textcolor{comment}{\ *\ halves\ of\ the\ mixed\ value\ are\ used\ independently\ to\ decorrelate\ the\ two\ axes.}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00062}00062\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00063}00063\ \textcolor{comment}{\ *\ @param\ hash\ \ Task\ hash\ value.}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00064}00064\ \textcolor{comment}{\ *\ @param\ row\ \ \ Output:\ row\ coordinate\ in\ [0,\ TTAK\_POOL\_SHARD\_COUNT).}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00065}00065\ \textcolor{comment}{\ *\ @param\ col\ \ \ Output:\ column\ coordinate\ in\ [0,\ TTAK\_POOL\_SHARD\_COUNT).}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00066}00066\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00067}\mbox{\hyperlink{shard__map_8h_af4f771db1edc0debc5a5162318d21a98}{00067}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{shard__map_8h_af4f771db1edc0debc5a5162318d21a98}{ttak\_shard\_hash\_to\_coords}}(uint64\_t\ hash,}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ *row,}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ *col)}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00070}00070\ \{}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00071}00071\ \ \ \ \ \textcolor{comment}{/*\ 64-\/bit\ golden-\/ratio\ constant\ (⌊2\string^64\ /\ φ⌋)\ for\ Fibonacci\ hashing\ */}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00072}00072\ \ \ \ \ \textcolor{keyword}{const}\ uint64\_t\ GOLDEN\ =\ UINT64\_C(0x9e3779b97f4a7c15);}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00073}00073\ \ \ \ \ uint64\_t\ mixed\ =\ hash\ *\ GOLDEN;}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00074}00074\ \ \ \ \ *row\ =\ (uint32\_t)(mixed\ >>\ 32)\ \&\ (uint32\_t)\mbox{\hyperlink{shard__map_8h_a602b4d16adcd7ec49d608228cd2c1fd9}{TTAK\_POOL\_SHARD\_MASK}};}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00075}00075\ \ \ \ \ *col\ =\ (uint32\_t)(mixed\ \&\ UINT32\_MAX)\ \&\ (uint32\_t)\mbox{\hyperlink{shard__map_8h_a602b4d16adcd7ec49d608228cd2c1fd9}{TTAK\_POOL\_SHARD\_MASK}};}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00076}00076\ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ row\_bits\ =\ *row\ \&\ (uint32\_t)\mbox{\hyperlink{mols__control_8h_ac654603a18a1cdb890a1e1f532645690}{TTAK\_MOLS\_SYMBOL\_MASK}};}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00077}00077\ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ col\_bits\ =\ *col\ \&\ (uint32\_t)\mbox{\hyperlink{mols__control_8h_ac654603a18a1cdb890a1e1f532645690}{TTAK\_MOLS\_SYMBOL\_MASK}};}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00078}00078\ \ \ \ \ \textcolor{keyword}{const}\ uint16\_t\ node\_id\ =}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00079}00079\ \ \ \ \ \ \ \ \ (uint16\_t)((row\_bits\ <<\ \mbox{\hyperlink{mols__control_8h_a3e1232cb62920b45e0e97256e166914b}{TTAK\_MOLS\_COORD\_SHIFT}})\ |\ col\_bits);}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00080}00080\ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ combined\ =}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00081}00081\ \ \ \ \ \ \ \ \ (row\_bits\ <<\ \mbox{\hyperlink{mols__control_8h_a3e1232cb62920b45e0e97256e166914b}{TTAK\_MOLS\_COORD\_SHIFT}})\ |\ col\_bits;}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00082}00082\ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ adjusted\ =\ \mbox{\hyperlink{mols__control_8h_ae070b9e05900410ed31898abf4a9a0ab}{ttak\_apply\_mols\_control}}(node\_id,\ combined);}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00083}00083\ \ \ \ \ *row\ =\ (adjusted\ >>\ \mbox{\hyperlink{mols__control_8h_a3e1232cb62920b45e0e97256e166914b}{TTAK\_MOLS\_COORD\_SHIFT}})\ \&\ (uint32\_t)\mbox{\hyperlink{shard__map_8h_a602b4d16adcd7ec49d608228cd2c1fd9}{TTAK\_POOL\_SHARD\_MASK}};}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00084}00084\ \ \ \ \ *col\ =\ adjusted\ \&\ (uint32\_t)\mbox{\hyperlink{shard__map_8h_a602b4d16adcd7ec49d608228cd2c1fd9}{TTAK\_POOL\_SHARD\_MASK}};}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00085}00085\ \}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00086}00086\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00087}00087\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00088}00088\ \textcolor{comment}{\ *\ @brief\ Map\ a\ task\ hash\ to\ a\ shard\ index\ via\ the\ 2D\ routing\ table.}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00089}00089\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00090}00090\ \textcolor{comment}{\ *\ This\ is\ the\ primary\ deterministic\ mapping\ function.\ \ Given\ any\ 64-\/bit}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00091}00091\ \textcolor{comment}{\ *\ hash\ the\ output\ is\ always\ in\ [0,\ TTAK\_POOL\_SHARD\_COUNT)\ and\ is}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00092}00092\ \textcolor{comment}{\ *\ reproducible\ across\ runs.}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00093}00093\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00094}00094\ \textcolor{comment}{\ *\ @param\ hash\ \ Task\ identifier\ hash.}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00095}00095\ \textcolor{comment}{\ *\ @return\ \ \ \ \ \ Shard\ index\ in\ [0,\ TTAK\_POOL\_SHARD\_COUNT).}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00096}00096\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00097}\mbox{\hyperlink{shard__map_8h_a8bb467e81c3843e468c99b69388204b5}{00097}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{shard__map_8h_a8bb467e81c3843e468c99b69388204b5}{ttak\_shard\_for\_hash}}(uint64\_t\ hash)}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00098}00098\ \{}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00099}00099\ \ \ \ \ uint32\_t\ row,\ col;}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00100}00100\ \ \ \ \ \mbox{\hyperlink{shard__map_8h_af4f771db1edc0debc5a5162318d21a98}{ttak\_shard\_hash\_to\_coords}}(hash,\ \&row,\ \&col);}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00101}00101\ \ \ \ \ \textcolor{keywordflow}{return}\ (\textcolor{keywordtype}{size\_t})\mbox{\hyperlink{shard__map_8h_af9aed54a211ccb4145390f93c2c1ec12}{shard\_route\_table}}[row][col];}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00102}00102\ \}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00103}00103\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00104}00104\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00105}00105\ \textcolor{comment}{\ *\ @brief\ Map\ a\ worker\ index\ to\ its\ preferred\ shard.}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00106}00106\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00107}00107\ \textcolor{comment}{\ *\ Workers\ are\ spread\ across\ shards\ using\ modular\ arithmetic\ so\ that\ the}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00108}00108\ \textcolor{comment}{\ *\ initial\ affinity\ assignment\ is\ uniform\ regardless\ of\ thread\ count.}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00109}00109\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00110}00110\ \textcolor{comment}{\ *\ @param\ worker\_idx\ \ Zero-\/based\ worker\ index.}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00111}00111\ \textcolor{comment}{\ *\ @return\ \ \ \ \ \ \ \ \ \ \ \ Preferred\ shard\ index.}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00112}00112\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00113}\mbox{\hyperlink{shard__map_8h_a883e8e3731a34abb05d8e59069257496}{00113}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{shard__map_8h_a883e8e3731a34abb05d8e59069257496}{ttak\_shard\_for\_worker}}(\textcolor{keywordtype}{size\_t}\ worker\_idx)}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00114}00114\ \{}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00115}00115\ \ \ \ \ \textcolor{keywordflow}{return}\ worker\_idx\ \&\ (size\_t)\mbox{\hyperlink{shard__map_8h_a602b4d16adcd7ec49d608228cd2c1fd9}{TTAK\_POOL\_SHARD\_MASK}};}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00116}00116\ \}}
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00117}00117\ }
+\DoxyCodeLine{\Hypertarget{shard__map_8h_source_l00118}00118\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ TTAK\_INTERNAL\_SHARD\_MAP\_H\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

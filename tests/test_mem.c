@@ -4,7 +4,7 @@
 
 void test_mem_alloc_free() {
     uint64_t now = 100;
-    void *ptr = ttak_mem_alloc(1024, 1000, now);
+    void *ptr = ttak_mem_alloc_raw(1024, 1000, now);
     ASSERT(ptr != NULL);
     
     void *accessed = ttak_mem_access(ptr, now + 500);
@@ -19,12 +19,12 @@ void test_mem_alloc_free() {
 
 void test_mem_realloc() {
     uint64_t now = 200;
-    void *ptr = ttak_mem_alloc(512, 1000, now);
+    void *ptr = ttak_mem_alloc_raw(512, 1000, now);
     ASSERT(ptr != NULL);
     
     memset(ptr, 0xAA, 512);
     
-    void *new_ptr = ttak_mem_realloc(ptr, 1024, 1000, now + 10);
+    void *new_ptr = ttak_mem_realloc_raw(ptr, 1024, 1000, now + 10);
     ASSERT(new_ptr != NULL);
     
     // Check if data was preserved

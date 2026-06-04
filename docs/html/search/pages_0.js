@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['clone_20coding_20path_3208',['Clone Coding Path',['../md_tutorials_CLONE_PATH.html',1,'']]]
+  ['algorithms_0',['Mathematical and Historical References for libttak Algorithms',['../md_REFERENCES.html',1,'']]],
+  ['and_20historical_20references_20for_20libttak_20algorithms_1',['Mathematical and Historical References for libttak Algorithms',['../md_REFERENCES.html',1,'']]]
 ];

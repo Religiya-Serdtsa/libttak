@@ -18,8 +18,7 @@
 #define TTAK_ARENA_LATIN_DIM 8U
 #define TTAK_ARENA_LATIN_MASK 63U
 
-/* Latin-square offsets scatter epochs per Gusuryak (Choi Seok-jeong, 1700) to minimize cacheline reuse. */
-/* Historical reference: Choi Seok-jeong, "Gusuryak (九數略)", 1700. */
+/* Latin-square offsets scatter epochs to minimize cacheline reuse. */
 static const uint8_t ttak_arena_latin_square_lut[TTAK_ARENA_LATIN_DIM * TTAK_ARENA_LATIN_DIM] = {
     0, 5, 2, 7, 4, 1, 6, 3,
     3, 0, 5, 2, 7, 4, 1, 6,
@@ -127,7 +126,7 @@ bool ttak_arena_generation_begin(ttak_arena_env_t *env, ttak_arena_generation_t 
 
     uint64_t now = ttak_get_tick_count();
     size_t buffer_bytes = env->config.generation_bytes;
-    void *buffer = ttak_mem_alloc_with_flags(buffer_bytes, env->config.lifetime_ticks, now, env->config.alloc_flags);
+    void *buffer = ttak_mem_alloc_with_flags_raw(buffer_bytes, env->config.lifetime_ticks, now, env->config.alloc_flags);
     if (!buffer) {
         return false;
     }

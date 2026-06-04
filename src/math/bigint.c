@@ -54,9 +54,9 @@ static _Bool ensure_capacity(ttak_bigint_t *bi, size_t required, uint64_t now) {
     limb_t *new_buf = NULL;
 
     if (bi->is_dynamic) {
-        new_buf = ttak_mem_realloc(bi->data.dyn_ptr, new_size, __TTAK_UNSAFE_MEM_FOREVER__, now);
+        new_buf = ttak_mem_realloc_raw(bi->data.dyn_ptr, new_size, __TTAK_UNSAFE_MEM_FOREVER__, now);
     } else {
-        new_buf = ttak_mem_dup(bi->data.sso_buf, bi->used * sizeof(limb_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
+        new_buf = ttak_mem_dup_raw(bi->data.sso_buf, bi->used * sizeof(limb_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
         if (new_buf) {
             /* If we duped but requested more than was in SSO, zero the rest */
             if (new_capacity > bi->used) {
@@ -632,7 +632,7 @@ _Bool ttak_bigint_mul_u64(ttak_bigint_t *dst, const ttak_bigint_t *lhs, uint64_t
     size_t needed = lhs->used + rhs_used;
     
     // Use a temporary limb buffer to handle in-place multiplication safely
-    limb_t *d = ttak_mem_alloc(needed * sizeof(limb_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
+    limb_t *d = ttak_mem_alloc_raw(needed * sizeof(limb_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!d) return false;
     memset(d, 0, needed * sizeof(limb_t));
 
@@ -806,8 +806,8 @@ static _Bool knuth_div_limbs(limb_t *q_out, limb_t *r_out,
         }
     }
 
-    limb_t *u_norm = ttak_mem_alloc((m + n + 1) * sizeof(limb_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
-    limb_t *v_norm = ttak_mem_alloc(n * sizeof(limb_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
+    limb_t *u_norm = ttak_mem_alloc_raw((m + n + 1) * sizeof(limb_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
+    limb_t *v_norm = ttak_mem_alloc_raw(n * sizeof(limb_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!u_norm || !v_norm) {
         ttak_mem_free(u_norm);
         ttak_mem_free(v_norm);
@@ -998,7 +998,7 @@ _Bool ttak_bigint_mod(ttak_bigint_t *r, const ttak_bigint_t *n, const ttak_bigin
  */
 char* ttak_bigint_to_string(const ttak_bigint_t *bi, uint64_t now) {
     if (ttak_bigint_is_zero(bi)) {
-        char *s = ttak_mem_alloc(2, __TTAK_UNSAFE_MEM_FOREVER__, now);
+        char *s = ttak_mem_alloc_raw(2, __TTAK_UNSAFE_MEM_FOREVER__, now);
         if(s) strcpy(s, "0");
         return s;
     }
@@ -1008,7 +1008,7 @@ char* ttak_bigint_to_string(const ttak_bigint_t *bi, uint64_t now) {
     size_t estimated_len = (size_t)(num_bits * 0.30103) + 2; // + sign and null
     if (bi->is_negative) estimated_len++;
 
-    char *s = ttak_mem_alloc(estimated_len, __TTAK_UNSAFE_MEM_FOREVER__, now);
+    char *s = ttak_mem_alloc_raw(estimated_len, __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!s) return NULL;
 
     char *p = s;

@@ -7,7 +7,7 @@ This directory contains performance testing utilities and stress tests for the L
 ### 1. TTL Cache Multi-threaded Benchmark
 Located in `ttl-cache-multithread-bench/`.
 - **Focus:** Lock-free shared memory throughput under heavy churn.
-- **Strategy:** Uses Choi Seok-jeong's OLS principle to achieve extreme Ops/s by trading off RSS.
+- **Strategy:** Uses orthogonal Latin square (OLS) principles to achieve extreme Ops/s by trading off RSS.
 - **Peak Result:** **29.2M Ops/s** (Lock-Free Shards).
 
 ### 2. General Benchmark Hub (`ttak_bench.c`)

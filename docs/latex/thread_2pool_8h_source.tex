@@ -6,46 +6,73 @@
 \DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00002}00002\ \textcolor{comment}{\ *\ @file\ pool.h}}
 \DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00003}00003\ \textcolor{comment}{\ *\ @brief\ Managed\ thread\ pool\ built\ on\ top\ of\ the\ async\ task\ scheduler.}}
 \DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00004}00004\ \textcolor{comment}{\ *}}
-\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00005}00005\ \textcolor{comment}{\ *\ Provides\ a\ fixed-\/size\ pool\ of\ worker\ threads\ that\ drain\ a\ shared\ task}}
-\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00006}00006\ \textcolor{comment}{\ *\ queue.\ \ Threads\ are\ created\ lazily\ and\ respect\ the\ nice\ value\ set\ at}}
-\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00007}00007\ \textcolor{comment}{\ *\ init\ time.}}
-\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00008}00008\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00009}00009\ }
-\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00010}00010\ \textcolor{preprocessor}{\#ifndef\ TTAK\_THREAD\_POOL\_H}}
-\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00011}00011\ \textcolor{preprocessor}{\#define\ TTAK\_THREAD\_POOL\_H}}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00005}00005\ \textcolor{comment}{\ *\ Provides\ a\ fixed-\/size\ pool\ of\ worker\ threads\ that\ drain\ a\ sharded\ task}}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00006}00006\ \textcolor{comment}{\ *\ queue.\ \ Tasks\ are\ routed\ to\ shards\ via\ a\ deterministic\ hash-\/to-\/coordinate}}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00007}00007\ \textcolor{comment}{\ *\ mapping\ backed\ by\ a\ Latin-\/square\ routing\ table,\ reducing\ lock\ contention}}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00008}00008\ \textcolor{comment}{\ *\ by\ confining\ queue\ operations\ to\ a\ single\ shard\ lock\ rather\ than\ a\ global}}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00009}00009\ \textcolor{comment}{\ *\ pool\ lock.\ \ Threads\ are\ created\ lazily\ and\ respect\ the\ nice\ value\ set\ at}}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00010}00010\ \textcolor{comment}{\ *\ init\ time.}}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00011}00011\ \textcolor{comment}{\ */}}
 \DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00012}00012\ }
-\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
-\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00014}00014\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
-\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00015}00015\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{task_8h}{ttak/async/task.h}}>}}
-\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00016}00016\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{worker_8h}{ttak/thread/worker.h}}>}}
-\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00017}00017\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{queue_8h}{ttak/priority/queue.h}}>}}
-\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00018}00018\ }
-\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00019}\mbox{\hyperlink{thread_2pool_8h_afedf2714ff1312529485b3643582ca0c}{00019}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__thread__pool}{ttak\_thread\_pool}}\ \mbox{\hyperlink{structttak__thread__pool}{ttak\_thread\_pool\_t}};}
-\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00020}00020\ }
-\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00021}\mbox{\hyperlink{thread_2pool_8h_a0003749eead12470661f5e9d7d4cc842}{00021}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__worker}{ttak\_worker}}\ \mbox{\hyperlink{structttak__worker}{ttak\_worker\_t}};}
-\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00022}00022\ }
-\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00023}\mbox{\hyperlink{structttak__thread__pool}{00023}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__thread__pool}{ttak\_thread\_pool}}\ \{}
-\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00024}\mbox{\hyperlink{structttak__thread__pool_a1002801580411b0d5394db3e66b854a8}{00024}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structttak__thread__pool_a1002801580411b0d5394db3e66b854a8}{num\_threads}};}
-\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00025}\mbox{\hyperlink{structttak__thread__pool_ab6f0dc625cc83c204a3ad9964fe955d3}{00025}}\ \ \ \ \ \mbox{\hyperlink{structttak__worker}{ttak\_worker\_t}}\ \ \ \ \ \ \ **\mbox{\hyperlink{structttak__thread__pool_ab6f0dc625cc83c204a3ad9964fe955d3}{workers}};}
-\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00026}\mbox{\hyperlink{structttak__thread__pool_af11bab4c4a0b8d8a6273f816152e143e}{00026}}\ \ \ \ \ \mbox{\hyperlink{struct____internal__ttak__proc__priority__queue__t}{\_\_i\_tt\_proc\_pq\_t}}\ \ \ \ \mbox{\hyperlink{structttak__thread__pool_af11bab4c4a0b8d8a6273f816152e143e}{task\_queue}};}
-\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00027}\mbox{\hyperlink{structttak__thread__pool_a7a896c31172e54ba5b8c541955ce3061}{00027}}\ \ \ \ \ pthread\_mutex\_t\ \ \ \ \ \mbox{\hyperlink{structttak__thread__pool_a7a896c31172e54ba5b8c541955ce3061}{pool\_lock}};}
-\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00028}\mbox{\hyperlink{structttak__thread__pool_aa6e30915da487a76011244421eae819b}{00028}}\ \ \ \ \ pthread\_cond\_t\ \ \ \ \ \ \mbox{\hyperlink{structttak__thread__pool_aa6e30915da487a76011244421eae819b}{task\_cond}};}
-\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00029}\mbox{\hyperlink{structttak__thread__pool_a3e5f0e7aff5c7d8d3c98f6614cafa405}{00029}}\ \ \ \ \ uint64\_t\ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structttak__thread__pool_a3e5f0e7aff5c7d8d3c98f6614cafa405}{creation\_ts}};}
-\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00030}\mbox{\hyperlink{structttak__thread__pool_ae11c409b6317364d0d6c9d68a823bdb6}{00030}}\ \ \ \ \ \_Bool\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structttak__thread__pool_ae11c409b6317364d0d6c9d68a823bdb6}{is\_shutdown}};}
-\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00031}00031\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00032}00032\ \textcolor{comment}{\ \ \ \ /**}}
-\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00033}00033\ \textcolor{comment}{\ \ \ \ \ *\ @brief\ Kills\ all\ sub-\/threads.}}
-\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00034}00034\ \textcolor{comment}{\ \ \ \ \ */}}
-\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00035}\mbox{\hyperlink{structttak__thread__pool_aae32bd8dbffd90e3da8049b02541dc61}{00035}}\ \ \ \ \ void\ (*\mbox{\hyperlink{structttak__thread__pool_aae32bd8dbffd90e3da8049b02541dc61}{force\_shutdown}})(\mbox{\hyperlink{structttak__thread__pool}{ttak\_thread\_pool\_t}}\ *pool);}
-\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00036}00036\ \};}
-\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00037}00037\ }
-\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00038}\mbox{\hyperlink{thread_2pool_8h_aa8a2cc0a68f04fd121e38fc3f080057d}{00038}}\ \mbox{\hyperlink{structttak__thread__pool}{ttak\_thread\_pool\_t}}\ *\mbox{\hyperlink{thread_2pool_8h_aa8a2cc0a68f04fd121e38fc3f080057d}{ttak\_thread\_pool\_create}}(\textcolor{keywordtype}{size\_t}\ num\_threads,\ \textcolor{keywordtype}{int}\ default\_nice,\ uint64\_t\ now);}
-\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00039}\mbox{\hyperlink{thread_2pool_8h_a9ae856596b3923eb0471ab6c88498777}{00039}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{thread_2pool_8h_a9ae856596b3923eb0471ab6c88498777}{ttak\_thread\_pool\_destroy}}(\mbox{\hyperlink{structttak__thread__pool}{ttak\_thread\_pool\_t}}\ *pool);}
-\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00040}\mbox{\hyperlink{thread_2pool_8h_afd3ec6c19878c359270fe1442300c5f3}{00040}}\ \mbox{\hyperlink{structttak__future}{ttak\_future\_t}}\ *\mbox{\hyperlink{thread_2pool_8h_afd3ec6c19878c359270fe1442300c5f3}{ttak\_thread\_pool\_submit\_task}}(\mbox{\hyperlink{structttak__thread__pool}{ttak\_thread\_pool\_t}}\ *pool,\ \textcolor{keywordtype}{void}\ *(*func)(\textcolor{keywordtype}{void}\ *),\ \textcolor{keywordtype}{void}\ *arg,\ \textcolor{keywordtype}{int}\ priority,\ uint64\_t\ now);}
-\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00041}\mbox{\hyperlink{thread_2pool_8h_a39c6f28640ef62dc5e66dfeb44ce242a}{00041}}\ \_Bool\ \mbox{\hyperlink{thread_2pool_8h_a39c6f28640ef62dc5e66dfeb44ce242a}{ttak\_thread\_pool\_schedule\_task}}(\mbox{\hyperlink{structttak__thread__pool}{ttak\_thread\_pool\_t}}\ *pool,\ \mbox{\hyperlink{task_8h_a6a4c7b4b8f087d53e7b2a92f84db216e}{ttak\_task\_t}}\ *task,\ \textcolor{keywordtype}{int}\ priority,\ uint64\_t\ now);}
-\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00042}00042\ }
-\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00043}00043\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{structttak__thread__pool}{ttak\_thread\_pool\_t}}\ *\mbox{\hyperlink{thread_2pool_8h_a5d1afca1eeeddf9e4fd83c80da10efcc}{async\_pool}};}
-\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00044}00044\ }
-\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00045}00045\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_THREAD\_POOL\_H}}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00013}00013\ \textcolor{preprocessor}{\#ifndef\ TTAK\_THREAD\_POOL\_H}}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00014}00014\ \textcolor{preprocessor}{\#define\ TTAK\_THREAD\_POOL\_H}}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00016}00016\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00017}00017\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00018}00018\ \textcolor{preprocessor}{\#include\ <stdatomic.h>}}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00019}00019\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{task_8h}{ttak/async/task.h}}>}}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00020}00020\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{worker_8h}{ttak/thread/worker.h}}>}}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00021}00021\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{queue_8h}{ttak/priority/queue.h}}>}}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00022}00022\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00023}00023\ \textcolor{comment}{/**\ Number\ of\ independent\ queue\ shards\ in\ the\ pool.\ Must\ equal\ TTAK\_POOL\_SHARD\_COUNT.\ */}}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00024}\mbox{\hyperlink{thread_2pool_8h_a789e77824badfc7948cbc10c78c44d4f}{00024}}\ \textcolor{preprocessor}{\#define\ TTAK\_THREAD\_POOL\_SHARDS\ 8}}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00026}\mbox{\hyperlink{thread_2pool_8h_afedf2714ff1312529485b3643582ca0c}{00026}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__thread__pool}{ttak\_thread\_pool}}\ \mbox{\hyperlink{structttak__thread__pool}{ttak\_thread\_pool\_t}};}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00028}\mbox{\hyperlink{thread_2pool_8h_a0003749eead12470661f5e9d7d4cc842}{00028}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__worker}{ttak\_worker}}\ \mbox{\hyperlink{structttak__worker}{ttak\_worker\_t}};}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00029}00029\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00030}00030\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00031}00031\ \textcolor{comment}{\ *\ @brief\ One\ independent\ queue\ shard\ with\ its\ own\ lock\ and\ condition\ variable.}}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00032}00032\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00033}00033\ \textcolor{comment}{\ *\ Confining\ push/pop\ operations\ to\ a\ single\ shard\ reduces\ the\ probability}}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00034}00034\ \textcolor{comment}{\ *\ that\ two\ concurrent\ enqueue/dequeue\ calls\ contend\ on\ the\ same\ mutex.}}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00035}00035\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00036}\mbox{\hyperlink{structttak__pool__shard__t}{00036}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00037}\mbox{\hyperlink{structttak__pool__shard__t_aad1eca3125b2e18eded4e45d26fd850c}{00037}}\ \ \ \ \ \mbox{\hyperlink{struct____internal__ttak__proc__priority__queue__t}{\_\_i\_tt\_proc\_pq\_t}}\ \ \mbox{\hyperlink{structttak__pool__shard__t_aad1eca3125b2e18eded4e45d26fd850c}{queue}};\ \ \textcolor{comment}{/**<\ Shard-\/local\ priority\ queue.\ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00038}\mbox{\hyperlink{structttak__pool__shard__t_af2c9a3af77ea6d608591bddbcde0acbe}{00038}}\ \ \ \ \ pthread\_mutex\_t\ \ \ \mbox{\hyperlink{structttak__pool__shard__t_af2c9a3af77ea6d608591bddbcde0acbe}{lock}};\ \ \ \textcolor{comment}{/**<\ Mutex\ protecting\ this\ shard's\ queue.\ \ */}}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00039}\mbox{\hyperlink{structttak__pool__shard__t_ace2ce21b85f1813e078513425c0914c4}{00039}}\ \ \ \ \ pthread\_cond\_t\ \ \ \ \mbox{\hyperlink{structttak__pool__shard__t_ace2ce21b85f1813e078513425c0914c4}{cond}};\ \ \ \textcolor{comment}{/**<\ Condition\ variable\ for\ this\ shard.\ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00040}00040\ \}\ \mbox{\hyperlink{structttak__pool__shard__t}{ttak\_pool\_shard\_t}};}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00042}\mbox{\hyperlink{structttak__thread__pool}{00042}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structttak__thread__pool}{ttak\_thread\_pool}}\ \{}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00043}\mbox{\hyperlink{structttak__thread__pool_a1002801580411b0d5394db3e66b854a8}{00043}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structttak__thread__pool_a1002801580411b0d5394db3e66b854a8}{num\_threads}};}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00044}\mbox{\hyperlink{structttak__thread__pool_ab6f0dc625cc83c204a3ad9964fe955d3}{00044}}\ \ \ \ \ \mbox{\hyperlink{structttak__worker}{ttak\_worker\_t}}\ \ \ \ \ \ \ **\mbox{\hyperlink{structttak__thread__pool_ab6f0dc625cc83c204a3ad9964fe955d3}{workers}};}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00045}00045\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00046}00046\ \textcolor{comment}{\ \ \ \ /**\ Sharded\ queues\ —\ tasks\ are\ routed\ here\ via\ the\ deterministic\ mapping.\ */}}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00047}\mbox{\hyperlink{structttak__thread__pool_ae8d8d450d36ac81afa761693ad4e5c12}{00047}}\ \ \ \ \ \mbox{\hyperlink{structttak__pool__shard__t}{ttak\_pool\_shard\_t}}\ \ \ \mbox{\hyperlink{structttak__thread__pool_ae8d8d450d36ac81afa761693ad4e5c12}{shards}}[\mbox{\hyperlink{thread_2pool_8h_a789e77824badfc7948cbc10c78c44d4f}{TTAK\_THREAD\_POOL\_SHARDS}}];}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00048}00048\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00049}00049\ \textcolor{comment}{\ \ \ \ /**\ Coarse-\/grained\ lock\ used\ only\ during\ shutdown\ signalling.\ */}}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00050}\mbox{\hyperlink{structttak__thread__pool_a7a896c31172e54ba5b8c541955ce3061}{00050}}\ \ \ \ \ pthread\_mutex\_t\ \ \ \ \ \mbox{\hyperlink{structttak__thread__pool_a7a896c31172e54ba5b8c541955ce3061}{pool\_lock}};\textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00051}00051\ \textcolor{comment}{\ \ \ \ /**\ Condition\ variable\ broadcast\ on\ shutdown\ so\ all\ workers\ wake.\ */}}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00052}\mbox{\hyperlink{structttak__thread__pool_aa6e30915da487a76011244421eae819b}{00052}}\ \ \ \ \ pthread\_cond\_t\ \ \ \ \ \ \mbox{\hyperlink{structttak__thread__pool_aa6e30915da487a76011244421eae819b}{task\_cond}};}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00053}\mbox{\hyperlink{structttak__thread__pool_a3e5f0e7aff5c7d8d3c98f6614cafa405}{00053}}\ \ \ \ \ uint64\_t\ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structttak__thread__pool_a3e5f0e7aff5c7d8d3c98f6614cafa405}{creation\_ts}};}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00054}\mbox{\hyperlink{structttak__thread__pool_ae11c409b6317364d0d6c9d68a823bdb6}{00054}}\ \ \ \ \ \_Bool\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structttak__thread__pool_ae11c409b6317364d0d6c9d68a823bdb6}{is\_shutdown}};}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00055}\mbox{\hyperlink{structttak__thread__pool_a3963893335bae3b4883aafa8c1eb9439}{00055}}\ \ \ \ \ \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\_Atomic}}\ uint32\_t\ \ \ \ \mbox{\hyperlink{structttak__thread__pool_a3963893335bae3b4883aafa8c1eb9439}{burst\_hot\_row\_q10}}[4];}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00056}\mbox{\hyperlink{structttak__thread__pool_ae0b12bc020ecc9c2de47a15371b5db3a}{00056}}\ \ \ \ \ \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\_Atomic}}\ uint32\_t\ \ \ \ \mbox{\hyperlink{structttak__thread__pool_ae0b12bc020ecc9c2de47a15371b5db3a}{burst\_hot\_col\_q10}}[4];}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00057}\mbox{\hyperlink{structttak__thread__pool_a3b423b801b8f95d119617ad683dcdfca}{00057}}\ \ \ \ \ \mbox{\hyperlink{include_2stdatomic_8h_a94674db2fe3c7496dfdcaa9b81486e79}{\_Atomic}}\ uint32\_t\ \ \ \ \mbox{\hyperlink{structttak__thread__pool_a3b423b801b8f95d119617ad683dcdfca}{burst\_mag\_q10}}[4];}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00058}00058\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00059}00059\ \textcolor{comment}{\ \ \ \ /**}}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00060}00060\ \textcolor{comment}{\ \ \ \ \ *\ @brief\ Kills\ all\ sub-\/threads.}}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00061}00061\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00062}\mbox{\hyperlink{structttak__thread__pool_aae32bd8dbffd90e3da8049b02541dc61}{00062}}\ \ \ \ \ void\ (*\mbox{\hyperlink{structttak__thread__pool_aae32bd8dbffd90e3da8049b02541dc61}{force\_shutdown}})(\mbox{\hyperlink{structttak__thread__pool}{ttak\_thread\_pool\_t}}\ *pool);}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00063}00063\ \};}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00065}\mbox{\hyperlink{thread_2pool_8h_aa8a2cc0a68f04fd121e38fc3f080057d}{00065}}\ \mbox{\hyperlink{structttak__thread__pool}{ttak\_thread\_pool\_t}}\ *\mbox{\hyperlink{thread_2pool_8h_aa8a2cc0a68f04fd121e38fc3f080057d}{ttak\_thread\_pool\_create}}(\textcolor{keywordtype}{size\_t}\ num\_threads,\ \textcolor{keywordtype}{int}\ default\_nice,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00066}\mbox{\hyperlink{thread_2pool_8h_a9ae856596b3923eb0471ab6c88498777}{00066}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{thread_2pool_8h_a9ae856596b3923eb0471ab6c88498777}{ttak\_thread\_pool\_destroy}}(\mbox{\hyperlink{structttak__thread__pool}{ttak\_thread\_pool\_t}}\ *pool);}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00067}\mbox{\hyperlink{thread_2pool_8h_afd3ec6c19878c359270fe1442300c5f3}{00067}}\ \mbox{\hyperlink{structttak__future}{ttak\_future\_t}}\ *\mbox{\hyperlink{thread_2pool_8h_afd3ec6c19878c359270fe1442300c5f3}{ttak\_thread\_pool\_submit\_task}}(\mbox{\hyperlink{structttak__thread__pool}{ttak\_thread\_pool\_t}}\ *pool,\ \textcolor{keywordtype}{void}\ *(*func)(\textcolor{keywordtype}{void}\ *),\ \textcolor{keywordtype}{void}\ *arg,\ \textcolor{keywordtype}{int}\ priority,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00068}\mbox{\hyperlink{thread_2pool_8h_a39c6f28640ef62dc5e66dfeb44ce242a}{00068}}\ \_Bool\ \mbox{\hyperlink{thread_2pool_8h_a39c6f28640ef62dc5e66dfeb44ce242a}{ttak\_thread\_pool\_schedule\_task}}(\mbox{\hyperlink{structttak__thread__pool}{ttak\_thread\_pool\_t}}\ *pool,\ \mbox{\hyperlink{task_8h_a6a4c7b4b8f087d53e7b2a92f84db216e}{ttak\_task\_t}}\ *task,\ \textcolor{keywordtype}{int}\ priority,\ uint64\_t\ now);}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00070}00070\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{structttak__thread__pool}{ttak\_thread\_pool\_t}}\ *\mbox{\hyperlink{thread_2pool_8h_a5d1afca1eeeddf9e4fd83c80da10efcc}{async\_pool}};}
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{thread_2pool_8h_source_l00072}00072\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_THREAD\_POOL\_H}}
 
 \end{DoxyCode}

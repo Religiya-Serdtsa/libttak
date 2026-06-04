@@ -15,6 +15,7 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
+#include <stdlib.h>
 #include <string.h>
 
 typedef struct {
@@ -32,46 +33,42 @@ static ttak_bigint_opencl_ctx_t g_bigint_ocl = {0};
 static const char *kBigIntKernelSrc =
 "__kernel void bigint_add(__global const uint *lhs, uint lhs_len,\n"
 "                         __global const uint *rhs, uint rhs_len,\n"
-"                         __global uint *out, uint out_len) {\n"
-"    if (get_global_id(0) != 0) return;\n"
-"    if (out_len == 0) return;\n"
-"    ulong carry = 0ul;\n"
-"    uint limit = (out_len > 0) ? (out_len - 1u) : 0u;\n"
-"    for (uint i = 0; i < limit; ++i) {\n"
-"        ulong sum = carry;\n"
+"                         __global ulong *temp, uint temp_len) {\n"
+"    uint idx = get_global_id(0);\n"
+"    uint stride = get_global_size(0);\n"
+"    for (uint i = idx; i < temp_len; i += stride) {\n"
+"        ulong sum = 0;\n"
 "        if (i < lhs_len) sum += (ulong)lhs[i];\n"
 "        if (i < rhs_len) sum += (ulong)rhs[i];\n"
-"        out[i] = (uint)(sum & 0xFFFFFFFFul);\n"
-"        carry = sum >> 32;\n"
+"        temp[i] = sum;\n"
 "    }\n"
-"    out[limit] = (uint)carry;\n"
 "}\n"
 "\n"
+"typedef struct { ulong lo; ulong hi; } u128;\n"
+"inline u128 u128_add(u128 a, u128 b) {\n"
+"    u128 r;\n"
+"    r.lo = a.lo + b.lo;\n"
+"    r.hi = a.hi + b.hi + (r.lo < a.lo);\n"
+"    return r;\n"
+"}\n"
+"inline u128 u128_from_u64(ulong x) {\n"
+"    u128 r; r.lo = x; r.hi = 0; return r;\n"
+"}\n"
 "__kernel void bigint_mul(__global const uint *lhs, uint lhs_len,\n"
 "                         __global const uint *rhs, uint rhs_len,\n"
-"                         __global uint *out, uint out_len) {\n"
-"    if (get_global_id(0) != 0) return;\n"
-"    if (lhs_len == 0 || rhs_len == 0 || out_len == 0) return;\n"
-"    for (uint n = 0; n < out_len; ++n) {\n"
-"        out[n] = 0u;\n"
+"                         __global ulong *temp_lo,\n"
+"                         __global ulong *temp_hi, uint temp_len) {\n"
+"    uint k = get_global_id(0);\n"
+"    if (k >= temp_len) return;\n"
+"    u128 sum = u128_from_u64(0);\n"
+"    for (uint i = 0; i < lhs_len && i <= k; ++i) {\n"
+"        uint j = k - i;\n"
+"        if (j >= rhs_len) continue;\n"
+"        u128 prod = u128_from_u64((ulong)lhs[i] * (ulong)rhs[j]);\n"
+"        sum = u128_add(sum, prod);\n"
 "    }\n"
-"    for (uint i = 0; i < lhs_len; ++i) {\n"
-"        ulong carry = 0ul;\n"
-"        for (uint j = 0; j < rhs_len; ++j) {\n"
-"            uint idx = i + j;\n"
-"            if (idx >= out_len) continue;\n"
-"            ulong sum = (ulong)out[idx] + ((ulong)lhs[i] * (ulong)rhs[j]) + carry;\n"
-"            out[idx] = (uint)(sum & 0xFFFFFFFFul);\n"
-"            carry = sum >> 32;\n"
-"        }\n"
-"        uint k = i + rhs_len;\n"
-"        while (carry > 0ul && k < out_len) {\n"
-"            ulong sum = (ulong)out[k] + carry;\n"
-"            out[k] = (uint)(sum & 0xFFFFFFFFul);\n"
-"            carry = sum >> 32;\n"
-"            ++k;\n"
-"        }\n"
-"    }\n"
+"    temp_lo[k] = sum.lo;\n"
+"    temp_hi[k] = sum.hi;\n"
 "}\n";
 
 static void ttak_bigint_opencl_release(void) {
@@ -197,7 +194,7 @@ bool ttak_bigint_accel_opencl_add(limb_t *dst,
         clReleaseMemObject(lhs_buf);
         return false;
     }
-    cl_mem out_buf = clCreateBuffer(g_bigint_ocl.context, CL_MEM_WRITE_ONLY, result_len * sizeof(cl_uint), NULL, &err);
+    cl_mem temp_buf = clCreateBuffer(g_bigint_ocl.context, CL_MEM_WRITE_ONLY, result_len * sizeof(cl_ulong), NULL, &err);
     if (err != CL_SUCCESS) {
         clReleaseMemObject(lhs_buf);
         clReleaseMemObject(rhs_buf);
@@ -209,33 +206,51 @@ bool ttak_bigint_accel_opencl_add(limb_t *dst,
     err |= clSetKernelArg(kernel, 1, sizeof(cl_uint), &(cl_uint){ (cl_uint)lhs_used });
     err |= clSetKernelArg(kernel, 2, sizeof(cl_mem), &rhs_buf);
     err |= clSetKernelArg(kernel, 3, sizeof(cl_uint), &(cl_uint){ (cl_uint)rhs_used });
-    err |= clSetKernelArg(kernel, 4, sizeof(cl_mem), &out_buf);
+    err |= clSetKernelArg(kernel, 4, sizeof(cl_mem), &temp_buf);
     err |= clSetKernelArg(kernel, 5, sizeof(cl_uint), &(cl_uint){ (cl_uint)result_len });
     if (err != CL_SUCCESS) {
         clReleaseMemObject(lhs_buf);
         clReleaseMemObject(rhs_buf);
-        clReleaseMemObject(out_buf);
+        clReleaseMemObject(temp_buf);
         return false;
     }
 
-    size_t global = 1;
-    err = clEnqueueNDRangeKernel(g_bigint_ocl.queue, kernel, 1, NULL, &global, NULL, 0, NULL, NULL);
+    size_t local = 64;
+    size_t global = ((result_len + local - 1) / local) * local;
+    err = clEnqueueNDRangeKernel(g_bigint_ocl.queue, kernel, 1, NULL, &global, &local, 0, NULL, NULL);
     if (err == CL_SUCCESS) {
         err = clFinish(g_bigint_ocl.queue);
     }
 
     bool ok = (err == CL_SUCCESS);
+    cl_ulong *temp = NULL;
     if (ok) {
-        err = clEnqueueReadBuffer(g_bigint_ocl.queue, out_buf, CL_TRUE, 0,
-                                  result_len * sizeof(cl_uint), dst, 0, NULL, NULL);
-        ok = (err == CL_SUCCESS);
+        temp = (cl_ulong *)malloc(result_len * sizeof(cl_ulong));
+        if (temp) {
+            err = clEnqueueReadBuffer(g_bigint_ocl.queue, temp_buf, CL_TRUE, 0,
+                                      result_len * sizeof(cl_ulong), temp, 0, NULL, NULL);
+            ok = (err == CL_SUCCESS);
+        } else {
+            ok = false;
+        }
     }
 
     clReleaseMemObject(lhs_buf);
     clReleaseMemObject(rhs_buf);
-    clReleaseMemObject(out_buf);
+    clReleaseMemObject(temp_buf);
 
-    if (!ok) return false;
+    if (!ok) {
+        free(temp);
+        return false;
+    }
+
+    cl_ulong carry = 0;
+    for (size_t i = 0; i < result_len; ++i) {
+        cl_ulong v = temp[i] + carry;
+        dst[i] = (limb_t)v;
+        carry = v >> 32;
+    }
+    free(temp);
 
     ttak_bigint_opencl_trim(dst, result_len, out_used);
     return true;
@@ -262,10 +277,17 @@ bool ttak_bigint_accel_opencl_mul(limb_t *dst,
         clReleaseMemObject(lhs_buf);
         return false;
     }
-    cl_mem out_buf = clCreateBuffer(g_bigint_ocl.context, CL_MEM_READ_WRITE, result_len * sizeof(cl_uint), NULL, &err);
+    cl_mem temp_lo_buf = clCreateBuffer(g_bigint_ocl.context, CL_MEM_WRITE_ONLY, result_len * sizeof(cl_ulong), NULL, &err);
     if (err != CL_SUCCESS) {
         clReleaseMemObject(lhs_buf);
         clReleaseMemObject(rhs_buf);
+        return false;
+    }
+    cl_mem temp_hi_buf = clCreateBuffer(g_bigint_ocl.context, CL_MEM_WRITE_ONLY, result_len * sizeof(cl_ulong), NULL, &err);
+    if (err != CL_SUCCESS) {
+        clReleaseMemObject(lhs_buf);
+        clReleaseMemObject(rhs_buf);
+        clReleaseMemObject(temp_lo_buf);
         return false;
     }
 
@@ -274,33 +296,64 @@ bool ttak_bigint_accel_opencl_mul(limb_t *dst,
     err |= clSetKernelArg(kernel, 1, sizeof(cl_uint), &(cl_uint){ (cl_uint)lhs_used });
     err |= clSetKernelArg(kernel, 2, sizeof(cl_mem), &rhs_buf);
     err |= clSetKernelArg(kernel, 3, sizeof(cl_uint), &(cl_uint){ (cl_uint)rhs_used });
-    err |= clSetKernelArg(kernel, 4, sizeof(cl_mem), &out_buf);
-    err |= clSetKernelArg(kernel, 5, sizeof(cl_uint), &(cl_uint){ (cl_uint)result_len });
+    err |= clSetKernelArg(kernel, 4, sizeof(cl_mem), &temp_lo_buf);
+    err |= clSetKernelArg(kernel, 5, sizeof(cl_mem), &temp_hi_buf);
+    err |= clSetKernelArg(kernel, 6, sizeof(cl_uint), &(cl_uint){ (cl_uint)result_len });
     if (err != CL_SUCCESS) {
         clReleaseMemObject(lhs_buf);
         clReleaseMemObject(rhs_buf);
-        clReleaseMemObject(out_buf);
+        clReleaseMemObject(temp_lo_buf);
+        clReleaseMemObject(temp_hi_buf);
         return false;
     }
 
-    size_t global = 1;
-    err = clEnqueueNDRangeKernel(g_bigint_ocl.queue, kernel, 1, NULL, &global, NULL, 0, NULL, NULL);
+    size_t local = 64;
+    size_t global = ((result_len + local - 1) / local) * local;
+    err = clEnqueueNDRangeKernel(g_bigint_ocl.queue, kernel, 1, NULL, &global, &local, 0, NULL, NULL);
     if (err == CL_SUCCESS) {
         err = clFinish(g_bigint_ocl.queue);
     }
 
     bool ok = (err == CL_SUCCESS);
+    cl_ulong *temp_lo = NULL;
+    cl_ulong *temp_hi = NULL;
     if (ok) {
-        err = clEnqueueReadBuffer(g_bigint_ocl.queue, out_buf, CL_TRUE, 0,
-                                  result_len * sizeof(cl_uint), dst, 0, NULL, NULL);
-        ok = (err == CL_SUCCESS);
+        temp_lo = (cl_ulong *)malloc(result_len * sizeof(cl_ulong));
+        temp_hi = (cl_ulong *)malloc(result_len * sizeof(cl_ulong));
+        if (temp_lo && temp_hi) {
+            err = clEnqueueReadBuffer(g_bigint_ocl.queue, temp_lo_buf, CL_TRUE, 0,
+                                      result_len * sizeof(cl_ulong), temp_lo, 0, NULL, NULL);
+            ok = (err == CL_SUCCESS);
+            if (ok) {
+                err = clEnqueueReadBuffer(g_bigint_ocl.queue, temp_hi_buf, CL_TRUE, 0,
+                                          result_len * sizeof(cl_ulong), temp_hi, 0, NULL, NULL);
+                ok = (err == CL_SUCCESS);
+            }
+        } else {
+            ok = false;
+        }
     }
 
     clReleaseMemObject(lhs_buf);
     clReleaseMemObject(rhs_buf);
-    clReleaseMemObject(out_buf);
+    clReleaseMemObject(temp_lo_buf);
+    clReleaseMemObject(temp_hi_buf);
 
-    if (!ok) return false;
+    if (!ok) {
+        free(temp_lo);
+        free(temp_hi);
+        return false;
+    }
+
+    cl_ulong carry = 0;
+    for (size_t i = 0; i < result_len; ++i) {
+        cl_ulong lo = temp_lo[i] + carry;
+        cl_ulong hi = temp_hi[i] + (lo < carry);
+        dst[i] = (limb_t)(lo & 0xFFFFFFFFUL);
+        carry = (hi << 32) | (lo >> 32);
+    }
+    free(temp_lo);
+    free(temp_hi);
 
     ttak_bigint_opencl_trim(dst, result_len, out_used);
     return true;

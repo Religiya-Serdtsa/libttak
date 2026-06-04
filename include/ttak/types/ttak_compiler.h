@@ -321,4 +321,11 @@ static inline int __ttak_clzll(unsigned long long v) {
 #define TTAK_FAST_ATOMIC_XCHG_U64(ptr, val) __atomic_exchange_n((ptr), (val), __ATOMIC_RELAXED)
 #endif
 
+/** @brief Variable cleanup attribute for GCC/Clang; no-op on others. */
+#if defined(__GNUC__) || defined(__clang__)
+#  define TTAK_ATTRIBUTE_CLEANUP(func) __attribute__((cleanup(func)))
+#else
+#  define TTAK_ATTRIBUTE_CLEANUP(func)
+#endif
+
 #endif /* TTAK_COMPILER_H */

@@ -73,7 +73,7 @@ int main() {
     ttak_epoch_gc_init(&g_gc);
 
     /* 2. Initialize Shared Container */
-    g_shared_config = ttak_mem_alloc(sizeof(ttak_shared_config_t), 0, ttak_get_tick_count());
+    g_shared_config = ttak_mem_alloc_raw(sizeof(ttak_shared_config_t), 0, ttak_get_tick_count());
     ttak_shared_config_init(g_shared_config);
     ttak_shared_config_allocate(g_shared_config, TTAK_SHARED_LEVEL_1);
     
@@ -98,7 +98,7 @@ int main() {
         usleep(100000); /* 100ms */
         
         /* Prepare new data */
-        my_config_t *new_data = ttak_mem_alloc(sizeof(my_config_t), 0, ttak_get_tick_count());
+        my_config_t *new_data = ttak_mem_alloc_raw(sizeof(my_config_t), 0, ttak_get_tick_count());
         new_data->version = i + 2;
         snprintf(new_data->data, sizeof(new_data->data), "Config Update %d", i + 2);
 

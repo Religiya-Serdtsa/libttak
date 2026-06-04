@@ -95,7 +95,8 @@ typedef struct ttak_mem_header_t {
     uint64_t canary_end;                /**< Magic number for end of user data (in strict mode) */
     char     *tracking_log;             /**< Dynamic memory operation tracking log (JSON) */
     uint8_t  allocation_tier;           /**< Tier that performed the allocation */
-    char     reserved[10];              /**< Explicit padding for header alignment */
+    size_t   mapped_size;               /**< Total OS-mapped bytes (header + payload + canary) */
+    char     reserved[2];               /**< Explicit padding for header alignment */
 } ttak_mem_header_t;
 
 /**
@@ -297,16 +298,198 @@ static inline uint32_t ttak_calc_header_checksum(const ttak_mem_header_t *h) {
     return sum1 ^ sum2;
 }
 
-/* Compatibility macros */
+/* Convenience type alias for lifecycle objects */
 typedef void ttak_lifecycle_obj_t;
+
+#if defined(__GNUC__) || defined(__clang__)
+/**
+ * @brief Cleanup handler for scoped ttak memory allocations.
+ * @param p Pointer to the variable holding the allocation (void **).
+ *
+ * Invoked automatically when a variable declared with the cleanup attribute
+ * goes out of scope.
+ */
+static inline void ttak_mem_cleanup(void *p) {
+    void **pp = (void **)p;
+    if (*pp) {
+        ttak_mem_free(*pp);
+    }
+}
+#endif
+
+/**
+ * @defgroup MemScopedMacros Scoped RAII Allocation Macros
+ * @brief Scope-bound allocation macros that auto-free on scope exit (GCC/Clang).
+ *
+ * These macros declare a variable that is automatically freed when it goes
+ * out of scope using the compiler's @c cleanup attribute. On compilers that
+ * do not support this attribute they degrade to plain allocation.
+ * @{
+ */
+
+/**
+ * @def ttak_mem_alloc_scoped(var, cast, size, lifetime, now_tick)
+ * @brief Scoped allocation with default flags.
+ * @param var     Variable name to declare.
+ * @param cast    Type to cast the resulting pointer to.
+ * @param size    Number of bytes to allocate.
+ * @param lifetime Lifetime hint in ticks.
+ * @param now_tick Current timestamp in ticks.
+ */
+#define ttak_mem_alloc_scoped(var, cast, size, lifetime, now_tick) \
+    void *_ttak_scoped_##var TTAK_ATTRIBUTE_CLEANUP(ttak_mem_cleanup) = ttak_mem_alloc_safe(size, lifetime, now_tick, false, false, true, false, TTAK_MEM_DEFAULT); \
+    cast var = (cast)_ttak_scoped_##var
+
+/**
+ * @def ttak_root_alloc_scoped(var, cast, size, lifetime, now_tick)
+ * @brief Scoped root allocation with default flags.
+ * @param var     Variable name to declare.
+ * @param cast    Type to cast the resulting pointer to.
+ * @param size    Number of bytes to allocate.
+ * @param lifetime Lifetime hint in ticks.
+ * @param now_tick Current timestamp in ticks.
+ */
+#define ttak_root_alloc_scoped(var, cast, size, lifetime, now_tick) \
+    void *_ttak_scoped_##var TTAK_ATTRIBUTE_CLEANUP(ttak_mem_cleanup) = ttak_mem_alloc_safe(size, lifetime, now_tick, true, true, true, true, TTAK_MEM_DEFAULT); \
+    cast var = (cast)_ttak_scoped_##var
+
+/**
+ * @def ttak_mem_alloc_with_flags_scoped(var, cast, size, lifetime, now_tick, flags)
+ * @brief Scoped allocation with custom flags.
+ */
+#define ttak_mem_alloc_with_flags_scoped(var, cast, size, lifetime, now_tick, flags) \
+    void *_ttak_scoped_##var TTAK_ATTRIBUTE_CLEANUP(ttak_mem_cleanup) = ttak_mem_alloc_safe(size, lifetime, now_tick, false, false, true, false, flags); \
+    cast var = (cast)_ttak_scoped_##var
+
+/**
+ * @def ttak_root_alloc_with_flags_scoped(var, cast, size, lifetime, now_tick, flags)
+ * @brief Scoped root allocation with custom flags.
+ */
+#define ttak_root_alloc_with_flags_scoped(var, cast, size, lifetime, now_tick, flags) \
+    void *_ttak_scoped_##var TTAK_ATTRIBUTE_CLEANUP(ttak_mem_cleanup) = ttak_mem_alloc_safe(size, lifetime, now_tick, true, true, true, true, flags); \
+    cast var = (cast)_ttak_scoped_##var
+
+/**
+ * @def ttak_mem_realloc_scoped(var, cast, ptr, size, lifetime, now_tick)
+ * @brief Scoped reallocation with default flags.
+ */
+#define ttak_mem_realloc_scoped(var, cast, ptr, size, lifetime, now_tick) \
+    void *_ttak_scoped_##var TTAK_ATTRIBUTE_CLEANUP(ttak_mem_cleanup) = ttak_mem_realloc_safe(ptr, size, lifetime, now_tick, false, TTAK_MEM_DEFAULT); \
+    cast var = (cast)_ttak_scoped_##var
+
+/**
+ * @def ttak_root_realloc_scoped(var, cast, ptr, size, lifetime, now_tick)
+ * @brief Scoped root reallocation with default flags.
+ */
+#define ttak_root_realloc_scoped(var, cast, ptr, size, lifetime, now_tick) \
+    void *_ttak_scoped_##var TTAK_ATTRIBUTE_CLEANUP(ttak_mem_cleanup) = ttak_mem_realloc_safe(ptr, size, lifetime, now_tick, true, TTAK_MEM_DEFAULT); \
+    cast var = (cast)_ttak_scoped_##var
+
+/**
+ * @def ttak_mem_realloc_with_flags_scoped(var, cast, ptr, size, lifetime, now_tick, flags)
+ * @brief Scoped reallocation with custom flags.
+ */
+#define ttak_mem_realloc_with_flags_scoped(var, cast, ptr, size, lifetime, now_tick, flags) \
+    void *_ttak_scoped_##var TTAK_ATTRIBUTE_CLEANUP(ttak_mem_cleanup) = ttak_mem_realloc_safe(ptr, size, lifetime, now_tick, false, flags); \
+    cast var = (cast)_ttak_scoped_##var
+
+/**
+ * @def ttak_root_realloc_with_flags_scoped(var, cast, ptr, size, lifetime, now_tick, flags)
+ * @brief Scoped root reallocation with custom flags.
+ */
+#define ttak_root_realloc_with_flags_scoped(var, cast, ptr, size, lifetime, now_tick, flags) \
+    void *_ttak_scoped_##var TTAK_ATTRIBUTE_CLEANUP(ttak_mem_cleanup) = ttak_mem_realloc_safe(ptr, size, lifetime, now_tick, true, flags); \
+    cast var = (cast)_ttak_scoped_##var
+
+/**
+ * @def ttak_mem_dup_scoped(var, cast, src, size, lifetime, now_tick)
+ * @brief Scoped duplication with default flags.
+ */
+#define ttak_mem_dup_scoped(var, cast, src, size, lifetime, now_tick) \
+    void *_ttak_scoped_##var TTAK_ATTRIBUTE_CLEANUP(ttak_mem_cleanup) = ttak_mem_dup_safe(src, size, lifetime, now_tick, false, TTAK_MEM_DEFAULT); \
+    cast var = (cast)_ttak_scoped_##var
+
+/**
+ * @def ttak_root_dup_scoped(var, cast, src, size, lifetime, now_tick)
+ * @brief Scoped root duplication with default flags.
+ */
+#define ttak_root_dup_scoped(var, cast, src, size, lifetime, now_tick) \
+    void *_ttak_scoped_##var TTAK_ATTRIBUTE_CLEANUP(ttak_mem_cleanup) = ttak_mem_dup_safe(src, size, lifetime, now_tick, true, TTAK_MEM_DEFAULT); \
+    cast var = (cast)_ttak_scoped_##var
+
+/**
+ * @def ttak_mem_dup_with_flags_scoped(var, cast, src, size, lifetime, now_tick, flags)
+ * @brief Scoped duplication with custom flags.
+ */
+#define ttak_mem_dup_with_flags_scoped(var, cast, src, size, lifetime, now_tick, flags) \
+    void *_ttak_scoped_##var TTAK_ATTRIBUTE_CLEANUP(ttak_mem_cleanup) = ttak_mem_dup_safe(src, size, lifetime, now_tick, false, flags); \
+    cast var = (cast)_ttak_scoped_##var
+
+/**
+ * @def ttak_root_dup_with_flags_scoped(var, cast, src, size, lifetime, now_tick, flags)
+ * @brief Scoped root duplication with custom flags.
+ */
+#define ttak_root_dup_with_flags_scoped(var, cast, src, size, lifetime, now_tick, flags) \
+    void *_ttak_scoped_##var TTAK_ATTRIBUTE_CLEANUP(ttak_mem_cleanup) = ttak_mem_dup_safe(src, size, lifetime, now_tick, true, flags); \
+    cast var = (cast)_ttak_scoped_##var
+
+/** @} */ /* end of MemScopedMacros */
+
+/**
+ * @defgroup MemConvenienceMacros Convenience Allocation Macros
+ * @brief Simplified macros that return a plain pointer for caller-driven lifetime.
+ *
+ * These macros wrap the underlying @c _safe functions with sensible defaults
+ * for everyday use. The caller is responsible for freeing the returned memory.
+ * @{
+ */
+
+/** @brief Allocate memory with default flags. */
 #define ttak_mem_alloc(size, lifetime, now_tick) ttak_mem_alloc_safe(size, lifetime, now_tick, false, false, true, false, TTAK_MEM_DEFAULT)
+/** @brief Allocate root memory with default flags. */
 #define ttak_root_alloc(size, lifetime, now_tick) ttak_mem_alloc_safe(size, lifetime, now_tick, true, true, true, true, TTAK_MEM_DEFAULT)
+/** @brief Allocate memory with custom flags. */
 #define ttak_mem_alloc_with_flags(size, lifetime, now_tick, flags) ttak_mem_alloc_safe(size, lifetime, now_tick, false, false, true, false, flags)
+/** @brief Allocate root memory with custom flags. */
 #define ttak_root_alloc_with_flags(size, lifetime, now_tick, flags) ttak_mem_alloc_safe(size, lifetime, now_tick, true, true, true, true, flags)
+/** @brief Reallocate memory with default flags. */
 #define ttak_mem_realloc(ptr, size, lifetime, now_tick) ttak_mem_realloc_safe(ptr, size, lifetime, now_tick, false, TTAK_MEM_DEFAULT)
+/** @brief Reallocate root memory with default flags. */
+#define ttak_root_realloc(ptr, size, lifetime, now_tick) ttak_mem_realloc_safe(ptr, size, lifetime, now_tick, true, TTAK_MEM_DEFAULT)
+/** @brief Reallocate memory with custom flags. */
 #define ttak_mem_realloc_with_flags(ptr, size, lifetime, now_tick, flags) ttak_mem_realloc_safe(ptr, size, lifetime, now_tick, false, flags)
+/** @brief Reallocate root memory with custom flags. */
+#define ttak_root_realloc_with_flags(ptr, size, lifetime, now_tick, flags) ttak_mem_realloc_safe(ptr, size, lifetime, now_tick, true, flags)
+/** @brief Duplicate memory with default flags. */
 #define ttak_mem_dup(src, size, lifetime, now_tick) ttak_mem_dup_safe(src, size, lifetime, now_tick, false, TTAK_MEM_DEFAULT)
+/** @brief Duplicate root memory with default flags. */
+#define ttak_root_dup(src, size, lifetime, now_tick) ttak_mem_dup_safe(src, size, lifetime, now_tick, true, TTAK_MEM_DEFAULT)
+/** @brief Duplicate memory with custom flags. */
 #define ttak_mem_dup_with_flags(src, size, lifetime, now_tick, flags) ttak_mem_dup_safe(src, size, lifetime, now_tick, false, flags)
+/** @brief Duplicate root memory with custom flags. */
+#define ttak_root_dup_with_flags(src, size, lifetime, now_tick, flags) ttak_mem_dup_safe(src, size, lifetime, now_tick, true, flags)
+
+/** @} */ /* end of MemConvenienceMacros */
+
+/**
+ * @defgroup MemRawMacros Raw Allocation Macros
+ * @brief Explicit aliases of the convenience macros for code that prefers the @_raw suffix.
+ * @{
+ */
+#define ttak_mem_alloc_raw(size, lifetime, now_tick) ttak_mem_alloc_safe(size, lifetime, now_tick, false, false, true, false, TTAK_MEM_DEFAULT)
+#define ttak_root_alloc_raw(size, lifetime, now_tick) ttak_mem_alloc_safe(size, lifetime, now_tick, true, true, true, true, TTAK_MEM_DEFAULT)
+#define ttak_mem_alloc_with_flags_raw(size, lifetime, now_tick, flags) ttak_mem_alloc_safe(size, lifetime, now_tick, false, false, true, false, flags)
+#define ttak_root_alloc_with_flags_raw(size, lifetime, now_tick, flags) ttak_mem_alloc_safe(size, lifetime, now_tick, true, true, true, true, flags)
+#define ttak_mem_realloc_raw(ptr, size, lifetime, now_tick) ttak_mem_realloc_safe(ptr, size, lifetime, now_tick, false, TTAK_MEM_DEFAULT)
+#define ttak_root_realloc_raw(ptr, size, lifetime, now_tick) ttak_mem_realloc_safe(ptr, size, lifetime, now_tick, true, TTAK_MEM_DEFAULT)
+#define ttak_mem_realloc_with_flags_raw(ptr, size, lifetime, now_tick, flags) ttak_mem_realloc_safe(ptr, size, lifetime, now_tick, false, flags)
+#define ttak_root_realloc_with_flags_raw(ptr, size, lifetime, now_tick, flags) ttak_mem_realloc_safe(ptr, size, lifetime, now_tick, true, flags)
+#define ttak_mem_dup_raw(src, size, lifetime, now_tick) ttak_mem_dup_safe(src, size, lifetime, now_tick, false, TTAK_MEM_DEFAULT)
+#define ttak_root_dup_raw(src, size, lifetime, now_tick) ttak_mem_dup_safe(src, size, lifetime, now_tick, true, TTAK_MEM_DEFAULT)
+#define ttak_mem_dup_with_flags_raw(src, size, lifetime, now_tick, flags) ttak_mem_dup_safe(src, size, lifetime, now_tick, false, flags)
+#define ttak_root_dup_with_flags_raw(src, size, lifetime, now_tick, flags) ttak_mem_dup_safe(src, size, lifetime, now_tick, true, flags)
+
+/** @} */ /* end of MemRawMacros */
 
 #ifndef EMBEDDED
 #define EMBEDDED 0

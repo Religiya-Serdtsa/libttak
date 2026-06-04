@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['9_20security_20integrity_0',['9. Security &amp;amp; Integrity',['../md_SPECS.html#autotoc_md54',1,'']]],
-  ['9_20–_20dangerous_20unsafe_1',['Stage 9 – DANGEROUS (Unsafe)',['../md_tutorials_2CLONE__PATH.html#autotoc_md204',1,'']]]
+  ['raii_20in_20libttak_3a_20how_20it_20differs_20from_20traditional_20resource_20management_0',['RAII in LibTTAK: How It Differs from Traditional Resource Management',['../md_RAII.html',1,'']]],
+  ['references_20for_20libttak_20algorithms_1',['Mathematical and Historical References for libttak Algorithms',['../md_REFERENCES.html',1,'']]],
+  ['resource_20management_2',['RAII in LibTTAK: How It Differs from Traditional Resource Management',['../md_RAII.html',1,'']]]
 ];

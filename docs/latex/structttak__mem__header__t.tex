@@ -1,15 +1,15 @@
-\hypertarget{structttak__mem__header__t}{}\doxysection{ttak\+\_\+mem\+\_\+header\+\_\+t Struct Reference}
-\label{structttak__mem__header__t}\index{ttak\_mem\_header\_t@{ttak\_mem\_header\_t}}
+\doxysection{ttak\+\_\+mem\+\_\+header\+\_\+t Struct Reference}
+\hypertarget{structttak__mem__header__t}{}\label{structttak__mem__header__t}\index{ttak\_mem\_header\_t@{ttak\_mem\_header\_t}}
 
 
-\char`\"{}\+Fortress\char`\"{} Memory Header stored before user data.  
+"{}\+Fortress"{} Memory Header stored before user data.  
 
 
 
 
 {\ttfamily \#include $<$mem.\+h$>$}
 
-\doxysubsection*{Public Attributes}
+\doxysubsubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
 uint32\+\_\+t \mbox{\hyperlink{structttak__mem__header__t_a63c543d0e2277438790686ca125adadf}{magic}}
@@ -48,25 +48,27 @@ uint64\+\_\+t \mbox{\hyperlink{structttak__mem__header__t_aeb69c52bed0292761ce4f
 \item 
 uint64\+\_\+t \mbox{\hyperlink{structttak__mem__header__t_a9bc5cff0708537fe474f41e356e69284}{canary\+\_\+end}}
 \item 
-char $\ast$ \mbox{\hyperlink{structttak__mem__header__t_a4c9d2514539339c34bed60e2bdd5e233}{tracking\+\_\+log}}
+char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__mem__header__t_a4c9d2514539339c34bed60e2bdd5e233}{tracking\+\_\+log}}
 \item 
 uint8\+\_\+t \mbox{\hyperlink{structttak__mem__header__t_ac4eb77c659fb7cadcd333ecab2354b77}{allocation\+\_\+tier}}
 \item 
-char \mbox{\hyperlink{structttak__mem__header__t_a366f1a3f775d16ec4e407da306f3ed76}{reserved}} \mbox{[}10\mbox{]}
+size\+\_\+t \mbox{\hyperlink{structttak__mem__header__t_a7131d9ca5e53aa1897ccd03e88f3393a}{mapped\+\_\+size}}
+\item 
+char \mbox{\hyperlink{structttak__mem__header__t_ab4dc0885d55644ebc33dbeb16e586562}{reserved}} \mbox{[}2\mbox{]}
 \end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
-\char`\"{}\+Fortress\char`\"{} Memory Header stored before user data. 
+"{}\+Fortress"{} Memory Header stored before user data. 
 
 64-\/byte aligned to prevent False Sharing and ensure user pointer alignment. The structure is padded to maintain alignment for the following user data. 
 
-Definition at line 77 of file mem.\+h.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00077}{77}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
 
 
 \doxysubsection{Member Data Documentation}
-\mbox{\Hypertarget{structttak__mem__header__t_a0318bb3cfda8bb54cf6ec0c43e6b2584}\label{structttak__mem__header__t_a0318bb3cfda8bb54cf6ec0c43e6b2584}} 
+\Hypertarget{structttak__mem__header__t_a0318bb3cfda8bb54cf6ec0c43e6b2584}\label{structttak__mem__header__t_a0318bb3cfda8bb54cf6ec0c43e6b2584} 
 \index{ttak\_mem\_header\_t@{ttak\_mem\_header\_t}!access\_count@{access\_count}}
 \index{access\_count@{access\_count}!ttak\_mem\_header\_t@{ttak\_mem\_header\_t}}
 \doxysubsubsection{\texorpdfstring{access\_count}{access\_count}}
@@ -74,9 +76,9 @@ Definition at line 77 of file mem.\+h.
 
 Atomic access audit counter 
 
-Definition at line 82 of file mem.\+h.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00082}{82}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
-\mbox{\Hypertarget{structttak__mem__header__t_ac4eb77c659fb7cadcd333ecab2354b77}\label{structttak__mem__header__t_ac4eb77c659fb7cadcd333ecab2354b77}} 
+\Hypertarget{structttak__mem__header__t_ac4eb77c659fb7cadcd333ecab2354b77}\label{structttak__mem__header__t_ac4eb77c659fb7cadcd333ecab2354b77} 
 \index{ttak\_mem\_header\_t@{ttak\_mem\_header\_t}!allocation\_tier@{allocation\_tier}}
 \index{allocation\_tier@{allocation\_tier}!ttak\_mem\_header\_t@{ttak\_mem\_header\_t}}
 \doxysubsubsection{\texorpdfstring{allocation\_tier}{allocation\_tier}}
@@ -84,9 +86,9 @@ Definition at line 82 of file mem.\+h.
 
 Tier that performed the allocation 
 
-Definition at line 97 of file mem.\+h.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00097}{97}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
-\mbox{\Hypertarget{structttak__mem__header__t_a42432ca91571c572cd16cadbbc197e7c}\label{structttak__mem__header__t_a42432ca91571c572cd16cadbbc197e7c}} 
+\Hypertarget{structttak__mem__header__t_a42432ca91571c572cd16cadbbc197e7c}\label{structttak__mem__header__t_a42432ca91571c572cd16cadbbc197e7c} 
 \index{ttak\_mem\_header\_t@{ttak\_mem\_header\_t}!allow\_direct\_access@{allow\_direct\_access}}
 \index{allow\_direct\_access@{allow\_direct\_access}!ttak\_mem\_header\_t@{ttak\_mem\_header\_t}}
 \doxysubsubsection{\texorpdfstring{allow\_direct\_access}{allow\_direct\_access}}
@@ -94,9 +96,9 @@ Definition at line 97 of file mem.\+h.
 
 Safety bypass flag for direct pointer access 
 
-Definition at line 89 of file mem.\+h.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00089}{89}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
-\mbox{\Hypertarget{structttak__mem__header__t_a9bc5cff0708537fe474f41e356e69284}\label{structttak__mem__header__t_a9bc5cff0708537fe474f41e356e69284}} 
+\Hypertarget{structttak__mem__header__t_a9bc5cff0708537fe474f41e356e69284}\label{structttak__mem__header__t_a9bc5cff0708537fe474f41e356e69284} 
 \index{ttak\_mem\_header\_t@{ttak\_mem\_header\_t}!canary\_end@{canary\_end}}
 \index{canary\_end@{canary\_end}!ttak\_mem\_header\_t@{ttak\_mem\_header\_t}}
 \doxysubsubsection{\texorpdfstring{canary\_end}{canary\_end}}
@@ -104,9 +106,9 @@ Definition at line 89 of file mem.\+h.
 
 Magic number for end of user data (in strict mode) 
 
-Definition at line 95 of file mem.\+h.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00095}{95}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
-\mbox{\Hypertarget{structttak__mem__header__t_aeb69c52bed0292761ce4ff581eae37df}\label{structttak__mem__header__t_aeb69c52bed0292761ce4ff581eae37df}} 
+\Hypertarget{structttak__mem__header__t_aeb69c52bed0292761ce4ff581eae37df}\label{structttak__mem__header__t_aeb69c52bed0292761ce4ff581eae37df} 
 \index{ttak\_mem\_header\_t@{ttak\_mem\_header\_t}!canary\_start@{canary\_start}}
 \index{canary\_start@{canary\_start}!ttak\_mem\_header\_t@{ttak\_mem\_header\_t}}
 \doxysubsubsection{\texorpdfstring{canary\_start}{canary\_start}}
@@ -114,9 +116,9 @@ Definition at line 95 of file mem.\+h.
 
 Magic number for start of user data (in strict mode) 
 
-Definition at line 94 of file mem.\+h.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00094}{94}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
-\mbox{\Hypertarget{structttak__mem__header__t_a49f32c7dc3f8c633c289870c99841153}\label{structttak__mem__header__t_a49f32c7dc3f8c633c289870c99841153}} 
+\Hypertarget{structttak__mem__header__t_a49f32c7dc3f8c633c289870c99841153}\label{structttak__mem__header__t_a49f32c7dc3f8c633c289870c99841153} 
 \index{ttak\_mem\_header\_t@{ttak\_mem\_header\_t}!checksum@{checksum}}
 \index{checksum@{checksum}!ttak\_mem\_header\_t@{ttak\_mem\_header\_t}}
 \doxysubsubsection{\texorpdfstring{checksum}{checksum}}
@@ -124,9 +126,9 @@ Definition at line 94 of file mem.\+h.
 
 Metadata checksum to detect header corruption 
 
-Definition at line 79 of file mem.\+h.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00079}{79}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
-\mbox{\Hypertarget{structttak__mem__header__t_aefba5a41d63f62a6de53c3a9a6f0f51b}\label{structttak__mem__header__t_aefba5a41d63f62a6de53c3a9a6f0f51b}} 
+\Hypertarget{structttak__mem__header__t_aefba5a41d63f62a6de53c3a9a6f0f51b}\label{structttak__mem__header__t_aefba5a41d63f62a6de53c3a9a6f0f51b} 
 \index{ttak\_mem\_header\_t@{ttak\_mem\_header\_t}!created\_tick@{created\_tick}}
 \index{created\_tick@{created\_tick}!ttak\_mem\_header\_t@{ttak\_mem\_header\_t}}
 \doxysubsubsection{\texorpdfstring{created\_tick}{created\_tick}}
@@ -134,9 +136,9 @@ Definition at line 79 of file mem.\+h.
 
 Creation timestamp in ticks 
 
-Definition at line 80 of file mem.\+h.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00080}{80}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
-\mbox{\Hypertarget{structttak__mem__header__t_a0362d896df5d92be01157426136ad6b0}\label{structttak__mem__header__t_a0362d896df5d92be01157426136ad6b0}} 
+\Hypertarget{structttak__mem__header__t_a0362d896df5d92be01157426136ad6b0}\label{structttak__mem__header__t_a0362d896df5d92be01157426136ad6b0} 
 \index{ttak\_mem\_header\_t@{ttak\_mem\_header\_t}!expires\_tick@{expires\_tick}}
 \index{expires\_tick@{expires\_tick}!ttak\_mem\_header\_t@{ttak\_mem\_header\_t}}
 \doxysubsubsection{\texorpdfstring{expires\_tick}{expires\_tick}}
@@ -144,9 +146,9 @@ Definition at line 80 of file mem.\+h.
 
 Expiration timestamp in ticks 
 
-Definition at line 81 of file mem.\+h.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00081}{81}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
-\mbox{\Hypertarget{structttak__mem__header__t_afb19e735d7af574abc849acff5d5a3e2}\label{structttak__mem__header__t_afb19e735d7af574abc849acff5d5a3e2}} 
+\Hypertarget{structttak__mem__header__t_afb19e735d7af574abc849acff5d5a3e2}\label{structttak__mem__header__t_afb19e735d7af574abc849acff5d5a3e2} 
 \index{ttak\_mem\_header\_t@{ttak\_mem\_header\_t}!freed@{freed}}
 \index{freed@{freed}!ttak\_mem\_header\_t@{ttak\_mem\_header\_t}}
 \doxysubsubsection{\texorpdfstring{freed}{freed}}
@@ -154,9 +156,9 @@ Definition at line 81 of file mem.\+h.
 
 True if the block has been deallocated 
 
-Definition at line 86 of file mem.\+h.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00086}{86}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
-\mbox{\Hypertarget{structttak__mem__header__t_ab572f0a0ea6c12903e9974131bcbf309}\label{structttak__mem__header__t_ab572f0a0ea6c12903e9974131bcbf309}} 
+\Hypertarget{structttak__mem__header__t_ab572f0a0ea6c12903e9974131bcbf309}\label{structttak__mem__header__t_ab572f0a0ea6c12903e9974131bcbf309} 
 \index{ttak\_mem\_header\_t@{ttak\_mem\_header\_t}!is\_const@{is\_const}}
 \index{is\_const@{is\_const}!ttak\_mem\_header\_t@{ttak\_mem\_header\_t}}
 \doxysubsubsection{\texorpdfstring{is\_const}{is\_const}}
@@ -164,9 +166,9 @@ Definition at line 86 of file mem.\+h.
 
 Immutability hint 
 
-Definition at line 87 of file mem.\+h.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00087}{87}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
-\mbox{\Hypertarget{structttak__mem__header__t_a0efd15ca55012af9b0dbce9ed8976e07}\label{structttak__mem__header__t_a0efd15ca55012af9b0dbce9ed8976e07}} 
+\Hypertarget{structttak__mem__header__t_a0efd15ca55012af9b0dbce9ed8976e07}\label{structttak__mem__header__t_a0efd15ca55012af9b0dbce9ed8976e07} 
 \index{ttak\_mem\_header\_t@{ttak\_mem\_header\_t}!is\_huge@{is\_huge}}
 \index{is\_huge@{is\_huge}!ttak\_mem\_header\_t@{ttak\_mem\_header\_t}}
 \doxysubsubsection{\texorpdfstring{is\_huge}{is\_huge}}
@@ -174,9 +176,9 @@ Definition at line 87 of file mem.\+h.
 
 True if mapped via hugepages 
 
-Definition at line 90 of file mem.\+h.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00090}{90}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
-\mbox{\Hypertarget{structttak__mem__header__t_ac5a057733c169250b2a6e4766940bcfe}\label{structttak__mem__header__t_ac5a057733c169250b2a6e4766940bcfe}} 
+\Hypertarget{structttak__mem__header__t_ac5a057733c169250b2a6e4766940bcfe}\label{structttak__mem__header__t_ac5a057733c169250b2a6e4766940bcfe} 
 \index{ttak\_mem\_header\_t@{ttak\_mem\_header\_t}!is\_root@{is\_root}}
 \index{is\_root@{is\_root}!ttak\_mem\_header\_t@{ttak\_mem\_header\_t}}
 \doxysubsubsection{\texorpdfstring{is\_root}{is\_root}}
@@ -184,9 +186,9 @@ Definition at line 90 of file mem.\+h.
 
 Marks the allocation as a root node for the mem\+\_\+tree 
 
-Definition at line 93 of file mem.\+h.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00093}{93}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
-\mbox{\Hypertarget{structttak__mem__header__t_ae0491926bdfd8510628db6a75794dae8}\label{structttak__mem__header__t_ae0491926bdfd8510628db6a75794dae8}} 
+\Hypertarget{structttak__mem__header__t_ae0491926bdfd8510628db6a75794dae8}\label{structttak__mem__header__t_ae0491926bdfd8510628db6a75794dae8} 
 \index{ttak\_mem\_header\_t@{ttak\_mem\_header\_t}!is\_volatile@{is\_volatile}}
 \index{is\_volatile@{is\_volatile}!ttak\_mem\_header\_t@{ttak\_mem\_header\_t}}
 \doxysubsubsection{\texorpdfstring{is\_volatile}{is\_volatile}}
@@ -194,9 +196,9 @@ Definition at line 93 of file mem.\+h.
 
 Volatility hint 
 
-Definition at line 88 of file mem.\+h.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00088}{88}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
-\mbox{\Hypertarget{structttak__mem__header__t_a5c63e95556a7b6528834155059dae312}\label{structttak__mem__header__t_a5c63e95556a7b6528834155059dae312}} 
+\Hypertarget{structttak__mem__header__t_a5c63e95556a7b6528834155059dae312}\label{structttak__mem__header__t_a5c63e95556a7b6528834155059dae312} 
 \index{ttak\_mem\_header\_t@{ttak\_mem\_header\_t}!lock@{lock}}
 \index{lock@{lock}!ttak\_mem\_header\_t@{ttak\_mem\_header\_t}}
 \doxysubsubsection{\texorpdfstring{lock}{lock}}
@@ -204,9 +206,9 @@ Definition at line 88 of file mem.\+h.
 
 Per-\/header synchronization lock 
 
-Definition at line 85 of file mem.\+h.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00085}{85}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
-\mbox{\Hypertarget{structttak__mem__header__t_a63c543d0e2277438790686ca125adadf}\label{structttak__mem__header__t_a63c543d0e2277438790686ca125adadf}} 
+\Hypertarget{structttak__mem__header__t_a63c543d0e2277438790686ca125adadf}\label{structttak__mem__header__t_a63c543d0e2277438790686ca125adadf} 
 \index{ttak\_mem\_header\_t@{ttak\_mem\_header\_t}!magic@{magic}}
 \index{magic@{magic}!ttak\_mem\_header\_t@{ttak\_mem\_header\_t}}
 \doxysubsubsection{\texorpdfstring{magic}{magic}}
@@ -214,9 +216,19 @@ Definition at line 85 of file mem.\+h.
 
 0x5454414B 
 
-Definition at line 78 of file mem.\+h.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00078}{78}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
-\mbox{\Hypertarget{structttak__mem__header__t_a6f56f8247cfdee283312f6d76b0625a1}\label{structttak__mem__header__t_a6f56f8247cfdee283312f6d76b0625a1}} 
+\Hypertarget{structttak__mem__header__t_a7131d9ca5e53aa1897ccd03e88f3393a}\label{structttak__mem__header__t_a7131d9ca5e53aa1897ccd03e88f3393a} 
+\index{ttak\_mem\_header\_t@{ttak\_mem\_header\_t}!mapped\_size@{mapped\_size}}
+\index{mapped\_size@{mapped\_size}!ttak\_mem\_header\_t@{ttak\_mem\_header\_t}}
+\doxysubsubsection{\texorpdfstring{mapped\_size}{mapped\_size}}
+{\footnotesize\ttfamily size\+\_\+t ttak\+\_\+mem\+\_\+header\+\_\+t\+::mapped\+\_\+size}
+
+Total OS-\/mapped bytes (header + payload + canary) 
+
+Definition at line \mbox{\hyperlink{mem_8h_source_l00098}{98}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
+
+\Hypertarget{structttak__mem__header__t_a6f56f8247cfdee283312f6d76b0625a1}\label{structttak__mem__header__t_a6f56f8247cfdee283312f6d76b0625a1} 
 \index{ttak\_mem\_header\_t@{ttak\_mem\_header\_t}!pin\_count@{pin\_count}}
 \index{pin\_count@{pin\_count}!ttak\_mem\_header\_t@{ttak\_mem\_header\_t}}
 \doxysubsubsection{\texorpdfstring{pin\_count}{pin\_count}}
@@ -224,19 +236,19 @@ Definition at line 78 of file mem.\+h.
 
 Atomic reference count for pinning 
 
-Definition at line 83 of file mem.\+h.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00083}{83}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
-\mbox{\Hypertarget{structttak__mem__header__t_a366f1a3f775d16ec4e407da306f3ed76}\label{structttak__mem__header__t_a366f1a3f775d16ec4e407da306f3ed76}} 
+\Hypertarget{structttak__mem__header__t_ab4dc0885d55644ebc33dbeb16e586562}\label{structttak__mem__header__t_ab4dc0885d55644ebc33dbeb16e586562} 
 \index{ttak\_mem\_header\_t@{ttak\_mem\_header\_t}!reserved@{reserved}}
 \index{reserved@{reserved}!ttak\_mem\_header\_t@{ttak\_mem\_header\_t}}
 \doxysubsubsection{\texorpdfstring{reserved}{reserved}}
-{\footnotesize\ttfamily char ttak\+\_\+mem\+\_\+header\+\_\+t\+::reserved\mbox{[}10\mbox{]}}
+{\footnotesize\ttfamily char ttak\+\_\+mem\+\_\+header\+\_\+t\+::reserved\mbox{[}2\mbox{]}}
 
 Explicit padding for header alignment 
 
-Definition at line 98 of file mem.\+h.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00099}{99}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
-\mbox{\Hypertarget{structttak__mem__header__t_a507281872e1f22c889df12ff9c0be63e}\label{structttak__mem__header__t_a507281872e1f22c889df12ff9c0be63e}} 
+\Hypertarget{structttak__mem__header__t_a507281872e1f22c889df12ff9c0be63e}\label{structttak__mem__header__t_a507281872e1f22c889df12ff9c0be63e} 
 \index{ttak\_mem\_header\_t@{ttak\_mem\_header\_t}!should\_join@{should\_join}}
 \index{should\_join@{should\_join}!ttak\_mem\_header\_t@{ttak\_mem\_header\_t}}
 \doxysubsubsection{\texorpdfstring{should\_join}{should\_join}}
@@ -244,9 +256,9 @@ Definition at line 98 of file mem.\+h.
 
 Indicates if associated resource needs joining 
 
-Definition at line 91 of file mem.\+h.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00091}{91}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
-\mbox{\Hypertarget{structttak__mem__header__t_a576f96336f81e4af314e70b911232dda}\label{structttak__mem__header__t_a576f96336f81e4af314e70b911232dda}} 
+\Hypertarget{structttak__mem__header__t_a576f96336f81e4af314e70b911232dda}\label{structttak__mem__header__t_a576f96336f81e4af314e70b911232dda} 
 \index{ttak\_mem\_header\_t@{ttak\_mem\_header\_t}!size@{size}}
 \index{size@{size}!ttak\_mem\_header\_t@{ttak\_mem\_header\_t}}
 \doxysubsubsection{\texorpdfstring{size}{size}}
@@ -254,9 +266,9 @@ Definition at line 91 of file mem.\+h.
 
 User-\/requested size in bytes 
 
-Definition at line 84 of file mem.\+h.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00084}{84}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
-\mbox{\Hypertarget{structttak__mem__header__t_a8b1ec6a6c170869bd09dbf027b7b1d0a}\label{structttak__mem__header__t_a8b1ec6a6c170869bd09dbf027b7b1d0a}} 
+\Hypertarget{structttak__mem__header__t_a8b1ec6a6c170869bd09dbf027b7b1d0a}\label{structttak__mem__header__t_a8b1ec6a6c170869bd09dbf027b7b1d0a} 
 \index{ttak\_mem\_header\_t@{ttak\_mem\_header\_t}!strict\_check@{strict\_check}}
 \index{strict\_check@{strict\_check}!ttak\_mem\_header\_t@{ttak\_mem\_header\_t}}
 \doxysubsubsection{\texorpdfstring{strict\_check}{strict\_check}}
@@ -264,17 +276,17 @@ Definition at line 84 of file mem.\+h.
 
 Enable strict memory boundary (canary) checks 
 
-Definition at line 92 of file mem.\+h.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00092}{92}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
-\mbox{\Hypertarget{structttak__mem__header__t_a4c9d2514539339c34bed60e2bdd5e233}\label{structttak__mem__header__t_a4c9d2514539339c34bed60e2bdd5e233}} 
+\Hypertarget{structttak__mem__header__t_a4c9d2514539339c34bed60e2bdd5e233}\label{structttak__mem__header__t_a4c9d2514539339c34bed60e2bdd5e233} 
 \index{ttak\_mem\_header\_t@{ttak\_mem\_header\_t}!tracking\_log@{tracking\_log}}
 \index{tracking\_log@{tracking\_log}!ttak\_mem\_header\_t@{ttak\_mem\_header\_t}}
 \doxysubsubsection{\texorpdfstring{tracking\_log}{tracking\_log}}
-{\footnotesize\ttfamily char$\ast$ ttak\+\_\+mem\+\_\+header\+\_\+t\+::tracking\+\_\+log}
+{\footnotesize\ttfamily char\texorpdfstring{$\ast$}{*} ttak\+\_\+mem\+\_\+header\+\_\+t\+::tracking\+\_\+log}
 
 Dynamic memory operation tracking log (JSON) 
 
-Definition at line 96 of file mem.\+h.
+Definition at line \mbox{\hyperlink{mem_8h_source_l00096}{96}} of file \mbox{\hyperlink{mem_8h_source}{mem.\+h}}.
 
 
 

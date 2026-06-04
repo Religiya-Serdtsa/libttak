@@ -1,0 +1,294 @@
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/ht/hash.d -c src/ht/hash.c -o obj/ht/hash.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/ht/map.d -c src/ht/map.c -o obj/ht/map.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/ht/table.d -c src/ht/table.c -o obj/ht/table.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/thread/pool.d -c src/thread/pool.c -o obj/thread/pool.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/thread/worker.d -c src/thread/worker.c -o obj/thread/worker.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/timing/deadline.d -c src/timing/deadline.c -o obj/timing/deadline.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/timing/timing.d -c src/timing/timing.c -o obj/timing/timing.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/mem/arena_helper.d -c src/mem/arena_helper.c -o obj/mem/arena_helper.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/mem/detachable.d -c src/mem/detachable.c -o obj/mem/detachable.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/mem/epoch.d -c src/mem/epoch.c -o obj/mem/epoch.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/mem/epoch_gc.d -c src/mem/epoch_gc.c -o obj/mem/epoch_gc.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/mem/mem.d -c src/mem/mem.c -o obj/mem/mem.o
+src/mem/mem.c:227:13: warning: ‘ttak_mem_update_friction_value’ defined but not used [-Wunused-function]
+  227 | static void ttak_mem_update_friction_value(int size_class_idx, bool waste_detected) {
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/mem/owner.d -c src/mem/owner.c -o obj/mem/owner.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/mem/ttak_mem_pocket.d -c src/mem/ttak_mem_pocket.c -o obj/mem/ttak_mem_pocket.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/mem/ttak_mem_vma.d -c src/mem/ttak_mem_vma.c -o obj/mem/ttak_mem_vma.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/async/future.d -c src/async/future.c -o obj/async/future.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/async/promise.d -c src/async/promise.c -o obj/async/promise.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/async/sched.d -c src/async/sched.c -o obj/async/sched.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/async/task.d -c src/async/task.c -o obj/async/task.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/priority/buf.d -c src/priority/buf.c -o obj/priority/buf.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/priority/heap.d -c src/priority/heap.c -o obj/priority/heap.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/priority/nice.d -c src/priority/nice.c -o obj/priority/nice.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/priority/queue.d -c src/priority/queue.c -o obj/priority/queue.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/priority/scheduler.d -c src/priority/scheduler.c -o obj/priority/scheduler.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/priority/simple.d -c src/priority/simple.c -o obj/priority/simple.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/atomic/atomic.d -c src/atomic/atomic.c -o obj/atomic/atomic.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/sync/spinlock.d -c src/sync/spinlock.c -o obj/sync/spinlock.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/math/bigcomplex.d -c src/math/bigcomplex.c -o obj/math/bigcomplex.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/math/bigint.d -c src/math/bigint.c -o obj/math/bigint.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/math/bigint_accel.d -c src/math/bigint_accel.c -o obj/math/bigint_accel.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/math/bigmul.d -c src/math/bigmul.c -o obj/math/bigmul.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/math/bigreal.d -c src/math/bigreal.c -o obj/math/bigreal.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/math/calculus.d -c src/math/calculus.c -o obj/math/calculus.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/math/factor.d -c src/math/factor.c -o obj/math/factor.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/math/floatundidf.d -c src/math/floatundidf.c -o obj/math/floatundidf.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/math/matrix.d -c src/math/matrix.c -o obj/math/matrix.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/math/ntt.d -c src/math/ntt.c -o obj/math/ntt.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/math/sum_divisors.d -c src/math/sum_divisors.c -o obj/math/sum_divisors.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/math/vector.d -c src/math/vector.c -o obj/math/vector.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/tree/ast.d -c src/tree/ast.c -o obj/tree/ast.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/tree/bplus.d -c src/tree/bplus.c -o obj/tree/bplus.o
+src/math/calculus.c:13:13: warning: ‘ttak_math_jeungseung_accumulate’ defined but not used [-Wunused-function]
+   13 | static void ttak_math_jeungseung_accumulate(ttak_bigreal_t *res, const ttak_bigreal_t *x, const ttak_bigreal_t *a, uint64_t now) {
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/tree/btree.d -c src/tree/btree.c -o obj/tree/btree.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/container/pair.d -c src/container/pair.c -o obj/container/pair.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/container/pool.d -c src/container/pool.c -o obj/container/pool.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/container/ringbuf.d -c src/container/ringbuf.c -o obj/container/ringbuf.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/container/set.d -c src/container/set.c -o obj/container/set.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/security/aes_gcm.d -c src/security/aes_gcm.c -o obj/security/aes_gcm.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/security/chacha20_poly1305.d -c src/security/chacha20_poly1305.c -o obj/security/chacha20_poly1305.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/security/lea.d -c src/security/lea.c -o obj/security/lea.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/security/security_engine.d -c src/security/security_engine.c -o obj/security/security_engine.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/security/seed.d -c src/security/seed.c -o obj/security/seed.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/security/sha256.d -c src/security/sha256.c -o obj/security/sha256.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/mem_tree/mem_tree.d -c src/mem_tree/mem_tree.c -o obj/mem_tree/mem_tree.o
+src/security/security_engine.c:20:31: warning: ‘g_simd_driver’ defined but not used [-Wunused-variable]
+   20 | static ttak_security_driver_t g_simd_driver = {
+      |                               ^~~~~~~~~~~~~
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/limit/limit.d -c src/limit/limit.c -o obj/limit/limit.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/stats/stats.d -c src/stats/stats.c -o obj/stats/stats.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/stats/stats_ext.d -c src/stats/stats_ext.c -o obj/stats/stats_ext.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/log/logger.d -c src/log/logger.c -o obj/log/logger.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/unsafe/context.d -c src/unsafe/context.c -o obj/unsafe/context.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/unsafe/region.d -c src/unsafe/region.c -o obj/unsafe/region.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/shared/shared.d -c src/shared/shared.c -o obj/shared/shared.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/mask/dynamic_mask.d -c src/mask/dynamic_mask.c -o obj/mask/dynamic_mask.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/phys/dimless/transport.d -c src/phys/dimless/transport.c -o obj/phys/dimless/transport.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/io/async.d -c src/io/async.c -o obj/io/async.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/io/bits.d -c src/io/bits.c -o obj/io/bits.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/io/io.d -c src/io/io.c -o obj/io/io.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/io/sync.d -c src/io/sync.c -o obj/io/sync.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/io/zerocopy.d -c src/io/zerocopy.c -o obj/io/zerocopy.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/net/endpoint.d -c src/net/endpoint.c -o obj/net/endpoint.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/net/lattice.d -c src/net/lattice.c -o obj/net/lattice.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/net/session.d -c src/net/session.c -o obj/net/session.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/net/view.d -c src/net/view.c -o obj/net/view.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/phys/mem/buddy.d -c src/phys/mem/buddy.c -o obj/phys/mem/buddy.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/script/bigscript.d -c src/script/bigscript.c -o obj/script/bigscript.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/accel/accel_cpu.d -c src/accel/accel_cpu.c -o obj/accel/accel_cpu.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/accel/ttak_accel_dispatch.d -c src/accel/ttak_accel_dispatch.c -o obj/accel/ttak_accel_dispatch.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/accel/accel_opencl.d -c src/accel/accel_opencl.c -o obj/accel/accel_opencl.o
+powerpc64le-linux-gnu-gcc -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum -O3 -pipe -flto -ffat-lto-objects -fomit-frame-pointer -funroll-loops                 -fstrict-aliasing -ffunction-sections -fdata-sections -fvisibility=hidden -DNDEBUG -mcpu=power8  -fPIC -ftls-model=global-dynamic -fPIC -DEMBEDDED=1 -DENABLE_CUDA -DENABLE_OPENCL -MD -MF obj/accel/bigint_opencl.d -c src/accel/bigint_opencl.c -o obj/accel/bigint_opencl.o
+nvcc -std=c++14 -Iinclude -DENABLE_CUDA -c src/accel/accel_cuda.cu -o obj/accel/accel_cuda.o
+nvcc -std=c++14 -Iinclude -DENABLE_CUDA -c src/accel/bigint_cuda.cu -o obj/accel/bigint_cuda.o
+In file included from /usr/include/CL/cl.h:20,
+                 from src/accel/bigint_opencl.c:5:
+/usr/include/CL/cl_version.h:22:9: note: ‘#pragma message: cl_version.h: CL_TARGET_OPENCL_VERSION is not defined. Defaulting to 300 (OpenCL 3.0)’
+   22 | #pragma message("cl_version.h: CL_TARGET_OPENCL_VERSION is not defined. Defaulting to 300 (OpenCL 3.0)")
+      |         ^~~~~~~
+In file included from /usr/include/CL/cl.h:20,
+                 from src/accel/accel_opencl.c:15:
+/usr/include/CL/cl_version.h:22:9: note: ‘#pragma message: cl_version.h: CL_TARGET_OPENCL_VERSION is not defined. Defaulting to 300 (OpenCL 3.0)’
+   22 | #pragma message("cl_version.h: CL_TARGET_OPENCL_VERSION is not defined. Defaulting to 300 (OpenCL 3.0)")
+      |         ^~~~~~~
+In file included from include/ttak/math/bigint.h:6,
+                 from src/accel/bigint_opencl.c:1:
+src/accel/bigint_opencl.c: In function ‘ttak_bigint_opencl_release’:
+src/accel/bigint_opencl.c:80:26: error: incompatible types when assigning to type ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} from type ‘int’
+   80 |     g_bigint_ocl.ready = false;
+      |                          ^~~~~
+src/accel/bigint_opencl.c: In function ‘ttak_bigint_opencl_build’:
+src/accel/bigint_opencl.c:84:9: error: used vector type where scalar is required
+   84 |     if (g_bigint_ocl.ready) return true;
+      |         ^~~~~~~~~~~~
+src/accel/bigint_opencl.c:84:36: error: incompatible types when returning type ‘int’ but ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} was expected
+   84 |     if (g_bigint_ocl.ready) return true;
+      |                                    ^~~~
+src/accel/bigint_opencl.c:90:16: error: incompatible types when returning type ‘int’ but ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} was expected
+   90 |         return false;
+      |                ^~~~~
+src/accel/bigint_opencl.c:98:20: error: incompatible types when returning type ‘int’ but ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} was expected
+   98 |             return false;
+      |                    ^~~~~
+src/accel/bigint_opencl.c:105:16: error: incompatible types when returning type ‘int’ but ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} was expected
+  105 |         return false;
+      |                ^~~~~
+src/accel/bigint_opencl.c:115:16: error: incompatible types when returning type ‘int’ but ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} was expected
+  115 |         return false;
+      |                ^~~~~
+src/accel/bigint_opencl.c:123:16: error: incompatible types when returning type ‘int’ but ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} was expected
+  123 |         return false;
+      |                ^~~~~
+src/accel/bigint_opencl.c:129:16: error: incompatible types when returning type ‘int’ but ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} was expected
+  129 |         return false;
+      |                ^~~~~
+src/accel/bigint_opencl.c:135:16: error: incompatible types when returning type ‘int’ but ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} was expected
+  135 |         return false;
+      |                ^~~~~
+src/accel/bigint_opencl.c:140:16: error: incompatible types when returning type ‘int’ but ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} was expected
+  140 |         return false;
+      |                ^~~~~
+src/accel/bigint_opencl.c:143:26: error: incompatible types when assigning to type ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} from type ‘int’
+  143 |     g_bigint_ocl.ready = true;
+      |                          ^~~~
+src/accel/bigint_opencl.c:144:12: error: incompatible types when returning type ‘int’ but ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} was expected
+  144 |     return true;
+      |            ^~~~
+src/accel/bigint_opencl.c: In function ‘ttak_bigint_accel_opencl_add’:
+src/accel/bigint_opencl.c:176:9: error: wrong type argument to unary exclamation mark
+  176 |     if (!ttak_bigint_opencl_build()) return false;
+      |         ^
+src/accel/bigint_opencl.c:176:45: error: incompatible types when returning type ‘int’ but ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} was expected
+  176 |     if (!ttak_bigint_opencl_build()) return false;
+      |                                             ^~~~~
+src/accel/bigint_opencl.c:181:16: error: incompatible types when returning type ‘int’ but ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} was expected
+  181 |         return false;
+      |                ^~~~~
+src/accel/bigint_opencl.c:186:35: error: incompatible types when returning type ‘int’ but ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} was expected
+  186 |     if (err != CL_SUCCESS) return false;
+      |                                   ^~~~~
+src/accel/bigint_opencl.c:190:16: error: incompatible types when returning type ‘int’ but ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} was expected
+  190 |         return false;
+      |                ^~~~~
+src/accel/bigint_opencl.c:196:16: error: incompatible types when returning type ‘int’ but ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} was expected
+  196 |         return false;
+      |                ^~~~~
+src/accel/bigint_opencl.c:210:16: error: incompatible types when returning type ‘int’ but ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} was expected
+  210 |         return false;
+      |                ^~~~~
+src/accel/bigint_opencl.c:219:15: error: incompatible types when initializing type ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} using type ‘int’
+  219 |     bool ok = (err == CL_SUCCESS);
+      |               ^
+src/accel/bigint_opencl.c:220:9: error: used vector type where scalar is required
+  220 |     if (ok) {
+      |         ^~
+src/accel/bigint_opencl.c:223:14: error: incompatible types when assigning to type ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} from type ‘int’
+  223 |         ok = (err == CL_SUCCESS);
+      |              ^
+src/accel/bigint_opencl.c:230:9: error: wrong type argument to unary exclamation mark
+  230 |     if (!ok) return false;
+      |         ^
+src/accel/bigint_opencl.c:230:21: error: incompatible types when returning type ‘int’ but ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} was expected
+  230 |     if (!ok) return false;
+      |                     ^~~~~
+src/accel/bigint_opencl.c:233:12: error: incompatible types when returning type ‘int’ but ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} was expected
+  233 |     return true;
+      |            ^~~~
+src/accel/bigint_opencl.c: In function ‘ttak_bigint_accel_opencl_mul’:
+src/accel/bigint_opencl.c:243:9: error: wrong type argument to unary exclamation mark
+  243 |     if (!ttak_bigint_opencl_build()) return false;
+      |         ^
+src/accel/bigint_opencl.c:243:45: error: incompatible types when returning type ‘int’ but ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} was expected
+  243 |     if (!ttak_bigint_opencl_build()) return false;
+      |                                             ^~~~~
+src/accel/bigint_opencl.c:246:16: error: incompatible types when returning type ‘int’ but ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} was expected
+  246 |         return false;
+      |                ^~~~~
+src/accel/bigint_opencl.c:251:35: error: incompatible types when returning type ‘int’ but ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} was expected
+  251 |     if (err != CL_SUCCESS) return false;
+      |                                   ^~~~~
+src/accel/bigint_opencl.c:255:16: error: incompatible types when returning type ‘int’ but ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} was expected
+  255 |         return false;
+      |                ^~~~~
+src/accel/bigint_opencl.c:261:16: error: incompatible types when returning type ‘int’ but ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} was expected
+  261 |         return false;
+      |                ^~~~~
+src/accel/bigint_opencl.c:275:16: error: incompatible types when returning type ‘int’ but ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} was expected
+  275 |         return false;
+      |                ^~~~~
+src/accel/bigint_opencl.c:284:15: error: incompatible types when initializing type ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} using type ‘int’
+  284 |     bool ok = (err == CL_SUCCESS);
+      |               ^
+src/accel/bigint_opencl.c:285:9: error: used vector type where scalar is required
+  285 |     if (ok) {
+      |         ^~
+src/accel/bigint_opencl.c:288:14: error: incompatible types when assigning to type ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} from type ‘int’
+  288 |         ok = (err == CL_SUCCESS);
+      |              ^
+src/accel/bigint_opencl.c:295:9: error: wrong type argument to unary exclamation mark
+  295 |     if (!ok) return false;
+      |         ^
+In file included from include/stdatomic.h:3,
+                 from include/ttak/ttak_accelerator.h:6,
+                 from src/accel/accel_opencl.c:1:
+src/accel/accel_opencl.c: In function ‘ttak_opencl_release’:
+src/accel/bigint_opencl.c:295:21: error: incompatible types when returning type ‘int’ but ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} was expected
+  295 |     if (!ok) return false;
+      |                     ^~~~~
+src/accel/accel_opencl.c:198:19: error: incompatible types when assigning to type ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} from type ‘int’
+  198 |     g_ocl.ready = false;
+      |                   ^~~~~
+src/accel/accel_opencl.c: In function ‘ttak_opencl_build’:
+src/accel/accel_opencl.c:202:9: error: used vector type where scalar is required
+  202 |     if (g_ocl.ready) return true;
+      |         ^~~~~
+src/accel/accel_opencl.c:202:29: error: incompatible types when returning type ‘int’ but ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} was expected
+  202 |     if (g_ocl.ready) return true;
+      |                             ^~~~
+src/accel/bigint_opencl.c:298:12: error: incompatible types when returning type ‘int’ but ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} was expected
+  298 |     return true;
+      |            ^~~~
+src/accel/accel_opencl.c:207:16: error: incompatible types when returning type ‘int’ but ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} was expected
+  207 |         return false;
+      |                ^~~~~
+src/accel/accel_opencl.c:212:16: error: incompatible types when returning type ‘int’ but ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} was expected
+  212 |         return false;
+      |                ^~~~~
+src/accel/accel_opencl.c:220:20: error: incompatible types when returning type ‘int’ but ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} was expected
+  220 |             return false;
+      |                    ^~~~~
+src/accel/accel_opencl.c:227:16: error: incompatible types when returning type ‘int’ but ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} was expected
+  227 |         return false;
+      |                ^~~~~
+src/accel/accel_opencl.c:237:16: error: incompatible types when returning type ‘int’ but ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} was expected
+  237 |         return false;
+      |                ^~~~~
+src/accel/accel_opencl.c:245:16: error: incompatible types when returning type ‘int’ but ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} was expected
+  245 |         return false;
+      |                ^~~~~
+src/accel/accel_opencl.c:251:16: error: incompatible types when returning type ‘int’ but ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} was expected
+  251 |         return false;
+      |                ^~~~~
+src/accel/accel_opencl.c:257:16: error: incompatible types when returning type ‘int’ but ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} was expected
+  257 |         return false;
+      |                ^~~~~
+src/accel/accel_opencl.c:260:19: error: incompatible types when assigning to type ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} from type ‘int’
+  260 |     g_ocl.ready = true;
+      |                   ^~~~
+src/accel/accel_opencl.c:261:12: error: incompatible types when returning type ‘int’ but ‘__vector __bool int’ {aka ‘__vector(4) __bool int’} was expected
+  261 |     return true;
+      |            ^~~~
+src/accel/bigint_opencl.c: In function ‘ttak_bigint_accel_opencl_add’:
+src/accel/bigint_opencl.c:234:1: warning: control reaches end of non-void function [-Wreturn-type]
+  234 | }
+      | ^
+src/accel/bigint_opencl.c: In function ‘ttak_bigint_accel_opencl_mul’:
+src/accel/bigint_opencl.c:299:1: warning: control reaches end of non-void function [-Wreturn-type]
+  299 | }
+      | ^
+src/accel/accel_opencl.c: In function ‘ttak_opencl_dispatch’:
+src/accel/accel_opencl.c:395:9: error: wrong type argument to unary exclamation mark
+  395 |     if (!ttak_opencl_build()) {
+      |         ^
+make: *** [Makefile:152: obj/accel/bigint_opencl.o] 오류 1
+make: *** 끝나지 않은 작업을 기다리고 있습니다....
+make: *** [Makefile:152: obj/accel/accel_opencl.o] 오류 1
+
+
+Compilation terminated.
+Compilation terminated.
+make: *** 'obj/phys/mem/buddy.o' 파일을 삭제합니다
+make: *** [Makefile:152: obj/net/session.o] 인터럽트
+make: *** [Makefile:152: obj/script/bigscript.o] 인터럽트
+make: *** [Makefile:152: obj/phys/mem/buddy.o] 인터럽트
+make: *** [Makefile:152: obj/accel/accel_cpu.o] 인터럽트
+nvcc error   : 'cudafe++' died due to signal 2 
+nvcc error   : 'cudafe++' died due to signal 2 
+make: *** [Makefile:161: obj/accel/bigint_cuda.o] 오류 2
+make: *** [Makefile:161: obj/accel/accel_cuda.o] 오류 2
+make: *** wait: 하위 프로세스가 없음.  멈춤.

@@ -20,7 +20,7 @@ var session_8h =
       [ "TTAK_NET_SESSION_DETACHED", "session_8h.html#a3ad0ec759aace8fad3ac4f92be02c9deab09f370952b930c8ebe0fc15171eb04f", null ]
     ] ],
     [ "ttak_net_session_mgr_close", "session_8h.html#a7d232d0409f2d48425cc50bdc099c9ac", null ],
-    [ "ttak_net_session_mgr_create", "session_8h.html#a616055e35abb79e97a7bb81185038cce", null ],
+    [ "ttak_net_session_mgr_create", "session_8h.html#a1ec2a3bb1afeb18977094a1c70b8c1be", null ],
     [ "ttak_net_session_mgr_destroy", "session_8h.html#a963a2b40b186c0b6bf4cd8599e256fd4", null ],
     [ "ttak_net_session_mgr_init", "session_8h.html#a2d762951d1224927bf5a8751855bf64f", null ],
     [ "ttak_net_session_mgr_set_policy", "session_8h.html#ace96cb1cf5f1aaa7d05d13a61bc4ef98", null ],

@@ -183,9 +183,11 @@ jobs:
           #endif
           #define __global__
           #define __device__
+          #define __constant__
           #define __host__
           #define __shared__    static
           #define __launch_bounds__(...)
+          #define __forceinline__ inline
           static inline hipError_t hipMalloc(void** ptr, size_t size) {
               *ptr = malloc(size);
               return *ptr ? hipSuccess : hipErrorOutOfMemory;
@@ -205,6 +207,8 @@ jobs:
               return hipSuccess;
           }
           static inline hipError_t hipDeviceSynchronize(void) { return hipSuccess; }
+          static inline hipError_t hipSetDevice(int device) { (void)device; return hipSuccess; }
+          static inline hipError_t hipGetLastError(void) { return hipSuccess; }
           #define hipLaunchKernelGGL(kernel, grid, block, sharedMem, stream, ...) \
               kernel(__VA_ARGS__)
           HIPSTUB

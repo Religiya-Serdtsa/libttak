@@ -91,10 +91,10 @@ void lru_put_ex(lru_cache_t *cache, const char *key, size_t val_size, uint64_t n
 	}
 
 	/* 2. Optimized Allocation */
-	lru_entry_t *node = (lru_entry_t*)ttak_mem_alloc_with_flags(sizeof(lru_entry_t), ttl, now, TTAK_MEM_STRICT_CHECK);
-	node->key = (char*)ttak_mem_alloc_with_flags(strlen(key) + 1, ttl, now, TTAK_MEM_STRICT_CHECK);
+	lru_entry_t *node = (lru_entry_t*)ttak_mem_alloc_with_flags_raw(sizeof(lru_entry_t), ttl, now, TTAK_MEM_STRICT_CHECK);
+	node->key = (char*)ttak_mem_alloc_with_flags_raw(strlen(key) + 1, ttl, now, TTAK_MEM_STRICT_CHECK);
 	strcpy(node->key, key);
-	node->data = ttak_mem_alloc_with_flags(val_size, ttl, now, TTAK_MEM_STRICT_CHECK);
+	node->data = ttak_mem_alloc_with_flags_raw(val_size, ttl, now, TTAK_MEM_STRICT_CHECK);
 	node->size = val_size;
 	node->last_access = now;
 

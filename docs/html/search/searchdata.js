@@ -1,6 +1,6 @@
 var indexSectionsWithContent =
 {
-  0: "01_abcdefghijklmnopqrstuvwz",
+  0: "$0123456789_abcdefghijklmnopqrstuvwyz–멀벤상안이입지참캐파한핵",
   1: "_ast",
   2: "01abcdefhilmnopqrstvwz",
   3: "_afgst",
@@ -9,7 +9,8 @@ var indexSectionsWithContent =
   6: "mt",
   7: "mt",
   8: "_adeopst",
-  9: "cdl"
+  9: "acmrs",
+  10: "abcdfhilmprst멀벤안캐한"
 };
 
 var indexSectionNames =
@@ -23,7 +24,8 @@ var indexSectionNames =
   6: "enums",
   7: "enumvalues",
   8: "defines",
-  9: "pages"
+  9: "groups",
+  10: "pages"
 };
 
 var indexSectionLabels =
@@ -37,6 +39,7 @@ var indexSectionLabels =
   6: "Enumerations",
   7: "Enumerator",
   8: "Macros",
-  9: "Pages"
+  9: "Modules",
+  10: "Pages"
 };
 

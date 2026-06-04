@@ -14,7 +14,7 @@
  * @return Pointer to the node or NULL on failure.
  */
 static ttak_bplus_node_t *create_node(int order, bool leaf, uint64_t now) {
-    ttak_bplus_node_t *node = (ttak_bplus_node_t *)ttak_mem_alloc(sizeof(ttak_bplus_node_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
+    ttak_bplus_node_t *node = (ttak_bplus_node_t *)ttak_mem_alloc_raw(sizeof(ttak_bplus_node_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!node) return NULL;
     
     node->is_leaf = leaf;
@@ -24,13 +24,13 @@ static ttak_bplus_node_t *create_node(int order, bool leaf, uint64_t now) {
     // Allocate max size (order is max children, so max keys = order-1, but we allow order for overflow handling before split)
     // Actually safe implementation allocates order+1 slots to simplify "insert then split".
     int cap = order + 1;
-    node->keys = (void **)ttak_mem_alloc(sizeof(void *) * cap, __TTAK_UNSAFE_MEM_FOREVER__, now);
+    node->keys = (void **)ttak_mem_alloc_raw(sizeof(void *) * cap, __TTAK_UNSAFE_MEM_FOREVER__, now);
     
     if (leaf) {
-        node->values = (void **)ttak_mem_alloc(sizeof(void *) * cap, __TTAK_UNSAFE_MEM_FOREVER__, now);
+        node->values = (void **)ttak_mem_alloc_raw(sizeof(void *) * cap, __TTAK_UNSAFE_MEM_FOREVER__, now);
         node->children = NULL;
     } else {
-        node->children = (struct ttak_bplus_node **)ttak_mem_alloc(sizeof(struct ttak_bplus_node *) * (cap + 1), __TTAK_UNSAFE_MEM_FOREVER__, now);
+        node->children = (struct ttak_bplus_node **)ttak_mem_alloc_raw(sizeof(struct ttak_bplus_node *) * (cap + 1), __TTAK_UNSAFE_MEM_FOREVER__, now);
         node->values = NULL;
     }
     

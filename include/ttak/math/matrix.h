@@ -58,9 +58,9 @@ _Bool ttak_matrix_set_flip(tt_shared_matrix_t *m, tt_owner_t *owner, uint8_t axi
 /**
  * @brief Initializes the matrix as a 4x4 Orthogonal Latin Square with magic sums.
  *
- * Inspired by Choi Seok-jeong's Gusuryak, this packs two mutually orthogonal
- * Latin squares (upper and lower 2-bit fields) whose combined values form a
- * 0-15 magic square (rows, columns, diagonals all sum to 30).
+ * Packs two mutually orthogonal Latin squares (upper and lower 2-bit fields)
+ * whose combined values form a normal 0-15 magic square (rows, columns,
+ * and both diagonals all sum to 30).
  */
 _Bool ttak_matrix_set_ols_magic_square_4x4(tt_shared_matrix_t *m, tt_owner_t *owner, uint64_t now);
 

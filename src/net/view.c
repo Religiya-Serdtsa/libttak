@@ -63,8 +63,7 @@ ttak_io_status_t ttak_net_view_from_endpoint(ttak_net_view_t *view,
     int fd = payload->guard.fd;
     uint32_t tid = ttak_net_lattice_get_worker_id();
 
-    /* Transparent Optimization: Use Choi Seok-jeong's Latin Square isolation if lattice is present and enabled */
-    /* Reference: Choi Seok-jeong, "Gusuryak (九數略)", 1700; Yi Sang-hyeok, "Suri (數理)", 1890s. */
+    /* Transparent optimization: use Latin-square isolation if lattice is present and enabled */
     if (lat && (payload->role_flags & TTAK_NET_ROLE_LATTICE_ACCEL)) {
         uint32_t mask = lat->mask;
         uint32_t my_tid = tid & mask;

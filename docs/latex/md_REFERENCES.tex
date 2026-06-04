@@ -1,0 +1,90 @@
+\chapter{Mathematical and Historical References for libttak Algorithms}
+\hypertarget{md_REFERENCES}{}\label{md_REFERENCES}\index{Mathematical and Historical References for libttak Algorithms@{Mathematical and Historical References for libttak Algorithms}}
+\label{md_REFERENCES_autotoc_md103}%
+\Hypertarget{md_REFERENCES_autotoc_md103}%
+ This document preserves the academic and historical lineage of the mathematical principles applied in libttak. To keep the source code mechanically readable and free of obscure cultural naming, all functions, variables, and comments use generic, descriptive system terminology. The references below are maintained for researchers who wish to trace the origins of specific algorithms.
+
+\DoxyHorRuler{0}
+\hypertarget{md_REFERENCES_autotoc_md105}{}\doxysection{\texorpdfstring{$<$tt$>$ttak\+\_\+math\+\_\+lane\+\_\+mul$<$/tt$>$ (formerly $<$tt$>$ttak\+\_\+math\+\_\+dawonsul\+\_\+lane\+\_\+mul$<$/tt$>$)}{<tt>ttak\_math\_lane\_mul</tt> (formerly <tt>ttak\_math\_dawonsul\_lane\_mul</tt>)}}\label{md_REFERENCES_autotoc_md105}
+
+\begin{DoxyItemize}
+\item {\bfseries{Historical concept\+:}} Dawonsul (多變數獨立法) — independent lane processing for multivariate linear systems, associated with the works of Hong Jeong-\/ha and collaborators.
+\item {\bfseries{Reference\+:}} Hong Jeong-\/ha, \texorpdfstring{$\ast$}{*}"{}\+Guiljip (九一集)"{}\texorpdfstring{$\ast$}{*}, 1660s.
+\item {\bfseries{Application in code\+:}} Matrix-\/vector lane multiplication used in {\ttfamily ttak\+\_\+matrix\+\_\+multiply\+\_\+vec}. Each variable lane is processed independently to maximize throughput via aligned-\/limb FMA-\/style accumulation.
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md_REFERENCES_autotoc_md107}{}\doxysection{\texorpdfstring{$<$tt$>$ttak\+\_\+matrix\+\_\+set\+\_\+ols\+\_\+magic\+\_\+square\+\_\+4x4$<$/tt$>$ (formerly $<$tt$>$ttak\+\_\+matrix\+\_\+set\+\_\+gusuryak\+\_\+4x4$<$/tt$>$)}{<tt>ttak\_matrix\_set\_ols\_magic\_square\_4x4</tt> (formerly <tt>ttak\_matrix\_set\_gusuryak\_4x4</tt>)}}\label{md_REFERENCES_autotoc_md107}
+
+\begin{DoxyItemize}
+\item {\bfseries{Historical concept\+:}} Mutually orthogonal Latin squares combined into a normal 0-\/15 magic square, documented in Choi Seok-\/jeong\textquotesingle{}s work on combinatorial design.
+\item {\bfseries{Reference\+:}} Choi Seok-\/jeong, \texorpdfstring{$\ast$}{*}"{}\+Gusuryak (九數略)"{}\texorpdfstring{$\ast$}{*}, 1700.
+\item {\bfseries{Application in code\+:}} Initializes a 4×4 matrix as an Orthogonal Latin Square (OLS) whose rows, columns, and diagonals sum to 30. Used for deterministic, collision-\/minimizing grid-\/based data placement.
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md_REFERENCES_autotoc_md109}{}\doxysection{\texorpdfstring{$<$tt$>$ttak\+\_\+math\+\_\+approx\+\_\+sin$<$/tt$>$ and $<$tt$>$ttak\+\_\+math\+\_\+approx\+\_\+cos$<$/tt$>$}{<tt>ttak\_math\_approx\_sin</tt> and <tt>ttak\_math\_approx\_cos</tt>}}\label{md_REFERENCES_autotoc_md109}
+
+\begin{DoxyItemize}
+\item {\bfseries{Historical concept\+:}} Polynomial approximation methods for trigonometric functions cataloged in the {\itshape Yussigihae} tradition.
+\item {\bfseries{Reference\+:}} Nam Byeong-\/gil, \texorpdfstring{$\ast$}{*}"{}\+Sanhak Jeong-\/ui (算學正義)"{}\texorpdfstring{$\ast$}{*}, 1849.
+\item {\bfseries{Application in code\+:}} Fixed-\/point polynomial expansions for approximate sine and cosine, used in {\ttfamily ttak\+\_\+matrix\+\_\+set\+\_\+rotation} to compute stable rotation matrix entries.
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md_REFERENCES_autotoc_md111}{}\doxysection{\texorpdfstring{$<$tt$>$ttak\+\_\+bigreal\+\_\+op\+\_\+aligned\+\_\+addsub$<$/tt$>$ (formerly $<$tt$>$ttak\+\_\+bigreal\+\_\+op\+\_\+cheonwonsul$<$/tt$>$)}{<tt>ttak\_bigreal\_op\_aligned\_addsub</tt> (formerly <tt>ttak\_bigreal\_op\_cheonwonsul</tt>)}}\label{md_REFERENCES_autotoc_md111}
+
+\begin{DoxyItemize}
+\item {\bfseries{Historical concept\+:}} Cheonwonsul (天元術), a system of aligned limb processing reinterpreted from Tian Yuan Shu for big-\/integer arithmetic.
+\item {\bfseries{Reference\+:}} Hong Jeong-\/ha, \texorpdfstring{$\ast$}{*}"{}\+Guiljip (九一集)"{}\texorpdfstring{$\ast$}{*}, 1660s.
+\item {\bfseries{Application in code\+:}} Internal helper for {\ttfamily ttak\+\_\+bigreal\+\_\+add} and {\ttfamily ttak\+\_\+bigreal\+\_\+sub}. Performs mantissa addition or subtraction after exponent alignment, mapping limbs to cache-\/line-\/friendly layouts.
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md_REFERENCES_autotoc_md113}{}\doxysection{\texorpdfstring{Latin-\/\+Square Scatter LUT in $<$tt$>$src/mem/arena\+\_\+helper.\+c$<$/tt$>$}{Latin-Square Scatter LUT in <tt>src/mem/arena\_helper.c</tt>}}\label{md_REFERENCES_autotoc_md113}
+
+\begin{DoxyItemize}
+\item {\bfseries{Historical concept\+:}} Latin-\/square offsets for epoch scattering.
+\item {\bfseries{Reference\+:}} Choi Seok-\/jeong, \texorpdfstring{$\ast$}{*}"{}\+Gusuryak (九數略)"{}\texorpdfstring{$\ast$}{*}, 1700.
+\item {\bfseries{Application in code\+:}} {\ttfamily ttak\+\_\+arena\+\_\+scatter\+\_\+offset} uses an 8×8 Latin-\/square lookup table ({\ttfamily ttak\+\_\+arena\+\_\+latin\+\_\+square\+\_\+lut}) to scatter epoch allocations and minimize cache-\/line reuse across generations.
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md_REFERENCES_autotoc_md115}{}\doxysection{\texorpdfstring{OLS Traversal in $<$tt$>$src/container/pool.\+c$<$/tt$>$}{OLS Traversal in <tt>src/container/pool.c</tt>}}\label{md_REFERENCES_autotoc_md115}
+
+\begin{DoxyItemize}
+\item {\bfseries{Historical concept\+:}} Orthogonal Latin lattice selection for deterministic slot traversal.
+\item {\bfseries{Reference\+:}} Choi Seok-\/jeong, \texorpdfstring{$\ast$}{*}"{}\+Gusuryak (九數略)"{}\texorpdfstring{$\ast$}{*}, 1700.
+\item {\bfseries{Application in code\+:}} {\ttfamily ttak\+\_\+object\+\_\+pool\+\_\+alloc} traverses pool slots via an order-\/8 Orthogonal Latin Square (OLS) to avoid clustering and reduce bitmap-\/scan contention.
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md_REFERENCES_autotoc_md117}{}\doxysection{\texorpdfstring{Lock-\/\+Free Lattice Ingress in $<$tt$>$src/net/lattice.\+c$<$/tt$>$}{Lock-Free Lattice Ingress in <tt>src/net/lattice.c</tt>}}\label{md_REFERENCES_autotoc_md117}
+
+\begin{DoxyItemize}
+\item {\bfseries{Historical concept\+:}} Deterministic coordinate scheduling on a 2-\/D lattice (Sanpan) for parallel ingress.
+\item {\bfseries{References\+:}}
+\begin{DoxyItemize}
+\item Choi Seok-\/jeong, \texorpdfstring{$\ast$}{*}"{}\+Gusuryak (九數略)"{}\texorpdfstring{$\ast$}{*}, 1700.
+\item Yi Sang-\/hyeok, \texorpdfstring{$\ast$}{*}"{}\+Suri (數理)"{}\texorpdfstring{$\ast$}{*}, 1890s.
+\end{DoxyItemize}
+\item {\bfseries{Application in code\+:}} {\ttfamily ttak\+\_\+net\+\_\+lattice\+\_\+write} performs lock-\/free deterministic writes by sweeping lattice coordinates in a deterministic order derived from OLS-\/based scheduling rules.
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md_REFERENCES_autotoc_md119}{}\doxysection{\texorpdfstring{$<$tt$>$ttak\+\_\+apply\+\_\+mols\+\_\+control$<$/tt$>$ in $<$tt$>$include/ttak/mols\+\_\+control.\+h$<$/tt$>$}{<tt>ttak\_apply\_mols\_control</tt> in <tt>include/ttak/mols\_control.h</tt>}}\label{md_REFERENCES_autotoc_md119}
+
+\begin{DoxyItemize}
+\item {\bfseries{Historical concept\+:}} Mutually Orthogonal Latin Squares (MOLS) applied to load redistribution.
+\item {\bfseries{Reference\+:}} Reverse Siamese Latin-\/square constructions.
+\item {\bfseries{Application in code\+:}} Congestion-\/control helper that redistributes load across a 64×64 mesh. Node coordinates feed a matched pair of Latin squares whose values are XOR-\/mixed with the caller\textquotesingle{}s seed to produce deterministic shuffling.
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md_REFERENCES_autotoc_md121}{}\doxysection{\texorpdfstring{Buddy Allocator Residue Lookup in $<$tt$>$src/phys/mem/buddy.\+c$<$/tt$>$}{Buddy Allocator Residue Lookup in <tt>src/phys/mem/buddy.c</tt>}}\label{md_REFERENCES_autotoc_md121}
+
+\begin{DoxyItemize}
+\item {\bfseries{Historical concept\+:}} Residue-\/class lookup tables for size-\/class indexing.
+\item {\bfseries{Reference\+:}} Nam Byeong-\/gil, \texorpdfstring{$\ast$}{*}"{}\+Sanhak Jeong-\/ui (算學正義)"{}\texorpdfstring{$\ast$}{*}, 1849.
+\item {\bfseries{Application in code\+:}} {\ttfamily select\+\_\+block} uses a bitmask-\/based residue lookup to choose the appropriate buddy block order, reducing fragmentation through deterministic size-\/class selection. 
+\end{DoxyItemize}

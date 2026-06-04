@@ -1,0 +1,334 @@
+\doxysection{include/ttak/mem/abstract.h File Reference}
+\hypertarget{abstract_8h}{}\label{abstract_8h}\index{include/ttak/mem/abstract.h@{include/ttak/mem/abstract.h}}
+
+
+Pointer-\/stable logical memory with segmented backing and scoped maps.  
+
+
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+Include dependency graph for abstract.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=235pt]{abstract_8h__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structttak__abstract__map}{ttak\+\_\+abstract\+\_\+map}}
+\begin{DoxyCompactList}\small\item\em Scoped mapping of a logical byte window in an abstract object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct ttak\+\_\+abstract\+\_\+mem \mbox{\hyperlink{abstract_8h_afdd84436fb08965928ea761ea7bcab0b}{ttak\+\_\+abstract\+\_\+mem\+\_\+t}}
+\item 
+typedef enum \mbox{\hyperlink{abstract_8h_a4e78bdc37bec6c4ddb87471344dd4b95}{ttak\+\_\+abstract\+\_\+access}} \mbox{\hyperlink{abstract_8h_aa41f3f87467114db0e18780fb7caa470}{ttak\+\_\+abstract\+\_\+access\+\_\+t}}
+\item 
+typedef struct \mbox{\hyperlink{structttak__abstract__map}{ttak\+\_\+abstract\+\_\+map}} \mbox{\hyperlink{abstract_8h_aab70ce14a34c4914f9900e68a137677d}{ttak\+\_\+abstract\+\_\+map\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Scoped mapping of a logical byte window in an abstract object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{abstract_8h_a4e78bdc37bec6c4ddb87471344dd4b95}{ttak\+\_\+abstract\+\_\+access}} \{ \mbox{\hyperlink{abstract_8h_a4e78bdc37bec6c4ddb87471344dd4b95ab2b62fca34a3a39eba302a74ce81b9b6}{TTAK\+\_\+\+ABSTRACT\+\_\+\+ACCESS\+\_\+\+READ}} = 0
+, \mbox{\hyperlink{abstract_8h_a4e78bdc37bec6c4ddb87471344dd4b95a111824baed0893db65a74e260f511a67}{TTAK\+\_\+\+ABSTRACT\+\_\+\+ACCESS\+\_\+\+WRITE}} = 1
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{abstract_8h_afdd84436fb08965928ea761ea7bcab0b}{ttak\+\_\+abstract\+\_\+mem\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{abstract_8h_a73447bba9538fd5ed9a9d8caf99a1324}{ttak\+\_\+abstract\+\_\+alloc}} (size\+\_\+t size)
+\begin{DoxyCompactList}\small\item\em Allocate a pointer-\/stable abstract memory object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{abstract_8h_a735ef23daad72a5e6826d6cd39edbfd6}{ttak\+\_\+abstract\+\_\+free}} (\mbox{\hyperlink{abstract_8h_afdd84436fb08965928ea761ea7bcab0b}{ttak\+\_\+abstract\+\_\+mem\+\_\+t}} \texorpdfstring{$\ast$}{*}mem)
+\begin{DoxyCompactList}\small\item\em Free an abstract memory object. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{abstract_8h_acadf412c46815948e090ff8df2a3b399}{ttak\+\_\+abstract\+\_\+size}} (const \mbox{\hyperlink{abstract_8h_afdd84436fb08965928ea761ea7bcab0b}{ttak\+\_\+abstract\+\_\+mem\+\_\+t}} \texorpdfstring{$\ast$}{*}mem)
+\begin{DoxyCompactList}\small\item\em Get current logical size in bytes. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{abstract_8h_a8c4384bc1c127367341c68eafa28aed5}{ttak\+\_\+abstract\+\_\+read}} (const \mbox{\hyperlink{abstract_8h_afdd84436fb08965928ea761ea7bcab0b}{ttak\+\_\+abstract\+\_\+mem\+\_\+t}} \texorpdfstring{$\ast$}{*}mem, size\+\_\+t offset, void \texorpdfstring{$\ast$}{*}out, size\+\_\+t len)
+\begin{DoxyCompactList}\small\item\em Copy out data from logical memory. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{abstract_8h_ab5751d876ce873fe34e3750823a8cf55}{ttak\+\_\+abstract\+\_\+write}} (\mbox{\hyperlink{abstract_8h_afdd84436fb08965928ea761ea7bcab0b}{ttak\+\_\+abstract\+\_\+mem\+\_\+t}} \texorpdfstring{$\ast$}{*}mem, size\+\_\+t offset, const void \texorpdfstring{$\ast$}{*}src, size\+\_\+t len)
+\begin{DoxyCompactList}\small\item\em Copy in data to logical memory. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{abstract_8h_af6f9b0d2b174b88b4e85f3b70c473509}{ttak\+\_\+abstract\+\_\+resize}} (\mbox{\hyperlink{abstract_8h_afdd84436fb08965928ea761ea7bcab0b}{ttak\+\_\+abstract\+\_\+mem\+\_\+t}} \texorpdfstring{$\ast$}{*}mem, size\+\_\+t new\+\_\+size)
+\begin{DoxyCompactList}\small\item\em Change logical size and preserve existing prefix data. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{abstract_8h_ac56f75a9dfada45eb7cf5bfee10b7f0a}{ttak\+\_\+abstract\+\_\+compact}} (\mbox{\hyperlink{abstract_8h_afdd84436fb08965928ea761ea7bcab0b}{ttak\+\_\+abstract\+\_\+mem\+\_\+t}} \texorpdfstring{$\ast$}{*}mem)
+\begin{DoxyCompactList}\small\item\em Force an internal relocation cycle for maintenance/compaction. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{abstract_8h_a7cb52ef5faed2e37518525c6f80099ce}{ttak\+\_\+abstract\+\_\+map}} (\mbox{\hyperlink{abstract_8h_afdd84436fb08965928ea761ea7bcab0b}{ttak\+\_\+abstract\+\_\+mem\+\_\+t}} \texorpdfstring{$\ast$}{*}mem, size\+\_\+t offset, size\+\_\+t len, \mbox{\hyperlink{abstract_8h_aa41f3f87467114db0e18780fb7caa470}{ttak\+\_\+abstract\+\_\+access\+\_\+t}} access, \mbox{\hyperlink{abstract_8h_aab70ce14a34c4914f9900e68a137677d}{ttak\+\_\+abstract\+\_\+map\+\_\+t}} \texorpdfstring{$\ast$}{*}map)
+\begin{DoxyCompactList}\small\item\em Map a logical byte window for direct access. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{abstract_8h_aaefa1f99637a1519d420edfd0adf2439}{ttak\+\_\+abstract\+\_\+unmap}} (\mbox{\hyperlink{abstract_8h_aab70ce14a34c4914f9900e68a137677d}{ttak\+\_\+abstract\+\_\+map\+\_\+t}} \texorpdfstring{$\ast$}{*}map)
+\begin{DoxyCompactList}\small\item\em Release a previously mapped logical window. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Pointer-\/stable logical memory with segmented backing and scoped maps. 
+
+This API exposes a stable logical handle while allowing the implementation to manage the physical backing as one or more internal segments.
+
+Core model\+:
+\begin{DoxyItemize}
+\item The handle returned by \doxylink{abstract_8h_a73447bba9538fd5ed9a9d8caf99a1324}{ttak\+\_\+abstract\+\_\+alloc()} is the stable identity.
+\item Logical bytes may be backed by multiple internal segments.
+\item Callers can use read/write helpers or temporarily map a logical window.
+\item A mapped window is contiguous from the caller\textquotesingle{}s perspective even when the implementation must stage it behind the scenes. 
+\end{DoxyItemize}
+
+Definition in file \mbox{\hyperlink{abstract_8h_source}{abstract.\+h}}.
+
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{abstract_8h_aa41f3f87467114db0e18780fb7caa470}\label{abstract_8h_aa41f3f87467114db0e18780fb7caa470} 
+\index{abstract.h@{abstract.h}!ttak\_abstract\_access\_t@{ttak\_abstract\_access\_t}}
+\index{ttak\_abstract\_access\_t@{ttak\_abstract\_access\_t}!abstract.h@{abstract.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_abstract\_access\_t}{ttak\_abstract\_access\_t}}
+{\footnotesize\ttfamily typedef enum \mbox{\hyperlink{abstract_8h_a4e78bdc37bec6c4ddb87471344dd4b95}{ttak\+\_\+abstract\+\_\+access}} \mbox{\hyperlink{abstract_8h_aa41f3f87467114db0e18780fb7caa470}{ttak\+\_\+abstract\+\_\+access\+\_\+t}}}
+
+\Hypertarget{abstract_8h_aab70ce14a34c4914f9900e68a137677d}\label{abstract_8h_aab70ce14a34c4914f9900e68a137677d} 
+\index{abstract.h@{abstract.h}!ttak\_abstract\_map\_t@{ttak\_abstract\_map\_t}}
+\index{ttak\_abstract\_map\_t@{ttak\_abstract\_map\_t}!abstract.h@{abstract.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_abstract\_map\_t}{ttak\_abstract\_map\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structttak__abstract__map}{ttak\+\_\+abstract\+\_\+map}} \mbox{\hyperlink{abstract_8h_aab70ce14a34c4914f9900e68a137677d}{ttak\+\_\+abstract\+\_\+map\+\_\+t}}}
+
+
+
+Scoped mapping of a logical byte window in an abstract object. 
+
+A map pins relocation behind the object\textquotesingle{}s synchronization boundary and exposes a contiguous byte window for direct indexed access. The mapping is valid only until \doxylink{abstract_8h_aaefa1f99637a1519d420edfd0adf2439}{ttak\+\_\+abstract\+\_\+unmap()} is called. \Hypertarget{abstract_8h_afdd84436fb08965928ea761ea7bcab0b}\label{abstract_8h_afdd84436fb08965928ea761ea7bcab0b} 
+\index{abstract.h@{abstract.h}!ttak\_abstract\_mem\_t@{ttak\_abstract\_mem\_t}}
+\index{ttak\_abstract\_mem\_t@{ttak\_abstract\_mem\_t}!abstract.h@{abstract.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_abstract\_mem\_t}{ttak\_abstract\_mem\_t}}
+{\footnotesize\ttfamily typedef struct ttak\+\_\+abstract\+\_\+mem \mbox{\hyperlink{abstract_8h_afdd84436fb08965928ea761ea7bcab0b}{ttak\+\_\+abstract\+\_\+mem\+\_\+t}}}
+
+Opaque pointer-\/stable logical memory object. 
+
+Definition at line \mbox{\hyperlink{abstract_8h_source_l00026}{26}} of file \mbox{\hyperlink{abstract_8h_source}{abstract.\+h}}.
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{abstract_8h_a4e78bdc37bec6c4ddb87471344dd4b95}\label{abstract_8h_a4e78bdc37bec6c4ddb87471344dd4b95} 
+\index{abstract.h@{abstract.h}!ttak\_abstract\_access@{ttak\_abstract\_access}}
+\index{ttak\_abstract\_access@{ttak\_abstract\_access}!abstract.h@{abstract.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_abstract\_access}{ttak\_abstract\_access}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{abstract_8h_a4e78bdc37bec6c4ddb87471344dd4b95}{ttak\+\_\+abstract\+\_\+access}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_ABSTRACT\_ACCESS\_READ@{TTAK\_ABSTRACT\_ACCESS\_READ}!abstract.h@{abstract.h}}\index{abstract.h@{abstract.h}!TTAK\_ABSTRACT\_ACCESS\_READ@{TTAK\_ABSTRACT\_ACCESS\_READ}}}\Hypertarget{abstract_8h_a4e78bdc37bec6c4ddb87471344dd4b95ab2b62fca34a3a39eba302a74ce81b9b6}\label{abstract_8h_a4e78bdc37bec6c4ddb87471344dd4b95ab2b62fca34a3a39eba302a74ce81b9b6} 
+TTAK\+\_\+\+ABSTRACT\+\_\+\+ACCESS\+\_\+\+READ&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TTAK\_ABSTRACT\_ACCESS\_WRITE@{TTAK\_ABSTRACT\_ACCESS\_WRITE}!abstract.h@{abstract.h}}\index{abstract.h@{abstract.h}!TTAK\_ABSTRACT\_ACCESS\_WRITE@{TTAK\_ABSTRACT\_ACCESS\_WRITE}}}\Hypertarget{abstract_8h_a4e78bdc37bec6c4ddb87471344dd4b95a111824baed0893db65a74e260f511a67}\label{abstract_8h_a4e78bdc37bec6c4ddb87471344dd4b95a111824baed0893db65a74e260f511a67} 
+TTAK\+\_\+\+ABSTRACT\+\_\+\+ACCESS\+\_\+\+WRITE&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{abstract_8h_source_l00028}{28}} of file \mbox{\hyperlink{abstract_8h_source}{abstract.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{abstract_8h_a73447bba9538fd5ed9a9d8caf99a1324}\label{abstract_8h_a73447bba9538fd5ed9a9d8caf99a1324} 
+\index{abstract.h@{abstract.h}!ttak\_abstract\_alloc@{ttak\_abstract\_alloc}}
+\index{ttak\_abstract\_alloc@{ttak\_abstract\_alloc}!abstract.h@{abstract.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_abstract\_alloc()}{ttak\_abstract\_alloc()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{abstract_8h_afdd84436fb08965928ea761ea7bcab0b}{ttak\+\_\+abstract\+\_\+mem\+\_\+t}} \texorpdfstring{$\ast$}{*} ttak\+\_\+abstract\+\_\+alloc (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{size }\end{DoxyParamCaption})}
+
+
+
+Allocate a pointer-\/stable abstract memory object. 
+
+The returned pointer is a stable logical handle, not a direct backing pointer. The logical object starts with {\ttfamily size} bytes, zero-\/initialized.
+
+
+\begin{DoxyParams}{Parameters}
+{\em size} & Logical byte length to allocate. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Stable handle on success, NULL on failure. 
+\end{DoxyReturn}
+\Hypertarget{abstract_8h_ac56f75a9dfada45eb7cf5bfee10b7f0a}\label{abstract_8h_ac56f75a9dfada45eb7cf5bfee10b7f0a} 
+\index{abstract.h@{abstract.h}!ttak\_abstract\_compact@{ttak\_abstract\_compact}}
+\index{ttak\_abstract\_compact@{ttak\_abstract\_compact}!abstract.h@{abstract.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_abstract\_compact()}{ttak\_abstract\_compact()}}
+{\footnotesize\ttfamily int ttak\+\_\+abstract\+\_\+compact (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{abstract_8h_afdd84436fb08965928ea761ea7bcab0b}{ttak\+\_\+abstract\+\_\+mem\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{mem }\end{DoxyParamCaption})}
+
+
+
+Force an internal relocation cycle for maintenance/compaction. 
+
+Useful when the caller wants deterministic relocation points.
+
+
+\begin{DoxyParams}{Parameters}
+{\em mem} & Handle. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, -\/1 on failure. 
+\end{DoxyReturn}
+\Hypertarget{abstract_8h_a735ef23daad72a5e6826d6cd39edbfd6}\label{abstract_8h_a735ef23daad72a5e6826d6cd39edbfd6} 
+\index{abstract.h@{abstract.h}!ttak\_abstract\_free@{ttak\_abstract\_free}}
+\index{ttak\_abstract\_free@{ttak\_abstract\_free}!abstract.h@{abstract.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_abstract\_free()}{ttak\_abstract\_free()}}
+{\footnotesize\ttfamily void ttak\+\_\+abstract\+\_\+free (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{abstract_8h_afdd84436fb08965928ea761ea7bcab0b}{ttak\+\_\+abstract\+\_\+mem\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{mem }\end{DoxyParamCaption})}
+
+
+
+Free an abstract memory object. 
+
+Behavior\+:
+\begin{DoxyItemize}
+\item Clears and releases current backing region.
+\item Releases internal metadata and synchronization resources.
+\item Safe with NULL (no-\/op).
+\end{DoxyItemize}
+
+
+\begin{DoxyParams}{Parameters}
+{\em mem} & Handle returned by \doxylink{abstract_8h_a73447bba9538fd5ed9a9d8caf99a1324}{ttak\+\_\+abstract\+\_\+alloc()}. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{abstract_8h_a7cb52ef5faed2e37518525c6f80099ce}\label{abstract_8h_a7cb52ef5faed2e37518525c6f80099ce} 
+\index{abstract.h@{abstract.h}!ttak\_abstract\_map@{ttak\_abstract\_map}}
+\index{ttak\_abstract\_map@{ttak\_abstract\_map}!abstract.h@{abstract.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_abstract\_map()}{ttak\_abstract\_map()}}
+{\footnotesize\ttfamily int \mbox{\hyperlink{structttak__abstract__map}{ttak\+\_\+abstract\+\_\+map}} (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{abstract_8h_afdd84436fb08965928ea761ea7bcab0b}{ttak\+\_\+abstract\+\_\+mem\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{mem,  }\item[{size\+\_\+t}]{offset,  }\item[{size\+\_\+t}]{len,  }\item[{\mbox{\hyperlink{abstract_8h_aa41f3f87467114db0e18780fb7caa470}{ttak\+\_\+abstract\+\_\+access\+\_\+t}}}]{access,  }\item[{\mbox{\hyperlink{abstract_8h_aab70ce14a34c4914f9900e68a137677d}{ttak\+\_\+abstract\+\_\+map\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{map }\end{DoxyParamCaption})}
+
+
+
+Map a logical byte window for direct access. 
+
+The map stays valid until \doxylink{abstract_8h_aaefa1f99637a1519d420edfd0adf2439}{ttak\+\_\+abstract\+\_\+unmap()} is called. READ maps allow inspection; WRITE maps additionally permit mutation and block relocation for the duration of the mapping.
+
+
+\begin{DoxyParams}{Parameters}
+{\em mem} & Handle. \\
+\hline
+{\em offset} & Start offset in logical bytes. \\
+\hline
+{\em len} & Number of bytes requested. \\
+\hline
+{\em access} & Requested access mode. \\
+\hline
+{\em map} & Output map token. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, -\/1 on invalid input/range. 
+\end{DoxyReturn}
+\Hypertarget{abstract_8h_a8c4384bc1c127367341c68eafa28aed5}\label{abstract_8h_a8c4384bc1c127367341c68eafa28aed5} 
+\index{abstract.h@{abstract.h}!ttak\_abstract\_read@{ttak\_abstract\_read}}
+\index{ttak\_abstract\_read@{ttak\_abstract\_read}!abstract.h@{abstract.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_abstract\_read()}{ttak\_abstract\_read()}}
+{\footnotesize\ttfamily int ttak\+\_\+abstract\+\_\+read (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{abstract_8h_afdd84436fb08965928ea761ea7bcab0b}{ttak\+\_\+abstract\+\_\+mem\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{mem,  }\item[{size\+\_\+t}]{offset,  }\item[{void \texorpdfstring{$\ast$}{*}}]{out,  }\item[{size\+\_\+t}]{len }\end{DoxyParamCaption})}
+
+
+
+Copy out data from logical memory. 
+
+This function is relocation-\/safe because it snapshots under a read lock.
+
+
+\begin{DoxyParams}{Parameters}
+{\em mem} & Handle. \\
+\hline
+{\em offset} & Start offset in logical bytes. \\
+\hline
+{\em out} & Destination buffer. \\
+\hline
+{\em len} & Number of bytes to copy. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, -\/1 on invalid input/range. 
+\end{DoxyReturn}
+\Hypertarget{abstract_8h_af6f9b0d2b174b88b4e85f3b70c473509}\label{abstract_8h_af6f9b0d2b174b88b4e85f3b70c473509} 
+\index{abstract.h@{abstract.h}!ttak\_abstract\_resize@{ttak\_abstract\_resize}}
+\index{ttak\_abstract\_resize@{ttak\_abstract\_resize}!abstract.h@{abstract.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_abstract\_resize()}{ttak\_abstract\_resize()}}
+{\footnotesize\ttfamily int ttak\+\_\+abstract\+\_\+resize (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{abstract_8h_afdd84436fb08965928ea761ea7bcab0b}{ttak\+\_\+abstract\+\_\+mem\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{mem,  }\item[{size\+\_\+t}]{new\+\_\+size }\end{DoxyParamCaption})}
+
+
+
+Change logical size and preserve existing prefix data. 
+
+Resize semantics\+:
+\begin{DoxyItemize}
+\item Growing zero-\/fills new logical range.
+\item Shrinking keeps prefix and may trigger compaction relocation.
+\item Backing replacement uses disjoint-\/region publication rules.
+\end{DoxyItemize}
+
+
+\begin{DoxyParams}{Parameters}
+{\em mem} & Handle. \\
+\hline
+{\em new\+\_\+size} & New logical byte size. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, -\/1 on failure. 
+\end{DoxyReturn}
+\Hypertarget{abstract_8h_acadf412c46815948e090ff8df2a3b399}\label{abstract_8h_acadf412c46815948e090ff8df2a3b399} 
+\index{abstract.h@{abstract.h}!ttak\_abstract\_size@{ttak\_abstract\_size}}
+\index{ttak\_abstract\_size@{ttak\_abstract\_size}!abstract.h@{abstract.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_abstract\_size()}{ttak\_abstract\_size()}}
+{\footnotesize\ttfamily size\+\_\+t ttak\+\_\+abstract\+\_\+size (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{abstract_8h_afdd84436fb08965928ea761ea7bcab0b}{ttak\+\_\+abstract\+\_\+mem\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{mem }\end{DoxyParamCaption})}
+
+
+
+Get current logical size in bytes. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mem} & Handle. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Logical size, or 0 when mem is NULL. 
+\end{DoxyReturn}
+\Hypertarget{abstract_8h_aaefa1f99637a1519d420edfd0adf2439}\label{abstract_8h_aaefa1f99637a1519d420edfd0adf2439} 
+\index{abstract.h@{abstract.h}!ttak\_abstract\_unmap@{ttak\_abstract\_unmap}}
+\index{ttak\_abstract\_unmap@{ttak\_abstract\_unmap}!abstract.h@{abstract.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_abstract\_unmap()}{ttak\_abstract\_unmap()}}
+{\footnotesize\ttfamily void ttak\+\_\+abstract\+\_\+unmap (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{abstract_8h_aab70ce14a34c4914f9900e68a137677d}{ttak\+\_\+abstract\+\_\+map\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{map }\end{DoxyParamCaption})}
+
+
+
+Release a previously mapped logical window. 
+
+Safe to call on a zero-\/initialized map. Resets the token to its canonical empty state.
+
+
+\begin{DoxyParams}{Parameters}
+{\em map} & Map token returned by \doxylink{structttak__abstract__map}{ttak\+\_\+abstract\+\_\+map()}. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{abstract_8h_ab5751d876ce873fe34e3750823a8cf55}\label{abstract_8h_ab5751d876ce873fe34e3750823a8cf55} 
+\index{abstract.h@{abstract.h}!ttak\_abstract\_write@{ttak\_abstract\_write}}
+\index{ttak\_abstract\_write@{ttak\_abstract\_write}!abstract.h@{abstract.h}}
+\doxysubsubsection{\texorpdfstring{ttak\_abstract\_write()}{ttak\_abstract\_write()}}
+{\footnotesize\ttfamily int ttak\+\_\+abstract\+\_\+write (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{abstract_8h_afdd84436fb08965928ea761ea7bcab0b}{ttak\+\_\+abstract\+\_\+mem\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{mem,  }\item[{size\+\_\+t}]{offset,  }\item[{const void \texorpdfstring{$\ast$}{*}}]{src,  }\item[{size\+\_\+t}]{len }\end{DoxyParamCaption})}
+
+
+
+Copy in data to logical memory. 
+
+This function may trigger internal relocation/compaction when capacity needs adjustment or periodic maintenance conditions are met.
+
+
+\begin{DoxyParams}{Parameters}
+{\em mem} & Handle. \\
+\hline
+{\em offset} & Start offset in logical bytes. \\
+\hline
+{\em src} & Source buffer. \\
+\hline
+{\em len} & Number of bytes to copy. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, -\/1 on invalid input/range/failure. 
+\end{DoxyReturn}

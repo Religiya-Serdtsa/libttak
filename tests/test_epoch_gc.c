@@ -12,7 +12,7 @@ static void test_epoch_gc_register_and_destroy(void) {
     ttak_epoch_gc_init(&gc);
     ttak_epoch_gc_manual_rotate(&gc, true);
 
-    void *ptr = ttak_mem_alloc(128, __TTAK_UNSAFE_MEM_FOREVER__, 0);
+    void *ptr = ttak_mem_alloc_raw(128, __TTAK_UNSAFE_MEM_FOREVER__, 0);
     ASSERT(ptr != NULL);
 
     ttak_epoch_gc_register(&gc, ptr, 128);
@@ -33,7 +33,7 @@ static void test_epoch_gc_rotate_cleanup(void) {
     ttak_epoch_gc_init(&gc);
     ttak_epoch_gc_manual_rotate(&gc, true);
 
-    void *ptr = ttak_mem_alloc(64, __TTAK_UNSAFE_MEM_FOREVER__, 0);
+    void *ptr = ttak_mem_alloc_raw(64, __TTAK_UNSAFE_MEM_FOREVER__, 0);
     ASSERT(ptr != NULL);
 
     ttak_epoch_gc_register(&gc, ptr, 64);

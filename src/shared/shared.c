@@ -121,7 +121,7 @@ static ttak_shared_result_t ttak_shared_allocate_impl(ttak_shared_t *self, size_
     uint64_t now = ttak_get_tick_count();
     size_t total_size = sizeof(ttak_payload_header_t) + size;
     
-    ttak_payload_header_t *header = ttak_mem_alloc(total_size, __TTAK_UNSAFE_MEM_FOREVER__, now);
+    ttak_payload_header_t *header = ttak_mem_alloc_raw(total_size, __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!header) return TTAK_OWNER_SHARE_DENIED;
 
     header->size = size;
@@ -405,7 +405,7 @@ ttak_shared_result_t ttak_shared_swap_ebr(ttak_shared_t *self, void *new_shared,
 
     /* 1. Create new implicit payload (Skip if already prefixed, but benchmark sends raw) */
     size_t total_size = sizeof(ttak_payload_header_t) + new_size;
-    ttak_payload_header_t *header = (ttak_payload_header_t *)ttak_mem_alloc(total_size, __TTAK_UNSAFE_MEM_FOREVER__, ttak_get_tick_count());
+    ttak_payload_header_t *header = (ttak_payload_header_t *)ttak_mem_alloc_raw(total_size, __TTAK_UNSAFE_MEM_FOREVER__, ttak_get_tick_count());
     if (!header) return TTAK_OWNER_SHARE_DENIED;
 
     header->size = new_size;

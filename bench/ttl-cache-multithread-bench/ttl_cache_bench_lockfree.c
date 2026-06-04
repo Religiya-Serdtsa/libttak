@@ -330,7 +330,7 @@ static cache_table_t *cache_table_create(size_t desired_buckets) {
         }
     }
     size_t bytes = sizeof(cache_table_t) + buckets * sizeof(cache_bucket_t);
-    cache_table_t *table = ttak_mem_alloc(bytes, 0, ttak_get_tick_count());
+    cache_table_t *table = ttak_mem_alloc_raw(bytes, 0, ttak_get_tick_count());
     if (!table) return NULL;
     memset(table, 0, bytes);
     table->bucket_count = buckets;
@@ -894,7 +894,7 @@ int main(void) {
     pre_fault_memory(table, table_bytes);
     g_table = table;
 
-    g_cache = ttak_mem_alloc(sizeof(ttak_shared_t), 0, ttak_get_tick_count());
+    g_cache = ttak_mem_alloc_raw(sizeof(ttak_shared_t), 0, ttak_get_tick_count());
     ttak_shared_init(g_cache);
     g_cache->allocate_typed(g_cache, sizeof(cache_item_data_t), "cache_item_data_t", TTAK_SHARED_NO_LEVEL);
     bench_install_table(g_table);

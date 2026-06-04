@@ -198,7 +198,7 @@ static int ttak_record_factor(uint64_t p, ttak_factor_ctx_t *ctx) {
     if (*ctx->count == *ctx->capacity) {
         size_t new_cap = (*ctx->capacity == 0) ? 8 : (*ctx->capacity * 2);
         ttak_prime_factor_t *grown =
-            ttak_mem_realloc(*ctx->factors, new_cap * sizeof(ttak_prime_factor_t),
+            ttak_mem_realloc_raw(*ctx->factors, new_cap * sizeof(ttak_prime_factor_t),
                              __TTAK_UNSAFE_MEM_FOREVER__, ctx->now);
         if (!grown) return -1;
         *ctx->factors = grown;
@@ -302,7 +302,7 @@ static int add_factor_big(const ttak_bigint_t *p, ttak_prime_factor_big_t **fact
 
     if (*count == *capacity) {
         size_t new_capacity = (*capacity == 0) ? 8 : *capacity * 2;
-        ttak_prime_factor_big_t *new_factors = ttak_mem_realloc(*factors, new_capacity * sizeof(ttak_prime_factor_big_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
+        ttak_prime_factor_big_t *new_factors = ttak_mem_realloc_raw(*factors, new_capacity * sizeof(ttak_prime_factor_big_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
         if (!new_factors) return -1;
         *factors = new_factors;
         *capacity = new_capacity;
@@ -349,7 +349,7 @@ int ttak_factor_big(const ttak_bigint_t *n, ttak_prime_factor_big_t **factors_ou
         }
 
         ttak_prime_factor_big_t *big_factors =
-            ttak_mem_realloc(NULL, u64_count * sizeof(ttak_prime_factor_big_t),
+            ttak_mem_realloc_raw(NULL, u64_count * sizeof(ttak_prime_factor_big_t),
                              __TTAK_UNSAFE_MEM_FOREVER__, now);
         if (!big_factors && u64_count > 0) {
             ttak_mem_free(u64_factors);

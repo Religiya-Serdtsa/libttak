@@ -1,5 +1,8 @@
 # libttak
 
+![Memuh the sea rabbit](./mascot.png)
+![GitHub Copilot CI Benchmark](./bench/ttl-cache-multithread-bench/copilot_ci_benchmark.svg)
+
 **Deterministic systems runtime for C.**
 
 libttak is a low-level runtime focused on predictable memory behavior,
@@ -96,9 +99,8 @@ Explicit worker orchestration without hiding scheduling behavior.
 
 This is one of libttak's experimental scheduling layers.
 
-It uses deterministic coordinate selection inspired by historical
-Latin-square construction methods documented in
-**Choi Seok-jeong's GuSuRyak (九數略)**.
+It uses deterministic coordinate selection inspired by
+orthogonal Latin square (OLS) constructions.
 
 This is used for:
 

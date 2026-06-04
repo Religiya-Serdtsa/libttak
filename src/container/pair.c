@@ -13,7 +13,7 @@ void ttak_pair_init(ttak_pair_t *pair, size_t length, uint64_t now) {
     if (!pair) return;
     pair->length = length;
     if (length > 0) {
-        pair->elements = (void **)ttak_mem_alloc(sizeof(void *) * length, __TTAK_UNSAFE_MEM_FOREVER__, now);
+        pair->elements = (void **)ttak_mem_alloc_raw(sizeof(void *) * length, __TTAK_UNSAFE_MEM_FOREVER__, now);
     } else {
         pair->elements = NULL;
     }

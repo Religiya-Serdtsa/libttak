@@ -2,6 +2,7 @@ var ttak__compiler_8h =
 [
     [ "__builtin_clzll", "ttak__compiler_8h.html#aded4ba7a8e210443e0f6245a10ee5e5b", null ],
     [ "__builtin_ctzll", "ttak__compiler_8h.html#a7127135e8502e259083fbc93d189db9d", null ],
+    [ "TTAK_ATTRIBUTE_CLEANUP", "ttak__compiler_8h.html#aa103fd0a6e458cbd4a89543905d68927", null ],
     [ "TTAK_FAST_ATOMIC_ADD_U32", "ttak__compiler_8h.html#ad8f1611e566fbff0e2d7920e9fe59130", null ],
     [ "TTAK_FAST_ATOMIC_ADD_U64", "ttak__compiler_8h.html#a966b919194eba8b9581f0dead8effecf", null ],
     [ "TTAK_FAST_ATOMIC_LOAD_U64", "ttak__compiler_8h.html#a326daeea4d60d85414964232a072e4a2", null ],

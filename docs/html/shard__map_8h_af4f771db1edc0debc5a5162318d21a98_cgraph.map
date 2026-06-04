@@ -1,0 +1,5 @@
+<map id="ttak_shard_hash_to_coords" name="ttak_shard_hash_to_coords">
+<area shape="rect" id="Node000001" title="Convert a task hash into (row, col) shard coordinates." alt="" coords="5,5,155,45"/>
+<area shape="rect" id="Node000002" href="$mols__control_8h.html#ae070b9e05900410ed31898abf4a9a0ab" title="Apply MOLS&#45;based congestion control on a 64×64 mesh node." alt="" coords="203,13,385,38"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="155,23,189,23,189,28,155,28"/>
+</map>

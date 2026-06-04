@@ -1,5 +1,10 @@
 <map id="internal/ttak/shard_map.h" name="internal/ttak/shard_map.h">
-<area shape="rect" id="node1" title="Deterministic shard mapping utilities for the concurrent async runtime." alt="" coords="19,5,146,47"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,95,69,121"/>
-<area shape="rect" id="node3" title=" " alt="" coords="94,95,162,121"/>
+<area shape="rect" id="Node000001" title="Deterministic shard mapping utilities for the concurrent async runtime." alt="" coords="5,5,148,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="72,167,143,192"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="57,47,43,63,32,81,26,99,30,118,48,140,71,158,68,162,44,144,25,120,21,99,27,78,39,60,53,44"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="39,93,114,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="79,46,79,79,74,79,74,46"/>
+<area shape="rect" id="Node000004" href="$mols__control_8h.html" title="Congestion control helpers built on mutually orthogonal Latin squares (MOLS)." alt="" coords="139,93,287,119"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="111,43,182,84,179,89,108,48"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="197,121,137,161,134,157,194,116"/>
 </map>

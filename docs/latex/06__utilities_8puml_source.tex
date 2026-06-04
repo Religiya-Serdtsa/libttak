@@ -30,51 +30,60 @@
 \DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ +\ mean()\ :\ double}
 \DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ +\ print\_ascii()}
 \DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00028}00028\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00029}00029\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00030}00030\ }
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00031}00031\ \ \ \ \ package\ "{}Timing\ (timing/)"{}\ \{}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00032}00032\ \ \ \ \ \ \ \ \ class\ ttak\_deadline\_t\ \{}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ +\ start\_ts\ :\ uint64\_t}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ +\ deadline\_ts\ :\ uint64\_t}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ +\ set(ms)}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ +\ is\_expired()\ :\ bool}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ +\ remaining()\ :\ uint64\_t}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00039}00039\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00040}00040\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00041}00041\ }
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00042}00042\ \ \ \ \ package\ "{}Limits\ (limit/)"{}\ \{}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00043}00043\ \ \ \ \ \ \ \ \ class\ ttak\_ratelimit\_t\ \{}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ +\ bucket\ :\ ttak\_token\_bucket\_t}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ +\ init(rate,\ burst)}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ +\ allow()\ :\ bool}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00030}00030\ \ \ \ \ \ \ \ \ class\ ttak\_system\_usage\ \{}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ +\ ttak\_get\_cpu\_usage\_total()\ :\ double}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ +\ ttak\_get\_cpu\_usage\_per\_core(core)\ :\ double}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ +\ ttak\_get\_gpu\_usage\_total()\ :\ double}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ +\ ttak\_get\_gpu\_usage\_per\_cu(cu)\ :\ double}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ +\ ttak\_get\_rss\_footprint()\ :\ size\_t}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ +\ ttak\_get\_rss\_footprint\_full()\ :\ char*}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00037}00037\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00038}00038\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00040}00040\ \ \ \ \ package\ "{}Timing\ (timing/)"{}\ \{}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00041}00041\ \ \ \ \ \ \ \ \ class\ ttak\_deadline\_t\ \{}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ +\ start\_ts\ :\ uint64\_t}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ +\ deadline\_ts\ :\ uint64\_t}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ +\ set(ms)}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ +\ is\_expired()\ :\ bool}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ +\ remaining()\ :\ uint64\_t}
 \DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00048}00048\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00049}00049\ }
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00050}00050\ \ \ \ \ \ \ \ \ class\ ttak\_token\_bucket\_t\ \{}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ +\ tokens\ :\ double}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ +\ max\_tokens\ :\ double}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ +\ refill\_rate\ :\ double}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ +\ last\_refill\_ts\ :\ uint64\_t}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ +\ lock\ :\ ttak\_spin\_t}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00056}00056\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00057}00057\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00049}00049\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00051}00051\ \ \ \ \ package\ "{}Limits\ (limit/)"{}\ \{}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00052}00052\ \ \ \ \ \ \ \ \ class\ ttak\_ratelimit\_t\ \{}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ +\ bucket\ :\ ttak\_token\_bucket\_t}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ +\ init(rate,\ burst)}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ +\ allow()\ :\ bool}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00057}00057\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00058}00058\ }
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00059}00059\ \ \ \ \ package\ "{}Masking\ (mask/)"{}\ \{}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00060}00060\ \ \ \ \ \ \ \ \ class\ ttak\_dynamic\_mask\_t\ \{}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ +\ bits\ :\ uint64\_t*}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ +\ capacity\ :\ uint32\_t}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ +\ count\ :\ uint32\_t}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ +\ lock\ :\ ttak\_rwlock\_t}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ +\ init()}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ +\ destroy()}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ +\ set(bit\_idx)}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ +\ clear(bit\_idx)}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ +\ test(bit\_idx)}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00071}00071\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00072}00072\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00073}00073\ \}}
-\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00074}00074\ @enduml}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00059}00059\ \ \ \ \ \ \ \ \ class\ ttak\_token\_bucket\_t\ \{}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ +\ tokens\ :\ double}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ +\ max\_tokens\ :\ double}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ +\ refill\_rate\ :\ double}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ +\ last\_refill\_ts\ :\ uint64\_t}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ +\ lock\ :\ ttak\_spin\_t}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00065}00065\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00066}00066\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00068}00068\ \ \ \ \ package\ "{}Masking\ (mask/)"{}\ \{}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00069}00069\ \ \ \ \ \ \ \ \ class\ ttak\_dynamic\_mask\_t\ \{}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ +\ bits\ :\ uint64\_t*}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ +\ capacity\ :\ uint32\_t}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ +\ count\ :\ uint32\_t}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ +\ lock\ :\ ttak\_rwlock\_t}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ +\ init()}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ +\ destroy()}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ +\ set(bit\_idx)}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ +\ clear(bit\_idx)}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ +\ test(bit\_idx)}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00080}00080\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00081}00081\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00082}00082\ \}}
+\DoxyCodeLine{\Hypertarget{06__utilities_8puml_source_l00083}00083\ @enduml}
 
 \end{DoxyCode}

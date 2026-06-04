@@ -1,6 +1,14 @@
 /**
  * @file ttak_mem_vma.c
- * @brief Region-backed medium and large allocators with split/coalescing.
+ * @brief Region-backed medium and large allocators.
+ *
+ * Dual-Path Architecture:
+ *   - OS Managed (TTAK_OS_MANAGED_MEMORY == 1): Each allocation is satisfied
+ *     by a direct OS native call (mmap / VirtualAlloc).  The returned block is
+ *     unmapped on free so RSS drops immediately.
+ *   - Legacy / Embedded (TTAK_OS_MANAGED_MEMORY == 0): Uses static
+ *     segregated free-list regions with split/coalescing inside pre-reserved
+ *     buffers.
  */
 
 #include <string.h>
@@ -10,6 +18,8 @@
 #include "../../internal/ttak/mem_internal.h"
 #include "../../include/ttak/mem/mem.h"
 #include <ttak/mem/fastpath.h>
+
+#if !TTAK_OS_MANAGED_MEMORY
 
 typedef struct ttak_region_block_t {
     size_t size;
@@ -64,7 +74,7 @@ static int size_to_bin(size_t sz) {
 }
 
 static inline size_t payload_offset(void) {
-    size_t off = sizeof(ttak_region_block_t);
+    size_t off = sizeof(ttak_mem_header_t);
     return (off + TTAK_VMA_ALIGNMENT - 1) & ~((size_t)TTAK_VMA_ALIGNMENT - 1);
 }
 
@@ -188,24 +198,63 @@ static void region_free(ttak_region_allocator_t *alloc, ttak_mem_header_t *heade
     pthread_mutex_lock(&alloc->lock);
     ttak_region_block_t *blk = (ttak_region_block_t *)((uint8_t *)header - payload_offset());
     blk->is_free = 1;
-    blk->free_next = NULL;
     blk = region_coalesce(alloc, blk);
     free_bin_insert(alloc, blk);
     pthread_mutex_unlock(&alloc->lock);
 }
 
+#endif /* !TTAK_OS_MANAGED_MEMORY */
+
+/* ------------------------------------------------------------------ */
+/*  Public tier entry points                                           */
+/* ------------------------------------------------------------------ */
+
 ttak_mem_header_t* ttak_mem_vma_alloc_internal(size_t user_requested_size) {
+#if TTAK_OS_MANAGED_MEMORY
+    size_t total = sizeof(ttak_mem_header_t) + user_requested_size;
+    total = (total + TTAK_VMA_ALIGNMENT - 1) & ~((size_t)TTAK_VMA_ALIGNMENT - 1);
+    ttak_mem_header_t *header = (ttak_mem_header_t *)ttak_os_mem_alloc(total);
+    if (header) {
+        memset(header, 0, total);
+        pthread_mutex_init(&header->lock, NULL);
+    }
+    return header;
+#else
     return region_alloc(&vma_allocator, user_requested_size);
+#endif
 }
 
 void _vma_free_internal(ttak_mem_header_t* header) {
+#if TTAK_OS_MANAGED_MEMORY
+    if (!header) return;
+    pthread_mutex_destroy(&header->lock);
+    ttak_os_mem_free(header, header->mapped_size);
+#else
     region_free(&vma_allocator, header);
+#endif
 }
 
 ttak_mem_header_t* ttak_mem_large_alloc_internal(size_t user_requested_size) {
+#if TTAK_OS_MANAGED_MEMORY
+    size_t total = sizeof(ttak_mem_header_t) + user_requested_size;
+    total = (total + TTAK_VMA_ALIGNMENT - 1) & ~((size_t)TTAK_VMA_ALIGNMENT - 1);
+    ttak_mem_header_t *header = (ttak_mem_header_t *)ttak_os_mem_alloc(total);
+    if (header) {
+        memset(header, 0, total);
+        pthread_mutex_init(&header->lock, NULL);
+    }
+    return header;
+#else
     return region_alloc(&large_allocator, user_requested_size);
+#endif
 }
 
 void _large_free_internal(ttak_mem_header_t* header) {
+#if TTAK_OS_MANAGED_MEMORY
+    if (!header) return;
+    pthread_mutex_destroy(&header->lock);
+    ttak_os_mem_free(header, header->mapped_size);
+#else
     region_free(&large_allocator, header);
+#endif
 }

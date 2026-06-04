@@ -262,7 +262,7 @@ static pthread_mutex_t g_progress_lock = PTHREAD_MUTEX_INITIALIZER;
 
 static bool progress_slots_init(size_t count, uint64_t now) {
     if (count == 0) return false;
-    g_progress_slots = (progress_slot_t *)ttak_mem_alloc(count * sizeof(progress_slot_t),
+    g_progress_slots = (progress_slot_t *)ttak_mem_alloc_raw(count * sizeof(progress_slot_t),
                                                          __TTAK_UNSAFE_MEM_FOREVER__,
                                                          now);
     if (!g_progress_slots) return false;
@@ -610,7 +610,7 @@ static bool seed_registry_try_add(const ttak_bigint_t *seed) {
         node = node->next;
     }
     uint64_t now = monotonic_millis();
-    node = ttak_mem_alloc(sizeof(*node), __TTAK_UNSAFE_MEM_FOREVER__, now);
+    node = ttak_mem_alloc_raw(sizeof(*node), __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!node) {
         ttak_mutex_unlock(&g_seed_lock);
         return false;
@@ -666,7 +666,7 @@ static void history_big_insert(history_big_table_t *t, const ttak_bigint_t *valu
     memcpy(&hash_prefix, hash, sizeof(hash_prefix));
     size_t idx = hash_prefix % HISTORY_BUCKETS;
     uint64_t now = monotonic_millis();
-    history_big_entry_t *node = ttak_mem_alloc(sizeof(*node), __TTAK_UNSAFE_MEM_FOREVER__, now);
+    history_big_entry_t *node = ttak_mem_alloc_raw(sizeof(*node), __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!node) return;
     memcpy(node->hash, hash, 32);
     node->step = step;
@@ -1005,8 +1005,8 @@ static bool ledger_ensure_found_capacity_locked(ledger_state_t *state, size_t ex
     size_t bytes = new_cap * sizeof(*state->found_records);
     uint64_t now = monotonic_millis();
     found_record_t *tmp = state->found_records
-        ? ttak_mem_realloc(state->found_records, bytes, __TTAK_UNSAFE_MEM_FOREVER__, now)
-        : ttak_mem_alloc(bytes, __TTAK_UNSAFE_MEM_FOREVER__, now);
+        ? ttak_mem_realloc_raw(state->found_records, bytes, __TTAK_UNSAFE_MEM_FOREVER__, now)
+        : ttak_mem_alloc_raw(bytes, __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!tmp) return false;
     state->found_records = tmp;
     state->found_cap = new_cap;
@@ -1021,8 +1021,8 @@ static bool ledger_ensure_jump_capacity_locked(ledger_state_t *state, size_t ext
     size_t bytes = new_cap * sizeof(*state->jump_records);
     uint64_t now = monotonic_millis();
     jump_record_t *tmp = state->jump_records
-        ? ttak_mem_realloc(state->jump_records, bytes, __TTAK_UNSAFE_MEM_FOREVER__, now)
-        : ttak_mem_alloc(bytes, __TTAK_UNSAFE_MEM_FOREVER__, now);
+        ? ttak_mem_realloc_raw(state->jump_records, bytes, __TTAK_UNSAFE_MEM_FOREVER__, now)
+        : ttak_mem_alloc_raw(bytes, __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!tmp) return false;
     state->jump_records = tmp;
     state->jump_cap = new_cap;
@@ -1037,8 +1037,8 @@ static bool ledger_ensure_track_capacity_locked(ledger_state_t *state, size_t ex
     size_t bytes = new_cap * sizeof(*state->track_records);
     uint64_t now = monotonic_millis();
     track_record_t *tmp = state->track_records
-        ? ttak_mem_realloc(state->track_records, bytes, __TTAK_UNSAFE_MEM_FOREVER__, now)
-        : ttak_mem_alloc(bytes, __TTAK_UNSAFE_MEM_FOREVER__, now);
+        ? ttak_mem_realloc_raw(state->track_records, bytes, __TTAK_UNSAFE_MEM_FOREVER__, now)
+        : ttak_mem_alloc_raw(bytes, __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!tmp) return false;
     state->track_records = tmp;
     state->track_cap = new_cap;
@@ -1122,7 +1122,7 @@ static void ledger_owner_store_track(void *ctx, void *args) {
         memcpy(dst->max_prefix, params->record->max_prefix, sizeof(dst->max_prefix));
         if (params->record->max_value_dec) {
             size_t len = strlen(params->record->max_value_dec);
-            dst->max_value_dec = ttak_mem_alloc(len + 1, __TTAK_UNSAFE_MEM_FOREVER__, now);
+            dst->max_value_dec = ttak_mem_alloc_raw(len + 1, __TTAK_UNSAFE_MEM_FOREVER__, now);
             if (dst->max_value_dec) memcpy(dst->max_value_dec, params->record->max_value_dec, len + 1);
         } else dst->max_value_dec = NULL;
         params->ok = true;
@@ -1739,7 +1739,7 @@ static void load_track_records(void) {
             
             char s_max[8192];
             if (json_extract_string(line, "max_value", s_max, sizeof(s_max))) {
-                rec.max_value_dec = ttak_mem_alloc(strlen(s_max) + 1, __TTAK_UNSAFE_MEM_FOREVER__, now);
+                rec.max_value_dec = ttak_mem_alloc_raw(strlen(s_max) + 1, __TTAK_UNSAFE_MEM_FOREVER__, now);
                 if (rec.max_value_dec) strcpy(rec.max_value_dec, s_max);
             }
 
@@ -1768,7 +1768,7 @@ static void load_queue_checkpoint(void) {
     if (!fp) return;
     fseek(fp, 0, SEEK_END); long sz = ftell(fp); if (sz <= 0) { fclose(fp); return; }
     rewind(fp); uint64_t now = monotonic_millis();
-    char *buf = ttak_mem_alloc((size_t)sz + 1, __TTAK_UNSAFE_MEM_FOREVER__, now);
+    char *buf = ttak_mem_alloc_raw((size_t)sz + 1, __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!buf) { fclose(fp); return; }
     fread(buf, 1, (size_t)sz, fp); buf[sz] = '\0'; fclose(fp);
     
@@ -1788,7 +1788,7 @@ static void load_queue_checkpoint(void) {
                         ttak_bigint_t seed;
                         if (ttak_bigint_init_from_string(&seed, s_seed, now)) {
                             if (seed_registry_try_add(&seed)) {
-                                aliquot_job_t *job = ttak_mem_alloc(sizeof(aliquot_job_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
+                                aliquot_job_t *job = ttak_mem_alloc_raw(sizeof(aliquot_job_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
                                 if (job) {
                                     memset(job, 0, sizeof(*job));
                                     ttak_bigint_init_copy(&job->seed, &seed, now);
@@ -1839,7 +1839,7 @@ static void process_job(const aliquot_job_t *job) {
     run_aliquot_sequence(&job->seed, max_steps, budget_ms, &outcome);
 
     if (outcome.max_bits > 64 && outcome.hit_limit) {
-        aliquot_job_t *retry = ttak_mem_alloc(sizeof(aliquot_job_t), __TTAK_UNSAFE_MEM_FOREVER__, monotonic_millis());
+        aliquot_job_t *retry = ttak_mem_alloc_raw(sizeof(aliquot_job_t), __TTAK_UNSAFE_MEM_FOREVER__, monotonic_millis());
         if (retry) {
             memset(retry, 0, sizeof(*retry));
             ttak_bigint_init_copy(&retry->seed, &job->seed, monotonic_millis());
@@ -1897,7 +1897,7 @@ static void *scout_main(void *arg) {
         double score; double op = compute_overflow_pressure(&probe);
         if (looks_long(&probe, &score)) {
             append_jump_record(&seed, probe.steps, &probe.max_value, score, op);
-            aliquot_job_t *job = ttak_mem_alloc(sizeof(aliquot_job_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
+            aliquot_job_t *job = ttak_mem_alloc_raw(sizeof(aliquot_job_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
             if (job) {
                 memset(job, 0, sizeof(*job));
                 ttak_bigint_init_copy(&job->seed, &seed, now);
@@ -1967,7 +1967,7 @@ int main(void) {
             ttak_bigint_init_u64(&seed, rand_seed_val, now);
 
             if (seed_registry_try_add(&seed)) {
-                aliquot_job_t *job = ttak_mem_alloc(sizeof(aliquot_job_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
+                aliquot_job_t *job = ttak_mem_alloc_raw(sizeof(aliquot_job_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
                 if (job) {
                     memset(job, 0, sizeof(*job));
                     ttak_bigint_init_copy(&job->seed, &seed, now);
@@ -2001,7 +2001,7 @@ int main(void) {
             ttak_bigint_init_u64(&seed, rand_seed_val, now);
 
             if (seed_registry_try_add(&seed)) {
-                aliquot_job_t *job = ttak_mem_alloc(sizeof(aliquot_job_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
+                aliquot_job_t *job = ttak_mem_alloc_raw(sizeof(aliquot_job_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
                 if (job) {
                     memset(job, 0, sizeof(*job));
                     ttak_bigint_init_copy(&job->seed, &seed, now);

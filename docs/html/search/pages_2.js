@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['libttak_20benchmark_20suite_3210',['LibTTAK Benchmark Suite',['../index.html',1,'']]],
-  ['libttak_20specification_3211',['LibTTAK Specification',['../md_SPECS.html',1,'']]]
+  ['clone_20coding_20path_0',['Clone Coding Path',['../md_tutorials_2CLONE__PATH.html',1,'']]],
+  ['coding_20path_1',['Clone Coding Path',['../md_tutorials_2CLONE__PATH.html',1,'']]]
 ];

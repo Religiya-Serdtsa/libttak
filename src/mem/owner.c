@@ -26,7 +26,7 @@ static inline uintptr_t _hash_str(const char *str) {
 
 ttak_owner_t *ttak_owner_create(uint32_t policy) {
     uint64_t now = ttak_get_tick_count();
-    ttak_owner_t *owner = ttak_mem_alloc(sizeof(ttak_owner_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
+    ttak_owner_t *owner = ttak_mem_alloc_raw(sizeof(ttak_owner_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!owner) return NULL;
 
     owner->id = atomic_fetch_add(&g_owner_id_counter, 1);

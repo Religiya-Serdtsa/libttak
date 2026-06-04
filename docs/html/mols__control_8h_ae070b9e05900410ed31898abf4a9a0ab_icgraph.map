@@ -1,0 +1,7 @@
+<map id="ttak_apply_mols_control" name="ttak_apply_mols_control">
+<area shape="rect" id="Node000001" title="Apply MOLS&#45;based congestion control on a 64×64 mesh node." alt="" coords="405,13,588,38"/>
+<area shape="rect" id="Node000002" href="$shard__map_8h.html#af4f771db1edc0debc5a5162318d21a98" title="Convert a task hash into (row, col) shard coordinates." alt="" coords="208,5,357,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="392,28,357,28,357,23,392,23"/>
+<area shape="rect" id="Node000003" href="$shard__map_8h.html#a8bb467e81c3843e468c99b69388204b5" title="Map a task hash to a shard index via the 2D routing table." alt="" coords="5,13,160,38"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="194,28,160,28,160,23,194,23"/>
+</map>

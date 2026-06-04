@@ -10,7 +10,7 @@ int main(void) {
 
     uint64_t now = ttak_get_tick_count_ns();
     ttak_epoch_gc_init(&gc);
-    int *value = (int *)ttak_mem_alloc(sizeof(*value), __TTAK_UNSAFE_MEM_FOREVER__, now);
+    int *value = (int *)ttak_mem_alloc_raw(sizeof(*value), __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (value) {
         *value = 7;
         ttak_epoch_gc_register(&gc, value, sizeof(*value));

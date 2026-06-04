@@ -181,7 +181,7 @@ ttak_thread_pool_t *ttak_thread_pool_create(size_t num_threads, int default_nice
     /* Ensure smart scheduler is ready */
     ttak_scheduler_init();
 
-    ttak_thread_pool_t *pool = (ttak_thread_pool_t *)ttak_mem_alloc(sizeof(ttak_thread_pool_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
+    ttak_thread_pool_t *pool = (ttak_thread_pool_t *)ttak_mem_alloc_raw(sizeof(ttak_thread_pool_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!pool) {
         if (attr_for_threads) pthread_attr_destroy(&attr);
         return NULL;
@@ -208,7 +208,7 @@ ttak_thread_pool_t *ttak_thread_pool_create(size_t num_threads, int default_nice
         pthread_cond_init(&pool->shards[s].cond, NULL);
     }
 
-    pool->workers = (ttak_worker_t **)ttak_mem_alloc(sizeof(ttak_worker_t *) * num_threads, __TTAK_UNSAFE_MEM_FOREVER__, now);
+    pool->workers = (ttak_worker_t **)ttak_mem_alloc_raw(sizeof(ttak_worker_t *) * num_threads, __TTAK_UNSAFE_MEM_FOREVER__, now);
     if (!pool->workers) {
         fprintf(stderr, "[FATAL] Failed to allocate worker array\n");
         for (size_t s = 0; s < TTAK_THREAD_POOL_SHARDS; s++) {
@@ -223,7 +223,7 @@ ttak_thread_pool_t *ttak_thread_pool_create(size_t num_threads, int default_nice
     }
 
     for (size_t i = 0; i < num_threads; i++) {
-        pool->workers[i] = (ttak_worker_t *)ttak_mem_alloc(sizeof(ttak_worker_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
+        pool->workers[i] = (ttak_worker_t *)ttak_mem_alloc_raw(sizeof(ttak_worker_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
         if (!pool->workers[i]) {
             fprintf(stderr, "[FATAL] Failed to allocate worker %zu\n", i);
             pool->num_threads = i;
@@ -237,7 +237,7 @@ ttak_thread_pool_t *ttak_thread_pool_create(size_t num_threads, int default_nice
         /* Assign shard affinity: spread workers evenly across shards */
         pool->workers[i]->preferred_shard = ttak_shard_for_worker(i);
 
-        pool->workers[i]->wrapper = (ttak_worker_wrapper_t *)ttak_mem_alloc(sizeof(ttak_worker_wrapper_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
+        pool->workers[i]->wrapper = (ttak_worker_wrapper_t *)ttak_mem_alloc_raw(sizeof(ttak_worker_wrapper_t), __TTAK_UNSAFE_MEM_FOREVER__, now);
         if (!pool->workers[i]->wrapper) {
             fprintf(stderr, "[FATAL] Failed to allocate worker wrapper %zu\n", i);
             ttak_mem_free(pool->workers[i]);

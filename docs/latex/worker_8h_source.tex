@@ -44,16 +44,17 @@
 \DoxyCodeLine{\Hypertarget{worker_8h_source_l00040}\mbox{\hyperlink{structttak__worker_aa43969e853405f2ce3da99a15dc305a9}{00040}}\ \ \ \ \ \mbox{\hyperlink{structttak__worker__wrapper}{ttak\_worker\_wrapper\_t}}\ \ \ *\mbox{\hyperlink{structttak__worker_aa43969e853405f2ce3da99a15dc305a9}{wrapper}};}
 \DoxyCodeLine{\Hypertarget{worker_8h_source_l00041}\mbox{\hyperlink{structttak__worker_a94f3f60243a1d3031730716de32b3229}{00041}}\ \ \ \ \ \_Bool\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structttak__worker_a94f3f60243a1d3031730716de32b3229}{should\_stop}};}
 \DoxyCodeLine{\Hypertarget{worker_8h_source_l00042}\mbox{\hyperlink{structttak__worker_abc558d47ac88b389c6668b151423d1a9}{00042}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structttak__worker_abc558d47ac88b389c6668b151423d1a9}{exit\_code}};}
-\DoxyCodeLine{\Hypertarget{worker_8h_source_l00043}\mbox{\hyperlink{worker_8h_a0003749eead12470661f5e9d7d4cc842}{00043}}\ \}\ \mbox{\hyperlink{worker_8h_a0003749eead12470661f5e9d7d4cc842}{ttak\_worker\_t}};}
-\DoxyCodeLine{\Hypertarget{worker_8h_source_l00044}00044\ }
-\DoxyCodeLine{\Hypertarget{worker_8h_source_l00045}\mbox{\hyperlink{worker_8h_afdb21bc290370c6055f5f8ce3e204337}{00045}}\ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{worker_8h_afdb21bc290370c6055f5f8ce3e204337}{ttak\_worker\_routine}}(\textcolor{keywordtype}{void}\ *arg);}
-\DoxyCodeLine{\Hypertarget{worker_8h_source_l00046}00046\ \textcolor{comment}{}}
-\DoxyCodeLine{\Hypertarget{worker_8h_source_l00047}00047\ \textcolor{comment}{/**}}
-\DoxyCodeLine{\Hypertarget{worker_8h_source_l00048}00048\ \textcolor{comment}{\ *\ @brief\ Aborts\ the\ current\ task\ execution\ using\ longjmp.}}
-\DoxyCodeLine{\Hypertarget{worker_8h_source_l00049}00049\ \textcolor{comment}{\ *\ Must\ be\ called\ from\ within\ a\ worker\ thread\ during\ task\ execution.}}
-\DoxyCodeLine{\Hypertarget{worker_8h_source_l00050}00050\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{worker_8h_source_l00051}\mbox{\hyperlink{worker_8h_a64a121d1facc0899dd991c138f56c3be}{00051}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{worker_8h_a64a121d1facc0899dd991c138f56c3be}{ttak\_worker\_abort}}(\textcolor{keywordtype}{void});}
-\DoxyCodeLine{\Hypertarget{worker_8h_source_l00052}00052\ }
-\DoxyCodeLine{\Hypertarget{worker_8h_source_l00053}00053\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_THREAD\_WORKER\_H}}
+\DoxyCodeLine{\Hypertarget{worker_8h_source_l00043}\mbox{\hyperlink{structttak__worker_adc86adf63d908abb87e36ee24cf44b5a}{00043}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structttak__worker_adc86adf63d908abb87e36ee24cf44b5a}{preferred\_shard}};\ \textcolor{comment}{/**<\ Shard\ index\ this\ worker\ drains\ first.\ */}}
+\DoxyCodeLine{\Hypertarget{worker_8h_source_l00044}\mbox{\hyperlink{worker_8h_a0003749eead12470661f5e9d7d4cc842}{00044}}\ \}\ \mbox{\hyperlink{worker_8h_a0003749eead12470661f5e9d7d4cc842}{ttak\_worker\_t}};}
+\DoxyCodeLine{\Hypertarget{worker_8h_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{worker_8h_source_l00046}\mbox{\hyperlink{worker_8h_afdb21bc290370c6055f5f8ce3e204337}{00046}}\ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{worker_8h_afdb21bc290370c6055f5f8ce3e204337}{ttak\_worker\_routine}}(\textcolor{keywordtype}{void}\ *arg);}
+\DoxyCodeLine{\Hypertarget{worker_8h_source_l00047}00047\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{worker_8h_source_l00048}00048\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{worker_8h_source_l00049}00049\ \textcolor{comment}{\ *\ @brief\ Aborts\ the\ current\ task\ execution\ using\ longjmp.}}
+\DoxyCodeLine{\Hypertarget{worker_8h_source_l00050}00050\ \textcolor{comment}{\ *\ Must\ be\ called\ from\ within\ a\ worker\ thread\ during\ task\ execution.}}
+\DoxyCodeLine{\Hypertarget{worker_8h_source_l00051}00051\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{worker_8h_source_l00052}\mbox{\hyperlink{worker_8h_a64a121d1facc0899dd991c138f56c3be}{00052}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{worker_8h_a64a121d1facc0899dd991c138f56c3be}{ttak\_worker\_abort}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{worker_8h_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{worker_8h_source_l00054}00054\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TTAK\_THREAD\_WORKER\_H}}
 
 \end{DoxyCode}

@@ -25,7 +25,7 @@
 #define TTAK_BUDDY_MIN_ORDER   6U   /* 64 bytes */
 #define TTAK_BUDDY_MAX_ORDER   60U  /* 2^60 bytes (~1 EB) */
 #define TTAK_BUDDY_TIER1_MAX_ORDER 9U    /* < 1 KB */
-#define TTAK_BUDDY_TIER2_MAX_ORDER 16U   /* < 64 KB */
+#define TTAK_BUDDY_TIER2_MAX_ORDER 22U   /* < 4 MB */
 #define TTAK_BUDDY_MAX_SEGMENTS 32U
 #define TTAK_BUDDY_GROWTH_THRESHOLD 80U
 #define TTAK_BUDDY_MIN_GROWTH_BYTES (1ULL << 20)
@@ -68,7 +68,7 @@ static atomic_flag g_tier1_lock = ATOMIC_FLAG_INIT;
 static pthread_mutex_t g_tier2_lock = PTHREAD_MUTEX_INITIALIZER;
 static pthread_rwlock_t g_tier3_lock = PTHREAD_RWLOCK_INITIALIZER;
 static pthread_mutex_t g_tier4_lock = PTHREAD_MUTEX_INITIALIZER;
-/* Daeyeon-guyilsul Zhaoshu bitmask: one residue bit per order. */
+/* Free-list bitmask: one residue bit per buddy order. */
 static _Atomic uint64_t g_free_mask = 0;
 
 static inline size_t order_size(uint8_t order);
@@ -558,8 +558,7 @@ void ttak_mem_buddy_set_pool(void *pool_start, size_t pool_len) {
     ttak_mem_buddy_init(pool_start, pool_len, g_zone.embedded_mode);
 }
 
-/* Residue lookup mirrors Nam Byeong-gil's Daeyeon-guyilsul (Gu-il-jip) Zhaoshu. */
-/* Reference: Nam Byeong-gil, "Sanhak Jeong-ui (算學正義)", 1849. */
+/* Residue lookup for size-class selection to reduce fragmentation. */
 static ttak_buddy_block_t *select_block(uint8_t desired, ttak_priority_t priority) {
     if (desired > g_zone.max_order) {
         return NULL;

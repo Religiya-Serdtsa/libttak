@@ -413,12 +413,11 @@ static ttak_result_t ttak_finalize_output(const ttak_accel_batch_item_t *item,
     uint8_t *payload = item->output + payload_offset;
     uint32_t payload_checksum = ttak_fnv1a32(payload, payload_size, checksum_seed);
 
-    ttak_accel_record_prefix_t prefix = {
-        prefix.guard = guard,
-        prefix.record_count = (uint32_t)record_count,
-        prefix.payload_checksum = payload_checksum,
-        prefix.reserved = sizeof(ttak_accel_factor_record_t)
-    };
+    ttak_accel_record_prefix_t prefix;
+    prefix.guard = guard;
+    prefix.record_count = (uint32_t)record_count;
+    prefix.payload_checksum = payload_checksum;
+    prefix.reserved = sizeof(ttak_accel_factor_record_t);
     memcpy(item->output, &prefix, sizeof(prefix));
     ttak_mask_payload(payload, payload_size, guard);
     if (item->checksum_out != NULL) {
@@ -429,15 +428,15 @@ static ttak_result_t ttak_finalize_output(const ttak_accel_batch_item_t *item,
 
 __global__ void ttak_cuda_factor_kernel(const uint64_t *values,
                                         ttak_accel_factor_record_t *records,
-                                        size_t count) {
+                                        size_t count,
+                                        uint64_t seed_base) {
     size_t idx = (blockIdx.x * blockDim.x) + threadIdx.x;
     if (idx >= count) return;
 
     uint64_t n = values[idx];
     ttak_accel_factor_record_t record;
-    ttak_cuda_rng_t rng = {
-        rng.state = (uint64_t)(0xA5A5A5A5A5A5A5A5ULL ^ n ^ (uint64_t)idx)
-    };
+    ttak_cuda_rng_t rng;
+    rng.state = seed_base ^ n ^ (uint64_t)idx;
     ttak_device_factor_number(n, &rng, &record);
     records[idx] = record;
 }
@@ -506,9 +505,10 @@ static ttak_result_t ttak_cuda_process_item(const ttak_accel_batch_item_t *item,
         return TTAK_RESULT_ERR_EXECUTION;
     }
 
+    uint64_t seed_base = ((uint64_t)guard << 32) ^ (uint64_t)record_count ^ (uint64_t)(uintptr_t)item->input;
     const int threads = 256;
     const int blocks = (int)((record_count + threads - 1) / threads);
-    ttak_cuda_factor_kernel<<<blocks, threads>>>(device_values, device_records, record_count);
+    ttak_cuda_factor_kernel<<<blocks, threads>>>(device_values, device_records, record_count, seed_base);
     err = cudaDeviceSynchronize();
     if (err != cudaSuccess) {
         cudaFree(device_values);
@@ -566,7 +566,7 @@ extern "C" ttak_result_t ttak_accel_run_cuda(
     for (size_t idx = 0; idx < item_count; ++idx) {
         ttak_result_t status = ttak_cuda_process_item(&items[idx], config);
         if (status != TTAK_RESULT_OK) {
-            return ttak_accel_run_cpu(items, item_count, config);
+            return ttak_accel_run_cpu(items + idx, item_count - idx, config);
         }
     }
 

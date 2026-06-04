@@ -1,0 +1,115 @@
+\doxysection{ttak\+\_\+abstract\+\_\+map Struct Reference}
+\hypertarget{structttak__abstract__map}{}\label{structttak__abstract__map}\index{ttak\_abstract\_map@{ttak\_abstract\_map}}
+
+
+Scoped mapping of a logical byte window in an abstract object.  
+
+
+
+
+{\ttfamily \#include $<$abstract.\+h$>$}
+
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__abstract__map_ab80819a51cef01aec4e2df6931fa878f}{data}}
+\item 
+size\+\_\+t \mbox{\hyperlink{structttak__abstract__map_afea5ada2575f40dc024be7239446a205}{size}}
+\item 
+size\+\_\+t \mbox{\hyperlink{structttak__abstract__map_a5ce84fec39751eb757b8d309f33f463c}{offset}}
+\item 
+const \mbox{\hyperlink{abstract_8h_afdd84436fb08965928ea761ea7bcab0b}{ttak\+\_\+abstract\+\_\+mem\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__abstract__map_a019eb278314dcd4652b9b3bf96b54bc4}{mem}}
+\item 
+\mbox{\hyperlink{abstract_8h_aa41f3f87467114db0e18780fb7caa470}{ttak\+\_\+abstract\+\_\+access\+\_\+t}} \mbox{\hyperlink{structttak__abstract__map_a7ab71afaf1be1e7ba68252ca94ce5a58}{access}}
+\item 
+void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structttak__abstract__map_a7fad70c1ac742591b10f65e4402f7cdc}{opaque}}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{structttak__abstract__map_aae6dcc73aae3d77f21fbc3916cd1db87}{flags}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Scoped mapping of a logical byte window in an abstract object. 
+
+A map pins relocation behind the object\textquotesingle{}s synchronization boundary and exposes a contiguous byte window for direct indexed access. The mapping is valid only until \doxylink{abstract_8h_aaefa1f99637a1519d420edfd0adf2439}{ttak\+\_\+abstract\+\_\+unmap()} is called. 
+
+Definition at line \mbox{\hyperlink{abstract_8h_source_l00040}{40}} of file \mbox{\hyperlink{abstract_8h_source}{abstract.\+h}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structttak__abstract__map_a7ab71afaf1be1e7ba68252ca94ce5a58}\label{structttak__abstract__map_a7ab71afaf1be1e7ba68252ca94ce5a58} 
+\index{ttak\_abstract\_map@{ttak\_abstract\_map}!access@{access}}
+\index{access@{access}!ttak\_abstract\_map@{ttak\_abstract\_map}}
+\doxysubsubsection{\texorpdfstring{access}{access}}
+{\footnotesize\ttfamily \mbox{\hyperlink{abstract_8h_aa41f3f87467114db0e18780fb7caa470}{ttak\+\_\+abstract\+\_\+access\+\_\+t}} ttak\+\_\+abstract\+\_\+map\+::access}
+
+
+
+Definition at line \mbox{\hyperlink{abstract_8h_source_l00045}{45}} of file \mbox{\hyperlink{abstract_8h_source}{abstract.\+h}}.
+
+\Hypertarget{structttak__abstract__map_ab80819a51cef01aec4e2df6931fa878f}\label{structttak__abstract__map_ab80819a51cef01aec4e2df6931fa878f} 
+\index{ttak\_abstract\_map@{ttak\_abstract\_map}!data@{data}}
+\index{data@{data}!ttak\_abstract\_map@{ttak\_abstract\_map}}
+\doxysubsubsection{\texorpdfstring{data}{data}}
+{\footnotesize\ttfamily void\texorpdfstring{$\ast$}{*} ttak\+\_\+abstract\+\_\+map\+::data}
+
+
+
+Definition at line \mbox{\hyperlink{abstract_8h_source_l00041}{41}} of file \mbox{\hyperlink{abstract_8h_source}{abstract.\+h}}.
+
+\Hypertarget{structttak__abstract__map_aae6dcc73aae3d77f21fbc3916cd1db87}\label{structttak__abstract__map_aae6dcc73aae3d77f21fbc3916cd1db87} 
+\index{ttak\_abstract\_map@{ttak\_abstract\_map}!flags@{flags}}
+\index{flags@{flags}!ttak\_abstract\_map@{ttak\_abstract\_map}}
+\doxysubsubsection{\texorpdfstring{flags}{flags}}
+{\footnotesize\ttfamily uint32\+\_\+t ttak\+\_\+abstract\+\_\+map\+::flags}
+
+
+
+Definition at line \mbox{\hyperlink{abstract_8h_source_l00047}{47}} of file \mbox{\hyperlink{abstract_8h_source}{abstract.\+h}}.
+
+\Hypertarget{structttak__abstract__map_a019eb278314dcd4652b9b3bf96b54bc4}\label{structttak__abstract__map_a019eb278314dcd4652b9b3bf96b54bc4} 
+\index{ttak\_abstract\_map@{ttak\_abstract\_map}!mem@{mem}}
+\index{mem@{mem}!ttak\_abstract\_map@{ttak\_abstract\_map}}
+\doxysubsubsection{\texorpdfstring{mem}{mem}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{abstract_8h_afdd84436fb08965928ea761ea7bcab0b}{ttak\+\_\+abstract\+\_\+mem\+\_\+t}}\texorpdfstring{$\ast$}{*} ttak\+\_\+abstract\+\_\+map\+::mem}
+
+
+
+Definition at line \mbox{\hyperlink{abstract_8h_source_l00044}{44}} of file \mbox{\hyperlink{abstract_8h_source}{abstract.\+h}}.
+
+\Hypertarget{structttak__abstract__map_a5ce84fec39751eb757b8d309f33f463c}\label{structttak__abstract__map_a5ce84fec39751eb757b8d309f33f463c} 
+\index{ttak\_abstract\_map@{ttak\_abstract\_map}!offset@{offset}}
+\index{offset@{offset}!ttak\_abstract\_map@{ttak\_abstract\_map}}
+\doxysubsubsection{\texorpdfstring{offset}{offset}}
+{\footnotesize\ttfamily size\+\_\+t ttak\+\_\+abstract\+\_\+map\+::offset}
+
+
+
+Definition at line \mbox{\hyperlink{abstract_8h_source_l00043}{43}} of file \mbox{\hyperlink{abstract_8h_source}{abstract.\+h}}.
+
+\Hypertarget{structttak__abstract__map_a7fad70c1ac742591b10f65e4402f7cdc}\label{structttak__abstract__map_a7fad70c1ac742591b10f65e4402f7cdc} 
+\index{ttak\_abstract\_map@{ttak\_abstract\_map}!opaque@{opaque}}
+\index{opaque@{opaque}!ttak\_abstract\_map@{ttak\_abstract\_map}}
+\doxysubsubsection{\texorpdfstring{opaque}{opaque}}
+{\footnotesize\ttfamily void\texorpdfstring{$\ast$}{*} ttak\+\_\+abstract\+\_\+map\+::opaque}
+
+
+
+Definition at line \mbox{\hyperlink{abstract_8h_source_l00046}{46}} of file \mbox{\hyperlink{abstract_8h_source}{abstract.\+h}}.
+
+\Hypertarget{structttak__abstract__map_afea5ada2575f40dc024be7239446a205}\label{structttak__abstract__map_afea5ada2575f40dc024be7239446a205} 
+\index{ttak\_abstract\_map@{ttak\_abstract\_map}!size@{size}}
+\index{size@{size}!ttak\_abstract\_map@{ttak\_abstract\_map}}
+\doxysubsubsection{\texorpdfstring{size}{size}}
+{\footnotesize\ttfamily size\+\_\+t ttak\+\_\+abstract\+\_\+map\+::size}
+
+
+
+Definition at line \mbox{\hyperlink{abstract_8h_source_l00042}{42}} of file \mbox{\hyperlink{abstract_8h_source}{abstract.\+h}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/ttak/mem/\mbox{\hyperlink{abstract_8h}{abstract.\+h}}\end{DoxyCompactItemize}

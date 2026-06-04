@@ -1,5 +1,7 @@
 <map id="include/ttak/security/sha256.h" name="include/ttak/security/sha256.h">
-<area shape="rect" id="node1" title="Minimal SHA&#45;256 hash interface." alt="" coords="15,5,154,47"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,95,73,121"/>
-<area shape="rect" id="node3" title=" " alt="" coords="98,95,162,121"/>
+<area shape="rect" id="Node000001" title="Minimal SHA&#45;256 hash interface." alt="" coords="13,5,168,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,93,80,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="81,47,59,83,55,80,77,44"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="105,93,175,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="105,44,128,80,123,83,100,47"/>
 </map>

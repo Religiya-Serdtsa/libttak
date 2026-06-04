@@ -5,7 +5,7 @@
  * @file thread_compat.h
  * @brief Minimal cross-platform thread wrappers exposed by libttak.
  *
- * These wrappers abstract the threading primitives used by CWIST examples
+ * These wrappers abstract the threading primitives used by libttak examples
  * so that Windows builds can translate directly to the Win32 threading API
  * without sprinkling platform ifdefs through the demos.
  */
