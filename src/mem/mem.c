@@ -626,6 +626,14 @@ void *ttak_mem_access_bridge(void *ptr, uint64_t now_tick) {
     if (!ptr) return NULL;
     ttak_mem_header_t *header = (ttak_mem_header_t *)ptr - 1;
 
+#if defined(__linux__)
+    /* Guard against use-after-free on pages that have been unmapped. */
+    unsigned char vec = 0;
+    void *page_base = (void *)(((uintptr_t)header) & ~((uintptr_t)4095));
+    if (mincore(page_base, 4096, &vec) != 0) return NULL;
+    if (!(vec & 1)) return NULL;
+#endif
+
     if (header->magic != TTAK_MAGIC_NUMBER) return NULL;
     if (header->freed) return NULL;
     if (header->expires_tick != __TTAK_UNSAFE_MEM_FOREVER__ && now_tick > header->expires_tick) return NULL;
