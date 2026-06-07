@@ -38,10 +38,10 @@
 #  define __tcc_arch_cas(ptr, old, new) ({ \
      __typeof__(*(ptr)) __oldval; int __res; \
      __asm__ __volatile__ ( \
-       "1: ldxr %0, [%2]\n" \
+       "1: ldaxr %0, [%2]\n" \
        "   cmp %0, %3\n" \
        "   b.ne 2f\n" \
-       "   stxr %w1, %4, [%2]\n" \
+       "   stlxr %w1, %4, [%2]\n" \
        "   cbnz %w1, 1b\n" \
        "2:" \
        : "=&r"(__oldval), "=&r"(__res) \
@@ -53,8 +53,8 @@
 #  define __tcc_arch_xchg(ptr, val) ({ \
      __typeof__(*(ptr)) __oldval; int __res; \
      __asm__ __volatile__ ( \
-       "1: ldxr %0, [%2]\n" \
-       "   stxr %w1, %3, [%2]\n" \
+       "1: ldaxr %0, [%2]\n" \
+       "   stlxr %w1, %3, [%2]\n" \
        "   cbnz %w1, 1b\n" \
        : "=&r"(__oldval), "=&r"(__res) \
        : "r"(ptr), "r"(val) \
@@ -126,9 +126,9 @@
 #  define __tcc_arch_cas(ptr, old, new) ({ \
      __typeof__(*(ptr)) __ret; int __tmp; \
      __asm__ __volatile__ ( \
-       "1: lr.d %0, (%2)\n" \
+       "1: lr.d.aqrl %0, (%2)\n" \
        "   bne %0, %3, 2f\n" \
-       "   sc.d %1, %4, (%2)\n" \
+       "   sc.d.aqrl %1, %4, (%2)\n" \
        "   bnez %1, 1b\n" \
        "2:" \
        : "=&r"(__ret), "=&r"(__tmp) \
@@ -140,7 +140,7 @@
 #  define __tcc_arch_xchg(ptr, val) ({ \
      __typeof__(*(ptr)) __ret; \
      __asm__ __volatile__ ( \
-       "amoswap.d %0, %2, (%1)" \
+       "amoswap.d.aqrl %0, %2, (%1)" \
        : "=&r"(__ret) \
        : "r"(ptr), "r"(val) \
        : "memory" \

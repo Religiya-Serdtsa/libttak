@@ -18,7 +18,7 @@
 #  endif
 #endif
 
-#if defined(__has_include_next) && defined(__GNUC__) && !defined(__clang__) && !defined(__TINYC__)
+#if defined(__has_include_next) && defined(__GNUC__) && !defined(__TINYC__)
 #  if __has_include_next(<stdatomic.h>)
 #    include_next <stdatomic.h>
 #    define __TTAK_STDATOMIC_SYSTEM_INCLUDED
@@ -390,6 +390,14 @@ static inline void atomic_flag_clear_explicit(volatile atomic_flag *obj, memory_
        else if (sizeof(*(obj)) == 1) __asm__ __volatile__ ("lock cmpxchgb %3, %1; setz %0" : "=q" (__ret), "+m" (*(obj)), "+a" (__exp) : "q" ((__typeof__(*(obj)))(desired)) : "memory", "cc"); \
        if (!__ret) *(expected) = __exp; \
        __ret; })
+
+#define atomic_exchange_explicit(obj, desired, order) \
+    ({ __typeof__(*(obj)) __val = (desired); \
+       if (sizeof(*(obj)) == 8) __asm__ __volatile__ ("xchgq %0, %1" : "+r" (__val), "+m" (*(obj)) : : "memory"); \
+       else if (sizeof(*(obj)) == 4) __asm__ __volatile__ ("xchgl %0, %1" : "+r" (__val), "+m" (*(obj)) : : "memory"); \
+       else if (sizeof(*(obj)) == 1) __asm__ __volatile__ ("xchgb %0, %1" : "+q" (__val), "+m" (*(obj)) : : "memory"); \
+       __val; })
+#define atomic_exchange(obj, desired) atomic_exchange_explicit((obj), (desired), memory_order_seq_cst)
 
 #elif defined(__aarch64__) && !defined(__TINYC__)
 #define atomic_thread_fence(order) __asm__ __volatile__ ("dmb ish" ::: "memory")
