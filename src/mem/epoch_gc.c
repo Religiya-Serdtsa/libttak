@@ -16,6 +16,12 @@ static inline void epoch_gc_clock_gettime(struct timespec *spec) {
     spec->tv_sec = (time_t)(tim / 1000000000ULL);
     spec->tv_nsec = (long)((tim % 1000000000ULL) * 100);
 }
+#elif defined(EMBEDDED_BAREMETAL)
+static inline void epoch_gc_clock_gettime(struct timespec *spec) {
+    uint64_t ns = ttak_get_tick_count_ns();
+    spec->tv_sec = (long)(ns / 1000000000ULL);
+    spec->tv_nsec = (long)(ns % 1000000000ULL);
+}
 #else
 #  define epoch_gc_clock_gettime(spec) clock_gettime(CLOCK_MONOTONIC, (spec))
 #endif

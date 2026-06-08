@@ -73,7 +73,6 @@ static pthread_mutex_t pocket_page_pool_lock = PTHREAD_MUTEX_INITIALIZER;
 static _Alignas(TTAK_POCKET_ALIGNMENT) uint8_t pocket_page_pool[TTAK_POCKET_POOL_SIZE];
 #endif
 static size_t pocket_page_pool_cursor = 0;
-#endif
 
 static uintptr_t ttak_thread_identity(void) {
     return (uintptr_t)pthread_self();

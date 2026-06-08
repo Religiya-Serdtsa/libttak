@@ -64,6 +64,9 @@ LDFLAGS = $(LDFLAGS_BASE) -flto -Wl,--gc-sections
 endif
 
 CFLAGS += $(EXTRA_CFLAGS) -DEMBEDDED=$(EMBEDDED)
+ifeq ($(EMBEDDED_BAREMETAL),1)
+CFLAGS += -DEMBEDDED_BAREMETAL=1
+endif
 LDFLAGS += $(EXTRA_LDFLAGS)
 
 # ---- MSVC toolchain overrides (Windows / cl.exe) -----------------------
@@ -103,6 +106,10 @@ DEFAULT_SRC_DIRS = src/ht src/thread src/timing src/mem src/async src/priority \
 # Allow callers (e.g. embedded/board builds) to restrict the compilation
 # surface by overriding SRC_DIRS on the make command line.
 SRC_DIRS ?= $(DEFAULT_SRC_DIRS)
+
+ifeq ($(EMBEDDED_BAREMETAL),1)
+SRC_DIRS := $(filter-out src/stats src/net src/net/core,$(SRC_DIRS))
+endif
 
 SRCS = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
 ifeq ($(BUILD_PROFILE),tcc)

@@ -12,8 +12,11 @@
 
 #include <ttak/async/task.h>
 #include <stdint.h>
-#ifndef _WIN32
+#include <stdbool.h>
+#if !defined(_WIN32) && !defined(EMBEDDED_BAREMETAL)
 #include <sched.h>
+#elif defined(EMBEDDED_BAREMETAL)
+/* bare-metal: no sched_yield */
 #else
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
@@ -42,11 +45,30 @@ void ttak_async_schedule(ttak_task_t *task, uint64_t now, int priority);
 
 /** @brief Yields the current CPU time slice without sleeping. */
 static inline void ttak_async_yield(void) {
-#ifndef _WIN32
+#if !defined(_WIN32) && !defined(EMBEDDED_BAREMETAL)
     sched_yield();
-#else
+#elif defined(_WIN32)
     SwitchToThread();
+#else
+    /* bare-metal: cooperative loop, no yield needed */
 #endif
 }
+
+#if defined(EMBEDDED_BAREMETAL)
+/** @brief Initialise the cooperative run-queue (bare-metal only). */
+void ttak_cooperative_init(void);
+
+/** @brief Drain and execute one task from the cooperative queue.
+ *
+ *  Call this from the main loop to drive background work.
+ *
+ *  @param now Current monotonic timestamp.
+ *  @return true if a task was executed, false if the queue was empty.
+ */
+bool ttak_cooperative_run_once(uint64_t now);
+
+/** @brief Destroy the cooperative run-queue and free any pending tasks. */
+void ttak_cooperative_shutdown(void);
+#endif /* EMBEDDED_BAREMETAL */
 
 #endif // TTAK_ASYNC_SCHED_H

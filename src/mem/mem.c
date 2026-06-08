@@ -42,7 +42,7 @@
     #endif
 #else
     #include <unistd.h>
-    #if EMBEDDED
+    #if EMBEDDED && !defined(EMBEDDED_BAREMETAL)
         #include <sys/mman.h>
     #endif
 #endif
@@ -135,7 +135,9 @@ static pthread_mutex_t global_init_lock = PTHREAD_MUTEX_INITIALIZER;
 #if EMBEDDED
 #include <ttak/phys/mem/buddy.h>
 #ifndef TTAK_EMBEDDED_POOL_ORDER
-#if defined(__LP64__) || defined(_WIN64)
+#if defined(EMBEDDED_BAREMETAL)
+#define TTAK_EMBEDDED_POOL_ORDER 15  /* 32KB */
+#elif defined(__LP64__) || defined(_WIN64)
 #define TTAK_EMBEDDED_POOL_ORDER 28
 #else
 #define TTAK_EMBEDDED_POOL_ORDER 24
@@ -155,6 +157,9 @@ static size_t embedded_pool_len = sizeof(buddy_pool);
 #endif
 
 static int ttak_detect_embedded_pool_mode(void) {
+#if defined(EMBEDDED_BAREMETAL)
+    return TTAK_BUDDY_DEFAULT_EMBEDDED_MODE;
+#else
     const char *env = getenv("TTAK_MEM_EMBEDDED_POOL");
     if (!env || !*env) {
         return TTAK_BUDDY_DEFAULT_EMBEDDED_MODE;
@@ -169,6 +174,7 @@ static int ttak_detect_embedded_pool_mode(void) {
         default:
             return 1;
     }
+#endif
 }
 
 /**
@@ -697,6 +703,7 @@ _Bool ttak_mem_is_pressure_high(void) { return ttak_atomic_read64(&global_mem_us
 
 void save_current_progress(const char *filename, const void *data, size_t size) {
     char temp_name[256]; snprintf(temp_name, sizeof(temp_name), "%s.tmp", filename);
+#if !defined(EMBEDDED_BAREMETAL)
     int fd = open(temp_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
     if (fd < 0) return;
     if (write(fd, data, size) != (ssize_t)size) { close(fd); unlink(temp_name); return; }
@@ -704,6 +711,7 @@ void save_current_progress(const char *filename, const void *data, size_t size) 
     close(fd); if (rename(temp_name, filename) != 0) unlink(temp_name);
 #ifndef _WIN32
     int dfd = open(".", O_RDONLY | O_DIRECTORY); if (dfd >= 0) { fsync(dfd); close(dfd); }
+#endif
 #endif
 }
 

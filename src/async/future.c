@@ -1,6 +1,10 @@
 #include <ttak/async/future.h>
 #include <ttak/mem/epoch.h>
+#include <ttak/timing/timing.h>
 #include <stddef.h>
+#if defined(EMBEDDED_BAREMETAL)
+#include <ttak/async/sched.h>
+#endif
 
 /**
  * @brief Retrieve the computed result from the future.
@@ -25,8 +29,16 @@ void *ttak_future_get(ttak_future_t *future) {
     ttak_epoch_exit();
 
     while (!future->ready) {
+#if defined(EMBEDDED_BAREMETAL)
+        /* On bare-metal there are no worker threads.  Drive the cooperative
+         * scheduler so that the task which will fulfill this future can run. */
+        pthread_mutex_unlock(&future->mutex);
+        ttak_cooperative_run_once(ttak_get_tick_count());
+        pthread_mutex_lock(&future->mutex);
+#else
         /* Suspend execution until the future state is set to ready by the worker. */
         pthread_cond_wait(&future->cond, &future->mutex);
+#endif
     }
 
     /* * Re-enter the epoch critical section upon wakeup to ensure that

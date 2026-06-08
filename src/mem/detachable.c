@@ -9,12 +9,13 @@
 
 #include <ttak/mem/detachable.h>
 #include <ttak/mem/fastpath.h>
+#include <ttak/timing/timing.h>
 
 #include <stdatomic.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#ifndef _WIN32
+#if !defined(_WIN32) && !defined(EMBEDDED_BAREMETAL)
 #include <signal.h>
 #include <unistd.h>
 #endif
@@ -314,8 +315,10 @@ void ttak_detachable_mem_free(ttak_detachable_context_t *ctx, ttak_detachable_al
 }
 
 static uint64_t ttak_detachable_now_ns(void) {
-#ifdef _WIN32
+#if defined(_WIN32)
     return 0;
+#elif defined(EMBEDDED_BAREMETAL)
+    return ttak_get_tick_count_ns();
 #else
     struct timespec ts;
     if (clock_gettime(CLOCK_MONOTONIC, &ts) != 0) {
@@ -658,7 +661,7 @@ static void ttak_detachable_global_shutdown(_Bool flush_rows) {
     pthread_mutex_unlock(&g_ctx_registry_lock);
 }
 
-#ifndef _WIN32
+#if !defined(_WIN32) && !defined(EMBEDDED_BAREMETAL)
 static void ttak_detachable_signal_handler(int signo) {
     bool expected = false;
     if (!atomic_compare_exchange_weak(&g_signal_guard.triggered, &expected, true)) {

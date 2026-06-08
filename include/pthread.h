@@ -10,25 +10,120 @@
  * This file supplies a minimal but correct compatibility layer built on
  * top of the Windows synchronisation API (SRWLOCK, CONDITION_VARIABLE,
  * CRITICAL_SECTION, CreateThread / WaitForSingleObject, InitOnceExecuteOnce).
+ *
+ * On EMBEDDED_BAREMETAL builds, this file provides a zero-POSIX shim
+ * using interrupt-disable spinlocks and single-thread stubs.
  */
 
-#if !defined(_MSC_VER) || !defined(_WIN32)
-#  if defined(__has_include_next)
-#    if __has_include_next(<pthread.h>)
+#if !defined(EMBEDDED_BAREMETAL)
+#  if !defined(_MSC_VER) || !defined(_WIN32)
+#    if defined(__has_include_next)
+#      if __has_include_next(<pthread.h>)
+#        include_next <pthread.h>
+#      endif
+#    else
 #      include_next <pthread.h>
 #    endif
-#  else
-#    include_next <pthread.h>
 #  endif
 #endif
 
 #ifndef TTAK_PTHREAD_SHIM_H
 #define TTAK_PTHREAD_SHIM_H
 
-#if defined(_MSC_VER) && defined(_WIN32)
-/* -----------------------------------------------------------------------
- * MSVC / Windows implementation
- * --------------------------------------------------------------------- */
+#if defined(EMBEDDED_BAREMETAL)
+/* ========================================================================
+ * Bare-Metal / Single-Thread Stub (Cortex-M)
+ * ======================================================================== */
+
+#include <stddef.h>
+#include <stdint.h>
+
+/* --- types --- */
+typedef volatile uint32_t pthread_mutex_t;
+typedef int               pthread_cond_t;
+typedef volatile uint32_t pthread_rwlock_t;
+typedef uint32_t          pthread_t;
+typedef volatile uint32_t pthread_once_t;
+typedef uint32_t          pthread_key_t;
+typedef int               pthread_attr_t;
+typedef int               pthread_mutexattr_t;
+typedef int               pthread_condattr_t;
+typedef int               pthread_rwlockattr_t;
+
+#ifndef _SYS__TIMESPEC_H_
+#define _SYS__TIMESPEC_H_
+struct timespec {
+    long tv_sec;
+    long tv_nsec;
+};
+#endif
+
+/* --- static-initialiser macros --- */
+#define PTHREAD_MUTEX_INITIALIZER 0U
+#define PTHREAD_COND_INITIALIZER  0
+#define PTHREAD_RWLOCK_INITIALIZER 0U
+#define PTHREAD_ONCE_INIT         0U
+#define PTHREAD_RWLOCK_PREFER_WRITER_NONRECURSIVE_NP 1
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/* --- mutex --- */
+int pthread_mutex_init(pthread_mutex_t *m, const pthread_mutexattr_t *attr);
+int pthread_mutex_lock(pthread_mutex_t *m);
+int pthread_mutex_trylock(pthread_mutex_t *m);
+int pthread_mutex_unlock(pthread_mutex_t *m);
+int pthread_mutex_destroy(pthread_mutex_t *m);
+
+/* --- condition variable --- */
+int pthread_cond_init(pthread_cond_t *c, const pthread_condattr_t *attr);
+int pthread_cond_wait(pthread_cond_t *c, pthread_mutex_t *m);
+int pthread_cond_timedwait(pthread_cond_t *c, pthread_mutex_t *m, const struct timespec *abstime);
+int pthread_cond_signal(pthread_cond_t *c);
+int pthread_cond_broadcast(pthread_cond_t *c);
+int pthread_cond_destroy(pthread_cond_t *c);
+
+/* --- read-write lock --- */
+int pthread_rwlock_init(pthread_rwlock_t *rw, const pthread_rwlockattr_t *attr);
+int pthread_rwlock_rdlock(pthread_rwlock_t *rw);
+int pthread_rwlock_wrlock(pthread_rwlock_t *rw);
+int pthread_rwlock_unlock(pthread_rwlock_t *rw);
+int pthread_rwlock_destroy(pthread_rwlock_t *rw);
+
+/* --- rwlock attribute stubs --- */
+int pthread_rwlockattr_init(pthread_rwlockattr_t *a);
+int pthread_rwlockattr_destroy(pthread_rwlockattr_t *a);
+int pthread_rwlockattr_setkind_np(pthread_rwlockattr_t *a, int pref);
+
+/* --- one-time initialisation --- */
+int pthread_once(pthread_once_t *once_ctrl, void (*init_routine)(void));
+
+/* --- thread creation / join --- */
+int pthread_create(pthread_t *thread, const pthread_attr_t *attr,
+                   void *(*start_routine)(void *), void *arg);
+int pthread_join(pthread_t thread, void **retval);
+int pthread_detach(pthread_t thread);
+pthread_t pthread_self(void);
+
+/* --- TLS --- */
+int pthread_key_create(pthread_key_t *key, void (*destructor)(void *));
+int pthread_setspecific(pthread_key_t key, const void *value);
+void *pthread_getspecific(pthread_key_t key);
+
+/* --- thread attributes --- */
+int pthread_attr_init(pthread_attr_t *attr);
+int pthread_attr_destroy(pthread_attr_t *attr);
+int pthread_attr_setstacksize(pthread_attr_t *attr, size_t stacksize);
+
+#ifdef __cplusplus
+}
+#endif
+
+#elif defined(_MSC_VER) && defined(_WIN32)
+/* ========================================================================
+ * MSVC / Windows implementation (original)
+ * ======================================================================== */
 
 #ifndef WIN32_LEAN_AND_MEAN
 #  define WIN32_LEAN_AND_MEAN

@@ -83,8 +83,12 @@ static int buddy_debug_enabled(void) {
     if (cached >= 0) {
         return cached;
     }
+#if defined(EMBEDDED_BAREMETAL)
+    cached = 0;
+#else
     const char *flag = getenv("TTAK_MEM_BUDDY_DEBUG");
     cached = (flag && *flag) ? 1 : 0;
+#endif
     return cached;
 }
 
@@ -201,6 +205,8 @@ static inline void *buddy_heap_alloc(size_t bytes) {
     }
 #if defined(_WIN32)
     return _aligned_malloc(bytes, 64);
+#elif defined(EMBEDDED_BAREMETAL)
+    return malloc(bytes);
 #else
     void *ptr = NULL;
     if (posix_memalign(&ptr, 64, bytes) != 0) {

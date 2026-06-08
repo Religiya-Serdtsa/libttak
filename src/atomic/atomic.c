@@ -56,6 +56,75 @@ uint64_t __atomic_fetch_sub_8(volatile void *ptr, uint64_t val, int mo) {
 }
 #endif
 
+#if defined(EMBEDDED_BAREMETAL)
+/* ARMv7-M has no 64-bit LDREX/STREX, so we provide software fallbacks
+ * protected by the global atomic lock.  On single-core Cortex-M this
+ * is equivalent to a critical section because our pthread_mutex_lock
+ * disables interrupts. */
+
+#include <string.h>
+
+uint64_t __atomic_load_8(volatile void *ptr, int mo) {
+    (void)mo;
+    uint64_t v;
+    pthread_mutex_lock(&__ttak_atomic_global_lock);
+    memcpy(&v, (const void *)ptr, sizeof(v));
+    pthread_mutex_unlock(&__ttak_atomic_global_lock);
+    return v;
+}
+
+void __atomic_store_8(volatile void *ptr, uint64_t val, int mo) {
+    (void)mo;
+    pthread_mutex_lock(&__ttak_atomic_global_lock);
+    memcpy((void *)ptr, &val, sizeof(val));
+    pthread_mutex_unlock(&__ttak_atomic_global_lock);
+}
+
+uint64_t __atomic_fetch_add_8(volatile void *ptr, uint64_t val, int mo) {
+    (void)mo;
+    pthread_mutex_lock(&__ttak_atomic_global_lock);
+    uint64_t old;
+    memcpy(&old, (const void *)ptr, sizeof(old));
+    uint64_t new = old + val;
+    memcpy((void *)ptr, &new, sizeof(new));
+    pthread_mutex_unlock(&__ttak_atomic_global_lock);
+    return old;
+}
+
+uint64_t __atomic_fetch_sub_8(volatile void *ptr, uint64_t val, int mo) {
+    (void)mo;
+    pthread_mutex_lock(&__ttak_atomic_global_lock);
+    uint64_t old;
+    memcpy(&old, (const void *)ptr, sizeof(old));
+    uint64_t new = old - val;
+    memcpy((void *)ptr, &new, sizeof(new));
+    pthread_mutex_unlock(&__ttak_atomic_global_lock);
+    return old;
+}
+
+uint64_t __atomic_fetch_or_8(volatile void *ptr, uint64_t val, int mo) {
+    (void)mo;
+    pthread_mutex_lock(&__ttak_atomic_global_lock);
+    uint64_t old;
+    memcpy(&old, (const void *)ptr, sizeof(old));
+    uint64_t new = old | val;
+    memcpy((void *)ptr, &new, sizeof(new));
+    pthread_mutex_unlock(&__ttak_atomic_global_lock);
+    return old;
+}
+
+uint64_t __atomic_fetch_and_8(volatile void *ptr, uint64_t val, int mo) {
+    (void)mo;
+    pthread_mutex_lock(&__ttak_atomic_global_lock);
+    uint64_t old;
+    memcpy(&old, (const void *)ptr, sizeof(old));
+    uint64_t new = old & val;
+    memcpy((void *)ptr, &new, sizeof(new));
+    pthread_mutex_unlock(&__ttak_atomic_global_lock);
+    return old;
+}
+#endif /* EMBEDDED_BAREMETAL */
+
 /**
  * @brief Atomic operations for uint64_t using GCC builtins.
  */

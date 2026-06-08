@@ -441,6 +441,10 @@ static void *cleanup_thread_func(void *arg) {
             struct timespec ts;
 #ifdef _WIN32
             clock_gettime_win(&ts);
+#elif defined(EMBEDDED_BAREMETAL)
+            uint64_t ns = ttak_get_tick_count_ns();
+            ts.tv_sec = (long)(ns / 1000000000ULL);
+            ts.tv_nsec = (long)(ns % 1000000000ULL);
 #else
             clock_gettime(CLOCK_MONOTONIC, &ts);
 #endif

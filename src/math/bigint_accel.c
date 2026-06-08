@@ -30,6 +30,7 @@ static atomic_bool g_bigint_accel_opencl_enabled = ATOMIC_VAR_INIT(true);
 static void ttak_bigint_accel_init_threshold(void) {
     if (g_bigint_accel_threshold_ready) return;
     g_bigint_accel_threshold = 256;
+#if !defined(EMBEDDED_BAREMETAL)
     const char *env = getenv("TTAK_BIGINT_ACCEL_THRESHOLD");
     if (env && *env) {
         char *endp = NULL;
@@ -38,6 +39,7 @@ static void ttak_bigint_accel_init_threshold(void) {
             g_bigint_accel_threshold = (size_t)parsed;
         }
     }
+#endif
     g_bigint_accel_threshold_ready = true;
 }
 

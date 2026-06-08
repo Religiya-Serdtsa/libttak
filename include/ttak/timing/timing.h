@@ -24,6 +24,17 @@
    void calibrate_tsc(void);
 #endif
 
+#if defined(EMBEDDED_BAREMETAL)
+static inline void ttak_baremetal_dwt_init(void) {
+    static int init = 0;
+    if (!init) {
+        *(volatile uint32_t *)0xE000EDFC |= (1U << 24);
+        *(volatile uint32_t *)0xE0001000 |= (1U << 0);
+        init = 1;
+    }
+}
+#endif
+
 /**
  * @brief Time unit macros for converting to nanoseconds.
  */
@@ -76,6 +87,9 @@ TTAK_FORCE_INLINE uint64_t ttak_get_tick_count_ns(void) {
 #elif defined(_WIN32)
     extern uint64_t ttak_get_tick_count_ns_win32(void);
     return ttak_get_tick_count_ns_win32();
+#elif defined(EMBEDDED_BAREMETAL)
+    ttak_baremetal_dwt_init();
+    return ((uint64_t)(*(volatile uint32_t *)0xE0001004)) * 1000ULL / 16ULL;
 #else
     struct timespec ts;
     clock_gettime(CLOCK_MONOTONIC, &ts);
@@ -91,6 +105,9 @@ TTAK_FORCE_INLINE uint64_t ttak_get_tick_count(void) {
     return ttak_get_tick_count_ns() / 1000000ULL;
 #elif defined(_WIN32)
     return ttak_get_tick_count_ns() / 1000000ULL;
+#elif defined(EMBEDDED_BAREMETAL)
+    ttak_baremetal_dwt_init();
+    return ((uint64_t)(*(volatile uint32_t *)0xE0001004)) / 16000ULL;
 #else
     struct timespec ts;
     clock_gettime(CLOCK_MONOTONIC, &ts);

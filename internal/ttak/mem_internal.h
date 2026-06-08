@@ -99,13 +99,9 @@ extern ttak_mem_friction_matrix_t global_friction_matrix;
 typedef struct ttak_mem_header_t ttak_mem_header_t;
 
 // --- Thread-Local Pockets (Objects <= 512B user payload) ---
-#define TTAK_POCKET_PAGE_SIZE 4096 
-#ifndef TTAK_POCKET_POOL_SIZE
-#define TTAK_POCKET_POOL_SIZE (TTAK_POCKET_PAGE_SIZE * 2048)
-#endif
-// (TTAK_POCKET_PAGE_SIZE * 2048)
-#define TTAK_POCKET_ALIGNMENT 4096 
-#define TTAK_NUM_POCKET_FREELISTS 4 
+#define TTAK_POCKET_PAGE_SIZE 4096
+#define TTAK_POCKET_ALIGNMENT 4096
+#define TTAK_NUM_POCKET_FREELISTS 4
 
 /**
  * @struct ttak_mem_pocket_freelist
@@ -127,16 +123,28 @@ extern TTAK_THREAD_LOCAL ttak_mem_pocket_freelist_t ttak_pocket_freelists[TTAK_N
 #endif
 
 // --- Bare-Metal VMA (Segregated Free-List + Coalescing) ---
+#if defined(EMBEDDED_BAREMETAL)
+#ifndef TTAK_POCKET_POOL_SIZE
+#define TTAK_POCKET_POOL_SIZE (TTAK_POCKET_PAGE_SIZE * 8)  /* 32KB */
+#endif
+#ifndef TTAK_VMA_REGION_SIZE
+#define TTAK_VMA_REGION_SIZE (16 * 1024)  /* 16KB */
+#endif
+#ifndef TTAK_LARGE_REGION_SIZE
+#define TTAK_LARGE_REGION_SIZE (16 * 1024)  /* 16KB */
+#endif
+#else
+#ifndef TTAK_POCKET_POOL_SIZE
+#define TTAK_POCKET_POOL_SIZE (TTAK_POCKET_PAGE_SIZE * 2048)
+#endif
 #ifndef TTAK_VMA_REGION_SIZE
 #define TTAK_VMA_REGION_SIZE (64 * 1024 * 1024)
 #endif
-#define TTAK_VMA_ALIGNMENT 64
-
-// --- Dedicated Large Region (>=2MB user payload) ---
 #ifndef TTAK_LARGE_REGION_SIZE
 #define TTAK_LARGE_REGION_SIZE (256 * 1024 * 1024)
 #endif
-// (256 * 1024 * 1024)
+#endif
+#define TTAK_VMA_ALIGNMENT 64
 
 /**
  * @struct ttak_mem_vma_region

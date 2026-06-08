@@ -42,10 +42,12 @@ void ttak_backoff_pause(ttak_backoff_t *b) {
     if (local_count < local_limit) {
         b->count = local_count + 1;
     } else {
-#ifdef _WIN32
+#if defined(_WIN32)
         Sleep(0);
-#else
+#elif !defined(EMBEDDED_BAREMETAL)
         sched_yield();
+#else
+        /* bare-metal: no-op */
 #endif
     }
 }
