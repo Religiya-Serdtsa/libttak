@@ -161,6 +161,8 @@ LIB = lib/libttak.$(LIBEXT)
 TEST_SRCS = $(wildcard tests/test_*.c)
 TEST_BINS = $(TEST_SRCS:.c=)
 
+EXAMPLE_BINS = examples/mersenne-prime/mersenne_explorer examples/shared-memory/shared_example
+
 all: directories $(LIB)
 
 $(LIB): $(OBJS)
@@ -208,6 +210,33 @@ test: all $(TEST_BINS)
 	done
 	@echo "All tests completed successfully."
 
+tests: test examples_run
+
+examples_run: $(EXAMPLE_BINS)
+	@echo "Starting example suite..."
+	@for bin in $(EXAMPLE_BINS); do \
+		if [ -f $$bin ]; then \
+			echo "[RUNNING EXAMPLE] $$bin"; \
+			timeout 10s $$bin; \
+			ret=$$?; \
+			if [ $$ret -eq 0 ]; then \
+				echo "[PASSED] $$bin"; \
+			elif [ $$ret -eq 124 ]; then \
+				echo "[PASSED] $$bin (timed out as expected for long-running demo)"; \
+			else \
+				echo "[FAILED] $$bin with exit code $$ret"; \
+				exit 1; \
+			fi \
+		fi \
+	done
+	@echo "All examples completed successfully."
+
+examples/mersenne-prime/mersenne_explorer: examples/mersenne-prime/mersenne_explorer.c $(LIB)
+	$(CC) $(CFLAGS) -Iexamples/mersenne-prime $< -o $@ -Llib -lttak $(LDFLAGS)
+
+examples/shared-memory/shared_example: examples/shared-memory/shared_example.c $(LIB)
+	$(CC) $(CFLAGS) -Iinclude $< -o $@ -Llib -lttak $(LDFLAGS)
+
 tests/test_%: tests/test_%.c $(LIB)
 	$(CC) $(CFLAGS) $< -o $@ $(LIB) $(LDFLAGS)
 
@@ -217,6 +246,8 @@ directories:
 clean:
 	rm -rf obj lib tests/*.d
 	find tests/ -type f ! -name "*.c" ! -name "*.h" -delete
+	rm -f examples/mersenne-prime/mersenne_explorer examples/mersenne-prime/*.o
+	rm -f examples/shared-memory/shared_example
 	rm -rf a.out
 
 asm_clean:
@@ -237,4 +268,4 @@ blueprints:
 
 -include $(DEPS)
 
-.PHONY: all clean directories install uninstall blueprints test asm asm_clean
+.PHONY: all clean directories install uninstall blueprints test tests asm asm_clean examples_run
