@@ -985,7 +985,7 @@ int main(void) {
 
         printf("%2ds | %8" PRIu64 " | %6.2f | %6.2f | %6.2f | %8" PRIu64 " | %11" PRIu64 " | %5" PRIu64 " | %7ld | %7" PRIu64 " | %7" PRIu64 " | %9" PRIu64 "\n",
                i, ops, hit_pct, miss_pct, exp_pct, writes, lat,
-               TTAK_FAST_ATOMIC_LOAD_U64(&g_gc.current_epoch),
+               atomic_load_explicit(&g_gc.current_epoch, memory_order_relaxed),
                rss, evictions, cleanups, retired);
         fflush(stdout);
     }
