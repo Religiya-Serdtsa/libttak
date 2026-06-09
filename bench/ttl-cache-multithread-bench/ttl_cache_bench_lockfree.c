@@ -193,22 +193,22 @@ static const size_t kMaxArenaBudgetBytes = 1024ULL * 1024ULL * 1024ULL;
  * Aligned to 64-byte cache lines to eliminate False Sharing.
  */
 typedef struct {
-    alignas(64) _Atomic uint64_t read_ops;
-    alignas(64) _Atomic uint64_t write_ops;
-    alignas(64) _Atomic uint64_t hits;
-    alignas(64) _Atomic uint64_t misses;
-    alignas(64) _Atomic uint64_t expired;
-    alignas(64) _Atomic uint64_t evictions;
-    alignas(64) _Atomic uint64_t cleanups;
-    alignas(64) _Atomic uint64_t retirements;
-    alignas(64) _Atomic uint64_t total_ticks;
+    alignas(64) uint64_t read_ops;
+    alignas(64) uint64_t write_ops;
+    alignas(64) uint64_t hits;
+    alignas(64) uint64_t misses;
+    alignas(64) uint64_t expired;
+    alignas(64) uint64_t evictions;
+    alignas(64) uint64_t cleanups;
+    alignas(64) uint64_t retirements;
+    alignas(64) uint64_t total_ticks;
 } stats_t;
 
 static stats_t stats;
-static _Atomic uint64_t g_running = 1;
-static _Atomic uint64_t g_start_signal = 0;
-static _Atomic uint64_t g_threads_ready = 0;
-static _Atomic uint64_t g_abort_signal = 0;
+static uint64_t g_running = 1;
+static uint64_t g_start_signal = 0;
+static uint64_t g_threads_ready = 0;
+static uint64_t g_abort_signal = 0;
 
 static ttak_shared_t *g_cache;
 static cache_table_t *g_table;
