@@ -13,7 +13,7 @@ on:
     - cron: "0 3 * * *"
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   benchmark:
@@ -23,11 +23,13 @@ jobs:
         shell: bash
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
 
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential clang tcc python3
+          sudo apt-get install -y build-essential clang tcc python3 python3-matplotlib
 
       - name: Build libttak
         run: make -j"$(nproc)"
@@ -43,6 +45,28 @@ jobs:
         run: |
           python3 ./generate_ci_benchmark_svg.py
           python3 ./update_readme_ci_section.py --duration 60
+
+      - name: Regenerate benchmark PNG graphs
+        run: |
+          python3 ./scripts/autogen_bench_graphs.py
+
+      - name: Auto-commit benchmark PNG updates
+        if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
+        run: |
+          set -euo pipefail
+          PNG_PATHS=(
+            bench/ttl-cache-multithread-bench/throughput_comparison.png
+            bench/ttl-cache-multithread-bench/rss_comparison.png
+          )
+          if git diff --quiet -- "${PNG_PATHS[@]}"; then
+            echo "No PNG changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "${PNG_PATHS[@]}"
+          git commit -m "chore(bench): refresh CI benchmark PNG graphs"
+          git push
 
       - name: Validate 60-point trend data
         working-directory: bench/ttl-cache-multithread-bench
@@ -70,5 +94,7 @@ jobs:
             bench/ttl-cache-multithread-bench/ci_benchmark_raw_clang.txt
             bench/ttl-cache-multithread-bench/ci_benchmark_raw_tcc.txt
             bench/ttl-cache-multithread-bench/copilot_ci_benchmark.svg
+            bench/ttl-cache-multithread-bench/throughput_comparison.png
+            bench/ttl-cache-multithread-bench/rss_comparison.png
             bench/ttl-cache-multithread-bench/README.md
             bench/ttl-cache-multithread-bench/README.ko.md
