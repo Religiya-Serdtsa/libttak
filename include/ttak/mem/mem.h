@@ -16,6 +16,7 @@
 #define _GNU_SOURCE
 #endif
 
+#include <sys/mman.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
