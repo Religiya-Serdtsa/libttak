@@ -50,13 +50,15 @@ TTAK_BENCH_DURATION_SEC=20 ./ttl_cache_bench_lockfree
 
 ## Compiler Comparison
 
-![Throughput Comparison](./throughput_comparison.png)
-![RSS Comparison](./rss_comparison.png)
+![Throughput Comparison](./throughput_comparison.svg)
+![RSS Comparison](./rss_comparison.svg)
 
 ## CI Detailed Time-Series Image
 
 <!-- AUTO-CI-BENCHMARK:START -->
-The CI artifact `copilot_ci_benchmark.svg` uses a roomy 3-panel line-chart layout and keeps the 3-compiler comparison format (GCC / Clang / TCC).
+The CI artifacts `copilot_ci_benchmark.svg`, `throughput_comparison.svg`, and `rss_comparison.svg` are generated from the same raw GitHub CI benchmark output.
+
+The detailed artifact uses a roomy 3-panel line-chart layout and keeps the 3-compiler comparison format (GCC / Clang / TCC).
 
 For the compiler-comparison section, each compiler is measured for **60 seconds** to capture steady-state trends:
 

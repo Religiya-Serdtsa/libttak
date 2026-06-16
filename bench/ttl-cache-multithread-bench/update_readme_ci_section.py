@@ -22,7 +22,9 @@ def replace_block(path: Path, block: str) -> None:
 
 
 def build_en_block(duration: int) -> str:
-    return f"""The CI artifact `copilot_ci_benchmark.svg` uses a roomy 3-panel line-chart layout and keeps the 3-compiler comparison format (GCC / Clang / TCC).
+    return f"""The CI artifacts `copilot_ci_benchmark.svg`, `throughput_comparison.svg`, and `rss_comparison.svg` are generated from the same raw GitHub CI benchmark output.
+
+The detailed artifact uses a roomy 3-panel line-chart layout and keeps the 3-compiler comparison format (GCC / Clang / TCC).
 
 For the compiler-comparison section, each compiler is measured for **{duration} seconds** to capture steady-state trends:
 
@@ -42,7 +44,9 @@ python3 ./update_readme_ci_section.py --duration {duration}
 
 
 def build_ko_block(duration: int) -> str:
-    return f"""`copilot_ci_benchmark.svg`는 다음 2개 섹션으로 생성됩니다.
+    return f"""`copilot_ci_benchmark.svg`, `throughput_comparison.svg`, `rss_comparison.svg`는 같은 GitHub CI raw 벤치마크 출력에서 생성됩니다.
+
+상세 이미지 `copilot_ci_benchmark.svg`는 다음 2개 섹션으로 생성됩니다.
 
 1. **컴파일러 3종 비교 섹션**: GCC / Clang / TCC 오버레이 라인 차트
 2. **Embedded Allocator 섹션**: GCC 고정 + `EMBEDDED=0` vs `EMBEDDED=1` 비교

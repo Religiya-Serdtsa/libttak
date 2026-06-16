@@ -8,6 +8,8 @@ from pathlib import Path
 
 BENCH_DIR = Path(__file__).resolve().parent
 OUT_FILE = BENCH_DIR / "copilot_ci_benchmark.svg"
+OUT_THROUGHPUT_FILE = BENCH_DIR / "throughput_comparison.svg"
+OUT_RSS_FILE = BENCH_DIR / "rss_comparison.svg"
 
 RAW_FILES = {
     "gcc": [BENCH_DIR / "ci_benchmark_raw_gcc.txt", BENCH_DIR / "ci_benchmark_raw.txt"],
@@ -162,6 +164,20 @@ def draw_embedded_section(x, y, w, h, embedded_data):
     return "\n".join(out)
 
 
+def write_single_metric_svg(path: Path, title: str, y_label: str, metric_key: str, data: dict[str, list[dict[str, float]]]) -> None:
+    width, height = 1200, 600
+    parts = [
+        f"<svg xmlns='http://www.w3.org/2000/svg' width='{width}' height='{height}' viewBox='0 0 {width} {height}'>",
+        "<rect width='100%' height='100%' fill='#0b1020'/>",
+        f"<text x='50%' y='48' text-anchor='middle' fill='#e6edf3' font-size='28' font-family='Arial' font-weight='700'>{title}</text>",
+        draw_legend(120, 88, ["gcc", "clang", "tcc"], set(data.keys())),
+        draw_panel(title, y_label, metric_key, 45, 125, 1110, 430, data),
+        "</svg>",
+    ]
+    path.write_text("\n".join(parts), encoding="utf-8")
+    print(f"Generated {path}")
+
+
 def main() -> None:
     compiler_data = load_series(RAW_FILES)
     if not compiler_data:
@@ -190,6 +206,20 @@ def main() -> None:
     parts.append("</svg>")
     OUT_FILE.write_text("\n".join(parts), encoding="utf-8")
     print(f"Generated {OUT_FILE}")
+    write_single_metric_svg(
+        OUT_THROUGHPUT_FILE,
+        "Lock-Free TTL Cache Throughput Comparison (GitHub CI)",
+        "Throughput (Million Ops/s)",
+        "ops_m",
+        compiler_data,
+    )
+    write_single_metric_svg(
+        OUT_RSS_FILE,
+        "Lock-Free TTL Cache RSS Comparison (GitHub CI)",
+        "RSS Footprint (MB)",
+        "rss_mb",
+        compiler_data,
+    )
 
 
 if __name__ == "__main__":

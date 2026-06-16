@@ -13,7 +13,7 @@ on:
     - cron: "0 3 * * *"
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   benchmark:
@@ -70,5 +70,32 @@ jobs:
             bench/ttl-cache-multithread-bench/ci_benchmark_raw_clang.txt
             bench/ttl-cache-multithread-bench/ci_benchmark_raw_tcc.txt
             bench/ttl-cache-multithread-bench/copilot_ci_benchmark.svg
+            bench/ttl-cache-multithread-bench/throughput_comparison.svg
+            bench/ttl-cache-multithread-bench/rss_comparison.svg
             bench/ttl-cache-multithread-bench/README.md
             bench/ttl-cache-multithread-bench/README.ko.md
+
+      - name: Push updated benchmark visualization to main
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            bench/ttl-cache-multithread-bench/ci_benchmark_raw_gcc.txt \
+            bench/ttl-cache-multithread-bench/ci_benchmark_raw_clang.txt \
+            bench/ttl-cache-multithread-bench/ci_benchmark_raw_tcc.txt \
+            bench/ttl-cache-multithread-bench/copilot_ci_benchmark.svg \
+            bench/ttl-cache-multithread-bench/throughput_comparison.svg \
+            bench/ttl-cache-multithread-bench/rss_comparison.svg \
+            bench/ttl-cache-multithread-bench/README.md \
+            bench/ttl-cache-multithread-bench/README.ko.md
+          git rm --ignore-unmatch \
+            bench/ttl-cache-multithread-bench/throughput_comparison.png \
+            bench/ttl-cache-multithread-bench/rss_comparison.png
+          if git diff --cached --quiet; then
+            echo "No benchmark visualization changes to push."
+            exit 0
+          fi
+          git commit -m "chore: update CI benchmark visualization"
+          git push origin HEAD:main

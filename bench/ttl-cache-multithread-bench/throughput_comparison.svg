@@ -1,0 +1,63 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='600' viewBox='0 0 1200 600'>
+<rect width='100%' height='100%' fill='#0b1020'/>
+<text x='50%' y='48' text-anchor='middle' fill='#e6edf3' font-size='28' font-family='Arial' font-weight='700'>Lock-Free TTL Cache Throughput Comparison (GitHub CI)</text>
+<line x1='120' y1='88' x2='154' y2='88' stroke='#58a6ff' stroke-width='4'/>
+<text x='164' y='93' fill='#c9d6e2' font-size='16' font-family='Arial'>GCC</text>
+<line x1='370' y1='88' x2='404' y2='88' stroke='#2ea043' stroke-width='4'/>
+<text x='414' y='93' fill='#c9d6e2' font-size='16' font-family='Arial'>CLANG</text>
+<line x1='620' y1='88' x2='654' y2='88' stroke='#f2cc60' stroke-width='4'/>
+<text x='664' y='93' fill='#c9d6e2' font-size='16' font-family='Arial'>TCC</text>
+<rect x='45' y='125' width='1110' height='430' rx='14' fill='#11182e' stroke='#4b5872' stroke-width='1.2'/>
+<text x='75' y='161' fill='#e6edf3' font-size='22' font-family='Arial' font-weight='700'>Lock-Free TTL Cache Throughput Comparison (GitHub CI)</text>
+<line x1='165' y1='179.0' x2='1085' y2='179.0' stroke='#3b465c' stroke-width='1' stroke-dasharray='6 6' opacity='0.55'/>
+<line x1='165' y1='230.7' x2='1085' y2='230.7' stroke='#3b465c' stroke-width='1' stroke-dasharray='6 6' opacity='0.55'/>
+<line x1='165' y1='282.3' x2='1085' y2='282.3' stroke='#3b465c' stroke-width='1' stroke-dasharray='6 6' opacity='0.55'/>
+<line x1='165' y1='334.0' x2='1085' y2='334.0' stroke='#3b465c' stroke-width='1' stroke-dasharray='6 6' opacity='0.55'/>
+<line x1='165' y1='385.7' x2='1085' y2='385.7' stroke='#3b465c' stroke-width='1' stroke-dasharray='6 6' opacity='0.55'/>
+<line x1='165' y1='437.3' x2='1085' y2='437.3' stroke='#3b465c' stroke-width='1' stroke-dasharray='6 6' opacity='0.55'/>
+<line x1='165' y1='489.0' x2='1085' y2='489.0' stroke='#3b465c' stroke-width='1' stroke-dasharray='6 6' opacity='0.55'/>
+<line x1='165' y1='489' x2='1085' y2='489' stroke='#95a2bb' stroke-width='1.4'/>
+<line x1='165' y1='179' x2='165' y2='489' stroke='#95a2bb' stroke-width='1.4'/>
+<text x='267.2' y='519' text-anchor='middle' fill='#c9d6e2' font-size='12' font-family='Arial'>2s</text>
+<text x='471.7' y='519' text-anchor='middle' fill='#c9d6e2' font-size='12' font-family='Arial'>4s</text>
+<text x='676.1' y='519' text-anchor='middle' fill='#c9d6e2' font-size='12' font-family='Arial'>6s</text>
+<text x='880.6' y='519' text-anchor='middle' fill='#c9d6e2' font-size='12' font-family='Arial'>8s</text>
+<text x='1085.0' y='519' text-anchor='middle' fill='#c9d6e2' font-size='12' font-family='Arial'>10s</text>
+<text x='80' y='340.0' fill='#c9d6e2' font-size='14' font-family='Arial' transform='rotate(-90 80,340.0)'>Throughput (Million Ops/s)</text>
+<text x='625.0' y='537' text-anchor='middle' fill='#c9d6e2' font-size='14' font-family='Arial'>Elapsed Time (s)</text>
+<text x='155' y='185' text-anchor='end' fill='#9fb0c0' font-size='12' font-family='Arial'>0.01</text>
+<text x='155' y='494' text-anchor='end' fill='#9fb0c0' font-size='12' font-family='Arial'>-0.00</text>
+<polyline points='165.0,334.0 267.2,214.8 369.4,214.9 471.7,214.9 573.9,334.0 676.1,214.9 778.3,214.9 880.6,214.9 982.8,214.8 1085.0,334.1' fill='none' stroke='#58a6ff' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'/>
+<circle cx='165.0' cy='334.0' r='4.0' fill='#58a6ff' stroke='#0b1020' stroke-width='1' />
+<circle cx='267.2' cy='214.8' r='4.0' fill='#58a6ff' stroke='#0b1020' stroke-width='1' />
+<circle cx='369.4' cy='214.9' r='4.0' fill='#58a6ff' stroke='#0b1020' stroke-width='1' />
+<circle cx='471.7' cy='214.9' r='4.0' fill='#58a6ff' stroke='#0b1020' stroke-width='1' />
+<circle cx='573.9' cy='334.0' r='4.0' fill='#58a6ff' stroke='#0b1020' stroke-width='1' />
+<circle cx='676.1' cy='214.9' r='4.0' fill='#58a6ff' stroke='#0b1020' stroke-width='1' />
+<circle cx='778.3' cy='214.9' r='4.0' fill='#58a6ff' stroke='#0b1020' stroke-width='1' />
+<circle cx='880.6' cy='214.9' r='4.0' fill='#58a6ff' stroke='#0b1020' stroke-width='1' />
+<circle cx='982.8' cy='214.8' r='4.0' fill='#58a6ff' stroke='#0b1020' stroke-width='1' />
+<circle cx='1085.0' cy='334.1' r='4.0' fill='#58a6ff' stroke='#0b1020' stroke-width='1' />
+<polyline points='165.0,334.0 267.2,334.0 369.4,214.9 471.7,334.1 573.9,214.8 676.1,334.0 778.3,214.9 880.6,334.1 982.8,214.8 1085.0,334.0' fill='none' stroke='#2ea043' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'/>
+<circle cx='165.0' cy='334.0' r='4.0' fill='#2ea043' stroke='#0b1020' stroke-width='1' />
+<circle cx='267.2' cy='334.0' r='4.0' fill='#2ea043' stroke='#0b1020' stroke-width='1' />
+<circle cx='369.4' cy='214.9' r='4.0' fill='#2ea043' stroke='#0b1020' stroke-width='1' />
+<circle cx='471.7' cy='334.1' r='4.0' fill='#2ea043' stroke='#0b1020' stroke-width='1' />
+<circle cx='573.9' cy='214.8' r='4.0' fill='#2ea043' stroke='#0b1020' stroke-width='1' />
+<circle cx='676.1' cy='334.0' r='4.0' fill='#2ea043' stroke='#0b1020' stroke-width='1' />
+<circle cx='778.3' cy='214.9' r='4.0' fill='#2ea043' stroke='#0b1020' stroke-width='1' />
+<circle cx='880.6' cy='334.1' r='4.0' fill='#2ea043' stroke='#0b1020' stroke-width='1' />
+<circle cx='982.8' cy='214.8' r='4.0' fill='#2ea043' stroke='#0b1020' stroke-width='1' />
+<circle cx='1085.0' cy='334.0' r='4.0' fill='#2ea043' stroke='#0b1020' stroke-width='1' />
+<polyline points='165.0,453.2 267.2,334.0 369.4,334.1 471.7,334.1 573.9,334.0 676.1,334.1 778.3,334.1 880.6,453.2 982.8,334.0 1085.0,334.0' fill='none' stroke='#f2cc60' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'/>
+<circle cx='165.0' cy='453.2' r='4.0' fill='#f2cc60' stroke='#0b1020' stroke-width='1' />
+<circle cx='267.2' cy='334.0' r='4.0' fill='#f2cc60' stroke='#0b1020' stroke-width='1' />
+<circle cx='369.4' cy='334.1' r='4.0' fill='#f2cc60' stroke='#0b1020' stroke-width='1' />
+<circle cx='471.7' cy='334.1' r='4.0' fill='#f2cc60' stroke='#0b1020' stroke-width='1' />
+<circle cx='573.9' cy='334.0' r='4.0' fill='#f2cc60' stroke='#0b1020' stroke-width='1' />
+<circle cx='676.1' cy='334.1' r='4.0' fill='#f2cc60' stroke='#0b1020' stroke-width='1' />
+<circle cx='778.3' cy='334.1' r='4.0' fill='#f2cc60' stroke='#0b1020' stroke-width='1' />
+<circle cx='880.6' cy='453.2' r='4.0' fill='#f2cc60' stroke='#0b1020' stroke-width='1' />
+<circle cx='982.8' cy='334.0' r='4.0' fill='#f2cc60' stroke='#0b1020' stroke-width='1' />
+<circle cx='1085.0' cy='334.0' r='4.0' fill='#f2cc60' stroke='#0b1020' stroke-width='1' />
+</svg>

@@ -11,7 +11,9 @@
 ## CI 상세 이미지
 
 <!-- AUTO-CI-BENCHMARK:START -->
-`copilot_ci_benchmark.svg`는 다음 2개 섹션으로 생성됩니다.
+`copilot_ci_benchmark.svg`, `throughput_comparison.svg`, `rss_comparison.svg`는 같은 GitHub CI raw 벤치마크 출력에서 생성됩니다.
+
+상세 이미지 `copilot_ci_benchmark.svg`는 다음 2개 섹션으로 생성됩니다.
 
 1. **컴파일러 3종 비교 섹션**: GCC / Clang / TCC 오버레이 라인 차트
 2. **Embedded Allocator 섹션**: GCC 고정 + `EMBEDDED=0` vs `EMBEDDED=1` 비교

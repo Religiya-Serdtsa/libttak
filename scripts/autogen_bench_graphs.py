@@ -108,8 +108,8 @@ def generate_graphs(data):
     plt.grid(True, linestyle="--", alpha=0.3)
     plt.legend()
     plt.tight_layout()
-    plt.savefig(os.path.join(BENCH_DIR, "throughput_comparison.png"))
-    print("Generated throughput_comparison.png")
+    plt.savefig(os.path.join(BENCH_DIR, "throughput_comparison.svg"))
+    print("Generated throughput_comparison.svg")
 
     # RSS Trend
     plt.figure(figsize=(12, 6))
@@ -127,8 +127,8 @@ def generate_graphs(data):
     plt.grid(True, linestyle="--", alpha=0.3)
     plt.legend()
     plt.tight_layout()
-    plt.savefig(os.path.join(BENCH_DIR, "rss_comparison.png"))
-    print("Generated rss_comparison.png")
+    plt.savefig(os.path.join(BENCH_DIR, "rss_comparison.svg"))
+    print("Generated rss_comparison.svg")
 
 if __name__ == "__main__":
     bench_data = {}
