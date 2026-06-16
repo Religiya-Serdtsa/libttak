@@ -675,8 +675,9 @@ static void *maintenance_task(void *arg) {
         }
         bench_usleep_us(100000); 
         ttak_epoch_reclaim();
-        ttak_epoch_gc_rotate(&g_gc);
     }
+
+    ttak_epoch_gc_rotate(&g_gc);
     ttak_epoch_deregister_thread();
     return NULL;
 }
