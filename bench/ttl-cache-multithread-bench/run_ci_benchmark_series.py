@@ -5,6 +5,10 @@ GCC is the reference lane and must succeed.  Clang and TCC are best-effort:
 if either lane fails to build or does not produce a complete run, the lane
 falls back to the GCC reference output so the CI trend/SVG steps always have
 valid 60-point data for all three compilers.
+
+Compiler lanes are intentionally run one after another.  The benchmark itself
+may create worker threads according to --threads, but this wrapper never runs
+GCC, Clang, and TCC concurrently.
 """
 
 from __future__ import annotations
@@ -144,25 +148,29 @@ def main() -> None:
     if args.duration <= 0:
         raise SystemExit("duration must be > 0")
 
-    for cc in ("gcc", "clang"):
-        if not run_compiler(args.duration, args.threads, cc, f"ci_benchmark_raw_{cc}.txt"):
-            if cc == "clang":
-                print("[clang] retrying with conservative warmup settings")
-                clang_compat_env = {
-                    "TTAK_BENCH_WARMUP": "1000",
-                    "TTAK_BENCH_READ_BATCH": "1",
-                    "TTAK_BENCH_MAINT_SCAN": "2048",
-                    "TTAK_BENCH_WRITE_PCT": "2",
-                }
-                if run_compiler(args.duration, args.threads, cc, f"ci_benchmark_raw_{cc}.txt", extra_env=clang_compat_env):
-                    continue
-            raise SystemExit(f"{cc} benchmark did not produce full {args.duration}s output")
+    print(f"running compiler lanes sequentially: gcc -> clang -> tcc ({args.duration}s each, {args.threads} worker thread(s))")
+
     # GCC is the reference lane and must succeed.
     if not run_compiler(args.duration, args.threads, "gcc", "ci_benchmark_raw_gcc.txt"):
         raise SystemExit("gcc benchmark did not produce full output")
 
     # Clang is best-effort; fall back to GCC if it fails.
     clang_ok = run_compiler(args.duration, args.threads, "clang", "ci_benchmark_raw_clang.txt")
+    if not clang_ok:
+        print("[clang] retrying with conservative warmup settings")
+        clang_compat_env = {
+            "TTAK_BENCH_WARMUP": "1000",
+            "TTAK_BENCH_READ_BATCH": "1",
+            "TTAK_BENCH_MAINT_SCAN": "2048",
+            "TTAK_BENCH_WRITE_PCT": "2",
+        }
+        clang_ok = run_compiler(
+            args.duration,
+            args.threads,
+            "clang",
+            "ci_benchmark_raw_clang.txt",
+            extra_env=clang_compat_env,
+        )
     if not clang_ok:
         print("[clang] benchmark lane failed; falling back to gcc reference output")
         fallback_to_gcc("clang", "ci_benchmark_raw_clang.txt", args.duration)
