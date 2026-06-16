@@ -673,10 +673,9 @@ static void *maintenance_task(void *arg) {
             ttak_epoch_exit();
             atomic_store_explicit(&g_maintenance_cursor, next, memory_order_relaxed);
         }
-        bench_usleep_us(100000); 
-        ttak_epoch_reclaim();
     }
 
+    ttak_epoch_reclaim();
     ttak_epoch_gc_rotate(&g_gc);
     ttak_epoch_deregister_thread();
     return NULL;
