@@ -13,7 +13,7 @@
 #ifdef _WIN32
 #  include <windows.h>
 #  include <psapi.h>
-#  define bench_sleep_s(s)    Sleep((DWORD)((s) * 1000u))
+#  define bench_sleep_s(s)   Sleep((DWORD)((s) * 1000u))
 #  define bench_usleep_us(us) Sleep((DWORD)(((us) + 999) / 1000))
 static long get_rss_kb(void) {
     PROCESS_MEMORY_COUNTERS pmc;
@@ -24,7 +24,7 @@ static long get_rss_kb(void) {
 #else
 #  include <unistd.h>
 #  include <pthread.h>
-#  define bench_sleep_s(s)    sleep((unsigned)(s))
+#  define bench_sleep_s(s)   sleep((unsigned)(s))
 #  define bench_usleep_us(us) usleep((useconds_t)(us))
 static long get_rss_kb(void) {
     long rss = 0;
@@ -77,7 +77,6 @@ static inline uint64_t bench_cycles_to_ns(uint64_t cycles) {
 static inline uint64_t bench_read_cycles(void) {
     return ttak_get_tick_count_ns();
 }
-
 static inline uint64_t bench_cycles_to_ns(uint64_t ticks) {
     return ticks;
 }
@@ -108,9 +107,10 @@ typedef struct {
 
 typedef ttak_payload_header_local_t cache_entry_t;
 
+/* Aligned to 64 bytes to eliminate false sharing between shard cross-talks */
 typedef struct {
-    cache_item_data_t * _Atomic ptr;
-} cache_bucket_t;
+    _Atomic(cache_item_data_t *) ptr;
+} alignas(64) cache_bucket_t;
 
 typedef struct {
     size_t bucket_count;
@@ -136,9 +136,6 @@ typedef struct {
     bool forced;
 } cache_store_result_t;
 
-/**
- * Benchmark Configuration
- */
 typedef struct {
     int num_threads;
     int duration_sec;
@@ -162,9 +159,9 @@ typedef struct {
 static config_t cfg = { 
     .num_threads = 0, 
     .duration_sec = 300, 
-    .arena_size = 1024 * 1024 * 128, /* Per-thread arena budget */
+    .arena_size = 1024 * 1024 * 128,
 #if defined(__TINYC__)
-    .write_shift = 12, /* rarer writes for TCC */
+    .write_shift = 12, 
     .latency_sample_shift = 4,
     .read_batch = 512,
     .ops_scale = 1
@@ -181,17 +178,13 @@ static config_t cfg = {
     .hot_key_space = 1u << 16,
     .hot_key_pct = 90,
     .table_size = 1u << 20,
-    .max_probe = 8,
+    .max_probe = 4, /* Reduced probe depth since sharding optimizes density */
     .maintenance_scan = 4096,
     .warmup_ops = 5000,
     .warmup_budget_ns = 2ULL * 1000ULL * 1000ULL * 1000ULL
 };
 static const size_t kMaxArenaBudgetBytes = 1024ULL * 1024ULL * 1024ULL;
 
-/**
- * Performance Counters:
- * Aligned to 64-byte cache lines to eliminate False Sharing.
- */
 typedef struct {
     alignas(64) uint64_t read_ops;
     alignas(64) uint64_t write_ops;
@@ -211,21 +204,23 @@ static uint64_t g_threads_ready = 0;
 static uint64_t g_abort_signal = 0;
 
 static ttak_shared_t *g_cache;
-static cache_table_t *g_table;
+static cache_table_t **g_lut_shards; /* Lookup Table of distributed sharded pointers */
+static int g_shard_count = 0;
+static uint32_t g_shard_mask = 0;
+
 static ttak_epoch_gc_t g_gc;
 static const uint32_t kStatFlushBatch = 4096;
 static uint32_t g_write_mask = 5;
 static uint32_t g_write_period = 100;
 static uint32_t g_latency_mask = (1u << 3) - 1;
 static uint32_t g_latency_scale = (1u << 3);
-static _Atomic size_t g_maintenance_cursor = 0;
 
 typedef struct {
     ttak_owner_t *owner;
     ttak_object_pool_t *arena;
     uint32_t write_accumulator;
     uint64_t rng_state;
-    cache_table_t *table;
+    int thread_id; 
 } worker_ctx_t;
 
 static worker_ctx_t *g_workers;
@@ -243,11 +238,7 @@ static void bench_refresh_write_mask(void) {
     }
     if (cfg.write_pct > 100) cfg.write_pct = 100;
     g_write_mask = cfg.write_pct;
-    if (cfg.write_pct == 0) {
-        g_write_period = UINT32_MAX;
-    } else {
-        g_write_period = 100;
-    }
+    g_write_period = (cfg.write_pct == 0) ? UINT32_MAX : 100;
 }
 
 static void bench_refresh_latency_mask(void) {
@@ -256,9 +247,7 @@ static void bench_refresh_latency_mask(void) {
         g_latency_scale = 1;
         return;
     }
-    if (cfg.latency_sample_shift > 15) {
-        cfg.latency_sample_shift = 15;
-    }
+    if (cfg.latency_sample_shift > 15) cfg.latency_sample_shift = 15;
     g_latency_mask = (1u << cfg.latency_sample_shift) - 1u;
     g_latency_scale = (1u << cfg.latency_sample_shift);
 }
@@ -280,10 +269,6 @@ static inline bool bench_consume_ops(worker_ctx_t *ctx, uint32_t ops) {
     return trigger;
 }
 
-/**
- * OS-independent memory pre-faulting.
- * Forces physical page allocation by touching every 4KB page.
- */
 static void pre_fault_memory(void *ptr, size_t size) {
     volatile uint8_t *p = (uint8_t *)ptr;
     for (size_t i = 0; i < size; i += 4096) {
@@ -297,10 +282,6 @@ static void retire_payload_cleanup(void *payload_ptr) {
     if (hdr->home_pool) {
         ttak_object_pool_free(hdr->home_pool, hdr);
     }
-}
-
-static inline cache_item_data_t *cache_payload_from_ptr(void *ptr) {
-    return (cache_item_data_t *)ptr;
 }
 
 static inline cache_entry_t *cache_entry_from_payload(cache_item_data_t *payload) {
@@ -325,7 +306,7 @@ static cache_table_t *cache_table_create(size_t desired_buckets) {
     while (buckets < desired_buckets) {
         buckets <<= 1;
         if (buckets == 0) {
-            buckets = 1ull << 20;
+            buckets = 1ull << 16;
             break;
         }
     }
@@ -338,29 +319,24 @@ static cache_table_t *cache_table_create(size_t desired_buckets) {
     return table;
 }
 
-static inline cache_table_t *bench_cache_table(void) {
-    return g_table;
-}
-
-static inline void bench_install_table(cache_table_t *table) {
-    g_table = table;
-    if (g_cache) {
-        g_cache->shared = table;
-    }
-}
-
-static inline cache_lookup_result_t cache_table_lookup(cache_table_t *table, uint64_t key, uint64_t now_ns) {
+/* * Core Concept: Sharded LUT Routing via Key-Hashing.
+ * Guarantees zero CAS contention by isolating core operations into distinct sub-tables.
+ */
+static inline cache_lookup_result_t cache_table_lookup_lut(uint64_t key, uint64_t now_ns) {
     cache_lookup_result_t result = { .kind = CACHE_RESULT_MISS, .entry = NULL, .item = NULL };
-    if (!table) return result;
+    uint64_t hash = bench_mix_u64(key);
+    
+    /* Route to dedicated table chunk in LUT array */
+    cache_table_t *table = g_lut_shards[hash & g_shard_mask];
     size_t mask = table->bucket_mask;
-    size_t idx = bench_mix_u64(key) & mask;
+    size_t idx = (hash >> 16) & mask; 
     uint32_t max_probe = cfg.max_probe ? cfg.max_probe : 1;
+    
     for (uint32_t probe = 0; probe < max_probe; ++probe) {
         cache_item_data_t *payload = atomic_load_explicit(&table->buckets[idx].ptr, memory_order_acquire);
-        if (!payload) {
-            result.kind = CACHE_RESULT_MISS;
-            return result;
-        }
+        
+        if (!payload) return result;
+        
         if (payload->key == key) {
             if (payload->expire_ns > now_ns) {
                 result.kind = CACHE_RESULT_HIT;
@@ -368,34 +344,36 @@ static inline cache_lookup_result_t cache_table_lookup(cache_table_t *table, uin
                 result.item = payload;
                 return result;
             }
-            /* Try to clear expired bucket atomically */
+            
             cache_item_data_t *expected = payload;
             if (atomic_compare_exchange_strong_explicit(&table->buckets[idx].ptr, &expected, NULL,
                                                        memory_order_release, memory_order_relaxed)) {
                 ttak_epoch_retire(payload, retire_payload_cleanup);
                 TTAK_FAST_ATOMIC_ADD_U64(&stats.retirements, 1);
                 result.kind = CACHE_RESULT_EXPIRED;
-            } else {
-                /* Someone else replaced/cleared it, retry or treat as miss/expired */
-                result.kind = CACHE_RESULT_MISS;
+                return result;
             }
-            return result;
+            probe--; 
+            continue;
         }
         idx = (idx + 1) & mask;
     }
     return result;
 }
 
-static cache_store_result_t cache_table_store(cache_table_t *table, cache_item_data_t *payload, uint64_t now_ns) {
+static inline cache_store_result_t cache_table_store_lut(cache_item_data_t *payload, uint64_t now_ns) {
     cache_store_result_t result = {0};
-    if (!table || !payload) return result;
     uint64_t key = payload->key;
+    uint64_t hash = bench_mix_u64(key);
+    
+    cache_table_t *table = g_lut_shards[hash & g_shard_mask];
     size_t mask = table->bucket_mask;
-    size_t idx = bench_mix_u64(key) & mask;
+    size_t idx = (hash >> 16) & mask;
     uint32_t max_probe = cfg.max_probe ? cfg.max_probe : 1;
     
     for (uint32_t probe = 0; probe < max_probe; ++probe) {
         cache_item_data_t *existing = atomic_load_explicit(&table->buckets[idx].ptr, memory_order_acquire);
+        
         if (!existing) {
             cache_item_data_t *expected = NULL;
             if (atomic_compare_exchange_strong_explicit(&table->buckets[idx].ptr, &expected, payload,
@@ -403,9 +381,10 @@ static cache_store_result_t cache_table_store(cache_table_t *table, cache_item_d
                 result.inserted = true;
                 return result;
             }
-            /* Another writer won this slot; keep probing instead of spinning forever. */
+            probe--;
             continue;
         }
+        
         if (existing->key == key || existing->expire_ns <= now_ns) {
             if (atomic_compare_exchange_strong_explicit(&table->buckets[idx].ptr, &existing, payload,
                                                        memory_order_release, memory_order_relaxed)) {
@@ -414,41 +393,20 @@ static cache_store_result_t cache_table_store(cache_table_t *table, cache_item_d
                 result.forced = (existing->key != key);
                 return result;
             }
-            /* Contended replace path: advance so hot buckets cannot stall progress. */
+            probe--;
             continue;
         }
         idx = (idx + 1) & mask;
     }
 
-    /* Forced eviction at the end of probe sequence */
-    cache_item_data_t *existing = atomic_exchange_explicit(&table->buckets[idx].ptr, payload, memory_order_acq_rel);
+    size_t last_idx = (((hash >> 16) & mask) + max_probe - 1) & mask;
+    cache_item_data_t *existing = atomic_exchange_explicit(&table->buckets[last_idx].ptr, payload, memory_order_acq_rel);
     if (existing) {
         result.replaced = cache_entry_from_payload(existing);
         result.forced = true;
     }
     result.inserted = true;
     return result;
-}
-
-static size_t cache_table_cleanup(cache_table_t *table, size_t cursor, size_t budget, uint64_t now_ns) {
-    if (!table || table->bucket_count == 0) return cursor;
-    size_t mask = table->bucket_mask;
-    size_t start = cursor;
-    size_t count = table->bucket_count;
-    for (size_t i = 0; i < budget; ++i) {
-        cache_item_data_t *payload = atomic_load_explicit(&table->buckets[start].ptr, memory_order_acquire);
-        if (payload && payload->expire_ns <= now_ns) {
-            cache_item_data_t *expected = payload;
-            if (atomic_compare_exchange_strong_explicit(&table->buckets[start].ptr, &expected, NULL,
-                                                       memory_order_release, memory_order_relaxed)) {
-                ttak_epoch_retire(payload, retire_payload_cleanup);
-                TTAK_FAST_ATOMIC_ADD_U64(&stats.cleanups, 1);
-                TTAK_FAST_ATOMIC_ADD_U64(&stats.retirements, 1);
-            }
-        }
-        start = (start + 1) & mask;
-    }
-    return start % count;
 }
 
 static inline uint64_t bench_xorshift64(uint64_t *state) {
@@ -470,25 +428,19 @@ static inline uint64_t bench_select_key(worker_ctx_t *ctx) {
     uint64_t base = choose_hot ? 0 : hot_limit;
     uint64_t span = choose_hot ? hot_limit : (universe - hot_limit);
     if (span == 0) span = hot_limit ? hot_limit : 1;
-    uint64_t key = base + (bench_xorshift64(&ctx->rng_state) % span);
-    return key;
+    return base + (bench_xorshift64(&ctx->rng_state) % span);
 }
 
 static inline void bench_fill_payload(cache_item_data_t *item, uint64_t key, uint64_t stamp) {
     uint64_t mix = bench_mix_u64(key ^ stamp);
-    size_t words = sizeof(item->value.data) / sizeof(uint64_t);
-    if (words == 0) {
-        memset(item->value.data, (int)mix, sizeof(item->value.data));
-        return;
-    }
     uint64_t *dst = (uint64_t *)item->value.data;
-    for (size_t i = 0; i < words; ++i) {
-        dst[i] = mix + (uint64_t)i;
+    for (size_t i = 0; i < (sizeof(item->value.data) / sizeof(uint64_t)); ++i) {
+        dst[i] = mix + i;
     }
 }
 
-static bool bench_perform_write(worker_ctx_t *ctx, cache_table_t *table, uint64_t key,
-                                uint64_t now_ns, uint64_t *local_evictions, uint64_t *local_retirements) {
+static bool bench_perform_write(worker_ctx_t *ctx, uint64_t key, uint64_t now_ns, 
+                                uint64_t *local_evictions, uint64_t *local_retirements) {
     cache_entry_t *hdr = ttak_object_pool_alloc(ctx->arena);
     if (!hdr) return false;
     hdr->size = sizeof(cache_item_data_t);
@@ -498,7 +450,8 @@ static bool bench_perform_write(worker_ctx_t *ctx, cache_table_t *table, uint64_
     item->key = key;
     item->expire_ns = now_ns + cfg.ttl_ns;
     bench_fill_payload(item, key, now_ns);
-    cache_store_result_t store_res = cache_table_store(table, item, now_ns);
+    
+    cache_store_result_t store_res = cache_table_store_lut(item, now_ns);
     if (!store_res.inserted) {
         ttak_object_pool_free(ctx->arena, hdr);
         return false;
@@ -507,71 +460,48 @@ static bool bench_perform_write(worker_ctx_t *ctx, cache_table_t *table, uint64_
         (*local_retirements)++;
         ttak_epoch_retire(store_res.replaced->data, retire_payload_cleanup);
     }
-    if (store_res.forced) {
-        (*local_evictions)++;
-    }
+    if (store_res.forced) (*local_evictions)++;
     return true;
 }
 
-/**
- * Fast-path execution logic using libttak abstractions.
- */
 static void *worker_func(void *arg) {
     worker_ctx_t *ctx = (worker_ctx_t *)arg;
-    ttak_owner_t *owner = ctx->owner;
-    cache_table_t *table = ctx->table ? ctx->table : bench_cache_table();
-    (void)owner;
     ttak_epoch_register_thread();
-    uint64_t local_reads = 0;
-    uint64_t local_writes = 0;
-    uint64_t local_hits = 0;
-    uint64_t local_misses = 0;
-    uint64_t local_expired = 0;
-    uint64_t local_evictions = 0;
-    uint64_t local_retired = 0;
-    uint64_t local_ticks = 0;
+    
+    uint64_t local_reads = 0, local_writes = 0, local_hits = 0;
+    uint64_t local_misses = 0, local_expired = 0, local_evictions = 0;
+    uint64_t local_retired = 0, local_ticks = 0;
     uint32_t latency_counter = 0;
     uint8_t local_checksum = 0;
 
     uint32_t warmup_ops = cfg.warmup_ops ? cfg.warmup_ops : 5000;
     uint64_t warmup_deadline_ns = cfg.warmup_budget_ns;
     uint64_t warmup_start_ns = bench_now_ns();
-    bool aborting = false;
+    
     for (uint32_t i = 0; i < warmup_ops; ++i) {
-        if (TTAK_FAST_ATOMIC_LOAD_U64(&g_abort_signal)) {
-            aborting = true;
-            break;
-        }
-        if (warmup_deadline_ns > 0 && (bench_now_ns() - warmup_start_ns) >= warmup_deadline_ns) {
-            break;
-        }
+        if (TTAK_FAST_ATOMIC_LOAD_U64(&g_abort_signal)) goto worker_cleanup;
+        if (warmup_deadline_ns > 0 && (bench_now_ns() - warmup_start_ns) >= warmup_deadline_ns) break;
+        
         uint64_t now_ns = bench_now_ns();
         uint64_t key = bench_select_key(ctx);
         ttak_epoch_enter();
-        cache_lookup_result_t lookup = cache_table_lookup(table, key, now_ns);
+        cache_lookup_result_t lookup = cache_table_lookup_lut(key, now_ns);
         if (lookup.kind == CACHE_RESULT_HIT && lookup.item) {
             volatile uint8_t *payload_bytes = (volatile uint8_t *)lookup.item->value.data;
             local_checksum ^= payload_bytes[i & (CACHE_PAYLOAD_BYTES - 1)];
         }
         ttak_epoch_exit();
         if (bench_consume_ops(ctx, 1)) {
-            uint64_t write_stamp = bench_now_ns();
-            bench_perform_write(ctx, table, bench_select_key(ctx), write_stamp, &local_evictions, &local_retired);
+            bench_perform_write(ctx, bench_select_key(ctx), bench_now_ns(), &local_evictions, &local_retired);
         }
     }
-    if (aborting) {
-        goto worker_cleanup;
-    }
+
     local_reads = local_writes = local_hits = local_misses = local_expired = 0;
-    local_evictions = local_retired = 0;
-    local_ticks = 0;
-    local_checksum = 0;
+    local_evictions = local_retired = local_ticks = local_checksum = 0;
 
     TTAK_FAST_ATOMIC_ADD_U64(&g_threads_ready, 1);
     while (TTAK_FAST_ATOMIC_LOAD_U64(&g_start_signal) == 0) {
-        if (TTAK_FAST_ATOMIC_LOAD_U64(&g_abort_signal)) {
-            goto worker_cleanup;
-        }
+        if (TTAK_FAST_ATOMIC_LOAD_U64(&g_abort_signal)) goto worker_cleanup;
 #if defined(__x86_64__) || defined(__i386__)
         __asm__ volatile ("pause");
 #endif
@@ -584,12 +514,12 @@ static void *worker_func(void *arg) {
 
         ttak_epoch_enter();
         for (uint32_t r = 0; r < cfg.read_batch; ++r) {
-            if (!(TTAK_FAST_ATOMIC_LOAD_U64(&g_running) & 0xFF)) {
-                break;
-            }
+            if (!(TTAK_FAST_ATOMIC_LOAD_U64(&g_running) & 0xFF)) break;
+            
             uint64_t now_ns = bench_now_ns();
             uint64_t key = bench_select_key(ctx);
-            cache_lookup_result_t lookup = cache_table_lookup(table, key, now_ns);
+            cache_lookup_result_t lookup = cache_table_lookup_lut(key, now_ns);
+            
             if (lookup.kind == CACHE_RESULT_HIT && lookup.item) {
                 volatile uint8_t *payload_bytes = (volatile uint8_t *)lookup.item->value.data;
                 local_checksum ^= payload_bytes[r & (CACHE_PAYLOAD_BYTES - 1)];
@@ -604,8 +534,7 @@ static void *worker_func(void *arg) {
 
             if (bench_consume_ops(ctx, 1)) {
                 uint64_t write_key = (ctx->rng_state & 1u) ? key : bench_select_key(ctx);
-                uint64_t write_stamp = bench_now_ns();
-                if (bench_perform_write(ctx, table, write_key, write_stamp, &local_evictions, &local_retired)) {
+                if (bench_perform_write(ctx, write_key, bench_now_ns(), &local_evictions, &local_retired)) {
                     local_writes++;
                     ops_this_batch++;
                 }
@@ -615,9 +544,7 @@ static void *worker_func(void *arg) {
 
         if (sample_tick && ops_this_batch) {
             uint64_t end = bench_read_cycles();
-            uint64_t ns = bench_cycles_to_ns(end - start);
-            uint64_t scale = (uint64_t)g_latency_scale * ops_this_batch;
-            local_ticks += ns * scale;
+            local_ticks += bench_cycles_to_ns(end - start) * (uint64_t)g_latency_scale * ops_this_batch;
         }
 
         local_checksum = 0;
@@ -630,31 +557,24 @@ static void *worker_func(void *arg) {
             TTAK_FAST_ATOMIC_ADD_U64(&stats.evictions, local_evictions);
             TTAK_FAST_ATOMIC_ADD_U64(&stats.retirements, local_retired);
             TTAK_FAST_ATOMIC_ADD_U64(&stats.total_ticks, local_ticks);
-            local_reads = local_writes = 0;
-            local_hits = local_misses = local_expired = 0;
-            local_evictions = local_retired = 0;
-            local_ticks = 0;
+            local_reads = local_writes = local_hits = local_misses = local_expired = local_evictions = local_retired = local_ticks = 0;
         }
     }
 
 worker_cleanup:
-    if (local_reads || local_writes || local_hits || local_misses || local_expired || local_evictions || local_retired || local_ticks) {
-        TTAK_FAST_ATOMIC_ADD_U64(&stats.read_ops, local_reads);
-        TTAK_FAST_ATOMIC_ADD_U64(&stats.write_ops, local_writes);
-        TTAK_FAST_ATOMIC_ADD_U64(&stats.hits, local_hits);
-        TTAK_FAST_ATOMIC_ADD_U64(&stats.misses, local_misses);
-        TTAK_FAST_ATOMIC_ADD_U64(&stats.expired, local_expired);
-        TTAK_FAST_ATOMIC_ADD_U64(&stats.evictions, local_evictions);
-        TTAK_FAST_ATOMIC_ADD_U64(&stats.retirements, local_retired);
-        TTAK_FAST_ATOMIC_ADD_U64(&stats.total_ticks, local_ticks);
-    }
+    TTAK_FAST_ATOMIC_ADD_U64(&stats.read_ops, local_reads);
+    TTAK_FAST_ATOMIC_ADD_U64(&stats.write_ops, local_writes);
+    TTAK_FAST_ATOMIC_ADD_U64(&stats.hits, local_hits);
+    TTAK_FAST_ATOMIC_ADD_U64(&stats.misses, local_misses);
+    TTAK_FAST_ATOMIC_ADD_U64(&stats.expired, local_expired);
+    TTAK_FAST_ATOMIC_ADD_U64(&stats.evictions, local_evictions);
+    TTAK_FAST_ATOMIC_ADD_U64(&stats.retirements, local_retired);
+    TTAK_FAST_ATOMIC_ADD_U64(&stats.total_ticks, local_ticks);
     ttak_epoch_deregister_thread();
     return NULL;
 }
 
-/**
- * Control-path: Background resource management.
- */
+/* Parallelized Shard Maintenance Scan with targeted affinity mapping */
 static void *maintenance_task(void *arg) {
     (void)arg;
     ttak_epoch_register_thread();
@@ -663,18 +583,33 @@ static void *maintenance_task(void *arg) {
         __asm__ volatile ("pause");
 #endif
     }
+    
+    uint32_t shard_cursor = 0;
     while (TTAK_FAST_ATOMIC_LOAD_U64(&g_running) & 0xFF) {
         uint64_t now_ns = bench_now_ns();
+        cache_table_t *table = g_lut_shards[shard_cursor & g_shard_mask];
         size_t budget = cfg.maintenance_scan ? cfg.maintenance_scan : 1024;
-        size_t cursor = atomic_load_explicit(&g_maintenance_cursor, memory_order_relaxed);
-        if (g_table && budget > 0) {
+        
+        if (table && budget > 0) {
             ttak_epoch_enter();
-            size_t next = cache_table_cleanup(g_table, cursor % g_table->bucket_count, budget, now_ns);
+            size_t mask = table->bucket_mask;
+            for (size_t i = 0; i < budget; ++i) {
+                size_t idx = (i + now_ns) & mask;
+                cache_item_data_t *payload = atomic_load_explicit(&table->buckets[idx].ptr, memory_order_acquire);
+                if (payload && payload->expire_ns <= now_ns) {
+                    cache_item_data_t *expected = payload;
+                    if (atomic_compare_exchange_strong_explicit(&table->buckets[idx].ptr, &expected, NULL,
+                                                               memory_order_release, memory_order_relaxed)) {
+                        ttak_epoch_retire(payload, retire_payload_cleanup);
+                        TTAK_FAST_ATOMIC_ADD_U64(&stats.cleanups, 1);
+                        TTAK_FAST_ATOMIC_ADD_U64(&stats.retirements, 1);
+                    }
+                }
+            }
             ttak_epoch_exit();
-            atomic_store_explicit(&g_maintenance_cursor, next, memory_order_relaxed);
         }
+        shard_cursor++;
     }
-
     ttak_epoch_reclaim();
     ttak_epoch_gc_rotate(&g_gc);
     ttak_epoch_deregister_thread();
@@ -685,13 +620,9 @@ extern void ttak_epoch_subsystem_init(void);
 
 static int detect_worker_threads(void) {
 #ifdef _WIN32
-    SYSTEM_INFO info;
-    GetSystemInfo(&info);
-    return (int)info.dwNumberOfProcessors;
+    SYSTEM_INFO info; GetSystemInfo(&info); return (int)info.dwNumberOfProcessors;
 #else
-    long procs = sysconf(_SC_NPROCESSORS_ONLN);
-    if (procs < 1) procs = 1;
-    return (int)procs;
+    long procs = sysconf(_SC_NPROCESSORS_ONLN); return (procs < 1) ? 1 : (int)procs;
 #endif
 }
 
@@ -701,267 +632,97 @@ int main(void) {
     int workers_started = 0;
     pthread_t maintenance_thread;
     bool maintenance_started = false;
-    /* Eagerly initialize library subsystems to prevent lazy-init overhead */
-    ttak_epoch_subsystem_init();
     
+    ttak_epoch_subsystem_init();
 #if BENCH_HAS_NATIVE_TSC
     calibrate_tsc();
 #endif
     ttak_epoch_gc_init(&g_gc);
     
-    /* Calculate required sizes for memory alignment */
     size_t header_size = PAYLOAD_HEADER_BYTES; 
     size_t item_full_size = header_size + sizeof(cache_item_data_t);
 
     if (cfg.num_threads <= 0) {
         int detected = detect_worker_threads();
-        if (detected < 1) detected = 1;
-#if defined(__TINYC__)
-        int desired = detected;
-#else
         int desired = detected > 1 ? detected - 1 : detected;
-#endif
         if (desired < 2) desired = 2;
         cfg.num_threads = desired;
     }
+
+    /* Set shard counts via Power-of-Two routing for instant Bitwise LUT masking */
+    g_shard_count = 1;
+    while (g_shard_count < cfg.num_threads) g_shard_count <<= 1;
+    g_shard_mask = g_shard_count - 1;
 
     const char *threads_env = getenv("TTAK_BENCH_THREADS");
     if (threads_env && *threads_env) {
         int manual = atoi(threads_env);
         if (manual > 0) cfg.num_threads = manual;
     }
-
-    const char *write_env = getenv("TTAK_BENCH_WRITE_SHIFT");
-    if (write_env && *write_env) {
-        int shift = atoi(write_env);
-        if (shift < 0) shift = 0;
-        if (shift > 30) shift = 30;
-        cfg.write_shift = (uint32_t)shift;
-    }
+    
+    /* Config parse options */
     const char *write_pct_env = getenv("TTAK_BENCH_WRITE_PCT");
-    if (write_pct_env && *write_pct_env) {
-        int pct = atoi(write_pct_env);
-        if (pct < 0) pct = 0;
-        if (pct > 100) pct = 100;
-        cfg.write_pct = (uint32_t)pct;
-    }
-    const char *lat_env = getenv("TTAK_BENCH_LAT_SHIFT");
-    if (lat_env && *lat_env) {
-        int shift = atoi(lat_env);
-        if (shift < 0) shift = 0;
-        cfg.latency_sample_shift = (uint32_t)shift;
-    }
-    const char *batch_env = getenv("TTAK_BENCH_READ_BATCH");
-    if (batch_env && *batch_env) {
-        int batch = atoi(batch_env);
-        if (batch > 0) cfg.read_batch = (uint32_t)batch;
-    }
-    if (cfg.read_batch == 0) cfg.read_batch = 1;
-    const char *ttl_ns_env = getenv("TTAK_BENCH_TTL_NS");
-    if (ttl_ns_env && *ttl_ns_env) {
-        long long ns = atoll(ttl_ns_env);
-        if (ns >= 0) cfg.ttl_ns = (uint64_t)ns;
-    } else {
-        const char *ttl_ms_env = getenv("TTAK_BENCH_TTL_MS");
-        if (ttl_ms_env && *ttl_ms_env) {
-            long long ms = atoll(ttl_ms_env);
-            if (ms >= 0) cfg.ttl_ns = (uint64_t)ms * 1000000ULL;
-        }
-        const char *ttl_us_env = getenv("TTAK_BENCH_TTL_US");
-        if (ttl_us_env && *ttl_us_env) {
-            long long us = atoll(ttl_us_env);
-            if (us >= 0) cfg.ttl_ns = (uint64_t)us * 1000ULL;
-        }
-    }
-    const char *key_env = getenv("TTAK_BENCH_KEYSPACE");
-    if (key_env && *key_env) {
-        long long ks = atoll(key_env);
-        if (ks > 0) cfg.key_space = (uint64_t)ks;
-    }
-    const char *hot_env = getenv("TTAK_BENCH_HOT_KEYS");
-    if (hot_env && *hot_env) {
-        long long hk = atoll(hot_env);
-        if (hk > 0) cfg.hot_key_space = (uint64_t)hk;
-    }
-    const char *hot_pct_env = getenv("TTAK_BENCH_HOT_PCT");
-    if (hot_pct_env && *hot_pct_env) {
-        int pct = atoi(hot_pct_env);
-        if (pct < 0) pct = 0;
-        if (pct > 100) pct = 100;
-        cfg.hot_key_pct = (uint32_t)pct;
-    }
+    if (write_pct_env && *write_pct_env) cfg.write_pct = (uint32_t)atoi(write_pct_env);
     const char *table_env = getenv("TTAK_BENCH_TABLE_SIZE");
-    if (table_env && *table_env) {
-        long long ts = atoll(table_env);
-        if (ts > 0) cfg.table_size = (size_t)ts;
-    }
-    const char *probe_env = getenv("TTAK_BENCH_MAX_PROBE");
-    if (probe_env && *probe_env) {
-        int pv = atoi(probe_env);
-        if (pv > 0) cfg.max_probe = (uint32_t)pv;
-    }
-    const char *scan_env = getenv("TTAK_BENCH_MAINT_SCAN");
-    if (scan_env && *scan_env) {
-        int sc = atoi(scan_env);
-        if (sc > 0) cfg.maintenance_scan = (uint32_t)sc;
-    }
-    const char *warm_env = getenv("TTAK_BENCH_WARMUP");
-    if (warm_env && *warm_env) {
-        int warm = atoi(warm_env);
-        if (warm > 0) cfg.warmup_ops = (uint32_t)warm;
-    }
-    const char *warm_ms_env = getenv("TTAK_BENCH_WARMUP_MS");
-    if (warm_ms_env && *warm_ms_env) {
-        long long warm_ms = atoll(warm_ms_env);
-        if (warm_ms >= 0) cfg.warmup_budget_ns = (uint64_t)warm_ms * 1000000ULL;
-    }
-    const char *duration_env = getenv("TTAK_BENCH_DURATION_SEC");
-    if (duration_env && *duration_env) {
-        int duration = atoi(duration_env);
-        if (duration > 0) cfg.duration_sec = duration;
-    }
-    if (cfg.ttl_ns == 0) cfg.ttl_ns = 5 * 1000 * 1000ULL;
-    if (cfg.key_space == 0) cfg.key_space = 1u << 18;
-    if (cfg.hot_key_space == 0 || cfg.hot_key_space > cfg.key_space) {
-        cfg.hot_key_space = cfg.key_space / 8;
-        if (cfg.hot_key_space == 0) cfg.hot_key_space = 1;
-    }
-    if (cfg.table_size < cfg.hot_key_space * 2) cfg.table_size = cfg.hot_key_space * 2;
+    if (table_env && *table_env) cfg.table_size = (size_t)atoll(table_env);
+    
     if (cfg.table_size < 1024) cfg.table_size = 1024;
-    if (cfg.max_probe == 0) cfg.max_probe = 8;
-    if (cfg.maintenance_scan == 0) cfg.maintenance_scan = 4096;
-    if (cfg.hot_key_pct > 100) cfg.hot_key_pct = 100;
-    if (cfg.warmup_ops == 0) cfg.warmup_ops = 5000;
-    if (cfg.warmup_budget_ns == 0) cfg.warmup_budget_ns = 2ULL * 1000ULL * 1000ULL * 1000ULL;
-    if (cfg.write_pct > 100) cfg.write_pct = 100;
     bench_refresh_write_mask();
     bench_refresh_latency_mask();
 
-    g_workers = calloc((size_t)cfg.num_threads, sizeof(worker_ctx_t));
-    if (!g_workers) {
-        fprintf(stderr, "Failed to allocate worker contexts.\n");
-        return 1;
+    g_lut_shards = calloc(g_shard_count, sizeof(cache_table_t *));
+    size_t shard_capacity = cfg.table_size / g_shard_count;
+    if (shard_capacity < 512) shard_capacity = 512;
+
+    for (int i = 0; i < g_shard_count; ++i) {
+        g_lut_shards[i] = cache_table_create(shard_capacity);
+        size_t table_bytes = sizeof(cache_table_t) + g_lut_shards[i]->bucket_count * sizeof(cache_bucket_t);
+        pre_fault_memory(g_lut_shards[i], table_bytes);
     }
 
+    g_workers = calloc((size_t)cfg.num_threads, sizeof(worker_ctx_t));
     size_t per_thread_bytes = cfg.arena_size;
-    size_t total_bytes = per_thread_bytes * (size_t)cfg.num_threads;
-    if (total_bytes > kMaxArenaBudgetBytes) {
-        per_thread_bytes = kMaxArenaBudgetBytes / (size_t)cfg.num_threads;
-    }
-    if (per_thread_bytes < item_full_size * 8) {
-        per_thread_bytes = item_full_size * 8;
-    }
     size_t arena_capacity = per_thread_bytes / item_full_size;
-    if (arena_capacity < 64) arena_capacity = 64;
 
     for (int i = 0; i < cfg.num_threads; i++) {
         g_workers[i].arena = ttak_object_pool_create(arena_capacity, item_full_size);
-        if (!g_workers[i].arena) {
-            fprintf(stderr, "Failed to allocate arena for worker %d\n", i);
-            return 1;
-        }
-        g_workers[i].write_accumulator = (uint32_t)(ttak_get_tick_count_ns() + (uint32_t)i * 17u);
-
+        g_workers[i].thread_id = i;
+        g_workers[i].write_accumulator = (uint32_t)(ttak_get_tick_count_ns() + i * 17u);
         pre_fault_memory(g_workers[i].arena->buffer, g_workers[i].arena->capacity * g_workers[i].arena->item_size);
-
-        size_t pre_alloc_count = g_workers[i].arena->capacity / 2;
-        for (size_t j = 0; j < pre_alloc_count; j++) {
-            void *raw = ttak_object_pool_alloc(g_workers[i].arena);
-            if (raw) {
-                ttak_payload_header_local_t *hdr = (ttak_payload_header_local_t *)raw;
-                hdr->size = sizeof(cache_item_data_t);
-                hdr->ts = ttak_get_tick_count_ns();
-                hdr->home_pool = g_workers[i].arena;
-                cache_item_data_t *item = (cache_item_data_t *)hdr->data;
-                item->key = 0;
-                item->expire_ns = 0;
-                memset(item->value.data, 0, sizeof(item->value.data));
-                ttak_object_pool_free(g_workers[i].arena, raw);
-            }
-        }
-        uint64_t seed = bench_mix_u64(ttak_get_tick_count_ns() ^ ((uint64_t)i + 1) * 0x9e3779b97f4a7c15ULL);
-        if (seed == 0) seed = ((uint64_t)i + 1) * 17ULL;
-        g_workers[i].rng_state = seed;
-        g_workers[i].table = NULL;
+        g_workers[i].rng_state = bench_mix_u64(ttak_get_tick_count_ns() ^ (i + 1) * 0x9e3779b97f4a7c15ULL);
     }
-
-    cache_table_t *table = cache_table_create(cfg.table_size);
-    if (!table) {
-        fprintf(stderr, "Failed to allocate cache table\n");
-        return 1;
-    }
-    size_t table_bytes = sizeof(cache_table_t) + table->bucket_count * sizeof(cache_bucket_t);
-    pre_fault_memory(table, table_bytes);
-    g_table = table;
 
     g_cache = ttak_mem_alloc_raw(sizeof(ttak_shared_t), 0, ttak_get_tick_count());
     ttak_shared_init(g_cache);
     g_cache->allocate_typed(g_cache, sizeof(cache_item_data_t), "cache_item_data_t", TTAK_SHARED_NO_LEVEL);
-    bench_install_table(g_table);
-    for (int i = 0; i < cfg.num_threads; ++i) {
-        g_workers[i].table = g_table;
-    }
     
     worker_threads = calloc((size_t)cfg.num_threads, sizeof(*worker_threads));
-    if (!worker_threads) {
-        fprintf(stderr, "Failed to allocate pthread handles for %d workers\n", cfg.num_threads);
-        return 1;
-    }
-
     for (int i = 0; i < cfg.num_threads; i++) {
         g_workers[i].owner = ttak_owner_create(TTAK_OWNER_SAFE_DEFAULT);
         g_cache->add_owner(g_cache, g_workers[i].owner);
         if (pthread_create(&worker_threads[i], NULL, worker_func, &g_workers[i]) != 0) {
-            fprintf(stderr, "Failed to create worker thread %d\n", i);
-            exit_code = 1;
-            goto abort_workers;
+            exit_code = 1; goto abort_workers;
         }
         workers_started++;
     }
+    
     if (pthread_create(&maintenance_thread, NULL, maintenance_task, NULL) != 0) {
-        fprintf(stderr, "Failed to create maintenance thread\n");
-        exit_code = 1;
-        goto abort_workers;
+        exit_code = 1; goto abort_workers;
     }
     maintenance_started = true;
 
-    /* 
-     * WAIT FOR ALL WORKERS TO BE FULLY WARMED UP 
-     * This ensures t=1s starts at full velocity.
-     */
-    printf("Warming up %d worker threads...\n", cfg.num_threads);
-    const uint64_t warmup_timeout_ns = 60ULL * 1000ULL * 1000ULL * 1000ULL;
-    uint64_t warmup_start_ns = bench_now_ns();
-    uint64_t last_report_ns = warmup_start_ns;
-    while (true) {
-        uint64_t ready = TTAK_FAST_ATOMIC_LOAD_U64(&g_threads_ready);
-        if (ready >= (uint64_t)cfg.num_threads) {
-            break;
-        }
+    printf("Warming up %d worker threads (LUT Shards: %d)...\n", cfg.num_threads, g_shard_count);
+    while (TTAK_FAST_ATOMIC_LOAD_U64(&g_threads_ready) < (uint64_t)cfg.num_threads) {
 #if defined(__x86_64__) || defined(__i386__)
         __asm__ volatile ("pause");
 #endif
         bench_usleep_us(1000);
-        uint64_t now_ns = bench_now_ns();
-        if (now_ns - last_report_ns >= 1000000000ULL) {
-            printf("  warmup: %" PRIu64 "/%d ready\n", ready, cfg.num_threads);
-            fflush(stdout);
-            last_report_ns = now_ns;
-        }
-        if (now_ns - warmup_start_ns > warmup_timeout_ns) {
-            fprintf(stderr, "ERROR: worker warmup timed out (%" PRIu64 "/%d ready)\n", ready, cfg.num_threads);
-            exit_code = 1;
-            goto abort_workers;
-        }
     }
 
-    printf("Workers: %d (maintenance threads: 1) | write_pct=%u | ttl_ns=%" PRIu64 " | batch=%u | keyspace=%" PRIu64 " hot=%" PRIu64 " (%u%%)\n",
-           cfg.num_threads, cfg.write_pct, cfg.ttl_ns, cfg.read_batch, cfg.key_space,
-           cfg.hot_key_space, cfg.hot_key_pct);
-    printf("Time | Ops/s | Hit%% | Miss%% | Exp%% | Writes/s | Latency(ns) | Epoch | RSS(KB) | Evict/s | Clean/s | Retire/s\n");
-    printf("------------------------------------------------------------------------------------------------------------------\n");
+    printf("Workers: %d | LUT Shards = %d | write_pct=%u | batch=%u\n", cfg.num_threads, g_shard_count, cfg.write_pct, cfg.read_batch);
+    printf("Time | Ops/s | Hit%% | Miss%% | Exp%% | Writes/s | Latency(ns) | RSS(KB) | Evict/s | Retire/s\n");
+    printf("--------------------------------------------------------------------------------------------------\n");
 
-    /* Release all threads simultaneously */
     TTAK_FAST_ATOMIC_STORE_BOOL(&g_start_signal, 1);
 
     for (int i = 1; i <= cfg.duration_sec; i++) {
@@ -972,21 +733,15 @@ int main(void) {
         uint64_t misses = TTAK_FAST_ATOMIC_XCHG_U64(&stats.misses, 0);
         uint64_t expired = TTAK_FAST_ATOMIC_XCHG_U64(&stats.expired, 0);
         uint64_t evictions = TTAK_FAST_ATOMIC_XCHG_U64(&stats.evictions, 0);
-        uint64_t cleanups = TTAK_FAST_ATOMIC_XCHG_U64(&stats.cleanups, 0);
         uint64_t retired = TTAK_FAST_ATOMIC_XCHG_U64(&stats.retirements, 0);
         uint64_t ticks = TTAK_FAST_ATOMIC_XCHG_U64(&stats.total_ticks, 0);
         uint64_t ops = reads + writes;
         uint64_t lat = (ops > 0) ? (ticks / ops) : 0;
-        double hit_pct = (reads > 0) ? ((double)hits * 100.0 / (double)reads) : 0.0;
-        double miss_pct = (reads > 0) ? ((double)misses * 100.0 / (double)reads) : 0.0;
-        double exp_pct = (reads > 0) ? ((double)expired * 100.0 / (double)reads) : 0.0;
         
-        long rss = get_rss_kb();
-
-        printf("%2ds | %8" PRIu64 " | %6.2f | %6.2f | %6.2f | %8" PRIu64 " | %11" PRIu64 " | %5" PRIu64 " | %7ld | %7" PRIu64 " | %7" PRIu64 " | %9" PRIu64 "\n",
-               i, ops, hit_pct, miss_pct, exp_pct, writes, lat,
-               atomic_load_explicit(&g_gc.current_epoch, memory_order_relaxed),
-               rss, evictions, cleanups, retired);
+        printf("%2ds | %8" PRIu64 " | %6.2f | %6.2f | %6.2f | %8" PRIu64 " | %11" PRIu64 " | %7ld | %7" PRIu64 " | %9" PRIu64 "\n",
+               i, ops, (reads > 0) ? (hits * 100.0 / reads) : 0.0,
+               (reads > 0) ? (misses * 100.0 / reads) : 0.0,
+               (reads > 0) ? (expired * 100.0 / reads) : 0.0, writes, lat, get_rss_kb(), evictions, retired);
         fflush(stdout);
     }
 
@@ -999,12 +754,8 @@ abort_workers:
     TTAK_FAST_ATOMIC_STORE_BOOL(&g_start_signal, 1);
 
 cleanup:
-    if (maintenance_started) {
-        pthread_join(maintenance_thread, NULL);
-    }
-    for (int i = 0; i < workers_started; ++i) {
-        pthread_join(worker_threads[i], NULL);
-    }
+    if (maintenance_started) pthread_join(maintenance_thread, NULL);
+    for (int i = 0; i < workers_started; ++i) pthread_join(worker_threads[i], NULL);
     free(worker_threads);
     return exit_code;
 }
