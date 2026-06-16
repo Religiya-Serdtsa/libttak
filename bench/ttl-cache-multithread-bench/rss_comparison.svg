@@ -50,8 +50,8 @@
 <text x='1085.0' y='519' text-anchor='middle' fill='#c9d6e2' font-size='12' font-family='Arial'>60s</text>
 <text x='80' y='340.0' fill='#c9d6e2' font-size='14' font-family='Arial' transform='rotate(-90 80,340.0)'>RSS Footprint (MB)</text>
 <text x='625.0' y='537' text-anchor='middle' fill='#c9d6e2' font-size='14' font-family='Arial'>Elapsed Time (s)</text>
-<text x='155' y='185' text-anchor='end' fill='#9fb0c0' font-size='12' font-family='Arial'>138.17</text>
-<text x='155' y='494' text-anchor='end' fill='#9fb0c0' font-size='12' font-family='Arial'>138.05</text>
+<text x='155' y='185' text-anchor='end' fill='#9fb0c0' font-size='12' font-family='Arial'>138.29</text>
+<text x='155' y='494' text-anchor='end' fill='#9fb0c0' font-size='12' font-family='Arial'>138.17</text>
 <polyline points='165.0,453.2 180.6,294.3 196.2,294.3 211.8,294.3 227.4,294.3 243.0,294.3 258.6,294.3 274.2,294.3 289.7,294.3 305.3,294.3 320.9,294.3 336.5,294.3 352.1,294.3 367.7,294.3 383.3,294.3 398.9,294.3 414.5,294.3 430.1,294.3 445.7,294.3 461.3,294.3 476.9,294.3 492.5,294.3 508.1,294.3 523.6,294.3 539.2,294.3 554.8,294.3 570.4,294.3 586.0,294.3 601.6,294.3 617.2,294.3 632.8,294.3 648.4,294.3 664.0,294.3 679.6,294.3 695.2,294.3 710.8,294.3 726.4,294.3 741.9,294.3 757.5,294.3 773.1,294.3 788.7,294.3 804.3,294.3 819.9,294.3 835.5,294.3 851.1,294.3 866.7,294.3 882.3,294.3 897.9,294.3 913.5,294.3 929.1,294.3 944.7,294.3 960.3,294.3 975.8,294.3 991.4,294.3 1007.0,294.3 1022.6,294.3 1038.2,294.3 1053.8,294.3 1069.4,294.3 1085.0,294.3' fill='none' stroke='#58a6ff' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'/>
 <circle cx='165.0' cy='453.2' r='4.0' fill='#58a6ff' stroke='#0b1020' stroke-width='1' />
 <circle cx='180.6' cy='294.3' r='4.0' fill='#58a6ff' stroke='#0b1020' stroke-width='1' />
