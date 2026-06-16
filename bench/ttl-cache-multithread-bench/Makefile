@@ -1,5 +1,5 @@
 CC ?= gcc
-CFLAGS_GCC = -Wall -std=c11 -pthread -I../../include -O3 -march=native -flto -D_GNU_SOURCE
+CFLAGS_GCC = -Wall -std=c17 -pthread -I../../include -O3 -march=native -flto -D_GNU_SOURCE
 LDFLAGS_GCC = -L../../lib -lttak -lpthread -flto
 
 CFLAGS_TCC = -Wall -std=c11 -pthread -I../../include -O3 -D_GNU_SOURCE
