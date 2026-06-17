@@ -336,7 +336,7 @@ _Bool ttak_thread_pool_schedule_task(ttak_thread_pool_t *pool, ttak_task_t *task
     }
 
     shard->queue.push(&shard->queue, task, priority, now);
-    pthread_cond_signal(&shard->cond);
+    pthread_cond_broadcast(&shard->cond);
     pthread_mutex_unlock(&shard->lock);
 
     /*
@@ -345,7 +345,7 @@ _Bool ttak_thread_pool_schedule_task(ttak_thread_pool_t *pool, ttak_task_t *task
      */
     for (size_t s = 0; s < TTAK_THREAD_POOL_SHARDS; s++) {
         if (s == shard_idx) continue;
-        pthread_cond_signal(&pool->shards[s].cond);
+        pthread_cond_broadcast(&pool->shards[s].cond);
     }
 
     return 1;

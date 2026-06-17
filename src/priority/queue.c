@@ -1,6 +1,7 @@
 #include <ttak/priority/internal/queue.h>
 #include <ttak/mem/mem.h>
 #include <stddef.h>
+#include <stdio.h>
 
 /**
  * @brief Insert a task into the queue according to its priority.
@@ -14,7 +15,11 @@ static void q_push(struct __internal_ttak_proc_priority_queue_t *q, ttak_task_t 
     (void)now;
     if (!q) return;
     struct __internal_ttak_qnode_t *node = (struct __internal_ttak_qnode_t *)ttak_dangerous_alloc(sizeof(struct __internal_ttak_qnode_t));
-    if (!node) return;
+    if (!node) {
+        fprintf(stderr, "[queue] push failed: node alloc failed\n");
+        return;
+    }
+    fprintf(stderr, "[queue] push task=%p priority=%d shard=%p head=%p\n", (void*)task, priority, (void*)q, (void*)q->head);
     node->task = task;
     node->priority = priority;
     node->next = NULL;
@@ -48,6 +53,7 @@ static ttak_task_t *q_pop(struct __internal_ttak_proc_priority_queue_t *q, uint6
     q->head = node->next;
     q->size--;
     ttak_dangerous_free(node);
+    fprintf(stderr, "[queue] pop task=%p shard=%p new_head=%p size=%zu\n", (void*)task, (void*)q, (void*)q->head, q->size);
     return task;
 }
 

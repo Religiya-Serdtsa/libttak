@@ -7,6 +7,7 @@
  */
 
 #include <ttak/mem/mem.h>
+#include <ttak/mem/owner.h>
 #include <ttak/atomic/atomic.h>
 #include <ttak/ht/map.h>
 #include <ttak/timing/timing.h>
@@ -619,6 +620,35 @@ void TTAK_HOT_PATH ttak_mem_free(void *ptr) {
             _large_free_internal(header);
 #endif
             break;
+    }
+}
+
+void ttak_mem_unuse(void *ptr, ttak_owner_t *owner) {
+    if (!ptr) return;
+    void *stable_ptr = ptr;
+    ttak_mem_header_t *header = GET_HEADER(stable_ptr);
+    V_HEADER(stable_ptr);
+
+    /* Remove the pointer from the owner's resource map when an owner is given. */
+    if (owner != TTAK_NO_OWNER && owner != NULL && owner->resources) {
+        ttak_rwlock_wrlock(&owner->lock);
+        ttak_map_t *res = (ttak_map_t *)owner->resources;
+        for (size_t i = 0; i < res->cap; ++i) {
+            if (res->ctrls[i] == OCCUPIED && (void *)res->values[i] == stable_ptr) {
+                ttak_delete_from_map(res, res->keys[i], ttak_get_tick_count());
+                break;
+            }
+        }
+        ttak_rwlock_unlock(&owner->lock);
+    }
+
+    /* Release one GC reference so the mem tree can collect the block when expired. */
+    if (header->is_root && (header->allocation_tier == TTAK_ALLOC_TIER_GENERAL ||
+                            header->allocation_tier == TTAK_ALLOC_TIER_BUDDY)) {
+        pthread_mutex_lock(&global_map_lock); in_mem_op = 1;
+        ttak_mem_node_t *node = ttak_mem_tree_find_node(&global_mem_tree, stable_ptr);
+        if (node) ttak_mem_node_release(node);
+        in_mem_op = 0; pthread_mutex_unlock(&global_map_lock);
     }
 }
 

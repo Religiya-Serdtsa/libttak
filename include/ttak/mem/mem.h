@@ -30,6 +30,9 @@
 #include <stdalign.h>
 #include <pthread.h>
 
+/* Owner handle used by ttak_mem_unuse(); full definition is in <ttak/mem/owner.h>. */
+typedef struct ttak_owner ttak_owner_t;
+
 #if defined(_MSC_VER)
 #define TTAK_ATOMIC_FETCH_ADD_U64(ptr, val) InterlockedExchangeAdd64((volatile LONG64 *)(ptr), (LONG64)(val))
 #elif defined(__TINYC__) || defined(__STDC_NO_ATOMICS__)
@@ -180,6 +183,17 @@ void ttak_dangerous_free(void *ptr);
  * @param ptr Pointer to user memory.
  */
 void ttak_mem_free(void *ptr);
+
+/**
+ * @brief Explicitly tells the GC that the caller no longer uses this pointer.
+ *
+ * If @p owner is non-NULL, the pointer is also removed from that owner's
+ * resource map.  Pass TTAK_NO_OWNER (or NULL) for ownerless pointers.
+ *
+ * @param ptr   Pointer to user memory that is being released from use.
+ * @param owner Owner context that held the pointer, or TTAK_NO_OWNER.
+ */
+void ttak_mem_unuse(void *ptr, ttak_owner_t *owner);
 
 /**
  * @brief Duplicates a memory block with lifecycle management.

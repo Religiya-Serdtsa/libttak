@@ -68,6 +68,7 @@ ttak_object_pool_t *ttak_object_pool_create(size_t capacity, size_t item_size) {
     pool->capacity = capacity;
     pool->item_size = item_size;
     pool->used_count = 0;
+    pool->free_list = NULL;
     pool->ols_chunk_count = ttak_pool_chunk_count(capacity);
     pool->ols_chunk_cursor = 0;
     pool->ols_lane_guard = 1U;
@@ -81,6 +82,15 @@ ttak_object_pool_t *ttak_object_pool_create(size_t capacity, size_t item_size) {
         free(pool->bitmap);
         free(pool);
         return NULL;
+    }
+
+    /* Build an O(1) LIFO free list when items are large enough to hold a pointer. */
+    if (item_size >= sizeof(void *)) {
+        for (size_t i = 0; i < capacity; ++i) {
+            void *item = (char *)pool->buffer + (i * item_size);
+            *(void **)item = pool->free_list;
+            pool->free_list = item;
+        }
     }
     return pool;
 }
@@ -101,6 +111,16 @@ void ttak_object_pool_destroy(ttak_object_pool_t *pool) {
  */
 void *ttak_object_pool_alloc(ttak_object_pool_t *pool) {
     ttak_spin_lock(&pool->lock);
+
+    /* Fast path: pop from the LIFO free list. */
+    if (pool->free_list) {
+        void *item = pool->free_list;
+        pool->free_list = *(void **)item;
+        pool->used_count++;
+        ttak_spin_unlock(&pool->lock);
+        return item;
+    }
+
     if (pool->used_count >= pool->capacity) {
         ttak_spin_unlock(&pool->lock);
         return NULL;
@@ -186,6 +206,10 @@ void ttak_object_pool_free(ttak_object_pool_t *pool, void *ptr) {
         pool->bitmap[idx / 8] &= ~(1 << (idx % 8));
         pool->used_count--;
         pool->last_recycled_index = idx;
+        if (pool->item_size >= sizeof(void *)) {
+            *(void **)ptr = pool->free_list;
+            pool->free_list = ptr;
+        }
     }
     ttak_spin_unlock(&pool->lock);
 }

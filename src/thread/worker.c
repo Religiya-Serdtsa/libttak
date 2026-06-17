@@ -25,6 +25,7 @@
 #else
     #include <sys/resource.h>
     #include <unistd.h>
+    #include <time.h>
 #endif
 #include <stdlib.h>
 #if defined(__TINYC__)
@@ -80,7 +81,6 @@ static ttak_task_t *worker_steal_task(ttak_thread_pool_t *pool, size_t skip_shar
     for (size_t s = 0; s < TTAK_THREAD_POOL_SHARDS; s++) {
         if (s == skip_shard) continue;
         ttak_pool_shard_t *shard = &pool->shards[s];
-        if (shard->queue.head == NULL) continue;  /* fast non-atomic pre-check */
         if (pthread_mutex_trylock(&shard->lock) != 0) continue;
         ttak_task_t *task = shard->queue.pop(&shard->queue, now);
         pthread_mutex_unlock(&shard->lock);
@@ -92,6 +92,8 @@ static ttak_task_t *worker_steal_task(ttak_thread_pool_t *pool, size_t skip_shar
 void *ttak_worker_routine(void *arg) {
     ttak_worker_t *self = (ttak_worker_t *)arg;
     ttak_thread_pool_t *pool = self->pool;
+    fprintf(stderr, "[worker] start %p\n", (void*)self);
+    fflush(stderr);
     set_current_worker(self);
     ttak_epoch_register_thread();
     ttak_epoch_exit();
@@ -128,24 +130,12 @@ void *ttak_worker_routine(void *arg) {
             task = worker_steal_task(pool, pref, now);
             if (task) break;
 
-            /* 3. Still idle? Block on preferred shard's CV until signaled (wait path) */
-            pthread_mutex_lock(&pref_shard->lock);
-            while (pref_shard->queue.head == NULL
-                   && !self->should_stop
-                   && !pool->is_shutdown) {
-                pthread_cond_wait(&pref_shard->cond, &pref_shard->lock);
-            }
-            if (self->should_stop || pool->is_shutdown) {
-                pthread_mutex_unlock(&pref_shard->lock);
-                break;
-            }
-            now = ttak_get_tick_count();
-            task = pref_shard->queue.pop(&pref_shard->queue, now);
-            pthread_mutex_unlock(&pref_shard->lock);
-            if (task) break;
+            /* 3. Still idle? Yield and retry to avoid lost-signal stalls. */
+            sched_yield();
         }
 
         if (task) {
+            fprintf(stderr, "[worker] %p executing task %p\n", (void*)self, (void*)task);
             volatile _Bool epoch_active = 0;
             if (tt_setjmp(self->wrapper->env, &self->wrapper->jmp_magic, &self->wrapper->jmp_tid) == 0) {
                 ttak_epoch_enter(); epoch_active = 1;

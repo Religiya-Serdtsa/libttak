@@ -44,8 +44,8 @@ static long get_rss_kb(void) {
 #include <ttak/shared/shared.h>
 #include <ttak/container/pool.h>
 #include <ttak/timing/timing.h>
-#include <ttak/thread/pool.h>
 #include <ttak/types/ttak_compiler.h>
+#include <pthread.h>
 
 #if defined(__x86_64__) || defined(__i386__)
 #define BENCH_HAS_NATIVE_TSC 1
@@ -109,11 +109,10 @@ typedef struct {
 typedef ttak_payload_header_local_t cache_entry_t;
 
 typedef struct {
-    cache_item_data_t *ptr;
+    alignas(64) cache_item_data_t * _Atomic ptr;
 } cache_bucket_t;
 
 typedef struct {
-    pthread_mutex_t lock;
     size_t bucket_count;
     size_t bucket_mask;
     cache_bucket_t buckets[];
@@ -137,9 +136,6 @@ typedef struct {
     bool forced;
 } cache_store_result_t;
 
-/**
- * Benchmark Configuration
- */
 typedef struct {
     int num_threads;
     int duration_sec;
@@ -162,35 +158,31 @@ typedef struct {
 static config_t cfg = { 
     .num_threads = 0, 
     .duration_sec = 300, 
-    .arena_size = 1024 * 1024 * 128, /* Per-thread arena budget */
+    .arena_size = 1024 * 1024 * 128, 
 #if defined(__TINYC__)
-    .write_shift = 12, /* rarer writes for TCC */
+    .write_shift = 12, 
     .latency_sample_shift = 4,
     .read_batch = 512,
     .ops_scale = 1
 #else
-    .write_shift = 6,
+    .write_shift = 4,
     .latency_sample_shift = 3,
-    .read_batch = 8,
+    .read_batch = 256,
     .ops_scale = 1
 #endif
     ,
     .write_pct = 5,
-    .ttl_ns = 5 * 1000 * 1000ULL,
+    .ttl_ns = 1000 * 1000 * 1000ULL,
     .key_space = 1u << 20,
     .hot_key_space = 1u << 16,
     .hot_key_pct = 90,
     .table_size = 1u << 20,
-    .max_probe = 8,
+    .max_probe = 4,
     .maintenance_scan = 4096,
-    .warmup_ops = 100000
+    .warmup_ops = 0
 };
 static const size_t kMaxArenaBudgetBytes = 1024ULL * 1024ULL * 1024ULL;
 
-/**
- * Performance Counters:
- * Aligned to 64-byte cache lines to eliminate False Sharing.
- */
 typedef struct {
     alignas(64) _Atomic uint64_t read_ops;
     alignas(64) _Atomic uint64_t write_ops;
@@ -279,10 +271,6 @@ static inline bool bench_consume_ops(worker_ctx_t *ctx, uint32_t ops) {
     return trigger;
 }
 
-/**
- * OS-independent memory pre-faulting.
- * Forces physical page allocation by touching every 4KB page.
- */
 static void pre_fault_memory(void *ptr, size_t size) {
     volatile uint8_t *p = (uint8_t *)ptr;
     for (size_t i = 0; i < size; i += 4096) {
@@ -332,10 +320,6 @@ static cache_table_t *cache_table_create(size_t desired_buckets) {
     cache_table_t *table = ttak_mem_alloc(bytes, 0, ttak_get_tick_count());
     if (!table) return NULL;
     memset(table, 0, bytes);
-    if (pthread_mutex_init(&table->lock, NULL) != 0) {
-        ttak_mem_free(table);
-        return NULL;
-    }
     table->bucket_count = buckets;
     table->bucket_mask = buckets - 1;
     return table;
@@ -355,16 +339,13 @@ static inline void bench_install_table(cache_table_t *table) {
 static inline cache_lookup_result_t cache_table_lookup(cache_table_t *table, uint64_t key, uint64_t now_ns) {
     cache_lookup_result_t result = { .kind = CACHE_RESULT_MISS, .entry = NULL, .item = NULL };
     if (!table) return result;
-    pthread_mutex_lock(&table->lock);
     size_t mask = table->bucket_mask;
     size_t idx = bench_mix_u64(key) & mask;
     uint32_t max_probe = cfg.max_probe ? cfg.max_probe : 1;
     for (uint32_t probe = 0; probe < max_probe; ++probe) {
-        cache_bucket_t *bucket = &table->buckets[idx];
-        cache_item_data_t *payload = cache_payload_from_ptr((void *)bucket->ptr);
+        cache_item_data_t *payload = atomic_load_explicit(&table->buckets[idx].ptr, memory_order_acquire);
         if (!payload) {
             result.kind = CACHE_RESULT_MISS;
-            pthread_mutex_unlock(&table->lock);
             return result;
         }
         if (payload->key == key) {
@@ -372,79 +353,82 @@ static inline cache_lookup_result_t cache_table_lookup(cache_table_t *table, uin
                 result.kind = CACHE_RESULT_HIT;
                 result.entry = cache_entry_from_payload(payload);
                 result.item = payload;
-                pthread_mutex_unlock(&table->lock);
                 return result;
             }
-            bucket->ptr = NULL;
-            ttak_epoch_retire(payload, retire_payload_cleanup);
-            TTAK_FAST_ATOMIC_ADD_U64(&stats.retirements, 1);
-            result.kind = CACHE_RESULT_EXPIRED;
-            pthread_mutex_unlock(&table->lock);
+            
+            cache_item_data_t *expected = payload;
+            if (atomic_compare_exchange_strong_explicit(&table->buckets[idx].ptr, &expected, NULL,
+                                                       memory_order_release, memory_order_relaxed)) {
+                ttak_epoch_retire(payload, retire_payload_cleanup);
+                TTAK_FAST_ATOMIC_ADD_U64(&stats.retirements, 1);
+                result.kind = CACHE_RESULT_EXPIRED;
+            } else {
+                
+                result.kind = CACHE_RESULT_MISS;
+            }
             return result;
         }
         idx = (idx + 1) & mask;
     }
-    pthread_mutex_unlock(&table->lock);
     return result;
 }
 
 static cache_store_result_t cache_table_store(cache_table_t *table, cache_item_data_t *payload, uint64_t now_ns) {
     cache_store_result_t result = {0};
     if (!table || !payload) return result;
-    pthread_mutex_lock(&table->lock);
     uint64_t key = payload->key;
     size_t mask = table->bucket_mask;
     size_t idx = bench_mix_u64(key) & mask;
     uint32_t max_probe = cfg.max_probe ? cfg.max_probe : 1;
+    
     for (uint32_t probe = 0; probe < max_probe; ++probe) {
-        cache_bucket_t *bucket = &table->buckets[idx];
-        cache_item_data_t *existing = cache_payload_from_ptr((void *)bucket->ptr);
+        cache_item_data_t *existing = atomic_load_explicit(&table->buckets[idx].ptr, memory_order_acquire);
         if (!existing) {
-            bucket->ptr = payload;
-            result.inserted = true;
-            pthread_mutex_unlock(&table->lock);
-            return result;
+            cache_item_data_t *expected = NULL;
+            if (atomic_compare_exchange_strong_explicit(&table->buckets[idx].ptr, &expected, payload,
+                                                       memory_order_release, memory_order_relaxed)) {
+                result.inserted = true;
+                return result;
+            }
+            idx = (idx + 1) & mask;
+            continue;
         }
         if (existing->key == key || existing->expire_ns <= now_ns) {
-            bucket->ptr = payload;
-            result.inserted = true;
-            result.replaced = cache_entry_from_payload(existing);
-            result.forced = (existing->key != key);
-            pthread_mutex_unlock(&table->lock);
-            return result;
+            if (atomic_compare_exchange_strong_explicit(&table->buckets[idx].ptr, &existing, payload,
+                                                       memory_order_release, memory_order_relaxed)) {
+                result.inserted = true;
+                result.replaced = cache_entry_from_payload(existing);
+                result.forced = (existing->key != key);
+                return result;
+            }
+            idx = (idx + 1) & mask;
+            continue;
         }
         idx = (idx + 1) & mask;
     }
-    cache_bucket_t *bucket = &table->buckets[idx];
-    cache_item_data_t *existing = cache_payload_from_ptr((void *)bucket->ptr);
-    bucket->ptr = payload;
-    if (existing) {
-        result.replaced = cache_entry_from_payload(existing);
-        result.forced = true;
-    }
-    result.inserted = true;
-    pthread_mutex_unlock(&table->lock);
+
+    
     return result;
 }
 
 static size_t cache_table_cleanup(cache_table_t *table, size_t cursor, size_t budget, uint64_t now_ns) {
     if (!table || table->bucket_count == 0) return cursor;
-    pthread_mutex_lock(&table->lock);
     size_t mask = table->bucket_mask;
     size_t start = cursor;
     size_t count = table->bucket_count;
     for (size_t i = 0; i < budget; ++i) {
-        cache_bucket_t *bucket = &table->buckets[start];
-        cache_item_data_t *payload = cache_payload_from_ptr((void *)bucket->ptr);
+        cache_item_data_t *payload = atomic_load_explicit(&table->buckets[start].ptr, memory_order_acquire);
         if (payload && payload->expire_ns <= now_ns) {
-            bucket->ptr = NULL;
-            ttak_epoch_retire(payload, retire_payload_cleanup);
-            TTAK_FAST_ATOMIC_ADD_U64(&stats.cleanups, 1);
-            TTAK_FAST_ATOMIC_ADD_U64(&stats.retirements, 1);
+            cache_item_data_t *expected = payload;
+            if (atomic_compare_exchange_strong_explicit(&table->buckets[start].ptr, &expected, NULL,
+                                                       memory_order_release, memory_order_relaxed)) {
+                ttak_epoch_retire(payload, retire_payload_cleanup);
+                TTAK_FAST_ATOMIC_ADD_U64(&stats.cleanups, 1);
+                TTAK_FAST_ATOMIC_ADD_U64(&stats.retirements, 1);
+            }
         }
         start = (start + 1) & mask;
     }
-    pthread_mutex_unlock(&table->lock);
     return start % count;
 }
 
@@ -510,15 +494,14 @@ static bool bench_perform_write(worker_ctx_t *ctx, cache_table_t *table, uint64_
     return true;
 }
 
-/**
- * Fast-path execution logic using libttak abstractions.
- */
 static void *worker_func(void *arg) {
     worker_ctx_t *ctx = (worker_ctx_t *)arg;
     ttak_owner_t *owner = ctx->owner;
     cache_table_t *table = ctx->table ? ctx->table : bench_cache_table();
     (void)owner;
+    TTAK_FAST_ATOMIC_ADD_U64(&g_threads_ready, 1);
     ttak_epoch_register_thread();
+
     uint64_t local_reads = 0;
     uint64_t local_writes = 0;
     uint64_t local_hits = 0;
@@ -530,36 +513,6 @@ static void *worker_func(void *arg) {
     uint32_t latency_counter = 0;
     uint8_t local_checksum = 0;
 
-    uint32_t warmup_ops = cfg.warmup_ops ? cfg.warmup_ops : 100000;
-    bool aborting = false;
-    for (uint32_t i = 0; i < warmup_ops; ++i) {
-        if (TTAK_FAST_ATOMIC_LOAD_U64(&g_abort_signal)) {
-            aborting = true;
-            break;
-        }
-        uint64_t now_ns = bench_now_ns();
-        uint64_t key = bench_select_key(ctx);
-        ttak_epoch_enter();
-        cache_lookup_result_t lookup = cache_table_lookup(table, key, now_ns);
-        if (lookup.kind == CACHE_RESULT_HIT && lookup.item) {
-            volatile uint8_t *payload_bytes = (volatile uint8_t *)lookup.item->value.data;
-            local_checksum ^= payload_bytes[i & (CACHE_PAYLOAD_BYTES - 1)];
-        }
-        ttak_epoch_exit();
-        if (bench_consume_ops(ctx, 1)) {
-            uint64_t write_stamp = bench_now_ns();
-            bench_perform_write(ctx, table, bench_select_key(ctx), write_stamp, &local_evictions, &local_retired);
-        }
-    }
-    if (aborting) {
-        goto worker_cleanup;
-    }
-    local_reads = local_writes = local_hits = local_misses = local_expired = 0;
-    local_evictions = local_retired = 0;
-    local_ticks = 0;
-    local_checksum = 0;
-
-    TTAK_FAST_ATOMIC_ADD_U64(&g_threads_ready, 1);
     while (TTAK_FAST_ATOMIC_LOAD_U64(&g_start_signal) == 0) {
         if (TTAK_FAST_ATOMIC_LOAD_U64(&g_abort_signal)) {
             goto worker_cleanup;
@@ -644,9 +597,6 @@ worker_cleanup:
     return NULL;
 }
 
-/**
- * Control-path: Background resource management.
- */
 static void *maintenance_task(void *arg) {
     (void)arg;
     ttak_epoch_register_thread();
@@ -665,7 +615,7 @@ static void *maintenance_task(void *arg) {
             ttak_epoch_exit();
             atomic_store_explicit(&g_maintenance_cursor, next, memory_order_relaxed);
         }
-        bench_usleep_us(100000); 
+        bench_usleep_us(1000000);
         ttak_epoch_reclaim();
         ttak_epoch_gc_rotate(&g_gc);
     }
@@ -689,7 +639,7 @@ static int detect_worker_threads(void) {
 
 int main(void) {
     int exit_code = 0;
-    /* Eagerly initialize library subsystems to prevent lazy-init overhead */
+    
     ttak_epoch_subsystem_init();
     
 #if BENCH_HAS_NATIVE_TSC
@@ -697,7 +647,7 @@ int main(void) {
 #endif
     ttak_epoch_gc_init(&g_gc);
     
-    /* Calculate required sizes for memory alignment */
+    
     size_t header_size = PAYLOAD_HEADER_BYTES; 
     size_t item_full_size = header_size + sizeof(cache_item_data_t);
 
@@ -796,7 +746,7 @@ int main(void) {
     const char *warm_env = getenv("TTAK_BENCH_WARMUP");
     if (warm_env && *warm_env) {
         int warm = atoi(warm_env);
-        if (warm > 0) cfg.warmup_ops = (uint32_t)warm;
+        if (warm >= 0) cfg.warmup_ops = (uint32_t)warm;
     }
     const char *duration_env = getenv("TTAK_BENCH_DURATION_SEC");
     if (duration_env && *duration_env) {
@@ -814,7 +764,6 @@ int main(void) {
     if (cfg.max_probe == 0) cfg.max_probe = 8;
     if (cfg.maintenance_scan == 0) cfg.maintenance_scan = 4096;
     if (cfg.hot_key_pct > 100) cfg.hot_key_pct = 100;
-    if (cfg.warmup_ops == 0) cfg.warmup_ops = 100000;
     if (cfg.write_pct > 100) cfg.write_pct = 100;
     bench_refresh_write_mask();
     bench_refresh_latency_mask();
@@ -846,21 +795,6 @@ int main(void) {
 
         pre_fault_memory(g_workers[i].arena->buffer, g_workers[i].arena->capacity * g_workers[i].arena->item_size);
 
-        size_t pre_alloc_count = g_workers[i].arena->capacity / 2;
-        for (size_t j = 0; j < pre_alloc_count; j++) {
-            void *raw = ttak_object_pool_alloc(g_workers[i].arena);
-            if (raw) {
-                ttak_payload_header_local_t *hdr = (ttak_payload_header_local_t *)raw;
-                hdr->size = sizeof(cache_item_data_t);
-                hdr->ts = ttak_get_tick_count_ns();
-                hdr->home_pool = g_workers[i].arena;
-                cache_item_data_t *item = (cache_item_data_t *)hdr->data;
-                item->key = 0;
-                item->expire_ns = 0;
-                memset(item->value.data, 0, sizeof(item->value.data));
-                ttak_object_pool_free(g_workers[i].arena, raw);
-            }
-        }
         uint64_t seed = bench_mix_u64(ttak_get_tick_count_ns() ^ ((uint64_t)i + 1) * 0x9e3779b97f4a7c15ULL);
         if (seed == 0) seed = ((uint64_t)i + 1) * 17ULL;
         g_workers[i].rng_state = seed;
@@ -883,34 +817,30 @@ int main(void) {
     for (int i = 0; i < cfg.num_threads; ++i) {
         g_workers[i].table = g_table;
     }
-    
-    ttak_thread_pool_t *pool = ttak_thread_pool_create(cfg.num_threads + 1, 0, 0);
-    if (!pool) {
-        fprintf(stderr, "Failed to create thread pool (workers=%d)\n", cfg.num_threads + 1);
+
+    pthread_t *threads = calloc((size_t)cfg.num_threads + 1, sizeof(pthread_t));
+    if (!threads) {
+        fprintf(stderr, "Failed to allocate thread handles\n");
         return 1;
     }
 
-    /* Pre-warm the shard directory and submit tasks */
     for (int i = 0; i < cfg.num_threads; i++) {
         g_workers[i].owner = ttak_owner_create(TTAK_OWNER_SAFE_DEFAULT);
         g_cache->add_owner(g_cache, g_workers[i].owner);
-        if (!ttak_thread_pool_submit_task(pool, worker_func, &g_workers[i], 0, 0)) {
-            fprintf(stderr, "Failed to schedule worker %d\n", i);
+        if (pthread_create(&threads[i], NULL, worker_func, &g_workers[i]) != 0) {
+            fprintf(stderr, "Failed to create worker thread %d\n", i);
             exit_code = 1;
             goto abort_workers;
         }
     }
-    if (!ttak_thread_pool_submit_task(pool, maintenance_task, NULL, 0, 0)) {
-        fprintf(stderr, "Failed to schedule maintenance task\n");
+    if (pthread_create(&threads[cfg.num_threads], NULL, maintenance_task, NULL) != 0) {
+        fprintf(stderr, "Failed to create maintenance thread\n");
         exit_code = 1;
         goto abort_workers;
     }
 
-    /* 
-     * WAIT FOR ALL WORKERS TO BE FULLY WARMED UP 
-     * This ensures t=1s starts at full velocity.
-     */
-    printf("Warming up %d worker threads...\n", cfg.num_threads);
+    
+    printf("Starting %d worker threads...\n", cfg.num_threads);
     const uint64_t warmup_timeout_ns = 60ULL * 1000ULL * 1000ULL * 1000ULL;
     uint64_t warmup_start_ns = bench_now_ns();
     uint64_t last_report_ns = warmup_start_ns;
@@ -942,7 +872,7 @@ int main(void) {
     printf("Time | Ops/s | Hit%% | Miss%% | Exp%% | Writes/s | Latency(ns) | Epoch | RSS(KB) | Evict/s | Clean/s | Retire/s\n");
     printf("------------------------------------------------------------------------------------------------------------------\n");
 
-    /* Release all threads simultaneously */
+    
     TTAK_FAST_ATOMIC_STORE_BOOL(&g_start_signal, 1);
 
     for (int i = 1; i <= cfg.duration_sec; i++) {
@@ -980,8 +910,9 @@ abort_workers:
     TTAK_FAST_ATOMIC_STORE_BOOL(&g_start_signal, 1);
 
 cleanup:
-    if (pool) {
-        ttak_thread_pool_destroy(pool);
+    for (int i = 0; i < cfg.num_threads + 1; i++) {
+        pthread_join(threads[i], NULL);
     }
+    free(threads);
     return exit_code;
 }

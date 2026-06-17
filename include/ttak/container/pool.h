@@ -19,6 +19,9 @@ typedef struct ttak_object_pool {
     size_t capacity;        /**< Total capacity of the pool. */
     size_t used_count;      /**< Number of currently allocated items. */
 
+    /* Fast O(1) LIFO free list (valid when item_size >= sizeof(void *)). */
+    void *free_list;        /**< Linked list of returned items. */
+
     /* Orthogonal Latin Square traversal state (order 8, 64 slots per lattice). */
     size_t ols_chunk_count;   /**< Number of 8x8 tiles covering the capacity. */
     size_t ols_chunk_cursor;  /**< Current tile cursor. */
@@ -27,7 +30,7 @@ typedef struct ttak_object_pool {
     uint8_t ols_lane_stride;  /**< Coprime stride applied to the lane seed. */
     size_t last_recycled_index; /**< Hot-slot recycled on the next allocation. */
 
-    ttak_spin_t lock;       /**< Spinlock for protecting the bitmap. */
+    ttak_spin_t lock;       /**< Spinlock for protecting the bitmap/free list. */
 } ttak_object_pool_t;
 
 typedef ttak_object_pool_t tt_object_pool_t;
