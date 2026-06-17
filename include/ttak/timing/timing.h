@@ -4,15 +4,10 @@
 #include <stdint.h>
 #include <time.h>
 #include <ttak/types/ttak_compiler.h>
+#include <ttak/arch/ttak_arch.h>
 
 #if defined(__x86_64__) || defined(_M_X64)
-#  if defined(__TINYC__)
-     static inline uint64_t __rdtsc(void) {
-         uint32_t low, high;
-         __asm__ volatile ("rdtsc" : "=a" (low), "=d" (high));
-         return ((uint64_t)high << 32) | low;
-     }
-#  else
+#  if !defined(__TINYC__)
 #    if defined(_MSC_VER)
 #      include <immintrin.h>
 #    else
@@ -39,7 +34,7 @@
 #    define ttak_get_tick_count_ns() ({ \
         uint64_t __scale = g_tsc_scale; \
         if (TTAK_UNLIKELY(__scale == 0)) { calibrate_tsc(); __scale = g_tsc_scale; if (__scale == 0) __scale = (1ULL << 32) / 2; } \
-        (__rdtsc() * __scale) >> 32; \
+        (ttak_arch_rdtsc() * __scale) >> 32; \
     })
 
 #    define ttak_get_tick_count() (ttak_get_tick_count_ns() / 1000000ULL)
@@ -72,7 +67,7 @@ TTAK_FORCE_INLINE uint64_t ttak_get_tick_count_ns(void) {
         scale = g_tsc_scale;
         if (scale == 0) scale = (1ULL << 32) / 2; 
     }
-    return (__rdtsc() * scale) >> 32;
+    return (ttak_arch_rdtsc() * scale) >> 32;
 #elif defined(_WIN32)
     extern uint64_t ttak_get_tick_count_ns_win32(void);
     return ttak_get_tick_count_ns_win32();

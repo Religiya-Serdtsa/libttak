@@ -210,24 +210,11 @@
 #  define TTAK_MAYBE_UNUSED
 #endif
 
+#include <ttak/arch/ttak_arch.h>
+
 #if !defined(__GNUC__) && !defined(__clang__)
-static inline int __ttak_ctzll(unsigned long long v) {
-    int r = 0;
-    if (!v) return 64;
-    while (!(v & 1)) { v >>= 1; r++; }
-    return r;
-}
-static inline int __ttak_clzll(unsigned long long v) {
-    int r = 0;
-    if (!v) return 64;
-    for (int i = 63; i >= 0; i--) {
-        if (v & (1ULL << i)) break;
-        r++;
-    }
-    return r;
-}
-#define __builtin_ctzll(x) __ttak_ctzll(x)
-#define __builtin_clzll(x) __ttak_clzll(x)
+#  define __builtin_ctzll(x) ttak_arch_ctz64((uint64_t)(x))
+#  define __builtin_clzll(x) ttak_arch_clz64((uint64_t)(x))
 #endif
 
 #if defined(__TINYC__) && defined(__x86_64__)
