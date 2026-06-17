@@ -145,6 +145,9 @@ jobs:
             bench/ttl-cache-multithread-bench/ci_benchmark_raw_gcc.txt
             bench/ttl-cache-multithread-bench/ci_benchmark_raw_clang.txt
             bench/ttl-cache-multithread-bench/ci_benchmark_raw_tcc.txt
+            bench/ttl-cache-multithread-bench/build_log_gcc.txt
+            bench/ttl-cache-multithread-bench/build_log_clang.txt
+            bench/ttl-cache-multithread-bench/build_log_tcc.txt
             bench/ttl-cache-multithread-bench/copilot_ci_benchmark.svg
             bench/ttl-cache-multithread-bench/throughput_comparison.svg
             bench/ttl-cache-multithread-bench/rss_comparison.svg

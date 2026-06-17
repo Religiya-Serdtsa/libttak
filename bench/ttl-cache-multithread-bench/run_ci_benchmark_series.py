@@ -94,15 +94,29 @@ def rebuild_libttak(cc: str) -> bool:
 
 
 def build_binary(cc: str) -> bool:
-    rc = run(["make", "clean"])
+    build_log = BENCH_DIR / f"build_log_{cc}.txt"
+    rc = run(["make", "clean"], output=build_log)
     if rc != 0:
         print(f"make clean failed for {cc}")
+        _dump_tail(build_log)
         return False
-    rc = run(["make", f"CC={cc}", "ttl_cache_bench_lockfree"])
+    rc = run(["make", f"CC={cc}", "ttl_cache_bench_lockfree"], output=build_log)
     if rc != 0:
         print(f"build failed for {cc}")
+        _dump_tail(build_log, lines=80)
         return False
     return True
+
+
+def _dump_tail(path: Path, lines: int = 40) -> None:
+    if not path.exists():
+        return
+    text = path.read_text(encoding="utf-8", errors="replace")
+    tail = text.splitlines()[-lines:]
+    print("--- build log tail ---")
+    for ln in tail:
+        print(ln)
+    print("--- end build log tail ---")
 
 
 def fallback_to_gcc(cc: str, out_name: str, duration: int) -> None:
