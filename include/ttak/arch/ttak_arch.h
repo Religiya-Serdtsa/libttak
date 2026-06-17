@@ -3,8 +3,8 @@
  * @brief Architecture / ISA / compiler capability detection and inline helpers.
  *
  * Provides a single place for arch-specific intrinsics and inline assembly.
- * TinyCC always gets the portable C fallback so it never sees unsupported
- * builtins or SIMD intrinsics.
+ * TinyCC gets arch-specific inline assembly where available, otherwise it
+ * falls back to portable C implementations.
  */
 
 #ifndef TTAK_ARCH_H
@@ -98,11 +98,15 @@ TTAK_ARCH_INLINE void ttak_arch_pause(void) {
 #  else
     __asm__ volatile ("yield" ::: "memory");
 #  endif
-#elif defined(__riscv)
-    /* RISC-V has no standard pause instruction; use a compiler barrier. */
-#  if defined(__GNUC__) || defined(__clang__) || defined(TTAK_COMPILER_TCC)
+#elif defined(TTAK_ARCH_RISCV64) && defined(TTAK_COMPILER_TCC)
+    /* RISC-V has no standard pause; use a light compiler barrier. */
     __asm__ volatile ("" ::: "memory");
-#  endif
+#elif defined(TTAK_ARCH_PPC64LE) && defined(TTAK_COMPILER_TCC)
+    /* POWER does not have a portable yield/pause in user space. */
+    __asm__ volatile ("" ::: "memory");
+#elif defined(TTAK_ARCH_MIPS64) && defined(TTAK_COMPILER_TCC)
+    /* MIPS32R2/MIPS64R2 introduced the 'pause' hint instruction. */
+    __asm__ volatile ("pause" ::: "memory");
 #else
 #  if defined(__GNUC__) || defined(__clang__) || defined(TTAK_COMPILER_TCC)
     __asm__ volatile ("" ::: "memory");
@@ -111,7 +115,7 @@ TTAK_ARCH_INLINE void ttak_arch_pause(void) {
 }
 
 /* ============================================================================
- * Timestamp counter (x86 rdtsc, else monotonic fallback)
+ * Timestamp counter
  * ============================================================================ */
 
 TTAK_ARCH_INLINE uint64_t ttak_arch_rdtsc(void) {
@@ -123,6 +127,22 @@ TTAK_ARCH_INLINE uint64_t ttak_arch_rdtsc(void) {
 #  else
     return __builtin_ia32_rdtsc();
 #  endif
+#elif defined(TTAK_ARCH_AARCH64) && defined(TTAK_COMPILER_TCC)
+    uint64_t cnt;
+    __asm__ volatile ("mrs %0, cntvct_el0" : "=r"(cnt));
+    return cnt;
+#elif defined(TTAK_ARCH_RISCV64) && defined(TTAK_COMPILER_TCC)
+    uint64_t time;
+    __asm__ volatile ("rdtime %0" : "=r"(time));
+    return time;
+#elif defined(TTAK_ARCH_PPC64LE) && defined(TTAK_COMPILER_TCC)
+    uint64_t tb;
+    __asm__ volatile ("mftb %0" : "=r"(tb));
+    return tb;
+#elif defined(TTAK_ARCH_MIPS64) && defined(TTAK_COMPILER_TCC)
+    uint64_t cc;
+    __asm__ volatile ("rdhwr %0, $2" : "=r"(cc));
+    return cc;
 #else
     /* Fallback: monotonic nanoseconds are portable but slower. */
     extern uint64_t ttak_get_tick_count_ns(void);
@@ -131,18 +151,36 @@ TTAK_ARCH_INLINE uint64_t ttak_arch_rdtsc(void) {
 }
 
 /* ============================================================================
- * Bit operations
+ * Count leading zeros
  * ============================================================================ */
 
 TTAK_ARCH_INLINE int ttak_arch_clz32(uint32_t v) {
     if (v == 0) return 32;
 #if defined(TTAK_COMPILER_TCC)
+#  if defined(TTAK_ARCH_X86_64)
+    uint32_t r;
+    __asm__ ("bsrl %1, %0" : "=r"(r) : "r"(v));
+    return 31 ^ (int)r;
+#  elif defined(TTAK_ARCH_AARCH64)
+    uint32_t r;
+    __asm__ ("clz %w0, %w1" : "=r"(r) : "r"(v));
+    return (int)r;
+#  elif defined(TTAK_ARCH_PPC64LE)
+    uint32_t r;
+    __asm__ ("cntlzw %0, %1" : "=r"(r) : "r"(v));
+    return (int)r;
+#  elif defined(TTAK_ARCH_MIPS64)
+    uint32_t r;
+    __asm__ ("clz %0, %1" : "=r"(r) : "r"(v));
+    return (int)r;
+#  else
     int r = 0;
     for (int i = 31; i >= 0; i--) {
         if (v & (1U << i)) break;
         r++;
     }
     return r;
+#  endif
 #elif defined(__GNUC__) || defined(__clang__)
     return __builtin_clz(v);
 #elif defined(_MSC_VER)
@@ -162,12 +200,30 @@ TTAK_ARCH_INLINE int ttak_arch_clz32(uint32_t v) {
 TTAK_ARCH_INLINE int ttak_arch_clz64(uint64_t v) {
     if (v == 0) return 64;
 #if defined(TTAK_COMPILER_TCC)
+#  if defined(TTAK_ARCH_X86_64)
+    uint64_t r;
+    __asm__ ("bsrq %1, %0" : "=r"(r) : "r"(v));
+    return 63 ^ (int)r;
+#  elif defined(TTAK_ARCH_AARCH64)
+    uint64_t r;
+    __asm__ ("clz %x0, %x1" : "=r"(r) : "r"(v));
+    return (int)r;
+#  elif defined(TTAK_ARCH_PPC64LE)
+    uint64_t r;
+    __asm__ ("cntlzd %0, %1" : "=r"(r) : "r"(v));
+    return (int)r;
+#  elif defined(TTAK_ARCH_MIPS64)
+    uint64_t r;
+    __asm__ ("dclz %0, %1" : "=r"(r) : "r"(v));
+    return (int)r;
+#  else
     int r = 0;
     for (int i = 63; i >= 0; i--) {
         if (v & (1ULL << i)) break;
         r++;
     }
     return r;
+#  endif
 #elif defined(__GNUC__) || defined(__clang__)
     return __builtin_clzll(v);
 #elif defined(_MSC_VER)
@@ -192,12 +248,31 @@ TTAK_ARCH_INLINE int ttak_arch_clz64(uint64_t v) {
 #endif
 }
 
+/* ============================================================================
+ * Count trailing zeros
+ * ============================================================================ */
+
 TTAK_ARCH_INLINE int ttak_arch_ctz32(uint32_t v) {
     if (v == 0) return 32;
 #if defined(TTAK_COMPILER_TCC)
+#  if defined(TTAK_ARCH_X86_64)
+    uint32_t r;
+    __asm__ ("bsfl %1, %0" : "=r"(r) : "r"(v));
+    return (int)r;
+#  elif defined(TTAK_ARCH_AARCH64)
+    uint32_t r;
+    __asm__ ("rbit %w0, %w1\n\t"
+             "clz %w0, %w0" : "=r"(r) : "r"(v));
+    return (int)r;
+#  elif defined(TTAK_ARCH_PPC64LE)
+    uint32_t r;
+    __asm__ ("cnttzw %0, %1" : "=r"(r) : "r"(v));
+    return (int)r;
+#  else
     int r = 0;
     while (!(v & 1U)) { v >>= 1; r++; }
     return r;
+#  endif
 #elif defined(__GNUC__) || defined(__clang__)
     return __builtin_ctz(v);
 #elif defined(_MSC_VER)
@@ -214,9 +289,24 @@ TTAK_ARCH_INLINE int ttak_arch_ctz32(uint32_t v) {
 TTAK_ARCH_INLINE int ttak_arch_ctz64(uint64_t v) {
     if (v == 0) return 64;
 #if defined(TTAK_COMPILER_TCC)
+#  if defined(TTAK_ARCH_X86_64)
+    uint64_t r;
+    __asm__ ("bsfq %1, %0" : "=r"(r) : "r"(v));
+    return (int)r;
+#  elif defined(TTAK_ARCH_AARCH64)
+    uint64_t r;
+    __asm__ ("rbit %x0, %x1\n\t"
+             "clz %x0, %x0" : "=r"(r) : "r"(v));
+    return (int)r;
+#  elif defined(TTAK_ARCH_PPC64LE)
+    uint64_t r;
+    __asm__ ("cnttzd %0, %1" : "=r"(r) : "r"(v));
+    return (int)r;
+#  else
     int r = 0;
     while (!(v & 1ULL)) { v >>= 1; r++; }
     return r;
+#  endif
 #elif defined(__GNUC__) || defined(__clang__)
     return __builtin_ctzll(v);
 #elif defined(_MSC_VER)
@@ -238,12 +328,29 @@ TTAK_ARCH_INLINE int ttak_arch_ctz64(uint64_t v) {
 #endif
 }
 
+/* ============================================================================
+ * Byte swap
+ * ============================================================================ */
+
 TTAK_ARCH_INLINE uint32_t ttak_arch_bswap32(uint32_t v) {
 #if defined(TTAK_COMPILER_TCC)
+#  if defined(TTAK_ARCH_X86_64)
+    __asm__ ("bswapl %0" : "=r"(v) : "0"(v));
+    return v;
+#  elif defined(TTAK_ARCH_AARCH64)
+    uint32_t r;
+    __asm__ ("rev %w0, %w1" : "=r"(r) : "r"(v));
+    return r;
+#  elif defined(TTAK_ARCH_PPC64LE)
+    uint32_t r;
+    __asm__ ("brw %0, %1" : "=r"(r) : "r"(v));
+    return r;
+#  else
     return ((v & 0xFF000000U) >> 24) |
            ((v & 0x00FF0000U) >>  8) |
            ((v & 0x0000FF00U) <<  8) |
            ((v & 0x000000FFU) << 24);
+#  endif
 #elif defined(__GNUC__) || defined(__clang__)
     return __builtin_bswap32(v);
 #elif defined(_MSC_VER)
@@ -258,6 +365,18 @@ TTAK_ARCH_INLINE uint32_t ttak_arch_bswap32(uint32_t v) {
 
 TTAK_ARCH_INLINE uint64_t ttak_arch_bswap64(uint64_t v) {
 #if defined(TTAK_COMPILER_TCC)
+#  if defined(TTAK_ARCH_X86_64)
+    __asm__ ("bswapq %0" : "=r"(v) : "0"(v));
+    return v;
+#  elif defined(TTAK_ARCH_AARCH64)
+    uint64_t r;
+    __asm__ ("rev %x0, %x1" : "=r"(r) : "r"(v));
+    return r;
+#  elif defined(TTAK_ARCH_PPC64LE)
+    uint64_t r;
+    __asm__ ("brd %0, %1" : "=r"(r) : "r"(v));
+    return r;
+#  else
     return ((v & 0xFF00000000000000ULL) >> 56) |
            ((v & 0x00FF000000000000ULL) >> 40) |
            ((v & 0x0000FF0000000000ULL) >> 24) |
@@ -266,6 +385,7 @@ TTAK_ARCH_INLINE uint64_t ttak_arch_bswap64(uint64_t v) {
            ((v & 0x0000000000FF0000ULL) << 24) |
            ((v & 0x000000000000FF00ULL) << 40) |
            ((v & 0x00000000000000FFULL) << 56);
+#  endif
 #elif defined(__GNUC__) || defined(__clang__)
     return __builtin_bswap64(v);
 #elif defined(_MSC_VER)

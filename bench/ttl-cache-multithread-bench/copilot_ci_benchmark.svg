@@ -3,12 +3,13 @@
 <text x='50%' y='62' text-anchor='middle' fill='#e6edf3' font-size='36' font-family='Arial' font-weight='700'>LibTTAK TTL Cache Benchmark (GitHub Copilot CI)</text>
 <text x='50%' y='100' text-anchor='middle' fill='#9fb0c0' font-size='20' font-family='Arial'>3-Compiler Comparison + Embedded Allocator Section</text>
 <text x='50%' y='132' text-anchor='middle' fill='#9fb0c0' font-size='18' font-family='Arial'>Duration: 60s | Threads: 4</text>
-<line x1='120' y1='170' x2='154' y2='170' stroke='#58a6ff' stroke-width='4'/>
-<text x='164' y='175' fill='#c9d6e2' font-size='16' font-family='Arial'>GCC</text>
-<line x1='370' y1='170' x2='404' y2='170' stroke='#2ea043' stroke-width='4'/>
-<text x='414' y='175' fill='#c9d6e2' font-size='16' font-family='Arial'>CLANG</text>
-<line x1='620' y1='170' x2='654' y2='170' stroke='#f2cc60' stroke-width='4'/>
-<text x='664' y='175' fill='#c9d6e2' font-size='16' font-family='Arial'>TCC</text>
+<text x='120' y='158' fill='#9fb0c0' font-size='13' font-family='Arial'>TCC lane uses compat parameters (read batch 32, maint scan 8192, write pct 1) for stable full-length runs.</text>
+<line x1='120' y1='182' x2='154' y2='182' stroke='#58a6ff' stroke-width='4'/>
+<text x='164' y='187' fill='#c9d6e2' font-size='16' font-family='Arial'>GCC</text>
+<line x1='370' y1='182' x2='404' y2='182' stroke='#2ea043' stroke-width='4'/>
+<text x='414' y='187' fill='#c9d6e2' font-size='16' font-family='Arial'>CLANG</text>
+<line x1='620' y1='182' x2='654' y2='182' stroke='#f2cc60' stroke-width='4'/>
+<text x='664' y='187' fill='#c9d6e2' font-size='16' font-family='Arial'>TCC</text>
 <rect x='50' y='210' width='1700' height='420' rx='14' fill='#11182e' stroke='#4b5872' stroke-width='1.2'/>
 <text x='80' y='246' fill='#e6edf3' font-size='22' font-family='Arial' font-weight='700'>N-second Throughput Trend</text>
 <line x1='170' y1='264.0' x2='1680' y2='264.0' stroke='#3b465c' stroke-width='1' stroke-dasharray='6 6' opacity='0.55'/>

@@ -33,6 +33,10 @@ endif
 ifeq ($(notdir $(CC)),tcc)
 	CFLAGS = $(CFLAGS_TCC)
 	LDFLAGS = $(LDFLAGS_TCC)
+	# TCC-friendly benchmark defaults.
+	export TTAK_BENCH_READ_BATCH ?= 32
+	export TTAK_BENCH_MAINT_SCAN ?= 8192
+	export TTAK_BENCH_WRITE_PCT ?= 1
 else ifeq ($(findstring clang,$(notdir $(CC))),clang)
 	CFLAGS = $(filter-out -flto,$(CFLAGS_GCC))
 	LDFLAGS = $(filter-out -flto,$(LDFLAGS_GCC))

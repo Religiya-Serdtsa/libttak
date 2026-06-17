@@ -179,17 +179,29 @@ def draw_embedded_section(x, y, w, h, embedded_data):
     return "\n".join(out)
 
 
+def tcc_note(present: set[str], y: int, x: int = 50) -> str:
+    if "tcc" not in present:
+        return ""
+    return (
+        f"<text x='{x}' y='{y}' fill='#9fb0c0' font-size='13' font-family='Arial'>"
+        f"TCC lane uses compat parameters (read batch 32, maint scan 8192, write pct 1) for stable full-length runs."
+        f"</text>"
+    )
+
+
 def write_single_metric_svg(path: Path, title: str, y_label: str, metric_key: str, data: dict[str, list[dict[str, float]]]) -> None:
     width, height = 1200, 600
+    present = set(data.keys())
     parts = [
         f"<svg xmlns='http://www.w3.org/2000/svg' width='{width}' height='{height}' viewBox='0 0 {width} {height}'>",
         "<rect width='100%' height='100%' fill='#0b1020'/>",
         f"<text x='50%' y='48' text-anchor='middle' fill='#e6edf3' font-size='28' font-family='Arial' font-weight='700'>{title}</text>",
-        draw_legend(120, 88, ["gcc", "clang", "tcc"], set(data.keys())),
+        draw_legend(120, 88, ["gcc", "clang", "tcc"], present),
+        tcc_note(present, 112),
         draw_panel(title, y_label, metric_key, 45, 125, 1110, 430, data),
         "</svg>",
     ]
-    path.write_text("\n".join(parts), encoding="utf-8")
+    path.write_text("\n".join(p for p in parts if p), encoding="utf-8")
     print(f"Generated {path}")
 
 
@@ -213,7 +225,8 @@ def main() -> None:
         "<text x='50%' y='62' text-anchor='middle' fill='#e6edf3' font-size='36' font-family='Arial' font-weight='700'>LibTTAK TTL Cache Benchmark (GitHub Copilot CI)</text>",
         "<text x='50%' y='100' text-anchor='middle' fill='#9fb0c0' font-size='20' font-family='Arial'>3-Compiler Comparison + Embedded Allocator Section</text>",
         f"<text x='50%' y='132' text-anchor='middle' fill='#9fb0c0' font-size='18' font-family='Arial'>Duration: {duration}s | Threads: {threads}</text>",
-        draw_legend(120, 170, ["gcc", "clang", "tcc"], set(compiler_data.keys())),
+        tcc_note(set(compiler_data.keys()), 158, x=120),
+        draw_legend(120, 182, ["gcc", "clang", "tcc"], set(compiler_data.keys())),
         draw_panel("N-second Throughput Trend", "Throughput (Million Ops/s)", "ops_m", 50, 210, 1700, 420, compiler_data),
         draw_panel("N-second RSS Footprint Trend", "RSS Footprint (MB)", "rss_mb", 50, 675, 1700, 420, compiler_data),
         draw_panel("N-second Memory Reclamation Ratio", "Reclamation Ratio (%)", "reclaim_pct", 50, 1140, 1700, 420, compiler_data),

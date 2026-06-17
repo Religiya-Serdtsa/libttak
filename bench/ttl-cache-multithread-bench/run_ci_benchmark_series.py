@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Run compiler benchmark series with completeness checks and TCC fallback.
+"""Run compiler benchmark series with completeness checks.
 
-GCC is the reference lane and must succeed.  Clang and TCC are best-effort:
-if either lane fails to build or does not produce a complete run, the lane
-falls back to the GCC reference output so the CI trend/SVG steps always have
-valid 60-point data for all three compilers.
+GCC is the reference lane and must succeed.  Clang and TCC are also required
+to produce their own complete runs; if either lane fails, the script exits
+with an error instead of silently substituting GCC results.  This keeps the
+CI trend/SVG data honest per compiler.
 
 Compiler lanes are intentionally run one after another.  The benchmark itself
 may create worker threads according to --threads, but this wrapper never runs
@@ -119,16 +119,6 @@ def _dump_tail(path: Path, lines: int = 40) -> None:
     print("--- end build log tail ---")
 
 
-def fallback_to_gcc(cc: str, out_name: str, duration: int) -> None:
-    """Copy the GCC reference output so a failed lane still validates."""
-    gcc_path = BENCH_DIR / "ci_benchmark_raw_gcc.txt"
-    out_path = BENCH_DIR / out_name
-    if not gcc_path.exists() or not ensure_complete(gcc_path, duration, "gcc"):
-        raise SystemExit(f"[{cc}] fallback impossible: gcc reference output missing/incomplete")
-    shutil.copyfile(gcc_path, out_path)
-    print(f"[{cc}] fallback: copied gcc reference output to {out_name}")
-
-
 def run_compiler(duration: int, threads: int, cc: str, out_name: str, extra_env: dict[str, str] | None = None) -> bool:
     if not build_binary(cc):
         return False
@@ -183,7 +173,7 @@ def main() -> None:
     if not run_compiler(args.duration, args.threads, "gcc", "ci_benchmark_raw_gcc.txt"):
         raise SystemExit("gcc benchmark did not produce full output")
 
-    # Clang is best-effort; fall back to GCC if it fails.
+    # Clang must produce its own complete run.
     clang_ok = run_compiler(args.duration, args.threads, "clang", "ci_benchmark_raw_clang.txt")
     if not clang_ok:
         print("[clang] retrying with conservative warmup settings")
@@ -201,11 +191,9 @@ def main() -> None:
             extra_env=clang_compat_env,
         )
     if not clang_ok:
-        print("[clang] benchmark lane failed; falling back to gcc reference output")
-        fallback_to_gcc("clang", "ci_benchmark_raw_clang.txt", args.duration)
+        raise SystemExit("[clang] benchmark lane failed")
 
-    # TCC needs the library rebuilt with its own profile.  Rebuild failures are
-    # non-fatal because we can still fall back to the GCC reference output.
+    # TCC needs the library rebuilt with its own profile.
     rebuild_libttak("tcc")
 
     tcc_ok = run_compiler(args.duration, args.threads, "tcc", "ci_benchmark_raw_tcc.txt")
@@ -213,17 +201,16 @@ def main() -> None:
         print("[tcc] retrying in compat mode for stable full-length output")
         compat_env = {
             "TTAK_BENCH_WARMUP": "20000",
-            "TTAK_BENCH_READ_BATCH": "1",
-            "TTAK_BENCH_MAINT_SCAN": "2048",
-            "TTAK_BENCH_WRITE_PCT": "2",
+            "TTAK_BENCH_READ_BATCH": "32",
+            "TTAK_BENCH_MAINT_SCAN": "8192",
+            "TTAK_BENCH_WRITE_PCT": "1",
         }
         tcc_ok = run_compiler(args.duration, args.threads, "tcc", "ci_benchmark_raw_tcc_compat.txt", extra_env=compat_env)
         if tcc_ok:
             shutil.copyfile(BENCH_DIR / "ci_benchmark_raw_tcc_compat.txt", BENCH_DIR / "ci_benchmark_raw_tcc.txt")
             print("[tcc] compat output copied to ci_benchmark_raw_tcc.txt")
         else:
-            print("[tcc] benchmark lane failed (normal + compat); falling back to gcc reference output")
-            fallback_to_gcc("tcc", "ci_benchmark_raw_tcc.txt", args.duration)
+            raise SystemExit("[tcc] benchmark lane failed (normal + compat)")
 
     # Restore the GCC-optimized library so the working tree remains fast for
     # subsequent local builds and the next CI run.

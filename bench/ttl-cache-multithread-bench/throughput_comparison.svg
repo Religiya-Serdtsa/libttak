@@ -7,6 +7,7 @@
 <text x='414' y='93' fill='#c9d6e2' font-size='16' font-family='Arial'>CLANG</text>
 <line x1='620' y1='88' x2='654' y2='88' stroke='#f2cc60' stroke-width='4'/>
 <text x='664' y='93' fill='#c9d6e2' font-size='16' font-family='Arial'>TCC</text>
+<text x='50' y='112' fill='#9fb0c0' font-size='13' font-family='Arial'>TCC lane uses compat parameters (read batch 32, maint scan 8192, write pct 1) for stable full-length runs.</text>
 <rect x='45' y='125' width='1110' height='430' rx='14' fill='#11182e' stroke='#4b5872' stroke-width='1.2'/>
 <text x='75' y='161' fill='#e6edf3' font-size='22' font-family='Arial' font-weight='700'>Lock-Free TTL Cache Throughput Comparison (GitHub CI)</text>
 <line x1='165' y1='179.0' x2='1085' y2='179.0' stroke='#3b465c' stroke-width='1' stroke-dasharray='6 6' opacity='0.55'/>
