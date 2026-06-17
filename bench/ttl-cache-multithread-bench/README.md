@@ -60,7 +60,7 @@ The CI artifacts `copilot_ci_benchmark.svg`, `throughput_comparison.svg`, and `r
 
 The detailed artifact uses a roomy 3-panel line-chart layout and keeps the 3-compiler comparison format (GCC / Clang / TCC).
 
-For the compiler-comparison section, each compiler is measured for **60 seconds** to capture steady-state trends:
+For the compiler-comparison section, each compiler is measured for **5 seconds** to capture steady-state trends:
 
 - N-second throughput trend (compiler overlay)
 - N-second RSS footprint trend (compiler overlay)
@@ -71,9 +71,9 @@ The layout reserves extra panel/axis/legend margins to prevent overlap or distor
 Regenerate with:
 
 ```bash
-python3 ./run_ci_benchmark_series.py --duration 60 --threads 1
+python3 ./run_ci_benchmark_series.py --duration 5
 python3 ./generate_ci_benchmark_svg.py
-python3 ./update_readme_ci_section.py --duration 60
+python3 ./update_readme_ci_section.py --duration 5
 ```
 <!-- AUTO-CI-BENCHMARK:END -->
 

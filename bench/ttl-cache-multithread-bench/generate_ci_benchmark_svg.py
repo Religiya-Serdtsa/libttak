@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import os
 import re
 from pathlib import Path
 
@@ -186,6 +187,7 @@ def main() -> None:
     embedded_data = load_series(EMBEDDED_FILES)
     duration_source = compiler_data.get("gcc") or next(iter(compiler_data.values()))
     duration = int(max(r["sec"] for r in duration_source))
+    threads = int(os.environ.get("TTAK_BENCH_THREADS", "1"))
 
     width, height = 1800, 2350
     parts = [
@@ -193,7 +195,7 @@ def main() -> None:
         "<rect width='100%' height='100%' fill='#0b1020'/>",
         "<text x='50%' y='62' text-anchor='middle' fill='#e6edf3' font-size='36' font-family='Arial' font-weight='700'>LibTTAK TTL Cache Benchmark (GitHub Copilot CI)</text>",
         "<text x='50%' y='100' text-anchor='middle' fill='#9fb0c0' font-size='20' font-family='Arial'>3-Compiler Comparison + Embedded Allocator Section</text>",
-        f"<text x='50%' y='132' text-anchor='middle' fill='#9fb0c0' font-size='18' font-family='Arial'>Duration: {duration}s</text>",
+        f"<text x='50%' y='132' text-anchor='middle' fill='#9fb0c0' font-size='18' font-family='Arial'>Duration: {duration}s | Threads: {threads}</text>",
         draw_legend(120, 170, ["gcc", "clang", "tcc"], set(compiler_data.keys())),
         draw_panel("N-second Throughput Trend", "Throughput (Million Ops/s)", "ops_m", 50, 210, 1700, 420, compiler_data),
         draw_panel("N-second RSS Footprint Trend", "RSS Footprint (MB)", "rss_mb", 50, 675, 1700, 420, compiler_data),

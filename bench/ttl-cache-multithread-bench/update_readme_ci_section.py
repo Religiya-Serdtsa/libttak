@@ -37,7 +37,7 @@ The layout reserves extra panel/axis/legend margins to prevent overlap or distor
 Regenerate with:
 
 ```bash
-python3 ./run_ci_benchmark_series.py --duration {duration} --threads 1
+python3 ./run_ci_benchmark_series.py --duration {duration}
 python3 ./generate_ci_benchmark_svg.py
 python3 ./update_readme_ci_section.py --duration {duration}
 ```"""
@@ -56,7 +56,7 @@ def build_ko_block(duration: int) -> str:
 이미지 재생성:
 
 ```bash
-python3 ./run_ci_benchmark_series.py --duration {duration} --threads 1
+python3 ./run_ci_benchmark_series.py --duration {duration}
 python3 ./generate_ci_benchmark_svg.py
 python3 ./update_readme_ci_section.py --duration {duration}
 ```"""

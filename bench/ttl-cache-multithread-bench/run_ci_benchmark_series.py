@@ -142,13 +142,28 @@ def run_compiler(duration: int, threads: int, cc: str, out_name: str, extra_env:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--duration", type=int, default=60)
-    parser.add_argument("--threads", type=int, default=1)
+    parser.add_argument(
+        "--threads",
+        type=int,
+        default=None,
+        help="number of worker threads (default: os.cpu_count())",
+    )
     args = parser.parse_args()
 
     if args.duration <= 0:
         raise SystemExit("duration must be > 0")
 
+    threads = args.threads if args.threads is not None else max(1, os.cpu_count() or 1)
+    if threads <= 0:
+        threads = 1
+    args.threads = threads
+
     print(f"running compiler lanes sequentially: gcc -> clang -> tcc ({args.duration}s each, {args.threads} worker thread(s))")
+
+    # Ensure the library is built with the reference compiler before the GCC lane.
+    # Otherwise a stale TCC/debug build of libttak.a can poison the GCC/Clang lanes.
+    if not rebuild_libttak("gcc"):
+        raise SystemExit("failed to rebuild libttak.a with gcc")
 
     # GCC is the reference lane and must succeed.
     if not run_compiler(args.duration, args.threads, "gcc", "ci_benchmark_raw_gcc.txt"):
@@ -195,6 +210,11 @@ def main() -> None:
         else:
             print("[tcc] benchmark lane failed (normal + compat); falling back to gcc reference output")
             fallback_to_gcc("tcc", "ci_benchmark_raw_tcc.txt", args.duration)
+
+    # Restore the GCC-optimized library so the working tree remains fast for
+    # subsequent local builds and the next CI run.
+    print("[cleanup] restoring libttak.a built with gcc")
+    rebuild_libttak("gcc")
 
 
 if __name__ == "__main__":
