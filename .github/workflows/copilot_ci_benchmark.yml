@@ -61,11 +61,10 @@ jobs:
 
       - name: Run compiler benchmark series
         working-directory: ${{ env.BENCH_DIR }}
-        env:
-          TTAK_BENCH_THREADS: "$(nproc)"
         run: |
           set -euo pipefail
           THREADS=$(nproc)
+          echo "TTAK_BENCH_THREADS=${THREADS}" >> "$GITHUB_ENV"
           echo "Running benchmark with TTAK_BENCH_THREADS=${THREADS}"
           python3 ./run_ci_benchmark_series.py --duration ${{ env.BENCH_DURATION }}
 
@@ -127,10 +126,9 @@ jobs:
 
       - name: Regenerate SVG + README CI section
         working-directory: ${{ env.BENCH_DIR }}
-        env:
-          TTAK_BENCH_THREADS: "$(nproc)"
         run: |
           set -euo pipefail
+          echo "Using TTAK_BENCH_THREADS=${TTAK_BENCH_THREADS:-<unset>}"
           python3 ./generate_ci_benchmark_svg.py
           python3 ./update_readme_ci_section.py --duration ${{ env.BENCH_DURATION }}
 

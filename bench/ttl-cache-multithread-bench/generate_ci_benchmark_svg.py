@@ -187,7 +187,10 @@ def main() -> None:
     embedded_data = load_series(EMBEDDED_FILES)
     duration_source = compiler_data.get("gcc") or next(iter(compiler_data.values()))
     duration = int(max(r["sec"] for r in duration_source))
-    threads = int(os.environ.get("TTAK_BENCH_THREADS", "1"))
+    try:
+        threads = int(os.environ.get("TTAK_BENCH_THREADS", "1"))
+    except ValueError:
+        threads = max(1, os.cpu_count() or 1)
 
     width, height = 1800, 2350
     parts = [
