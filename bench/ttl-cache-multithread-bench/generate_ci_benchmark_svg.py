@@ -37,11 +37,13 @@ LINE_RE = re.compile(
 )
 
 
-def parse_samples(text: str) -> list[dict[str, float]]:
+def parse_samples(text: str, label: str = "") -> list[dict[str, float]]:
     rows = []
+    unmatched = 0
     for line in text.splitlines():
         m = LINE_RE.match(line)
         if not m:
+            unmatched += 1
             continue
         sec, ops, _hit, _miss, _exp, _writes, _lat, _epoch, rss_kb, _evict, clean, retire = m.groups()
         clean_i, retire_i = int(clean), int(retire)
@@ -53,6 +55,11 @@ def parse_samples(text: str) -> list[dict[str, float]]:
                 "reclaim_pct": (clean_i / retire_i * 100.0) if retire_i > 0 else 0.0,
             }
         )
+    if label:
+        print(f"[parse {label}] matched={len(rows)} unmatched={unmatched}")
+        if rows:
+            print(f"[parse {label}] first={rows[0]}")
+            print(f"[parse {label}] last={rows[-1]}")
     return rows
 
 
@@ -61,10 +68,17 @@ def load_series(paths_map: dict[str, list[Path]]) -> dict[str, list[dict[str, fl
     for name, paths in paths_map.items():
         chosen = next((p for p in paths if p.exists()), None)
         if not chosen:
+            print(f"[load_series] {name}: no candidate file found")
             continue
-        parsed = parse_samples(chosen.read_text(encoding="utf-8"))
+        text = chosen.read_text(encoding="utf-8")
+        parsed = parse_samples(text, label=name)
         if parsed:
             data[name] = parsed
+        else:
+            print(f"[load_series] {name}: {chosen} parsed 0 rows")
+            # Show a few non-matching lines to diagnose format drift.
+            for i, line in enumerate(text.splitlines()[:10]):
+                print(f"  line {i}: {line!r}")
     return data
 
 
