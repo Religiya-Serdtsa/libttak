@@ -8,7 +8,7 @@ This directory contains performance testing utilities and stress tests for the L
 Located in `ttl-cache-multithread-bench/`.
 - **Focus:** Lock-free shared memory throughput under heavy churn.
 - **Strategy:** Uses orthogonal Latin square (OLS) principles to achieve extreme Ops/s by trading off RSS.
-- **Peak Result:** **29.2M Ops/s** (Lock-Free Shards).
+- **Peak Result:** **27.13M Ops/s** (Lock-Free Shards in CI, 29.2M+ on bare-metal).
 
 ### 2. General Benchmark Hub (`ttak_bench.c`)
 - **Focus:** Micro-benchmarking core primitives (allocators, atomics, math).

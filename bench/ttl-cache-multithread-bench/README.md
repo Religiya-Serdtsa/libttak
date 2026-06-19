@@ -17,9 +17,11 @@ We strategically prioritize **explosive throughput (Ops/s)** by utilizing determ
 
 ## Latest Benchmark Results (GitHub Copilot CI)
 
-| Compiler | Peak Throughput | Avg Throughput (20s) | Final RSS | Performance Note |
+| Compiler | Peak Throughput | Avg Throughput (60s) | Final RSS | Performance Note |
 |----------|-----------------|----------------------|-----------|------------------|
-| **GCC** | **13.9M Ops/s** | 10.0M Ops/s | 266.3 MB | 3 vCPU virtual runner baseline |
+| **GCC** | **27.13M Ops/s** | 20.00M Ops/s | 579.3 MB | 3 vCPU virtual runner baseline |
+| **Clang** | **27.11M Ops/s** | 20.91M Ops/s | 579.4 MB | 3 vCPU virtual runner baseline |
+| **TCC** | **14.89M Ops/s** | 11.41M Ops/s | 578.9 MB | 3 vCPU virtual runner baseline (TCC-tuned parameters) |
 
 ### CI Environment (Recorded)
 
@@ -28,13 +30,18 @@ We strategically prioritize **explosive throughput (Ops/s)** by utilizing determ
 - CPU: `Intel(R) Xeon(R) Platinum 8272CL CPU @ 2.60GHz` (3 vCPU)
 - Memory: 17 GiB RAM, no swap
 
-## Technical Analysis: TCC Memory Anomaly
+## Technical Analysis: TCC Memory Anomaly (Resolved in v3)
 
-The benchmark reveals a significant disparity in RSS (Resident Set Size) between TCC (~2.9 GB) and GCC/Clang (< 30 MB). This is not an architectural flaw in LibTTAK but a consequence of compiler-specific code generation:
+In earlier versions, the benchmark revealed a significant disparity in RSS (Resident Set Size) between TCC (~2.9 GB) and GCC/Clang (< 30 MB) under heavy churn. This was not an architectural flaw in LibTTAK but a consequence of compiler-specific code generation:
 
 1.  **Optimization & Inlining Lag**: LibTTAK's **Epoch-based GC** relies on aggressive inlining and register-level optimizations to reclaim memory at high velocity. TCC's lack of advanced optimization passes (like O3/LTO) causes the reclamation logic to execute significantly slower than the allocation/versioning logic, leading to "reclamation debt" under extreme throughput.
 2.  **Atomic Implementation**: GCC and Clang generate highly optimized lock-free primitives and memory barriers. TCC's atomic handling is more conservative, increasing the window of time an object remains "live" in an epoch before it can be safely purged.
-3.  **Throughput vs. Cleanup Mismatch**: At > 60M Ops/s, the TCC-compiled binary produces versioned slots faster than its cleanup routine can sweep them. This results in a temporary "inventory accumulation" in memory, whereas GCC/Clang's optimized sweeps maintain a near-constant memory footprint.
+3.  **Throughput vs. Cleanup Mismatch**: The TCC-compiled binary produced versioned slots faster than its cleanup routine could sweep them, resulting in a temporary "inventory accumulation" in memory.
+
+### Resolution in v3:
+To address this, we implemented:
+- **Architecture-Specific Inline Assembly**: Native `amd64`/`arm64` pause, atomic, and rdtsc assembly routines in `include/ttak/arch/ttak_arch.h` for TCC, avoiding generic fallbacks.
+- **TCC-Tuned Parameters**: TCC-specific settings (such as batch size and maintenance scan tuning) are applied when running the benchmark, allowing TCC's sweeps to maintain a stable memory footprint (~578.9 MB) matching GCC/Clang.
 
 ## Running the Benchmark
 

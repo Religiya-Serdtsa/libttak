@@ -182,16 +182,28 @@ Benchmark target:
 
 Configuration:
 
-- 20 second runtime
+- 60 second runtime (compiler comparison)
 - auto thread detection
-- 2 worker threads
+- 4 worker threads
 - 1 maintenance thread
 
-Results:
+Results (GCC):
 
-- Peak throughput: **13.9M ops/sec**
-- Average throughput: **10.0M ops/sec**
-- Final RSS: **~266 MB**
+- Peak throughput: **27.13M ops/sec**
+- Average throughput: **20.00M ops/sec**
+- Final RSS: **~579.3 MB**
+
+Results (Clang):
+
+- Peak throughput: **27.11M ops/sec**
+- Average throughput: **20.91M ops/sec**
+- Final RSS: **~579.4 MB**
+
+Results (TCC):
+
+- Peak throughput: **14.89M ops/sec**
+- Average throughput: **11.41M ops/sec**
+- Final RSS: **~578.9 MB**
 
 These numbers should be treated as a **minimum reproducible baseline**, not peak hardware capability.
 
