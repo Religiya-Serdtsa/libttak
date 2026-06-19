@@ -16,6 +16,14 @@
 #define _GNU_SOURCE
 #endif
 
+#ifndef _DEFAULT_SOURCE
+#define _DEFAULT_SOURCE
+#endif
+
+#ifndef _BSD_SOURCE
+#define _BSD_SOURCE
+#endif
+
 #include <sys/mman.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -212,6 +220,17 @@ void *ttak_mem_dup_safe(const void *src, size_t size, uint64_t lifetime_ticks, u
  * @param ptr Pointer to user memory.
  */
 void ttak_mem_free(void *ptr);
+
+/**
+ * @brief Frees a memory block and clears the caller's pointer.
+ *
+ * Convenience wrapper around ttak_mem_free() that also sets @p *ptr to NULL
+ * so the caller cannot accidentally reuse a dangling pointer. Passing a NULL
+ * pointer or a pointer to NULL is a no-op.
+ *
+ * @param ptr Pointer to the user pointer that will be freed and zeroed.
+ */
+void ttak_mem_freep(void **ptr);
 
 /**
  * @brief Safe accessor implemented in the library for ABI-stable builds.

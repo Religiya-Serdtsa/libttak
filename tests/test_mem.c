@@ -2,7 +2,7 @@
 #include "test_macros.h"
 #include <string.h>
 
-void test_mem_alloc_free() {
+void test_mem_alloc_free(void) {
     uint64_t now = 100;
     void *ptr = ttak_mem_alloc_raw(1024, 1000, now);
     ASSERT(ptr != NULL);
@@ -17,7 +17,20 @@ void test_mem_alloc_free() {
     ttak_mem_free(ptr);
 }
 
-void test_mem_realloc() {
+void test_mem_freep(void) {
+    uint64_t now = 300;
+    void *ptr = ttak_mem_alloc_raw(256, 1000, now);
+    ASSERT(ptr != NULL);
+
+    ttak_mem_freep(&ptr);
+    ASSERT(ptr == NULL);
+
+    /* Double free through freep is safe. */
+    ttak_mem_freep(&ptr);
+    ASSERT(ptr == NULL);
+}
+
+void test_mem_realloc(void) {
     uint64_t now = 200;
     void *ptr = ttak_mem_alloc_raw(512, 1000, now);
     ASSERT(ptr != NULL);
@@ -36,8 +49,9 @@ void test_mem_realloc() {
     ttak_mem_free(new_ptr);
 }
 
-int main() {
+int main(void) {
     RUN_TEST(test_mem_alloc_free);
+    RUN_TEST(test_mem_freep);
     RUN_TEST(test_mem_realloc);
     return 0;
 }

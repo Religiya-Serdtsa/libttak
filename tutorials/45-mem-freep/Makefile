@@ -1,10 +1,9 @@
-
 CC ?= tcc
 CFLAGS ?= -Wall -Wextra -pedantic -std=c11 -g -D_GNU_SOURCE -D_XOPEN_SOURCE=700
 LIBTTAK_CFLAGS ?=
 LIBTTAK_LDFLAGS ?= -lttak -lpthread -lm
-TARGET = lesson22_mem_tree
-SOURCE = lesson22_mem_tree.c
+TARGET = lesson45_mem_freep
+SOURCE = lesson45_mem_freep.c
 
 .PHONY: all clean run
 

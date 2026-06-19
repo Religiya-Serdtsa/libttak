@@ -1,6 +1,6 @@
 
 CC ?= tcc
-CFLAGS ?= -Wall -Wextra -pedantic -std=c11 -g -D_XOPEN_SOURCE=700
+CFLAGS ?= -Wall -Wextra -pedantic -std=c11 -g -D_GNU_SOURCE -D_XOPEN_SOURCE=700
 LIBTTAK_CFLAGS ?=
 LIBTTAK_LDFLAGS ?= -lttak -lpthread -lm
 TARGET = lesson21_epoch_gc

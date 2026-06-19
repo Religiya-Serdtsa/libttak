@@ -1,5 +1,5 @@
 CC ?= gcc
-CFLAGS ?= -Wall -Wextra -std=c11 -g -I../../include -D_XOPEN_SOURCE=700
+CFLAGS ?= -Wall -Wextra -std=c11 -g -I../../include -D_GNU_SOURCE -D_XOPEN_SOURCE=700
 LDFLAGS ?= -lttak -lpthread -lm -lc
 TARGET = lesson38_ebr_shared
 SOURCE = lesson38_ebr_shared.c

@@ -623,6 +623,13 @@ void TTAK_HOT_PATH ttak_mem_free(void *ptr) {
     }
 }
 
+void ttak_mem_freep(void **ptr) {
+    if (ptr && *ptr) {
+        ttak_mem_free(*ptr);
+        *ptr = NULL;
+    }
+}
+
 void ttak_mem_unuse(void *ptr, ttak_owner_t *owner) {
     if (!ptr) return;
     void *stable_ptr = ptr;

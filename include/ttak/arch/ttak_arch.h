@@ -12,6 +12,7 @@
 
 #include <stdint.h>
 #include <stddef.h>
+#include <time.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -144,9 +145,12 @@ TTAK_ARCH_INLINE uint64_t ttak_arch_rdtsc(void) {
     __asm__ volatile ("rdhwr %0, $2" : "=r"(cc));
     return cc;
 #else
-    /* Fallback: monotonic nanoseconds are portable but slower. */
-    extern uint64_t ttak_get_tick_count_ns(void);
-    return ttak_get_tick_count_ns();
+    /* Fallback: monotonic nanoseconds are portable but slower.
+     * Implemented locally to avoid a linkage/declaration cycle with
+     * ttak_get_tick_count_ns() defined in timing.h. */
+    struct timespec ts;
+    clock_gettime(CLOCK_MONOTONIC, &ts);
+    return ((uint64_t)ts.tv_sec * 1000000000ULL) + (uint64_t)ts.tv_nsec;
 #endif
 }
 
