@@ -69,7 +69,6 @@ static bool ttak_detachable_untrack_pointer(ttak_detachable_context_t *ctx, void
 static bool ttak_detachable_cache_store(ttak_detachable_context_t *ctx, ttak_detachable_cache_t *cache, void *ptr, size_t size);
 static void *ttak_detachable_cache_take(ttak_detachable_cache_t *cache, size_t requested);
 static void ttak_detachable_cache_drain(ttak_detachable_context_t *ctx, ttak_detachable_cache_t *cache, bool release_storage);
-static void ttak_detachable_global_shutdown(_Bool flush_rows);
 typedef enum {
     TTAK_DETACHABLE_MODE_STANDARD = 0,
     TTAK_DETACHABLE_MODE_DETACHED = 1
@@ -643,6 +642,7 @@ static void ttak_detachable_cache_drain(ttak_detachable_context_t *ctx, ttak_det
     }
 }
 
+#ifndef _WIN32
 static void ttak_detachable_global_shutdown(_Bool flush_rows) {
     pthread_mutex_lock(&g_ctx_registry_lock);
     for (size_t i = 0; i < g_ctx_registry_len; ++i) {
@@ -658,7 +658,6 @@ static void ttak_detachable_global_shutdown(_Bool flush_rows) {
     pthread_mutex_unlock(&g_ctx_registry_lock);
 }
 
-#ifndef _WIN32
 static void ttak_detachable_signal_handler(int signo) {
     bool expected = false;
     if (!atomic_compare_exchange_weak(&g_signal_guard.triggered, &expected, true)) {
