@@ -663,12 +663,16 @@ void *ttak_mem_access_bridge(void *ptr, uint64_t now_tick) {
     if (!ptr) return NULL;
     ttak_mem_header_t *header = (ttak_mem_header_t *)ptr - 1;
 
-#if defined(__linux__)
     /* Guard against use-after-free on pages that have been unmapped. */
-    unsigned char vec = 0;
     void *page_base = (void *)(((uintptr_t)header) & ~((uintptr_t)4095));
+#if defined(__linux__)
+    unsigned char vec = 0;
     if (mincore(page_base, 4096, &vec) != 0) return NULL;
     if (!(vec & 1)) return NULL;
+#elif defined(_WIN32)
+    MEMORY_BASIC_INFORMATION mbi;
+    if (VirtualQuery(page_base, &mbi, sizeof(mbi)) == 0) return NULL;
+    if (mbi.State != MEM_COMMIT) return NULL;
 #endif
 
     if (header->magic != TTAK_MAGIC_NUMBER) return NULL;
