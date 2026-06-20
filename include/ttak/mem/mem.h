@@ -24,7 +24,9 @@
 #define _BSD_SOURCE
 #endif
 
+#if defined(__linux__)
 #include <sys/mman.h>
+#endif
 #include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
