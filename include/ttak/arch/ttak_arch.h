@@ -14,6 +14,10 @@
 #include <stddef.h>
 #include <time.h>
 
+#if defined(_MSC_VER)
+#  include <intrin.h>
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -90,6 +94,8 @@ TTAK_ARCH_INLINE void ttak_arch_pause(void) {
 #if defined(TTAK_ARCH_X86_64)
 #  if defined(TTAK_COMPILER_TCC)
     __asm__ volatile ("pause" ::: "memory");
+#  elif defined(TTAK_COMPILER_MSVC)
+    _mm_pause();
 #  else
     __builtin_ia32_pause();
 #  endif
@@ -125,6 +131,8 @@ TTAK_ARCH_INLINE uint64_t ttak_arch_rdtsc(void) {
     uint32_t low, high;
     __asm__ volatile ("rdtsc" : "=a"(low), "=d"(high));
     return ((uint64_t)high << 32) | low;
+#  elif defined(TTAK_COMPILER_MSVC)
+    return __rdtsc();
 #  else
     return __builtin_ia32_rdtsc();
 #  endif
