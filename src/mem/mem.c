@@ -712,6 +712,9 @@ void ttak_mem_configure_gc(uint64_t min_interval_ns, uint64_t max_interval_ns, s
     ensure_global_map(now);
     ttak_mem_tree_set_cleaning_intervals(&global_mem_tree, min_interval_ns, max_interval_ns);
     ttak_mem_tree_set_pressure_threshold(&global_mem_tree, pressure_threshold);
+    /* The global mem_tree cleanup thread spins on ttak_epoch_reclaim and
+     * consumes whole cores.  Disable it; callers rotate/reclaim explicitly. */
+    ttak_mem_tree_set_manual_cleanup(&global_mem_tree, true);
 }
 
 void TTAK_COLD_PATH tt_autoclean_dirty_pointers(uint64_t now) {
