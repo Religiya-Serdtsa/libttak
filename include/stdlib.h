@@ -15,6 +15,8 @@ void *calloc(size_t nmemb, size_t size);
 void *realloc(void *ptr, size_t size);
 void abort(void);
 
+int atoi(const char *str);
+
 #define RAND_MAX 32767
 int rand(void);
 void srand(unsigned int seed);
