@@ -10,7 +10,7 @@
 #include <ttak/mem/detachable.h>
 #include <ttak/mem/fastpath.h>
 
-#include <stdatomic.h>
+#include <ttak/compat/stdatomic.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>

@@ -7,8 +7,8 @@
 #ifndef _WIN32
 #include <signal.h>
 #endif
-#include <pthread.h>
-#include <stdatomic.h>
+#include <ttak/compat/pthread.h>
+#include <ttak/compat/stdatomic.h>
 
 #include <ttak/mem/epoch.h>
 

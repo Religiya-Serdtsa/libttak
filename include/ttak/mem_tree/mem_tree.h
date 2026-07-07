@@ -4,8 +4,8 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
-#include <stdatomic.h>
-#include <pthread.h>
+#include <ttak/compat/stdatomic.h>
+#include <ttak/compat/pthread.h>
 
 typedef struct ttak_mem_tree ttak_mem_tree_t;
 

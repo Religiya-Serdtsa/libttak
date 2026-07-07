@@ -18,7 +18,7 @@ typedef DWORD  ttak_thread_id_t;
 #define TTAK_THREAD_CALL WINAPI
 #define ttak_thread_yield() Sleep(0)
 #else
-#include <pthread.h>
+#include <ttak/compat/pthread.h>
 #include <unistd.h>
 #include <sched.h>
 typedef pthread_t ttak_thread_t;

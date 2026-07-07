@@ -12,7 +12,7 @@
 #include <ttak/async/task.h>
 #include <stddef.h>
 #include <stdint.h>
-#include <pthread.h>
+#include <ttak/compat/pthread.h>
 
 struct __internal_ttak_qnode_t {
     ttak_task_t *task;

@@ -29,7 +29,7 @@
 #endif
 #include <stdlib.h>
 #if defined(__TINYC__)
-#include <pthread.h>
+#include <ttak/compat/pthread.h>
 #endif
 #include "../../internal/app_types.h"
 #include "../../internal/tt_jmp.h"

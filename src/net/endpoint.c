@@ -13,7 +13,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <string.h>
-#include <pthread.h>
+#include <ttak/compat/pthread.h>
 
 #ifdef _WIN32
 #include <winsock2.h>

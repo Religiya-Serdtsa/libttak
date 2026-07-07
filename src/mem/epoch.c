@@ -9,12 +9,12 @@
 #include <ttak/types/ttak_compiler.h>
 
 #ifndef _MSC_VER
-#include <stdatomic.h>
+#include <ttak/compat/stdatomic.h>
 #else
 #include <windows.h>
 #endif
 
-#include <pthread.h>
+#include <ttak/compat/pthread.h>
 #include <string.h>
 #include <stdbool.h>
 #include <stdlib.h>

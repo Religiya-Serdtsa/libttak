@@ -4,10 +4,10 @@
 #include <ttak/async/promise.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <pthread.h>
+#include <ttak/compat/pthread.h>
 #include <signal.h>
 #include <errno.h>
-#include <stdatomic.h>
+#include <ttak/compat/stdatomic.h>
 
 #include <ttak/priority/scheduler.h>
 #include "../../internal/ttak/shard_map.h"

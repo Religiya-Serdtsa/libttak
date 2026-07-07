@@ -10,7 +10,7 @@
 #ifndef TTAK_THREAD_WORKER_H
 #define TTAK_THREAD_WORKER_H
 
-#include <pthread.h>
+#include <ttak/compat/pthread.h>
 #include <setjmp.h>
 #include <stdint.h>
 #include <ttak/async/promise.h>

@@ -16,8 +16,8 @@
 #include <ttak/types/ttak_compiler.h>
 #include <string.h>
 #include <stdlib.h>
-#include <pthread.h>
-#include <stdatomic.h>
+#include <ttak/compat/pthread.h>
+#include <ttak/compat/stdatomic.h>
 
 #if defined(__TINYC__) && !TTAK_TINYCC_NEEDS_PORTABLE_FALLBACK
 static inline void ttak_net_lattice_copy_bytes(uint8_t *dst, const uint8_t *src, uint32_t len) {

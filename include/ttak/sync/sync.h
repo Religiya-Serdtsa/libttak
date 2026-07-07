@@ -5,9 +5,9 @@
 #define _XOPEN_SOURCE 700
 #endif
 
-#include <pthread.h>
+#include <ttak/compat/pthread.h>
 #include <stdint.h>
-#include <stdatomic.h>
+#include <ttak/compat/stdatomic.h>
 
 typedef pthread_mutex_t ttak_mutex_t;
 typedef pthread_mutex_t tt_mutex_t;

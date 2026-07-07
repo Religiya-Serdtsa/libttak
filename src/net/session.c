@@ -15,7 +15,7 @@
 #include <ttak/async/task.h>
 #include <ttak/async/sched.h>
 #include <ttak/timing/timing.h>
-#include <pthread.h>
+#include <ttak/compat/pthread.h>
 
 #include <inttypes.h>
 #include <stdio.h>

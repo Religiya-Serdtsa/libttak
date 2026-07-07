@@ -10,7 +10,7 @@
 
 #include <ttak/timing/timing.h>
 #include <time.h>
-#include <pthread.h>
+#include <ttak/compat/pthread.h>
 #ifdef _WIN32
     #include <windows.h>
     #include <stdbool.h>

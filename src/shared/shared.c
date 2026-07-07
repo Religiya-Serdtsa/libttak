@@ -13,7 +13,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stddef.h>
-#include <stdatomic.h>
+#include <ttak/compat/stdatomic.h>
 
 /* Lock-free helper to access thread's designated shard slot */
 static inline atomic_uint_least64_t* _ttak_shared_get_shard(ttak_shared_t *self) {

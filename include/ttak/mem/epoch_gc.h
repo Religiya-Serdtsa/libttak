@@ -2,8 +2,8 @@
 #define TTAK_MEM_EPOCH_GC_H
 
 #include <ttak/mem_tree/mem_tree.h>
-#include <pthread.h>
-#include <stdatomic.h>
+#include <ttak/compat/pthread.h>
+#include <ttak/compat/stdatomic.h>
 
 /**
  * @brief Epoch-based garbage collection context.
