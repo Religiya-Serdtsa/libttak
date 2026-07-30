@@ -15,6 +15,7 @@ TOOLCHAIN ?= gnu
 COMMON_WARNINGS ?= -Wall -std=c17 -pthread -Iinclude -D_GNU_SOURCE -D_XOPEN_SOURCE=700 -D_REENTRANT
 DEPFLAGS ?= -MD -MF $(@:.o=.d)
 LDFLAGS_BASE = -pthread -lm
+UNAME_S := $(shell uname -s)
 
 # Detect which compiler family we are using.
 BUILD_PROFILE = perf
@@ -32,12 +33,6 @@ override CC := clang
 endif
 endif
 
-# Clang detection and specific flags
-ifneq (,$(findstring clang,$(notdir $(CC))))
-PERF_STACK_FLAGS += -flto=thin -mllvm -inline-threshold=600
-LDFLAGS += -flto=thin
-endif
-
 TCC_STACK_FLAGS ?= -O3 -g \
                   -fno-inline \
                   -fno-omit-frame-pointer \
@@ -49,17 +44,30 @@ TCC_STACK_FLAGS ?= -O3 -g \
 				  -fno-math-errno \
 
 PERF_WARNINGS ?= -Wextra -Wshadow -Wstrict-prototypes -Wswitch-enum
-PERF_STACK_FLAGS ?= -O3 -march=native -mtune=native -pipe -flto -ffat-lto-objects \
+PERF_STACK_FLAGS ?= -O3 -march=native -mtune=native -pipe -flto \
                    -fomit-frame-pointer -funroll-loops \
                    -fstrict-aliasing -ffunction-sections -fdata-sections \
                    -fvisibility=hidden -DNDEBUG
+
+# GCC can retain portable LTO objects; AppleClang rejects that GCC-only flag.
+# Keep it out of the default profile on every Clang/macOS build rather than
+# requiring each caller (CI, users, package managers) to override CFLAGS.
+ifeq ($(UNAME_S),Darwin)
+PERF_STACK_FLAGS := $(filter-out -ffat-lto-objects,$(PERF_STACK_FLAGS))
+else
+PERF_STACK_FLAGS += -ffat-lto-objects
+endif
 
 ifeq ($(BUILD_PROFILE),tcc)
 CFLAGS = $(COMMON_WARNINGS) $(TCC_STACK_FLAGS)
 LDFLAGS = $(LDFLAGS_BASE)
 else
 CFLAGS = $(COMMON_WARNINGS) $(PERF_WARNINGS) $(PERF_STACK_FLAGS)  -fPIC -ftls-model=global-dynamic
+ifeq ($(UNAME_S),Darwin)
+LDFLAGS = $(LDFLAGS_BASE) -flto -Wl,-dead_strip
+else
 LDFLAGS = $(LDFLAGS_BASE) -flto -Wl,--gc-sections
+endif
 endif
 
 CFLAGS += $(EXTRA_CFLAGS) -DEMBEDDED=$(EMBEDDED)
