@@ -123,15 +123,21 @@ void *ttak_worker_routine(void *arg) {
             /* 1. Try preferred shard (fast path) */
             pthread_mutex_lock(&pref_shard->lock);
             task = pref_shard->queue.pop(&pref_shard->queue, now);
-            pthread_mutex_unlock(&pref_shard->lock);
-            if (task) break;
+            if (task) {
+                pthread_mutex_unlock(&pref_shard->lock);
+                break;
+            }
 
             /* 2. Try stealing from other shards (throughput path) */
             task = worker_steal_task(pool, pref, now);
-            if (task) break;
+            if (task) {
+                pthread_mutex_unlock(&pref_shard->lock);
+                break;
+            }
 
-            /* 3. Still idle? Yield and retry to avoid lost-signal stalls. */
-            sched_yield();
+            /* 3. Still idle? Wait on preferred shard's condition variable. */
+            pthread_cond_wait(&pref_shard->cond, &pref_shard->lock);
+            pthread_mutex_unlock(&pref_shard->lock);
         }
 
         if (task) {

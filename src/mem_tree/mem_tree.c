@@ -450,7 +450,9 @@ static void *cleanup_thread_func(void *arg) {
 #ifdef _WIN32
             clock_gettime_win(&ts);
 #else
-            clock_gettime(CLOCK_MONOTONIC, &ts);
+            /* pthread_cond_timedwait uses CLOCK_REALTIME unless the
+             * condition variable was created with a monotonic clock. */
+            clock_gettime(CLOCK_REALTIME, &ts);
 #endif
             uint64_t total_ns = (uint64_t)ts.tv_sec * 1000000000ULL + (uint64_t)ts.tv_nsec + current_sleep_ns;
             ts.tv_sec = (time_t)(total_ns / 1000000000ULL);
