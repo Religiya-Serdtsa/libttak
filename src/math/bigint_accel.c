@@ -9,7 +9,7 @@
 
 #include <ttak/math/bigint_accel.h>
 
-#include <stdatomic.h>
+#include <ttak/compat/stdatomic.h>
 #include <stdlib.h>
 
 static size_t g_bigint_accel_threshold = 0;

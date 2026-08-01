@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
-#include <stdatomic.h>
+#include <ttak/compat/stdatomic.h>
 #include <string.h>
 
 #if !defined(__SIZEOF_INT128__) && !defined(_MSC_VER)

@@ -15,7 +15,7 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
-#include <stdatomic.h>
+#include <ttak/compat/stdatomic.h>
 
 /**
  * @struct ttak_shard_table_t

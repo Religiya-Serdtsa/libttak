@@ -9,7 +9,7 @@
 #include <ttak/types/ttak_compiler.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdatomic.h>
+#include <ttak/compat/stdatomic.h>
 
 void ttak_dynamic_mask_init(ttak_dynamic_mask_t *mask) {
     if (TTAK_UNLIKELY(!mask)) return;

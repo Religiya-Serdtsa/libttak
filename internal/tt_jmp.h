@@ -3,7 +3,7 @@
 
 #include <setjmp.h>
 #include <stdint.h>
-#include <pthread.h>
+#include <ttak/compat/pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 

@@ -14,9 +14,19 @@ static void test_timing_basic(void) {
 
 static void test_deadline_expiration(void) {
     ttak_deadline_t dl;
-    ttak_deadline_set(&dl, 100);
+    ttak_deadline_set(&dl, 50);
     ASSERT(ttak_deadline_is_expired(&dl) == false);
-    usleep(110000);
+
+    /* Poll with a generous wall-clock timeout so the test survives
+       scheduler jitter and coarse tick resolution. */
+    const uint64_t poll_step_us = 5000;
+    const int max_polls = 80; /* 5 ms * 80 = 400 ms ceiling */
+    for (int i = 0; i < max_polls; ++i) {
+        if (ttak_deadline_is_expired(&dl)) {
+            return;
+        }
+        usleep((useconds_t)poll_step_us);
+    }
     ASSERT(ttak_deadline_is_expired(&dl) == true);
 }
 

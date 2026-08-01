@@ -265,7 +265,7 @@
     })
 
 #elif defined(__TINYC__)
-#include <stdatomic.h>
+#include <ttak/compat/stdatomic.h>
 #define TTAK_FAST_ATOMIC_ADD_U64(ptr, val) \
     atomic_fetch_add_explicit((_Atomic uint64_t *)(ptr), (uint64_t)(val), memory_order_relaxed)
 #define TTAK_FAST_ATOMIC_ADD_U32(ptr, val) \
@@ -284,7 +284,7 @@
  * MSVC does not provide __atomic_* compiler built-ins or the __ATOMIC_*
  * memory-order constants, so the GCC/Clang #else branch below would produce
  * undefined-identifier errors when these macros are expanded.              */
-#include <stdatomic.h>
+#include <ttak/compat/stdatomic.h>
 #define TTAK_FAST_ATOMIC_ADD_U64(ptr, val) \
     atomic_fetch_add_explicit((_Atomic uint64_t *)(ptr), (uint64_t)(val), memory_order_relaxed)
 #define TTAK_FAST_ATOMIC_ADD_U32(ptr, val) \
@@ -299,7 +299,7 @@
     atomic_exchange_explicit((_Atomic uint64_t *)(ptr), (uint64_t)(val), memory_order_relaxed)
 
 #else
-#include <stdatomic.h>
+#include <ttak/compat/stdatomic.h>
 #define TTAK_FAST_ATOMIC_ADD_U64(ptr, val) \
     atomic_fetch_add_explicit((_Atomic uint64_t *)(ptr), (uint64_t)(val), memory_order_relaxed)
 #define TTAK_FAST_ATOMIC_ADD_U32(ptr, val) \

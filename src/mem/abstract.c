@@ -5,7 +5,7 @@
 
 #include <ttak/mem/abstract.h>
 
-#include <pthread.h>
+#include <ttak/compat/pthread.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>

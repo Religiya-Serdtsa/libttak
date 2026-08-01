@@ -29,8 +29,11 @@ extern "C" {
 typedef enum ttak_security_op {
     TTAK_SECURITY_LEA_ENC = 0,         /**< LEA block-cipher encryption. */
     TTAK_SECURITY_SEED_ENC,             /**< SEED block-cipher encryption. */
+    TTAK_SECURITY_ARIA_ENC,             /**< ARIA block-cipher encryption. */
+    TTAK_SECURITY_ARIA_DEC,             /**< ARIA block-cipher decryption. */
     TTAK_SECURITY_AES_GCM,              /**< AES-256-GCM authenticated encryption. */
     TTAK_SECURITY_CHACHA20_POLY1305,    /**< ChaCha20-Poly1305 AEAD. */
+    TTAK_SECURITY_LSH,                  /**< LSH cryptographic hash. */
     TTAK_SECURITY_SIGN_PQC,             /**< Post-quantum signature (stub). */
     TTAK_SECURITY_HASH_FAST,            /**< Fast non-cryptographic hash. */
     TTAK_SECURITY_KDF_HARD              /**< Memory-hard key derivation. */

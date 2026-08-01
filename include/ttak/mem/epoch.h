@@ -3,7 +3,7 @@
 
 #include <stdbool.h>
 #include <stdint.h>
-#include <stdatomic.h>
+#include <ttak/compat/stdatomic.h>
 #include <ttak/types/ttak_compiler.h>
 
 #define TTAK_EPOCH_SESSIONS 3

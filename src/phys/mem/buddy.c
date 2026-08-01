@@ -3,14 +3,14 @@
 #include <ttak/mem/epoch.h>
 
 #include <stdalign.h>
-#include <stdatomic.h>
+#include <ttak/compat/stdatomic.h>
 #include <stdbool.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include <limits.h>
-#include <pthread.h>
+#include <ttak/compat/pthread.h>
 #if defined(_MSC_VER)
 #include <intrin.h>
 #include <malloc.h>

@@ -2,7 +2,7 @@
 
 #include <stdbool.h>
 #include <stdint.h>
-#include <stdatomic.h>
+#include <ttak/compat/stdatomic.h>
 
 static _Atomic uintptr_t g_backend_ptr = ATOMIC_VAR_INIT((uintptr_t)0);
 static _Atomic ttak_accel_target_t g_backend_target =

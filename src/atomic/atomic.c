@@ -1,8 +1,8 @@
 #include <ttak/atomic/atomic.h>
 #include <ttak/ht/map.h>
 #include <ttak/mem/mem.h>
-#include <pthread.h>
-#include <stdatomic.h>
+#include <ttak/compat/pthread.h>
+#include <ttak/compat/stdatomic.h>
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>

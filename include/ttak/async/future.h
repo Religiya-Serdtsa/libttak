@@ -10,7 +10,7 @@
 #ifndef TTAK_ASYNC_FUTURE_H
 #define TTAK_ASYNC_FUTURE_H
 
-#include <pthread.h>
+#include <ttak/compat/pthread.h>
 #include <stdbool.h>
 
 /**

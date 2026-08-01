@@ -33,12 +33,12 @@
 #if defined(_WIN32)
 #include <windows.h>
 #elif !defined(__TINYC__) && !defined(__STDC_NO_ATOMICS__)
-#include <stdatomic.h>
+#include <ttak/compat/stdatomic.h>
 #endif
 #include <ttak/mem/epoch_gc.h>
 #include <ttak/types/ttak_compiler.h>
 #include <stdalign.h>
-#include <pthread.h>
+#include <ttak/compat/pthread.h>
 
 /* Owner handle used by ttak_mem_unuse(); full definition is in <ttak/mem/owner.h>. */
 typedef struct ttak_owner ttak_owner_t;
@@ -216,12 +216,6 @@ void ttak_mem_unuse(void *ptr, ttak_owner_t *owner);
  * @return Duplicated pointer, or NULL on failure.
  */
 void *ttak_mem_dup_safe(const void *src, size_t size, uint64_t lifetime_ticks, uint64_t now_tick, bool is_root, ttak_mem_flags_t flags);
-
-/**
- * @brief Frees a memory block and updates usage statistics.
- * @param ptr Pointer to user memory.
- */
-void ttak_mem_free(void *ptr);
 
 /**
  * @brief Frees a memory block and clears the caller's pointer.

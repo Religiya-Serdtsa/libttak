@@ -15,7 +15,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
-#include <stdatomic.h>
+#include <ttak/compat/stdatomic.h>
 #include <ttak/async/task.h>
 #include <ttak/thread/worker.h>
 #include <ttak/priority/queue.h>

@@ -1,6 +1,6 @@
 #include <ttak/stats/system_usage.h>
 
-#include <pthread.h>
+#include <ttak/compat/pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

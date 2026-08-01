@@ -3,7 +3,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
-#include <stdatomic.h>
+#include <ttak/compat/stdatomic.h>
 
 #ifdef __cplusplus
 extern "C" {

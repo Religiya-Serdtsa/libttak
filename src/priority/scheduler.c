@@ -14,7 +14,7 @@
 #include <ttak/mem/mem.h>
 #include <ttak/ht/map.h>
 #include <ttak/timing/timing.h>
-#include <pthread.h>
+#include <ttak/compat/pthread.h>
 #include <stddef.h>
 #include <string.h>
 #include "../../internal/ttak/shard_map.h"

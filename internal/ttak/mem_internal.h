@@ -12,8 +12,8 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
-#include <stdatomic.h>
-#include <pthread.h>
+#include <ttak/compat/stdatomic.h>
+#include <ttak/compat/pthread.h>
 
 #if (!defined(EMBEDDED) || EMBEDDED == 0) && (defined(_WIN32) || defined(__unix__) || defined(__APPLE__) || defined(__linux__))
 #define TTAK_OS_MANAGED_MEMORY 1

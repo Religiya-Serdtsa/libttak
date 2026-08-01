@@ -2,7 +2,7 @@
 #include <ttak/ht/hash.h>
 #include <ttak/mem/mem.h>
 #include <ttak/timing/timing.h>
-#include <stdatomic.h>
+#include <ttak/compat/stdatomic.h>
 #include <inttypes.h>
 #include <stdlib.h>
 #include <string.h>

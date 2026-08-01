@@ -1,7 +1,7 @@
 #ifndef TTAK_SYNC_SPINLOCK_H
 #define TTAK_SYNC_SPINLOCK_H
 
-#include <stdatomic.h>
+#include <ttak/compat/stdatomic.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <time.h>

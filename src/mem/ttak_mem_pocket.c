@@ -17,7 +17,7 @@
 #include <string.h>
 #include <stdio.h>
 #if defined(__TINYC__)
-#include <pthread.h>
+#include <ttak/compat/pthread.h>
 #endif
 
 #include "../../internal/ttak/mem_internal.h"

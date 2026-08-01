@@ -17,7 +17,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <inttypes.h>
-#include <pthread.h>
+#include <ttak/compat/pthread.h>
 #include <limits.h>
 #include <errno.h>
 

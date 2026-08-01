@@ -5,7 +5,7 @@
 #include <ttak/types/ttak_compiler.h>
 #include <stdint.h>
 #include <stdbool.h>
-#include <pthread.h>
+#include <ttak/compat/pthread.h>
 
 /**
  * @brief Generic function pointer type.
