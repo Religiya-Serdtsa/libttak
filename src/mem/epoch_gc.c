@@ -17,7 +17,7 @@ static inline void epoch_gc_clock_gettime(struct timespec *spec) {
     spec->tv_nsec = (long)((tim % 1000000000ULL) * 100);
 }
 #else
-#  define epoch_gc_clock_gettime(spec) clock_gettime(CLOCK_MONOTONIC, (spec))
+#  define epoch_gc_clock_gettime(spec) clock_gettime(CLOCK_REALTIME, (spec))
 #endif
 
 /* Relaxed cadence: 20 Hz min, 0.5 Hz max.  The memory manager provides
