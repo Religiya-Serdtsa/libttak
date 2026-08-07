@@ -551,13 +551,28 @@ void TTAK_HOT_PATH *ttak_mem_realloc_safe(void *ptr, size_t new_size, uint64_t l
 
 void TTAK_HOT_PATH *ttak_mem_dup_safe(const void *src, size_t size, uint64_t lifetime_ticks, uint64_t now, _Bool is_root, ttak_mem_flags_t flags) {
     if (!src) return NULL;
-    ttak_mem_header_t *h_src = (ttak_mem_header_t *)src - 1;
+    
     bool is_const = false, is_volatile = false, allow_direct = true;
     ttak_mem_flags_t final_flags = flags;
-    if (h_src->magic == TTAK_MAGIC_NUMBER) {
-        is_const = h_src->is_const; is_volatile = h_src->is_volatile; allow_direct = h_src->allow_direct_access;
-        if (h_src->strict_check) final_flags |= TTAK_MEM_STRICT_CHECK;
+    
+    _Bool is_allocated_ptr = false;
+    size_t dummy_out = 0;
+    if (global_ptr_map) {
+        pthread_mutex_lock(&global_map_lock);
+        is_allocated_ptr = ttak_map_get_key((tt_map_t *)global_ptr_map, (uintptr_t)src, &dummy_out, now);
+        pthread_mutex_unlock(&global_map_lock);
     }
+    
+    if (is_allocated_ptr) {
+        ttak_mem_header_t *h_src = (ttak_mem_header_t *)src - 1;
+        if (h_src->magic == TTAK_MAGIC_NUMBER) {
+            is_const = h_src->is_const; 
+            is_volatile = h_src->is_volatile; 
+            allow_direct = h_src->allow_direct_access;
+            if (h_src->strict_check) final_flags |= TTAK_MEM_STRICT_CHECK;
+        }
+    }
+    
     void *new_ptr = ttak_mem_alloc_safe(size, lifetime_ticks, now, is_const, is_volatile, allow_direct, is_root, final_flags);
     if (!new_ptr) return NULL;
     ttak_mem_stream_copy(new_ptr, src, size);
