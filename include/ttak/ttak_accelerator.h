@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <ttak/compat/stdatomic.h>
 
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -61,6 +62,25 @@ typedef struct ttak_accel_batch_item {
 typedef ttak_result_t (*ttak_accel_backend_fn)(
     const ttak_accel_batch_item_t *items,
     size_t item_count,
+    const ttak_accel_config_t *config);
+
+struct ttak_ntt_prime;
+
+/**
+ * @brief Executes a Number-Theoretic Transform on the highest priority accelerator.
+ */
+ttak_result_t ttak_accel_ntt(
+    uint64_t *data,
+    size_t n,
+    const struct ttak_ntt_prime *prime,
+    bool inverse,
+    const ttak_accel_config_t *config);
+
+typedef ttak_result_t (*ttak_accel_ntt_fn)(
+    uint64_t *data,
+    size_t n,
+    const struct ttak_ntt_prime *prime,
+    bool inverse,
     const ttak_accel_config_t *config);
 
 /**

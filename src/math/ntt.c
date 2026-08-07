@@ -1,16 +1,31 @@
 #include <ttak/math/ntt.h>
+#include <ttak/ttak_accelerator.h>
 #include <stdint.h>
 #include <string.h>
+#include <stdlib.h>
 
 #define ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]))
-
-#define TTAK_NTT_MAX_LATTICE_DIM 32U
 
 const ttak_ntt_prime_t ttak_ntt_primes[TTAK_NTT_PRIME_COUNT] = {
     { 998244353ULL, 3ULL, 23U, 17450252288407896063ULL, 299560064ULL },
     { 1004535809ULL, 3ULL, 21U, 8214279848305098751ULL, 742115580ULL },
     { 469762049ULL, 3ULL, 26U, 18226067692438159359ULL, 118963808ULL }
 };
+
+/**
+ * @brief Forward declarations for GPU-accelerated NTT backends.
+ */
+#ifdef ENABLE_CUDA
+extern ttak_result_t ttak_accel_ntt_cuda(uint64_t *data, size_t n, const ttak_ntt_prime_t *prime, bool inverse);
+#endif
+
+#ifdef ENABLE_ROCM
+extern ttak_result_t ttak_accel_ntt_rocm(uint64_t *data, size_t n, const ttak_ntt_prime_t *prime, bool inverse);
+#endif
+
+#ifdef ENABLE_OPENCL
+extern ttak_result_t ttak_accel_ntt_opencl(uint64_t *data, size_t n, const ttak_ntt_prime_t *prime, bool inverse);
+#endif
 
 /**
  * @brief Compute (a + b) mod mod without overflow.
@@ -242,56 +257,72 @@ _Bool ttak_ntt_transform(uint64_t *data, size_t n, const ttak_ntt_prime_t *prime
     if ((n & (n - 1)) != 0) return false;
     if (n > (size_t)(1ULL << prime->max_power_two)) return false;
 
+    // GPU Acceleration Dispatch for large transforms (N >= 4096)
+    if (n >= 4096) {
+#ifdef ENABLE_CUDA
+        if (ttak_accel_ntt_cuda(data, n, prime, inverse) == TTAK_RESULT_OK) {
+            return true;
+        }
+#endif
+#ifdef ENABLE_ROCM
+        if (ttak_accel_ntt_rocm(data, n, prime, inverse) == TTAK_RESULT_OK) {
+            return true;
+        }
+#endif
+#ifdef ENABLE_OPENCL
+        if (ttak_accel_ntt_opencl(data, n, prime, inverse) == TTAK_RESULT_OK) {
+            return true;
+        }
+#endif
+        // Fall back to CPU if no GPU available or if execution failed.
+    }
+
     uint64_t modulus = prime->modulus;
-    uint64_t unity = ttak_montgomery_convert(1ULL, prime);
 
     bit_reverse(data, n);
     montgomery_array_convert(data, n, prime);
+
+    // Precompute twiddle factors on host to avoid mod_pow inside loops
+    uint64_t *twiddle = malloc(sizeof(uint64_t) * n);
+    if (!twiddle) return false;
 
     uint64_t root = ttak_mod_pow(prime->primitive_root, (prime->modulus - 1) / n, modulus);
     if (inverse) {
         root = ttak_mod_inverse(root, modulus);
     }
+    uint64_t root_mont = ttak_montgomery_convert(root, prime);
+    uint64_t curr = ttak_montgomery_convert(1ULL, prime);
+    for (size_t i = 0; i < n; ++i) {
+        twiddle[i] = curr;
+        curr = ttak_montgomery_mul(curr, root_mont, prime);
+    }
 
+    // Tiled/Hierarchical mixed Lattice NTT structure
     for (size_t len = 1; len < n; len <<= 1) {
-        uint64_t wlen = ttak_mod_pow(root, n / (len << 1), modulus);
-        uint64_t wlen_mont = ttak_montgomery_convert(wlen, prime);
+        size_t step = len << 1;
+        size_t twiddle_stride = n / step;
         size_t lattice_dim = ttak_ntt_lattice_dim(len);
         size_t lattice_shift = ttak_ntt_lattice_shift(lattice_dim);
-        size_t lattice_mask = lattice_dim - 1;
         size_t lattice_rows = len >> lattice_shift;
-        uint64_t lane_pows[TTAK_NTT_MAX_LATTICE_DIM];
-        lane_pows[0] = unity;
-        for (size_t idx = 1; idx < lattice_dim; ++idx) {
-            lane_pows[idx] = ttak_montgomery_mul(lane_pows[idx - 1], wlen_mont, prime);
-        }
-        uint64_t lattice_stride = unity;
-        for (size_t step = 0; step < lattice_dim; ++step) {
-            lattice_stride = ttak_montgomery_mul(lattice_stride, wlen_mont, prime);
-        }
 
-        for (size_t i = 0; i < n; i += (len << 1)) {
-            uint64_t row_factor = unity;
+        for (size_t i = 0; i < n; i += step) {
             for (size_t row = 0; row < lattice_rows; ++row) {
-                size_t row_seed = row & lattice_mask;
                 size_t row_base = row << lattice_shift;
                 for (size_t lane = 0; lane < lattice_dim; ++lane) {
-                    size_t lane_idx = (row_seed + lane) & lattice_mask;
-                    size_t j = row_base | lane_idx;
-                    uint64_t w = ttak_montgomery_mul(row_factor, lane_pows[lane_idx], prime);
+                    size_t j = row_base | lane;
+                    uint64_t w = twiddle[j * twiddle_stride];
 
                     uint64_t u = data[i + j];
                     uint64_t v = ttak_montgomery_mul(data[i + j + len], w, prime);
-                    uint64_t add = u + v;
-                    if (add >= modulus) add -= modulus;
-                    uint64_t sub = (u >= v) ? (u - v) : (u + modulus - v);
-                    data[i + j] = add;
-                    data[i + j + len] = sub;
+
+                    data[i + j] = ttak_mod_add(u, v, modulus);
+                    data[i + j + len] = ttak_mod_sub(u, v, modulus);
                 }
-                row_factor = ttak_montgomery_mul(row_factor, lattice_stride, prime);
             }
         }
     }
+
+    free(twiddle);
 
     if (inverse) {
         uint64_t inv_n = ttak_mod_inverse((uint64_t)n % modulus, modulus);
