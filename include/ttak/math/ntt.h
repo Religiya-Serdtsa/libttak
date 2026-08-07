@@ -28,6 +28,10 @@ typedef struct ttak_ntt_prime {
     uint64_t montgomery_r2;  /**< R^2 mod modulus for Montgomery conversion. */
 } ttak_ntt_prime_t;
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /** @brief Number of built-in NTT primes (three distinct Solinas-like primes). */
 #define TTAK_NTT_PRIME_COUNT 3
 
@@ -97,5 +101,9 @@ typedef struct ttak_crt_term {
  * @return             True on success.
  */
 _Bool ttak_crt_combine(const ttak_crt_term_t *terms, size_t count, ttak_u128_t *residue_out, ttak_u128_t *modulus_out);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // TTAK_MATH_NTT_H

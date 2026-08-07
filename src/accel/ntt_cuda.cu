@@ -4,12 +4,29 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+__device__ __forceinline__ uint64_t ttak_cuda_umul64hi(uint64_t a, uint64_t b) {
+#if defined(__CUDA_ARCH__)
+    return __umul64hi(a, b);
+#elif defined(__SIZEOF_INT128__)
+    return (uint64_t)(((unsigned __int128)a * b) >> 64);
+#else
+    uint64_t a_lo = (uint32_t)a, a_hi = a >> 32;
+    uint64_t b_lo = (uint32_t)b, b_hi = b >> 32;
+    uint64_t p0 = a_lo * b_lo;
+    uint64_t p1 = a_lo * b_hi;
+    uint64_t p2 = a_hi * b_lo;
+    uint64_t p3 = a_hi * b_hi;
+    uint64_t cy0 = (p0 >> 32) + (uint32_t)p1 + (uint32_t)p2;
+    return p3 + (p1 >> 32) + (p2 >> 32) + (cy0 >> 32);
+#endif
+}
+
 __device__ __forceinline__ uint64_t ttak_cuda_mont_mul(uint64_t a, uint64_t b, uint64_t modulus, uint64_t mont_inv) {
     uint64_t low = a * b;
-    uint64_t high = __umul64hi(a, b);
+    uint64_t high = ttak_cuda_umul64hi(a, b);
     uint64_t m = low * mont_inv;
     uint64_t m_mod_low = m * modulus;
-    uint64_t m_mod_high = __umul64hi(m, modulus);
+    uint64_t m_mod_high = ttak_cuda_umul64hi(m, modulus);
     uint64_t sum_low = low + m_mod_low;
     uint64_t carry = (sum_low < low) ? 1ULL : 0ULL;
     uint64_t res = high + m_mod_high + carry;
@@ -53,7 +70,7 @@ extern "C" ttak_result_t ttak_accel_ntt_cuda(
     uint64_t *data_dev = NULL;
     uint64_t *twiddle_dev = NULL;
 
-    if (cudaMalloc(&data_dev, sizeof(uint64_t) * n) != cudaSuccess) {
+    if (cudaMalloc((void **)&data_dev, sizeof(uint64_t) * n) != cudaSuccess) {
         return TTAK_RESULT_ERR_EXECUTION;
     }
 
@@ -75,7 +92,7 @@ extern "C" ttak_result_t ttak_accel_ntt_cuda(
         curr = ttak_montgomery_mul(curr, root_mont, prime);
     }
 
-    if (cudaMalloc(&twiddle_dev, sizeof(uint64_t) * n) != cudaSuccess) {
+    if (cudaMalloc((void **)&twiddle_dev, sizeof(uint64_t) * n) != cudaSuccess) {
         free(twiddle);
         cudaFree(data_dev);
         return TTAK_RESULT_ERR_EXECUTION;
